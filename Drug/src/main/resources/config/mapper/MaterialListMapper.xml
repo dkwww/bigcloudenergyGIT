@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.dao.MaterialListMapper">
+  <resultMap id="BaseResultMap" type="com.yidu.domain.MaterialList">
+    <id column="ml_id" jdbcType="VARCHAR" property="mlId" />
+    <result column="mat_id" jdbcType="VARCHAR" property="matId" />
+    <result column="drug_id" jdbcType="VARCHAR" property="drugId" />
+    <result column="ml_amount" jdbcType="INTEGER" property="mlAmount" />
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ml_id, mat_id, drug_id, ml_amount, isva, optime, oper, sort
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_material_list
+    where ml_id = #{mlId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from drug_material_list
+    where ml_id = #{mlId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yidu.domain.MaterialList">
+    insert into drug_material_list (ml_id, mat_id, drug_id, 
+      ml_amount, isva, optime, 
+      oper, sort)
+    values (#{mlId,jdbcType=VARCHAR}, #{matId,jdbcType=VARCHAR}, #{drugId,jdbcType=VARCHAR}, 
+      #{mlAmount,jdbcType=INTEGER}, #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, 
+      #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yidu.domain.MaterialList">
+    insert into drug_material_list
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mlId != null">
+        ml_id,
+      </if>
+      <if test="matId != null">
+        mat_id,
+      </if>
+      <if test="drugId != null">
+        drug_id,
+      </if>
+      <if test="mlAmount != null">
+        ml_amount,
+      </if>
+      <if test="isva != null">
+        isva,
+      </if>
+      <if test="optime != null">
+        optime,
+      </if>
+      <if test="oper != null">
+        oper,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mlId != null">
+        #{mlId,jdbcType=VARCHAR},
+      </if>
+      <if test="matId != null">
+        #{matId,jdbcType=VARCHAR},
+      </if>
+      <if test="drugId != null">
+        #{drugId,jdbcType=VARCHAR},
+      </if>
+      <if test="mlAmount != null">
+        #{mlAmount,jdbcType=INTEGER},
+      </if>
+      <if test="isva != null">
+        #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.MaterialList">
+    update drug_material_list
+    <set>
+      <if test="matId != null">
+        mat_id = #{matId,jdbcType=VARCHAR},
+      </if>
+      <if test="drugId != null">
+        drug_id = #{drugId,jdbcType=VARCHAR},
+      </if>
+      <if test="mlAmount != null">
+        ml_amount = #{mlAmount,jdbcType=INTEGER},
+      </if>
+      <if test="isva != null">
+        isva = #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        optime = #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        oper = #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ml_id = #{mlId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yidu.domain.MaterialList">
+    update drug_material_list
+    set mat_id = #{matId,jdbcType=VARCHAR},
+      drug_id = #{drugId,jdbcType=VARCHAR},
+      ml_amount = #{mlAmount,jdbcType=INTEGER},
+      isva = #{isva,jdbcType=VARCHAR},
+      optime = #{optime,jdbcType=TIMESTAMP},
+      oper = #{oper,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR}
+    where ml_id = #{mlId,jdbcType=VARCHAR}
+  </update>
+</mapper>

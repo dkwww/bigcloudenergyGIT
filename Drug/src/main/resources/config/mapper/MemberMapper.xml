@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.dao.MemberMapper">
+  <resultMap id="BaseResultMap" type="com.yidu.domain.Member">
+    <id column="men_id" jdbcType="VARCHAR" property="menId" />
+    <result column="men_name" jdbcType="VARCHAR" property="menName" />
+    <result column="mem_pwd" jdbcType="VARCHAR" property="memPwd" />
+    <result column="mem_phone" jdbcType="VARCHAR" property="memPhone" />
+    <result column="mem_address" jdbcType="VARCHAR" property="memAddress" />
+    <result column="mem_pictrue" jdbcType="VARCHAR" property="memPictrue" />
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    men_id, men_name, mem_pwd, mem_phone, mem_address, mem_pictrue, isva, optime, oper, 
+    sort
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_member
+    where men_id = #{menId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from drug_member
+    where men_id = #{menId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yidu.domain.Member">
+    insert into drug_member (men_id, men_name, mem_pwd, 
+      mem_phone, mem_address, mem_pictrue, 
+      isva, optime, oper, 
+      sort)
+    values (#{menId,jdbcType=VARCHAR}, #{menName,jdbcType=VARCHAR}, #{memPwd,jdbcType=VARCHAR}, 
+      #{memPhone,jdbcType=VARCHAR}, #{memAddress,jdbcType=VARCHAR}, #{memPictrue,jdbcType=VARCHAR}, 
+      #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yidu.domain.Member">
+    insert into drug_member
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="menId != null">
+        men_id,
+      </if>
+      <if test="menName != null">
+        men_name,
+      </if>
+      <if test="memPwd != null">
+        mem_pwd,
+      </if>
+      <if test="memPhone != null">
+        mem_phone,
+      </if>
+      <if test="memAddress != null">
+        mem_address,
+      </if>
+      <if test="memPictrue != null">
+        mem_pictrue,
+      </if>
+      <if test="isva != null">
+        isva,
+      </if>
+      <if test="optime != null">
+        optime,
+      </if>
+      <if test="oper != null">
+        oper,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="menId != null">
+        #{menId,jdbcType=VARCHAR},
+      </if>
+      <if test="menName != null">
+        #{menName,jdbcType=VARCHAR},
+      </if>
+      <if test="memPwd != null">
+        #{memPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="memPhone != null">
+        #{memPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="memAddress != null">
+        #{memAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="memPictrue != null">
+        #{memPictrue,jdbcType=VARCHAR},
+      </if>
+      <if test="isva != null">
+        #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Member">
+    update drug_member
+    <set>
+      <if test="menName != null">
+        men_name = #{menName,jdbcType=VARCHAR},
+      </if>
+      <if test="memPwd != null">
+        mem_pwd = #{memPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="memPhone != null">
+        mem_phone = #{memPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="memAddress != null">
+        mem_address = #{memAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="memPictrue != null">
+        mem_pictrue = #{memPictrue,jdbcType=VARCHAR},
+      </if>
+      <if test="isva != null">
+        isva = #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        optime = #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        oper = #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where men_id = #{menId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Member">
+    update drug_member
+    set men_name = #{menName,jdbcType=VARCHAR},
+      mem_pwd = #{memPwd,jdbcType=VARCHAR},
+      mem_phone = #{memPhone,jdbcType=VARCHAR},
+      mem_address = #{memAddress,jdbcType=VARCHAR},
+      mem_pictrue = #{memPictrue,jdbcType=VARCHAR},
+      isva = #{isva,jdbcType=VARCHAR},
+      optime = #{optime,jdbcType=TIMESTAMP},
+      oper = #{oper,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR}
+    where men_id = #{menId,jdbcType=VARCHAR}
+  </update>
+</mapper>

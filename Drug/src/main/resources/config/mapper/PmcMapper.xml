@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.dao.PmcMapper">
+  <resultMap id="BaseResultMap" type="com.yidu.domain.Pmc">
+    <id column="pmc_id" jdbcType="VARCHAR" property="pmcId" />
+    <result column="pmc_amount" jdbcType="INTEGER" property="pmcAmount" />
+    <result column="pmc_start" jdbcType="TIMESTAMP" property="pmcStart" />
+    <result column="pmc_end" jdbcType="TIMESTAMP" property="pmcEnd" />
+    <result column="pmc_state" jdbcType="VARCHAR" property="pmcState" />
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pmc_id, pmc_amount, pmc_start, pmc_end, pmc_state, isva, optime, oper, sort
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_pmc
+    where pmc_id = #{pmcId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from drug_pmc
+    where pmc_id = #{pmcId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yidu.domain.Pmc">
+    insert into drug_pmc (pmc_id, pmc_amount, pmc_start, 
+      pmc_end, pmc_state, isva, 
+      optime, oper, sort
+      )
+    values (#{pmcId,jdbcType=VARCHAR}, #{pmcAmount,jdbcType=INTEGER}, #{pmcStart,jdbcType=TIMESTAMP}, 
+      #{pmcEnd,jdbcType=TIMESTAMP}, #{pmcState,jdbcType=VARCHAR}, #{isva,jdbcType=VARCHAR}, 
+      #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yidu.domain.Pmc">
+    insert into drug_pmc
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pmcId != null">
+        pmc_id,
+      </if>
+      <if test="pmcAmount != null">
+        pmc_amount,
+      </if>
+      <if test="pmcStart != null">
+        pmc_start,
+      </if>
+      <if test="pmcEnd != null">
+        pmc_end,
+      </if>
+      <if test="pmcState != null">
+        pmc_state,
+      </if>
+      <if test="isva != null">
+        isva,
+      </if>
+      <if test="optime != null">
+        optime,
+      </if>
+      <if test="oper != null">
+        oper,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pmcId != null">
+        #{pmcId,jdbcType=VARCHAR},
+      </if>
+      <if test="pmcAmount != null">
+        #{pmcAmount,jdbcType=INTEGER},
+      </if>
+      <if test="pmcStart != null">
+        #{pmcStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pmcEnd != null">
+        #{pmcEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pmcState != null">
+        #{pmcState,jdbcType=VARCHAR},
+      </if>
+      <if test="isva != null">
+        #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Pmc">
+    update drug_pmc
+    <set>
+      <if test="pmcAmount != null">
+        pmc_amount = #{pmcAmount,jdbcType=INTEGER},
+      </if>
+      <if test="pmcStart != null">
+        pmc_start = #{pmcStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pmcEnd != null">
+        pmc_end = #{pmcEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pmcState != null">
+        pmc_state = #{pmcState,jdbcType=VARCHAR},
+      </if>
+      <if test="isva != null">
+        isva = #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        optime = #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        oper = #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pmc_id = #{pmcId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Pmc">
+    update drug_pmc
+    set pmc_amount = #{pmcAmount,jdbcType=INTEGER},
+      pmc_start = #{pmcStart,jdbcType=TIMESTAMP},
+      pmc_end = #{pmcEnd,jdbcType=TIMESTAMP},
+      pmc_state = #{pmcState,jdbcType=VARCHAR},
+      isva = #{isva,jdbcType=VARCHAR},
+      optime = #{optime,jdbcType=TIMESTAMP},
+      oper = #{oper,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR}
+    where pmc_id = #{pmcId,jdbcType=VARCHAR}
+  </update>
+</mapper>

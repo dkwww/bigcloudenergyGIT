@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.dao.DebtyMapper">
+  <resultMap id="BaseResultMap" type="com.yidu.domain.Debty">
+    <id column="deb_id" jdbcType="VARCHAR" property="debId" />
+    <result column="com_id" jdbcType="VARCHAR" property="comId" />
+    <result column="deb_money" jdbcType="DECIMAL" property="debMoney" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    deb_id, com_id, deb_money, optime, isva, oper, sort
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_debty
+    where deb_id = #{debId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from drug_debty
+    where deb_id = #{debId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yidu.domain.Debty">
+    insert into drug_debty (deb_id, com_id, deb_money, 
+      optime, isva, oper, 
+      sort)
+    values (#{debId,jdbcType=VARCHAR}, #{comId,jdbcType=VARCHAR}, #{debMoney,jdbcType=DECIMAL}, 
+      #{optime,jdbcType=TIMESTAMP}, #{isva,jdbcType=VARCHAR}, #{oper,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yidu.domain.Debty">
+    insert into drug_debty
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="debId != null">
+        deb_id,
+      </if>
+      <if test="comId != null">
+        com_id,
+      </if>
+      <if test="debMoney != null">
+        deb_money,
+      </if>
+      <if test="optime != null">
+        optime,
+      </if>
+      <if test="isva != null">
+        isva,
+      </if>
+      <if test="oper != null">
+        oper,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="debId != null">
+        #{debId,jdbcType=VARCHAR},
+      </if>
+      <if test="comId != null">
+        #{comId,jdbcType=VARCHAR},
+      </if>
+      <if test="debMoney != null">
+        #{debMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="optime != null">
+        #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isva != null">
+        #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="oper != null">
+        #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Debty">
+    update drug_debty
+    <set>
+      <if test="comId != null">
+        com_id = #{comId,jdbcType=VARCHAR},
+      </if>
+      <if test="debMoney != null">
+        deb_money = #{debMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="optime != null">
+        optime = #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isva != null">
+        isva = #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="oper != null">
+        oper = #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where deb_id = #{debId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Debty">
+    update drug_debty
+    set com_id = #{comId,jdbcType=VARCHAR},
+      deb_money = #{debMoney,jdbcType=DECIMAL},
+      optime = #{optime,jdbcType=TIMESTAMP},
+      isva = #{isva,jdbcType=VARCHAR},
+      oper = #{oper,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR}
+    where deb_id = #{debId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.dao.MatInvDetailMapper">
+  <resultMap id="BaseResultMap" type="com.yidu.domain.MatInvDetail">
+    <id column="mid_id" jdbcType="VARCHAR" property="midId" />
+    <result column="mi_id" jdbcType="VARCHAR" property="miId" />
+    <result column="mid_amount" jdbcType="INTEGER" property="midAmount" />
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    mid_id, mi_id, mid_amount, isva, optime, oper, sort
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_mat_inv_detail
+    where mid_id = #{midId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from drug_mat_inv_detail
+    where mid_id = #{midId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yidu.domain.MatInvDetail">
+    insert into drug_mat_inv_detail (mid_id, mi_id, mid_amount, 
+      isva, optime, oper, 
+      sort)
+    values (#{midId,jdbcType=VARCHAR}, #{miId,jdbcType=VARCHAR}, #{midAmount,jdbcType=INTEGER}, 
+      #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yidu.domain.MatInvDetail">
+    insert into drug_mat_inv_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="midId != null">
+        mid_id,
+      </if>
+      <if test="miId != null">
+        mi_id,
+      </if>
+      <if test="midAmount != null">
+        mid_amount,
+      </if>
+      <if test="isva != null">
+        isva,
+      </if>
+      <if test="optime != null">
+        optime,
+      </if>
+      <if test="oper != null">
+        oper,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="midId != null">
+        #{midId,jdbcType=VARCHAR},
+      </if>
+      <if test="miId != null">
+        #{miId,jdbcType=VARCHAR},
+      </if>
+      <if test="midAmount != null">
+        #{midAmount,jdbcType=INTEGER},
+      </if>
+      <if test="isva != null">
+        #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.MatInvDetail">
+    update drug_mat_inv_detail
+    <set>
+      <if test="miId != null">
+        mi_id = #{miId,jdbcType=VARCHAR},
+      </if>
+      <if test="midAmount != null">
+        mid_amount = #{midAmount,jdbcType=INTEGER},
+      </if>
+      <if test="isva != null">
+        isva = #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        optime = #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        oper = #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where mid_id = #{midId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yidu.domain.MatInvDetail">
+    update drug_mat_inv_detail
+    set mi_id = #{miId,jdbcType=VARCHAR},
+      mid_amount = #{midAmount,jdbcType=INTEGER},
+      isva = #{isva,jdbcType=VARCHAR},
+      optime = #{optime,jdbcType=TIMESTAMP},
+      oper = #{oper,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR}
+    where mid_id = #{midId,jdbcType=VARCHAR}
+  </update>
+</mapper>

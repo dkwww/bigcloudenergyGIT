@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.dao.QcDetailMapper">
+  <resultMap id="BaseResultMap" type="com.yidu.domain.QcDetail">
+    <id column="qdet_id" jdbcType="VARCHAR" property="qdetId" />
+    <result column="qc_id" jdbcType="VARCHAR" property="qcId" />
+    <result column="qdet_fk_id" jdbcType="VARCHAR" property="qdetFkId" />
+    <result column="qdet_amount" jdbcType="INTEGER" property="qdetAmount" />
+    <result column="qdet_fail" jdbcType="INTEGER" property="qdetFail" />
+    <result column="qdet_rate" jdbcType="DECIMAL" property="qdetRate" />
+    <result column="qdet_optime" jdbcType="TIMESTAMP" property="qdetOptime" />
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    qdet_id, qc_id, qdet_fk_id, qdet_amount, qdet_fail, qdet_rate, qdet_optime, isva, 
+    optime, oper, sort
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_qc_detail
+    where qdet_id = #{qdetId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from drug_qc_detail
+    where qdet_id = #{qdetId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yidu.domain.QcDetail">
+    insert into drug_qc_detail (qdet_id, qc_id, qdet_fk_id, 
+      qdet_amount, qdet_fail, qdet_rate, 
+      qdet_optime, isva, optime, 
+      oper, sort)
+    values (#{qdetId,jdbcType=VARCHAR}, #{qcId,jdbcType=VARCHAR}, #{qdetFkId,jdbcType=VARCHAR}, 
+      #{qdetAmount,jdbcType=INTEGER}, #{qdetFail,jdbcType=INTEGER}, #{qdetRate,jdbcType=DECIMAL}, 
+      #{qdetOptime,jdbcType=TIMESTAMP}, #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, 
+      #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yidu.domain.QcDetail">
+    insert into drug_qc_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="qdetId != null">
+        qdet_id,
+      </if>
+      <if test="qcId != null">
+        qc_id,
+      </if>
+      <if test="qdetFkId != null">
+        qdet_fk_id,
+      </if>
+      <if test="qdetAmount != null">
+        qdet_amount,
+      </if>
+      <if test="qdetFail != null">
+        qdet_fail,
+      </if>
+      <if test="qdetRate != null">
+        qdet_rate,
+      </if>
+      <if test="qdetOptime != null">
+        qdet_optime,
+      </if>
+      <if test="isva != null">
+        isva,
+      </if>
+      <if test="optime != null">
+        optime,
+      </if>
+      <if test="oper != null">
+        oper,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="qdetId != null">
+        #{qdetId,jdbcType=VARCHAR},
+      </if>
+      <if test="qcId != null">
+        #{qcId,jdbcType=VARCHAR},
+      </if>
+      <if test="qdetFkId != null">
+        #{qdetFkId,jdbcType=VARCHAR},
+      </if>
+      <if test="qdetAmount != null">
+        #{qdetAmount,jdbcType=INTEGER},
+      </if>
+      <if test="qdetFail != null">
+        #{qdetFail,jdbcType=INTEGER},
+      </if>
+      <if test="qdetRate != null">
+        #{qdetRate,jdbcType=DECIMAL},
+      </if>
+      <if test="qdetOptime != null">
+        #{qdetOptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isva != null">
+        #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.QcDetail">
+    update drug_qc_detail
+    <set>
+      <if test="qcId != null">
+        qc_id = #{qcId,jdbcType=VARCHAR},
+      </if>
+      <if test="qdetFkId != null">
+        qdet_fk_id = #{qdetFkId,jdbcType=VARCHAR},
+      </if>
+      <if test="qdetAmount != null">
+        qdet_amount = #{qdetAmount,jdbcType=INTEGER},
+      </if>
+      <if test="qdetFail != null">
+        qdet_fail = #{qdetFail,jdbcType=INTEGER},
+      </if>
+      <if test="qdetRate != null">
+        qdet_rate = #{qdetRate,jdbcType=DECIMAL},
+      </if>
+      <if test="qdetOptime != null">
+        qdet_optime = #{qdetOptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isva != null">
+        isva = #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        optime = #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        oper = #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where qdet_id = #{qdetId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yidu.domain.QcDetail">
+    update drug_qc_detail
+    set qc_id = #{qcId,jdbcType=VARCHAR},
+      qdet_fk_id = #{qdetFkId,jdbcType=VARCHAR},
+      qdet_amount = #{qdetAmount,jdbcType=INTEGER},
+      qdet_fail = #{qdetFail,jdbcType=INTEGER},
+      qdet_rate = #{qdetRate,jdbcType=DECIMAL},
+      qdet_optime = #{qdetOptime,jdbcType=TIMESTAMP},
+      isva = #{isva,jdbcType=VARCHAR},
+      optime = #{optime,jdbcType=TIMESTAMP},
+      oper = #{oper,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR}
+    where qdet_id = #{qdetId,jdbcType=VARCHAR}
+  </update>
+</mapper>

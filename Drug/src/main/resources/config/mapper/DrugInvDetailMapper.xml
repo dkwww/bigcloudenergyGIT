@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.dao.DrugInvDetailMapper">
+  <resultMap id="BaseResultMap" type="com.yidu.domain.DrugInvDetail">
+    <id column="did_id" jdbcType="VARCHAR" property="didId" />
+    <result column="di_id" jdbcType="VARCHAR" property="diId" />
+    <result column="di_amount" jdbcType="INTEGER" property="diAmount" />
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    did_id, di_id, di_amount, isva, optime, oper, sort
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_drug_inv_detail
+    where did_id = #{didId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from drug_drug_inv_detail
+    where did_id = #{didId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yidu.domain.DrugInvDetail">
+    insert into drug_drug_inv_detail (did_id, di_id, di_amount, 
+      isva, optime, oper, 
+      sort)
+    values (#{didId,jdbcType=VARCHAR}, #{diId,jdbcType=VARCHAR}, #{diAmount,jdbcType=INTEGER}, 
+      #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yidu.domain.DrugInvDetail">
+    insert into drug_drug_inv_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="didId != null">
+        did_id,
+      </if>
+      <if test="diId != null">
+        di_id,
+      </if>
+      <if test="diAmount != null">
+        di_amount,
+      </if>
+      <if test="isva != null">
+        isva,
+      </if>
+      <if test="optime != null">
+        optime,
+      </if>
+      <if test="oper != null">
+        oper,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="didId != null">
+        #{didId,jdbcType=VARCHAR},
+      </if>
+      <if test="diId != null">
+        #{diId,jdbcType=VARCHAR},
+      </if>
+      <if test="diAmount != null">
+        #{diAmount,jdbcType=INTEGER},
+      </if>
+      <if test="isva != null">
+        #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.DrugInvDetail">
+    update drug_drug_inv_detail
+    <set>
+      <if test="diId != null">
+        di_id = #{diId,jdbcType=VARCHAR},
+      </if>
+      <if test="diAmount != null">
+        di_amount = #{diAmount,jdbcType=INTEGER},
+      </if>
+      <if test="isva != null">
+        isva = #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        optime = #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        oper = #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where did_id = #{didId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yidu.domain.DrugInvDetail">
+    update drug_drug_inv_detail
+    set di_id = #{diId,jdbcType=VARCHAR},
+      di_amount = #{diAmount,jdbcType=INTEGER},
+      isva = #{isva,jdbcType=VARCHAR},
+      optime = #{optime,jdbcType=TIMESTAMP},
+      oper = #{oper,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR}
+    where did_id = #{didId,jdbcType=VARCHAR}
+  </update>
+</mapper>

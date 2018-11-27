@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.dao.MrpMapper">
+  <resultMap id="BaseResultMap" type="com.yidu.domain.Mrp">
+    <id column="mrp_id" jdbcType="VARCHAR" property="mrpId" />
+    <result column="drug_id" jdbcType="VARCHAR" property="drugId" />
+    <result column="mrp_optime" jdbcType="TIMESTAMP" property="mrpOptime" />
+    <result column="mrp_plan" jdbcType="INTEGER" property="mrpPlan" />
+    <result column="mrp_rate" jdbcType="DECIMAL" property="mrpRate" />
+    <result column="mrp_state" jdbcType="VARCHAR" property="mrpState" />
+    <result column="mrp_idea" jdbcType="VARCHAR" property="mrpIdea" />
+    <result column="mrp_amount" jdbcType="INTEGER" property="mrpAmount" />
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    mrp_id, drug_id, mrp_optime, mrp_plan, mrp_rate, mrp_state, mrp_idea, mrp_amount, 
+    isva, optime, oper, sort
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_mrp
+    where mrp_id = #{mrpId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from drug_mrp
+    where mrp_id = #{mrpId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yidu.domain.Mrp">
+    insert into drug_mrp (mrp_id, drug_id, mrp_optime, 
+      mrp_plan, mrp_rate, mrp_state, 
+      mrp_idea, mrp_amount, isva, 
+      optime, oper, sort
+      )
+    values (#{mrpId,jdbcType=VARCHAR}, #{drugId,jdbcType=VARCHAR}, #{mrpOptime,jdbcType=TIMESTAMP}, 
+      #{mrpPlan,jdbcType=INTEGER}, #{mrpRate,jdbcType=DECIMAL}, #{mrpState,jdbcType=VARCHAR}, 
+      #{mrpIdea,jdbcType=VARCHAR}, #{mrpAmount,jdbcType=INTEGER}, #{isva,jdbcType=VARCHAR}, 
+      #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yidu.domain.Mrp">
+    insert into drug_mrp
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mrpId != null">
+        mrp_id,
+      </if>
+      <if test="drugId != null">
+        drug_id,
+      </if>
+      <if test="mrpOptime != null">
+        mrp_optime,
+      </if>
+      <if test="mrpPlan != null">
+        mrp_plan,
+      </if>
+      <if test="mrpRate != null">
+        mrp_rate,
+      </if>
+      <if test="mrpState != null">
+        mrp_state,
+      </if>
+      <if test="mrpIdea != null">
+        mrp_idea,
+      </if>
+      <if test="mrpAmount != null">
+        mrp_amount,
+      </if>
+      <if test="isva != null">
+        isva,
+      </if>
+      <if test="optime != null">
+        optime,
+      </if>
+      <if test="oper != null">
+        oper,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mrpId != null">
+        #{mrpId,jdbcType=VARCHAR},
+      </if>
+      <if test="drugId != null">
+        #{drugId,jdbcType=VARCHAR},
+      </if>
+      <if test="mrpOptime != null">
+        #{mrpOptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mrpPlan != null">
+        #{mrpPlan,jdbcType=INTEGER},
+      </if>
+      <if test="mrpRate != null">
+        #{mrpRate,jdbcType=DECIMAL},
+      </if>
+      <if test="mrpState != null">
+        #{mrpState,jdbcType=VARCHAR},
+      </if>
+      <if test="mrpIdea != null">
+        #{mrpIdea,jdbcType=VARCHAR},
+      </if>
+      <if test="mrpAmount != null">
+        #{mrpAmount,jdbcType=INTEGER},
+      </if>
+      <if test="isva != null">
+        #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Mrp">
+    update drug_mrp
+    <set>
+      <if test="drugId != null">
+        drug_id = #{drugId,jdbcType=VARCHAR},
+      </if>
+      <if test="mrpOptime != null">
+        mrp_optime = #{mrpOptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mrpPlan != null">
+        mrp_plan = #{mrpPlan,jdbcType=INTEGER},
+      </if>
+      <if test="mrpRate != null">
+        mrp_rate = #{mrpRate,jdbcType=DECIMAL},
+      </if>
+      <if test="mrpState != null">
+        mrp_state = #{mrpState,jdbcType=VARCHAR},
+      </if>
+      <if test="mrpIdea != null">
+        mrp_idea = #{mrpIdea,jdbcType=VARCHAR},
+      </if>
+      <if test="mrpAmount != null">
+        mrp_amount = #{mrpAmount,jdbcType=INTEGER},
+      </if>
+      <if test="isva != null">
+        isva = #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        optime = #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        oper = #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where mrp_id = #{mrpId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Mrp">
+    update drug_mrp
+    set drug_id = #{drugId,jdbcType=VARCHAR},
+      mrp_optime = #{mrpOptime,jdbcType=TIMESTAMP},
+      mrp_plan = #{mrpPlan,jdbcType=INTEGER},
+      mrp_rate = #{mrpRate,jdbcType=DECIMAL},
+      mrp_state = #{mrpState,jdbcType=VARCHAR},
+      mrp_idea = #{mrpIdea,jdbcType=VARCHAR},
+      mrp_amount = #{mrpAmount,jdbcType=INTEGER},
+      isva = #{isva,jdbcType=VARCHAR},
+      optime = #{optime,jdbcType=TIMESTAMP},
+      oper = #{oper,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR}
+    where mrp_id = #{mrpId,jdbcType=VARCHAR}
+  </update>
+</mapper>

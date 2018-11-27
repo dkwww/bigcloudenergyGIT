@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.dao.AuditMapper">
+  <resultMap id="BaseResultMap" type="com.yidu.domain.Audit">
+    <id column="aud_id" jdbcType="VARCHAR" property="audId" />
+    <result column="aud_fk_id" jdbcType="VARCHAR" property="audFkId" />
+    <result column="aud_comtype" jdbcType="VARCHAR" property="audComtype" />
+    <result column="qc_fk_id" jdbcType="VARCHAR" property="qcFkId" />
+    <result column="aud_time" jdbcType="TIMESTAMP" property="audTime" />
+    <result column="aud_state" jdbcType="VARCHAR" property="audState" />
+    <result column="aud_idea" jdbcType="VARCHAR" property="audIdea" />
+    <result column="aud_name" jdbcType="VARCHAR" property="audName" />
+    <result column="aud_mes" jdbcType="VARCHAR" property="audMes" />
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    aud_id, aud_fk_id, aud_comtype, qc_fk_id, aud_time, aud_state, aud_idea, aud_name, 
+    aud_mes, isva, optime, oper, sort
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_audit
+    where aud_id = #{audId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from drug_audit
+    where aud_id = #{audId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yidu.domain.Audit">
+    insert into drug_audit (aud_id, aud_fk_id, aud_comtype, 
+      qc_fk_id, aud_time, aud_state, 
+      aud_idea, aud_name, aud_mes, 
+      isva, optime, oper, 
+      sort)
+    values (#{audId,jdbcType=VARCHAR}, #{audFkId,jdbcType=VARCHAR}, #{audComtype,jdbcType=VARCHAR}, 
+      #{qcFkId,jdbcType=VARCHAR}, #{audTime,jdbcType=TIMESTAMP}, #{audState,jdbcType=VARCHAR}, 
+      #{audIdea,jdbcType=VARCHAR}, #{audName,jdbcType=VARCHAR}, #{audMes,jdbcType=VARCHAR}, 
+      #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yidu.domain.Audit">
+    insert into drug_audit
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="audId != null">
+        aud_id,
+      </if>
+      <if test="audFkId != null">
+        aud_fk_id,
+      </if>
+      <if test="audComtype != null">
+        aud_comtype,
+      </if>
+      <if test="qcFkId != null">
+        qc_fk_id,
+      </if>
+      <if test="audTime != null">
+        aud_time,
+      </if>
+      <if test="audState != null">
+        aud_state,
+      </if>
+      <if test="audIdea != null">
+        aud_idea,
+      </if>
+      <if test="audName != null">
+        aud_name,
+      </if>
+      <if test="audMes != null">
+        aud_mes,
+      </if>
+      <if test="isva != null">
+        isva,
+      </if>
+      <if test="optime != null">
+        optime,
+      </if>
+      <if test="oper != null">
+        oper,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="audId != null">
+        #{audId,jdbcType=VARCHAR},
+      </if>
+      <if test="audFkId != null">
+        #{audFkId,jdbcType=VARCHAR},
+      </if>
+      <if test="audComtype != null">
+        #{audComtype,jdbcType=VARCHAR},
+      </if>
+      <if test="qcFkId != null">
+        #{qcFkId,jdbcType=VARCHAR},
+      </if>
+      <if test="audTime != null">
+        #{audTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="audState != null">
+        #{audState,jdbcType=VARCHAR},
+      </if>
+      <if test="audIdea != null">
+        #{audIdea,jdbcType=VARCHAR},
+      </if>
+      <if test="audName != null">
+        #{audName,jdbcType=VARCHAR},
+      </if>
+      <if test="audMes != null">
+        #{audMes,jdbcType=VARCHAR},
+      </if>
+      <if test="isva != null">
+        #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Audit">
+    update drug_audit
+    <set>
+      <if test="audFkId != null">
+        aud_fk_id = #{audFkId,jdbcType=VARCHAR},
+      </if>
+      <if test="audComtype != null">
+        aud_comtype = #{audComtype,jdbcType=VARCHAR},
+      </if>
+      <if test="qcFkId != null">
+        qc_fk_id = #{qcFkId,jdbcType=VARCHAR},
+      </if>
+      <if test="audTime != null">
+        aud_time = #{audTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="audState != null">
+        aud_state = #{audState,jdbcType=VARCHAR},
+      </if>
+      <if test="audIdea != null">
+        aud_idea = #{audIdea,jdbcType=VARCHAR},
+      </if>
+      <if test="audName != null">
+        aud_name = #{audName,jdbcType=VARCHAR},
+      </if>
+      <if test="audMes != null">
+        aud_mes = #{audMes,jdbcType=VARCHAR},
+      </if>
+      <if test="isva != null">
+        isva = #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        optime = #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        oper = #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where aud_id = #{audId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Audit">
+    update drug_audit
+    set aud_fk_id = #{audFkId,jdbcType=VARCHAR},
+      aud_comtype = #{audComtype,jdbcType=VARCHAR},
+      qc_fk_id = #{qcFkId,jdbcType=VARCHAR},
+      aud_time = #{audTime,jdbcType=TIMESTAMP},
+      aud_state = #{audState,jdbcType=VARCHAR},
+      aud_idea = #{audIdea,jdbcType=VARCHAR},
+      aud_name = #{audName,jdbcType=VARCHAR},
+      aud_mes = #{audMes,jdbcType=VARCHAR},
+      isva = #{isva,jdbcType=VARCHAR},
+      optime = #{optime,jdbcType=TIMESTAMP},
+      oper = #{oper,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR}
+    where aud_id = #{audId,jdbcType=VARCHAR}
+  </update>
+</mapper>

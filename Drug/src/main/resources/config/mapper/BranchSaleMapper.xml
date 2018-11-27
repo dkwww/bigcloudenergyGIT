@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.dao.BranchSaleMapper">
+  <resultMap id="BaseResultMap" type="com.yidu.domain.BranchSale">
+    <id column="bs_id" jdbcType="VARCHAR" property="bsId" />
+    <result column="com_id" jdbcType="VARCHAR" property="comId" />
+    <result column="men_id" jdbcType="VARCHAR" property="menId" />
+    <result column="sd_id" jdbcType="VARCHAR" property="sdId" />
+    <result column="bs_amount" jdbcType="INTEGER" property="bsAmount" />
+    <result column="bs_price" jdbcType="DECIMAL" property="bsPrice" />
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    bs_id, com_id, men_id, sd_id, bs_amount, bs_price, isva, optime, oper, sort
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_branch_sale
+    where bs_id = #{bsId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from drug_branch_sale
+    where bs_id = #{bsId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yidu.domain.BranchSale">
+    insert into drug_branch_sale (bs_id, com_id, men_id, 
+      sd_id, bs_amount, bs_price, 
+      isva, optime, oper, 
+      sort)
+    values (#{bsId,jdbcType=VARCHAR}, #{comId,jdbcType=VARCHAR}, #{menId,jdbcType=VARCHAR}, 
+      #{sdId,jdbcType=VARCHAR}, #{bsAmount,jdbcType=INTEGER}, #{bsPrice,jdbcType=DECIMAL}, 
+      #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yidu.domain.BranchSale">
+    insert into drug_branch_sale
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bsId != null">
+        bs_id,
+      </if>
+      <if test="comId != null">
+        com_id,
+      </if>
+      <if test="menId != null">
+        men_id,
+      </if>
+      <if test="sdId != null">
+        sd_id,
+      </if>
+      <if test="bsAmount != null">
+        bs_amount,
+      </if>
+      <if test="bsPrice != null">
+        bs_price,
+      </if>
+      <if test="isva != null">
+        isva,
+      </if>
+      <if test="optime != null">
+        optime,
+      </if>
+      <if test="oper != null">
+        oper,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bsId != null">
+        #{bsId,jdbcType=VARCHAR},
+      </if>
+      <if test="comId != null">
+        #{comId,jdbcType=VARCHAR},
+      </if>
+      <if test="menId != null">
+        #{menId,jdbcType=VARCHAR},
+      </if>
+      <if test="sdId != null">
+        #{sdId,jdbcType=VARCHAR},
+      </if>
+      <if test="bsAmount != null">
+        #{bsAmount,jdbcType=INTEGER},
+      </if>
+      <if test="bsPrice != null">
+        #{bsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isva != null">
+        #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.BranchSale">
+    update drug_branch_sale
+    <set>
+      <if test="comId != null">
+        com_id = #{comId,jdbcType=VARCHAR},
+      </if>
+      <if test="menId != null">
+        men_id = #{menId,jdbcType=VARCHAR},
+      </if>
+      <if test="sdId != null">
+        sd_id = #{sdId,jdbcType=VARCHAR},
+      </if>
+      <if test="bsAmount != null">
+        bs_amount = #{bsAmount,jdbcType=INTEGER},
+      </if>
+      <if test="bsPrice != null">
+        bs_price = #{bsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isva != null">
+        isva = #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        optime = #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        oper = #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bs_id = #{bsId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yidu.domain.BranchSale">
+    update drug_branch_sale
+    set com_id = #{comId,jdbcType=VARCHAR},
+      men_id = #{menId,jdbcType=VARCHAR},
+      sd_id = #{sdId,jdbcType=VARCHAR},
+      bs_amount = #{bsAmount,jdbcType=INTEGER},
+      bs_price = #{bsPrice,jdbcType=DECIMAL},
+      isva = #{isva,jdbcType=VARCHAR},
+      optime = #{optime,jdbcType=TIMESTAMP},
+      oper = #{oper,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR}
+    where bs_id = #{bsId,jdbcType=VARCHAR}
+  </update>
+</mapper>

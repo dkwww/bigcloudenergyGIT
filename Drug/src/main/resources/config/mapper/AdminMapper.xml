@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.dao.AdminMapper">
+  <resultMap id="BaseResultMap" type="com.yidu.domain.Admin">
+    <id column="admin_id" jdbcType="VARCHAR" property="adminId" />
+    <result column="admin_web" jdbcType="VARCHAR" property="adminWeb" />
+    <result column="admin_name" jdbcType="VARCHAR" property="adminName" />
+    <result column="admin_pwd" jdbcType="VARCHAR" property="adminPwd" />
+    <result column="admin_pictrue" jdbcType="VARCHAR" property="adminPictrue" />
+    <result column="admin_msg" jdbcType="VARCHAR" property="adminMsg" />
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    admin_id, admin_web, admin_name, admin_pwd, admin_pictrue, admin_msg, isva, optime, 
+    oper, sort
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_admin
+    where admin_id = #{adminId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from drug_admin
+    where admin_id = #{adminId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yidu.domain.Admin">
+    insert into drug_admin (admin_id, admin_web, admin_name, 
+      admin_pwd, admin_pictrue, admin_msg, 
+      isva, optime, oper, 
+      sort)
+    values (#{adminId,jdbcType=VARCHAR}, #{adminWeb,jdbcType=VARCHAR}, #{adminName,jdbcType=VARCHAR}, 
+      #{adminPwd,jdbcType=VARCHAR}, #{adminPictrue,jdbcType=VARCHAR}, #{adminMsg,jdbcType=VARCHAR}, 
+      #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yidu.domain.Admin">
+    insert into drug_admin
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="adminId != null">
+        admin_id,
+      </if>
+      <if test="adminWeb != null">
+        admin_web,
+      </if>
+      <if test="adminName != null">
+        admin_name,
+      </if>
+      <if test="adminPwd != null">
+        admin_pwd,
+      </if>
+      <if test="adminPictrue != null">
+        admin_pictrue,
+      </if>
+      <if test="adminMsg != null">
+        admin_msg,
+      </if>
+      <if test="isva != null">
+        isva,
+      </if>
+      <if test="optime != null">
+        optime,
+      </if>
+      <if test="oper != null">
+        oper,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="adminId != null">
+        #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="adminWeb != null">
+        #{adminWeb,jdbcType=VARCHAR},
+      </if>
+      <if test="adminName != null">
+        #{adminName,jdbcType=VARCHAR},
+      </if>
+      <if test="adminPwd != null">
+        #{adminPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="adminPictrue != null">
+        #{adminPictrue,jdbcType=VARCHAR},
+      </if>
+      <if test="adminMsg != null">
+        #{adminMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="isva != null">
+        #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Admin">
+    update drug_admin
+    <set>
+      <if test="adminWeb != null">
+        admin_web = #{adminWeb,jdbcType=VARCHAR},
+      </if>
+      <if test="adminName != null">
+        admin_name = #{adminName,jdbcType=VARCHAR},
+      </if>
+      <if test="adminPwd != null">
+        admin_pwd = #{adminPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="adminPictrue != null">
+        admin_pictrue = #{adminPictrue,jdbcType=VARCHAR},
+      </if>
+      <if test="adminMsg != null">
+        admin_msg = #{adminMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="isva != null">
+        isva = #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        optime = #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        oper = #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where admin_id = #{adminId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Admin">
+    update drug_admin
+    set admin_web = #{adminWeb,jdbcType=VARCHAR},
+      admin_name = #{adminName,jdbcType=VARCHAR},
+      admin_pwd = #{adminPwd,jdbcType=VARCHAR},
+      admin_pictrue = #{adminPictrue,jdbcType=VARCHAR},
+      admin_msg = #{adminMsg,jdbcType=VARCHAR},
+      isva = #{isva,jdbcType=VARCHAR},
+      optime = #{optime,jdbcType=TIMESTAMP},
+      oper = #{oper,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR}
+    where admin_id = #{adminId,jdbcType=VARCHAR}
+  </update>
+</mapper>

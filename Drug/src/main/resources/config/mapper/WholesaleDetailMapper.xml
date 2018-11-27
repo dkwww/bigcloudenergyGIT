@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.dao.WholesaleDetailMapper">
+  <resultMap id="BaseResultMap" type="com.yidu.domain.WholesaleDetail">
+    <id column="wd_id" jdbcType="VARCHAR" property="wdId" />
+    <result column="whol_id" jdbcType="VARCHAR" property="wholId" />
+    <result column="drug_id" jdbcType="VARCHAR" property="drugId" />
+    <result column="wd_amount" jdbcType="INTEGER" property="wdAmount" />
+    <result column="wd_price" jdbcType="DECIMAL" property="wdPrice" />
+    <result column="wd_total" jdbcType="DECIMAL" property="wdTotal" />
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    wd_id, whol_id, drug_id, wd_amount, wd_price, wd_total, isva, optime, oper, sort
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_wholesale_detail
+    where wd_id = #{wdId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from drug_wholesale_detail
+    where wd_id = #{wdId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yidu.domain.WholesaleDetail">
+    insert into drug_wholesale_detail (wd_id, whol_id, drug_id, 
+      wd_amount, wd_price, wd_total, 
+      isva, optime, oper, 
+      sort)
+    values (#{wdId,jdbcType=VARCHAR}, #{wholId,jdbcType=VARCHAR}, #{drugId,jdbcType=VARCHAR}, 
+      #{wdAmount,jdbcType=INTEGER}, #{wdPrice,jdbcType=DECIMAL}, #{wdTotal,jdbcType=DECIMAL}, 
+      #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yidu.domain.WholesaleDetail">
+    insert into drug_wholesale_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="wdId != null">
+        wd_id,
+      </if>
+      <if test="wholId != null">
+        whol_id,
+      </if>
+      <if test="drugId != null">
+        drug_id,
+      </if>
+      <if test="wdAmount != null">
+        wd_amount,
+      </if>
+      <if test="wdPrice != null">
+        wd_price,
+      </if>
+      <if test="wdTotal != null">
+        wd_total,
+      </if>
+      <if test="isva != null">
+        isva,
+      </if>
+      <if test="optime != null">
+        optime,
+      </if>
+      <if test="oper != null">
+        oper,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="wdId != null">
+        #{wdId,jdbcType=VARCHAR},
+      </if>
+      <if test="wholId != null">
+        #{wholId,jdbcType=VARCHAR},
+      </if>
+      <if test="drugId != null">
+        #{drugId,jdbcType=VARCHAR},
+      </if>
+      <if test="wdAmount != null">
+        #{wdAmount,jdbcType=INTEGER},
+      </if>
+      <if test="wdPrice != null">
+        #{wdPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="wdTotal != null">
+        #{wdTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="isva != null">
+        #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.WholesaleDetail">
+    update drug_wholesale_detail
+    <set>
+      <if test="wholId != null">
+        whol_id = #{wholId,jdbcType=VARCHAR},
+      </if>
+      <if test="drugId != null">
+        drug_id = #{drugId,jdbcType=VARCHAR},
+      </if>
+      <if test="wdAmount != null">
+        wd_amount = #{wdAmount,jdbcType=INTEGER},
+      </if>
+      <if test="wdPrice != null">
+        wd_price = #{wdPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="wdTotal != null">
+        wd_total = #{wdTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="isva != null">
+        isva = #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        optime = #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        oper = #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where wd_id = #{wdId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yidu.domain.WholesaleDetail">
+    update drug_wholesale_detail
+    set whol_id = #{wholId,jdbcType=VARCHAR},
+      drug_id = #{drugId,jdbcType=VARCHAR},
+      wd_amount = #{wdAmount,jdbcType=INTEGER},
+      wd_price = #{wdPrice,jdbcType=DECIMAL},
+      wd_total = #{wdTotal,jdbcType=DECIMAL},
+      isva = #{isva,jdbcType=VARCHAR},
+      optime = #{optime,jdbcType=TIMESTAMP},
+      oper = #{oper,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR}
+    where wd_id = #{wdId,jdbcType=VARCHAR}
+  </update>
+</mapper>

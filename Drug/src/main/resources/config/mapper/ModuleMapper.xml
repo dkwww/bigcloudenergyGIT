@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.dao.ModuleMapper">
+  <resultMap id="BaseResultMap" type="com.yidu.domain.Module">
+    <id column="mode_id" jdbcType="VARCHAR" property="modeId" />
+    <result column="dru_mode_id" jdbcType="VARCHAR" property="druModeId" />
+    <result column="mode_url" jdbcType="VARCHAR" property="modeUrl" />
+    <result column="mode_name" jdbcType="VARCHAR" property="modeName" />
+    <result column="mode_code" jdbcType="VARCHAR" property="modeCode" />
+    <result column="mode_explain" jdbcType="VARCHAR" property="modeExplain" />
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    mode_id, dru_mode_id, mode_url, mode_name, mode_code, mode_explain, isva, optime, 
+    oper, sort
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_module
+    where mode_id = #{modeId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from drug_module
+    where mode_id = #{modeId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yidu.domain.Module">
+    insert into drug_module (mode_id, dru_mode_id, mode_url, 
+      mode_name, mode_code, mode_explain, 
+      isva, optime, oper, 
+      sort)
+    values (#{modeId,jdbcType=VARCHAR}, #{druModeId,jdbcType=VARCHAR}, #{modeUrl,jdbcType=VARCHAR}, 
+      #{modeName,jdbcType=VARCHAR}, #{modeCode,jdbcType=VARCHAR}, #{modeExplain,jdbcType=VARCHAR}, 
+      #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yidu.domain.Module">
+    insert into drug_module
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="modeId != null">
+        mode_id,
+      </if>
+      <if test="druModeId != null">
+        dru_mode_id,
+      </if>
+      <if test="modeUrl != null">
+        mode_url,
+      </if>
+      <if test="modeName != null">
+        mode_name,
+      </if>
+      <if test="modeCode != null">
+        mode_code,
+      </if>
+      <if test="modeExplain != null">
+        mode_explain,
+      </if>
+      <if test="isva != null">
+        isva,
+      </if>
+      <if test="optime != null">
+        optime,
+      </if>
+      <if test="oper != null">
+        oper,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="modeId != null">
+        #{modeId,jdbcType=VARCHAR},
+      </if>
+      <if test="druModeId != null">
+        #{druModeId,jdbcType=VARCHAR},
+      </if>
+      <if test="modeUrl != null">
+        #{modeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="modeName != null">
+        #{modeName,jdbcType=VARCHAR},
+      </if>
+      <if test="modeCode != null">
+        #{modeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="modeExplain != null">
+        #{modeExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="isva != null">
+        #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Module">
+    update drug_module
+    <set>
+      <if test="druModeId != null">
+        dru_mode_id = #{druModeId,jdbcType=VARCHAR},
+      </if>
+      <if test="modeUrl != null">
+        mode_url = #{modeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="modeName != null">
+        mode_name = #{modeName,jdbcType=VARCHAR},
+      </if>
+      <if test="modeCode != null">
+        mode_code = #{modeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="modeExplain != null">
+        mode_explain = #{modeExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="isva != null">
+        isva = #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        optime = #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        oper = #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where mode_id = #{modeId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Module">
+    update drug_module
+    set dru_mode_id = #{druModeId,jdbcType=VARCHAR},
+      mode_url = #{modeUrl,jdbcType=VARCHAR},
+      mode_name = #{modeName,jdbcType=VARCHAR},
+      mode_code = #{modeCode,jdbcType=VARCHAR},
+      mode_explain = #{modeExplain,jdbcType=VARCHAR},
+      isva = #{isva,jdbcType=VARCHAR},
+      optime = #{optime,jdbcType=TIMESTAMP},
+      oper = #{oper,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR}
+    where mode_id = #{modeId,jdbcType=VARCHAR}
+  </update>
+</mapper>

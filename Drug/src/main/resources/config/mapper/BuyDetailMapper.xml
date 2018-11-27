@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.dao.BuyDetailMapper">
+  <resultMap id="BaseResultMap" type="com.yidu.domain.BuyDetail">
+    <id column="bdet_id" jdbcType="VARCHAR" property="bdetId" />
+    <result column="buy_id" jdbcType="VARCHAR" property="buyId" />
+    <result column="bdet_amount" jdbcType="INTEGER" property="bdetAmount" />
+    <result column="bdet_price" jdbcType="DECIMAL" property="bdetPrice" />
+    <result column="bdet_total" jdbcType="DECIMAL" property="bdetTotal" />
+    <result column="bdet_fk_id" jdbcType="VARCHAR" property="bdetFkId" />
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    bdet_id, buy_id, bdet_amount, bdet_price, bdet_total, bdet_fk_id, isva, optime, oper, 
+    sort
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_buy_detail
+    where bdet_id = #{bdetId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from drug_buy_detail
+    where bdet_id = #{bdetId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yidu.domain.BuyDetail">
+    insert into drug_buy_detail (bdet_id, buy_id, bdet_amount, 
+      bdet_price, bdet_total, bdet_fk_id, 
+      isva, optime, oper, 
+      sort)
+    values (#{bdetId,jdbcType=VARCHAR}, #{buyId,jdbcType=VARCHAR}, #{bdetAmount,jdbcType=INTEGER}, 
+      #{bdetPrice,jdbcType=DECIMAL}, #{bdetTotal,jdbcType=DECIMAL}, #{bdetFkId,jdbcType=VARCHAR}, 
+      #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yidu.domain.BuyDetail">
+    insert into drug_buy_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bdetId != null">
+        bdet_id,
+      </if>
+      <if test="buyId != null">
+        buy_id,
+      </if>
+      <if test="bdetAmount != null">
+        bdet_amount,
+      </if>
+      <if test="bdetPrice != null">
+        bdet_price,
+      </if>
+      <if test="bdetTotal != null">
+        bdet_total,
+      </if>
+      <if test="bdetFkId != null">
+        bdet_fk_id,
+      </if>
+      <if test="isva != null">
+        isva,
+      </if>
+      <if test="optime != null">
+        optime,
+      </if>
+      <if test="oper != null">
+        oper,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bdetId != null">
+        #{bdetId,jdbcType=VARCHAR},
+      </if>
+      <if test="buyId != null">
+        #{buyId,jdbcType=VARCHAR},
+      </if>
+      <if test="bdetAmount != null">
+        #{bdetAmount,jdbcType=INTEGER},
+      </if>
+      <if test="bdetPrice != null">
+        #{bdetPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="bdetTotal != null">
+        #{bdetTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="bdetFkId != null">
+        #{bdetFkId,jdbcType=VARCHAR},
+      </if>
+      <if test="isva != null">
+        #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.BuyDetail">
+    update drug_buy_detail
+    <set>
+      <if test="buyId != null">
+        buy_id = #{buyId,jdbcType=VARCHAR},
+      </if>
+      <if test="bdetAmount != null">
+        bdet_amount = #{bdetAmount,jdbcType=INTEGER},
+      </if>
+      <if test="bdetPrice != null">
+        bdet_price = #{bdetPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="bdetTotal != null">
+        bdet_total = #{bdetTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="bdetFkId != null">
+        bdet_fk_id = #{bdetFkId,jdbcType=VARCHAR},
+      </if>
+      <if test="isva != null">
+        isva = #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        optime = #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        oper = #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bdet_id = #{bdetId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yidu.domain.BuyDetail">
+    update drug_buy_detail
+    set buy_id = #{buyId,jdbcType=VARCHAR},
+      bdet_amount = #{bdetAmount,jdbcType=INTEGER},
+      bdet_price = #{bdetPrice,jdbcType=DECIMAL},
+      bdet_total = #{bdetTotal,jdbcType=DECIMAL},
+      bdet_fk_id = #{bdetFkId,jdbcType=VARCHAR},
+      isva = #{isva,jdbcType=VARCHAR},
+      optime = #{optime,jdbcType=TIMESTAMP},
+      oper = #{oper,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR}
+    where bdet_id = #{bdetId,jdbcType=VARCHAR}
+  </update>
+</mapper>

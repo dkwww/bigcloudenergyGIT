@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.dao.DrugMapper">
+  <resultMap id="BaseResultMap" type="com.yidu.domain.Drug">
+    <id column="drug_id" jdbcType="VARCHAR" property="drugId" />
+    <result column="spec_id" jdbcType="VARCHAR" property="specId" />
+    <result column="dt_id" jdbcType="VARCHAR" property="dtId" />
+    <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
+    <result column="drug_unit" jdbcType="VARCHAR" property="drugUnit" />
+    <result column="drug_prop" jdbcType="VARCHAR" property="drugProp" />
+    <result column="drug_pictrue" jdbcType="VARCHAR" property="drugPictrue" />
+    <result column="drug_price" jdbcType="DECIMAL" property="drugPrice" />
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    drug_id, spec_id, dt_id, drug_name, drug_unit, drug_prop, drug_pictrue, drug_price, 
+    isva, optime, oper, sort
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_drug
+    where drug_id = #{drugId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from drug_drug
+    where drug_id = #{drugId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yidu.domain.Drug">
+    insert into drug_drug (drug_id, spec_id, dt_id, 
+      drug_name, drug_unit, drug_prop, 
+      drug_pictrue, drug_price, isva, 
+      optime, oper, sort
+      )
+    values (#{drugId,jdbcType=VARCHAR}, #{specId,jdbcType=VARCHAR}, #{dtId,jdbcType=VARCHAR}, 
+      #{drugName,jdbcType=VARCHAR}, #{drugUnit,jdbcType=VARCHAR}, #{drugProp,jdbcType=VARCHAR}, 
+      #{drugPictrue,jdbcType=VARCHAR}, #{drugPrice,jdbcType=DECIMAL}, #{isva,jdbcType=VARCHAR}, 
+      #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yidu.domain.Drug">
+    insert into drug_drug
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="drugId != null">
+        drug_id,
+      </if>
+      <if test="specId != null">
+        spec_id,
+      </if>
+      <if test="dtId != null">
+        dt_id,
+      </if>
+      <if test="drugName != null">
+        drug_name,
+      </if>
+      <if test="drugUnit != null">
+        drug_unit,
+      </if>
+      <if test="drugProp != null">
+        drug_prop,
+      </if>
+      <if test="drugPictrue != null">
+        drug_pictrue,
+      </if>
+      <if test="drugPrice != null">
+        drug_price,
+      </if>
+      <if test="isva != null">
+        isva,
+      </if>
+      <if test="optime != null">
+        optime,
+      </if>
+      <if test="oper != null">
+        oper,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="drugId != null">
+        #{drugId,jdbcType=VARCHAR},
+      </if>
+      <if test="specId != null">
+        #{specId,jdbcType=VARCHAR},
+      </if>
+      <if test="dtId != null">
+        #{dtId,jdbcType=VARCHAR},
+      </if>
+      <if test="drugName != null">
+        #{drugName,jdbcType=VARCHAR},
+      </if>
+      <if test="drugUnit != null">
+        #{drugUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="drugProp != null">
+        #{drugProp,jdbcType=VARCHAR},
+      </if>
+      <if test="drugPictrue != null">
+        #{drugPictrue,jdbcType=VARCHAR},
+      </if>
+      <if test="drugPrice != null">
+        #{drugPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isva != null">
+        #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Drug">
+    update drug_drug
+    <set>
+      <if test="specId != null">
+        spec_id = #{specId,jdbcType=VARCHAR},
+      </if>
+      <if test="dtId != null">
+        dt_id = #{dtId,jdbcType=VARCHAR},
+      </if>
+      <if test="drugName != null">
+        drug_name = #{drugName,jdbcType=VARCHAR},
+      </if>
+      <if test="drugUnit != null">
+        drug_unit = #{drugUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="drugProp != null">
+        drug_prop = #{drugProp,jdbcType=VARCHAR},
+      </if>
+      <if test="drugPictrue != null">
+        drug_pictrue = #{drugPictrue,jdbcType=VARCHAR},
+      </if>
+      <if test="drugPrice != null">
+        drug_price = #{drugPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isva != null">
+        isva = #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        optime = #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        oper = #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where drug_id = #{drugId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Drug">
+    update drug_drug
+    set spec_id = #{specId,jdbcType=VARCHAR},
+      dt_id = #{dtId,jdbcType=VARCHAR},
+      drug_name = #{drugName,jdbcType=VARCHAR},
+      drug_unit = #{drugUnit,jdbcType=VARCHAR},
+      drug_prop = #{drugProp,jdbcType=VARCHAR},
+      drug_pictrue = #{drugPictrue,jdbcType=VARCHAR},
+      drug_price = #{drugPrice,jdbcType=DECIMAL},
+      isva = #{isva,jdbcType=VARCHAR},
+      optime = #{optime,jdbcType=TIMESTAMP},
+      oper = #{oper,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR}
+    where drug_id = #{drugId,jdbcType=VARCHAR}
+  </update>
+</mapper>

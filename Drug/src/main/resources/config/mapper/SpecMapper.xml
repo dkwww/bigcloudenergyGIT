@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.dao.SpecMapper">
+  <resultMap id="BaseResultMap" type="com.yidu.domain.Spec">
+    <id column="spec_id" jdbcType="VARCHAR" property="specId" />
+    <result column="spec_name" jdbcType="VARCHAR" property="specName" />
+    <result column="spec_trait" jdbcType="VARCHAR" property="specTrait" />
+    <result column="spec_purpose" jdbcType="VARCHAR" property="specPurpose" />
+    <result column="spec_size" jdbcType="VARCHAR" property="specSize" />
+    <result column="spec_use" jdbcType="VARCHAR" property="specUse" />
+    <result column="spec_effect" jdbcType="VARCHAR" property="specEffect" />
+    <result column="spec_taboo" jdbcType="VARCHAR" property="specTaboo" />
+    <result column="spec_notice" jdbcType="VARCHAR" property="specNotice" />
+    <result column="spec_interact" jdbcType="VARCHAR" property="specInteract" />
+    <result column="spec_depot" jdbcType="VARCHAR" property="specDepot" />
+    <result column="spec_pack" jdbcType="VARCHAR" property="specPack" />
+    <result column="spec_validity" jdbcType="VARCHAR" property="specValidity" />
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    spec_id, spec_name, spec_trait, spec_purpose, spec_size, spec_use, spec_effect, spec_taboo, 
+    spec_notice, spec_interact, spec_depot, spec_pack, spec_validity, isva, optime, oper, 
+    sort
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_spec
+    where spec_id = #{specId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from drug_spec
+    where spec_id = #{specId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yidu.domain.Spec">
+    insert into drug_spec (spec_id, spec_name, spec_trait, 
+      spec_purpose, spec_size, spec_use, 
+      spec_effect, spec_taboo, spec_notice, 
+      spec_interact, spec_depot, spec_pack, 
+      spec_validity, isva, optime, 
+      oper, sort)
+    values (#{specId,jdbcType=VARCHAR}, #{specName,jdbcType=VARCHAR}, #{specTrait,jdbcType=VARCHAR}, 
+      #{specPurpose,jdbcType=VARCHAR}, #{specSize,jdbcType=VARCHAR}, #{specUse,jdbcType=VARCHAR}, 
+      #{specEffect,jdbcType=VARCHAR}, #{specTaboo,jdbcType=VARCHAR}, #{specNotice,jdbcType=VARCHAR}, 
+      #{specInteract,jdbcType=VARCHAR}, #{specDepot,jdbcType=VARCHAR}, #{specPack,jdbcType=VARCHAR}, 
+      #{specValidity,jdbcType=VARCHAR}, #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, 
+      #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yidu.domain.Spec">
+    insert into drug_spec
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="specId != null">
+        spec_id,
+      </if>
+      <if test="specName != null">
+        spec_name,
+      </if>
+      <if test="specTrait != null">
+        spec_trait,
+      </if>
+      <if test="specPurpose != null">
+        spec_purpose,
+      </if>
+      <if test="specSize != null">
+        spec_size,
+      </if>
+      <if test="specUse != null">
+        spec_use,
+      </if>
+      <if test="specEffect != null">
+        spec_effect,
+      </if>
+      <if test="specTaboo != null">
+        spec_taboo,
+      </if>
+      <if test="specNotice != null">
+        spec_notice,
+      </if>
+      <if test="specInteract != null">
+        spec_interact,
+      </if>
+      <if test="specDepot != null">
+        spec_depot,
+      </if>
+      <if test="specPack != null">
+        spec_pack,
+      </if>
+      <if test="specValidity != null">
+        spec_validity,
+      </if>
+      <if test="isva != null">
+        isva,
+      </if>
+      <if test="optime != null">
+        optime,
+      </if>
+      <if test="oper != null">
+        oper,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="specId != null">
+        #{specId,jdbcType=VARCHAR},
+      </if>
+      <if test="specName != null">
+        #{specName,jdbcType=VARCHAR},
+      </if>
+      <if test="specTrait != null">
+        #{specTrait,jdbcType=VARCHAR},
+      </if>
+      <if test="specPurpose != null">
+        #{specPurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="specSize != null">
+        #{specSize,jdbcType=VARCHAR},
+      </if>
+      <if test="specUse != null">
+        #{specUse,jdbcType=VARCHAR},
+      </if>
+      <if test="specEffect != null">
+        #{specEffect,jdbcType=VARCHAR},
+      </if>
+      <if test="specTaboo != null">
+        #{specTaboo,jdbcType=VARCHAR},
+      </if>
+      <if test="specNotice != null">
+        #{specNotice,jdbcType=VARCHAR},
+      </if>
+      <if test="specInteract != null">
+        #{specInteract,jdbcType=VARCHAR},
+      </if>
+      <if test="specDepot != null">
+        #{specDepot,jdbcType=VARCHAR},
+      </if>
+      <if test="specPack != null">
+        #{specPack,jdbcType=VARCHAR},
+      </if>
+      <if test="specValidity != null">
+        #{specValidity,jdbcType=VARCHAR},
+      </if>
+      <if test="isva != null">
+        #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Spec">
+    update drug_spec
+    <set>
+      <if test="specName != null">
+        spec_name = #{specName,jdbcType=VARCHAR},
+      </if>
+      <if test="specTrait != null">
+        spec_trait = #{specTrait,jdbcType=VARCHAR},
+      </if>
+      <if test="specPurpose != null">
+        spec_purpose = #{specPurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="specSize != null">
+        spec_size = #{specSize,jdbcType=VARCHAR},
+      </if>
+      <if test="specUse != null">
+        spec_use = #{specUse,jdbcType=VARCHAR},
+      </if>
+      <if test="specEffect != null">
+        spec_effect = #{specEffect,jdbcType=VARCHAR},
+      </if>
+      <if test="specTaboo != null">
+        spec_taboo = #{specTaboo,jdbcType=VARCHAR},
+      </if>
+      <if test="specNotice != null">
+        spec_notice = #{specNotice,jdbcType=VARCHAR},
+      </if>
+      <if test="specInteract != null">
+        spec_interact = #{specInteract,jdbcType=VARCHAR},
+      </if>
+      <if test="specDepot != null">
+        spec_depot = #{specDepot,jdbcType=VARCHAR},
+      </if>
+      <if test="specPack != null">
+        spec_pack = #{specPack,jdbcType=VARCHAR},
+      </if>
+      <if test="specValidity != null">
+        spec_validity = #{specValidity,jdbcType=VARCHAR},
+      </if>
+      <if test="isva != null">
+        isva = #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        optime = #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        oper = #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where spec_id = #{specId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Spec">
+    update drug_spec
+    set spec_name = #{specName,jdbcType=VARCHAR},
+      spec_trait = #{specTrait,jdbcType=VARCHAR},
+      spec_purpose = #{specPurpose,jdbcType=VARCHAR},
+      spec_size = #{specSize,jdbcType=VARCHAR},
+      spec_use = #{specUse,jdbcType=VARCHAR},
+      spec_effect = #{specEffect,jdbcType=VARCHAR},
+      spec_taboo = #{specTaboo,jdbcType=VARCHAR},
+      spec_notice = #{specNotice,jdbcType=VARCHAR},
+      spec_interact = #{specInteract,jdbcType=VARCHAR},
+      spec_depot = #{specDepot,jdbcType=VARCHAR},
+      spec_pack = #{specPack,jdbcType=VARCHAR},
+      spec_validity = #{specValidity,jdbcType=VARCHAR},
+      isva = #{isva,jdbcType=VARCHAR},
+      optime = #{optime,jdbcType=TIMESTAMP},
+      oper = #{oper,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR}
+    where spec_id = #{specId,jdbcType=VARCHAR}
+  </update>
+</mapper>

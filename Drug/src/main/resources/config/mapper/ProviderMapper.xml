@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.dao.ProviderMapper">
+  <resultMap id="BaseResultMap" type="com.yidu.domain.Provider">
+    <id column="prov_id" jdbcType="VARCHAR" property="provId" />
+    <result column="prov_name" jdbcType="VARCHAR" property="provName" />
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    prov_id, prov_name, isva, optime, oper, sort
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_provider
+    where prov_id = #{provId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from drug_provider
+    where prov_id = #{provId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yidu.domain.Provider">
+    insert into drug_provider (prov_id, prov_name, isva, 
+      optime, oper, sort
+      )
+    values (#{provId,jdbcType=VARCHAR}, #{provName,jdbcType=VARCHAR}, #{isva,jdbcType=VARCHAR}, 
+      #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yidu.domain.Provider">
+    insert into drug_provider
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="provId != null">
+        prov_id,
+      </if>
+      <if test="provName != null">
+        prov_name,
+      </if>
+      <if test="isva != null">
+        isva,
+      </if>
+      <if test="optime != null">
+        optime,
+      </if>
+      <if test="oper != null">
+        oper,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="provId != null">
+        #{provId,jdbcType=VARCHAR},
+      </if>
+      <if test="provName != null">
+        #{provName,jdbcType=VARCHAR},
+      </if>
+      <if test="isva != null">
+        #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Provider">
+    update drug_provider
+    <set>
+      <if test="provName != null">
+        prov_name = #{provName,jdbcType=VARCHAR},
+      </if>
+      <if test="isva != null">
+        isva = #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        optime = #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        oper = #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where prov_id = #{provId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Provider">
+    update drug_provider
+    set prov_name = #{provName,jdbcType=VARCHAR},
+      isva = #{isva,jdbcType=VARCHAR},
+      optime = #{optime,jdbcType=TIMESTAMP},
+      oper = #{oper,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR}
+    where prov_id = #{provId,jdbcType=VARCHAR}
+  </update>
+</mapper>

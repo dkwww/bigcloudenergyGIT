@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">  
+<generatorConfiguration>  
+    <!-- 数据库驱动包位置 -->  
+    <classPathEntry location="D:\mybatis\mysql-connector-java-5.1.38.jar" />    
+    <!-- <classPathEntry location="D:\eclipse\eclipse-workspace01\SingerMyBaties\WebContent\WEB-INF\lib\ojdbc7.jar" /> -->
+    <context id="DB2Tables" targetRuntime="MyBatis3">  
+        <commentGenerator>  
+        	<!-- false时打开时间标志，true时关闭...真是反人类啊 -->
+        	<property name="suppressDate" value="true"/>
+        	<!-- false时打开注释，true时关闭注释 -->
+            <property name="suppressAllComments" value="true" />  
+        </commentGenerator>  
+        <!-- 数据库链接URL、用户名、密码 -->  
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" 
+        				connectionURL="jdbc:mysql://localhost:3306/drug_db?characterEncoding=utf8" 
+        				userId="root" password="123">   
+        <!-- <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" 
+        				connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:ORCL" 
+        				userId="C##ZHOUJUN" password="123"> -->
+        </jdbcConnection>  
+        <javaTypeResolver>  
+            <property name="forceBigDecimals" value="false" />  
+        </javaTypeResolver>  
+        <!-- 生成模型的包名和位置 -->  
+        <javaModelGenerator targetPackage="com.yidu.domain" targetProject="Drug/src/main/java">  
+            <property name="enableSubPackages" value="true" />  
+            <property name="trimStrings" value="true" />  
+        </javaModelGenerator>  
+        <!-- 生成的映射文件包名和位置 -->  
+        <sqlMapGenerator targetPackage="config.mapper" targetProject="Drug/src/main/resources">  
+            <property name="enableSubPackages" value="true" />  
+        </sqlMapGenerator>  
+        <!-- 生成DAO的包名和位置 -->  
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.yidu.dao" targetProject="Drug" >  
+            <property name="enableSubPackages" value="true" />  
+        </javaClientGenerator>  
+        <!-- 要生成那些表(更改tableName和domainObjectName就可以或mapperName) -->  
+       
+        <table tableName="drug_admin" domainObjectName="Admin" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_admin_role" domainObjectName="AdminRole" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_audit" domainObjectName="Audit" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_branch_sale" domainObjectName="BranchSale" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_branch_sale_detail" domainObjectName="BranchSaleDetail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_buy" domainObjectName="Buy" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_buy_detail" domainObjectName="BuyDetail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_company" domainObjectName="Company" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+         <table tableName="drug_debty" domainObjectName="Debty" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_debty_detail" domainObjectName="DebtyDetail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_drug" domainObjectName="Drug" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_drug_inv" domainObjectName="DrugInve" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_drug_inv_detail" domainObjectName="DrugInvDetail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_drug_type" domainObjectName="DrugType" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_mat_inv" domainObjectName="MatInv" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_mat_inv_detail" domainObjectName="MatInvDetail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_mat_type" domainObjectName="MatType" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_material" domainObjectName="Material" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_material_list" domainObjectName="MaterialList" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_member" domainObjectName="Member" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_role" domainObjectName="Role" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_qc_detail" domainObjectName="QcDetail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_qc" domainObjectName="Qc" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_provider" domainObjectName="Provider" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+         <table tableName="drug_pmc_details" domainObjectName="PmcDetails" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_pmc" domainObjectName="Pmc" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_mrp" domainObjectName="Mrp" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_module_role" domainObjectName="ModuleRole" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_module" domainObjectName="Module" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_sale" domainObjectName="Sale" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_sale_detail" domainObjectName="SaleDetail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_spec" domainObjectName="Spec" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_wholesale" domainObjectName="Wholesale" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="drug_wholesale_detail" domainObjectName="WholesaleDetail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        </context>
+</generatorConfiguration>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.dao.AdminRoleMapper">
+  <resultMap id="BaseResultMap" type="com.yidu.domain.AdminRole">
+    <id column="ar_id" jdbcType="VARCHAR" property="arId" />
+    <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ar_id, admin_id, role_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_admin_role
+    where ar_id = #{arId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from drug_admin_role
+    where ar_id = #{arId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yidu.domain.AdminRole">
+    insert into drug_admin_role (ar_id, admin_id, role_id
+      )
+    values (#{arId,jdbcType=VARCHAR}, #{adminId,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yidu.domain.AdminRole">
+    insert into drug_admin_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="arId != null">
+        ar_id,
+      </if>
+      <if test="adminId != null">
+        admin_id,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="arId != null">
+        #{arId,jdbcType=VARCHAR},
+      </if>
+      <if test="adminId != null">
+        #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.AdminRole">
+    update drug_admin_role
+    <set>
+      <if test="adminId != null">
+        admin_id = #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ar_id = #{arId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yidu.domain.AdminRole">
+    update drug_admin_role
+    set admin_id = #{adminId,jdbcType=VARCHAR},
+      role_id = #{roleId,jdbcType=VARCHAR}
+    where ar_id = #{arId,jdbcType=VARCHAR}
+  </update>
+</mapper>

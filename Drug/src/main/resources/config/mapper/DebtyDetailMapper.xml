@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.dao.DebtyDetailMapper">
+  <resultMap id="BaseResultMap" type="com.yidu.domain.DebtyDetail">
+    <id column="ddet_id" jdbcType="VARCHAR" property="ddetId" />
+    <result column="deb_id" jdbcType="VARCHAR" property="debId" />
+    <result column="ddet_change" jdbcType="DECIMAL" property="ddetChange" />
+    <result column="ddett_fk_id" jdbcType="VARCHAR" property="ddettFkId" />
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ddet_id, deb_id, ddet_change, ddett_fk_id, isva, optime, oper, sort
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_debty_detail
+    where ddet_id = #{ddetId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from drug_debty_detail
+    where ddet_id = #{ddetId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yidu.domain.DebtyDetail">
+    insert into drug_debty_detail (ddet_id, deb_id, ddet_change, 
+      ddett_fk_id, isva, optime, 
+      oper, sort)
+    values (#{ddetId,jdbcType=VARCHAR}, #{debId,jdbcType=VARCHAR}, #{ddetChange,jdbcType=DECIMAL}, 
+      #{ddettFkId,jdbcType=VARCHAR}, #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, 
+      #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yidu.domain.DebtyDetail">
+    insert into drug_debty_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ddetId != null">
+        ddet_id,
+      </if>
+      <if test="debId != null">
+        deb_id,
+      </if>
+      <if test="ddetChange != null">
+        ddet_change,
+      </if>
+      <if test="ddettFkId != null">
+        ddett_fk_id,
+      </if>
+      <if test="isva != null">
+        isva,
+      </if>
+      <if test="optime != null">
+        optime,
+      </if>
+      <if test="oper != null">
+        oper,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ddetId != null">
+        #{ddetId,jdbcType=VARCHAR},
+      </if>
+      <if test="debId != null">
+        #{debId,jdbcType=VARCHAR},
+      </if>
+      <if test="ddetChange != null">
+        #{ddetChange,jdbcType=DECIMAL},
+      </if>
+      <if test="ddettFkId != null">
+        #{ddettFkId,jdbcType=VARCHAR},
+      </if>
+      <if test="isva != null">
+        #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.DebtyDetail">
+    update drug_debty_detail
+    <set>
+      <if test="debId != null">
+        deb_id = #{debId,jdbcType=VARCHAR},
+      </if>
+      <if test="ddetChange != null">
+        ddet_change = #{ddetChange,jdbcType=DECIMAL},
+      </if>
+      <if test="ddettFkId != null">
+        ddett_fk_id = #{ddettFkId,jdbcType=VARCHAR},
+      </if>
+      <if test="isva != null">
+        isva = #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        optime = #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        oper = #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ddet_id = #{ddetId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yidu.domain.DebtyDetail">
+    update drug_debty_detail
+    set deb_id = #{debId,jdbcType=VARCHAR},
+      ddet_change = #{ddetChange,jdbcType=DECIMAL},
+      ddett_fk_id = #{ddettFkId,jdbcType=VARCHAR},
+      isva = #{isva,jdbcType=VARCHAR},
+      optime = #{optime,jdbcType=TIMESTAMP},
+      oper = #{oper,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR}
+    where ddet_id = #{ddetId,jdbcType=VARCHAR}
+  </update>
+</mapper>

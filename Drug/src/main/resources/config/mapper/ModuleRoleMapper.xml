@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.dao.ModuleRoleMapper">
+  <resultMap id="BaseResultMap" type="com.yidu.domain.ModuleRole">
+    <id column="mr_id" jdbcType="VARCHAR" property="mrId" />
+    <result column="mode_id" jdbcType="VARCHAR" property="modeId" />
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    mr_id, mode_id, role_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_module_role
+    where mr_id = #{mrId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from drug_module_role
+    where mr_id = #{mrId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yidu.domain.ModuleRole">
+    insert into drug_module_role (mr_id, mode_id, role_id
+      )
+    values (#{mrId,jdbcType=VARCHAR}, #{modeId,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yidu.domain.ModuleRole">
+    insert into drug_module_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mrId != null">
+        mr_id,
+      </if>
+      <if test="modeId != null">
+        mode_id,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mrId != null">
+        #{mrId,jdbcType=VARCHAR},
+      </if>
+      <if test="modeId != null">
+        #{modeId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.ModuleRole">
+    update drug_module_role
+    <set>
+      <if test="modeId != null">
+        mode_id = #{modeId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where mr_id = #{mrId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yidu.domain.ModuleRole">
+    update drug_module_role
+    set mode_id = #{modeId,jdbcType=VARCHAR},
+      role_id = #{roleId,jdbcType=VARCHAR}
+    where mr_id = #{mrId,jdbcType=VARCHAR}
+  </update>
+</mapper>

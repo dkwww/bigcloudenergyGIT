@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.dao.QcMapper">
+  <resultMap id="BaseResultMap" type="com.yidu.domain.Qc">
+    <id column="qc_id" jdbcType="VARCHAR" property="qcId" />
+    <result column="com_id" jdbcType="VARCHAR" property="comId" />
+    <result column="qc_amount" jdbcType="INTEGER" property="qcAmount" />
+    <result column="qc_fail" jdbcType="INTEGER" property="qcFail" />
+    <result column="qc_rate" jdbcType="DECIMAL" property="qcRate" />
+    <result column="qc_optime" jdbcType="TIMESTAMP" property="qcOptime" />
+    <result column="qc_conpany" jdbcType="VARCHAR" property="qcConpany" />
+    <result column="qc_type" jdbcType="VARCHAR" property="qcType" />
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    qc_id, com_id, qc_amount, qc_fail, qc_rate, qc_optime, qc_conpany, qc_type, isva, 
+    optime, oper, sort
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_qc
+    where qc_id = #{qcId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from drug_qc
+    where qc_id = #{qcId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yidu.domain.Qc">
+    insert into drug_qc (qc_id, com_id, qc_amount, 
+      qc_fail, qc_rate, qc_optime, 
+      qc_conpany, qc_type, isva, 
+      optime, oper, sort
+      )
+    values (#{qcId,jdbcType=VARCHAR}, #{comId,jdbcType=VARCHAR}, #{qcAmount,jdbcType=INTEGER}, 
+      #{qcFail,jdbcType=INTEGER}, #{qcRate,jdbcType=DECIMAL}, #{qcOptime,jdbcType=TIMESTAMP}, 
+      #{qcConpany,jdbcType=VARCHAR}, #{qcType,jdbcType=VARCHAR}, #{isva,jdbcType=VARCHAR}, 
+      #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yidu.domain.Qc">
+    insert into drug_qc
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="qcId != null">
+        qc_id,
+      </if>
+      <if test="comId != null">
+        com_id,
+      </if>
+      <if test="qcAmount != null">
+        qc_amount,
+      </if>
+      <if test="qcFail != null">
+        qc_fail,
+      </if>
+      <if test="qcRate != null">
+        qc_rate,
+      </if>
+      <if test="qcOptime != null">
+        qc_optime,
+      </if>
+      <if test="qcConpany != null">
+        qc_conpany,
+      </if>
+      <if test="qcType != null">
+        qc_type,
+      </if>
+      <if test="isva != null">
+        isva,
+      </if>
+      <if test="optime != null">
+        optime,
+      </if>
+      <if test="oper != null">
+        oper,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="qcId != null">
+        #{qcId,jdbcType=VARCHAR},
+      </if>
+      <if test="comId != null">
+        #{comId,jdbcType=VARCHAR},
+      </if>
+      <if test="qcAmount != null">
+        #{qcAmount,jdbcType=INTEGER},
+      </if>
+      <if test="qcFail != null">
+        #{qcFail,jdbcType=INTEGER},
+      </if>
+      <if test="qcRate != null">
+        #{qcRate,jdbcType=DECIMAL},
+      </if>
+      <if test="qcOptime != null">
+        #{qcOptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qcConpany != null">
+        #{qcConpany,jdbcType=VARCHAR},
+      </if>
+      <if test="qcType != null">
+        #{qcType,jdbcType=VARCHAR},
+      </if>
+      <if test="isva != null">
+        #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Qc">
+    update drug_qc
+    <set>
+      <if test="comId != null">
+        com_id = #{comId,jdbcType=VARCHAR},
+      </if>
+      <if test="qcAmount != null">
+        qc_amount = #{qcAmount,jdbcType=INTEGER},
+      </if>
+      <if test="qcFail != null">
+        qc_fail = #{qcFail,jdbcType=INTEGER},
+      </if>
+      <if test="qcRate != null">
+        qc_rate = #{qcRate,jdbcType=DECIMAL},
+      </if>
+      <if test="qcOptime != null">
+        qc_optime = #{qcOptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qcConpany != null">
+        qc_conpany = #{qcConpany,jdbcType=VARCHAR},
+      </if>
+      <if test="qcType != null">
+        qc_type = #{qcType,jdbcType=VARCHAR},
+      </if>
+      <if test="isva != null">
+        isva = #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        optime = #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        oper = #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where qc_id = #{qcId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Qc">
+    update drug_qc
+    set com_id = #{comId,jdbcType=VARCHAR},
+      qc_amount = #{qcAmount,jdbcType=INTEGER},
+      qc_fail = #{qcFail,jdbcType=INTEGER},
+      qc_rate = #{qcRate,jdbcType=DECIMAL},
+      qc_optime = #{qcOptime,jdbcType=TIMESTAMP},
+      qc_conpany = #{qcConpany,jdbcType=VARCHAR},
+      qc_type = #{qcType,jdbcType=VARCHAR},
+      isva = #{isva,jdbcType=VARCHAR},
+      optime = #{optime,jdbcType=TIMESTAMP},
+      oper = #{oper,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR}
+    where qc_id = #{qcId,jdbcType=VARCHAR}
+  </update>
+</mapper>
