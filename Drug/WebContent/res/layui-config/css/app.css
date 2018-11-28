@@ -332,6 +332,12 @@ button {
 	border: 0
 }
 
+/* 我对layui自定义的样式 */
+.layui-side-scroll {
+    overflow-y: scroll;
+	width: calc(100% + 18px)!important;
+}
+
 @media (max-width:992px) {
 
 	.kit-layout-admin .layui-body,
