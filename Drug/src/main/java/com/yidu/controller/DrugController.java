@@ -8,9 +8,11 @@ import com.yidu.domain.Drug;
 import com.yidu.service.DrugService;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -34,8 +36,15 @@ public class DrugController {
 	 */
 	@RequestMapping("/showList")
 	@ResponseBody
-	public List<Drug> showList(Drug record) {
-		return drugService.findAll(record);
+	public Map<String,Object> showList(Drug record) {
+		List<Drug> list = drugService.findAll(record);
+		@SuppressWarnings("unchecked")
+		Map<String,Object> map = new HashedMap();
+		map.put("code", 0);
+		map.put("msg", "");
+		map.put("count", 10);
+		map.put("data", list);
+		return map;
 	}
 	
 	

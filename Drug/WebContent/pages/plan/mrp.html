@@ -194,7 +194,7 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: 'full', //容器高度
-		            url: '../../drug/showList.action',
+		            url: '../../table.json',
 		            page: true,
 		            id: 'demo',
 		            cols: [
@@ -202,29 +202,42 @@
 		                    checkbox: true,
 		                    fixed: true
 		                }, {
-		                    field: 'drugId',
+		                    field: 'id',
 		                    title: 'ID',
-		                    width: 140
+		                    width: 80
 		                }, {
-		                    field: 'drugName',
-		                    title: '药名',
+		                    field: 'username',
+		                    title: '用户名',
 		                    width: 105
 		                }, {
-		                    field: 'drugUnit',
-		                    title: '单位',
+		                    field: 'sex',
+		                    title: '性别',
 		                    width: 80
 		                }, {
-		                    field: 'drugProp',
-		                    title: '属性',
+		                    field: 'city',
+		                    title: '城市',
 		                    width: 80
 		                }, {
-		                    field: 'drugPictrue',
-		                    title: '图片',
+		                    field: 'sign',
+		                    title: '签名',
 		                    width: 177
 		                }, {
-		                    field: 'drugPrice',
-		                    title: '价格',
+		                    field: 'experience',
+		                    title: '积分',
 		                    width: 80
+		                }, {
+		                    field: 'score',
+		                    title: '评分',
+		                    width: 80
+		                }, {
+		                    field: 'classify',
+		                    title: '职业',
+		                    width: 80
+		                }, {
+		                    field: 'wealth',
+		                    title: '财富',
+		                    width: 145,
+		                    sort: true
 		                }, {
 		                    fixed: 'right',
 		                    title: '操作',
@@ -241,20 +254,6 @@
 		                // console.log(curr);
 		                // //得到数据总量
 		                // console.log(count);
-		                $("[data-field = 'drugProp']").children().each(function(){
-						    if($(this).text() == '1'){
-						    	$(this).text("处方药");
-						    } else if ($(this).text() == '0') {
-						    	$(this).text("非处方药");
-						    } else {
-						    	$(this).text("无数据");
-						    }
-					  	});
-		                $("[data-field = 'drugPictrue']").children().each(function(){
-						    if($(this).text() == 'null'||$(this).text() == ''){
-						    	$(this).text("暂无");
-						    }
-					  	});
 		            },
 		            loading: true,
 		            //method: 'post'
