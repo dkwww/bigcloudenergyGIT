@@ -11,7 +11,7 @@
 	<body>
 		<div class="kit-table">
 		    <form class="layui-form" lay-filter="kit-search-form">
-						<!-- 左上角的两个按钮 -->
+				<!-- 左上角的两个按钮 -->
 		        <div class="kit-table-header">
 		            <div class="kit-search-btns">
 		                <a href="javascript:;" data-action="add" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i> 新增</a>
@@ -25,7 +25,7 @@
 		                <div class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>
 		            </div>
 		        </div>
-						<!-- 搜索扩展工具条 -->
+				<!-- 搜索扩展工具条 -->
 		        <div class="kit-search-mored layui-anim layui-anim-upbit">
 		            <div class="kit-search-body">
 		                <div class="layui-form-item">
@@ -81,7 +81,7 @@
 		        </div>
 		    </form>
 				
-				<!-- 操作按钮 -->
+			<!-- 操作按钮 -->
 		    <div class="kit-table-body">
 		        <table id="demo" lay-filter="demo"></table>
 		        <script type="text/html" id="barDemo">
@@ -204,7 +204,7 @@
 		                }, {
 		                    field: 'drugId',
 		                    title: 'ID',
-		                    width: 160
+		                    width: 200
 		                }, {
 		                    field: 'drugName',
 		                    title: '药名',
@@ -316,7 +316,7 @@
 		                });
 		            } else if (layEvent === 'edit') { //编辑
 		                var d = {
-		                    user: data,
+		                	rowdate: data,
 		                    citys: staticData.citys,
 		                    classifies: staticData.classifies
 		                };
@@ -363,7 +363,7 @@
 		            switch (action) {
 		                case 'add':
 		                    var d = {
-		                        user: {
+		                        rowdate: {
 		                            sign: '你哈',
 		                            city: '',
 		                            classify: '',
