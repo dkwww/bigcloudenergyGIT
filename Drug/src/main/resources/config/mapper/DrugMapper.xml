@@ -15,9 +15,28 @@
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
   </resultMap>
+  <resultMap id="BaseResultMapOne" type="com.yidu.domain.Drug">
+    <id column="drug_id" jdbcType="VARCHAR" property="drugId" />
+    <result column="spec_id" jdbcType="VARCHAR" property="specId" />
+    <result column="dt_id" jdbcType="VARCHAR" property="dtId" />
+    <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
+    <result column="drug_unit" jdbcType="VARCHAR" property="drugUnit" />
+    <result column="drug_prop" jdbcType="VARCHAR" property="drugProp" />
+    <result column="drug_pictrue" jdbcType="VARCHAR" property="drugPictrue" />
+    <result column="drug_price" jdbcType="DECIMAL" property="drugPrice" />
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+    <result column="dt_name" jdbcType="VARCHAR" property="dtName" />
+  </resultMap>
   <sql id="Base_Column_List">
     drug_id, spec_id, dt_id, drug_name, drug_unit, drug_prop, drug_pictrue, drug_price, 
     isva, optime, oper, sort
+  </sql>
+  <sql id="Base_Column_List_One">
+    dd.drug_id, dd.spec_id, dd.dt_id, dd.drug_name, dd.drug_unit, dd.drug_prop, dd.drug_pictrue, dd.drug_price, 
+    dd.isva, dd.optime, dd.oper, dd.sort, dt.dt_name
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -25,15 +44,14 @@
     from drug_drug
     where drug_id = #{drugId,jdbcType=VARCHAR}
   </select>
-  <select id="selectBySelective" parameterType="com.yidu.domain.Drug" resultMap="BaseResultMap">
+  <select id="selectBySelective" parameterType="com.yidu.domain.Drug" resultMap="BaseResultMapOne">
     select 
-    <include refid="Base_Column_List" />
-    from drug_drug
-    <where>
-    	<if test="drugName != null">
-    		and drug_name like '%'#{drugName,jdbcType=VARCHAR}'%'
-    	</if>
-    </where>
+    <include refid="Base_Column_List_One" />
+    from drug_drug dd,drug_drug_type dt
+    where dd.dt_id = dt.dt_id
+   	<if test="drugName != null">
+   		and dd.drug_name like '%'#{drugName,jdbcType=VARCHAR}'%'
+   	</if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_drug

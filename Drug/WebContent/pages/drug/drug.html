@@ -204,11 +204,15 @@
 		                }, {
 		                    field: 'drugId',
 		                    title: 'ID',
-		                    width: 140
+		                    width: 160
 		                }, {
 		                    field: 'drugName',
 		                    title: '药名',
 		                    width: 105
+		                }, {
+		                    field: 'dtName',
+		                    title: '类型',
+		                    width: 80
 		                }, {
 		                    field: 'drugUnit',
 		                    title: '单位',
@@ -223,8 +227,8 @@
 		                    width: 177
 		                }, {
 		                    field: 'drugPrice',
-		                    title: '价格',
-		                    width: 80
+		                    title: '价格（元）',
+		                    width: 100
 		                }, {
 		                    fixed: 'right',
 		                    title: '操作',
@@ -246,8 +250,6 @@
 						    	$(this).text("处方药");
 						    } else if ($(this).text() == '0') {
 						    	$(this).text("非处方药");
-						    } else {
-						    	$(this).text("无数据");
 						    }
 					  	});
 		                $("[data-field = 'drugPictrue']").children().each(function(){
