@@ -150,4 +150,9 @@
       sort = #{sort,jdbcType=VARCHAR}
     where men_id = #{menId,jdbcType=VARCHAR}
   </update>
+  
+  <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
+  	select * from drug_member where isva='1'
+  	limit #{util.startRows},#{util.rows}
+  </select>
 </mapper>

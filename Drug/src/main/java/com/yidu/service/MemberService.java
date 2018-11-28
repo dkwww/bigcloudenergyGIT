@@ -1,5 +1,10 @@
 package com.yidu.service;
- 
+
+import java.util.List;
+import java.util.Map;
+
+import com.yidu.domain.Member;
+
 
 /**
  * <p>
@@ -10,5 +15,5 @@ package com.yidu.service;
  * @since 2018-11-26
  */
 public interface MemberService   {
-
+	public List<Member> query(Map<String, Object> maps);
 }
