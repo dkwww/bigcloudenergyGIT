@@ -14,6 +14,16 @@
   <sql id="Base_Column_List">
     whol_id, com_id, whol_amount, whol_price, optime, isva, oper, sort
   </sql>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+  	SELECT * FROM drug_wholesale
+  	<where>
+    	<if test="comId != null">
+    		and com_id like '%'#{comId,jdbcType=VARCHAR}'%'
+    	</if>
+    </where>
+  </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -125,4 +135,31 @@
       sort = #{sort,jdbcType=VARCHAR}
     where whol_id = #{wholId,jdbcType=VARCHAR}
   </update>
+  <update id="updateisva" parameterType="com.yidu.domain.Wholesale">
+  	 update drug_wholesale set isva=0 
+  	 <where>
+	   	  <if test="comId != null">
+	        com_id = #{comId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="wholAmount != null">
+	        whol_amount = #{wholAmount,jdbcType=INTEGER},
+	      </if>
+	      <if test="wholPrice != null">
+	        whol_price = #{wholPrice,jdbcType=DECIMAL},
+	      </if>
+	      <if test="optime != null">
+	        optime = #{optime,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="isva != null">
+	        isva = #{isva,jdbcType=VARCHAR},
+	      </if>
+	      <if test="oper != null">
+	        oper = #{oper,jdbcType=VARCHAR},
+	      </if>
+	      <if test="sort != null">
+	        sort = #{sort,jdbcType=VARCHAR},
+	      </if>
+      </where>
+  </update>
+  
 </mapper>

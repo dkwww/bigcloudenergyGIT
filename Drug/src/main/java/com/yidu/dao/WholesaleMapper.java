@@ -1,5 +1,7 @@
 package com.yidu.dao;
 
+import java.util.List;
+
 import com.yidu.domain.Wholesale;
 
 public interface WholesaleMapper {
@@ -14,4 +16,8 @@ public interface WholesaleMapper {
     int updateByPrimaryKeySelective(Wholesale record);
 
     int updateByPrimaryKey(Wholesale record);
+    
+    public List<Wholesale> selectAll(Wholesale wholesale);
+    
+    public int updateisva(Wholesale wholesale);
 }
