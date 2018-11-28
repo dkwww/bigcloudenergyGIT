@@ -25,6 +25,16 @@
     from drug_drug
     where drug_id = #{drugId,jdbcType=VARCHAR}
   </select>
+  <select id="selectBySelective" parameterType="com.yidu.domain.Drug" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_drug
+    <where>
+    	<if test="drugName != null">
+    		and drug_name like '%'#{drugName,jdbcType=VARCHAR}'%'
+    	</if>
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_drug
     where drug_id = #{drugId,jdbcType=VARCHAR}
