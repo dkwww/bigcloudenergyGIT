@@ -254,6 +254,17 @@
 		                // console.log(curr);
 		                // //得到数据总量
 		                // console.log(count);
+		                
+		                //判断如果 sex值为1就改为男，0改为女 否则默认无数据
+		            	$("[data-field = 'sex']").children().each(function(){
+						    if($(this).text() == '1'){
+						    	$(this).text("男");
+						    } else if ($(this).text() == '0') {
+						    	$(this).text("女");
+						    } else {
+						    	$(this).text("无数据");
+						    }
+					  	});
 		            },
 		            loading: true,
 		            //method: 'post'
