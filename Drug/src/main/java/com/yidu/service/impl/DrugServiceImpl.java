@@ -42,4 +42,9 @@ public class DrugServiceImpl   implements DrugService {
 		}
 	}
 
+	@Override
+	public int bulkUpdate(String[] ids) {
+		return drugMapper.bulkDeleteByPrimaryKeySelective(ids);
+	}
+
 }

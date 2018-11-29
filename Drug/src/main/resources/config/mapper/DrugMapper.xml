@@ -40,13 +40,13 @@
     select 
     <include refid="Base_Column_List" />
     from drug_drug
-    where drug_id = #{drugId,jdbcType=VARCHAR}
+    where drug_id = #{drugId,jdbcType=VARCHAR} and isva = '1'
   </select>
   <select id="selectBySelective" parameterType="com.yidu.domain.Drug" resultMap="BaseResultMapOne">
     select 
     <include refid="Base_Column_List_One" />
     from drug_drug dd,drug_drug_type dt
-    where dd.dt_id = dt.dt_id
+    where dd.dt_id = dt.dt_id and dd.isva = '1'
    	<if test="drugName != null">
    		and dd.drug_name like '%'#{drugName,jdbcType=VARCHAR}'%'
    	</if>
@@ -146,6 +146,18 @@
       </if>
     </trim>
   </insert>
+  <update id="bulkDeleteByPrimaryKeySelective">
+    update drug_drug
+    <set>
+      <if test="isva != null">
+        isva = '0',
+      </if>
+    </set>
+    where drug_id in 
+    <foreach collection="array" item="ids" open="(" separator="," close=")">
+      #{ids} 
+    </foreach> 
+  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Drug">
     update drug_drug
     <set>

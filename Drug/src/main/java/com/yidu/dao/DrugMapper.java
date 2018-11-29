@@ -18,4 +18,6 @@ public interface DrugMapper {
     int updateByPrimaryKey(Drug record);
     
     List<Drug> selectBySelective(Drug record);
+    
+    int bulkDeleteByPrimaryKeySelective(String[] ids);
 }

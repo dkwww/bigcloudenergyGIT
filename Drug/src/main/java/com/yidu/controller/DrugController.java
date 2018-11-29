@@ -91,5 +91,26 @@ public class DrugController {
 		}
 		return mes;
 	}
+	
+	/**
+	 * 批量删除
+	 * @param ids
+	 * @return
+	 */
+	@RequestMapping("/bulkUpdate")
+	@ResponseBody
+	public Message bulkUpdate(@RequestBody String[] ids) {
+		System.out.println(ids.length+"=======================================================");
+		int rows = drugService.bulkUpdate(ids);
+		Message mes = new Message();
+		if (rows>0) {
+			mes.setStatus(1);
+			mes.setMsg("删除成功");
+		} else {
+			mes.setStatus(0);
+			mes.setMsg("数据异常，请稍后重试！");
+		}
+		return mes;
+	}
 }
 

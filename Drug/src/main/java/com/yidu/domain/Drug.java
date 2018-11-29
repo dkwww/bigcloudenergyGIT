@@ -27,6 +27,8 @@ public class Drug {
     private String sort;
     
     private String dtName;
+    
+    private String[] ids;
 
     public String getDrugId() {
         return drugId;
@@ -122,6 +124,14 @@ public class Drug {
 
 	public void setDtName(String dtName) {
 		this.dtName = dtName == null ? null : dtName.trim();
+	}
+
+	public String[] getIds() {
+		return ids;
+	}
+
+	public void setIds(String[] ids) {
+		this.ids = ids;
 	}
     
 }

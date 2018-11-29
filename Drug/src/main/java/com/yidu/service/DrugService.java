@@ -18,5 +18,7 @@ public interface DrugService   {
 	List<Drug> findAll(Drug record);
 	//增加药品
 	int addOrUpdate(Drug record);
+	//批量修改
+	int bulkUpdate(String[] ids);
 
 }
