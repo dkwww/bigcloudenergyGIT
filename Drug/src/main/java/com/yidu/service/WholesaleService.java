@@ -16,4 +16,6 @@ public interface WholesaleService  {
 	public List<Wholesale> selectAll(Wholesale wholesale);
 	
 	public int updateisva(Wholesale wholesale);
+	
+	public int updateByPrimaryKeySelective(Wholesale wholesale);
 }

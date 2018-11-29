@@ -34,4 +34,9 @@ public class WholesaleServiceImpl  implements WholesaleService {
 	public int updateisva(Wholesale wholesale) {
 		return whole.updateisva(wholesale);
 	}
+	
+	@Override
+	public int updateByPrimaryKeySelective(Wholesale wholesale) {
+		return whole.updateByPrimaryKeySelective(wholesale);
+	}
 }

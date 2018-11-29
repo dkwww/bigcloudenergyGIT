@@ -19,7 +19,7 @@
   	SELECT * FROM drug_wholesale
   	<where>
     	<if test="comId != null">
-    		and com_id like '%'#{comId,jdbcType=VARCHAR}'%'
+    		and whol_id like '%'#{wholId,jdbcType=VARCHAR}'%'
     	</if>
     </where>
   </select>
