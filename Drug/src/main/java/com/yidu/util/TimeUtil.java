@@ -16,9 +16,9 @@ public class TimeUtil {
 	 * 获得 util Date
 	 * @return Date 当前时间
 	 */
-	public static Date getDateTime(){
+	public static Date getDateTime(String format){
 		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		String str = sdf.format(date);
 		Date time = null;
 		try {
@@ -61,10 +61,18 @@ public class TimeUtil {
 	 * 获得 sql精确时间 Timestamp
 	 * @return Timestamp 当前时间
 	 */
-	public static String getStrDate(){
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	public static String getStrDate(String format){
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		Date date = new Date();
 		return sdf.format(date);
+	}
+	
+	/**
+	 * 得到当前时间的字符串数字
+	 */
+	public static String getStrDate(){ 
+		Date date = new Date();
+		return date.getTime()+"";
 	}
 	
 	/**

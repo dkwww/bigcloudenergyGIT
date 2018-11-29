@@ -1,5 +1,7 @@
 package com.yidu.dao;
 
+import java.util.List;
+
 import com.yidu.domain.DrugType;
 
 public interface DrugTypeMapper {
@@ -14,4 +16,6 @@ public interface DrugTypeMapper {
     int updateByPrimaryKeySelective(DrugType record);
 
     int updateByPrimaryKey(DrugType record);
+    
+    List<DrugType> selectAll();
 }

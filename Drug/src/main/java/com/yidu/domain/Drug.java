@@ -6,8 +6,6 @@ import java.util.Date;
 public class Drug {
     private String drugId;
 
-    private String specId;
-
     private String dtId;
 
     private String drugName;
@@ -36,14 +34,6 @@ public class Drug {
 
     public void setDrugId(String drugId) {
         this.drugId = drugId == null ? null : drugId.trim();
-    }
-
-    public String getSpecId() {
-        return specId;
-    }
-
-    public void setSpecId(String specId) {
-        this.specId = specId == null ? null : specId.trim();
     }
 
     public String getDtId() {

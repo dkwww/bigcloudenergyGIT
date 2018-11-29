@@ -3,7 +3,6 @@
 <mapper namespace="com.yidu.dao.DrugMapper">
   <resultMap id="BaseResultMap" type="com.yidu.domain.Drug">
     <id column="drug_id" jdbcType="VARCHAR" property="drugId" />
-    <result column="spec_id" jdbcType="VARCHAR" property="specId" />
     <result column="dt_id" jdbcType="VARCHAR" property="dtId" />
     <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
     <result column="drug_unit" jdbcType="VARCHAR" property="drugUnit" />
@@ -17,7 +16,6 @@
   </resultMap>
   <resultMap id="BaseResultMapOne" type="com.yidu.domain.Drug">
     <id column="drug_id" jdbcType="VARCHAR" property="drugId" />
-    <result column="spec_id" jdbcType="VARCHAR" property="specId" />
     <result column="dt_id" jdbcType="VARCHAR" property="dtId" />
     <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
     <result column="drug_unit" jdbcType="VARCHAR" property="drugUnit" />
@@ -31,11 +29,11 @@
     <result column="dt_name" jdbcType="VARCHAR" property="dtName" />
   </resultMap>
   <sql id="Base_Column_List">
-    drug_id, spec_id, dt_id, drug_name, drug_unit, drug_prop, drug_pictrue, drug_price, 
+    drug_id, dt_id, drug_name, drug_unit, drug_prop, drug_pictrue, drug_price, 
     isva, optime, oper, sort
   </sql>
   <sql id="Base_Column_List_One">
-    dd.drug_id, dd.spec_id, dd.dt_id, dd.drug_name, dd.drug_unit, dd.drug_prop, dd.drug_pictrue, dd.drug_price, 
+    dd.drug_id, dd.dt_id, dd.drug_name, dd.drug_unit, dd.drug_prop, dd.drug_pictrue, dd.drug_price, 
     dd.isva, dd.optime, dd.oper, dd.sort, dt.dt_name
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -58,25 +56,28 @@
     where drug_id = #{drugId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.yidu.domain.Drug">
-    insert into drug_drug (drug_id, spec_id, dt_id, 
+  	<selectKey keyProperty="drugId" resultType="string" order="BEFORE">
+	    SELECT REPLACE(UUID(),'-','') AS id;
+	</selectKey>
+    insert into drug_drug (drug_id, dt_id, 
       drug_name, drug_unit, drug_prop, 
       drug_pictrue, drug_price, isva, 
       optime, oper, sort
       )
-    values (#{drugId,jdbcType=VARCHAR}, #{specId,jdbcType=VARCHAR}, #{dtId,jdbcType=VARCHAR}, 
+    values (#{drugId,jdbcType=VARCHAR}, #{dtId,jdbcType=VARCHAR}, 
       #{drugName,jdbcType=VARCHAR}, #{drugUnit,jdbcType=VARCHAR}, #{drugProp,jdbcType=VARCHAR}, 
       #{drugPictrue,jdbcType=VARCHAR}, #{drugPrice,jdbcType=DECIMAL}, #{isva,jdbcType=VARCHAR}, 
       #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.yidu.domain.Drug">
+  	<selectKey keyProperty="drugId" resultType="string" order="BEFORE">
+	    SELECT REPLACE(UUID(),'-','') AS id;
+	</selectKey>
     insert into drug_drug
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="drugId != null">
         drug_id,
-      </if>
-      <if test="specId != null">
-        spec_id,
       </if>
       <if test="dtId != null">
         dt_id,
@@ -113,9 +114,6 @@
       <if test="drugId != null">
         #{drugId,jdbcType=VARCHAR},
       </if>
-      <if test="specId != null">
-        #{specId,jdbcType=VARCHAR},
-      </if>
       <if test="dtId != null">
         #{dtId,jdbcType=VARCHAR},
       </if>
@@ -151,9 +149,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Drug">
     update drug_drug
     <set>
-      <if test="specId != null">
-        spec_id = #{specId,jdbcType=VARCHAR},
-      </if>
       <if test="dtId != null">
         dt_id = #{dtId,jdbcType=VARCHAR},
       </if>
@@ -189,8 +184,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Drug">
     update drug_drug
-    set spec_id = #{specId,jdbcType=VARCHAR},
-      dt_id = #{dtId,jdbcType=VARCHAR},
+    set dt_id = #{dtId,jdbcType=VARCHAR},
       drug_name = #{drugName,jdbcType=VARCHAR},
       drug_unit = #{drugUnit,jdbcType=VARCHAR},
       drug_prop = #{drugProp,jdbcType=VARCHAR},

@@ -16,5 +16,7 @@ public interface DrugService   {
 	
 	//查询所有
 	List<Drug> findAll(Drug record);
+	//增加药品
+	int addOrUpdate(Drug record);
 
 }

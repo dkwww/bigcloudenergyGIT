@@ -1,6 +1,8 @@
 package com.yidu.service;
 
- 
+import java.util.List;
+
+import com.yidu.domain.DrugType;
 
 /**
  * <p>
@@ -11,5 +13,7 @@ package com.yidu.service;
  * @since 2018-11-26
  */
 public interface DrugTypeService   {
+
+	List<DrugType> showList();
 
 }
