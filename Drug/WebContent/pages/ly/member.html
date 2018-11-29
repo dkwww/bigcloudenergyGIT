@@ -97,63 +97,44 @@
 		<script type="text/html" id="edit-tpl">
 		    <div style="margin:10px">
 		        <form class="layui-form" action="" lay-filter="form-edit">
-		            <input type="hidden" name="menId" value="{{menId}}" />
+		            <input type="hidden" name="menId" value="{{d.rowdata.menId}}" />
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">用户名</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="menName" required lay-verify="required" value="{{menName}}" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+		                    <input type="text" name="menName" required lay-verify="required" value="{{d.rowdata.menName}}" placeholder="请输入用户名" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">用户密码</label>
 		                <div class="layui-input-inline">
-		                    <input type="password" name="menPwd" required lay-verify="required" placeholder="请输入用户密码" autocomplete="off" class="layui-input">
+		                    <input type="password" name="memPwd" required lay-verify="required" value="{{d.rowdata.memPwd}}" placeholder="请输入用户密码" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 					<div class="layui-form-item">
 		                <label class="layui-form-label">电话号码</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="menPhone" required lay-verify="required" value="{{menPwd}}" placeholder="请输入电话号码" autocomplete="off" class="layui-input">
+		                    <input type="text" name="memPhone" required lay-verify="required" value="{{d.rowdata.memPhone}}" placeholder="请输入电话号码" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 					<div class="layui-form-item">
 		                <label class="layui-form-label">地址</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="memAddress" required lay-verify="required" value="{{memAddress}}" placeholder="请输入地址" autocomplete="off" class="layui-input">
+		                    <input type="text" name="memAddress" required lay-verify="required" value="{{d.rowdata.memAddress}}" placeholder="请输入地址" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
-					<div class="layui-form-item">
-		                <label class="layui-form-label">头像</label>
+					<div class="layui-upload">
+                		<label class="layui-form-label">头像:</label>
+                		<div class="layui-upload layui-input-block">
+                    		<input type="texe" name="memPictrue" value="{{d.rowdata.memPictrue}}"/>
+                    		<button type="button" class="layui-btn layui-btn-primary" id="fileBtn"><i class="layui-icon">&#xe67c;</i>选择文件</button>
+                   	 		<button type="button" class="layui-btn layui-btn-warm" id="uploadBtn">开始上传</button>
+                		</div>
+            		</div>
+					
+					<div class="layui-form-item" style="display:none;">
 		                <div class="layui-input-block">
-		                    <input type="file" name="memPictrue" required lay-verify="required" value="{{memPictrue}}" placeholder="请选择图片" autocomplete="off" class="layui-input">
-		                </div>
-		            </div>
-
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">是否有效</label>
-		                <div class="layui-input-block">
-		                    {{# var no = isva === 0?'checked':'';}} {{# var yes = isva === 1?'checked':'';}}
-		                    <input type="radio" name="isva" value="有效" title="有效" {{yes}} />
-		                    <input type="radio" name="isva" value="无效" title="无效" {{no}} />
-		                </div>
-		            </div>
-		            
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">操作时间</label>
-		                <div class="layui-input-block">
-		                    <input type="text" name="optimeString" required lay-verify="required" value="{{optimeString}}" placeholder="请输入操作时间" autocomplete="off" class="layui-input">
-		                </div>
-		            </div>
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">操作人</label>
-		                <div class="layui-input-block">
-		                    <input type="text" name="oper" required lay-verify="required" value="{{oper}}" placeholder="请输入操作人" autocomplete="off" class="layui-input">
-		                </div>
-		            </div>
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">排序</label>
-		                <div class="layui-input-block">
-		                    <input type="text" name="sort" required lay-verify="required" value="{{sort}}" autocomplete="off" class="layui-input">
+		                    <button class="layui-btn" lay-submit lay-filter="formEdit">立即提交</button>
+		                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
 		                </div>
 		            </div>
 		        </form>
@@ -161,14 +142,16 @@
 		</script>
 		
 		<!-- 显示表格 -->
+		<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
 		<script src="../../res/layui/layui.js"></script>
 		<script>
-		    layui.use(['table'], function() {
+		    layui.use(['table','upload'], function() {
 		        var table = layui.table,
 		            $ = layui.jquery,
 		            layer = layui.layer,
 		            form = layui.form,
 		            laytpl = layui.laytpl;
+		        var upload=layui.upload;
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: 'full', //容器高度
@@ -208,29 +191,13 @@
 		                    field: 'memPictrue',
 		                    title: '头像',
 		                    width: 90,
-		                    align: 'center'
-		                }, {
-		                    field: 'isva',
-		                    title: '是否有效',
-		                    width: 90,
-		                    align: 'center'
+		                    align: 'center',
+		                    templet:'<div><img style="height:100%;height:30px;" src="../../{{d.memPictrue}}"></div>'
 		                }, {
 		                    field: 'optimeString',
 		                    title: '操作时间',
 		                    width: 130,
 		                    align: 'center'
-		                }, {
-		                    field: 'oper',
-		                    title: '操作人',
-		                    width: 100,
-		                    align: 'center',
-		                    sort: true
-		                }, {
-		                    field: 'sort',
-		                    title: '排序',
-		                    width: 90,
-		                    align: 'center',
-		                    sort: true
 		                }, {
 		                    fixed: 'right',
 		                    title: '操作',
@@ -299,7 +266,7 @@
 		        });
 		        //监听工具条
 		        table.on('tool(demo)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-		            var data = obj.data; //获得当前行数据
+		            var da = obj.data; //获得当前行数据
 		            var layEvent = obj.event; //获得 lay-event 对应的值
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		
@@ -307,15 +274,25 @@
 		                console.log(table.checkStatus('demo'));
 		            } else if (layEvent === 'del') { //删除
 		                layer.confirm('真的删除行么', function(index) {
-		                    obj.del(); //删除对应行（tr）的DOM结构
-		                    layer.close(index);
-		                    //向服务端发送删除指令
+		                	
+		                	var url="../../member/delete.action";
+		                	var data={"menId":da.menId};
+		                	$.post(url,data,function(mes){
+		                		if(mes==1){
+		                			obj.del(); //删除对应行（tr）的DOM结构
+				                    layer.close(index);
+				                    layer.msg("删除成功");
+		                		}else{
+		                			layer.msg("删除失败");
+		                		}
+		                	},"json");
+		                	
+		                    
 		                });
 		            } else if (layEvent === 'edit') { //编辑
 		                var d = {
-		                    user: data,
-		                    citys: staticData.citys,
-		                    classifies: staticData.classifies
+		                		rowdata: data,
+			                    types: staticData.types
 		                };
 		                laytpl($('#edit-tpl').html()).render(d, function(html) {
 		                    layer.open({
@@ -336,6 +313,21 @@
 		                            form.render(null, 'form-edit');
 		                        }
 		                    });
+		                    upload.render({
+                            	elem:'#fileBtn'
+                            	,url:'../../member/upload.action'
+                            	,accept:'file'
+                            	,auto:false
+                            	,bindAction:'#uploadBtn'
+                            	,done: function(res){
+                            		layer.msg(res.msg);
+                            		if(res.status=="1"){
+                            			$("[name=memPictrue]").val(res.obj);
+                            			$("#fileBtn").html('<i class="layui-icon">&#xe67c;</i>选择文件');
+                            			form.render(null,'form-edit');
+                            		}
+                            	}
+                            });
 		                });
 		                //同步更新缓存对应的值
 		                // obj.update({
@@ -350,9 +342,31 @@
 		        });
 		        var editIndex;
 		        form.on('submit(formEdit)', function(data) {
-		            layer.msg('formEdit');
-		            editIndex && layer.close(editIndex); //关闭弹出层
-		            return false;
+		        	if ($("[name=memPictrue]").val()=="") {
+                		layer.msg('未上传文件');
+                    	$("#fileBtn").html('<span style="color:red"><i class="layui-icon">&#xe67c;</i>选择文件</span>');
+                    	form.render(null, 'form-edit');
+                    	return false;
+                    }
+		        	$.ajax({ url:"../../member/addMember.action",
+                        type:'post',//method请求方式，get或者post
+                        cache: false,//同步
+                        dataType:'json',//预期服务器返回的数据类型
+                        data:JSON.stringify(data.field),//表格数据序列化
+                        contentType: "application/json; charset=utf-8",
+                        success:function(mes){//res为相应体,function为回调函数
+	                        if(mes.status==1){ 
+		                        $("#res").click();//调用重置按钮将表单数据清空
+		                        editIndex && layer.close(editIndex); //关闭弹出层
+	    			    		$(".layui-laypage-btn")[0].click();//当前表格刷新
+	                        	layer.msg(mes.msg,{icon:1});
+	                        } else {
+	                        	layer.msg(mes.msg,{icon:5});
+	                        }
+                        },
+                       	error:function(){layer.alert('操作失败！！！',{icon:5});}
+	                 });
+		        	return false;
 		        });
 		        $('.kit-search-btns').children('a').off('click').on('click', function() {
 		            var $that = $(this),
@@ -360,21 +374,16 @@
 		            switch (action) {
 		                case 'add':
 		                    var d = {
-		                        user: {
-		                            sign: '你哈',
-		                            city: '',
-		                            classify: '',
-		                            experience: '',
-		                            id: 0,
-		                            logins: '',
-		                            score: '',
-		                            sex: 1,
-		                            sign: '',
-		                            username: '',
-		                            wealth: ''
+		                        rowdata: {
+		                        	menId: '',
+		                        	menName: '',
+		                        	memPwd: '',
+		                        	memPhone: '',
+		                        	optimeString:'',
+		                        	memAddress: '',
+		                        	memPictrue: ''
 		                        },
-		                        citys: staticData.citys,
-		                        classifies: staticData.classifies
+		                        types: staticData.types
 		                    };
 		                    //渲染
 		                    laytpl($('#edit-tpl').html()).render(d,
@@ -396,6 +405,21 @@
 		                                success: function() {
 		                                    form.render(null, 'form-edit');
 		                                }
+		                            });
+		                            upload.render({
+		                            	elem:'#fileBtn'
+		                            	,url:'../../member/upload.action'
+		                            	,accept:'file'
+		                            	,auto:false
+		                            	,bindAction:'#uploadBtn'
+		                            	,done: function(res){
+		                            		layer.msg(res.msg);
+		                            		if(res.status=="1"){
+		                            			$("[name=memPictrue]").val(res.obj);
+		                            			$("#fileBtn").html('<i class="layui-icon">&#xe67c;</i>选择文件');
+		                            			form.render(null,'form-edit');
+		                            		}
+		                            	}
 		                            });
 		                        });
 		                    break;

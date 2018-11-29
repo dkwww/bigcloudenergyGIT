@@ -23,9 +23,17 @@ public interface MemberService   {
 	public List<Member> query(Map<String, Object> maps);
 	
 	/**
-	 * 修改
+	 * 增加修改
 	 * @param menId model
 	 * @return
 	 */
-	public int update(String menId);
+	public int addOrUpdate(Member record);
+	
+	/**
+	 * 删除
+	 * @param menId 会员ID
+	 * @return
+	 */
+	public int delete(String menId);
+	
 }

@@ -2,10 +2,14 @@ package com.yidu.service.impl;
 
  
 
+
 import com.yidu.dao.MemberMapper;
 import com.yidu.domain.Member;
 import com.yidu.service.MemberService;
+import com.yidu.util.TimeUtil;
+import com.yidu.util.Tools;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -35,16 +39,32 @@ public class MemberServiceImpl   implements MemberService {
 		//返回dao类查询所有的方法
 		return mapper.selectAll(maps);
 	}
-	
 	/**
-	 * 修改
+	 * 增加
 	 */
 	@Override
-	public int update(String menId) {
+	public int addOrUpdate(Member record) {
+		if (record.getMenId()!=null && !"".equals(record.getMenId())) {
+			record.setOptime(new Date());
+			return mapper.updateByPrimaryKeySelective(record);
+		}else {
+			record.setIsva("1");
+			record.setSort(TimeUtil.getStrDate());
+			record.setOptime(new Date());
+			return mapper.insertSelective(record);
+		}
+	}
+	
+	/**
+	 * 删除
+	 */
+	@Override
+	public int delete(String menId) {
+		//调用dao类根据ID查询的方法
 		Member member=mapper.selectByPrimaryKey(menId);
+		//取到是否有效为0
 		member.setIsva("0");
-		//返回dao类修改的方法
+		//返回dao类根据ID修改的方法
 		return mapper.updateByPrimaryKeySelective(member);
 	}
-
 }

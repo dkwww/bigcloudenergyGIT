@@ -1,14 +1,17 @@
 package com.yidu.controller;
 
 
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yidu.domain.Member;
 import com.yidu.service.MemberService;
+import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
 import com.yidu.util.TimeUtil;
 import com.yidu.util.Tools;
+import com.yidu.util.UploadUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 
@@ -78,15 +82,59 @@ public class MemberController {
 	}
 	
 	/**
-	 * 修改
-	 * @param member model
-	 * @return service里面修改的方法
+	 * 上传文件
+	 * @param req
+	 * @return msg
+	 * @throws Exception 异常
 	 */
-	@RequestMapping("/update")
+	@RequestMapping("/upload")
 	@ResponseBody
-	public int update(String menId) {
-		//返回service里面修改的方法
-		return service.update(menId);
+	public Message upload(HttpServletRequest req) throws Exception {
+		String fileName=UploadUtil.upload(req);
+		Message msg=new Message();
+		if(fileName!=null) {
+			msg.setStatus(1);
+			msg.setObj(fileName);
+			msg.setMsg("上传成功");
+		}else {
+			msg.setStatus(0);
+			msg.setMsg("上传失败");
+		}
+		return msg;
+	}
+	
+	/**
+	 * 增加会员
+	 * @param record model
+	 * @return 返回msg
+	 */
+	@RequestMapping("/addMember")
+	@ResponseBody
+	public Message addMember(@RequestBody Member record) {
+		int rows=service.addOrUpdate(record);
+		Message msg=new Message();
+		if(rows>0) {
+			msg.setStatus(1);
+			msg.setMsg("操作成功");
+		}else {
+			msg.setStatus(0);
+			msg.setMsg("操作失败");
+		}
+		return msg;
+	}
+	
+	/**
+	 * 删除
+	 * @param menId 会员ID
+	 * @return 返回rows
+	 */
+	@RequestMapping("/delete")
+	@ResponseBody
+	public int delete(String menId) {
+		//调用service里面删除的方法
+		int rows=service.delete(menId);
+		//返回rows
+		return rows;
 	}
 }
 

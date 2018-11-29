@@ -28,6 +28,9 @@
     where men_id = #{menId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.yidu.domain.Member">
+  	<selectKey keyProperty="menId" resultType="string" order="BEFORE">
+	    SELECT REPLACE(UUID(),'-','') AS id;
+	</selectKey>
     insert into drug_member (men_id, men_name, mem_pwd, 
       mem_phone, mem_address, mem_pictrue, 
       isva, optime, oper, 
@@ -38,6 +41,9 @@
       #{sort,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yidu.domain.Member">
+  	<selectKey keyProperty="menId" resultType="string" order="BEFORE">
+	    SELECT REPLACE(UUID(),'-','') AS id;
+	</selectKey>
     insert into drug_member
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="menId != null">
@@ -152,7 +158,8 @@
   </update>
   
   <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
-  	select * from drug_member where isva='1'
+  	select * from drug_member where isva='1' 
+  	order by optime desc
   	limit #{util.startRows},#{util.rows}
   </select>
 
