@@ -22,8 +22,25 @@ public class Member {
     private String oper;
 
     private String sort;
+    
+    private String optimeString;
+    
 
-    public String getMenId() {
+    /**
+	 * @return the optimeString
+	 */
+	public String getOptimeString() {
+		return optimeString;
+	}
+
+	/**
+	 * @param optimeString the optimeString to set
+	 */
+	public void setOptimeString(String optimeString) {
+		this.optimeString = optimeString;
+	}
+
+	public String getMenId() {
         return menId;
     }
 

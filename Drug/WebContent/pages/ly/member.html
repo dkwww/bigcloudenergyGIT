@@ -97,86 +97,63 @@
 		<script type="text/html" id="edit-tpl">
 		    <div style="margin:10px">
 		        <form class="layui-form" action="" lay-filter="form-edit">
-		            <input type="hidden" name="id" value="{{d.user.id}}" />
+		            <input type="hidden" name="menId" value="{{menId}}" />
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">用户名</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="username" required lay-verify="required" value="{{d.user.username}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                    <input type="text" name="menName" required lay-verify="required" value="{{menName}}" placeholder="请输入用户名" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 		            <div class="layui-form-item">
-		                <label class="layui-form-label">密码框</label>
+		                <label class="layui-form-label">用户密码</label>
 		                <div class="layui-input-inline">
-		                    <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
-		                </div>
-		                <div class="layui-form-mid layui-word-aux">辅助文字</div>
-		            </div>
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">单选框</label>
-		                <div class="layui-input-block">
-		                    {{# var woman = d.user.sex === 0?'checked':'';}} {{# var man = d.user.sex === 1?'checked':'';}}
-		                    <input type="radio" name="sex" value="男" title="男" {{man}} />
-		                    <input type="radio" name="sex" value="女" title="女" {{woman}} />
+		                    <input type="password" name="menPwd" required lay-verify="required" placeholder="请输入用户密码" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">城市</label>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">电话号码</label>
 		                <div class="layui-input-block">
-		                    <select name="city" lay-verify="required">
-		                      <option value=""></option>
-		                      {{# layui.each(d.citys,function(index,item){ }}                      
-		                      {{# if(item.id===d.user.city){}}
-		                      <option value="{{item.id}}" selected>{{item.name}}</option>
-		                      {{#}else{}}
-		                      <option value="{{item.id}}">{{item.name}}</option>
-		                      {{#};}}
-		                      {{# }); }}
-		                    </select>
+		                    <input type="text" name="menPhone" required lay-verify="required" value="{{menPwd}}" placeholder="请输入电话号码" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">积分</label>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">地址</label>
 		                <div class="layui-input-block">
-		                    <input type="number" name="experience" required lay-verify="required" value="{{d.user.experience}}" placeholder="请输入积分" autocomplete="off" class="layui-input">
+		                    <input type="text" name="memAddress" required lay-verify="required" value="{{memAddress}}" placeholder="请输入地址" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">评分</label>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">头像</label>
 		                <div class="layui-input-block">
-		                    <input type="number" name="score" required lay-verify="required" value="{{d.user.score}}" placeholder="请输入评分" autocomplete="off" class="layui-input">
+		                    <input type="file" name="memPictrue" required lay-verify="required" value="{{memPictrue}}" placeholder="请选择图片" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">是否有效</label>
+		                <div class="layui-input-block">
+		                    {{# var no = isva === 0?'checked':'';}} {{# var yes = isva === 1?'checked':'';}}
+		                    <input type="radio" name="isva" value="有效" title="有效" {{yes}} />
+		                    <input type="radio" name="isva" value="无效" title="无效" {{no}} />
+		                </div>
+		            </div>
+		            
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">操作时间</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="optimeString" required lay-verify="required" value="{{optimeString}}" placeholder="请输入操作时间" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 		            <div class="layui-form-item">
-		                <label class="layui-form-label">财富</label>
+		                <label class="layui-form-label">操作人</label>
 		                <div class="layui-input-block">
-		                    <input type="number" name="wealth" required lay-verify="required" value="{{d.user.wealth}}" placeholder="请输入财富" autocomplete="off" class="layui-input">
+		                    <input type="text" name="oper" required lay-verify="required" value="{{oper}}" placeholder="请输入操作人" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 		            <div class="layui-form-item">
-		                <label class="layui-form-label">职业</label>
+		                <label class="layui-form-label">排序</label>
 		                <div class="layui-input-block">
-		                    <select name="classify" lay-verify="required">
-		                        <option value=""></option>                        
-		                      {{# layui.each(d.classifies,function(index,item){ }}
-		                      {{# if(item.id===d.user.classify){}}
-		                      <option value="{{item.id}}" selected>{{item.name}}</option>
-		                      {{#}else{}}
-		                      <option value="{{item.id}}">{{item.name}}</option>
-		                      {{#};}}
-		                      {{# }); }}
-		                    </select>
-		                </div>
-		            </div>
-		            <div class="layui-form-item layui-form-text">
-		                <label class="layui-form-label">签名</label>
-		                <div class="layui-input-block">
-		                    <textarea name="sign" placeholder="请输入个性签名" class="layui-textarea">{{d.user.sign}}</textarea>
-		                </div>
-		            </div>
-		            <div class="layui-form-item" style="display:none;">
-		                <div class="layui-input-block">
-		                    <button class="layui-btn" lay-submit lay-filter="formEdit">立即提交</button>
-		                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		                    <input type="text" name="sort" required lay-verify="required" value="{{sort}}" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 		        </form>
@@ -219,7 +196,7 @@
 		                    align: 'center'
 		                }, {
 		                    field: 'memPhone',
-		                    title: '手机号码',
+		                    title: '电话号码',
 		                    width: 100,
 		                    align: 'center'
 		                }, {
@@ -238,7 +215,7 @@
 		                    width: 90,
 		                    align: 'center'
 		                }, {
-		                    field: 'optime',
+		                    field: 'optimeString',
 		                    title: '操作时间',
 		                    width: 130,
 		                    align: 'center'

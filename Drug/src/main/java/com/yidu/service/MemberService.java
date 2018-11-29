@@ -15,5 +15,17 @@ import com.yidu.domain.Member;
  * @since 2018-11-26
  */
 public interface MemberService   {
+	/**
+	 * 查询所有
+	 * @param maps map集合
+	 * @return
+	 */
 	public List<Member> query(Map<String, Object> maps);
+	
+	/**
+	 * 修改
+	 * @param menId model
+	 * @return
+	 */
+	public int update(String menId);
 }
