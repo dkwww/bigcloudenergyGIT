@@ -1,6 +1,9 @@
 package com.yidu.dao;
 
+import java.util.List;
+
 import com.yidu.domain.Buy;
+
 
 public interface BuyMapper {
     int deleteByPrimaryKey(String buyId);
@@ -14,4 +17,12 @@ public interface BuyMapper {
     int updateByPrimaryKeySelective(Buy record);
 
     int updateByPrimaryKey(Buy record);
+    
+    
+    
+    /**
+     * 查询所有
+     * @return
+     */
+    public List<Buy> findAll();
 }

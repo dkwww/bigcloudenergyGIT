@@ -14,6 +14,8 @@ public class Buy {
 
     private Date buyTime;
 
+    private String buyTimes;
+
     private String buyCompany;
 
     private String buyType;
@@ -31,12 +33,31 @@ public class Buy {
     private String isva;
 
     private Date optime;
+    
+    private String optimes;
 
     private String oper;
 
     private String sort;
 
-    public String getBuyId() {
+    
+    public String getBuyTimes() {
+		return buyTimes;
+	}
+
+	public void setBuyTimes(String buyTimes) {
+		this.buyTimes = buyTimes;
+	}
+
+	public String getOptimes() {
+		return optimes;
+	}
+
+	public void setOptimes(String optimes) {
+		this.optimes = optimes;
+	}
+
+	public String getBuyId() {
         return buyId;
     }
 

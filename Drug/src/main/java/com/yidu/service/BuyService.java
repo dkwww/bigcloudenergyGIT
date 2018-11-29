@@ -1,6 +1,8 @@
 package com.yidu.service;
 
+import java.util.List;
 
+import com.yidu.domain.Buy;
 
 /**
  * <p>
@@ -11,5 +13,11 @@ package com.yidu.service;
  * @since 2018-11-26
  */
 public interface BuyService   {
-
+	
+	/**
+	 * 查询所有
+	 * @return
+	 */
+	public List<Buy> findAll();
+	
 }

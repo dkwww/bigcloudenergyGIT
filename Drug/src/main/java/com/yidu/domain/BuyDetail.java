@@ -20,11 +20,22 @@ public class BuyDetail {
 
     private Date optime;
 
+    private String optimes;
+
     private String oper;
 
     private String sort;
 
-    public String getBdetId() {
+    
+    public String getOptimes() {
+		return optimes;
+	}
+
+	public void setOptimes(String optimes) {
+		this.optimes = optimes;
+	}
+
+	public String getBdetId() {
         return bdetId;
     }
 
