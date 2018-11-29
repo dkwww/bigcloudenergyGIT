@@ -3,6 +3,7 @@ package com.yidu.service;
 import java.util.List;
 
 import com.yidu.domain.Drug;
+import com.yidu.util.PageUtil;
 
 /**
  * <p>
@@ -15,10 +16,12 @@ import com.yidu.domain.Drug;
 public interface DrugService   {
 	
 	//查询所有
-	List<Drug> findAll(Drug record);
+	List<Drug> findAll(Drug record, PageUtil pageUtil);
 	//增加药品
 	int addOrUpdate(Drug record);
 	//批量修改
-	int bulkUpdate(String[] ids);
+	int bulkUpdate(List<String> ids);
+	//查找总行数
+	int findCount(Drug record);
 
 }

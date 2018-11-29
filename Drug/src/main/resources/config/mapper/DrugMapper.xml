@@ -28,33 +28,69 @@
     <result column="sort" jdbcType="VARCHAR" property="sort" />
     <result column="dt_name" jdbcType="VARCHAR" property="dtName" />
   </resultMap>
+  
   <sql id="Base_Column_List">
     drug_id, dt_id, drug_name, drug_unit, drug_prop, drug_pictrue, drug_price, 
     isva, optime, oper, sort
   </sql>
+  
   <sql id="Base_Column_List_One">
     dd.drug_id, dd.dt_id, dd.drug_name, dd.drug_unit, dd.drug_prop, dd.drug_pictrue, dd.drug_price, 
     dd.isva, dd.optime, dd.oper, dd.sort, dt.dt_name
   </sql>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from drug_drug
     where drug_id = #{drugId,jdbcType=VARCHAR} and isva = '1'
   </select>
-  <select id="selectBySelective" parameterType="com.yidu.domain.Drug" resultMap="BaseResultMapOne">
+  
+  <select id="selectBySelective" parameterType="java.util.Map" resultMap="BaseResultMapOne">
     select 
     <include refid="Base_Column_List_One" />
     from drug_drug dd,drug_drug_type dt
     where dd.dt_id = dt.dt_id and dd.isva = '1'
-   	<if test="drugName != null">
-   		and dd.drug_name like '%'#{drugName,jdbcType=VARCHAR}'%'
+   	<if test="record.drugName != null and record.drugName != ''">
+   		and dd.drug_name like CONCAT(CONCAT('%',#{record.drugName,jdbcType=VARCHAR},'%'))
+   	</if>
+   	<if test="record.dtId != null and record.dtId != ''">
+   		and dt.dt_id = #{record.dtId,jdbcType=VARCHAR}
+   	</if>
+   	<if test="record.priceMin !=null and record.priceMin != ''">
+   		and dd.drug_price &gt; #{record.priceMin,jdbcType=DECIMAL}
+   	</if>
+   	<if test="record.priceMax !=null and record.priceMax !='' ">
+   		and dd.drug_price &lt; #{record.priceMax,jdbcType=DECIMAL}
+   	</if>
+   	order by (dd.sort+0) desc 
+   	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectCountBySelective" parameterType="com.yidu.domain.Drug" resultType="int">
+    select 
+    count(*) 
+    from drug_drug dd,drug_drug_type dt
+    where dd.dt_id = dt.dt_id and dd.isva = '1'
+   	<if test="drugName != null and drugName != ''">
+   		and dd.drug_name like CONCAT(CONCAT('%',#{drugName,jdbcType=VARCHAR},'%'))
+   	</if>
+   	<if test="dtId != null and dtId != ''">
+   		and dt.dt_id = #{dtId,jdbcType=VARCHAR}
+   	</if>
+   	<if test="priceMin !=null and priceMin !=''">
+   		and dd.drug_price &gt; #{priceMin,jdbcType=DECIMAL}
+   	</if>
+   	<if test="priceMax !=null and priceMax !=''">
+   		and dd.drug_price &lt; #{priceMax,jdbcType=DECIMAL}
    	</if>
   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_drug
     where drug_id = #{drugId,jdbcType=VARCHAR}
   </delete>
+  
   <insert id="insert" parameterType="com.yidu.domain.Drug">
   	<selectKey keyProperty="drugId" resultType="string" order="BEFORE">
 	    SELECT REPLACE(UUID(),'-','') AS id;
@@ -70,6 +106,7 @@
       #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}
       )
   </insert>
+  
   <insert id="insertSelective" parameterType="com.yidu.domain.Drug">
   	<selectKey keyProperty="drugId" resultType="string" order="BEFORE">
 	    SELECT REPLACE(UUID(),'-','') AS id;
@@ -146,18 +183,15 @@
       </if>
     </trim>
   </insert>
+  
   <update id="bulkDeleteByPrimaryKeySelective">
-    update drug_drug
-    <set>
-      <if test="isva != null">
-        isva = '0',
-      </if>
-    </set>
+    update drug_drug set isva = '0'
     where drug_id in 
-    <foreach collection="array" item="ids" open="(" separator="," close=")">
+    <foreach collection="list" item="ids" open="(" separator="," close=")">
       #{ids} 
     </foreach> 
   </update>
+  
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Drug">
     update drug_drug
     <set>
@@ -194,6 +228,7 @@
     </set>
     where drug_id = #{drugId,jdbcType=VARCHAR}
   </update>
+  
   <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Drug">
     update drug_drug
     set dt_id = #{dtId,jdbcType=VARCHAR},

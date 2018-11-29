@@ -28,8 +28,10 @@ public class Drug {
     
     private String dtName;
     
-    private String[] ids;
-
+    private Double priceMin;
+    
+    private Double priceMax;
+    
     public String getDrugId() {
         return drugId;
     }
@@ -126,12 +128,20 @@ public class Drug {
 		this.dtName = dtName == null ? null : dtName.trim();
 	}
 
-	public String[] getIds() {
-		return ids;
+	public Double getPriceMin() {
+		return priceMin;
 	}
 
-	public void setIds(String[] ids) {
-		this.ids = ids;
+	public void setPriceMin(Double priceMin) {
+		this.priceMin = priceMin;
+	}
+
+	public Double getPriceMax() {
+		return priceMax;
+	}
+
+	public void setPriceMax(Double priceMax) {
+		this.priceMax = priceMax;
 	}
     
 }

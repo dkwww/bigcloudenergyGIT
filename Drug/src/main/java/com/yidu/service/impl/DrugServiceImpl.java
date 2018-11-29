@@ -1,7 +1,9 @@
 package com.yidu.service.impl;
 
  
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.yidu.dao.DrugMapper;
 import com.yidu.domain.Drug;
 import com.yidu.service.DrugService;
+import com.yidu.util.PageUtil;
 import com.yidu.util.TimeUtil;
 
 /**
@@ -21,14 +24,17 @@ import com.yidu.util.TimeUtil;
  * @since 2018-11-26
  */
 @Service
-public class DrugServiceImpl   implements DrugService {
+public class DrugServiceImpl implements DrugService {
 	
 	@Resource
 	private DrugMapper drugMapper;
 
 	@Override
-	public List<Drug> findAll(Drug record) {
-		return drugMapper.selectBySelective(record);
+	public List<Drug> findAll(Drug record, PageUtil pageUtil) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("record", record);
+		map.put("pageUtil", pageUtil);
+		return drugMapper.selectBySelective(map);
 	}
 
 	@Override
@@ -43,8 +49,13 @@ public class DrugServiceImpl   implements DrugService {
 	}
 
 	@Override
-	public int bulkUpdate(String[] ids) {
+	public int bulkUpdate(List<String> ids) {
 		return drugMapper.bulkDeleteByPrimaryKeySelective(ids);
+	}
+
+	@Override
+	public int findCount(Drug record) {
+		return drugMapper.selectCountBySelective(record);
 	}
 
 }

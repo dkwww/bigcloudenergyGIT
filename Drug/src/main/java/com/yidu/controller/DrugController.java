@@ -1,15 +1,6 @@
 package com.yidu.controller;
 
 
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.yidu.domain.Drug;
-import com.yidu.service.DrugService;
-import com.yidu.util.Message;
-import com.yidu.util.UploadUtil;
-
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.yidu.domain.Drug;
+import com.yidu.service.DrugService;
+import com.yidu.util.Message;
+import com.yidu.util.PageUtil;
+import com.yidu.util.UploadUtil;
 
 /**
  * <p>
@@ -40,13 +40,19 @@ public class DrugController {
 	 */
 	@RequestMapping("/showList")
 	@ResponseBody
-	public Map<String,Object> showList(Drug record) {
-		List<Drug> list = drugService.findAll(record);
+	public Map<String,Object> showList(Drug record,Integer page,Integer limit) {
+		PageUtil pageUtil = new PageUtil();
+		pageUtil.setCurPage(page);
+		pageUtil.setRows(limit);
+		
+		List<Drug> list = drugService.findAll(record,pageUtil);
+		int rows = drugService.findCount(record);
+		
 		@SuppressWarnings("unchecked")
 		Map<String,Object> map = new HashedMap();
 		map.put("code", 0);
 		map.put("msg", "");
-		map.put("count", 10);
+		map.put("count", rows);
 		map.put("data", list);
 		return map;
 	}
@@ -99,8 +105,7 @@ public class DrugController {
 	 */
 	@RequestMapping("/bulkUpdate")
 	@ResponseBody
-	public Message bulkUpdate(@RequestBody String[] ids) {
-		System.out.println(ids.length+"=======================================================");
+	public Message bulkUpdate(@RequestBody List<String> ids) {
 		int rows = drugService.bulkUpdate(ids);
 		Message mes = new Message();
 		if (rows>0) {

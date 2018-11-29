@@ -1,6 +1,7 @@
 package com.yidu.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.yidu.domain.Drug;
 
@@ -17,7 +18,9 @@ public interface DrugMapper {
 
     int updateByPrimaryKey(Drug record);
     
-    List<Drug> selectBySelective(Drug record);
+    List<Drug> selectBySelective(Map<String, Object> map);
     
-    int bulkDeleteByPrimaryKeySelective(String[] ids);
+    int selectCountBySelective(Drug record);
+    
+	int bulkDeleteByPrimaryKeySelective(List<String> ids);
 }
