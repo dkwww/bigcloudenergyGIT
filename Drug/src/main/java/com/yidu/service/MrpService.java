@@ -1,5 +1,10 @@
 package com.yidu.service;
+
  
+
+import java.util.List;
+
+import com.yidu.domain.Mrp;
 
 /**
  * <p>
@@ -10,5 +15,7 @@ package com.yidu.service;
  * @since 2018-11-26
  */
 public interface MrpService   {
+	
+	public  List<Mrp>  qureyAll();
 
 }

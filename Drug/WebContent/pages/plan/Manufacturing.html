@@ -194,7 +194,7 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: 'full', //容器高度
-		            url: '../../table.json',
+		            url: '../../mrp/qureyAll.action',
 		            page: true,
 		            id: 'demo',
 		            cols: [
@@ -202,48 +202,33 @@
 		                    checkbox: true,
 		                    fixed: true
 		                }, {
-		                    field: 'id',
-		                    title: 'ID',
-		                    width: 80
+		                    field: 'drugName',
+		                    title: '药品名称',
+		                    width: 190
 		                }, {
-		                    field: 'username',
-		                    title: '用户名',
-		                    width: 105
+		                    field: 'mrpOptime',
+		                    title: '制造时间',
+		                    width: 150
 		                }, {
-		                    field: 'sex',
-		                    title: '性别',
-		                    width: 80
+		                    field: 'mrpPlan',
+		                    title: '计划任务',
+		                    width: 150
 		                }, {
-		                    field: 'city',
-		                    title: '城市',
-		                    width: 80
+		                    field: 'mrpRate',
+		                    title: '进度',
+		                    width: 160
 		                }, {
-		                    field: 'sign',
-		                    title: '签名',
+		                    field: 'stateName',
+		                    title: '状态',
 		                    width: 177
 		                }, {
-		                    field: 'experience',
-		                    title: '积分',
-		                    width: 80
+		                    field: 'ideaName',
+		                    title: '处理方案',
+		                    width: 160
 		                }, {
-		                    field: 'score',
-		                    title: '评分',
-		                    width: 80
-		                }, {
-		                    field: 'classify',
-		                    title: '职业',
-		                    width: 80
-		                }, {
-		                    field: 'wealth',
-		                    title: '财富',
-		                    width: 145,
-		                    sort: true
-		                }, {
-		                    fixed: 'right',
-		                    title: '操作',
-		                    width: 180,
-		                    align: 'center',
-		                    toolbar: '#barDemo'
+		                    field: 'mrpAmount',
+		                    title: '制造次数',
+		                    width: 160
 		                }]
 		            ],
 		            done: function(res, curr, count) {

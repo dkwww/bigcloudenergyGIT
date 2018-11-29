@@ -14,9 +14,9 @@ public class Mrp {
 
     private BigDecimal mrpRate;
 
-    private String mrpState;
+    private Integer  mrpState;
 
-    private String mrpIdea;
+    private Integer mrpIdea;
 
     private Integer mrpAmount;
 
@@ -27,8 +27,43 @@ public class Mrp {
     private String oper;
 
     private String sort;
+    
+    
+    private String   stateName;
+    
+    
+    private  String  ideaName;
+      
+    private  String  drugName;
+    
+    
+    
+    
+    public String getDrugName() {
+		return drugName;
+	}
 
-    public String getMrpId() {
+	public void setDrugName(String drugName) {
+		this.drugName = drugName;
+	}
+
+	public String getStateName() {
+		return stateName;
+	}
+
+	public void setStateName(String stateName) {
+		this.stateName = stateName;
+	}
+
+	public String getIdeaName() {
+		return ideaName;
+	}
+
+	public void setIdeaName(String ideaName) {
+		this.ideaName = ideaName;
+	}
+
+	public String getMrpId() {
         return mrpId;
     }
 
@@ -68,23 +103,25 @@ public class Mrp {
         this.mrpRate = mrpRate;
     }
 
-    public String getMrpState() {
-        return mrpState;
-    }
+    
+    
+    public Integer getMrpState() {
+		return mrpState;
+	}
 
-    public void setMrpState(String mrpState) {
-        this.mrpState = mrpState == null ? null : mrpState.trim();
-    }
+	public void setMrpState(Integer mrpState) {
+		this.mrpState = mrpState;
+	}
 
-    public String getMrpIdea() {
-        return mrpIdea;
-    }
+	public Integer getMrpIdea() {
+		return mrpIdea;
+	}
 
-    public void setMrpIdea(String mrpIdea) {
-        this.mrpIdea = mrpIdea == null ? null : mrpIdea.trim();
-    }
+	public void setMrpIdea(Integer mrpIdea) {
+		this.mrpIdea = mrpIdea;
+	}
 
-    public Integer getMrpAmount() {
+	public Integer getMrpAmount() {
         return mrpAmount;
     }
 
