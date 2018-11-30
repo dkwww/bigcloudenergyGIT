@@ -3,9 +3,9 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="../res/layui/css/layui.css" media="all">
-		<link rel="stylesheet" href="../res/css/common/font-awesome.min.css" media="all">
-		<link rel="stylesheet" href="../res/layui-config/css/app.css" media="all">
+		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
+		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
 		<title>药品管理</title>
 	</head>
 	<body>
@@ -183,7 +183,7 @@
 		</script>
 		
 		<!-- 显示表格 -->
-		<script src="../res/layui/layui.js"></script>
+		<script src="../../res/layui/layui.js"></script>
 		<script>
 		    layui.use(['table'], function() {
 		        var table = layui.table,
@@ -194,7 +194,7 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: 'full', //容器高度
-		            url: '../table.json',
+		            url: '../../table.json',
 		            page: true,
 		            id: 'demo',
 		            cols: [
@@ -261,8 +261,6 @@
 						    	$(this).text("男");
 						    } else if ($(this).text() == '0') {
 						    	$(this).text("女");
-						    } else {
-						    	$(this).text("无数据");
 						    }
 					  	});
 		            },
