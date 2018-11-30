@@ -1,6 +1,7 @@
 package com.yidu.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.yidu.domain.Mrp;
 
@@ -17,5 +18,7 @@ public interface MrpMapper {
 
     int updateByPrimaryKey(Mrp record);
     
-    List<Mrp>  qureyAll();
+    List<Mrp>  qureyAll(Map<String, Object> map);
+    
+    int  selectCountBySelective(Mrp  mrp);
 }
