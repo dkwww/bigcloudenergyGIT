@@ -1,5 +1,8 @@
 package com.yidu.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.yidu.domain.MatType;
 
 public interface MatTypeMapper {
@@ -14,4 +17,15 @@ public interface MatTypeMapper {
     int updateByPrimaryKeySelective(MatType record);
 
     int updateByPrimaryKey(MatType record);
+    
+    /**
+     * 查询所有
+     * @return
+     */
+    List<MatType> showList(Map<String, Object> map);
+    
+    
+    int selectCount(MatType type);
+    
+    
 }

@@ -12,12 +12,32 @@
   <sql id="Base_Column_List">
     mt_id, mt_name, isva, optime, oper, sort
   </sql>
+  
+  <select id="showList" parameterType="map" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from drug_mat_type where isva = '1'
+	<if test="type.mtName!=null and type.mtName!='' ">
+		and mt_name like concat('%', #{type.mtName} ,'%')
+	</if>
+	order by (sort+0) desc
+	limit #{pageUtil.startRows},#{pageUtil.rows}
+  </select>
+  
+  <select id="selectCount" parameterType="com.yidu.domain.MatType" resultType="int">
+  	select count(*) from drug_mat_type where isva= '1'
+  	<if test="mtName!=null and mtName!='' ">
+		and mt_name like concat('%', #{mtName} ,'%')
+	</if>
+  </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from drug_mat_type
     where mt_id = #{mtId,jdbcType=VARCHAR}
   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_mat_type
     where mt_id = #{mtId,jdbcType=VARCHAR}

@@ -19,7 +19,7 @@
 		            </div>
 		            <div class="kit-search-inputs">
 		                <div class="kit-search-keyword">
-		                    <input type="text" class="layui-input" name="keyword" placeholder="搜索关键字.." />
+		                    <input type="text" class="layui-input" name="mtName" id="serach-one" placeholder="类型名" onKeyUp="lockInput(this,'serach-two')"/>
 		                    <button lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
 		                </div>
 		                <div class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>
@@ -31,7 +31,7 @@
 		                <div class="layui-form-item">
 		                    <label class="layui-form-label">输入框</label>
 		                    <div class="layui-input-block">
-		                        <input type="text" name="title" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                        <input type="text" name="mtName" placeholder="请输入标题" id="serach-two" autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
 		                    </div>
 		                </div>
 		                <div class="layui-form-item">
@@ -137,7 +137,13 @@
 		        </form>
 		    </div>
 		</script>
-		
+		<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
+		<script>
+			//搜索框同步输入
+			function lockInput(obj,id){
+				$("#"+id).val($(obj).val());
+			}
+		</script>
 		<!-- 显示表格 -->
 		<script src="../../res/layui/layui.js"></script>
 		<script>
@@ -214,35 +220,7 @@
 		            loading: true,
 		            //method: 'post'
 		        });
-						//城市及角色
-		        var staticData = {
-		            citys: [{
-		                id: 0,
-		                name: '北京'
-		            }, {
-		                id: 1,
-		                name: '广州'
-		            }, {
-		                id: 2,
-		                name: '深圳'
-		            }, {
-		                id: 3,
-		                name: '杭州'
-		            }],
-		            classifies: [{
-		                id: 0,
-		                name: '词人'
-		            }, {
-		                id: 1,
-		                name: '诗人'
-		            }, {
-		                id: 2,
-		                name: '作家'
-		            }, {
-		                id: 3,
-		                name: '酱油'
-		            }]
-		        };
+		        
 		        //监听搜索表单提交
 		        form.on('submit(search)', function(data) {
 		            console.log(data.field);
@@ -251,6 +229,7 @@
 		            tableIns.reload({
 		                where: data.field
 		            });
+		            $('.kit-search-mored').hide();
 		            return false;
 		        });
 		        //监听工具条
@@ -288,8 +267,6 @@
 		            } else if (layEvent === 'edit') { //编辑
 		                var d = {
 		                	rowsdata: data,
-		                    citys: staticData.citys,
-		                    classifies: staticData.classifies
 		                };
 		                laytpl($('#edit-tpl').html()).render(d, function(html) {
 		                    layer.open({
@@ -360,8 +337,8 @@
 		                        	sort:'',
 		                        	
 		                        },
-		                        citys: staticData.citys,
-		                        classifies: staticData.classifies
+		                        
+		                        
 		                    };
 		                    //渲染
 		                    laytpl($('#edit-tpl').html()).render(d,
