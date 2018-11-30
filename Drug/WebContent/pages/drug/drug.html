@@ -222,10 +222,11 @@
                  });
 		        
 		        //监听搜索表单提交
-		        form.on('submit(search)', function(data) {
+		        form.on('submit(search)', function(data) {  
 		            //带条件查询
 		            tableIns.reload({
-		                where: data.field
+		                where: data.field,
+		                page: { curr: 1 }
 		            });
 		            $('.kit-search-mored').hide();
 		            return false;
@@ -263,6 +264,7 @@
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		
 		            if (layEvent === 'detail') { //查看
+		            	maxlayer();
 		                console.log(table.checkStatus('demo'));
 		            } else if (layEvent === 'del') { //删除
 		                layer.confirm('真的删除行么', function(index) {
@@ -294,7 +296,7 @@
                     	form.render(null, 'form-edit');
                     	return false;
                     }
-                	update("../../drug/Drug.action",data.field);
+                	update("../../drug/addDrug.action",data.field);
                 	if (close) editIndex && layer.close(editIndex); //关闭弹出层
                 	return false;
 		        });
@@ -339,16 +341,16 @@
 		                    
 		            }
 		        });
-		        
 		    });
 			
 		  	//全屏弹窗
 			function maxlayer(){
 				var index = layer.open({
 				  type: 2,
+				  title: '药品配置',
 				  content: 'http://layim.layui.com',
-				  area: ['320px', '195px'],
-				  maxmin: true
+				  area: ['800px', '430px']
+				  //maxmin: true
 				});
 				layer.full(index);
 			}
