@@ -5,8 +5,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yidu.domain.Drug;
 import com.yidu.domain.Wholesale;
 import com.yidu.service.WholesaleService;
+import com.yidu.util.Message;
 import com.yidu.util.TimeUtil;
 
 import java.util.ArrayList;
@@ -56,13 +58,25 @@ public class WholesaleController {
 	@ResponseBody
 	public int updateisva(Wholesale wholesale){
 		return service.updateisva(wholesale);
-	}
+	}	
 	
-	@RequestMapping("/updateByPrimaryKeySelective")
+	/**
+	 * 增加或修改
+	 * @return Message json信息类
+	 */
+	@RequestMapping("/addDrug")
 	@ResponseBody
-	public int updateByPrimaryKeySelective(@RequestBody Wholesale wholesale) {
-		System.out.println("asdasdasdasdasd="+wholesale.getIsva());
-		return service.updateByPrimaryKeySelective(wholesale);
+	public Message addDrug(@RequestBody Wholesale record) {
+		int rows = service.addOrUpdate(record);
+		Message mes = new Message();
+		if (rows>0) {
+			mes.setStatus(1);
+			mes.setMsg("操作成功");
+		} else {
+			mes.setStatus(0);
+			mes.setMsg("数据异常，请稍后重试！");
+		}
+		return mes;
 	}
 }
 

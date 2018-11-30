@@ -2,8 +2,10 @@ package com.yidu.service.impl;
 
  
 import com.yidu.dao.WholesaleMapper;
+import com.yidu.domain.Drug;
 import com.yidu.domain.Wholesale;
 import com.yidu.service.WholesaleService;
+import com.yidu.util.TimeUtil;
 
 import java.util.List;
 
@@ -38,5 +40,17 @@ public class WholesaleServiceImpl  implements WholesaleService {
 	@Override
 	public int updateByPrimaryKeySelective(Wholesale wholesale) {
 		return whole.updateByPrimaryKeySelective(wholesale);
+	}
+	
+	
+	@Override
+	public int addOrUpdate(Wholesale record) {
+		if (record.getWholId()!=null&&!"".equals(record.getWholId())) {
+			return whole.updateByPrimaryKeySelective(record);
+		} else {
+			record.setIsva("1");
+			record.setSort(TimeUtil.getStrDate());
+			return whole.insertSelective(record);
+		}
 	}
 }

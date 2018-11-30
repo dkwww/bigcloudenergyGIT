@@ -2,6 +2,7 @@ package com.yidu.service;
 
 import java.util.List;
 
+import com.yidu.domain.Drug;
 import com.yidu.domain.Wholesale;
 
 /**
@@ -18,4 +19,6 @@ public interface WholesaleService  {
 	public int updateisva(Wholesale wholesale);
 	
 	public int updateByPrimaryKeySelective(Wholesale wholesale);
+	
+	int addOrUpdate(Wholesale record);
 }

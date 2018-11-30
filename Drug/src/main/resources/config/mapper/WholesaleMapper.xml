@@ -45,9 +45,6 @@
   <insert id="insertSelective" parameterType="com.yidu.domain.Wholesale">
     insert into drug_wholesale
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="wholId != null">
-        whol_id,
-      </if>
       <if test="comId != null">
         com_id,
       </if>
