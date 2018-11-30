@@ -41,9 +41,8 @@
     <filter-name>CharacterEncodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  <!-- 替换页面 start -->
   <error-page>
-  	<error-code>403</error-code>
+    <error-code>403</error-code>
     <location>/WEB-INF/views/403.html</location>
   </error-page>
   <error-page>
@@ -54,5 +53,4 @@
     <error-code>500</error-code>
     <location>/WEB-INF/views/500.html</location>
   </error-page>
-  <!-- end -->
 </web-app>
