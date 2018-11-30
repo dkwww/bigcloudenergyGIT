@@ -159,8 +159,43 @@
   
   <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
   	select * from drug_member where isva='1' 
+  	  <if test="member.menName != null and member.menName != '' ">
+       and  men_name = #{member.menName,jdbcType=VARCHAR}
+      </if>
+      <if test="member.memPhone != null and member.memPhone != '' ">
+       and mem_phone = #{member.memPhone,jdbcType=VARCHAR}
+      </if>
+      <if test="member.memAddress != null and member.memAddress != '' ">
+       and mem_address = #{member.memAddress,jdbcType=VARCHAR}
+      </if>
+      <if test="member.optime != null and member.optime != '' ">
+       and optime = #{member.optime,jdbcType=TIMESTAMP}
+      </if>
   	order by optime desc
-  	limit #{util.startRows},#{util.rows}
+  	 limit #{util.startRows},#{util.rows}
   </select>
-
+  
+  <select id="findCount" parameterType="map" resultType="Integer">
+  	select count(*) from drug_member where isva='1' 
+  	  <if test="menName != null and menName != '' ">
+       and men_name = #{menName,jdbcType=VARCHAR}
+      </if>
+      <if test="memPhone != null and memPhone != '' ">
+       and mem_phone = #{memPhone,jdbcType=VARCHAR}
+      </if>
+      <if test="memAddress != null and memAddress != '' ">
+       and mem_address = #{memAddress,jdbcType=VARCHAR}
+      </if>
+      <if test="optime != null and optime != '' ">
+       and optime = #{optime,jdbcType=TIMESTAMP}
+      </if>
+  </select>
+  
+  <update id="bulkDelete">
+  	update drug_member set isva='0'
+  	where men_id in
+  	<foreach collection="list" item="ids" open="(" separator="," close=")">
+  		#{ids}
+  	</foreach>
+  </update>
 </mapper>

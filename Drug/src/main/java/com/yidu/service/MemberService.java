@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.yidu.domain.Member;
+import com.yidu.util.PageUtil;
 
 
 /**
@@ -20,7 +21,7 @@ public interface MemberService   {
 	 * @param maps map集合
 	 * @return
 	 */
-	public List<Member> query(Map<String, Object> maps);
+	public List<Member> query(PageUtil util,Member member);
 	
 	/**
 	 * 增加修改
@@ -35,5 +36,18 @@ public interface MemberService   {
 	 * @return
 	 */
 	public int delete(String menId);
+	/**
+	 * 批量删除
+	 * @param ids
+	 * @return
+	 */
+	public int bulkUpdate(List<String> ids);
+	/**
+	 * 分页
+	 * @param member model
+	 * @return
+	 */
+	public int findCount(Member member);
+	
 	
 }

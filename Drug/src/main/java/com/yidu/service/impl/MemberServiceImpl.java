@@ -6,10 +6,12 @@ package com.yidu.service.impl;
 import com.yidu.dao.MemberMapper;
 import com.yidu.domain.Member;
 import com.yidu.service.MemberService;
+import com.yidu.util.PageUtil;
 import com.yidu.util.TimeUtil;
 import com.yidu.util.Tools;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,9 +37,12 @@ public class MemberServiceImpl   implements MemberService {
 	 * 查询所有
 	 */
 	@Override
-	public List<Member> query(Map<String, Object> maps) {
+	public List<Member> query(PageUtil util,Member member) {
+		Map<String, Object> map=new HashMap<>();
+		map.put("util", util);
+		map.put("member", member);
 		//返回dao类查询所有的方法
-		return mapper.selectAll(maps);
+		return mapper.selectAll(map);
 	}
 	/**
 	 * 增加
@@ -66,5 +71,21 @@ public class MemberServiceImpl   implements MemberService {
 		member.setIsva("0");
 		//返回dao类根据ID修改的方法
 		return mapper.updateByPrimaryKeySelective(member);
+	}
+	
+	/**
+	 * 批量删除
+	 */
+	@Override
+	public int bulkUpdate(List<String> ids) {
+		return mapper.bulkDelete(ids);
+	}
+	
+	/**
+	 * 分页
+	 */
+	@Override
+	public int findCount(Member member) {
+		return mapper.findCount(member);
 	}
 }

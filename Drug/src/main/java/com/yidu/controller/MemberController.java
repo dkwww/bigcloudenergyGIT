@@ -13,6 +13,8 @@ import com.yidu.util.TimeUtil;
 import com.yidu.util.Tools;
 import com.yidu.util.UploadUtil;
 
+import antlr.RecognitionException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -56,14 +58,10 @@ public class MemberController {
 		util.setRows(Integer.valueOf(limit));
 		//List集合
 		List<Member> list=new ArrayList<>();
-		//map集合
-		Map<String,Object> maps=new HashMap<>();
-		//将会员对象包装到map
-		maps.put("member", member);
-		//将分页对象包装到map
-		maps.put("util", util);
 		//调用service查询所有的方法
-		List<Member> lists=service.query(maps);
+		List<Member> lists=service.query(util,member);
+		//调用service分页的方法
+		int rows=service.findCount(member);
 		//循环
 		for (Member member2 : lists) {
 			member2.setOptimeString(Tools.getTimeStr(member2.getOptime()));
@@ -75,7 +73,7 @@ public class MemberController {
 		//打印
 		map.put("msg", "");
 		//总行数
-		map.put("count", "10");
+		map.put("count", rows);
 		map.put("data", list);
 		//返回map
 		return map;
@@ -135,6 +133,22 @@ public class MemberController {
 		int rows=service.delete(menId);
 		//返回rows
 		return rows;
+	}
+	
+	//批量删除
+	@RequestMapping("/bulkUpdate")
+	@ResponseBody
+	public Message bulkUpdate(@RequestBody List<String> ids) {
+		int rows=service.bulkUpdate(ids);
+		Message msg=new Message();
+		if(rows>0) {
+			msg.setStatus(1);
+			msg.setMsg("删除成功");
+		}else {
+			msg.setStatus(0);
+			msg.setMsg("删除失败");
+		}
+		return msg;
 	}
 }
 

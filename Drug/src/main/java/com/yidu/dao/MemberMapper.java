@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.yidu.domain.Member;
+import com.yidu.util.PageUtil;
 
 public interface MemberMapper {
     int deleteByPrimaryKey(String menId);
@@ -23,4 +24,16 @@ public interface MemberMapper {
      * @return
      */
     public List<Member> selectAll(Map<String, Object> maps);
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    int bulkDelete(List<String> ids);
+    /**
+     * 分页
+     * @param record model
+     * @return
+     */
+    int findCount(Member record);
 }
