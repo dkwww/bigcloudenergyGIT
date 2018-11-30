@@ -26,9 +26,26 @@
     from drug_mrp
     where mrp_id = #{mrpId,jdbcType=VARCHAR}
   </select>
-  <select  id="qureyAll" parameterType="map"  resultMap="BaseResultMap"> 
-   select  *  from   drug_mrp   a  ,  drug_drug b where  a.drug_id=b.drug_id
+  <select  id="qureyAll" parameterType="java.util.Map"  resultMap="BaseResultMap"> 
+ 	SELECT  *  FROM  drug_mrp  a , drug_drug b    WHERE  a.drug_id=b.drug_id 
+	 <if test="drugName != null and drugName != ''">
+   		and b.drug_name like CONCAT(CONCAT('%',#{drugName,jdbcType=VARCHAR},'%'))
+   	</if>
+   	order by (a.sort+0) desc 
+   	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
+   	
    </select>
+   
+   
+    <select id="selectCountBySelective" parameterType="com.yidu.domain.Mrp" resultType="int">
+    SELECT  COUNT(*)  FROM  drug_mrp  a , drug_drug b    WHERE  a.drug_id=b.drug_id   
+   	<if test="drugName != null and drugName != ''">
+   		and b.drug_name like CONCAT(CONCAT('%',#{drugName,jdbcType=VARCHAR},'%'))
+   	</if>
+    
+  
+  </select>
+   
   
   
   

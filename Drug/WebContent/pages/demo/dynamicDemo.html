@@ -294,7 +294,7 @@
                     	form.render(null, 'form-edit');
                     	return false;
                     }
-                	update("../../drug/Drug.action",data.field);
+                	update("../../drug/addDrug.action",data.field);
                 	if (close) editIndex && layer.close(editIndex); //关闭弹出层
                 	return false;
 		        });
@@ -339,19 +339,7 @@
 		                    
 		            }
 		        });
-		        
 		    });
-			
-		  	//全屏弹窗
-			function maxlayer(){
-				var index = layer.open({
-				  type: 2,
-				  content: 'http://layim.layui.com',
-				  area: ['320px', '195px'],
-				  maxmin: true
-				});
-				layer.full(index);
-			}
 		    
 		    //增加、修改、删除、批量删除 都是用的这一个方法
 		    function update(url,data){

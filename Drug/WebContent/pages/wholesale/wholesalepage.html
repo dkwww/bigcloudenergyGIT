@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8" />
@@ -117,18 +117,12 @@
 		                    <input type="radio" name="isva" value="0" title="无效" {{woman}} />
 		                </div>
 		            </div>
- 					<div class="layui-inline">
-      					<label class="layui-form-label">验证日期</label>
-    					  <div class="layui-input-inline">
-       						 <input type="text" name="optime" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
-      					  </div>
-   					 </div>
-					 <div class="layui-inline">
-      					<label class="layui-form-label">日期选择</label>
-      						<div class="layui-input-block">
-        						<input type="text" name="date" id="date1" autocomplete="off" class="layui-input">
-      						</div>
-    				 </div>
+					 <div class="layui-form-item" style="display:none;">
+		                <div class="layui-input-block">
+		                    <button class="layui-btn" lay-submit lay-filter="formEdit">立即提交</button>
+		                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		                </div>
+		            </div>
 		        </form>
 		    </div>
 		</script>
@@ -173,10 +167,6 @@
 		                    title: '是否有效',
 		                    width: 120
 		                }, {
-		                    field: 'optime',
-		                    title: '操作时间',
-		                    width: 120
-		                }, {
 		                    fixed: 'right',
 		                    title: '操作',
 		                    width: 180,
@@ -203,45 +193,15 @@
 		            loading: true,
 		            //method: 'post'
 		        });
-					//城市及角色
-		        var staticData = {
-		            citys: [{
-		                id: 0,
-		                name: '北京'
-		            }, {
-		                id: 1,
-		                name: '广州'
-		            }, {
-		                id: 2,
-		                name: '深圳'
-		            }, {
-		                id: 3,
-		                name: '杭州'
-		            }],
-		            classifies: [{
-		                id: 0,
-		                name: '词人'
-		            }, {
-		                id: 1,
-		                name: '诗人'
-		            }, {
-		                id: 2,
-		                name: '作家'
-		            }, {
-		                id: 3,
-		                name: '酱油'
-		            }]
-		        };
 		        //监听搜索表单提交
 		        form.on('submit(search)', function(data) {
-		        	alert(data.field);
-		            console.log(data.field);
-		            layer.msg(JSON.stringify(data.field));
-		            //带条件查询
-		            tableIns.reload({
-		                where: data.field
-		            });
-		            return false;
+		        	 console.log(data.field);
+			            layer.msg(JSON.stringify(data.field));
+			            //带条件查询
+			            tableIns.reload({
+			                where: data.field
+			            });
+			            return false;
 		        });
 		        //监听工具条
 		        table.on('tool(demo)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
@@ -282,8 +242,6 @@
 		            } else if (layEvent === 'edit') { //编辑
 		                var d = {
 		                    rowdata: data,
-		                    citys: staticData.citys,
-		                    classifies: staticData.classifies
 		                };
 		                laytpl($('#edit-tpl').html()).render(d, function(html) {
 		                    layer.open({
@@ -318,26 +276,22 @@
 		        });
 		        var editIndex;
 		        form.on('submit(formEdit)', function(data) {
-		            layer.msg('formEdit');
-		            editIndex && layer.close(editIndex); //关闭弹出层
                     $.ajax({
-                		url: "../../wholesale/updateByPrimaryKeySelective.action",
+                		url: "../../wholesale/addDrug.action",
                 		type: "POST",
                 		cache: false,//同步
                 		data:JSON.stringify(data.field),
                 		dataType: "json",
                 		contentType : "application/json;charset=utf8",
-               			success: function(data){            
+               			success: function(mes){            
                     		if(data==0){
-                     			layer.msg("修改失败", {icon: 5});
+                     			layer.msg(mes.msg, {icon: 5});
                      			return false;
                     		}else{   
-                       			//关闭弹框
-                        		layer.close(index);
-                        		layer.msg("修改成功,该项已经不能启用", {icon: 6});
-                        		layer.closeAll();
-			                    parent.location.reload();
-                        		Load(); //删除完需要加载数据
+                    			$("#res").click();//调用重置按钮将表单数据清空
+		                        editIndex && layer.close(editIndex); //关闭弹出层
+	    			    		$(".layui-laypage-btn")[0].click();//当前表格刷新
+	                        	layer.msg(mes.msg,{icon:1});
                    			 }
                 		},
                 		error:function(){
@@ -359,8 +313,6 @@
 		                			isva:'',
 		                			optime: ''
 		                        },
-		                        citys: staticData.citys,
-		                        classifies: staticData.classifies
 		                    };
 		                    //渲染
 		                    laytpl($('#edit-tpl').html()).render(d,
@@ -374,7 +326,6 @@
 		                                yes: function(index, layero) {
 		                                    editIndex = index;
 		                                    $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
-		                                	alert("yes");
 		                                },
 		                                btn2: function(index, layero) {
 		                                    $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
@@ -388,7 +339,6 @@
 		                case 'del-bulk':
 		                    var d = table.checkStatus('demo');
 		                    if (d.data.length === 0) {
-		                        layer.msg('请选择要删除的数据');
 		                        return;
 		                    }
 		                    var data = d.data,

@@ -5,6 +5,7 @@ package com.yidu.service;
 import java.util.List;
 
 import com.yidu.domain.Mrp;
+import com.yidu.util.PageUtil;
 
 /**
  * <p>
@@ -15,7 +16,21 @@ import com.yidu.domain.Mrp;
  * @since 2018-11-26
  */
 public interface MrpService   {
+	 /** 
+	  * 查询所有  分页
+	  * @param mrp 
+	  * @param pageUtil
+	  * @return
+	  */
+	public  List<Mrp>  qureyAll(Mrp  mrp , PageUtil pageUtil);
 	
-	public  List<Mrp>  qureyAll();
+	
+	/**
+	 * 查询行数
+	 * @param mrp
+	 * @return
+	 */
+	   public  int  selectCountBySelectiv (Mrp  mrp );
 
 }
+  
