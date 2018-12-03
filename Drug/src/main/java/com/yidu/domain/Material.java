@@ -4,29 +4,50 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Material {
-    private String matId;
+    private String matId;				//原材料编号
 
-    private String mtId;
+    private String mtId;				//药材类型编号
 
-    private String miId;
+    private String miId;				//原料库存编号
 
-    private String matName;
+    private String matName;				//药材名称
 
-    private Integer matAmount;
+    private Integer matAmount;			//数量
 
-    private BigDecimal matPrice;
+    private BigDecimal matPrice;		//单价
 
-    private String matUnit;
+    private String matUnit;				//药品单位（个、粒、克）
+    
+    private String matEffect;			//功效
 
-    private String isva;
+    private String isva;				//是否有效
 
-    private Date optime;
+    private Date optime;				//操作时间
 
-    private String oper;
+    private String oper;				//操作人
 
-    private String sort;
+    private String sort;				//排序
+    
+    private String mtName;				//药材类型名
+    
+    
+    public String getMatEffect() {
+		return matEffect;
+	}
 
-    public String getMatId() {
+	public void setMatEffect(String matEffect) {
+		this.matEffect = matEffect;
+	}
+
+	public String getMtName() {
+		return mtName;
+	}
+
+	public void setMtName(String mtName) {
+		this.mtName = mtName;
+	}
+
+	public String getMatId() {
         return matId;
     }
 

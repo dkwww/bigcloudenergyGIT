@@ -13,11 +13,32 @@
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
+    <result column="mt_name" jdbcType="VARCHAR" property="mtName" />
+    <result column="mat_effect" jdbcType="VARCHAR" property="matEffect" />
   </resultMap>
   <sql id="Base_Column_List">
     mat_id, mt_id, mi_id, mat_name, mat_amount, mat_price, mat_unit, isva, optime, oper, 
-    sort
+    sort,mt_name,mat_effect
   </sql>
+  
+  <select id="showList" parameterType="map" resultMap="BaseResultMap">
+  	select
+  	*
+  	from drug_material a,drug_mat_type b where a.mt_id=b.mt_id and a.isva='1'
+  	<if test="material.matName!=null and material.matName!='' ">
+  		and mat_name like concat('%',#{material.matName},'%')
+  	</if>
+  	order by (a.sort+0) desc
+  	limit #{page.startRows},#{page.rows}
+  </select>
+  
+  <select id="selectCount" parameterType="com.yidu.domain.Material" resultType="int">
+  	select count(*) from drug_material where isva= '1'
+  	<if test="matName !=null and matName!='' ">
+  		and mat_name like concat('%',#{matName},'%')
+  	</if>
+  </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -32,11 +53,11 @@
     insert into drug_material (mat_id, mt_id, mi_id, 
       mat_name, mat_amount, mat_price, 
       mat_unit, isva, optime, 
-      oper, sort)
+      oper, sort,mat_effect)
     values (#{matId,jdbcType=VARCHAR}, #{mtId,jdbcType=VARCHAR}, #{miId,jdbcType=VARCHAR}, 
       #{matName,jdbcType=VARCHAR}, #{matAmount,jdbcType=INTEGER}, #{matPrice,jdbcType=DECIMAL}, 
       #{matUnit,jdbcType=VARCHAR}, #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, 
-      #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR})
+      #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR} ,#{matEffect})
   </insert>
   <insert id="insertSelective" parameterType="com.yidu.domain.Material">
     insert into drug_material

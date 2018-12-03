@@ -46,10 +46,10 @@ public class MatTypeController {
 	@ResponseBody
 	public Map<String, Object> showList(MatType type,Integer page,Integer limit){
 		PageUtil pageUtil = new PageUtil();
-		pageUtil.setCurPage(page);
-		pageUtil.setRows(limit);
-		
-		
+		if(page!=null && limit!=null) {
+			pageUtil.setCurPage(page);
+			pageUtil.setRows(limit);
+		}
 		
 		List<MatType> list=matTypeService.showList(type,pageUtil);
 		int rows=matTypeService.selectCount(type);
