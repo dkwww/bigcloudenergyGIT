@@ -15,13 +15,22 @@
     whol_id, com_id, whol_amount, whol_price, optime, isva, oper, sort
   </sql>
   
-  <select id="selectAll" resultMap="BaseResultMap">
+  <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
   	SELECT * FROM drug_wholesale
-  	<where>
-    	<if test="comId != null">
-    		and whol_id like '%'#{wholId,jdbcType=VARCHAR}'%'
-    	</if>
-    </where>
+  	where 1=1
+    <if test="title != null and title != '' ">
+    		and whol_id = #{title}
+    </if>
+	 <if test="kshs !=null and jshs !=null">
+   		limit #{kshs},#{jshs}   <!-- 开始行数到每页多少行 -->
+   	 </if>
+ 
+  </select>
+  <select id="selectCount" parameterType="map" resultType="integer">
+  	select count(*) from drug_wholesale where 1=1
+  	<if test="title != null and title != '' ">
+  	and whol_id = #{title}
+  	</if>
   </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -43,8 +52,14 @@
       #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yidu.domain.Wholesale">
+  	<selectKey keyProperty="wholId" resultType="string" order="BEFORE">
+	    SELECT REPLACE(UUID(),'-','') AS id;
+	</selectKey>
     insert into drug_wholesale
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="wholId != null">
+        whol_id,
+      </if>
       <if test="comId != null">
         com_id,
       </if>
@@ -133,30 +148,7 @@
     where whol_id = #{wholId,jdbcType=VARCHAR}
   </update>
   <update id="updateisva" parameterType="com.yidu.domain.Wholesale">
-  	 update drug_wholesale set isva=0 
-  	 <where>
-	   	  <if test="comId != null">
-	        com_id = #{comId,jdbcType=VARCHAR},
-	      </if>
-	      <if test="wholAmount != null">
-	        whol_amount = #{wholAmount,jdbcType=INTEGER},
-	      </if>
-	      <if test="wholPrice != null">
-	        whol_price = #{wholPrice,jdbcType=DECIMAL},
-	      </if>
-	      <if test="optime != null">
-	        optime = #{optime,jdbcType=TIMESTAMP},
-	      </if>
-	      <if test="isva != null">
-	        isva = #{isva,jdbcType=VARCHAR},
-	      </if>
-	      <if test="oper != null">
-	        oper = #{oper,jdbcType=VARCHAR},
-	      </if>
-	      <if test="sort != null">
-	        sort = #{sort,jdbcType=VARCHAR},
-	      </if>
-      </where>
+  	 update drug_wholesale set isva=0 where whol_id=#{wholId,jdbcType=VARCHAR}
   </update>
   
 </mapper>

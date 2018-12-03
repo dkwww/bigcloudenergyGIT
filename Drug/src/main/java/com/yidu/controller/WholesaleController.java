@@ -3,15 +3,19 @@ package com.yidu.controller;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yidu.domain.Drug;
 import com.yidu.domain.Wholesale;
 import com.yidu.service.WholesaleService;
 import com.yidu.util.Message;
+import com.yidu.util.PageUtil;
 import com.yidu.util.TimeUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -37,9 +41,22 @@ public class WholesaleController {
 	
 	@RequestMapping("/selectAll")
 	@ResponseBody
-	public Map<String,Object> selectAll(Wholesale record){
+	public Map<String,Object> selectAll(@RequestParam(value = "limit",required = false)Integer limit,
+			@RequestParam(value = "page" ,required = false)Integer page, Wholesale record){
+		System.err.println("  sdsddddddddddddddddd"+limit+"==================="+page);
+		PageUtil pages=new PageUtil();
+		if(limit!=null && page!=null) {
+			pages.setCurPage(page);
+			pages.setRows(limit);
+		}
+		Map<String, Object> maps=new HashMap<String,Object >();
+		maps.put("title",record.getWholId());
+		maps.put("kshs", pages.getStartRows());
+		maps.put("jshs", pages.getRows());
+		
 		List<Wholesale> lists=new ArrayList<>();
- 		List<Wholesale> list = service.selectAll(record);
+ 		List<Wholesale> list = service.selectAll(maps);
+ 		int selectCount = service.selectCount(maps);
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 			Wholesale wholesale = (Wholesale) iterator.next();
 			TimeUtil.dateToString(wholesale.getOptime(), "yyyy-MM-dd");
@@ -49,7 +66,7 @@ public class WholesaleController {
 		Map<String,Object> map = new HashedMap();
 		map.put("code", 0);
 		map.put("msg", "");
-		map.put("count", 10);
+		map.put("count", selectCount);
 		map.put("data", lists);
 		return map;
 	}
@@ -64,9 +81,9 @@ public class WholesaleController {
 	 * 增加或修改
 	 * @return Message json信息类
 	 */
-	@RequestMapping("/addDrug")
+	@RequestMapping("/addorupdate")
 	@ResponseBody
-	public Message addDrug(@RequestBody Wholesale record) {
+	public Message addorupdate(@RequestBody Wholesale record) {
 		int rows = service.addOrUpdate(record);
 		Message mes = new Message();
 		if (rows>0) {

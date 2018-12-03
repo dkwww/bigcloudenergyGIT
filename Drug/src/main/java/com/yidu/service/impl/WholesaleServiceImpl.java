@@ -8,9 +8,11 @@ import com.yidu.service.WholesaleService;
 import com.yidu.util.TimeUtil;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.functors.WhileClosure;
 import org.springframework.stereotype.Service;
 
 /**
@@ -28,8 +30,9 @@ public class WholesaleServiceImpl  implements WholesaleService {
 	WholesaleMapper whole;
 
 	@Override
-	public List<Wholesale> selectAll(Wholesale wholesale) {
-		return whole.selectAll(wholesale);
+	public List<Wholesale> selectAll(Map<String, Object> map) {
+		
+		return whole.selectAll(map);
 	}
 
 	@Override
@@ -50,7 +53,14 @@ public class WholesaleServiceImpl  implements WholesaleService {
 		} else {
 			record.setIsva("1");
 			record.setSort(TimeUtil.getStrDate());
+			record.setComId("1");
 			return whole.insertSelective(record);
 		}
+	}
+
+	@Override
+	public int selectCount(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return whole.selectCount(map);
 	}
 }

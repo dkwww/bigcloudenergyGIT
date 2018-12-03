@@ -53,8 +53,4 @@ public class MrpServiceImpl implements MrpService {
 	 
 		return dao.selectCountBySelective(mrp);
 	}
-	
-	
-	
-
 }

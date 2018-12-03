@@ -127,6 +127,33 @@
 		    </div>
 		</script>
 		
+		<script type="text/html" id="edit-tpls">
+		    <div style="margin:10px">
+		        <form class="layui-form" action="" lay-filter="form-edit">
+		            <input type="hidden" name="wholId" value="{{d.rowdata.wholId}}" />
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">物品数量</label>
+		                <div class="layui-input-block">
+		                    <input type	="text" name="wholAmount" required lay-verify="required" value="{{d.rowdata.wholAmount}}" placeholder="请输入数量" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">物品总价</label>
+		                <div class="layui-input-block">
+		                    <input type	="text" name="wholPrice" required lay-verify="required" value="{{d.rowdata.wholPrice}}" placeholder="请输入总价" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+					 <div class="layui-form-item" style="display:none;">
+		                <div class="layui-input-block">
+		                    <button class="layui-btn" lay-submit lay-filter="formEdits">立即提交</button>
+		                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		                </div>
+		            </div>
+		        </form>
+		    </div>
+		</script>
+		
+		
 		<!-- 显示表格 -->
 		<script src="../../res/layui/layui.js"></script>
 		<script>
@@ -195,11 +222,10 @@
 		        });
 		        //监听搜索表单提交
 		        form.on('submit(search)', function(data) {
-		        	 console.log(data.field);
-			            layer.msg(JSON.stringify(data.field));
+		        		$(".layui-laypage-btn")[0].click();//当前表格刷新
 			            //带条件查询
-			            tableIns.reload({
-			                where: data.field
+			            table.reload('demo',{
+			                where: {'wholId':data.field.wholId}
 			            });
 			            return false;
 		        });
@@ -274,10 +300,12 @@
 		        $('#kit-search-more').on('click', function() {
 		            $('.kit-search-mored').toggle();
 		        });
+		        
+		        //删除
 		        var editIndex;
 		        form.on('submit(formEdit)', function(data) {
                     $.ajax({
-                		url: "../../wholesale/addDrug.action",
+                		url: "../../wholesale/addorupdate.action",
                 		type: "POST",
                 		cache: false,//同步
                 		data:JSON.stringify(data.field),
@@ -300,6 +328,36 @@
             		});
 		            return false;
 		        });
+		        
+		        //增加
+		        var editIndex;
+		        form.on('submit(formEdit)', function(data) {
+                    $.ajax({
+                		url: "../../wholesale/addorupdate.action",
+                		type: "POST",
+                		cache: false,//同步
+                		data:JSON.stringify(data.field),
+                		dataType: "json",
+                		contentType : "application/json;charset=utf8",
+               			success: function(mes){            
+                    		if(data==0){
+                     			layer.msg(mes.msg, {icon: 5});
+                     			return false;
+                    		}else{   
+                    			$("#res").click();//调用重置按钮将表单数据清空
+		                        editIndex && layer.close(editIndex); //关闭弹出层
+	    			    		$(".layui-laypage-btn")[0].click();//当前表格刷新
+	                        	layer.msg(mes.msg,{icon:1});
+                   			 }
+                		},
+                		error:function(){
+                			return false;
+                		},
+            		});
+		            return false;
+		        });
+		        
+		        
 		        $('.kit-search-btns').children('a').off('click').on('click', function() {
 		            var $that = $(this),
 		                action = $that.data('action');
@@ -315,43 +373,18 @@
 		                        },
 		                    };
 		                    //渲染
-		                    laytpl($('#edit-tpl').html()).render(d,
+		                    laytpl($('#edit-tpls').html()).render(d,
 		                        function(html) {
 		                            layer.open({
-		                                type: 1,
-		                                title: '表单',
-		                                content: html,
+		                                type: 2,
+		                                title: '增加批发订单',
+		                                shadeClose: true,
+		                                shade: false,
+		                                maxmin: true, //开启最大化最小化按钮
 		                                area: ['800px', '450px'],
-		                                btn: ['提交', '重置', '取消'],
-		                                yes: function(index, layero) {
-		                                    editIndex = index;
-		                                    $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
-		                                },
-		                                btn2: function(index, layero) {
-		                                    $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
-		                                    return false;
-		                                },
-		                                success: function() {
-		                                    form.render(null, 'form-edit');
-		                                }
+		                                content: 'http://fly.layui.com/'
 		                            });
 		                        });
-		                case 'del-bulk':
-		                    var d = table.checkStatus('demo');
-		                    if (d.data.length === 0) {
-		                        return;
-		                    }
-		                    var data = d.data,
-		                        names = [],
-		                        ids = [];
-		                    layui.each(data, function(index, item) {
-		                        console.log(item);
-		                        names.push(item.username);
-		                        ids.push(item.id);
-		                    });
-		                    layer.msg(names.join(','));
-		                    console.log(ids.join(','));
-		                    break;
 		            }
 		        });
 		    });

@@ -30,7 +30,7 @@ public interface MrpService   {
 	 * @param mrp
 	 * @return
 	 */
-	   public  int  selectCountBySelectiv (Mrp  mrp );
+	   public  int  selectCountBySelectiv (Mrp  mrp);
 
 }
   
