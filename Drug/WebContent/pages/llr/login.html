@@ -12,6 +12,7 @@
     <link href="../../res/css/llr/demo.css" rel="stylesheet" type="text/css" />
     <link href="../../res/css/llr/loaders.css" rel="stylesheet" type="text/css" />
     <script src="../../res/js/llr/jquery-2.1.1.min.js"></script>
+    <script src="../../res/js/llr/login.js"></script>
 </head>
 <body>
 <div class='login'>
@@ -26,7 +27,7 @@
 
                 <img alt="" src='../../upload/user_icon_copy.png'>
             </div>
-            <input name="login" placeholder='用户名' maxlength="16" class="username" type='text' autocomplete="off" value="admin"/>
+            <input name="login" placeholder='用户名' id="adminName" name="adminName" maxlength="16" class="username" type='text' autocomplete="off" />
             <div class='validation'>
                 <img alt="" src='../../upload/tick.png'>
             </div>
@@ -35,7 +36,7 @@
             <div class='icon'>
                 <img alt="" src='../../upload/lock_icon_copy.png'>
             </div>
-            <input name="pwd" class="passwordNumder" placeholder='密码' maxlength="16" type='text' autocomplete="off">
+            <input name="pwd" class="passwordNumder" id="adminPwd" name="adminPwd" placeholder='密码' maxlength="16" type='text' autocomplete="off">
             <div class='validation'>
                 <img alt="" src='../../upload/tick.png'>
             </div>
