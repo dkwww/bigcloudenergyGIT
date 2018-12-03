@@ -20,5 +20,5 @@ public interface MrpMapper {
     
     List<Mrp>  qureyAll(Map<String, Object> map);
     
-    int  selectCountBySelective(Mrp  mrp);
+    int  selectCountBySelective(Mrp  record);
 }

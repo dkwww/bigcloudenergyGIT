@@ -28,8 +28,8 @@
   </select>
   <select  id="qureyAll" parameterType="java.util.Map"  resultMap="BaseResultMap"> 
  	SELECT  *  FROM  drug_mrp  a , drug_drug b    WHERE  a.drug_id=b.drug_id 
-	 <if test="drugName != null and drugName != ''">
-   		and b.drug_name like CONCAT(CONCAT('%',#{drugName,jdbcType=VARCHAR},'%'))
+	 <if test="mrp.drugName != null and mrp.drugName != ''">
+   		and b.drug_name like CONCAT(CONCAT('%',#{mrp.drugName,jdbcType=VARCHAR},'%'))
    	</if>
    	order by (a.sort+0) desc 
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
@@ -42,8 +42,6 @@
    	<if test="drugName != null and drugName != ''">
    		and b.drug_name like CONCAT(CONCAT('%',#{drugName,jdbcType=VARCHAR},'%'))
    	</if>
-    
-  
   </select>
    
   
