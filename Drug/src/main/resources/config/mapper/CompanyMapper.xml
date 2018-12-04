@@ -21,6 +21,30 @@
     from drug_company
     where com_id = #{comId,jdbcType=VARCHAR}
   </select>
+	
+  <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
+  	select * from  drug_company 
+  	<where>
+	  		<if test="company.comName != null and company.comName != '' ">
+	  		com_name like concat('%',#{company.comName},'%')
+	  	</if>
+  	</where>
+  	limit #{pageUtil.startRows},#{pageUtil.rows}
+  </select>
+  <!-- 分页以及模糊查询 -->
+  <select id="selectCount" parameterType="com.yidu.domain.Company" resultType="int">
+    select 
+    count(*) 
+    from drug_company
+    <where>
+	  	<if test="comName != null and comName != '' ">
+	  		com_name like concat('%',#{comName},'%')
+	  	</if>
+  	</where>
+   	
+  </select>
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_company
     where com_id = #{comId,jdbcType=VARCHAR}
@@ -137,5 +161,13 @@
       oper = #{oper,jdbcType=VARCHAR},
       sort = #{sort,jdbcType=VARCHAR}
     where com_id = #{comId,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="companyDeleteByPrimaryKeySelective">
+    update drug_company set isva = '未加盟'
+    where com_id in 
+    <foreach collection="list" item="ids" open="(" separator="," close=")">
+      #{ids} 
+    </foreach> 
   </update>
 </mapper>

@@ -3,6 +3,9 @@ package com.yidu.domain;
 import java.util.Date;
 
 public class Company {
+	
+
+    private String strTime;
     private String comId;
 
     private String comName;
@@ -20,8 +23,18 @@ public class Company {
     private String oper;
 
     private String sort;
+    
+   
+    
+    public String getStrTime() {
+		return strTime;
+	}
 
-    public String getComId() {
+	public void setStrTime(String strTime) {
+		this.strTime = strTime;
+	}
+
+	public String getComId() {
         return comId;
     }
 
