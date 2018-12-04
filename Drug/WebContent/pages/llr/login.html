@@ -4,30 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <title>药瓶后台登录</title>
-    <link rel="icon" href="loginSpecial/images/favicon.ico" type="image/x-icon"/>
-    <link rel="shortcut icon" href="loginSpecial/images/favicon.ico" type="image/x-icon"/>
     <link href="../../res/css/llr/default.css" rel="stylesheet" type="text/css" />
+    <link href="../../res/css/llr/layui.css" rel="stylesheet" type="text/css" />
     <!--必要样式-->
+    <link rel="icon" href="../../res/css/llr/favicon.ico" type="image/x-icon"/>
     <link href="../../res/css/llr/styles.css" rel="stylesheet" type="text/css" />
     <link href="../../res/css/llr/demo.css" rel="stylesheet" type="text/css" />
     <link href="../../res/css/llr/loaders.css" rel="stylesheet" type="text/css" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="../../res/js/llr/jquery-2.1.1.min.js"></script>
     <script src="../../res/js/llr/login.js"></script>
+  
 </head>
 <body>
 <div class='login'>
 
-    <!--<img class="MyLogo" src="loginSpecial/images/logo01.png" alt="   LOGO">-->
     <div class='login_title'>
         <span>管理员登录</span>
     </div>
+    <form method="post" id="myForm">
     <div class='login_fields'>
-        <div class='login_fields__user'>
+        <div class='login_fields__us234er'>
             <div class='icon'>
-
                 <img alt="" src='../../upload/user_icon_copy.png'>
             </div>
-            <input name="login" placeholder='用户名' id="adminName" name="adminName" maxlength="16" class="username" type='text' autocomplete="off" />
+            <input placeholder='用户名' id="adminName" name="adminName" type='text' autocomplete="off" />
             <div class='validation'>
                 <img alt="" src='../../upload/tick.png'>
             </div>
@@ -36,7 +37,7 @@
             <div class='icon'>
                 <img alt="" src='../../upload/lock_icon_copy.png'>
             </div>
-            <input name="pwd" class="passwordNumder" id="adminPwd" name="adminPwd" placeholder='密码' maxlength="16" type='text' autocomplete="off">
+            <input id="adminPwd" name="adminPwd" placeholder='密码' type='password' autocomplete="off">
             <div class='validation'>
                 <img alt="" src='../../upload/tick.png'>
             </div>
@@ -45,15 +46,16 @@
             <div class='icon'>
                 <img alt="" src='../../upload/key.png'>
             </div>
-            <input name="code" placeholder='验证码' maxlength="4"  class="ValidateNum" type='text' name="ValidateNum" autocomplete="off">
+            <input name="code" placeholder='验证码' maxlength="4"  id="ValidateNum" type='text' name="ValidateNum" autocomplete="off">
             <div class='validation' style="opacity: 1; right: -5px;top: -3px;">
                 <canvas class="J_codeimg" id="myCanvas" onclick="Code();">对不起，您的浏览器不支持canvas，请下载最新版浏览器!</canvas>
             </div>
         </div>
         <div class='login_fields__submit'>
-            <input type='button' value='登录'>
+            <input type='button' value='登录' id="submit">
         </div>
     </div>
+    </form>
     <div class='success'>
     </div>
     <div class='disclaimer'>
@@ -71,11 +73,11 @@
     <p>认证中...</p>
 </div>
 <div class="OverWindows"></div>
-<link href="../../res/css/llr/layui.css" rel="stylesheet" type="text/css" />
+
 <!--<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>-->
 <script type="text/javascript" src="../../res/js/llr/jquery-ui.min.js"></script>
 <script type="text/javascript" src='../../res/js/llr/stopExecutionOnTimeout.js'></script>
-<script src="../../res/js/llr/layui.js" type="text/javascript"></script>
+<script src="../../res/layui/layui.js" type="text/javascript"></script>
 <script src="../../res/js/llr/Particleground.js" type="text/javascript"></script>
 <script src="../../res/js/llr/Treatment.js" type="text/javascript"></script>
 <script src="../../res/js/llr/jquery.mockjax.js" type="text/javascript"></script>

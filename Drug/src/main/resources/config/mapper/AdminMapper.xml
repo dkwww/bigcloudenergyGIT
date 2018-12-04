@@ -150,4 +150,8 @@
       sort = #{sort,jdbcType=VARCHAR}
     where admin_id = #{adminId,jdbcType=VARCHAR}
   </update>
+  <!-- 根据用户名和密码查询 -->
+  <select id="queryNameOrPwd" resultMap="BaseResultMap">
+	 select <include refid="Base_Column_List" /> from drug_admin where admin_name = #{adminName,jdbcType=VARCHAR} and admin_pwd=#{adminPwd,jdbcType=VARCHAR}
+  </select>
 </mapper>

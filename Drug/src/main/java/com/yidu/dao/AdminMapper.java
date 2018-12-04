@@ -14,4 +14,11 @@ public interface AdminMapper {
     int updateByPrimaryKeySelective(Admin record);
 
     int updateByPrimaryKey(Admin record);
+
+    /**
+     * 查询用户名密码是否存在
+     * @param admin
+     * @return
+     */
+	public Admin queryNameOrPwd(Admin admin);
 }
