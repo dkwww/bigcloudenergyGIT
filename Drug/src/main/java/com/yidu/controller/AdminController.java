@@ -9,6 +9,8 @@ import com.yidu.service.AdminService;
 import com.yidu.util.Message;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 
@@ -34,7 +36,7 @@ public class AdminController {
 	 */
 	@RequestMapping("/queryNameOrPwd")
 	@ResponseBody
-	public Message queryNameOrPwd(Admin admin) {
+	public Message queryNameOrPwd(Admin admin,HttpServletRequest request) {
 		Admin admin2 = service.queryNameOrPwd(admin);
 		Message msg = new Message();
 		if(admin2==null) {
@@ -43,8 +45,40 @@ public class AdminController {
 		}else {
 			msg.setStatus(1);
 			msg.setMsg("登录成功");
+			HttpSession session=request.getSession();
+			session.setAttribute("user", admin2);
 		}
 		return msg;
+	}
+	
+	/**
+	 * 获取Seesion
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/getSessions")
+	@ResponseBody
+	public Admin getSessions(HttpServletRequest request) {
+		HttpSession session=request.getSession();
+		Admin admin=(Admin) session.getAttribute("user");
+		
+		System.out.println("Seesion==="+admin);
+		if(admin != null) {
+			return admin;
+		}else {
+			return admin = new Admin();
+		}
+	}
+	/**
+	 * 取session
+	 */
+	@RequestMapping("/sessionuser")
+	@ResponseBody
+	public Admin sessionuser(HttpServletRequest request) {
+		System.out.println("userseesion");
+		HttpSession session=request.getSession();
+		Admin admin=(Admin) session.getAttribute("user");
+			return admin;
 	}
 }
 
