@@ -75,8 +75,7 @@ layui.use('layer', function () {
             ErroAlert('请输入验证码');
             return false;
         }else {
-        	 
-        	if(CodeVal.toUpperCase()!=code){
+        	if(CodeVal.toUpperCase()!=code.toUpperCase()){
         		ErroAlert('请输入正确的验证码');
         		return false ;
         	}
@@ -110,7 +109,8 @@ layui.use('layer', function () {
                     setTimeout(function () {
                         $('.authent').hide();
                         $('.login').removeClass('test');
-                        ErroAlert("登录成功")
+                        //ErroAlert("登录成功")
+                        window.location.href='../../index.html';
                     }, 2400);
 				}else{
 					setTimeout(function () {
@@ -119,7 +119,7 @@ layui.use('layer', function () {
                     setTimeout(function () {
                         $('.authent').hide();
                         $('.login').removeClass('test');
-                        ErroAlert('登录失败');
+                        ErroAlert('对不起！登录失败');
                     }, 2400);
 				}
     		},"json")
