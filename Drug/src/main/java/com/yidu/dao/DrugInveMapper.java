@@ -1,5 +1,8 @@
 package com.yidu.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.yidu.domain.DrugInve;
 
 public interface DrugInveMapper {
@@ -14,4 +17,17 @@ public interface DrugInveMapper {
     int updateByPrimaryKeySelective(DrugInve record);
 
     int updateByPrimaryKey(DrugInve record);
+    
+    /**
+     *  查询所有
+     * @return
+     */
+    List<DrugInve> qureyAll(Map<String, Object> map);
+    	/**
+    	 * 查询行数
+    	 * @param record
+    	 * @return
+    	 */
+    	
+    	 int  selectCountBySelective(DrugInve  record);
 }

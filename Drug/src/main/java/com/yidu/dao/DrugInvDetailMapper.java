@@ -1,5 +1,7 @@
 package com.yidu.dao;
 
+import java.util.List;
+
 import com.yidu.domain.DrugInvDetail;
 
 public interface DrugInvDetailMapper {
@@ -9,9 +11,11 @@ public interface DrugInvDetailMapper {
 
     int insertSelective(DrugInvDetail record);
 
-    DrugInvDetail selectByPrimaryKey(String didId);
+    List<DrugInvDetail> selectByPrimaryKey(String didId);
 
     int updateByPrimaryKeySelective(DrugInvDetail record);
 
     int updateByPrimaryKey(DrugInvDetail record);
+    
+    int  selectcount(String  id);
 }

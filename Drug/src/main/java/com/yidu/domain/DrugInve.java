@@ -21,7 +21,41 @@ public class DrugInve {
 
     private String sort;
 
-    public String getDiId() {
+    private  String  drugName;   //药品名称
+    
+    private  String   comName;  //公司名称
+    
+    
+    private  String  typeName;   //药品类型名称
+    
+    
+    
+    
+    public String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+
+	public String getDrugName() {
+		return drugName;
+	}
+
+	public void setDrugName(String drugName) {
+		this.drugName = drugName;
+	}
+
+	public String getComName() {
+		return comName;
+	}
+
+	public void setComName(String comName) {
+		this.comName = comName;
+	}
+
+	public String getDiId() {
         return diId;
     }
 

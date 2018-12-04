@@ -4,6 +4,9 @@
   <resultMap id="BaseResultMap" type="com.yidu.domain.DrugInvDetail">
     <id column="did_id" jdbcType="VARCHAR" property="didId" />
     <result column="di_id" jdbcType="VARCHAR" property="diId" />
+    <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
+      <result column="drug_price" jdbcType="DECIMAL" property="drugPrice" />
+     <result column="Remarks" jdbcType="VARCHAR" property="Remarks" />
     <result column="di_amount" jdbcType="INTEGER" property="diAmount" />
     <result column="isva" jdbcType="VARCHAR" property="isva" />
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
@@ -14,11 +17,17 @@
     did_id, di_id, di_amount, isva, optime, oper, sort
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from drug_drug_inv_detail
-    where did_id = #{didId,jdbcType=VARCHAR}
+       SELECT  * FROM   drug_drug_inv_detail a ,drug_drug_inv b,drug_drug c ,drug_drug_type  d WHERE   a.di_id =b.di_id AND  b.drug_id=c.drug_id  AND  c.dt_id=d.dt_id 
+    and a.di_id = #{diId,jdbcType=VARCHAR}
   </select>
+  
+  
+  <select id="selectcount" parameterType="java.lang.String"  resultType="int">
+       SELECT  count(*) FROM   drug_drug_inv_detail a ,drug_drug_inv b,drug_drug c ,drug_drug_type  d WHERE   a.di_id =b.di_id AND  b.drug_id=c.drug_id  AND  c.dt_id=d.dt_id 
+    and a.di_id = #{diId,jdbcType=VARCHAR}
+  </select>
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_drug_inv_detail
     where did_id = #{didId,jdbcType=VARCHAR}
@@ -28,7 +37,7 @@
       isva, optime, oper, 
       sort)
     values (#{didId,jdbcType=VARCHAR}, #{diId,jdbcType=VARCHAR}, #{diAmount,jdbcType=INTEGER}, 
-      #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, 
+      #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR},
       #{sort,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yidu.domain.DrugInvDetail">
