@@ -1,5 +1,8 @@
 package com.yidu.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.yidu.domain.Sale;
 
 public interface SaleMapper {
@@ -14,4 +17,10 @@ public interface SaleMapper {
     int updateByPrimaryKeySelective(Sale record);
 
     int updateByPrimaryKey(Sale record);
+    /**
+     * 显示列表
+     * @param maps
+     * @return
+     */
+    public List<Sale> selectAll(Map<String, Object> maps);
 }

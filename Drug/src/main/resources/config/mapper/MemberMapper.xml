@@ -178,16 +178,13 @@
   <select id="findCount" parameterType="map" resultType="Integer">
   	select count(*) from drug_member where isva='1' 
   	  <if test="menName != null and menName != '' ">
-       and men_name = #{menName,jdbcType=VARCHAR}
+       and men_name like CONCAT(CONCAT('%',#{menName,jdbcType=VARCHAR},'%'))
       </if>
       <if test="memPhone != null and memPhone != '' ">
        and mem_phone = #{memPhone,jdbcType=VARCHAR}
       </if>
       <if test="memAddress != null and memAddress != '' ">
        and mem_address = #{memAddress,jdbcType=VARCHAR}
-      </if>
-      <if test="optime != null and optime != '' ">
-       and optime = #{optime,jdbcType=TIMESTAMP}
       </if>
   </select>
   

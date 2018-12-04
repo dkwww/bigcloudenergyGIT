@@ -6,48 +6,71 @@
 		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
-		<title>会员管理</title>
+		<title>药品管理</title>
     </script>
 	</head>
 	<body>
 		<div class="kit-table">
-		    <form class="layui-form" lay-filter="kit-search-form">
-				<!-- 左上角的两个按钮 -->
-		        <div class="kit-table-header">
-		            <div class="kit-search-btns">
-		                <a href="javascript:;" data-action="add" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i> 新增</a>
-		                <a href="javascript:;" data-action="del-bulk" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon">&#xe640;</i> 批量删除</a>
-		            </div>
-		            <div class="kit-search-inputs">
-		                <div class="kit-search-keyword">
-		                    <input type="text" class="layui-input" id="serach-one" placeholder="请输入会员名.." onKeyUp="lockInput(this,'serach-two')"/>
-		                    <button lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
-		                </div>
-		                <div class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>
-		            </div>
-		        </div>
-				<!-- 搜索扩展工具条 -->
-		        <div class="kit-search-mored layui-anim layui-anim-upbit">
-		            <div class="kit-search-body">
+				<form class="layui-form" lay-filter="kit-search-form">
+						<!-- 左上角的两个按钮 -->
+				        <div class="kit-table-header">
+				            <div class="kit-search-btns">
+				                <a href="javascript:;" data-action="add" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i> 新增</a>
+				                <a href="javascript:;" data-action="del-bulk" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon">&#xe640;</i> 批量删除</a>
+				            </div>
+				            <div class="kit-search-inputs">
+				                <div class="kit-search-keyword">
+				                    <input type="text" class="layui-input" id="serach-one" placeholder="请输入药品名.." onKeyUp="lockInput(this,'serach-two')"/>
+				                    <button lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
+				                </div>
+				                <div class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>
+				            </div>
+				        </div>
+						<!-- 搜索扩展工具条 -->
+						<div class="kit-search-mored layui-anim layui-anim-upbit">
+				          <div class="kit-search-body">
+							 <div class="layui-form-item">
+					           <label class="layui-form-label">药品名</label>
+					                <div class="layui-input-block">
+					                    <select name="drugName" id="drug-type">
+					                      <option value=""></option>
+					                    </select>
+					                </div>
+				         	 </div>
+				         <div class="layui-form-item">
+				              <div class="layui-inline">
+				                   <label class="layui-form-label">销售时间</label>
+				                        <div class="layui-input-block">
+					                        <div class="layui-input-inline" style="width: 150px;">
+					                             <input type="text" name="priceMin" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input" onKeyUp="amount(this)">
+					                        </div>
+					                        <div class="layui-form-mid">-</div>
+					                        <div class="layui-input-inline" style="width: 150px;">
+					                             <input type="text" name="priceMax" id="time" lay-verify="time" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input" onKeyUp="amount(this)">
+					                        </div>
+				                        </div>
+				              </div>
+				         </div>
+				         <div class="layui-form-item">
+				              <label class="layui-form-label">销售总数</label>
+				                   <div class="layui-input-block">
+				                        <input type="text" name="saleAmount" id="serach-two" placeholder="请输入销售总数" autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
+				                   </div>
+				         </div>
 		                <div class="layui-form-item">
-		                    <label class="layui-form-label">用户名</label>
-		                    <div class="layui-input-block">
-		                        <input type="text" name="menName" id="serach-two" placeholder="请输入用户名" autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
+		                    <div class="layui-inline">
+		                        <label class="layui-form-label">销售总金额</label>
+		                        <div class="layui-input-block">
+			                        <div class="layui-input-inline" style="width: 100px;">
+			                            <input type="text" name="priceMin" placeholder="￥" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
+			                        </div>
+			                        <div class="layui-form-mid">-</div>
+			                        <div class="layui-input-inline" style="width: 100px;">
+			                            <input type="text" name="priceMax" placeholder="￥" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
+			                        </div>
+		                        </div>
 		                    </div>
 		                </div>
-		                <div class="layui-form-item">
-		                    <label class="layui-form-label">手机号码</label>
-		                    <div class="layui-input-block">
-		                        <input type="text" name="memPhone" id="serach-two" placeholder="请输入手机号码" autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
-		                    </div>
-		                </div>
-		                <div class="layui-form-item">
-		                    <label class="layui-form-label">地址</label>
-		                    <div class="layui-input-block">
-		                        <input type="text" name="memAddress" id="serach-two" placeholder="请输入地址" autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
-		                    </div>
-		                </div>
-		                
 		            </div>
 		            <div class="kit-search-footer">
 		                <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary kit-btn reset-btn">重置</button>
@@ -73,39 +96,37 @@
 		        <form class="layui-form" action="" lay-filter="form-edit">
 		            <input type="hidden" name="menId" value="{{d.rowdata.menId}}" />
 		            <div class="layui-form-item">
-		                <label class="layui-form-label">用户名</label>
+		                <label class="layui-form-label">药品名</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="menName" required lay-verify="required" value="{{d.rowdata.menName}}" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+		                    <input type="text" name="drugName" required lay-verify="required" value="{{d.rowdata.drugName}}" placeholder="请输入药品名" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 		           
+					<div class="layui-inline">
+				          <label class="layui-form-label">销售时间</label>
+				              <div class="layui-input-block">
+					               <div class="layui-input-inline" style="width: 150px;">
+					                   <input type="text" name="priceMin" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input" onKeyUp="amount(this)">
+					               </div>
+					               <div class="layui-form-mid">-</div>
+					               <div class="layui-input-inline" style="width: 150px;">
+					                   <input type="text" name="priceMax" id="time" lay-verify="time" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input" onKeyUp="amount(this)">
+					               </div>
+				              </div>
+				    </div>
 					<div class="layui-form-item">
-		                <label class="layui-form-label">用户密码</label>
+		                <label class="layui-form-label">销售总数</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="memPwd" required lay-verify="required" value="{{d.rowdata.memPwd}}" placeholder="请输入密码" autocomplete="off" class="layui-input">
-		                </div>
-		            </div>
-					<div class="layui-form-item">
-		                <label class="layui-form-label">手机号码</label>
-		                <div class="layui-input-block">
-		                    <input type="text" name="memPhone" required lay-verify="required" value="{{d.rowdata.memPhone}}" placeholder="请输入密码" autocomplete="off" class="layui-input">
+		                    <input type="text" name="saleAmount" required lay-verify="required" value="{{d.rowdata.saleAmount}}" placeholder="请输入密码" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 		            <div class="layui-form-item">
-		                <label class="layui-form-label">地址</label>
+		                <label class="layui-form-label">销售总金额</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="memAddress" required lay-verify="required" value="{{d.rowdata.memAddress}}" placeholder="请输入密码" autocomplete="off" class="layui-input">
+		                    <input type="text" name="saleMoney" required lay-verify="required" value="{{d.rowdata.saleMoney}}" placeholder="请输入密码" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
-					<div class="layui-upload">
-                		<label class="layui-form-label">头像:</label>
-                		<div class="layui-upload layui-input-block">
-                    		<input type="hidden" name="memPictrue" value="{{d.rowdata.memPictrue}}"/>
-                    		<button type="button" class="layui-btn layui-btn-primary" id="fileBtn"><i class="layui-icon">&#xe67c;</i>选择文件</button>
-                   	 		<button type="button" class="layui-btn layui-btn-warm" id="uploadBtn">开始上传</button>
-                		</div>
-            		</div>
-					
+
 		            <div class="layui-form-item" style="display:none;">
 		                <div class="layui-input-block">
 		                    <button class="layui-btn" lay-submit lay-filter="formEdit">立即提交</button>
@@ -142,18 +163,16 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '469px', //容器高度
-		            url: '../../member/query.action',
+		            url: '../../sale/query.action',
 		            page: true,
 		            id: 'demo',
 		            cols: [
 		                [{checkbox: true,fixed: true},
-		                {field: 'menId',title: 'ID', width: 145,align: 'center'},
-		                {field: 'menName',title: '用户名',width: 100,align: 'center'},
-		                {field: 'memPwd',title: '密码',width: 100,align: 'center'},
-		                {field: 'memPhone',title: '电话号码',width: 130,align: 'center'},
-		                {field: 'memAddress',title: '地址',width: 225,align: 'center'},
-		                {field: 'memPictrue',title: '头像',width: 100,align: 'center',templet:'<div><img style="height:100%;height:30px;" src="../../{{ d.memPictrue}}"></div>'},
-		                {field: 'optimeString',title: '操作时间',width: 170},
+		                {field: 'saleId',title: 'ID', width: 200,align: 'center'},
+		                {field: 'drugName',title: '药品名',width: 200,align: 'center'},
+		                {field: 'saleTimeStr',title: '销售时间',width: 200,align: 'center'},
+		                {field: 'saleAmount',title: '销售总数',width: 130,align: 'center'},
+		                {field: 'saleMoney',title: '销售总金额',width: 225,align: 'center'},
 		                {fixed: 'right',title: '操作',width: 180,align: 'center',toolbar: '#barDemo'}]
 		            ],
 		            done: function(res, curr, count) {
@@ -214,7 +233,7 @@
 		            } else if (layEvent === 'del') { //删除
 		                layer.confirm('真的删除行么', function(index) {
 		                	layer.close(index);
-		                    update("../../member/addMember.action",{"menId":data.menId,"isva":"0"});
+		                    update("../../sale/addSale.action",{"saleId":data.saleId,"isva":"0"});
 		                });
 		            } else if (layEvent === 'edit') { //编辑
 		                var d = {
@@ -240,7 +259,7 @@
                     	form.render(null, 'form-edit');
                     	return false;
                     }
-                	update("../../member/addMember.action",data.field);
+                	update("../../sale/addSale.action",data.field);
                 	if (close) editIndex && layer.close(editIndex); //关闭弹出层
                 	return false;
 		        });
@@ -255,7 +274,7 @@
 		                    var d = {
 		                		//替换增加页面文本框内出现的undefine
 		                        rowdata: {
-		                        	menId: '',menName: '',memPwd: '',memPhone: '',memAddress: '',memPictrue: ''
+		                        	saleId: '',drugId: '',saleTime: '',saleAmount: '',saleMoney: ''
 		                        },
 		                    };
 		                    showlayer(d);
@@ -277,7 +296,7 @@
 		                    });
 		                    layer.confirm('真的删除行么', function(index) {
 		                    	layer.close(index);
-		                    	update("../../member/bulkUpdate.action",ids);
+		                    	update("../../sale/bulkUpdate.action",ids);
 			                });
 		                    break;
 		            }
@@ -303,29 +322,6 @@
                     },
                    	error:function(){layer.alert('数据异常，请稍后重试！！！',{icon:5});}
                  });
-		    }
-		    
-		    //上传文件
-		    function upload(){
-		    	layui.upload.render({
-	                elem: '#fileBtn'
-	                ,url: '../../member/upload.action'
-	                ,accept: 'file'
-	                ,auto: false
-	                ,bindAction: '#uploadBtn'
-	                ,before: function(){
-	                	layer.load(2,{shade:false});
-	                }
-	                ,done: function(res){
-	                	layer.closeAll("loading");
-	                	layer.msg(res.msg);
-	                	if (res.status=="1") {
-	                		 $("[name=memPictrue]").val(res.obj);
-	                		 $("#fileBtn").html('<i class="layui-icon">&#xe67c;</i>选择文件');
-	                		 form.render('form-edit');
-	                	}
-	                }
-	            });
 		    }
 		    
 		    //ajax加载动画

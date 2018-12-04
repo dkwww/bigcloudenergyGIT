@@ -21,8 +21,36 @@ public class Sale {
     private String oper;
 
     private String sort;
+    
+    private String saleTimeStr;
+    
+    private String drugName;
+    
+    
 
-    public String getSaleId() {
+	/**
+	 * @return the drugName
+	 */
+	public String getDrugName() {
+		return drugName;
+	}
+
+	/**
+	 * @param drugName the drugName to set
+	 */
+	public void setDrugName(String drugName) {
+		this.drugName = drugName;
+	}
+
+	public String getSaleTimeStr() {
+		return saleTimeStr;
+	}
+
+	public void setSaleTimeStr(String saleTimeStr) {
+		this.saleTimeStr = saleTimeStr;
+	}
+
+	public String getSaleId() {
         return saleId;
     }
 

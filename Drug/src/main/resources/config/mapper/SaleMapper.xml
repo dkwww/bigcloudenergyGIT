@@ -12,6 +12,18 @@
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
   </resultMap>
+  <resultMap id="BaseResultMapOne" type="com.yidu.domain.Sale">
+    <id column="sale_id" jdbcType="VARCHAR" property="saleId" />
+    <result column="drug_id" jdbcType="VARCHAR" property="drugId" />
+    <result column="sale_time" jdbcType="TIMESTAMP" property="saleTime" />
+    <result column="sale_amount" jdbcType="INTEGER" property="saleAmount" />
+    <result column="sale_money" jdbcType="DECIMAL" property="saleMoney" />
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+    <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
+  </resultMap>
   <sql id="Base_Column_List">
     sale_id, drug_id, sale_time, sale_amount, sale_money, isva, optime, oper, sort
   </sql>
@@ -138,4 +150,25 @@
       sort = #{sort,jdbcType=VARCHAR}
     where sale_id = #{saleId,jdbcType=VARCHAR}
   </update>
+  <!-- 查询所有 -->
+  <select id="selectAll" parameterType="map" resultMap="BaseResultMapOne">
+  	SELECT sa.*,dr.drug_name FROM drug_sale sa,drug_drug dr WHERE sa.drug_id=dr.drug_id AND sa.isva = '1'
+  	  <if test="sale.drugName != null and sale.drugName != '' ">
+       and dr.drug_Name = #{sale.drug_Name,jdbcType=VARCHAR}
+      </if>
+      <if test="sale.saleTime != null and sale.saleTime != '' ">
+       and sa.sale_time = #{sale.saleTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="sale.saleAmount != null and sale.saleAmount != '' ">
+       and sa.sale_amount = #{sale.saleAmount,jdbcType=VARCHAR}
+      </if>
+      <if test="sale.saleMoney != null and sale.saleMoney != '' ">
+       and sa.sale_money &gt; #{sale.priceMin,jdbcType=DECIMAL}
+      </if>
+       <if test="sale.saleMoney != null and sale.saleMoney != '' ">
+       and sa.sale_money &lt; #{sale.priceMax,jdbcType=DECIMAL}
+      </if>
+  	 order by (sa.sort+0) desc
+  	 limit #{util.startRows},#{util.rows}
+  </select>
 </mapper>

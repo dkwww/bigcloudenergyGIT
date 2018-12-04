@@ -38,6 +38,7 @@ public class MemberServiceImpl   implements MemberService {
 	 */
 	@Override
 	public List<Member> query(PageUtil util,Member member) {
+		//new一个Map集合
 		Map<String, Object> map=new HashMap<>();
 		map.put("util", util);
 		map.put("member", member);
