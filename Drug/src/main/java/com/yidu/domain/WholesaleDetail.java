@@ -23,7 +23,6 @@ public class WholesaleDetail {
     private String oper;
 
     private String sort;
-
     public String getWdId() {
         return wdId;
     }
