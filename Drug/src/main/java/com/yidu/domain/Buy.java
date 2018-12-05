@@ -3,45 +3,63 @@ package com.yidu.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * 采购
+ * @author 邓康威
+ *
+ */
 public class Buy {
-    private String buyId;
+    private String buyId;					//采购编号
 
-    private String comId;
+    private String comId;					//店铺编号
 
-    private Integer buyAmount;
+    private Integer buyAmount;				//商品数量
 
-    private BigDecimal buyMoney;
+    private BigDecimal buyMoney;			//总金额
 
-    private Date buyTime;
-
-    private String buyTimes;
-
-    private String buyCompany;
-
-    private String buyType;
-
-    private String buyAudit;
-
-    private String buyState;
-
-    private String buyQc;
-
-    private String buyPut;
-
-    private String buyMes;
-
-    private String isva;
-
-    private Date optime;
+    private Date buyTime;					//采购时间
     
-    private String optimes;
+    private String buyTimes;				
 
-    private String oper;
-
-    private String sort;
-
+    private String buyCompany;				//供应商外键
     
-    public String getBuyTimes() {
+    private String provName;				//供应商名
+
+    private String buyType;					//采购类型（0原料、1药品）
+
+    private String buyAudit;				//审核状态
+
+    private String buyState;				//采购状态
+    	
+    private String buyQc;					//质检状态
+
+    private String buyPut;					//入库状态
+
+    private String buyMes;					//备注
+
+    private String isva;					//是否有效
+
+    private Date optime;					//操作时间
+    
+    private String optimes;					
+
+    private String oper;					//操作人
+
+    private String sort;					//排序
+    
+    
+    
+   
+
+	public String getProvName() {
+		return provName;
+	}
+
+	public void setProvName(String provName) {
+		this.provName = provName;
+	}
+
+	public String getBuyTimes() {
 		return buyTimes;
 	}
 

@@ -38,8 +38,8 @@ public class BuyDetailController {
 	 */
 	@RequestMapping("/showList")
 	@ResponseBody
-	public Map<String,Object> showList() {
-		List<BuyDetail> list = service.findAll();
+	public Map<String,Object> showList(BuyDetail deta) {
+		List<BuyDetail> list = service.showList(deta);
 		
 		Map<String, Object> m = new HashMap<>();
 		m.put("code", 0);

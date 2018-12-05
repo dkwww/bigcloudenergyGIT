@@ -20,7 +20,7 @@ import org.springframework.stereotype.Controller;
  * 采购订单 前端控制器
  * </p>
  *
- * @author Pngjiangping
+ * @author 邓康威
  * @since 2018-11-26
  */
 @Controller
@@ -36,8 +36,10 @@ public class BuyController {
 	 */
 	@RequestMapping("/showList")
 	@ResponseBody
-	public Map<String,Object> showList() {
-		List<Buy> list = service.findAll();
+	public Map<String,Object> showList(Buy buy) {
+		List<Buy> list = service.showList(buy);
+		
+		
 		
 		Map<String, Object> m = new HashMap<>();
 		m.put("code", 0);

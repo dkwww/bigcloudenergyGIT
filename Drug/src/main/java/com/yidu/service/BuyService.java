@@ -18,6 +18,6 @@ public interface BuyService   {
 	 * 查询所有
 	 * @return
 	 */
-	public List<Buy> findAll();
+	public List<Buy> showList(Buy buy);
 	
 }

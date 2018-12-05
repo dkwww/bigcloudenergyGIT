@@ -8,6 +8,7 @@
     <result column="buy_money" jdbcType="DECIMAL" property="buyMoney" />
     <result column="buy_time" jdbcType="TIMESTAMP" property="buyTime" />
     <result column="buy_company" jdbcType="VARCHAR" property="buyCompany" />
+    <result column="prov_name" jdbcType="VARCHAR" property="provName" />
     <result column="buy_type" jdbcType="VARCHAR" property="buyType" />
     <result column="buy_audit" jdbcType="VARCHAR" property="buyAudit" />
     <result column="buy_state" jdbcType="VARCHAR" property="buyState" />
@@ -23,6 +24,17 @@
     buy_id, com_id, buy_amount, buy_money, buy_time, buy_company, buy_type, buy_audit, 
     buy_state, buy_qc, buy_put, buy_mes, isva, optime, oper, sort
   </sql>
+  
+  <select id="showList" parameterType="map" resultMap="BaseResultMap">
+  	SELECT * FROM drug_buy a,drug_provider b WHERE a.buy_company=b.prov_id
+  	<if test="buy.buyCompany!=null and buy.buyCompany!='' ">
+  		and buy_company like concat("%",#{buy.buyCompany},"%")
+  	</if>
+  	
+  </select>
+  
+  
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

@@ -28,14 +28,20 @@
   	<if test="material.matName!=null and material.matName!='' ">
   		and mat_name like concat('%',#{material.matName},'%')
   	</if>
+  	<if test="material.mtName !=null and material.mtName!='' ">
+  		and b.mt_name like concat('%',#{material.mtName},'%')
+  	</if>
   	order by (a.sort+0) desc
   	limit #{page.startRows},#{page.rows}
   </select>
   
   <select id="selectCount" parameterType="com.yidu.domain.Material" resultType="int">
-  	select count(*) from drug_material where isva= '1'
+  	select count(*) from drug_material a,drug_mat_type b where a.mt_id=b.mt_id and a.isva= '1'
   	<if test="matName !=null and matName!='' ">
   		and mat_name like concat('%',#{matName},'%')
+  	</if>
+  	<if test="mtName !=null and mtName!='' ">
+  		and b.mt_name like concat('%',#{mtName},'%')
   	</if>
   </select>
   

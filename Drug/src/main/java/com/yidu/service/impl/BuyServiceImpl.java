@@ -2,8 +2,10 @@ package com.yidu.service.impl;
 
  
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -26,20 +28,16 @@ import com.yidu.util.TimeUtil;
 public class BuyServiceImpl implements BuyService {
 
 	@Resource
-	BuyMapper buyMapper;
+	BuyMapper dao;
 	
 	@Override
-	public List<Buy> findAll() {
-		List<Buy> lists = new ArrayList<>();
-		List<Buy> list = buyMapper.findAll();
-		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
-			Buy buy = (Buy) iterator.next();
-			buy.setBuyTimes(TimeUtil.dateToString(buy.getBuyTime(), "yyyy-MM-dd HH:mm:ss"));
-			buy.setOptimes(TimeUtil.dateToString(buy.getOptime(), "yyyy-MM-dd HH:mm:ss"));
-			lists.add(buy);
-		}
+	public List<Buy> showList(Buy buy) {
 		
-		return lists;
+		Map<String, Object> map=new HashMap<>();
+		map.put("buy", buy);
+		
+		
+		return dao.showList(map);
 	}
 
 }

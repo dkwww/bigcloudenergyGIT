@@ -20,6 +20,6 @@ public interface BuyDetailService  {
 	 * 显示列表
 	 * @return
 	 */
-	public List<BuyDetail> findAll();
+	public List<BuyDetail> showList(BuyDetail deta);
 	
 }

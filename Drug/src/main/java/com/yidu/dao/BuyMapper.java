@@ -1,6 +1,7 @@
 package com.yidu.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.yidu.domain.Buy;
 
@@ -24,5 +25,5 @@ public interface BuyMapper {
      * 查询所有
      * @return
      */
-    public List<Buy> findAll();
+    public List<Buy> showList(Map<String, Object> map);
 }

@@ -30,20 +30,13 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 
 
 	@Resource
-	BuyDetailMapper mapper;
+	BuyDetailMapper dao;
 	
 	@Override
-	public List<BuyDetail> findAll() {
-		List<BuyDetail> lists = new ArrayList<>();
-		List<BuyDetail> list = mapper.findAll();
-		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
-			BuyDetail buyDetail = (BuyDetail) iterator.next();
-			
-			buyDetail.setOptimes(TimeUtil.dateToString(buyDetail.getOptime(), "yyyy-MM-dd HH:mm:ss"));
-			lists.add(buyDetail);
-		}
+	public List<BuyDetail> showList(BuyDetail deta) {
 		
-		return lists;
+		
+		return dao.showList(deta);
 	}
 
 }

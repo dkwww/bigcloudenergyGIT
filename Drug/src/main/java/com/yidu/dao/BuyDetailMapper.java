@@ -21,5 +21,5 @@ public interface BuyDetailMapper {
      * 显示列表
      * @return
      */
-    public List<BuyDetail> findAll();
+    public List<BuyDetail> showList(BuyDetail deta);
 }

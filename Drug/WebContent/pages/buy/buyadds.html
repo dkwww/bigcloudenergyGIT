@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
+		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
+		<title>采购增加页面</title>
+    </script>
+	</head>
+	
+	<script type="text/html" id="input">
+	<div class="layui-inline">
+		<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="bdetAmount"  autocomplete="off"  value="{{d.bdetAmount}}" id="number{{d.bdetId}}" onkeyup="Pressdown(this);">
+	</div>
+	</script>
+	
+	<script type="text/html" id="inputss">
+	<div class="layui-inline">
+		<input class="layui-input " disabled readonly="readonly"  maxlength="9" style="border:none;padding-bottom:8px;" name="bdetTotal" id="price{{d.bdetId}}" autocomplete="off" value="{{d.bdetTotal}}"">
+	</div>
+	</script>
+	
+	<body>
+		<div class="kit-table">
+		    <form class="layui-form" lay-filter="kit-search-form">
+				<!-- 左上角的两个按钮 -->
+		        <div class="kit-table-header">
+		            <div class="kit-search-btns">
+		                <a href="javascript:;" data-action="add" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i> 添加材料</a>
+		                <a href="javascript:;" data-action="add-Order" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i> 保存订单</a>
+		            </div>
+		            <div class="kit-search-inputs">
+		                <div class="kit-search-keyword">
+		                    <label class="layui-form-label"><span class="color-red"><span class="color-red"></span>供应商:</label>
+							  <div class="layui-input-inline">
+							    <select id="edit_exam_school" name="buyCompany">
+							      <option value="">请选择</option>
+							      <option value="1">阿里</option>
+							      <option value="2">腾讯</option>
+							      <option value="3">百度</option>
+							      <option value="4">万达</option>
+							    </select>
+							  </div>
+		                    <button lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
+		                </div>
+		            </div>
+		        </div>
+			
+		    </form>
+			<div class="layui-form-item">
+			   <label class="layui-form-label">采购总数量</label>
+			   <div class="layui-input-inline">
+			     <input type="text" name="buyAmount" id="buyAmount" autocomplete="off" class="layui-input layui-disabled" readonly="readonly">
+			   </div>
+			   <label class="layui-form-label">采购总金额</label>
+			   <div class="layui-input-inline">
+			     <input type="text" name="buyMoney" id="buyMoney" autocomplete="off" class="layui-input layui-disabled" readonly="readonly">
+			   </div>
+			</div>
+			<!-- 操作按钮 -->
+		    <div class="kit-table-body">
+		        <table id="demo" lay-filter="demo"></table>
+		        <script type="text/html" id="barDemo">
+		            <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+		            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+		            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+		        </script>
+		    </div>
+		</div>
+		
+		
+		<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
+		<script>
+			//文本框只能输入金额
+		    function amount(th){
+		        var regStrs = [
+		            ['^0(\\d+)$', '$1'], //禁止录入整数部分两位以上，但首位为0
+		            ['[^\\d\\.]+$', ''], //禁止录入任何非数字和点
+		            ['\\.(\\d?)\\.+', '.$1'], //禁止录入两个以上的点
+		            ['^(\\d+\\.\\d{2}).+', '$1'] //禁止录入小数点后两位以上
+		        ];
+		        for(i=0; i<regStrs.length; i++){
+		            var reg = new RegExp(regStrs[i][0]);
+		            th.value = th.value.replace(reg, regStrs[i][1]);
+		        }
+		    }
+			//搜索框同步输入
+			function lockInput(obj,id){
+				$("#"+id).val($(obj).val());
+			}
+		</script>
+		<script src="../../res/layui/layui.all.js"></script>
+		<script>
+			window.windata=null;
+			//显示表格数据
+		    layui.use(['table','upload'], function() {
+		        var table = layui.table,
+		            $ = layui.jquery,
+		            layer = layui.layer,
+		            form = layui.form,
+		            laytpl = layui.laytpl;
+		        var tableIns = table.render({
+		            elem: '#demo',
+		            height: '449px', //容器高度
+		            url: '../../material/showList.action',
+		            page: true,
+		            id: 'demo',
+		            cols: [
+		                [{checkbox: true,fixed: true},
+		                {field: 'matId',title: 'ID',width: 120},	
+		                {field: 'matName',title: '材料名',width: 120},
+		                {field: 'matPrice',title: '单价',width: 120},
+		                {field: 'matAmount',title: '数量',width: 120,templet:'#input'},
+		                {field: 'bdetTotal',title: '小计',width: 150,templet:'#inputss'}]
+		            ],
+		            done: function(res, curr, count) {
+		            	
+		            	windata=res.data;
+		            },
+		            loading: true
+		        });
+		        
+				//查询类型下拉框数据
+		        var staticData = null;
+		        $.ajax({ url:"../..//showList.action",
+                    type:'post',//method请求方式，get或者post
+                    cache: false,//同步
+                    dataType:'json',//预期服务器返回的数据类型
+                    success:function(mes){//res为相应体,function为回调函数
+                    	//增加及修改类型下拉框内的数据
+                    	staticData = mes;
+                    	//循环添加类型搜索框内的数据
+                    	$.each(mes.types,function(index,item){
+                    		$("#drug-type").append("<option value="+item.dtId+">"+item.dtName+"</option>");
+                    	});
+                    	//渲染类型搜索框内的下拉框
+                    	renderForm();
+                    }
+                 });
+		        
+		        
+		        
+		        
+		        //监听搜索表单提交
+		        form.on('submit(search)', function(data) {  
+		            //带条件查询
+		            tableIns.reload({
+		                where: data.field,
+		                page: { curr: 1 }
+		            });
+		            $('.kit-search-mored').hide();
+		            return false;
+		        });
+		        
+		        table.on('checkbox(demo)', function(obj){
+		        	var tables=table.cache.demo;
+		        	var data=obj.data;
+		        	 if(obj.checked==true){
+		        		 $.each(tables,function(i,item){
+		        			 if(data.bdetId==item.bdetId){
+		        				 console.info($("#number"+data.bdetId).val())
+		        				 console.info($("#price"+data.bdetId).val())
+		        			 }
+		        			 
+		        		 });
+		        	 }
+
+		        	 
+		        });
+		        
+		        
+		        
+		        
+		        //表单渲染
+		        form.render(null, 'kit-search-form');
+		        //更多筛选点击事件
+		        $('#kit-search-more').on('click', function() {
+		            $('.kit-search-mored').toggle();
+		        });
+		        var editIndex;
+		    });
+			
+		  	//全屏弹窗
+			function maxlayer(){
+				var index = layer.open({
+				  type: 2,
+				  title: '药品配置',
+				  content: 'https://www.baidu.com',
+				  area: ['800px', '430px']
+				  //maxmin: true
+				});
+				layer.full(index);
+			}
+		  	
+		  	//重新渲染表单
+		  	function renderForm(){ 
+	  			layui.use('form', function(){ 
+		  			var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加() 
+		  			form.render(); 
+	  			}); 
+	  		}
+		    //ajax加载动画
+		    $(function () {
+	            $.ajaxSetup({
+	                layerIndex:-1,
+	                beforeSend: function () {
+	                    this.layerIndex = layer.load(1, { shade: [0.8, '#ffffff'] });
+	                },
+	                complete: function () {
+	                    layer.close(this.layerIndex);
+	                },
+	                error: function () {
+	                    layer.alert('部分数据加载失败，可能会导致页面显示异常，请刷新后重试', {
+	                        skin: 'layui-layer-molv'
+	                       , closeBtn: 0
+	                       , shift: 4 //动画类型
+	                    });
+	                }
+	            });
+	        });
+		</script>
+		
+		<script>
+			
+			
+			
+			function Pressdown(obj){
+				obj.value = obj.value.replace(/[^\d]/g,"");//清除“数字”和“.”以外的字符  
+			    if(obj.value ==0){
+			    	obj.value = "0";
+			    }
+			    if(obj.value.indexOf(".")< 0 && obj.value !=""){//以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额 
+			        obj.value= parseFloat(obj.value); 
+			    }
+			    if(obj.value.indexOf(".")==0){//第一个字符不能为.
+			    	 obj.value="0";
+			    }
+			    
+			    var id = obj.id;
+				var a = obj.value;//数量值
+				var b=$(obj).parent().parent().parent().prev().children().html();//获取this的父类节点
+				var c =parseFloat(a)*parseFloat(b);//用this*数量
+				//计算结果显示
+				$(obj).parent().parent().parent().next().children().children().children().val(c);
+			}
+		</script>
+		
+	</body>
+</html>

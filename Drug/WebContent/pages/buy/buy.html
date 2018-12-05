@@ -6,7 +6,7 @@
 		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
-		<title>原材料管理</title>
+		<title>采购管理</title>
     </script>
 	</head>
 	<body>
@@ -18,10 +18,9 @@
 		                <a href="javascript:;" data-action="add" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i> 新增</a>
 		                <a href="javascript:;" data-action="del-bulk" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon">&#xe640;</i> 批量删除</a>
 		            </div>
-		            
 		            <div class="kit-search-inputs">
 		                <div class="kit-search-keyword">
-		                    <input type="text" class="layui-input" name="matName" id="serach-one" placeholder="药材名称.." onKeyUp="lockInput(this,'serach-two')"/>
+		                    <input type="text" class="layui-input" id="serach-one" placeholder=".." onKeyUp="lockInput(this,'serach-two')"/>
 		                    <button lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
 		                </div>
 		                <div class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>
@@ -33,13 +32,13 @@
 		                <div class="layui-form-item">
 		                    <label class="layui-form-label">药品名称</label>
 		                    <div class="layui-input-block">
-		                        <input type="text" name="matName" id="serach-two" placeholder="搜索关键字.." autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
+		                        <input type="text" name="" id="serach-two" placeholder="搜索关键字.." autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
 		                    </div>
 		                </div>
 		                <div class="layui-form-item">
 			                <label class="layui-form-label">类型</label>
 			                <div class="layui-input-block">
-			                    <select name="mtName" id="drug-type">
+			                    <select name="dtId" id="drug-type">
 			                      <option value=""></option>
 			                    </select>
 			                </div>
@@ -81,22 +80,29 @@
 		<script type="text/html" id="edit-tpl">
 		    <div style="margin:10px">
 		        <form class="layui-form" action="" lay-filter="form-edit">
-		            <input type="hidden" name="matId" value="{{d.rowdata.matId}}" />
-					<div class="layui-form-item">
+		            <input type="hidden" name="drugId" value="{{d.rowdata.drugId}}" />
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">名称</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="drugName" required lay-verify="required" value="{{d.rowdata.drugName}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+		            <div class="layui-form-item">
 		                <label class="layui-form-label">类型</label>
 		                <div class="layui-input-block">
-		                    <select name="mtId" lay-verify="required">
+		                    <select name="dtId" lay-verify="required">
 		                      <option value=""></option>
 		                      {{# layui.each(d.types,function(index,item){ }}                      
-		                      {{# if(item.mtId===d.rowdata.mtId){}}
-		                      <option value="{{item.mtId}}" selected>{{item.mtName}}</option>
+		                      {{# if(item.dtId===d.rowdata.dtId){}}
+		                      <option value="{{item.dtId}}" selected>{{item.dtName}}</option>
 		                      {{#}else{}}
-		                      <option value="{{item.mtId}}">{{item.mtName}}</option>
+		                      <option value="{{item.dtId}}">{{item.dtName}}</option>
 		                      {{#};}}
 		                      {{# }); }}
 		                    </select>
 		                </div>
 		            </div>
+
 					<div class="layui-form-item">
 		                <label class="layui-form-label">是否有效</label>
 		                <div class="layui-input-block">
@@ -105,40 +111,28 @@
 		                    <input type="radio" name="isva" value="0" title="否" {{woman}} />
 		                </div>
 		            </div>
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">药材名称</label>
-		                <div class="layui-input-block">
-		                    <input type="text" name="matName" required lay-verify="required" value="{{d.rowdata.matName}}" placeholder="请输入药材名称" autocomplete="off" class="layui-input">
-		                </div>
-		            </div>
-					<div class="layui-form-item">
-		                <label class="layui-form-label">数量</label>
-		                <div class="layui-input-block">
-		                    <input type="text" name="matAmount" required lay-verify="required" value="{{d.rowdata.matAmount}}" placeholder="请输入数量" autocomplete="off" class="layui-input">
-		                </div>
-		            </div>
-					
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">单价</label>
-		                <div class="layui-input-block">
-		                    <input type="text" name="matPrice" required lay-verify="required" maxlength="6" value="{{d.rowdata.matPrice}}" placeholder="请输入认购数额（整数）" autocomplete="off" class="layui-input activity_card_money">
-		                </div>
-		            </div>
-					
-					<div class="layui-form-item">
-		                <label class="layui-form-label">药品单位（个、粒、克）</label>
-		                <div class="layui-input-block">
-		                    <input type="text" name="matUnit" required lay-verify="required" maxlength="6" value="{{d.rowdata.matUnit}}" placeholder="请输入认购数额（整数）" autocomplete="off" class="layui-input activity_card_money">
-		                </div>
-		            </div>
+
 
 					<div class="layui-form-item">
-		                <label class="layui-form-label">功效</label>
+		                <label class="layui-form-label">单位</label>
 		                <div class="layui-input-block">
-							<input type="text" name="matEffect" required lay-verify="required" value="{{d.rowdata.matEffect}}" placeholder="请输入功效" autocomplete="off" class="layui-input">
+		                    <input type="text" name="drugUnit" required lay-verify="required" value="{{d.rowdata.drugUnit}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
-
+					<div class="layui-form-item">
+		                <label class="layui-form-label">buyType</label>
+		                <div class="layui-input-block">
+		                    {{# var otc = d.rowdata.buyType === '0'?'checked':'';}} {{# var rx = d.rowdata.buyType === '1'?'checked':'';}}
+		                    <input type="radio" name="buyType" value="1" title="药品" {{rx}} />
+		                    <input type="radio" name="buyType" value="0" title="原料" {{otc}} />
+		                </div>
+		            </div>
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">价格</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="drugPrice" required lay-verify="required" maxlength="6" value="{{d.rowdata.drugPrice}}" placeholder="请输入认购数额（整数）" autocomplete="off" class="layui-input activity_card_money" onKeyUp="amount(this)">
+		                </div>
+		            </div>
 					
 					
 		            <div class="layui-form-item" style="display:none;">
@@ -182,18 +176,22 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '449px', //容器高度
-		            url: '../../material/showList.action',
+		            url: '../../buy/showList.action',
 		            page: true,
 		            id: 'demo',
 		            cols: [
 		                [{checkbox: true,fixed: true},
-		                {field: 'matId',title: '原材料编号', width: 145},
-		                {field: 'mtName',title: '类型',width: 175},
-		                {field: 'matName',title: '药材名称',width: 150},
-		                {field: 'matAmount',title: '数量',width: 80},
-		                {field: 'matPrice',title: '单价',width: 90},
-		                {field: 'matUnit',title: '药品单位(个,颗,粒)',width: 150,sort: true},
-		                {field: 'matEffect',title: '功效',width: 150},
+		                {field: 'comId',title: '店铺编号',width: 95},
+		                {field: 'buyAmount',title: '商品数量',width: 100},
+		                {field: 'buyMoney',title: '总金额',width: 80},
+		                {field: 'buyTime',title: '采购时间',width: 150},
+		                {field: 'provName',title: '供应商 ',width: 130},
+		                {field: 'buyType',title: '采购类型',width: 90},
+		                {field: 'buyAudit',title: '审核状态',width: 90},
+		                {field: 'buyState',title: '采购状态',width: 90},
+		                {field: 'buyQc',title: '质检状态',width: 90},
+		                {field: 'buyPut',title: '入库状态',width: 90},
+		                {field: 'buyMes',title: '备注',width: 90},
 		                {fixed: 'right',title: '操作',width: 180,align: 'center',toolbar: '#barDemo'}]
 		            ],
 		            done: function(res, curr, count) {
@@ -215,17 +213,16 @@
 		        
 				//查询类型下拉框数据
 		        var staticData = null;
-		        $.ajax({ url:"../../matType/showList.action",
+		        $.ajax({ url:"../..//showList.action",
                     type:'post',//method请求方式，get或者post
                     cache: false,//同步
                     dataType:'json',//预期服务器返回的数据类型
                     success:function(mes){//res为相应体,function为回调函数
                     	//增加及修改类型下拉框内的数据
                     	staticData = mes;
-                    	console.log(mes.data)
                     	//循环添加类型搜索框内的数据
-                    	$.each(mes.data,function(index,item){
-                    		$("#drug-type").append("<option value="+item.mtName+">"+item.mtName+"</option>");
+                    	$.each(mes.types,function(index,item){
+                    		$("#drug-type").append("<option value="+item.dtId+">"+item.dtName+"</option>");
                     	});
                     	//渲染类型搜索框内的下拉框
                     	renderForm();
@@ -233,10 +230,11 @@
                  });
 		        
 		        //监听搜索表单提交
-		        form.on('submit(search)', function(data) {
+		        form.on('submit(search)', function(data) {  
 		            //带条件查询
 		            tableIns.reload({
-		                where: data.field
+		                where: data.field,
+		                page: { curr: 1 }
 		            });
 		            $('.kit-search-mored').hide();
 		            return false;
@@ -263,7 +261,7 @@
 	                            form.render(null, 'form-edit');
 	                        }
 	                    });
-	                    
+	                    upload();
 	                });
 			    }
 		        
@@ -274,16 +272,17 @@
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		
 		            if (layEvent === 'detail') { //查看
+		            	maxlayer();
 		                console.log(table.checkStatus('demo'));
 		            } else if (layEvent === 'del') { //删除
 		                layer.confirm('真的删除行么', function(index) {
 		                	layer.close(index);
-		                    update("../../material/addorUpdate.action",{"matId":data.matId,"isva":"0"});
+		                    update("../../drug/addDrug.action",{"drugId":data.drugId,"isva":"0"});
 		                });
 		            } else if (layEvent === 'edit') { //编辑
 		                var d = {
 		                	rowdata: data,
-		                    types: staticData.data
+		                    //types: staticData.data
 		                };
 		                showlayer(d);
 		            }
@@ -299,9 +298,14 @@
 		        
 		        //增加和修改弹出层   提交按钮点击事件
 		        form.on('submit(formEdit)', function(data) {
-                	update("../../material/addorUpdate.action",data.field);
-                	
-                	editIndex && layer.close(editIndex); //关闭弹出层
+                	if ($("[name=drugPictrue]").val()=="") {
+                		layer.msg('未上传文件');
+                    	$("#fileBtn").html('<span style="color:red"><i class="layui-icon">&#xe67c;</i>选择文件</span>');
+                    	form.render(null, 'form-edit');
+                    	return false;
+                    }
+                	update("../../drug/addDrug.action",data.field);
+                	if (close) editIndex && layer.close(editIndex); //关闭弹出层
                 	return false;
 		        });
 		        
@@ -315,11 +319,10 @@
 		                    var d = {
 		                		//替换增加页面文本框内出现的undefine
 		                        rowdata: {
-		                        	matId: '',mtName: '',matName: '',matAmount: '',matPrice: '',matUnit: '',matEffect:'',isva:'',
+		                        	drugId: '',drugName: '',drugProp: 1,drugUnit: '',drugPrice: '',drugPictrue: '',drugProp: 0,isva: ''
 		                        },
 		                        //类型下拉框数据
-		                       	types: staticData.data
-		                       	
+		                        //types: staticData.data
 		                    };
 		                    showlayer(d);
 		                    break;
@@ -335,27 +338,27 @@
 		                        names = [],
 		                        ids = [];
 		                    layui.each(data, function(index, item) {
-		                        names.push(item.matName);
-		                        ids.push(item.matId);
+		                        names.push(item.drugName);
+		                        ids.push(item.drugId);
 		                    });
 		                    layer.confirm('真的删除行么', function(index) {
 		                    	layer.close(index);
-		                    	update("../../material/addorUpdate.action",ids);
+		                    	update("../../drug/bulkUpdate.action",ids);
 			                });
 		                    break;
 		                    
 		            }
 		        });
-		        
 		    });
 			
 		  	//全屏弹窗
 			function maxlayer(){
 				var index = layer.open({
 				  type: 2,
-				  content: 'http://layim.layui.com',
-				  area: ['320px', '195px'],
-				  maxmin: true
+				  title: '药品配置',
+				  content: 'https://www.baidu.com',
+				  area: ['800px', '430px']
+				  //maxmin: true
 				});
 				layer.full(index);
 			}
@@ -381,7 +384,28 @@
                  });
 		    }
 		    
-		    
+		    //上传文件
+		    function upload(){
+		    	layui.upload.render({
+	                elem: '#fileBtn'
+	                ,url: '../../drug/upload.action'
+	                ,accept: 'file'
+	                ,auto: false
+	                ,bindAction: '#uploadBtn'
+	                ,before: function(){
+	                	layer.load(2,{shade:false});
+	                }
+	                ,done: function(res){
+	                	layer.closeAll("loading");
+	                	layer.msg(res.msg);
+	                	if (res.status=="1") {
+	                		 $("[name=drugPictrue]").val(res.obj);
+	                		 $("#fileBtn").html('<i class="layui-icon">&#xe67c;</i>选择文件');
+	                		 form.render('form-edit');
+	                	}
+	                }
+	            });
+		    }
 		    
 		  	//重新渲染表单
 		  	function renderForm(){ 

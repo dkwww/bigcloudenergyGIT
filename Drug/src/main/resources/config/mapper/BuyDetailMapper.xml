@@ -12,11 +12,15 @@
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
+    <result column="mat_name" jdbcType="VARCHAR" property="matName" />
   </resultMap>
   <sql id="Base_Column_List">
     bdet_id, buy_id, bdet_amount, bdet_price, bdet_total, bdet_fk_id, isva, optime, oper, 
-    sort
+    sort,mat_name
   </sql>
+  <select id="showList" parameterType="map" resultMap="BaseResultMap">
+  	SELECT * FROM drug_buy_detail a,drug_material b WHERE a.bdet_fk_id=b.mat_id
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -31,11 +35,11 @@
     insert into drug_buy_detail (bdet_id, buy_id, bdet_amount, 
       bdet_price, bdet_total, bdet_fk_id, 
       isva, optime, oper, 
-      sort)
+      sort,mat_name)
     values (#{bdetId,jdbcType=VARCHAR}, #{buyId,jdbcType=VARCHAR}, #{bdetAmount,jdbcType=INTEGER}, 
       #{bdetPrice,jdbcType=DECIMAL}, #{bdetTotal,jdbcType=DECIMAL}, #{bdetFkId,jdbcType=VARCHAR}, 
       #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, 
-      #{sort,jdbcType=VARCHAR})
+      #{sort,jdbcType=VARCHAR},#{matName})
   </insert>
   <insert id="insertSelective" parameterType="com.yidu.domain.BuyDetail">
     insert into drug_buy_detail
