@@ -29,27 +29,11 @@
 						<!-- 搜索扩展工具条 -->
 						<div class="kit-search-mored layui-anim layui-anim-upbit">
 				          <div class="kit-search-body">
-							 <div class="layui-form-item">
-					           <label class="layui-form-label">药品名</label>
-					                <div class="layui-input-block">
-					                    <select name="drugName" id="drug-type">
-					                      <option value=""></option>
-					                    </select>
-					                </div>
-				         	 </div>
-				         <div class="layui-form-item">
-				              <div class="layui-inline">
-				                   <label class="layui-form-label">销售时间</label>
-				                        <div class="layui-input-block">
-					                        <div class="layui-input-inline" style="width: 150px;">
-					                             <input type="text" name="priceMin" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input" onKeyUp="amount(this)">
-					                        </div>
-					                        <div class="layui-form-mid">-</div>
-					                        <div class="layui-input-inline" style="width: 150px;">
-					                             <input type="text" name="priceMax" id="time" lay-verify="time" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input" onKeyUp="amount(this)">
-					                        </div>
-				                        </div>
-				              </div>
+							  <div class="layui-form-item">
+				              <label class="layui-form-label">药品名</label>
+				                   <div class="layui-input-block">
+				                        <input type="text" name="drugName" id="serach-two" placeholder="请输入药品名" autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
+				                   </div>
 				         </div>
 				         <div class="layui-form-item">
 				              <label class="layui-form-label">销售总数</label>
@@ -94,11 +78,11 @@
 		<script type="text/html" id="edit-tpl">
 		    <div style="margin:10px">
 		        <form class="layui-form" action="" lay-filter="form-edit">
-		            <input type="hidden" name="menId" value="{{d.rowdata.menId}}" />
+		            <input type="hidden" name="saleId" value="{{d.rowdata.saleId}}" />
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">药品名</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="drugName" required lay-verify="required" value="{{d.rowdata.drugName}}" placeholder="请输入药品名" autocomplete="off" class="layui-input">
+		                    <input type="text" name="drugName" required lay-verify="required" value="{{d.rowdata.drugName}}" placeholder="请输入密码" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 		           
@@ -153,6 +137,7 @@
 		            form = layui.form,
 		            laytpl = layui.laytpl,
 		            laydate=layui.laydate;
+		        
 		        
 		        laydate.render({
 		        	elem:'#date'
@@ -324,25 +309,6 @@
                  });
 		    }
 		    
-		    //ajax加载动画
-		    $(function () {
-	            $.ajaxSetup({
-	                layerIndex:-1,
-	                beforeSend: function () {
-	                    this.layerIndex = layer.load(1, { shade: [0.8, '#ffffff'] });
-	                },
-	                complete: function () {
-	                    layer.close(this.layerIndex);
-	                },
-	                error: function () {
-	                    layer.alert('部分数据加载失败，可能会导致页面显示异常，请刷新后重试', {
-	                        skin: 'layui-layer-molv'
-	                       , closeBtn: 0
-	                       , shift: 4 //动画类型
-	                    });
-	                }
-	            });
-	        });
 		</script>
 	</body>
 </html>

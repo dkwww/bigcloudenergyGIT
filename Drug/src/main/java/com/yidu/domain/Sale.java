@@ -26,7 +26,40 @@ public class Sale {
     
     private String drugName;
     
+    private String priceMin;
     
+    private String priceMax;
+    
+    
+
+
+	/**
+	 * @return the priceMin
+	 */
+	public String getPriceMin() {
+		return priceMin;
+	}
+
+	/**
+	 * @param priceMin the priceMin to set
+	 */
+	public void setPriceMin(String priceMin) {
+		this.priceMin = priceMin;
+	}
+
+	/**
+	 * @return the priceMax
+	 */
+	public String getPriceMax() {
+		return priceMax;
+	}
+
+	/**
+	 * @param priceMax the priceMax to set
+	 */
+	public void setPriceMax(String priceMax) {
+		this.priceMax = priceMax;
+	}
 
 	/**
 	 * @return the drugName

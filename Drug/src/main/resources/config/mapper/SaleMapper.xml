@@ -154,18 +154,15 @@
   <select id="selectAll" parameterType="map" resultMap="BaseResultMapOne">
   	SELECT sa.*,dr.drug_name FROM drug_sale sa,drug_drug dr WHERE sa.drug_id=dr.drug_id AND sa.isva = '1'
   	  <if test="sale.drugName != null and sale.drugName != '' ">
-       and dr.drug_Name = #{sale.drug_Name,jdbcType=VARCHAR}
-      </if>
-      <if test="sale.saleTime != null and sale.saleTime != '' ">
-       and sa.sale_time = #{sale.saleTime,jdbcType=TIMESTAMP}
+       and dr.drug_Name like CONCAT(CONCAT('%',#{sale.drugName,jdbcType=VARCHAR},'%'))
       </if>
       <if test="sale.saleAmount != null and sale.saleAmount != '' ">
-       and sa.sale_amount = #{sale.saleAmount,jdbcType=VARCHAR}
+       and sa.sale_amount like CONCAT(CONCAT('%',#{sale.saleAmount,jdbcType=VARCHAR},'%'))
       </if>
-      <if test="sale.saleMoney != null and sale.saleMoney != '' ">
+      <if test="sale.priceMin != null and sale.priceMin != '' ">
        and sa.sale_money &gt; #{sale.priceMin,jdbcType=DECIMAL}
       </if>
-       <if test="sale.saleMoney != null and sale.saleMoney != '' ">
+       <if test="sale.priceMax!= null and sale.priceMax != '' ">
        and sa.sale_money &lt; #{sale.priceMax,jdbcType=DECIMAL}
       </if>
   	 order by (sa.sort+0) desc
