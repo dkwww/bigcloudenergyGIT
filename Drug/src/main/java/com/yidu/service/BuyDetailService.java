@@ -20,6 +20,28 @@ public interface BuyDetailService  {
 	 * 显示列表
 	 * @return
 	 */
-	public List<BuyDetail> showList(BuyDetail deta);
+	public List<BuyDetail> findAll();
 	
+	
+	/**
+	 * 增加或修改的方法
+	 * @param detail
+	 * @return
+	 */
+	public int addOrUpdate(BuyDetail detail);
+	
+	
+	/**
+	 * 修改
+	 * @param toy
+	 * @return
+	 */
+	public int updateByPrimaryKeySelective(BuyDetail detail);
+	
+	/**
+	 * 增加
+	 * @param toy
+	 * @return
+	 */
+	public int insertSelective(BuyDetail detail);
 }

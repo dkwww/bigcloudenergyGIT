@@ -3,25 +3,24 @@ package com.yidu.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * 采购明细
- * @author 邓康威
- *
- */
 public class BuyDetail {
-    private String bdetId;						//采购明细编号
+    private String bdetId;
 
-    private String buyId;						//采购订单编号
+    private String buyId;
 
-    private Integer bdetAmount;					//数量
+    private Integer bdetAmount;
 
-    private BigDecimal bdetPrice;				//单价
+    private BigDecimal bdetPrice;
 
-    private BigDecimal bdetTotal;				//小计
+    private BigDecimal bdetTotal;
 
-    private String bdetFkId;					//业务编号（采购商品编号）
+    private String bdetFkId;
 
-    private String isva;						
+    private String bdetFkName;
+    
+    private String mes;
+
+    private String isva;
 
     private Date optime;
 
@@ -30,17 +29,23 @@ public class BuyDetail {
     private String oper;
 
     private String sort;
-    
-    private String matName;						//材料名
-    
+
     
     
-    public String getMatName() {
-		return matName;
+    public String getMes() {
+		return mes;
 	}
 
-	public void setMatName(String matName) {
-		this.matName = matName;
+	public void setMes(String mes) {
+		this.mes = mes;
+	}
+
+	public String getBdetFkName() {
+		return bdetFkName;
+	}
+
+	public void setBdetFkName(String bdetFkName) {
+		this.bdetFkName = bdetFkName;
 	}
 
 	public String getOptimes() {

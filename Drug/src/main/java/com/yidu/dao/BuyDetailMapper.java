@@ -3,6 +3,7 @@ package com.yidu.dao;
 import java.util.List;
 
 import com.yidu.domain.BuyDetail;
+import com.yidu.domain.Drug;
 
 public interface BuyDetailMapper {
     int deleteByPrimaryKey(String bdetId);
@@ -21,5 +22,6 @@ public interface BuyDetailMapper {
      * 显示列表
      * @return
      */
-    public List<BuyDetail> showList(BuyDetail deta);
+    public List<BuyDetail> findAll();
+    
 }

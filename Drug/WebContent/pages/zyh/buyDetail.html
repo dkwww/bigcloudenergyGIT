@@ -6,172 +6,148 @@
 		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
-		<title>采购详情</title>
+		<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
+		<title>采购管理</title>
 	</head>
 	<body>
+ <input type="button" value="一键添加" id="btn" class="layui-btn layui-btn-lg" />
+<table class="layui-table"  style="width:1000px;" lay-filter="test3" id="add">
+  <thead>
+    <tr>
+      <th>药品名称</th>
+      <th>数量</th>
+      <th>单价</th>
+      <th>数量单位</th>
+      <th>备注</th>
+      <th>总价</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody id="tbo">
+  	
+  </tbody>
+</table>
+	
+	
+	
 		<div class="kit-table">
 		    <form class="layui-form" lay-filter="kit-search-form">
-						<!-- 左上角的两个按钮 -->
+				<!-- 左上角的两个按钮 -->
 		        <div class="kit-table-header">
 		            <div class="kit-search-btns">
-		                <a href="javascript:;" data-action="add" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i> 新增</a>
-		                <a href="javascript:;" data-action="del-bulk" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon">&#xe640;</i> 批量删除</a>
 		            </div>
 		            <div class="kit-search-inputs">
 		                <div class="kit-search-keyword">
-		                    <input type="text" class="layui-input" name="keyword" placeholder="搜索关键字.." />
+		                    <input type="text" class="layui-input" id="serach-one" placeholder="药品.." onKeyUp="lockInput(this,'serach-two')"/>
 		                    <button lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
 		                </div>
 		                <div class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>
 		            </div>
 		        </div>
-						<!-- 搜索扩展工具条 -->
+				<!-- 搜索扩展工具条 -->
 		        <div class="kit-search-mored layui-anim layui-anim-upbit">
 		            <div class="kit-search-body">
 		                <div class="layui-form-item">
-		                    <label class="layui-form-label">输入框</label>
+		                    <label class="layui-form-label">药品名称</label>
 		                    <div class="layui-input-block">
-		                        <input type="text" name="title" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                        <input type="text" name="drugName" id="serach-two" placeholder="搜索关键字.." autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
 		                    </div>
 		                </div>
 		                <div class="layui-form-item">
-		                    <div class="layui-inline">
-		                        <label class="layui-form-label">验证手机</label>
-		                        <div class="layui-input-inline">
-		                            <input type="tel" name="phone" autocomplete="off" class="layui-input">
-		                        </div>
-		                    </div>
-		                    <div class="layui-inline">
-		                        <label class="layui-form-label">验证邮箱</label>
-		                        <div class="layui-input-inline">
-		                            <input type="text" name="email" autocomplete="off" class="layui-input">
-		                        </div>
-		                    </div>
+			                <label class="layui-form-label">类型</label>
+			                <div class="layui-input-block">
+			                    <select name="dtId">
+			                      <option value=""></option>
+			                      <option value="04f0c99f02324cac9c55b733e2d0e62a">感冒药</option>
+			                      <option value="04f0c99f02324cac9c55b733e2d0ekksa">消炎药</option>
+			                    </select>
+			                </div>
 		                </div>
 		                <div class="layui-form-item">
 		                    <div class="layui-inline">
 		                        <label class="layui-form-label">范围</label>
-		                        <div class="layui-input-inline" style="width: 100px;">
-		                            <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input">
+		                        <div class="layui-input-block">
+			                        <div class="layui-input-inline" style="width: 100px;">
+			                            <input type="text" name="priceMin" placeholder="￥" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
+			                        </div>
+			                        <div class="layui-form-mid">-</div>
+			                        <div class="layui-input-inline" style="width: 100px;">
+			                            <input type="text" name="priceMax" placeholder="￥" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
+			                        </div>
 		                        </div>
-		                        <div class="layui-form-mid">-</div>
-		                        <div class="layui-input-inline" style="width: 100px;">
-		                            <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input">
-		                        </div>
-		                    </div>
-		                </div>
-		                <div class="layui-form-item">
-		                    <label class="layui-form-label">单行选择框</label>
-		                    <div class="layui-input-block">
-		                        <select name="interest" lay-filter="aihao">
-		                            <option value=""></option>
-		                            <option value="0">写作</option>
-		                            <option value="1" selected="">阅读</option>
-		                            <option value="2">游戏</option>
-		                            <option value="3">音乐</option>
-		                            <option value="4">旅行</option>
-		                          </select>
 		                    </div>
 		                </div>
 		            </div>
 		            <div class="kit-search-footer">
-		                <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary kit-btn">重置</button>
+		                <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary kit-btn reset-btn">重置</button>
 		                <button lay-submit lay-filter="search" class="layui-btn layui-btn-sm kit-btn">确定</button>
 		            </div>
 		        </div>
 		    </form>
 				
-				<!-- 操作按钮 -->
+			<!-- 操作按钮 -->
 		    <div class="kit-table-body">
 		        <table id="demo" lay-filter="demo"></table>
-		        <script type="text/html" id="barDemo">
-		            <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
-		            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-		            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-		        </script>
 		    </div>
 		</div>
-		
+		<script>
+			
+		</script>
 		<!-- 修改页面 -->
 		<script type="text/html" id="edit-tpl">
 		    <div style="margin:10px">
 		        <form class="layui-form" action="" lay-filter="form-edit">
-		            <input type="hidden" name="id" value="{{d.user.id}}" />
+		            <input type="hidden" name="drugId" value="{{d.rowdata.drugId}}" />
 		            <div class="layui-form-item">
-		                <label class="layui-form-label">用户名</label>
+		                <label class="layui-form-label">名称</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="username" required lay-verify="required" value="{{d.user.username}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                    <input type="text" name="drugName" required lay-verify="required" value="{{d.rowdata.drugName}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 		            <div class="layui-form-item">
-		                <label class="layui-form-label">密码框</label>
-		                <div class="layui-input-inline">
-		                    <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
-		                </div>
-		                <div class="layui-form-mid layui-word-aux">辅助文字</div>
-		            </div>
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">单选框</label>
+		                <label class="layui-form-label">类型</label>
 		                <div class="layui-input-block">
-		                    {{# var woman = d.user.sex === 0?'checked':'';}} {{# var man = d.user.sex === 1?'checked':'';}}
-		                    <input type="radio" name="sex" value="男" title="男" {{man}} />
-		                    <input type="radio" name="sex" value="女" title="女" {{woman}} />
-		                </div>
-		            </div>
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">城市</label>
-		                <div class="layui-input-block">
-		                    <select name="city" lay-verify="required">
+		                    <select name="dtId" lay-verify="required">
 		                      <option value=""></option>
-		                      {{# layui.each(d.citys,function(index,item){ }}                      
-		                      {{# if(item.id===d.user.city){}}
-		                      <option value="{{item.id}}" selected>{{item.name}}</option>
+		                      {{# layui.each(d.types,function(index,item){ }}                      
+		                      {{# if(item.dtId===d.rowdata.dtId){}}
+		                      <option value="{{item.dtId}}" selected>{{item.dtName}}</option>
 		                      {{#}else{}}
-		                      <option value="{{item.id}}">{{item.name}}</option>
+		                      <option value="{{item.dtId}}">{{item.dtName}}</option>
 		                      {{#};}}
 		                      {{# }); }}
 		                    </select>
 		                </div>
 		            </div>
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">积分</label>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">单位</label>
 		                <div class="layui-input-block">
-		                    <input type="number" name="experience" required lay-verify="required" value="{{d.user.experience}}" placeholder="请输入积分" autocomplete="off" class="layui-input">
+		                    <input type="text" name="drugUnit" required lay-verify="required" value="{{d.rowdata.drugUnit}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">属性</label>
+		                <div class="layui-input-block">
+		                    {{# var otc = d.rowdata.drugProp === '0'?'checked':'';}} {{# var rx = d.rowdata.drugProp === '1'?'checked':'';}}
+		                    <input type="radio" name="drugProp" value="1" title="处方药" {{rx}} />
+		                    <input type="radio" name="drugProp" value="0" title="非处方药" {{otc}} />
 		                </div>
 		            </div>
 		            <div class="layui-form-item">
-		                <label class="layui-form-label">评分</label>
+		                <label class="layui-form-label">价格</label>
 		                <div class="layui-input-block">
-		                    <input type="number" name="score" required lay-verify="required" value="{{d.user.score}}" placeholder="请输入评分" autocomplete="off" class="layui-input">
+		                    <input type="text" name="drugPrice" required lay-verify="required" maxlength="6" value="{{d.rowdata.drugPrice}}" placeholder="请输入认购数额（整数）" autocomplete="off" class="layui-input activity_card_money" onKeyUp="amount(this)">
 		                </div>
 		            </div>
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">财富</label>
-		                <div class="layui-input-block">
-		                    <input type="number" name="wealth" required lay-verify="required" value="{{d.user.wealth}}" placeholder="请输入财富" autocomplete="off" class="layui-input">
-		                </div>
-		            </div>
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">职业</label>
-		                <div class="layui-input-block">
-		                    <select name="classify" lay-verify="required">
-		                        <option value=""></option>                        
-		                      {{# layui.each(d.classifies,function(index,item){ }}
-		                      {{# if(item.id===d.user.classify){}}
-		                      <option value="{{item.id}}" selected>{{item.name}}</option>
-		                      {{#}else{}}
-		                      <option value="{{item.id}}">{{item.name}}</option>
-		                      {{#};}}
-		                      {{# }); }}
-		                    </select>
-		                </div>
-		            </div>
-		            <div class="layui-form-item layui-form-text">
-		                <label class="layui-form-label">签名</label>
-		                <div class="layui-input-block">
-		                    <textarea name="sign" placeholder="请输入个性签名" class="layui-textarea">{{d.user.sign}}</textarea>
-		                </div>
-		            </div>
+					<div class="layui-upload">
+                		<label class="layui-form-label">头像:</label>
+                		<div class="layui-upload layui-input-block">
+                    		<input type="hidden" name="drugPictrue" value="{{d.rowdata.drugPictrue}}"/>
+                    		<button type="button" class="layui-btn layui-btn-primary" id="fileBtn"><i class="layui-icon">&#xe67c;</i>选择文件</button>
+                   	 		<button type="button" class="layui-btn layui-btn-warm" id="uploadBtn">开始上传</button>
+                		</div>
+            		</div>
+					
 		            <div class="layui-form-item" style="display:none;">
 		                <div class="layui-input-block">
 		                    <button class="layui-btn" lay-submit lay-filter="formEdit">立即提交</button>
@@ -181,245 +157,145 @@
 		        </form>
 		    </div>
 		</script>
-		
-		<!-- 显示表格 -->
-		<script src="../../res/layui/layui.js"></script>
 		<script>
-		    layui.use(['table'], function() {
+
+			 
+			//为隐藏的文本框赋值
+			function num(obj){
+				
+				var id = obj.id;
+				var a = obj.value;//数量
+				var b=$(obj).parent().next().text();//单价
+				var c =parseFloat(a)*parseFloat(b);//总价
+				$(obj).parent().parent().children().eq(5).text(c);
+				
+				pj();
+			}
+			/**
+			* 拼接的方法
+			*/
+			function pj(){
+				//赋值
+				var str = ""; 
+				//拼接
+				$("#tbo").find("tr").each(function(){
+					  $(this).children('td').each(function(j){ 
+						  str+=$(this).text()+"#";
+					  });
+					  str+=$(this).find("td:eq(1) input").val()+"#";
+					  str+=$(this).find("td:eq(4) input").val()+"#";
+					  str+=$(this).find("td:eq(7) input").val()+"&";
+				});
+				$("#mes").val(str);
+			}			//文本框只能输入金额
+		    function amount(th){
+		        var regStrs = [
+		            ['^0(\\d+)$', '$1'], //禁止录入整数部分两位以上，但首位为0
+		            ['[^\\d\\.]+$', ''], //禁止录入任何非数字和点
+		            ['\\.(\\d?)\\.+', '.$1'], //禁止录入两个以上的点
+		            ['^(\\d+\\.\\d{2}).+', '$1'] //禁止录入小数点后两位以上
+		        ];
+		        for(i=0; i<regStrs.length; i++){
+		            var reg = new RegExp(regStrs[i][0]);
+		            th.value = th.value.replace(reg, regStrs[i][1]);
+		        }
+		    }
+			//搜索框同步输入
+			function lockInput(obj,id){
+				$("#"+id).val($(obj).val());
+			}
+		</script>
+		<script src="../../res/layui/layui.all.js"></script>
+		<script>
+			//显示表格数据
+		    layui.use(['table','upload'], function() {
 		        var table = layui.table,
 		            $ = layui.jquery,
 		            layer = layui.layer,
 		            form = layui.form,
 		            laytpl = layui.laytpl;
+		        
 		        var tableIns = table.render({
 		            elem: '#demo',
-		            height: 'full', //容器高度
-		            url: '../../buyDetail/showList.action',
+		            height: '449px', //容器高度
+		            url: '../../drug/showList.action',
 		            page: true,
 		            id: 'demo',
 		            cols: [
-		                [{
-		                    checkbox: true,
-		                    fixed: true
-		                }, {
-		                    field: 'bdetId',
-		                    title: '明细编号',
-		                    width: 140
-		                }, {
-		                    field: 'buyId',
-		                    title: '采购编号',
-		                    width: 105
-		                }, {
-		                    field: 'bdetAmount',
-		                    title: '数量',
-		                    width: 100
-		                }, {
-		                    field: 'bdetPrice',
-		                    title: '单价',
-		                    width: 80
-		                }, {
-		                    field: 'bdetTotal',
-		                    title: '小计',
-		                    width: 100
-		                }, {
-		                    field: 'bdetFkId',
-		                    title: '业务编号',
-		                    width: 100
-		                }, {
-		                    field: 'isva',
-		                    title: '是否有效',
-		                    width: 100
-		                },{
-		                    field: 'optimes',
-		                    title: '操作时间',
-		                    width: 170,
-		                    sort: true
-		                },{
-		                    field: 'oper',
-		                    title: '操作人',
-		                    width: 100,
-		                    sort: true
-		                }, {
-		                    fixed: 'right',
-		                    title: '操作',
-		                    width: 180,
-		                    align: 'center',
-		                    toolbar: '#barDemo'
-		                }]
+		                [{checkbox: true,fixed: true},
+		                {field: 'drugId',title: 'ID', width: 273},
+		                {field: 'drugName',title: '药名',width: 175},
+		                {field: 'dtName',title: '类型',width: 80},
+		                {field: 'drugUnit',title: '单位',width: 80},
+		                {field: 'drugProp',title: '属性',width: 90},
+		                {field: 'drugPictrue',title: '图片',width: 60,templet:'<div><img style="height:100%;height:30px;" src="../../{{ d.drugPictrue}}"></div>'},
+		                {field: 'drugPrice',title: '价格（元）',width: 150,sort: true}]
 		            ],
 		            done: function(res, curr, count) {
-		                //如果是异步请求数据方式，res即为你接口返回的信息。
-		                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
-		                // console.log(res);
-		                // //得到当前页码
-		                // console.log(curr);
-		                // //得到数据总量
-		                // console.log(count);
+		                $("[data-field = 'drugProp']").children().each(function(){
+						    if($(this).text() == '1'){
+						    	$(this).text("处方药");
+						    } else if ($(this).text() == '0') {
+						    	$(this).text("非处方药");
+						    }
+					  	});
+		                /* $("[data-field = 'drugPictrue']").children().each(function(){
+						    if($(this).text() == 'null'||$(this).text() == ''){
+						    	$(this).text("暂无");
+						    }
+					  	}); */
 		            },
 		            loading: true,
-		            //method: 'post'
 		        });
-						//城市及角色
-		        var staticData = {
-		            citys: [{
-		                id: 0,
-		                name: '北京'
-		            }, {
-		                id: 1,
-		                name: '广州'
-		            }, {
-		                id: 2,
-		                name: '深圳'
-		            }, {
-		                id: 3,
-		                name: '杭州'
-		            }],
-		            classifies: [{
-		                id: 0,
-		                name: '词人'
-		            }, {
-		                id: 1,
-		                name: '诗人'
-		            }, {
-		                id: 2,
-		                name: '作家'
-		            }, {
-		                id: 3,
-		                name: '酱油'
-		            }]
-		        };
+		        
+		        
+					
+		      	//监听表格复选框选择
+		        table.on('checkbox(demo)', function(obj){
+		        	var data = obj.data;
+		        	$("#tbo").append("<tr><td>"+data.drugName+"</td><td><input type='number' id='up_"+data.drugId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' /></td><td id='pic_"+data.drugId+"'>"+data.drugPrice+"</td><td>"+data.drugUnit+"</td><td><input type='text' id='mes_"+data.drugId+"' style='height:20px; border:0px; width:200px;' onKeyUp='pj()'/></td><td id='total'></td><td><a href='javascript:remove(this);'>删除</a></td><td style='display:none;'><input type='text' id='drugId' value='"+data.drugId+"' /></td></tr>")
+		        	
+		        	
+		        });
 		        //监听搜索表单提交
 		        form.on('submit(search)', function(data) {
-		            console.log(data.field);
-		            layer.msg(JSON.stringify(data.field));
 		            //带条件查询
 		            tableIns.reload({
 		                where: data.field
 		            });
+		            $('.kit-search-mored').hide();
 		            return false;
 		        });
-		        //监听工具条
-		        table.on('tool(demo)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-		            var data = obj.data; //获得当前行数据
-		            var layEvent = obj.event; //获得 lay-event 对应的值
-		            var tr = obj.tr; //获得当前行 tr 的DOM对象
-		
-		            if (layEvent === 'detail') { //查看
-		                console.log(table.checkStatus('demo'));
-		            } else if (layEvent === 'del') { //删除
-		                layer.confirm('真的删除行么', function(index) {
-		                    obj.del(); //删除对应行（tr）的DOM结构
-		                    layer.close(index);
-		                    //向服务端发送删除指令
-		                });
-		            } else if (layEvent === 'edit') { //编辑
-		                var d = {
-		                    user: data,
-		                    citys: staticData.citys,
-		                    classifies: staticData.classifies
-		                };
-		                laytpl($('#edit-tpl').html()).render(d, function(html) {
-		                    layer.open({
-		                        type: 1,
-		                        title: '表单',
-		                        content: html,
-		                        area: ['800px', '450px'],
-		                        btn: ['提交', '重置', '取消'],
-		                        yes: function(index, layero) {
-		                            editIndex = index;
-		                            $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
-		                        },
-		                        btn2: function(index, layero) {
-		                            $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
-		                            return false;
-		                        },
-		                        success: function() {
-		                            form.render(null, 'form-edit');
-		                        }
-		                    });
-		                });
-		                //同步更新缓存对应的值
-		                // obj.update({
-		                //     username: '123',
-		                //     title: 'xxx'
-		                // });
-		            }
-		        });
+		        
+		        //表单渲染
 		        form.render(null, 'kit-search-form');
+		        //更多筛选点击事件
 		        $('#kit-search-more').on('click', function() {
 		            $('.kit-search-mored').toggle();
 		        });
 		        var editIndex;
-		        form.on('submit(formEdit)', function(data) {
-		            layer.msg('formEdit');
-		            editIndex && layer.close(editIndex); //关闭弹出层
-		            return false;
-		        });
-		        $('.kit-search-btns').children('a').off('click').on('click', function() {
-		            var $that = $(this),
-		                action = $that.data('action');
-		            switch (action) {
-		                case 'add':
-		                    var d = {
-		                        user: {
-		                            sign: '你哈',
-		                            city: '',
-		                            classify: '',
-		                            experience: '',
-		                            id: 0,
-		                            logins: '',
-		                            score: '',
-		                            sex: 1,
-		                            sign: '',
-		                            username: '',
-		                            wealth: ''
-		                        },
-		                        citys: staticData.citys,
-		                        classifies: staticData.classifies
-		                    };
-		                    //渲染
-		                    laytpl($('#edit-tpl').html()).render(d,
-		                        function(html) {
-		                            layer.open({
-		                                type: 1,
-		                                title: '表单',
-		                                content: html,
-		                                area: ['800px', '450px'],
-		                                btn: ['提交', '重置', '取消'],
-		                                yes: function(index, layero) {
-		                                    editIndex = index;
-		                                    $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
-		                                },
-		                                btn2: function(index, layero) {
-		                                    $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
-		                                    return false;
-		                                },
-		                                success: function() {
-		                                    form.render(null, 'form-edit');
-		                                }
-		                            });
-		                        });
-		                    break;
-		                case 'del-bulk':
-		                    var d = table.checkStatus('demo');
-		                    if (d.data.length === 0) {
-		                        layer.msg('请选择要删除的数据');
-		                        return;
-		                    }
-		                    var data = d.data,
-		                        names = [],
-		                        ids = [];
-		                    layui.each(data, function(index, item) {
-		                        console.log(item);
-		                        names.push(item.username);
-		                        ids.push(item.id);
-		                    });
-		                    layer.msg(names.join(','));
-		                    console.log(ids.join(','));
-		                    break;
-		            }
-		        });
 		    });
+		    
+		    $(document).on("click",".layui-table-body table.layui-table tbody tr", function () { var index = $(this).attr('data-index'); var tableBox = $(this).parents('.layui-table-box'); //存在固定列
+		    if (tableBox.find(".layui-table-fixed.layui-table-fixed-l").length>0) { tableDiv = tableBox.find(".layui-table-fixed.layui-table-fixed-l"); } else { tableDiv = tableBox.find(".layui-table-body.layui-table-main"); } var checkCell = tableDiv.find("tr[data-index=" + index + "]").find("td div.laytable-cell-checkbox div.layui-form-checkbox I"); if (checkCell.length>0) { checkCell.click(); } }); $(document).on("click", "td div.laytable-cell-checkbox div.layui-form-checkbox", function (e) { e.stopPropagation(); });
+		    	
+		    $("#btn").click(function(){
+
+					var url="../../buyDetail/add.action";
+					var data={"mes":$("#mes").val()};
+					$.post(url,data,function(mes){
+						if(mes.state==1){
+							alert("菜");
+						}else{
+							alert("牛逼");
+						}
+						
+					},"json");
+				})
+		   
+		   
 		</script>
+		
+   		<input type="hidden" name="mes" id="mes"/>
 	</body>
 </html>

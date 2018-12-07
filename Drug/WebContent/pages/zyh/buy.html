@@ -139,18 +139,7 @@
 		                    <input type="number" name="experience" required lay-verify="required" value="{{d.user.experience}}" placeholder="请输入积分" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">评分</label>
-		                <div class="layui-input-block">
-		                    <input type="number" name="score" required lay-verify="required" value="{{d.user.score}}" placeholder="请输入评分" autocomplete="off" class="layui-input">
-		                </div>
-		            </div>
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">财富</label>
-		                <div class="layui-input-block">
-		                    <input type="number" name="wealth" required lay-verify="required" value="{{d.user.wealth}}" placeholder="请输入财富" autocomplete="off" class="layui-input">
-		                </div>
-		            </div>
+		            
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">职业</label>
 		                <div class="layui-input-block">
@@ -327,6 +316,8 @@
 		                console.log(table.checkStatus('demo'));
 		            } else if (layEvent === 'del') { //删除
 		                layer.confirm('真的删除行么', function(index) {
+		                	
+		                	
 		                    obj.del(); //删除对应行（tr）的DOM结构
 		                    layer.close(index);
 		                    //向服务端发送删除指令
@@ -340,7 +331,7 @@
 		                laytpl($('#edit-tpl').html()).render(d, function(html) {
 		                    layer.open({
 		                        type: 1,
-		                        title: '表单',
+		                        title: '信息',
 		                        content: html,
 		                        area: ['800px', '450px'],
 		                        btn: ['提交', '重置', '取消'],
@@ -396,13 +387,13 @@
 		                        citys: staticData.citys,
 		                        classifies: staticData.classifies
 		                    };
-		                    //渲染
+		                    //增加
 		                    laytpl($('#edit-tpl').html()).render(d,
 		                        function(html) {
 		                            layer.open({
-		                                type: 1,
-		                                title: '表单',
-		                                content: html,
+		                                type: 2,
+		                                title: '信息',
+		                                content:['buyDetail.html', 'no'],
 		                                area: ['800px', '450px'],
 		                                btn: ['提交', '重置', '取消'],
 		                                yes: function(index, layero) {

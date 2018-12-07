@@ -8,19 +8,16 @@
     <result column="bdet_price" jdbcType="DECIMAL" property="bdetPrice" />
     <result column="bdet_total" jdbcType="DECIMAL" property="bdetTotal" />
     <result column="bdet_fk_id" jdbcType="VARCHAR" property="bdetFkId" />
+    <result column="drug_name" jdbcType="VARCHAR" property="bdetFkName" />
     <result column="isva" jdbcType="VARCHAR" property="isva" />
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
-    <result column="mat_name" jdbcType="VARCHAR" property="matName" />
   </resultMap>
   <sql id="Base_Column_List">
     bdet_id, buy_id, bdet_amount, bdet_price, bdet_total, bdet_fk_id, isva, optime, oper, 
-    sort,mat_name
+    sort
   </sql>
-  <select id="showList" parameterType="map" resultMap="BaseResultMap">
-  	SELECT * FROM drug_buy_detail a,drug_material b WHERE a.bdet_fk_id=b.mat_id
-  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -35,11 +32,11 @@
     insert into drug_buy_detail (bdet_id, buy_id, bdet_amount, 
       bdet_price, bdet_total, bdet_fk_id, 
       isva, optime, oper, 
-      sort,mat_name)
+      sort)
     values (#{bdetId,jdbcType=VARCHAR}, #{buyId,jdbcType=VARCHAR}, #{bdetAmount,jdbcType=INTEGER}, 
       #{bdetPrice,jdbcType=DECIMAL}, #{bdetTotal,jdbcType=DECIMAL}, #{bdetFkId,jdbcType=VARCHAR}, 
       #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, 
-      #{sort,jdbcType=VARCHAR},#{matName})
+      #{sort,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yidu.domain.BuyDetail">
     insert into drug_buy_detail
@@ -154,4 +151,11 @@
       sort = #{sort,jdbcType=VARCHAR}
     where bdet_id = #{bdetId,jdbcType=VARCHAR}
   </update>
+  
+  <select id="findAll" resultMap="BaseResultMap">
+  	select * from drug_buy_detail bd,drug_drug d where bd.bdet_fk_id =d.drug_id 
+  </select>
+  
+  
+  
 </mapper>
