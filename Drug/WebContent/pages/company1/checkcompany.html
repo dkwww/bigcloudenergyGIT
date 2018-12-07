@@ -6,7 +6,7 @@
 		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
-		<title>分公司管理</title>
+		<title>分公司审核</title>
     </script>
 	</head>
 	<body>
@@ -15,8 +15,8 @@
 				<!-- 左上角的两个按钮 -->
 		        <div class="kit-table-header">
 		            <div class="kit-search-btns">
-		                <a href="javascript:;" data-action="add" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i> 新增</a>
-		                <a href="javascript:;" data-action="del-bulk" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon">&#xe640;</i> 批量删除</a>
+		                
+		                <a href="javascript:;" data-action="del-bulk" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon">&#xe640;</i> 批量审核</a>
 		            </div>
 		            <div class="kit-search-inputs">
 		                <div class="kit-search-keyword">
@@ -48,9 +48,7 @@
 		    <div class="kit-table-body">
 		        <table id="demo" lay-filter="demo"></table>
 		        <script type="text/html" id="barDemo">
-		            
-		            <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
-		            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+		            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">审核</a>
 		        </script>
 		    </div>
 		</div>
@@ -60,34 +58,15 @@
 		    <div style="margin:10px">
 		    	<form class="layui-form" action="" lay-filter="form-edit">
 		    		<input type="hidden" name="comId" value="{{d.user.comId}}" />
-		    		<div class="layui-form-item">
-		    			<label class="layui-form-label">分公司名称</label>
-		    			<div class="layui-input-block">
-		    				<input type="text" name="comName" required lay-verify="required" value="{{d.user.comName}}" placeholder="请输入分公司名称" autocomplete="off" class="layui-input">
-		    			</div>
-		    		</div>
-		    	
-		    		<div class="layui-form-item">
-		    			<label class="layui-form-label">分公司电话</label>
-		    			<div class="layui-input-block">
-		    				<input type="text" name="comPhone" required lay-verify="required" value="{{d.user.comPhone}}" placeholder="请输入分公司类型电话" autocomplete="off" class="layui-input">
-		    			</div>
-		    		</div>
-		    		<div class="layui-form-item">
-		    			<label class="layui-form-label">分公司地址</label>
-		    			<div class="layui-input-block">
-		    				<input type="text" name="comAddress" required lay-verify="required" value="{{d.user.comAddress}}" placeholder="请输入分公司地址" autocomplete="off" class="layui-input">
-		    			</div>
-		    		</div>
 		    		
+		    		<div class="layui-form-item">
+		    			<label class="layui-form-label">是否有效</label>
+		    			<div class="layui-input-block">
+		    				<input type="text" name="isva" required lay-verify="required" value="{{d.user.isva}}" placeholder="" autocomplete="off" class="layui-input">
+		    			</div>
+		    		</div>
 		    
-		    		<div class="layui-form-item">
-		    			<label class="layui-form-label">操作人</label>
-		    			<div class="layui-input-block">
-		    				<input type="text" name="oper" required lay-verify="required" value="{{d.user.oper}}" placeholder="请输入操作人" autocomplete="off" class="layui-input">
-		    			</div>
-		    		</div>
-		    		
+		    	
 					
 		            <div class="layui-form-item" style="display:none;">
 		                <div class="layui-input-block">
@@ -130,7 +109,7 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '449px', //容器高度
-		          url: '../../company/findAll.action',
+		          url: '../../company/checkfindAll.action',
 		          page: true,
 		          id: 'demo',
 		          cols: [
@@ -196,7 +175,7 @@
 		        });
 		        
 		        var staticData = null;
-		        $.ajax({ url:"../../company/findAll.action",
+		        $.ajax({ url:"../../company/checkfindAll.action",
                     type:'post',//method请求方式，get或者post
                     cache: false,//同步
                     dataType:'json',//预期服务器返回的数据类型
@@ -204,9 +183,7 @@
                     	//增加及修改类型下拉框内的数据
                     	staticData = mes;
                     	//循环添加类型搜索框内的数据
-                    	$.each(mes.types,function(index,item){
-                    		$("#drug-type").append("<option value="+item.dtId+">"+item.dtName+"</option>");
-                    	});
+                    
                     	//渲染类型搜索框内的下拉框
                     	renderForm();
                     }
@@ -216,7 +193,8 @@
 		        form.on('submit(search)', function(data) {
 		            //带条件查询
 		            tableIns.reload({
-		                where: data.field
+		                where: data.field,
+		                page: { curr: 1 }
 		            });
 		            $('.kit-search-mored').hide();
 		            return false;
@@ -256,9 +234,9 @@
 		            if (layEvent === 'detail') { //查看
 		                console.log(table.checkStatus('demo'));
 		            } else if (layEvent === 'del') { //删除
-		                layer.confirm('真的删除行么', function(index) {
+		                layer.confirm('确定审核通过吗', function(index) {
 		                	layer.close(index);
-		                    update("../../company/add.action",{"comId":data.comId,"isva":"0"});
+		                    update("../../company/add.action",{"comId":data.comId,"isva":"1"});
 		                });
 		            } else if (layEvent === 'edit') { //编辑
 		                var d = {
@@ -322,7 +300,7 @@
 		                case 'del-bulk':
 		                    var d = table.checkStatus('demo');
 		                    if (d.data.length === 0) {
-		                        layer.msg('请选择要删除的数据');
+		                        layer.msg('请选择要审核的数据');
 		                        return;
 		                    }
 		                    var data = d.data,
@@ -332,9 +310,9 @@
 		                        names.push(item.comName);
 		                        ids.push(item.comId);
 		                    });
-		                    layer.confirm('真的删除行么', function(index) {
+		                    layer.confirm('确定全部审核通过吗', function(index) {
 		                    	layer.close(index);
-		                    	update("../../company/companyUpdate.action",ids);
+		                    	update("../../company/checkcompanyUpdate.action",ids);
 			                });
 		                    break;
 		                    

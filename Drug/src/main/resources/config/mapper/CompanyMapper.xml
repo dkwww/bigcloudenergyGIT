@@ -21,7 +21,7 @@
     from drug_company
     where com_id = #{comId,jdbcType=VARCHAR}
   </select>
-	
+	<!-- 分店分页以及模糊查询 -->
   <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
   	select * from  drug_company 
   	<where>
@@ -31,19 +31,44 @@
   	</where>
   	limit #{pageUtil.startRows},#{pageUtil.rows}
   </select>
-  <!-- 分页以及模糊查询 -->
+  <!-- 查询总共多少条数据 -->
   <select id="selectCount" parameterType="com.yidu.domain.Company" resultType="int">
     select 
     count(*) 
     from drug_company
-    <where>
-	  	<if test="comName != null and comName != '' ">
-	  		com_name like concat('%',#{comName},'%')
-	  	</if>
-  	</where>
-   	
+
   </select>
+  <!-- 查询总共多少条数据 -->
+  <select id="checkselectCount" parameterType="com.yidu.domain.Company" resultType="int">
+    select  count(*) from drug_company WHERE com_type='分店' AND isva='0'
+
+  </select>
+  <!--审核分页以及模糊查询  -->
+  <select id="checkselectAll" parameterType="map" resultMap="BaseResultMap">
+  SELECT * FROM  drug_company WHERE com_type='分店' AND isva='0' 
   
+	  		<if test="company.comName != null and company.comName != '' ">
+	  		AND com_name like concat('%',#{company.comName},'%')
+	  	</if>
+
+  	limit #{pageUtil.startRows},#{pageUtil.rows}
+  </select>
+  <!-- 分店批量修改 -->
+  <update id="companyDeleteByPrimaryKeySelective">
+    update drug_company set isva = '0'
+    where com_id in 
+    <foreach collection="list" item="ids" open="(" separator="," close=")">
+      #{ids} 
+    </foreach> 
+  </update>
+  <!-- 审核批量修改 -->
+   <update id="checkcompanyDeleteByPrimaryKeySelective">
+    update drug_company set isva = '1'
+    where com_id in 
+    <foreach collection="list" item="ids" open="(" separator="," close=")">
+      #{ids} 
+    </foreach> 
+  </update>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_company
@@ -163,11 +188,5 @@
     where com_id = #{comId,jdbcType=VARCHAR}
   </update>
   
-  <update id="companyDeleteByPrimaryKeySelective">
-    update drug_company set isva = '未加盟'
-    where com_id in 
-    <foreach collection="list" item="ids" open="(" separator="," close=")">
-      #{ids} 
-    </foreach> 
-  </update>
+  
 </mapper>

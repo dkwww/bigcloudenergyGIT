@@ -35,25 +35,53 @@ public class CompanyServiceImpl  implements CompanyService {
 	@Resource
 	private CompanyMapper companyMapper;
 
+	/**
+	 * 分店的查询
+	 */
 	@Override
 	public List<Company> findAll(Company company,PageUtil pageUtil) {
-		
+		//创建map
 		Map<String, Object> map = new HashMap<String, Object>();
-		
+		//map赋值
 		map.put("company", company);
+		//map赋值
 		map.put("pageUtil", pageUtil);
-		
+		//list集合
 		List<Company> selectAll = companyMapper.selectAll(map);
+		//创建list
 		List<Company>ss=new ArrayList<>(); 
 		
 		for (Company company2 : selectAll) {
+			//调用工具类，装换时间格式
 			company2.setStrTime(Tools.getTimeStr(company2.getOptime()));
+			//加入集合
 			ss.add(company2);
-		}
-		
+		}	
 		return ss;
+	}
+	/**
+	 * 审核的查询
+	 */
+	@Override
+	public List<Company> checkfindAll(Company company, PageUtil pageUtil) {
+		//创建map
+		Map<String, Object> map = new HashMap<String, Object>();
+		//map赋值
+		map.put("company", company);
+		//map赋值
+		map.put("pageUtil", pageUtil);
+		//list集合
+		List<Company> selectAll = companyMapper.checkselectAll(map);
+		//创建list
+		List<Company>ss=new ArrayList<>(); 
 		
-		
+		for (Company company2 : selectAll) {
+			//调用工具类，装换时间格式
+			company2.setStrTime(Tools.getTimeStr(company2.getOptime()));
+			//加入集合
+			ss.add(company2);
+		}	
+		return ss;
 	}
 
 	@Override
@@ -66,13 +94,28 @@ public class CompanyServiceImpl  implements CompanyService {
 			com.setComId(uuid);
 			com.setComType("分店");
 			com.setOptime(new Date());
+			com.setIsva("0");
 			com.setSort(TimeUtil.getStrDate());
 			rows=insertSelective(com);
 		}
 		return rows;
 	}
-
-
+	/**
+	 * 分店批量修改
+	 */
+	@Override
+	public int companyUpdate(List<String> ids) {
+	
+		return companyMapper.companyDeleteByPrimaryKeySelective(ids);
+	}
+	/**
+	 * 审核批量审核
+	 */
+	@Override
+	public int checkcompanyUpdate(List<String> ids) {
+		
+		return companyMapper.checkcompanyDeleteByPrimaryKeySelective(ids);
+	}
 
 
 	@Override
@@ -93,12 +136,15 @@ public class CompanyServiceImpl  implements CompanyService {
 		return companyMapper.selectCount(company);
 	}
 
-	@Override
-	public int companyUpdate(List<String> ids) {
 	
-		return companyMapper.companyDeleteByPrimaryKeySelective(ids);
+	@Override
+	public int checkselectCount(Company company) {
+		
+		return companyMapper.checkselectCount(company);
 	}
+	
 
+	
 	
 
 

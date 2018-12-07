@@ -17,13 +17,18 @@ import com.yidu.util.PageUtil;
  */
 public interface CompanyService   {
 	/**
-     * 查询所有
+     *分店 查询所有
      * @return
      */
 	List<Company> findAll(Company company,PageUtil pageUtil);
 	
-	int selectCount(Company company);
+	/*
+	 * 审核查询所有
+	 */
+	List<Company> checkfindAll(Company company,PageUtil pageUtil);
 	
+	int selectCount(Company company);
+	int checkselectCount(Company company);
 	 /**
      * 增加或者修改的方法
      * @param vo
@@ -35,6 +40,8 @@ public interface CompanyService   {
     int insertSelective(Company record);
 
     int companyUpdate(List<String> ids);
+    int checkcompanyUpdate(List<String> ids);
 
     int updateByPrimaryKeySelective(Company record);
+    
 }

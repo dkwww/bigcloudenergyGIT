@@ -26,9 +26,11 @@ public interface CompanyMapper {
      * @return
      */
     List<Company> selectAll(Map<String, Object> map);
-    
+    List<Company> checkselectAll(Map<String, Object> map);
     
     int selectCount(Company company);
-    
+    int checkselectCount(Company company);
     int companyDeleteByPrimaryKeySelective(List<String> ids);
+    int checkcompanyDeleteByPrimaryKeySelective(List<String> ids);
+    
 }
