@@ -23,7 +23,20 @@ public class Admin {
 
     private String sort;
 
-    public String getAdminId() {
+    private String optimestring;
+    
+    
+    
+
+	public String getOptimestring() {
+		return optimestring;
+	}
+
+	public void setOptimestring(String optimestring) {
+		this.optimestring = optimestring;
+	}
+
+	public String getAdminId() {
         return adminId;
     }
 
@@ -80,14 +93,14 @@ public class Admin {
     }
 
     public Date getOptime() {
-        return optime;
-    }
+		return optime;
+	}
 
-    public void setOptime(Date optime) {
-        this.optime = optime;
-    }
+	public void setOptime(Date optime) {
+		this.optime = optime ;
+	}
 
-    public String getOper() {
+	public String getOper() {
         return oper;
     }
 

@@ -1,5 +1,8 @@
 package com.yidu.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.yidu.domain.Admin;
 
 public interface AdminMapper {
@@ -21,4 +24,11 @@ public interface AdminMapper {
      * @return
      */
 	public Admin queryNameOrPwd(Admin admin);
+
+	/**
+	 * 查询
+	 * @param map
+	 * @return
+	 */
+	List<Admin> selectAll(Map<String, Object> map);
 }

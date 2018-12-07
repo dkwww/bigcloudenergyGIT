@@ -1,5 +1,7 @@
 package com.yidu.service;
 
+import java.util.List;
+
 import com.yidu.domain.Admin;
 
 /**
@@ -19,5 +21,12 @@ public interface AdminService   {
 	 * @return
 	 */
 	public Admin queryNameOrPwd(Admin admin);
+	
+	/**
+	 * 查询
+	 * @param user
+	 * @return
+	 */
+	public List<Admin> findAll(Admin admin);
 
 }

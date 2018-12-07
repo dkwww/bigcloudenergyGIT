@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../res/layui/css/layui.css"  media="all">
+  <link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
+		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+	<div class="kit-table">
+		<form class="layui-form" lay-filter="kit-search-form">
+			<!-- 左上角的两个按钮 -->
+		    <div class="kit-table-header">
+		        <div class="kit-search-btns">
+		            <a href="javascript:;" data-action="add" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i> 新增</a>
+		            <a href="javascript:;" data-action="del-bulk" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon">&#xe640;</i> 批量删除</a>
+		        </div>
+		        <div class="kit-search-inputs">
+		            <div class="kit-search-keyword">
+		                <input type="text" class="layui-input" id="serach-one" placeholder="请输入用户名.." onKeyUp="lockInput(this,'serach-two')"/>
+		                <button lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
+		            </div>
+		            <div class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>
+		        </div>
+		    </div>
+		    <!-- 搜索扩展工具条 -->
+	        <div class="kit-search-mored layui-anim layui-anim-upbit">
+	            <div class="kit-search-body">
+	                <div class="layui-form-item">
+	                    <label class="layui-form-label">用户名</label>
+	                    <div class="layui-input-block">
+	                        <input type="text" name="adminName" id="serach-two" placeholder="请输入用户名" autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
+	                    </div>
+	                </div>
+	                <div class="layui-form-item">
+	                    <label class="layui-form-label">公司名称</label>
+	                    <div class="layui-input-block">
+	                        <input type="text" name="adminWeb" id="serach-two" placeholder="请输入公司名称" autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="kit-search-footer">
+	                <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary kit-btn reset-btn">重置</button>
+	                <button lay-submit lay-filter="search" class="layui-btn layui-btn-sm kit-btn">确定</button>
+	            </div>
+	        </div>
+		</form>
+		
+		<!-- 操作按钮 -->
+		<div class="kit-table-body">
+			<table class="layui-hide" id="test"></table>
+			<script type="text/html" id="barDemo">
+				<a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
+				<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+			</script>
+		</div>
+	</div>             
+	<script src="../../res/layui/layui.js" charset="utf-8"></script>
+	<script>
+		//搜索框同步输入
+		function lockInput(obj,id){
+			$("#"+id).val($(obj).val());
+		}
+	</script>
+	<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 --> 
+	<script src="../../res/layui/layui.all.js"></script> 
+	<script>
+		layui.use(['table'], function(){
+		  	var table = layui.table;
+			  	$ = layui.jquery,
+	            layer = layui.layer,
+	            form = layui.form,
+	            laytpl = layui.laytpl;
+	        var tableIns = table.render({
+		    	elem: '#test'
+		    	,height: '469px' //容器高度
+		    	,url:'../../admin/findAll.action'
+		    	,page: true
+		    	,id: 'test'
+		    	,cols: [[
+		      		{checkbox: true,fixed: true}
+			      ,{field:'adminId', width:80, title: 'ID', align: 'center'}
+			      ,{field:'adminWeb', width:148, title: '公司名称',align: 'center'}
+			      ,{field:'adminName', width:110, title: '用户名', align: 'center'}
+			      ,{field:'adminPictrue', title: '头像', width: 130,align: 'center',templet:'<div><img style="height:100%;height:30px;" src="../../{{ d.adminPictrue}}"></div>'}
+			      ,{field:'adminMsg', width:80, title: '备注', align: 'center'}
+			      ,{field:'isva', width:110, title: '审核状态', align: 'center'}
+			      ,{field:'optimestring', width:180, title: '操作时间',align: 'center'}
+			      ,{field:'oper', width:135, title: '操作人', align: 'center'}
+			      ,{field:'sort', width:135, title: '排序', align: 'center'}
+			      ,{fixed: 'right',title: '操作',width: 160,align: 'center',toolbar: '#barDemo'}
+			    ]],
+			    done: function(res, curr, count) {
+	                $("[data-field = 'isva']").children().each(function(){
+					    if($(this).text() == '1'){
+					    	$(this).text("已审核");
+					    } else if ($(this).text() == '0') {
+					    	$(this).text("未审核");
+					    }
+				  	}); 
+	            },
+	            loading: true
+	        });
+	        //监听搜索表单提交
+	        form.on('submit(search)', function(data) {
+	            //带条件查询
+	            tableIns.reload({
+	                where: data.field
+	            });
+	            $('.kit-search-mored').hide();
+	            return false;
+	        });
+	        //表单渲染
+	        form.render(null, 'kit-search-form');
+	        //更多筛选点击事件
+	        $('#kit-search-more').on('click', function() {
+	            $('.kit-search-mored').toggle();
+	        });
+		});
+		//ajax加载动画
+	    $(function () {
+            $.ajaxSetup({
+                layerIndex:-1,
+                beforeSend: function () {
+                    this.layerIndex = layer.load(1, { shade: [0.8, '#ffffff'] });
+                },
+                complete: function () {
+                    layer.close(this.layerIndex);
+                },
+                error: function () {
+                    layer.alert('部分数据加载失败，可能会导致页面显示异常，请刷新后重试', {
+                        skin: 'layui-layer-molv'
+                       , closeBtn: 0
+                       , shift: 4 //动画类型
+                    });
+                }
+            });
+        });
+	</script>
+</body>
+</html>

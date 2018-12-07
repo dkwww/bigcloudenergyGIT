@@ -154,4 +154,14 @@
   <select id="queryNameOrPwd" resultMap="BaseResultMap">
 	 select <include refid="Base_Column_List" /> from drug_admin where admin_name = #{adminName,jdbcType=VARCHAR} and admin_pwd=#{adminPwd,jdbcType=VARCHAR}
   </select>
+  <!-- 查询所有或者根据名字查询 -->
+  <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
+		select * from drug_admin where isva='1'
+		<if test="admin.adminName!=null and admin.adminName!=''">
+			and admin_name like CONCAT(CONCAT('%',#{admin.adminName,jdbcType=VARCHAR},'%'))
+		</if>
+		<if test="admin.adminWeb!=null and admin.adminWeb!=''">
+			and admin_web like CONCAT(CONCAT('%',#{admin.adminWeb,jdbcType=VARCHAR},'%'))
+		</if>
+	</select>
 </mapper>
