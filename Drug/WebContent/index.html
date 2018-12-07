@@ -1,442 +1,167 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8" />
-		<meta name="renderer" content="webkit" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="format-detection" content="telephone=no" />
-		<title>原料清单</title>
-		<link rel="stylesheet" href="../../res/layui/css/layui.css" />
-		<script src="../../res/js/common/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
-		<link rel="stylesheet" type="text/css" href="../../res/css/material-list/index.css" />
-		<script src="../../res/js/material-list/index.js" type="text/javascript" charset="utf-8"></script>
-		<link rel="stylesheet" type="text/css" href="../../res/css/material-list/row.css" />
-	</head>
-	<body class="childBody">
 
-		<section class="layui-col-md10">
-			<div class="layui-card">
-				<div class="card-top css-transition">
-					<div class="layui-card-header">
-						<h3>药品：<font style="color: #DC2D00;">珍视明滴眼液</font>
-						</h3>
-					</div>
-					<div class="layui-card-body layui-text">
-						<div id="toolbar">
-							<div>
-								<button type="button" class="layui-btn layui-btn-sm add" title="筛选原材料">
-									<i class="layui-icon layui-icon-add-1"></i> 添加原材料
-								</button>
-								<button type="button" class="layui-btn layui-btn-sm layui-btn-danger" data-type="delBulk" title="批量删除">
-									<i class="layui-icon">&#xe640;</i> 批量删除
-								</button>
-							</div>
-						</div>
-						<div id="tableRes" class="table-overlay">
-							<table id="dataTable1" lay-filter="dataTable" class="layui-hide"></table>
-						</div>
-						<div id="action" class="text-center">
-							<button type="button" name="btnSave" class="layui-btn" data-type="save"><i class="layui-icon layui-icon-ok-circle"></i>保存</button>
-							<button type="reset" name="btnReset" class="layui-btn layui-btn-primary">取消</button>
-						</div>
-					</div>
-				</div>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>XXX医药</title>
+  <link rel="stylesheet" href="./res/layui/css/layui.css" media="all" />
+  <link rel="stylesheet" href="./res/css/common/font-awesome.min.css" media="all" />
+  <link rel="stylesheet" href="./res/layui-config/css/app.css" media="all" />
+  <link rel="stylesheet" href="./res/layui-config/css/themes/red.css" media="all" id="skin" kit-skin />
+</head>
 
-				<div class="card-down css-transition">
-					<div class="layui-card-header layui-form" style="padding: 8px 0px;">
-						<!-- 搜索扩展工具条 -->
-						<form class="layui-form" lay-filter="kit-search-form">
-						<div class="layui-form-item">
-							<label class="layui-form-label" style="padding: 9px 10px;width: 58px;">药材筛选</label>
-							<div style="width: 200px;margin-left: 85px;">
-								<select name="mtName" lay-filter="mat-type" id="mat-type">
-									<option value=""></option>
-								</select>
-							</div>
-						</div>
-						</form>
-					</div>
-					<div class="layui-card-body">
-						<div id="tableRes" class="table-overlay">
-							<div class="card-body-down">
-								<div class="scroll-wrap">
-									<ul class="down-ul">
-										<p class="li-title">药材清单（list）</p>
-										<li>山药</li>
-										<li>人参</li>
-										<li>枸杞</li>
-									</ul>
-								</div>
-							</div>
-							<div class="card-body-top">
-								<table id="dataTable2" lay-filter="dataTables" class="layui-hide" ></table>
-							</div>
-						</div>
-						<div id="action" class="text-center">
-							<button type="button" name="btnConfirm" class="layui-btn btnConfirm" data-type="confirm"><i class="layui-icon layui-icon-ok-circle"></i>确定</button>
-							<button type="reset" name="btnCancel" class="layui-btn layui-btn-primary">取消</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!--保存结果输出-->
-			<div class="layui-card">
-				<div class="layui-card-header">保存结果输出</div>
-				<div class="layui-card-body layui-text">
-					<blockquote class="layui-elem-quote layui-quote-nm">
-						<pre id="jsonResult"><span class="layui-word-aux">请点击“保存”后查看输出信息……</span></pre>
-					</blockquote>
-				</div>
-			</div>
-		</section>
-		<!--recommended script position-->
-		<script src="../../res/layui/layui.all.js"></script>
-		<script type="text/html" id="myCheckbox">
-    		{{# if(d.id%2 == 0) {  if(d.LAY_CHECKED) { var checked = 'checked=""';}  }}
-   			<input type="checkbox" lay-skin="primary" name="layTableCheckbox" {{checked||''}}  >
-    		{{# } else { layui.table.cache.grid2[d.LAY_TABLE_INDEX].checkDisabled=true;} }}
-		</script>
-		<script type="text/javascript">
-			//准备视图对象
-			window.viewObj = null;
-			$.ajax({
-				url: "../../materialList/showList.action", //json文件位置
-				data: {"page":1,"limit":1000},
-				type: "post",
-				async: false,
-				dataType: "json", //返回数据格式为json
-				success: function(data) { //请求成功完成后要执行的方法
-					viewObj = data;
-				}
+<body class="kit-theme">
+  <div class="layui-layout layui-layout-admin kit-layout-admin">
+    <div class="layui-header">
+      <div class="layui-logo">XXX医药</div>
+      <div class="layui-logo kit-logo-mobile"></div>
+      <ul class="layui-nav layui-layout-right kit-nav">
+        <li class="layui-nav-item">
+          <a href="javascript:;">皮肤</a>
+          <dl class="layui-nav-child skin">
+            <dd><a href="javascript:;" data-skin="default" style="color:#393D49;"><i class="layui-icon">&#xe658;</i> 默认</a></dd>
+            <dd><a href="javascript:;" data-skin="orange" style="color:#ff6700;"><i class="layui-icon">&#xe658;</i> 橘子橙</a></dd>
+            <dd><a href="javascript:;" data-skin="green" style="color:#00a65a;"><i class="layui-icon">&#xe658;</i> 原谅绿</a></dd>
+            <dd><a href="javascript:;" data-skin="pink" style="color:#FA6086;"><i class="layui-icon">&#xe658;</i> 少女粉</a></dd>
+            <dd><a href="javascript:;" data-skin="blue.1" style="color:#00c0ef;"><i class="layui-icon">&#xe658;</i> 天空蓝</a></dd>
+            <dd><a href="javascript:;" data-skin="red" style="color:#dd4b39;"><i class="layui-icon">&#xe658;</i> 枫叶红</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">
+            <img src="http://m.zhengjinfan.cn/images/0.jpg" class="layui-nav-img"> Van
+          </a>
+          <dl class="layui-nav-child">
+            <dd><a href="javascript:;" kit-target data-options="{url:'basic.html',icon:'&#xe658;',title:'基本资料',id:'966'}"><span>基本资料</span></a></dd>
+            <dd><a href="javascript:;">安全设置</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item"><a href="login.html"><i class="fa fa-sign-out" aria-hidden="true"></i> 注销</a></li>
+      </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black kit-side">
+      <div class="layui-side-scroll">
+        <div class="kit-side-fold"><i class="fa fa-navicon" aria-hidden="true"></i></div>
+        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+        <ul class="layui-nav layui-nav-tree" lay-filter="kitNavbar" kit-navbar>
+		  <!-- 模块管理 -->
+          <li class="layui-nav-item layui-nav-itemed">
+            <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 你的模块</span></a>
+            <dl class="layui-nav-child">
+              <dd><a href="javascript:;" kit-target data-options="{url:'pages/demo/staticDemo.html',icon:'&#xe614;',title:'静态案例',id:'staticDemo'}"><i class="layui-icon">&#xe614;</i><span> 官方静态案例</span></a></dd>
+              <dd><a href="javascript:;" kit-target data-options="{url:'pages/demo/dynamicDemo.html',icon:'&#xe614;',title:'动态案例',id:'dynamicDemo'}"><i class="layui-icon">&#xe614;</i><span> 动态案例</span></a></dd>
+              <dd><a href="javascript:;" kit-target data-options="{url:'pages/demo/notice .html',icon:'&#xe614;',title:'提示',id:'notice'}" style="color: #DD4B39!important"><i class="layui-icon">&#xe614;</i><span> 全体成员</span></a></dd>
+              <dd><a href="javascript:;" kit-target data-options="{url:'https://www.baidu.com',icon:'&#xe658;',title:'百度一下',id:'baidu'}"><i class="layui-icon" >&#xe658;</i><span> 百度一下</span></a></dd>
+            </dl>
+          </li>
+          <!-- 药品管理 -->
+          <li class="layui-nav-item layui-nav-itemed">
+            <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 药品管理</span></a>
+            <dl class="layui-nav-child">
+              <dd><a href="javascript:;" kit-target data-options="{url:'pages/drug/drug.html',icon:'&#xe614;',title:'药品',id:'1'}"><i class="layui-icon">&#xe614;</i><span> 药品</span></a></dd>
+            </dl>
+          </li>
+          <!-- 任务计划 -->
+          <li class="layui-nav-item layui-nav-itemed">
+            <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 任务计划</span></a>
+            <dl class="layui-nav-child">
+              <dd><a href="javascript:;" kit-target data-options="{url:'pages/plan/mrp.html',icon:'&#xe614;',title:'生产计划',id:'2'}"><i class="layui-icon">&#xe614;</i><span> 生产计划</span></a></dd>
+              <dd><a href="javascript:;" kit-target data-options="{url:'pages/plan/Manufacturing.html',icon:'&#xe614;',title:'制造计划',id:'3'}"><i class="layui-icon">&#xe614;</i><span> 制造计划</span></a></dd>
+            </dl>
+          </li>
+            <!-- 零售管理 -->
+          <li class="layui-nav-item layui-nav-itemed">
+            <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 零售管理</span></a>
+            <dl class="layui-nav-child">
+              <dd><a href="javascript:;" kit-target data-options="{url:'pages/ly/member.html',icon:'&#xe614;',title:'会员',id:'1'}"><i class="layui-icon">&#xe614;</i><span> 会员</span></a></dd>
+              <dd><a href="javascript:;" kit-target data-options="{url:'pages/ly/sale.html',icon:'&#xe658;',title:'零售',id:'5'}"><i class="layui-icon" >&#xe614;</i><span> 零售</span></a></dd>
+            </dl>
+          </li>
+          <!-- 原材料管理 -->
+          <li class="layui-nav-item layui-nav-itemed">
+            <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 原材料管理</span></a>
+            <dl class="layui-nav-child">
+              <dd><a href="javascript:;" kit-target data-options="{url:'pages/material/materType.html',icon:'&#xe614;',title:'原材料类型',id:'3'}"><i class="layui-icon">&#xe614;</i><span> 原材料类型</span></a></dd>
+              <dd><a href="javascript:;" kit-target data-options="{url:'pages/material/material.html',icon:'&#xe658;',title:'原材料',id:'5'}"><i class="layui-icon" >&#xe614;</i><span> 原材料</span></a></dd>
+            </dl>
+          </li>
+           <!-- 库存管理 -->
+          <li class="layui-nav-item layui-nav-itemed">
+            <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 库存管理</span></a>
+            <dl class="layui-nav-child">
+              <dd><a href="javascript:;" kit-target data-options="{url:'pages/material/materType.html',icon:'&#xe614;',title:'材料库存',id:'3'}"><i class="layui-icon">&#xe614;</i><span> 材料库存</span></a></dd>
+              <dd><a href="javascript:;" kit-target data-options="{url:'pages/ly/sale.html',icon:'&#xe658;',title:'药品库存',id:'5'}"><i class="layui-icon" >&#xe614;</i><span> 药品库存</span></a></dd>
+            </dl>
+          </li>
+		  <!-- 组件 -->
+          <li class="layui-nav-item">
+            <a href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 组件</span></a>
+            <dl class="layui-nav-child">
+              <dd><a href="javascript:;" kit-target data-options="{url:'navbar.html',icon:'&#xe658;',title:'Navbar',id:'6'}"><i class="layui-icon">&#xe658;</i><span> Navbar</span></a></dd>
+              <dd><a href="javascript:;" kit-target data-options="{url:'tab.html',icon:'&#xe658;',title:'TAB',id:'7'}"><i class="layui-icon">&#xe658;</i><span> Tab</span></a></dd>
+              <dd><a href="javascript:;" kit-target data-options="{url:'onelevel.html',icon:'&#xe658;',title:'OneLevel',id:'50'}"><i class="layui-icon">&#xe658;</i><span> OneLevel</span></a></dd>
+              <dd><a href="javascript:;" kit-target data-options="{url:'app.html',icon:'&#xe658;',title:'App',id:'8'}"><i class="layui-icon">&#xe658;</i><span> app.js主入口</span></a></dd>
+            </dl>
+          </li>
+					
+        </ul>
+      </div>
+    </div>
+    <div class="layui-body" id="container">
+      <!-- 内容主体区域 -->
+      <div style="padding: 15px;"><i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop">&#xe63e;</i> 请稍等...</div>
+    </div>
+		<div class="layui-footer">
+			<!-- 底部固定区域 -->
+			2018 &copy;
+			XXX医药生产销售管理
+		</div>
+  </div>
+  <script src="./res/layui/layui.js"></script>
+  <script>
+    var message;
+		layui.config({
+			base: 'res/layui-config/js/',
+      version: '1.0.1'
+		}).use(['app', 'message'], function() {
+			var app = layui.app,
+				$ = layui.jquery,
+				layer = layui.layer;
+				//将message设置为全局以便子页面调用
+				message = layui.message;
+			//主入口
+			app.set({
+				type: 'iframe'
+			}).init();
+			$('dl.skin > dd').on('click', function() {
+				var $that = $(this);
+				var skin = $that.children('a').data('skin');
+				switchSkin(skin);
 			});
-			var arr1 = new Array();//选中的数据
-			var arr2 = new Array();//表格的数据
-			var tableData = new Array();//第一个表格的数据
-			//layui 模块化引用
-			layui.use(['jquery', 'table', 'layer'], function() {
-				var $ = layui.$,
-					table = layui.table,
-					form = layui.form,
-					layer = layui.layer;
-				//数据表格实例化			
-				var layTableId1 = "layTableId1";
-				var h = autoHeight(layTableId1);
-				var tableIns = table.render({
-					elem: '#dataTable1',
-					id: layTableId1,
-					data: viewObj.data,
-					height: h,
-					page: true,
-					loading: true,
-					even: false, //不开启隔行背景
-					cols: [
-							[{checkbox: true},{title: '序号',type: 'numbers'},
-							{field: 'matName',title: '材料名称（name）'},
-							{field: 'mlAmount',title: '数量（amount）',edit: 'number'},
-							{field: 'matPrice',title: '单价（price）'},
-							{field: 'mtName',title: '种类（type）'},
-							{field: 'matEffect',title: '功效（effect）'},
-							{field: 'tempId',title: '操作',
-								templet: function(d) {
-									return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.tempId +
-										'"><i class="layui-icon layui-icon-delete"></i>移除</a>';
-								}
-							}
-						]
-					],
-					done: function(res, curr, count) {
-						tableData = res.data;
-						$("[data-field = 'mlAmount']").keyup(function() {
-							var obj = $(this).children().last();
-							if (obj.prop('maxlength') == -1) {
-								obj.prop('maxlength', 5);
-							}
-							obj.val(obj.val().replace(/[^0-9]*$/, ""));
-							obj.val(obj.val().replace(/^[0]+[0-9]*$/gi, ""));
-						});
-					}
-				});
-				
-				//定义事件集合
-				var active = {
-					add: function() { //添加一行
-						/* var oldData = table.cache[layTableId1];
-						var newRow = {
-							tempId: new Date().valueOf(),
-							matName: '人参',
-							mlAmount: 0,
-							matPrice: 0,
-							mtName: '根类',
-							matEffect: '活血化瘀',
-							state: 0
-						};
-						oldData.unshift(newRow);
-						tableIns.reload({
-							data: oldData
-						}); */
-					},
-					removeEmptyTableCache: function() {
-						var oldData = table.cache[layTableId1];
-						for (var i = 0, row; i < oldData.length; i++) {
-							row = oldData[i];
-							if (!row || !row.tempId) {
-								oldData.splice(i, 1); //删除一项
-							}
-							continue;
-						}
-						tableIns.reload({
-							data: oldData
-						});
-					},
-					delBulk: function() {
-						var d = table.checkStatus(layTableId1);
-						if (d.data.length === 0) {
-							layer.msg('请选择要删除的数据');
-							return;
-						}
-						var data = d.data,
-							names = [],
-							ids = [];
-						layui.each(data, function(index, item) {
-							console.log(item);
-							names.push(item.username);
-							ids.push(item.id);
-						});
-						layer.msg(names.join(','));
-						console.log(ids.join(','));
-					},
-					save: function() {
-						var oldData = table.cache[layTableId1];
-						console.log(oldData);
-						for (var i = 0, row; i < oldData.length; i++) {
-							row = oldData[i];
-						}
-						document.getElementById("jsonResult").innerHTML = JSON.stringify(table.cache[layTableId1], null, 2); //使用JSON.stringify() 格式化输出JSON字符串	
-					},
-					confirm: function() {
-						tableData = table.cache[layTableId1];
-						for (var i=0;i<arr1.length;i++) {
-							console.log(arr1[i])
-							tableData.unshift(arr1[i]);
-						};
-						tableIns.reload({
-							data: tableData
-						});
-					}
-				}
-
-				//激活事件
-				var activeByType = function(type, arg) {
-					if (arguments.length === 2) {
-						active[type] ? active[type].call(this, arg) : '';
-					} else {
-						active[type] ? active[type].call(this) : '';
-					}
-				}
-
-				//注册按钮事件
-				$('.layui-btn[data-type]').on('click', function() {
-					var type = $(this).data('type');
-					activeByType(type);
-				});
-
-				//监听工具条
-				table.on('tool(dataTable)', function(obj) {
-					var data = obj.data,
-						event = obj.event,
-						tr = obj.tr; //获得当前行 tr 的DOM对象;
-					console.log(data);
-					switch (event) {
-						case "del":
-							layer.confirm('真的删除行么？', function(index) {
-								obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-								layer.close(index);
-								activeByType('removeEmptyTableCache');
-							});
-							break;
-					}
-				});
-				var layTableId2 = "layTableId2";
-				var h = autoHeight(layTableId2);
-				var tableElem = ""
-				var tableInss = table.render({
-					elem: '#dataTable2',
-					id: layTableId2,
-					url: '../../material/showList.action',
-					height: h,
-					page: true,
-					loading: true,
-					even: false, //不开启隔行背景
-					cols: [
-							[{checkbox: true},
-							{title: '序号',type: 'numbers'},
-							{field: 'matId',title: '材料编号（ID）'},
-							{field: 'matName',title: '材料名称（name）'},
-							{field: 'matAmount',title: '数量（amount）'},
-							{field: 'matPrice',title: '单价（price）'},
-							{field: 'mtName',title: '种类（type）'},
-							{field: 'matEffect',title: '功效（effect）'}
-						]
-					],
-					done: function(res, curr, count) {
-						//viewObj.tbData = res.data;
-						tableElem = this.elem.next('.layui-table-view');
-						for (var i = 0; i < res.data.length; i++) {
-							for (var j = 0; j < arr1.length; j++) {
-								if (res.data[i].matId == arr1[j].matId) {
-									res.data[i]["LAY_CHECKED"] = true;
-									var index = res.data[i]['LAY_TABLE_INDEX'];
-									tableElem.find('tr[data-index=' + index + '] input[type="checkbox"]').prop('checked', true).next().addClass('layui-form-checked');
-								}
-							}
-							for (var k = 0; k < tableData.length; k++) {
-								if (res.data[i].matId == tableData[k].matId) {
-									res.data[i].checkDisabled = true;
-									var index = res.data[i]['LAY_TABLE_INDEX'];
-									//tableElem.find('tr[data-index=' + index + '] input[type="checkbox"]').attr({name:'layTableCheckbox_disabled',"disabled":"disabled"}).next().addClass('layui-checkbox-disbaled layui-disabled');
-									console.log(tableElem.find('tr[data-index=' + index + '] input[type="checkbox"]').next())
-									$("#dataTable2").next().find('tr[data-index=' + index + '] input[type="checkbox"]').next().remove();"
-									//tableElem.find('tr[data-index=' + index + '] input[type="checkbox"]').remove();
-								}
-							}
-						}
-						//设置全选checkbox的选中状态，只有改变LAY_CHECKED的值， table.checkStatus才能抓取到选中的状态 
-						var checkStatus = table.checkStatus(layTableId2);
-						if (checkStatus.isAll) {
-							tableElem.find('th[data-field="0"] input[type="checkbox"]').prop('checked', true).next().addClass('layui-form-checked');
-						}
-						form.render();
-					}
-				});
-				$(".layui-card").css({"height":h+150});
-				$(".card-body-down").css({"height":h});
-				table.on('checkbox(dataTables)', function(obj) {
-					if (obj.checked == true) {
-						if (obj.type == 'one') {
-							addRow(obj.data);
-							arr1.push(obj.data);
-							arr1[arr1.length-1]['state']=0;
-						} else {
-							arr2 = table.cache[layTableId2];
-							for (var i = 0; i < arr2.length; i++) {
-								var stra = arr2[i].matId;
-								var count = 0;
-								for (var j = 0; j < arr1.length; j++) {
-									var strb = arr1[j].matId;
-									if (stra == strb) count++;
-								}
-								if (count === 0) {
-									addRow(arr2[i]);
-									arr2[i]['state']=0;
-									arr1.push(arr2[i])
-								}
-							}
-						}
-					} else {
-						if (obj.type == 'one') {
-							removeOne(obj.data.matId);
-						} else {
-							arr2 = table.cache[layTableId2];
-							for (var i = 0; i < arr2.length; i++) {
-								removeOne(arr2[i].matId);
-							}
-						}
-					}
-					console.log(arr1)
-				});
-				//查询类型下拉框数据
-		        $.ajax({ 
-		        	url:'../../matType/showList.action',
-                    type:'post',//method请求方式，get或者post
-                    cache: false,//同步
-                    dataType:'json',//预期服务器返回的数据类型
-                    success:function(mes){//res为相应体,function为回调函数
-                    	//循环添加类型搜索框内的数据
-                    	$.each(mes.data,function(index,item){
-                    		$("#mat-type").append("<option value="+item.mtName+">"+item.mtName+"</option>");
-                    	});
-                    	//渲染类型搜索框内的下拉框
-                    	renderForm();
-                    }
-                 });
-				form.on('select(mat-type)', function(data){
-				  	//带条件查询
-		            tableInss.reload({
-		                where: {"mtName":data.value},
-		                page: { curr: 1 }
-		            });
-				})
-				function autoHeight(tableId){
-					var h = document.body.clientHeight && document.documentElement.clientHeight - 232; //窗口高度
-					//监听改变窗口大小
-					window.onresize = function() {
-						h = document.body.clientHeight && document.documentElement.clientHeight - 232; //窗口高度
-						tableIns.reload(tableId, {
-							height: h
-						}); //刷新数据表格
-						//window.location.reload(); //刷新iframe页面
-					}
-					return h;
-				}
-				//重新渲染表单
-			  	function renderForm(){ 
-		  			layui.use('form', function(){ 
-			  			var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加() 
-			  			form.render(); 
-		  			}); 
-		  		}
-				
-				//移除数组内重复的元素
-				function removeOne(arrId) {
-					var arr3 = new Array();
-					for (var i = 0; i < arr1.length; i++) {
-						if (arr1[i].matId == arrId) {
-							removeRow(arr1[i].matId);
-						} else {
-							arr3.push(arr1[i]);
-						}
-					}
-					arr1 = arr3;
-				}
-				
-				function changeState(rowId) {
-					var objStr = tableElem.find("td[data-field='matId']");
-					for (var i = 0; i < objStr.length; i++) {
-						if (objStr[i].innerText == rowId) {
-							//$(objStr[i]).prev().prev().children().children().last().click();
-							tableElem.find('tr[data-index=' + i + '] input[type="checkbox"]').next().click();
-						}
-					}
-				}
-				
-				function addClose(obj) {
-					obj.append("<span class='li-close'>×</span>");
-					obj.find(".li-close").on("click", function() {
-						changeState(obj.prop("id"));
-						removeOne(obj.prop("id"));
+			//换肤功能
+			var setSkin = function(value) {
+					layui.data('kit_skin', {
+						key: 'skin',
+						value: value
 					});
-				}
+				},
+				getSkinName = function() {
+					return layui.data('kit_skin').skin;
+				},
+				switchSkin = function(value) {
+					var _target = $('link[kit-skin]')[0];
+					_target.href = _target.href.substring(0, _target.href.lastIndexOf('/') + 1) + value + _target.href.substring(_target.href.lastIndexOf('.'));
+					setSkin(value);
 
-				function addRow(data) {
-					$("<li />", {
-						'id': data.matId,
-						'text': data.matName,
-						'class': "new-item "
-					}).insertAfter($(".li-title"));
-					addClose($("#" + data.matId));
-				}
-				
-				function removeRow(id) {
-					var removePoint = $(".down-ul").find("#" + id);
-					removePoint.removeClass("new-item").addClass("remove-item");
-					setTimeout(function() {
-						$(".remove-item").remove();
-					}, 480);
-				}
-			});
-		</script>
-	</body>
+				},
+				initSkin = function() {
+					var skin = getSkinName();
+					switchSkin(skin === undefined ? 'default' : skin);
+				}();
+		});
+  </script>
+</body>
+
 </html>
