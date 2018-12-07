@@ -6,8 +6,8 @@
     <result column="whol_id" jdbcType="VARCHAR" property="wholId" />
     <result column="drug_id" jdbcType="VARCHAR" property="drugId" />
     <result column="wd_amount" jdbcType="INTEGER" property="wdAmount" />
-    <result column="wd_price" jdbcType="DECIMAL" property="wdPrice" />
-    <result column="wd_total" jdbcType="DECIMAL" property="wdTotal" />
+    <result column="wd_price" jdbcType="VARCHAR" property="wdPrice" />
+    <result column="wd_total" jdbcType="VARCHAR" property="wdTotal" />
     <result column="isva" jdbcType="VARCHAR" property="isva" />
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
@@ -32,11 +32,14 @@
       isva, optime, oper, 
       sort)
     values (#{wdId,jdbcType=VARCHAR}, #{wholId,jdbcType=VARCHAR}, #{drugId,jdbcType=VARCHAR}, 
-      #{wdAmount,jdbcType=INTEGER}, #{wdPrice,jdbcType=DECIMAL}, #{wdTotal,jdbcType=DECIMAL}, 
+      #{wdAmount,jdbcType=INTEGER}, #{wdPrice,jdbcType=VARCHAR}, #{wdTotal,jdbcType=VARCHAR}, 
       #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, 
       #{sort,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yidu.domain.WholesaleDetail">
+  	<selectKey keyProperty="wdId" resultType="string" order="BEFORE">
+	    SELECT REPLACE(UUID(),'-','') AS id;
+	</selectKey>
     insert into drug_wholesale_detail
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="wdId != null">
@@ -84,10 +87,10 @@
         #{wdAmount,jdbcType=INTEGER},
       </if>
       <if test="wdPrice != null">
-        #{wdPrice,jdbcType=DECIMAL},
+        #{wdPrice,jdbcType=VARCHAR},
       </if>
       <if test="wdTotal != null">
-        #{wdTotal,jdbcType=DECIMAL},
+        #{wdTotal,jdbcType=VARCHAR},
       </if>
       <if test="isva != null">
         #{isva,jdbcType=VARCHAR},
@@ -116,10 +119,10 @@
         wd_amount = #{wdAmount,jdbcType=INTEGER},
       </if>
       <if test="wdPrice != null">
-        wd_price = #{wdPrice,jdbcType=DECIMAL},
+        wd_price = #{wdPrice,jdbcType=VARCHAR},
       </if>
       <if test="wdTotal != null">
-        wd_total = #{wdTotal,jdbcType=DECIMAL},
+        wd_total = #{wdTotal,jdbcType=VARCHAR},
       </if>
       <if test="isva != null">
         isva = #{isva,jdbcType=VARCHAR},
@@ -141,8 +144,8 @@
     set whol_id = #{wholId,jdbcType=VARCHAR},
       drug_id = #{drugId,jdbcType=VARCHAR},
       wd_amount = #{wdAmount,jdbcType=INTEGER},
-      wd_price = #{wdPrice,jdbcType=DECIMAL},
-      wd_total = #{wdTotal,jdbcType=DECIMAL},
+      wd_price = #{wdPrice,jdbcType=VARCHAR},
+      wd_total = #{wdTotal,jdbcType=VARCHAR},
       isva = #{isva,jdbcType=VARCHAR},
       optime = #{optime,jdbcType=TIMESTAMP},
       oper = #{oper,jdbcType=VARCHAR},

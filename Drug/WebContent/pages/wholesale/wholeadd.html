@@ -28,7 +28,7 @@
 			  </thead>
 			</table>
 		</div>
-		<button style="top:-80px;left:780px;width:100px;" lay-submit lay-filter="search" class="layui-btn layui-btn-sm kit-btn">确认批发</button>
+		<button onclick="okpi()" style="position:absolute;top:35px;left:780px;width:100px;" class="layui-btn layui-btn-sm kit-btn">确认批发</button>
 		<div class="kit-table">
 		    <form class="layui-form" lay-filter="kit-search-form">
 				<!-- 左上角的两个按钮 -->
@@ -130,8 +130,7 @@
 		            cols: [
 		                [{checkbox: true,fixed: true},
 		                {field: 'drugName',title: '药名',width: 175},
-		                {field: 'dtName',title: '类型',width: 80},
-		                {field: 'drugProp',title: '属性',width: 90},
+		                {field: 'drugProp',title: '类型',width: 80},
 		                {field: 'drugPictrue',title: '图片',width: 60,templet:'<div><img style="height:100%;height:30px;" src="../../{{ d.drugPictrue}}"></div>'},
 		                {field: 'drugPrice',title: '价格（元）',width: 150,sort: true},
 		                {fixed: 'right',title: '操作',width: 180,align: 'center',toolbar: '#barDemo'}]
@@ -168,10 +167,18 @@
 		        
 		        table.on('checkbox(demo)', function(obj){
 		        	var data = obj.data;
-		        	$("#add").append("<tr><td>"+data.drugName+"</td><td>"+data.dtName+"</td><td id='pic_"+data.drugId+"'>"+data.drugPrice+"</td><td><input type='number' id='up_"+data.drugId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' /></td><td id=''></td><td id='total'></td><td><a href='javascript:remove(this);'>删除</a></td></tr>")
+		        	if(obj.checked==true){
+		        		var mony = data.drugPrice;
+			        	$("#add").append("<tr><td style='display:none'>"+data.drugId+"</td><td>"+data.drugName+"</td><td>"+data.dtName+"</td><td id='pic_"+data.drugId+"'>"+data.drugPrice+"</td><td><input type='text' id='up_"+data.drugId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' value='1' /></td><td id='zong_"+data.drugId+"'></td><td id='pi_"+data.drugId+"'></td><td><a href='javascript:remove(this);'>删除</a></td></tr>")
+						var num=$(".numbers").val();
+			        	$("#zong_"+data.drugId+"").text(mony*num);
+			        	var pi=mony*num;
+			        	$("#pi_"+data.drugId+"").text(pi);
+		        	}
+		        	if(obj.checked==false){
+		        		alert("s");
+		        	}
 		        });
-		        
-		        
 		        
 		        //监听搜索表单提交
 		        form.on('submit(search)', function(data) {  
@@ -183,8 +190,6 @@
 		            $('.kit-search-mored').hide();
 		            return false;
 		        });
-		        
-		        
 		        //渲染 修改和增加弹出层
 			    function showlayer(d){
 			    	laytpl($('#edit-tpl').html()).render(d,function(html) {
@@ -215,12 +220,11 @@
 		            var data = obj.data; //获得当前行数据
 		            var layEvent = obj.event; //获得 lay-event 对应的值
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
-		
+
 		            if (layEvent === 'detail') { //查看
 		            	
 		            }
 		        });
-		        
 		        //表单渲染
 		        form.render(null, 'kit-search-form');
 		        //更多筛选点击事件
@@ -261,8 +265,32 @@
 			var a = obj.value;
 			var b=$(obj).parent().prev().text();
 			var c =parseFloat(a)*parseFloat(b);
-			$(obj).parent().parent().children().eq(4).text(c);
-			$(obj).parent().parent().children().eq(5).text(d);
+			var d=c*0.8;
+			$(obj).parent().parent().children().eq(5).text(c);
+			$(obj).parent().parent().children().eq(6).text(d);
+		}
+		
+		function okpi(){
+			var html="";
+			$("#add tr").not(":first").each(function(){
+				$(this).find("td").each(function(j){
+					html+=$(this).text()+",";
+				});
+					html+=$(this).find('td:eq(4) input').val()+"#";
+			});
+			$.ajax({ url:"../../wholesale/Wholesalemanagement.action",
+                type:'post',//method请求方式，get或者post
+                cache: false,//同步
+                dataType:'json',//预期服务器返回的数据类型
+                data:{"htmlstr":html},//传表格数据
+                success:function(mes){//res为相应体,function为回调函数
+                	 if(mes.msg>=1){
+                		 alert("s");
+                	 }else{
+                		 alert("Ss");
+                	 }
+                }
+             });
 		}
 		</script>
 	</body>

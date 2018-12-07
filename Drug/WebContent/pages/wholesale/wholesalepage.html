@@ -224,7 +224,8 @@
 		        		$(".layui-laypage-btn")[0].click();//当前表格刷新
 			            //带条件查询
 			            table.reload('demo',{
-			                where: {'wholId':data.field.wholId}
+			                where: {'wholId':data.field.wholId},
+			                page:{curr:1}
 			            });
 			            return false;
 		        });
@@ -383,7 +384,7 @@
 		                                area: ['900px', '450px'],
 		                                content: 'wholeadd.html'
 		                            });
-		                        });
+		                });
 		            }
 		        });
 		    });

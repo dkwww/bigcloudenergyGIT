@@ -25,13 +25,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class WholesaleServiceImpl  implements WholesaleService {
-	
 	@Resource
 	WholesaleMapper whole;
 
 	@Override
 	public List<Wholesale> selectAll(Map<String, Object> map) {
-		
 		return whole.selectAll(map);
 	}
 
@@ -62,5 +60,10 @@ public class WholesaleServiceImpl  implements WholesaleService {
 	public int selectCount(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return whole.selectCount(map);
+	}
+
+	@Override
+	public int insertSelective(Wholesale wholesale) {
+		return whole.insertSelective(wholesale);
 	}
 }

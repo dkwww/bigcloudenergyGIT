@@ -1,6 +1,5 @@
 package com.yidu.domain;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class WholesaleDetail {
@@ -12,9 +11,9 @@ public class WholesaleDetail {
 
     private Integer wdAmount;
 
-    private BigDecimal wdPrice;
+    private String wdPrice;
 
-    private BigDecimal wdTotal;
+    private String wdTotal;
 
     private String isva;
 
@@ -55,19 +54,19 @@ public class WholesaleDetail {
         this.wdAmount = wdAmount;
     }
 
-    public BigDecimal getWdPrice() {
+    public String getWdPrice() {
         return wdPrice;
     }
 
-    public void setWdPrice(BigDecimal wdPrice) {
+    public void setWdPrice(String wdPrice) {
         this.wdPrice = wdPrice;
     }
 
-    public BigDecimal getWdTotal() {
+    public String getWdTotal() {
         return wdTotal;
     }
 
-    public void setWdTotal(BigDecimal wdTotal) {
+    public void setWdTotal(String wdTotal) {
         this.wdTotal = wdTotal;
     }
 

@@ -10,7 +10,7 @@ public class Wholesale {
 
     private Integer wholAmount;
 
-    private BigDecimal wholPrice;
+    private String wholPrice;
 
     private Date optime;
 
@@ -44,11 +44,11 @@ public class Wholesale {
         this.wholAmount = wholAmount;
     }
 
-    public BigDecimal getWholPrice() {
+    public String getWholPrice() {
         return wholPrice;
     }
 
-    public void setWholPrice(BigDecimal wholPrice) {
+    public void setWholPrice(String wholPrice) {
         this.wholPrice = wholPrice;
     }
 

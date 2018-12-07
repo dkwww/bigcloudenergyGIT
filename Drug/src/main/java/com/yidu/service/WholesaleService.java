@@ -24,4 +24,6 @@ public interface WholesaleService  {
 	int addOrUpdate(Wholesale record);
 	
 	public int selectCount(Map<String, Object> map);
+	
+	public int insertSelective(Wholesale wholesale);
 }

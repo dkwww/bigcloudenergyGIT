@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yidu.domain.Drug;
 import com.yidu.domain.Wholesale;
+import com.yidu.domain.WholesaleDetail;
+import com.yidu.service.WholesaleDetailService;
 import com.yidu.service.WholesaleService;
 import com.yidu.util.TimeUtil;
 
@@ -30,6 +32,13 @@ import org.springframework.stereotype.Controller;
 @Controller
 @RequestMapping("/wholesaleDetail")
 public class WholesaleDetailController {
+	@Resource
+	WholesaleDetailService detailService;
 	
+	
+	@RequestMapping("insertAdd")
+	public int insertAdd(WholesaleDetail wholesaleDetail) {
+		return detailService.insertSelective(wholesaleDetail);
+	}
 }
 
