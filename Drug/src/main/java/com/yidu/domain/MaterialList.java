@@ -18,6 +18,16 @@ public class MaterialList {
     private String oper;
 
     private String sort;
+    
+    private String drugName;
+    
+    private String matName;
+    
+    private Integer matPrice;
+    
+    private String mtName;
+    
+    private String matEffect;
 
     public String getMlId() {
         return mlId;
@@ -82,4 +92,45 @@ public class MaterialList {
     public void setSort(String sort) {
         this.sort = sort == null ? null : sort.trim();
     }
+
+	public String getDrugName() {
+		return drugName;
+	}
+
+	public void setDrugName(String drugName) {
+		this.drugName = drugName;
+	}
+
+	public String getMatName() {
+		return matName;
+	}
+
+	public void setMatName(String matName) {
+		this.matName = matName;
+	}
+
+	public Integer getMatPrice() {
+		return matPrice;
+	}
+
+	public void setMatPrice(Integer matPrice) {
+		this.matPrice = matPrice;
+	}
+
+	public String getMtName() {
+		return mtName;
+	}
+
+	public void setMtName(String mtName) {
+		this.mtName = mtName;
+	}
+
+	public String getMatEffect() {
+		return matEffect;
+	}
+
+	public void setMatEffect(String matEffect) {
+		this.matEffect = matEffect;
+	}
+    
 }

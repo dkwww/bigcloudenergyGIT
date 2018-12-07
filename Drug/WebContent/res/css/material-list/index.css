@@ -1,0 +1,126 @@
+.css-closeTrans {
+	-webkit-transform: translateY(0%);
+	-moz-transform: translateY(0%);
+	-ms-transform: translateY(0%);
+	-o-transform: translateY(0%);
+	transform: translateY(0%);
+}
+
+.css-showTrans {
+	-webkit-transform: translateY(-100%);
+	-moz-transform: translateY(-100%);
+	-ms-transform: translateY(-100%);
+	-o-transform: translateY(-100%);
+	transform: translateY(-100%);
+}
+
+.css-transition {
+	-webkit-transition: transform 0.4s ease 0s;
+	-moz-transition: transform 0.4s ease 0s;
+	-ms-transition: transform 0.4s ease 0s;
+	-o-transition: transform 0.4s ease 0s;
+	transition: transform 0.4s ease 0s;
+}
+
+.layui-table-view .layui-table-body {
+	height: 360px;
+}
+
+.layui-card {
+	border: 1px solid #d2d2d2;
+	background-color: #fff;
+	border-radius: 2px;
+	margin: 37px 0px;
+	overflow: hidden
+}
+
+.layui-col-md10 {
+	margin: 0 auto;
+	float: none
+}
+
+.card-top {
+	/* display: none; */
+	background: rgba(255,255,250);
+} 
+
+.card-down {
+	/* display: none */
+}
+
+.layui-border-box{
+	margin: 0px;
+}
+
+#tableRes{
+	margin: 10px 0px;
+	white-space : normal nowrap ;
+}
+.card-body-top{
+	width: 77%;
+	display: inline-block;
+}
+
+.card-body-down{
+	width: 22%;
+	border: 1px solid #E6E6E6;
+	display: inline-block;
+	position: relative;
+	overflow: hidden;
+}
+
+.scroll-wrap{
+	width: 100%;
+	height: 100%;
+}
+
+.down-ul{
+	margin: 0px;
+	padding: 0px;
+	position: absolute;
+	font-size: 12px;
+	text-indent: 1em;
+	width: calc(100% + 16px);
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+.li-title{
+	width: 100%;
+	height: 33px;
+	line-height: 33px;
+	background: #F2F2F2;
+	border-bottom: 1px solid #E6E6E6;
+	color: #666666;
+}
+
+.down-ul li{
+	height: 33px;
+	line-height: 33px;
+	border-bottom: 1px solid #E6E6E6;
+}
+
+.li-close{
+	position: absolute;
+	right: 0px;
+	width: 18px;
+	height: 30px;
+	padding-right: 15px;
+	line-height: 30px;
+	font-size: 18px;
+	font-weight: bold;
+	transition: all .5s ease 0s;
+	color: transparent;
+}
+
+.down-ul li:hover > .li-close{
+	cursor: pointer;
+	color: #000;
+}
+
+
+/*文本对齐方式*/
+.text-center {
+	text-align: center;
+}

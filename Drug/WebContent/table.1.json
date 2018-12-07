@@ -1,0 +1,42 @@
+{
+	"code": 0,
+	"msg": "",
+	"count": 1000,
+	"data": [{
+			"tempId": 1,
+			"name": "人参1",
+			"amount": 1,
+			"price": 22.6,
+			"type": "根类1",
+			"effect": "活血化瘀1",
+			"state": 1
+		},
+		{
+			"tempId": 2,
+			"name": "人参2",
+			"amount": 1,
+			"price": 27.8,
+			"type": "根类2",
+			"effect": "活血化瘀2",
+			"state": 1
+		},
+		{
+			"tempId": 3,
+			"name": "人参3",
+			"amount": 1,
+			"price": 29.6,
+			"type": "根类3",
+			"effect": "活血化瘀3",
+			"state": 1
+		},
+		{
+			"tempId": 4,
+			"name": "人参4",
+			"amount": 1,
+			"price": 39.6,
+			"type": "根类4",
+			"effect": "活血化瘀4",
+			"state": 1
+		}
+	]
+}

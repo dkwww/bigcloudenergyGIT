@@ -1,0 +1,101 @@
+body {
+	font: 12px/1.4 "Lucida Grande", Sans-Serif;
+}
+
+.new-item {
+	-webkit-animation: growHeight 0.5s ease forwards;
+	animation: growHeight 0.5s ease forwards;
+}
+
+.remove-item {
+	-webkit-animation: shrinkHeight 500ms ease forwards;
+	animation: shrinkHeight 500ms ease forwards;
+}
+
+@keyframes growHeight {
+	to {
+		max-height: 50px;
+		opacity: 1;
+		transform: scale(1);
+		background: #aeec88;
+	}
+
+	from {
+		max-height: 0px;
+		opacity: 1;
+		transform: scale(0);
+		background: #E6E6E6;
+	}
+}
+
+@-webkit-keyframes growHeight {
+	to {
+		max-height: 50px;
+		opacity: 1;
+		-webkit-transform: scale(1);
+		transform: scale(1);
+		background: #aeec88;
+	}
+
+	from {
+		max-height: 0px;
+		opacity: 1;
+		-webkit-transform: scale(0);
+		transform: scale(0);
+		background: #E6E6E6;
+	}
+}
+
+@keyframes shrinkHeight {
+	to {
+		max-height: 0;
+		opacity: 1;
+		-webkit-transform: scale(0);
+		transform: scale(0);
+		background: #E6E6E6;
+	}
+
+	from {
+		max-height: 50px;
+		opacity: 1;
+		-webkit-transform: scale(1);
+		transform: scale(1);
+		background: #aeec88;
+	}
+}
+
+@-webkit-keyframes shrinkHeight {
+	to {
+		max-height: 0;
+		opacity: 1;
+		-webkit-transform: scale(0);
+		transform: scale(0);
+		background: #E6E6E6;
+	}
+
+	from {
+		max-height: 50px;
+		opacity: 1;
+		-webkit-transform: scale(1);
+		transform: scale(1);
+		background: #aeec88;
+	}
+}
+
+.example-five .details {
+	display: none;
+	line-height: 1.4;
+	padding-bottom: 10px;
+}
+
+#ex-five-button {
+	transition: background 0.2s ease;
+}
+
+#ex-five-button.open {
+	background: #a8ffd5;
+}
+
+#ex-five-button.open .title {
+	font-weight: bold;
+}

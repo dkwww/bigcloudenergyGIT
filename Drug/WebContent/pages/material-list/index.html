@@ -296,10 +296,11 @@
 								if (res.data[i].matId == tableData[k].matId) {
 									res.data[i].checkDisabled = true;
 									var index = res.data[i]['LAY_TABLE_INDEX'];
-									//tableElem.find('tr[data-index=' + index + '] input[type="checkbox"]').attr({name:'layTableCheckbox_disabled',"disabled":"disabled"}).next().addClass('layui-checkbox-disbaled layui-disabled');
-									console.log(tableElem.find('tr[data-index=' + index + '] input[type="checkbox"]').next())
-									$("#dataTable2").next().find('tr[data-index=' + index + '] input[type="checkbox"]').next().remove();"
+									tableElem.find('tr[data-index=' + index + '] input[type="checkbox"]').attr({name:'layTableCheckbox_disabled',"disabled":"disabled"});//.next().addClass('layui-checkbox-disbaled layui-disabled');
+									//console.log(tableElem.find('tr[data-index=' + index + '] input[type="checkbox"]').next().parent().children().last().css("display","none"))
+									//$("#dataTable2").next().find('tr[data-index=' + index + '] input[type="checkbox"]').next();
 									//tableElem.find('tr[data-index=' + index + '] input[type="checkbox"]').remove();
+									form.render('checkbox');
 								}
 							}
 						}
@@ -308,7 +309,6 @@
 						if (checkStatus.isAll) {
 							tableElem.find('th[data-field="0"] input[type="checkbox"]').prop('checked', true).next().addClass('layui-form-checked');
 						}
-						form.render();
 					}
 				});
 				$(".layui-card").css({"height":h+150});
