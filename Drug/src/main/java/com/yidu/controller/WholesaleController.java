@@ -163,7 +163,6 @@ public class WholesaleController {
 					num=0;
 				}
 			}
-			
 			//创建批发明细的对象
 			WholesaleDetail wholesaleDetail=new WholesaleDetail();
 			//批发外键
@@ -194,6 +193,8 @@ public class WholesaleController {
 				num=0;
 			}
 		}
+		System.out.println(zong);
+		
 		Message mes = new Message();
 		if(num>=2) {
 			mes.setMsg("1");

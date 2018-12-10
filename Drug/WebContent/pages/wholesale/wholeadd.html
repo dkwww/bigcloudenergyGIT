@@ -29,6 +29,10 @@
 			</table>
 		</div>
 		<button onclick="okpi()" style="position:absolute;top:35px;left:780px;width:100px;" class="layui-btn layui-btn-sm kit-btn">确认批发</button>
+		<div style="position: relative;display: inline;" id="zong">
+			总金额:<input id="zongjin" style="width:120px;" class="layui-input" type="text" />
+			 总数量:<input id="zongshu" style="width:120px;" class="layui-input" type="text" />
+		</div>
 		<div class="kit-table">
 		    <form class="layui-form" lay-filter="kit-search-form">
 				<!-- 左上角的两个按钮 -->
@@ -164,7 +168,7 @@
                     	renderForm();
                     }
                  });
-		        
+		        var zongs=0;
 		        table.on('checkbox(demo)', function(obj){
 		        	var data = obj.data;
 		        	if(obj.checked==true){
@@ -174,10 +178,21 @@
 			        	$("#zong_"+data.drugId+"").text(mony*num);
 			        	var pi=mony*num;
 			        	$("#pi_"+data.drugId+"").text(pi);
+			        	var lak=parseInt($("#pi_"+data.drugId+"").text());
+			        	zongs+=lak;
 		        	}
 		        	if(obj.checked==false){
-		        		alert("s");
+		        		var mony = data.drugPrice;
+			        	$("#add").html("");
+						var num=$(".numbers").val();
+			        	$("#zong_"+data.drugId+"").text(mony*num);
+			        	var pi=mony*num;
+			        	$("#pi_"+data.drugId+"").text($("#pi_"+data.drugId+"").text-pi);
+			        	var lak=parseInt($("#pi_"+data.drugId+"").text());
+			        	zongs+=lak;
 		        	}
+		        	alert(zongs);
+		        	$("#zongjin").val(zongs);
 		        });
 		        
 		        //监听搜索表单提交
@@ -210,7 +225,7 @@
 	                        success: function() {
 	                            form.render(null, 'form-edit');
 	                        }
-	                    });
+	                     });
 	                    upload();
 	                });
 			    }
@@ -268,6 +283,12 @@
 			var d=c*0.8;
 			$(obj).parent().parent().children().eq(5).text(c);
 			$(obj).parent().parent().children().eq(6).text(d);
+			var zongj=$(obj).parent().parent().children().eq(6).text();
+			alert("zongj="+zongj);
+			alert("zongjin="+$("#zongjin").val());
+			var zongmoney=parseInt($("#zongjin").val())+parseInt(zongj);
+			$("#zongjin").val(zongmoney);
+			zongmoney=0;
 		}
 		
 		function okpi(){
@@ -278,7 +299,7 @@
 				});
 					html+=$(this).find('td:eq(4) input').val()+"#";
 			});
-			$.ajax({ url:"../../wholesale/Wholesalemanagement.action",
+			$.ajax({ url:"../../wholesale/Wholesal5emanagement.action",
                 type:'post',//method请求方式，get或者post
                 cache: false,//同步
                 dataType:'json',//预期服务器返回的数据类型
@@ -295,3 +316,4 @@
 		</script>
 	</body>
 </html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
