@@ -1,12 +1,3 @@
 $(function(){
-	$(".add").on("click",function(){
-		$(".card-top,.card-down").addClass("css-showTrans").removeClass("css-closeTrans");
-		$(".layui-laypage-btn")[0].click();//当前表格刷新
-	});
-	$(".btnConfirm").on("click",function(){
-		$(".card-top,.card-down").removeClass("css-showTrans").addClass("css-closeTrans").removeClass("css-closeTrans");
-	});
-	$("button[name=btnCancel]").on("click",function(){
-		$(".card-top,.card-down").removeClass("css-showTrans").addClass("css-closeTrans").removeClass("css-closeTrans");
-	});
+	
 });

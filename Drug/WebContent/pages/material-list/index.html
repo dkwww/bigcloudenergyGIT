@@ -119,17 +119,19 @@
 				
 				//数据表格实例化			
 				var layTableId1 = "layTableId1";
-				var tableIns = table.render({
+				var h1 = autoHeight(layTableId1);
+				var tableIns1 = table.render({
 					elem: '#dataTable1',
 					id: layTableId1,
 					data: viewObj.data,
-					height: autoHeight(layTableId1),
+					height: h1,
 					page: true,
 					loading: true,
 					cols: [
-							[{checkbox: true},{title: '序号',type: 'numbers'},
+						[
+							{title: '序号',type: 'numbers'},
 							{field: 'matName',title: '材料名称（name）'},
-							{field: 'mlAmount',title: '数量（amount）',edit: 'number'},
+							{field: 'mlAmount',title: '数量（amount）',edit: 'text'},
 							{field: 'matPrice',title: '单价（price）'},
 							{field: 'mtName',title: '种类（type）'},
 							{field: 'matEffect',title: '功效（effect）'},
@@ -142,6 +144,10 @@
 						]
 					],
 					done: function(res, curr, count) {
+						layui.each(table.cache[layTableId1], function(index, data) {
+							res.data[index].state=1;
+							res.data[index].checkDisabled == true
+						});
 						tableData = res.data;
 						$("[data-field = 'mlAmount']").keyup(function() {
 							var obj = $(this).children().last();
@@ -167,7 +173,7 @@
 							}
 							continue;
 						}
-						tableIns.reload({
+						tableIns1.reload({
 							data: oldData
 						});
 					},
@@ -197,14 +203,22 @@
 						document.getElementById("jsonResult").innerHTML = JSON.stringify(table.cache[layTableId1], null, 2); //使用JSON.stringify() 格式化输出JSON字符串	
 					},
 					confirm: function() {
-						tableData = table.cache[layTableId1];
-						for (var i=0;i<arr1.length;i++) {
-							console.log(arr1[i])
-							tableData.unshift(arr1[i]);
+						console.log("newData")
+						console.log(viewObj.data);
+						console.log("arr1")
+						console.log(arr1);
+						var newData = new Array();
+						for(var i=0;i<viewObj.data.length;i++){
+							newData.push(viewObj.data[i]);
+						}
+						for (var j=0;j<arr1.length;j++) {
+							newData.unshift(arr1[j]);
 						};
-						tableIns.reload({
-							data: tableData
+						tableIns1.reload({
+							data: newData
 						});
+						console.log("newData")
+						console.log(newData)
 					}
 				}
 
@@ -246,18 +260,15 @@
 				var layTableId2 = "table2";
 				var h2 = autoHeight(layTableId2);
 				var tableElem = "";
-				var tableIns = table.render({
+				var tableIns2 = table.render({
 					elem: '#dataTable2',
 					id: layTableId2,
 					height: h2,
 					url: "../../material/showList.action",
 					page: true,
 					cols: [
-						[ //表头
-							{
-								type: 'checkbox',
-								fixed: true
-							},
+						[
+							{type: 'checkbox',fixed: true},
 							{title: '序号',type: 'numbers'},
 							{field: 'matId',title: '材料编号（ID）'},
 							{field: 'matName',title: '材料名称（name）'},
@@ -271,10 +282,22 @@
 						tableElem = this.elem.next('.layui-table-view');
 						count || tableElem.find('.layui-table-header').css('overflow', 'auto');
 						layui.each(table.cache[layTableId2], function(index, data) {
-							for (var j = 0; j < arr1.length; j++) {
-								if (res.data[index].matId == arr1[j].matId) {
+							for (var j = 0; j < tableData.length; j++) {
+								if (tableData[j].matId == data.matId) {
+									res.data[index]["LAY_CHECKED"] = true;
+									res.data[index].checkDisabled = true;
+									tableElem.find('tr[data-index="' + index + '"]').find('input[name="layTableCheckbox"]').attr({name: 'layTableCheckbox_disabled',disabled: 'disabled'}).next().removeClass('layui-form-checked');
+									tableElem.find('tr[data-index="' + index + '"]').find('td').css({"color":"#C0C0C0"});
+									return;
+								} else {
+									res.data[index].checkDisabled = false;
+								}
+							}
+							for (var i = 0; i < arr1.length; i++) {
+								if (res.data[index].matId == arr1[i].matId && res.data[index].checkDisabled == false) {
 									res.data[index]["LAY_CHECKED"] = true;
 									tableElem.find('tr[data-index=' + index + '] input[type="checkbox"]').prop('checked', true).next().addClass('layui-form-checked');
+									
 								}
 							}
 						});
@@ -282,22 +305,6 @@
 						if (checkStatus.isAll) {
 							tableElem.find('th[data-field="0"] input[type="checkbox"]').prop('checked', true).next().addClass('layui-form-checked');
 						}
-						layui.each(table.cache[layTableId2], function(index, data) {
-							for (var i = 0; i < tableData.length; i++) {
-								if (tableData[i].matId == data.matId) {
-									res.data[index]["LAY_CHECKED"] = false;
-									tableElem.find('tr[data-index="' + index + '"]').find('input[name="layTableCheckbox"]').attr({
-										name: 'layTableCheckbox_disabled',
-										disabled: 'disabled'
-									});
-									res.data[index].checkDisabled = true;
-									return;
-								} else {
-									res.data[index].checkDisabled = false;
-								}
-							}
-						});
-						console.log(table.cache[layTableId2])
 						form.render();
 					}
 				});
@@ -309,27 +316,24 @@
 							addRow(obj.data);
 							arr1.push(obj.data);
 							arr1[arr1.length-1]['state']=0;
+							arr1[arr1.length-1]['mlAmount']=1;
 						} else {
 							arr2 = table.cache[layTableId2];
-							console.log(arr2);
-							console.log(arr1);
 							for (var i = 0; i < arr2.length; i++) {
-								var stra = ;
-								var disabled = arr2[i].checkDisabled;
 								var count = 0;
 								for (var j = 0; j < arr1.length; j++) {
-									if ((arr2[i].matId == arr1[j].matId)&&disabled) {
+									if (arr2[i].matId == arr1[j].matId) {
 										count++;
 									}
 								}
-								if (count === 0) {
+								if (count === 0&&!arr2[i].checkDisabled) {
 									addRow(arr2[i]);
 									arr2[i]['state']=0;
-									arr1.push(arr2[i])
+									arr2[i]['mlAmount']=1;
+									arr1.push(arr2[i]);
 								}
 							}
 							arr3 = arr1;
-							console.log(arr3);
 						}
 					} else {
 						if (obj.type == 'one') {
@@ -341,7 +345,6 @@
 							}
 						}
 					}
-					console.log(arr1)
 				});
 				//查询类型下拉框数据
 		        $.ajax({ 
@@ -360,7 +363,7 @@
                  });
 				form.on('select(mat-type)', function(data){
 				  	//带条件查询
-		            tableIns.reload({
+		            tableIns2.reload({
 		                where: {"mtName":data.value},
 		                page: { curr: 1 }
 		            });
@@ -434,10 +437,18 @@
 						$(".remove-item").remove();
 					}, 480);
 				}
+				$(".add").on("click",function(){
+					$(".card-top,.card-down").addClass("css-showTrans").removeClass("css-closeTrans");
+					tableIns2.reload();
+				});
+				$(".btnConfirm").on("click",function(){
+					$(".card-top,.card-down").removeClass("css-showTrans").addClass("css-closeTrans").removeClass("css-closeTrans");
+					$(".new-item").remove();
+				});
+				$("button[name=btnCancel]").on("click",function(){
+					$(".card-top,.card-down").removeClass("css-showTrans").addClass("css-closeTrans").removeClass("css-closeTrans");
+				});
 			});
-		</script>
-		<script>
-			
 		</script>
 	</body>
 </html>

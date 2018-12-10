@@ -20,6 +20,10 @@ public class Pmc {
     private String oper;
 
     private String sort;
+    
+    private String startTime;
+    
+    private String endTime;
 
     public String getPmcId() {
         return pmcId;
@@ -92,4 +96,21 @@ public class Pmc {
     public void setSort(String sort) {
         this.sort = sort == null ? null : sort.trim();
     }
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+    
 }

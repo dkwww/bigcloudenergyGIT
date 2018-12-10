@@ -1,5 +1,8 @@
 package com.yidu.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.yidu.domain.Pmc;
 
 public interface PmcMapper {
@@ -14,4 +17,8 @@ public interface PmcMapper {
     int updateByPrimaryKeySelective(Pmc record);
 
     int updateByPrimaryKey(Pmc record);
+
+	List<Pmc> selectBySelective(Map<String, Object> map);
+
+	int selectCountBySelective(Pmc record);
 }
