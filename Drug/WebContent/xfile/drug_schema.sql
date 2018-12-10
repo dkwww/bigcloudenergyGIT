@@ -78,7 +78,7 @@ drop table if exists drug_wholesale_detail;
 create table drug_admin
 (
    admin_id             varchar(100) not null comment '管理员编号',
-   admin_web            varchar(100) comment '站点编号',
+   com_id            varchar(100) comment '站点编号',
    admin_name           varchar(100) comment '昵称',
    admin_pwd            varchar(50) comment '密码',
    admin_pictrue        varchar(300) comment '头像',
@@ -822,4 +822,7 @@ alter table drug_wholesale_detail add constraint FK_Reference_35 foreign key (wh
 
 alter table drug_wholesale_detail add constraint FK_Reference_42 foreign key (drug_id)
       references drug_drug (drug_id) on delete restrict on update restrict;
+      
+      ALTER TABLE drug_admin ADD CONSTRAINT FK_Reference_66 FOREIGN KEY (com_id)
+      REFERENCES drug_company (com_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
