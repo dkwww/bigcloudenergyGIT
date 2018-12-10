@@ -4,17 +4,17 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class BuyDetail {
-    private String bdetId;
+    private String bdetId;						//采购订单编号
 
-    private String buyId;
+    private String buyId;						//采购订单编号
 
-    private Integer bdetAmount;
+    private Integer bdetAmount;					//数量
 
-    private BigDecimal bdetPrice;
+    private BigDecimal bdetPrice;				//单价
 
-    private BigDecimal bdetTotal;
+    private BigDecimal bdetTotal;				//小计
 
-    private String bdetFkId;
+    private String bdetFkId;					//业务编号（采购商品编号）
 
     private String bdetFkName;
     
@@ -29,10 +29,41 @@ public class BuyDetail {
     private String oper;
 
     private String sort;
+    
+    private String matName;						//材料名
+    
+    private String matAmount;					//材料数量
+    
+    private String matPrice;					//材料单价
+    
 
     
     
-    public String getMes() {
+    public String getMatName() {
+		return matName;
+	}
+
+	public void setMatName(String matName) {
+		this.matName = matName;
+	}
+
+	public String getMatAmount() {
+		return matAmount;
+	}
+
+	public void setMatAmount(String matAmount) {
+		this.matAmount = matAmount;
+	}
+
+	public String getMatPrice() {
+		return matPrice;
+	}
+
+	public void setMatPrice(String matPrice) {
+		this.matPrice = matPrice;
+	}
+
+	public String getMes() {
 		return mes;
 	}
 

@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yidu.domain.Buy;
 import com.yidu.domain.BuyDetail;
-import com.yidu.service.BuyDetailService;
-import com.yidu.service.BuyService;
+import com.yidu.service.BuyHeDetailService;
+import com.yidu.service.BuyHeService;
 import com.yidu.util.Message;
 
 import java.util.HashMap;
@@ -27,14 +27,14 @@ import org.springframework.stereotype.Controller;
  * @since 2018-11-26
  */
 @Controller
-@RequestMapping("/buy")
-public class BuyController {
+@RequestMapping("/buyht")
+public class BuyHeController {
 	
 	@Resource
-	private BuyService service;
+	private BuyHeService service;
 	
 	@Resource
-	private BuyDetailService detaservice;
+	private BuyHeDetailService detaservice;
 	
 	
 	/**
@@ -54,6 +54,23 @@ public class BuyController {
 		return m;
 	}
 	
-	
+	/**
+	 * 增加
+	 * @param buy
+	 * @return
+	 */
+	@RequestMapping("add")
+	@ResponseBody
+	public Message add(Buy buy,BuyDetail deta) {
+		System.out.println("111111111111111"+deta.getBdetFkId());
+		
+		service.add(buy);
+		detaservice.add(deta);
+		Message me=new Message();
+		me.setStatus(1);
+		me.setMsg("增加成功");
+		
+		return me;
+	}
 }
 

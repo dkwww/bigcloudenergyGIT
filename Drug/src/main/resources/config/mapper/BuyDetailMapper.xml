@@ -18,6 +18,11 @@
     bdet_id, buy_id, bdet_amount, bdet_price, bdet_total, bdet_fk_id, isva, optime, oper, 
     sort
   </sql>
+  
+  <select id="showList" parameterType="map" resultMap="BaseResultMap">
+  	SELECT * FROM drug_buy_detail a,drug_material b WHERE a.bdet_fk_id=b.mat_id
+  </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

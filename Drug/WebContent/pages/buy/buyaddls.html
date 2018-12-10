@@ -12,53 +12,52 @@
 	
 	<script type="text/html" id="input">
 	<div class="layui-inline">
-		<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="bdetAmount"  autocomplete="off"  value="{{d.bdetAmount}}" id="number{{d.bdetId}}" onkeyup="Pressdown(this);">
+		<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="matAmount"  autocomplete="off"  value="{{d.matAmount}}" id="number{{d.matId}}" onkeyup="Pressdown(this);">
 	</div>
 	</script>
 	
 	<script type="text/html" id="inputss">
 	<div class="layui-inline">
-		<input class="layui-input " disabled readonly="readonly"  maxlength="9" style="border:none;padding-bottom:8px;" name="bdetTotal" id="price{{d.bdetId}}" autocomplete="off" value="{{d.bdetTotal}}"">
+		<input class="layui-input layui-disabled"  readonly="readonly"  value="0" maxlength="9" style="border:none;padding-bottom:8px;" name="bdetTotal" id="price{{d.matId}}" autocomplete="off"">
 	</div>
 	</script>
 	
 	<body>
 		<div class="kit-table">
-		    <form class="layui-form" lay-filter="kit-search-form">
 				<!-- 左上角的两个按钮 -->
 		        <div class="kit-table-header">
-		            <div class="kit-search-btns">
-		                <a href="javascript:;" data-action="add" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i> 添加材料</a>
-		                <a href="javascript:;" data-action="add-Order" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i> 保存订单</a>
-		            </div>
-		            <div class="kit-search-inputs">
+		        
+		        <form id="zsum">
+		        <div class="kit-search-inputs" style="margin-left: 200px;">
 		                <div class="kit-search-keyword">
 		                    <label class="layui-form-label"><span class="color-red"><span class="color-red"></span>供应商:</label>
-							  <div class="layui-input-inline">
+							  <div class="layui-input-inline" style="float:right;">
 							    <select id="edit_exam_school" name="buyCompany">
 							      <option value="">请选择</option>
-							      <option value="1">阿里</option>
-							      <option value="2">腾讯</option>
-							      <option value="3">百度</option>
-							      <option value="4">万达</option>
 							    </select>
 							  </div>
-		                    <button lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
 		                </div>
 		            </div>
+		            
+					<div class="layui-form-item">
+					   <label class="layui-form-label">采购总数量</label>
+					   <div class="layui-input-inline">
+					     <input type="text" name="buyAmount" value="0" id="buyAmount" autocomplete="off" class="layui-input layui-disabled" readonly="readonly">
+					   </div>
+					   <label class="layui-form-label">采购总金额</label>
+					   <div class="layui-input-inline">
+					     <input type="text" name="buyMoney" value="0" id="buyMoney" autocomplete="off" class="layui-input layui-disabled" readonly="readonly">
+					   </div>
+					</div>
+					
+				</form>
+		            <div class="kit-search-btns" style="width: 100px;margin-left: 630px;margin-top: -60px;">
+		             <a class="layui-btn layui-btn-sm" id="add"><i class="layui-icon"></i> 保存订单</a>
+		        	</div>
 		        </div>
 			
-		    </form>
-			<div class="layui-form-item">
-			   <label class="layui-form-label">采购总数量</label>
-			   <div class="layui-input-inline">
-			     <input type="text" name="buyAmount" id="buyAmount" autocomplete="off" class="layui-input layui-disabled" readonly="readonly">
-			   </div>
-			   <label class="layui-form-label">采购总金额</label>
-			   <div class="layui-input-inline">
-			     <input type="text" name="buyMoney" id="buyMoney" autocomplete="off" class="layui-input layui-disabled" readonly="readonly">
-			   </div>
-			</div>
+		    
+		    
 			<!-- 操作按钮 -->
 		    <div class="kit-table-body">
 		        <table id="demo" lay-filter="demo"></table>
@@ -104,42 +103,37 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '449px', //容器高度
-		            url: '../../buyDetail/showList.action',
+		            url: '../../material/showList.action',
 		            page: true,
 		            id: 'demo',
 		            cols: [
 		                [{checkbox: true,fixed: true},
-		                {field: 'bdetId',title: 'ID',width: 120},	
+		                {field: 'matId',title: 'ID',width: 120},	
 		                {field: 'matName',title: '材料名',width: 120},
-		                {field: 'bdetPrice',event:'danjia',title: '单价',width: 120},
-		                {field: 'bdetAmount',title: '数量',width: 120,templet:'#input'},
-		                {field: 'bdetTotal',title: '小计',width: 150,templet:'#inputss'}]
+		                {field: 'matPrice',title: '单价',width: 120},
+		                {field: 'matAmount',title: '数量',width: 120,templet:'#input'},
+		                {title: '小计',width: 150,templet:'#inputss'}]
 		            ],
 		            done: function(res, curr, count) {
-		            	
 		            	windata=res.data;
 		            },
 		            loading: true
 		        });
 		        
 				//查询类型下拉框数据
-		        var staticData = null;
-		        $.ajax({ url:"../..//showList.action",
+		        $.ajax({ url:"../../provider/showList.action",
                     type:'post',//method请求方式，get或者post
                     cache: false,//同步
                     dataType:'json',//预期服务器返回的数据类型
                     success:function(mes){//res为相应体,function为回调函数
-                    	//增加及修改类型下拉框内的数据
-                    	staticData = mes;
-                    	//循环添加类型搜索框内的数据
-                    	$.each(mes.types,function(index,item){
-                    		$("#drug-type").append("<option value="+item.dtId+">"+item.dtName+"</option>");
+                    	//循环添加框内的数据
+                    	$.each(mes.data,function(index,item){
+                    		$("#edit_exam_school").append("<option value="+item.provId+">"+item.provName+"</option>");
                     	});
-                    	//渲染类型搜索框内的下拉框
-                    	renderForm();
+                    	//渲染框内的下拉框
+                    	form.render();
                     }
                  });
-		        
 		        
 		        
 		        
@@ -154,23 +148,61 @@
 		            return false;
 		        });
 		        
+		        
+	        	//选中、取消值
+	        	var data=null;
 		        table.on('checkbox(demo)', function(obj){
+		        	
 		        	var tables=table.cache.demo;
-		        	var data=obj.data;
+		        	data=obj.data;
 		        	 if(obj.checked==true){
+		        		 
 		        		 $.each(tables,function(i,item){
-		        			 if(data.bdetId==item.bdetId){
-		        				 console.info($("#number"+data.bdetId).val())
-		        				 console.info($("#price"+data.bdetId).val())
+		        			 if(data.matId==item.matId){
+		        				 //取输入数量值
+		        				 var a=$("#number"+data.matId).val();
+		        				 //放入总数量
+		        				 $("#buyAmount").val(parseInt($("#buyAmount").val())+parseInt(a));
+		        				 
+		        				 //取输入小计值
+		        				 var b=$("#price"+data.matId).val();
+		        				 //放入总金额
+		        				 $("#buyMoney").val(parseInt($("#buyMoney").val())+parseInt(b));
 		        			 }
-		        			 
 		        		 });
 		        	 }
-
-		        	 
+		        	 if(obj.checked==false){
+		        		 $.each(tables,function(i,item){
+		        			 if(data.matId==item.matId){
+		        				 //获取总数量值
+		        				 var zAmount=$("#buyAmount").val();
+	        					 //用总数量值减去输入的值
+		        				 $("#buyAmount").val(parseInt(zAmount)-$("#number"+data.matId).val());
+	        					 
+		        				 //获取总金额值
+		        				 var zMoney=$("#buyMoney").val();
+	        					 //用总金额减去输入的小计值
+		        				 $("#buyMoney").val(parseInt(zMoney)-$("#price"+data.matId).val());
+		        			 }
+		        		 });
+		        		 
+		        	 }
 		        });
 		        
-		        
+		        $("#add").click(function(){
+					var datas=data.matId;
+					var url="../../buyht/add.action";
+					//var dataobj={$("#zsum").serialize(),"bdetFkId":datas};
+					//var datass=data.matName;
+					//var datasss=data.matPrice;
+					$.post(url,$.param({"bdetFkId":datas})+'&'+$("#zsum").serialize(),function(mes){
+						if(mes.status==1){
+							alert("采购成功");
+						}else{
+							alert("采购失败");
+						}
+					})
+				})
 		        
 		        
 		        //表单渲染
@@ -222,9 +254,9 @@
 	        });
 		</script>
 		
+		
+		
 		<script>
-			
-			
 			
 			function Pressdown(obj){
 				obj.value = obj.value.replace(/[^\d]/g,"");//清除“数字”和“.”以外的字符  
@@ -239,6 +271,7 @@
 			    }
 			    
 			    var id = obj.id;
+			    
 				var a = obj.value;//数量值
 				var b=$(obj).parent().parent().parent().prev().children().html();//获取this的父类节点
 				var c =parseFloat(a)*parseFloat(b);//用this*数量

@@ -12,7 +12,7 @@ import com.yidu.domain.Buy;
  * @author Pngjiangping
  * @since 2018-11-26
  */
-public interface BuyService   {
+public interface BuyHeService   {
 	
 	/**
 	 * 查询所有

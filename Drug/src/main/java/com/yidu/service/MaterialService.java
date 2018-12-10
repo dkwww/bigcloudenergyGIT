@@ -24,7 +24,6 @@ public interface MaterialService   {
 	
 	int selectCount(Material mat);
 	
-	
 	int addorUpdate(Material mat);
 	
 }

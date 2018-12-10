@@ -24,4 +24,12 @@ public interface BuyDetailMapper {
      */
     public List<BuyDetail> findAll();
     
+    /**
+     * 查询所有
+     * @param deta
+     * @author 邓康威
+     * @return
+     */
+    public List<BuyDetail> showList(BuyDetail deta);
+    
 }

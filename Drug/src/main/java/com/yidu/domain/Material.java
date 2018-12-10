@@ -31,7 +31,11 @@ public class Material {
     private String mtName;				//药材类型名
     
     
-    public String getMatEffect() {
+    
+    
+   
+
+	public String getMatEffect() {
 		return matEffect;
 	}
 

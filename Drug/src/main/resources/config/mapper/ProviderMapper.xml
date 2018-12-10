@@ -12,6 +12,11 @@
   <sql id="Base_Column_List">
     prov_id, prov_name, isva, optime, oper, sort
   </sql>
+  <select id="showList" parameterType="map" resultMap="BaseResultMap">
+  select 
+  <include refid="Base_Column_List" />
+  from drug_provider
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

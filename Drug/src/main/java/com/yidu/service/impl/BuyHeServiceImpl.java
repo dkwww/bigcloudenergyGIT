@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.yidu.dao.BuyMapper;
 import com.yidu.domain.Buy;
+import com.yidu.service.BuyHeService;
 import com.yidu.service.BuyService;
 import com.yidu.util.TimeUtil;
 
@@ -26,7 +27,7 @@ import com.yidu.util.TimeUtil;
  * @since 2018-11-26
  */
 @Service
-public class BuyServiceImpl implements BuyService {
+public class BuyHeServiceImpl implements BuyHeService {
 
 	@Resource
 	BuyMapper dao;
@@ -36,7 +37,6 @@ public class BuyServiceImpl implements BuyService {
 		
 		Map<String, Object> map=new HashMap<>();
 		map.put("buy", buy);
-		
 		
 		return dao.showList(map);
 	}

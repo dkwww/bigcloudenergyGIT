@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yidu.domain.Buy;
 import com.yidu.domain.BuyDetail;
 import com.yidu.service.BuyDetailService;
+import com.yidu.service.BuyHeDetailService;
 import com.yidu.service.BuyService;
-import com.yidu.util.Message;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,22 +20,18 @@ import org.springframework.stereotype.Controller;
 
 /**
  * <p>
- * 采购订单 前端控制器
+ * 采购明细 前端控制器
  * </p>
  *
- * @author 邓康威
+ * @author Pngjiangping
  * @since 2018-11-26
  */
 @Controller
-@RequestMapping("/buy")
-public class BuyController {
+@RequestMapping("/buyheDetail")
+public class BuyHeDetailController {
 	
 	@Resource
-	private BuyService service;
-	
-	@Resource
-	private BuyDetailService detaservice;
-	
+	BuyHeDetailService service;
 	
 	/**
 	 * 显示列表
@@ -43,8 +39,8 @@ public class BuyController {
 	 */
 	@RequestMapping("/showList")
 	@ResponseBody
-	public Map<String,Object> showList(Buy buy) {
-		List<Buy> list = service.showList(buy);
+	public Map<String,Object> showList(BuyDetail deta) {
+		List<BuyDetail> list = service.showList(deta);
 		
 		Map<String, Object> m = new HashMap<>();
 		m.put("code", 0);
@@ -53,7 +49,5 @@ public class BuyController {
 		m.put("data", list);
 		return m;
 	}
-	
-	
 }
 

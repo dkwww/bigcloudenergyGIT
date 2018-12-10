@@ -20,6 +20,7 @@
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
   </resultMap>
+  
   <sql id="Base_Column_List">
     buy_id, com_id, buy_amount, buy_money, buy_time, buy_company, buy_type, buy_audit, 
     buy_state, buy_qc, buy_put, buy_mes, isva, optime, oper, sort
@@ -30,7 +31,6 @@
   	<if test="buy.buyCompany!=null and buy.buyCompany!='' ">
   		and buy_company like concat("%",#{buy.buyCompany},"%")
   	</if>
-  	
   </select>
   
   
