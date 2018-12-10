@@ -34,6 +34,7 @@ public class MrpController {
 	private  MrpService   mrpService ;
 	
 	
+	
 	/**
 	 * 查询所有的方法
 	 * @param mrp
@@ -53,10 +54,6 @@ public class MrpController {
 		List<Mrp> list = mrpService.qureyAll(mrp,pageUtil);
 		//查询行数
 		int rows = mrpService.selectCountBySelectiv(mrp);
-		
-		
-		System.out.println("-------------------------------"+rows);
-		 //转换时间
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 			Mrp mrp2 = (Mrp) iterator.next();
 			TimeUtil.dateToString(mrp2.getOptime(), "yyyy-mm-dd");

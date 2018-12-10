@@ -489,7 +489,7 @@ alter table drug_module_role comment '模块角色表';
 /*==============================================================*/
 create table drug_mrp
 (
-   mrp_id               varchar(100) not null comment '制造计划编号',
+   mrp_id               varchar(100) not null comment ' 编号',
    drug_id              varchar(100) comment '药品编号',
    mrp_optime           datetime comment '制造时间',
    mrp_plan             int(5) comment '计划任务',
@@ -500,7 +500,7 @@ create table drug_mrp
    isva                 varchar(50) comment '是否有效',
    optime               datetime comment '操作时间',
    oper                 varchar(100) comment '操作人',
-   sort                 varchar(200) comment '排序',
+   sort                 varchar(200) comment  '排序',
    primary key (mrp_id)
 );
 
