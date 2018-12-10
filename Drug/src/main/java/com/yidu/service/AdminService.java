@@ -3,6 +3,7 @@ package com.yidu.service;
 import java.util.List;
 
 import com.yidu.domain.Admin;
+import com.yidu.util.PageUtil;
 
 /**
  * <p>
@@ -24,9 +25,12 @@ public interface AdminService   {
 	
 	/**
 	 * 查询
+	 * @param pageUtil 
 	 * @param user
 	 * @return
 	 */
-	public List<Admin> findAll(Admin admin);
+	public List<Admin> findAll(Admin admin, PageUtil pageUtil);
+
+	public int selectCount(Admin admin);
 
 }

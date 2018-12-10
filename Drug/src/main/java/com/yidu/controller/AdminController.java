@@ -5,12 +5,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yidu.domain.Admin;
-import com.yidu.domain.Member;
 import com.yidu.service.AdminService;
 import com.yidu.util.Message;
-import com.yidu.util.Tools;
+import com.yidu.util.PageUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,17 +35,18 @@ public class AdminController {
 	
 	@RequestMapping("/findAll")
 	@ResponseBody
-	public Map<String,Object> findAll(Admin admin){
+	public Map<String,Object> findAll(Admin admin,Integer page,Integer limit){
+		PageUtil pageUtil = new PageUtil();
+		pageUtil.setCurPage(page);
+		pageUtil.setRows(limit);
 		//List集合
-		List<Admin> list=new ArrayList<>();
-		List<Admin> list2 = service.findAll(admin);
-		for (Admin admin2 : list2) {
-			admin2.setOptimestring(Tools.getTimeStr(admin2.getOptime()));
-			list.add(admin2);
-		}
+		List<Admin> list = service.findAll(admin,pageUtil);
+		//查询分页的行
+		int rows = service.selectCount(admin);
 		Map<String , Object> map = new HashMap<>();
 		map.put("code",0);
 		map.put("msg","");
+		map.put("count", rows);
 		map.put("data", list);
 		return map;
 	}

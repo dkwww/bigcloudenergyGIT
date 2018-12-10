@@ -31,4 +31,6 @@ public interface AdminMapper {
 	 * @return
 	 */
 	List<Admin> selectAll(Map<String, Object> map);
+
+	int selectCount(Admin admin);
 }

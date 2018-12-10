@@ -5,7 +5,7 @@ import java.util.Date;
 public class Admin {
     private String adminId;
 
-    private String adminWeb;
+    private String comId;
 
     private String adminName;
 
@@ -25,8 +25,23 @@ public class Admin {
 
     private String optimestring;
     
+    private String comName;
     
-    
+	public String getComId() {
+		return comId;
+	}
+
+	public void setComId(String comId) {
+		this.comId = comId;
+	}
+
+	public String getComName() {
+		return comName;
+	}
+
+	public void setComName(String comName) {
+		this.comName = comName == null ? null : adminName.trim();
+	}
 
 	public String getOptimestring() {
 		return optimestring;
@@ -42,14 +57,6 @@ public class Admin {
 
     public void setAdminId(String adminId) {
         this.adminId = adminId == null ? null : adminId.trim();
-    }
-
-    public String getAdminWeb() {
-        return adminWeb;
-    }
-
-    public void setAdminWeb(String adminWeb) {
-        this.adminWeb = adminWeb == null ? null : adminWeb.trim();
     }
 
     public String getAdminName() {

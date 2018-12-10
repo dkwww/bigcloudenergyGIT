@@ -61,11 +61,76 @@
 		</div>
 	</div>             
 	<script src="../../res/layui/layui.js" charset="utf-8"></script>
-	<script>
+	<script>..
 		//搜索框同步输入
 		function lockInput(obj,id){
 			$("#"+id).val($(obj).val());
 		}
+	</script>
+	
+	<!-- 修改页面 -->
+	<script type="text/html" id="edit-tpl">
+		   	<div style="margin:10px">
+		        <form class="layui-form" action="" lay-filter="form-edit">
+		            <input type="hidden" name="adminId" value="{{d.rowdata.adminId}}" />
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">用户名</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="adminName" required lay-verify="required" value="{{d.rowdata.adminName}}" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">类型</label>
+		                <div class="layui-input-block">
+		                    <select name="dtId" lay-verify="required">
+		                      <option value=""></option>
+		                      {{# layui.each(d.types,function(index,item){ }}                      
+		                      {{# if(item.dtId===d.rowdata.dtId){}}
+		                      <option value="{{item.dtId}}" selected>{{item.dtName}}</option>
+		                      {{#}else{}}
+		                      <option value="{{item.dtId}}">{{item.dtName}}</option>
+		                      {{#};}}
+		                      {{# }); }}
+		                    </select>
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">单位</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="drugUnit" required lay-verify="required" value="{{d.rowdata.drugUnit}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">属性</label>
+		                <div class="layui-input-block">
+		                    {{# var otc = d.rowdata.drugProp === '0'?'checked':'';}} {{# var rx = d.rowdata.drugProp === '1'?'checked':'';}}
+		                    <input type="radio" name="drugProp" value="1" title="处方药" {{rx}} />
+		                    <input type="radio" name="drugProp" value="0" title="非处方药" {{otc}} />
+		                </div>
+		            </div>
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">价格</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="drugPrice" required lay-verify="required" maxlength="6" value="{{d.rowdata.drugPrice}}" placeholder="请输入认购数额（整数）" autocomplete="off" class="layui-input activity_card_money" onKeyUp="amount(this)">
+		                </div>
+		            </div>
+					<div class="layui-upload">
+                		<label class="layui-form-label">头像:</label>
+                		<div class="layui-upload layui-input-block">
+                    		<input type="hidden" name="drugPictrue" value="{{d.rowdata.drugPictrue}}"/>
+                    		<button type="button" class="layui-btn layui-btn-primary" id="fileBtn"><i class="layui-icon">&#xe67c;</i>选择文件</button>
+                   	 		<button type="button" class="layui-btn layui-btn-warm" id="uploadBtn">开始上传</button>
+                		</div>
+            		</div>
+					
+		            <div class="layui-form-item" style="display:none;">
+		                <div class="layui-input-block">
+		                    <button class="layui-btn" lay-submit lay-filter="formEdit">立即提交</button>
+		                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		                </div>
+		            </div>
+		        </form>
+		    </div>
 	</script>
 	<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 --> 
 	<script src="../../res/layui/layui.all.js"></script> 
@@ -85,7 +150,7 @@
 		    	,cols: [[
 		      		{checkbox: true,fixed: true}
 			      ,{field:'adminId', width:80, title: 'ID', align: 'center'}
-			      ,{field:'adminWeb', width:148, title: '公司名称',align: 'center'}
+			      ,{field:'comName', width:148, title: '公司名称',align: 'center'}
 			      ,{field:'adminName', width:110, title: '用户名', align: 'center'}
 			      ,{field:'adminPictrue', title: '头像', width: 130,align: 'center',templet:'<div><img style="height:100%;height:30px;" src="../../{{ d.adminPictrue}}"></div>'}
 			      ,{field:'adminMsg', width:80, title: '备注', align: 'center'}
@@ -120,6 +185,25 @@
 	        //更多筛选点击事件
 	        $('#kit-search-more').on('click', function() {
 	            $('.kit-search-mored').toggle();
+	        });
+	      //增加、批量删除 按钮点击事件
+	        $('.kit-search-btns').children('a').off('click').on('click', function() {
+	            var $that = $(this),
+	                action = $that.data('action');
+	            switch (action) {
+	            	//点击的是 增加按钮
+	                case 'add':
+	                    var d = {
+	                		//替换增加页面文本框内出现的undefine
+	                        rowdata: {
+	                        	drugId: '',drugName: '',drugProp: 1,drugUnit: '',drugPrice: '',drugPictrue: '',drugProp: '0'
+	                        },
+	                        //类型下拉框数据
+	                        types: staticData.types
+	                    };
+	                    showlayer(d);
+	                    break;
+	            }
 	        });
 		});
 		//ajax加载动画
