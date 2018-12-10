@@ -14,9 +14,11 @@
 		<link rel="stylesheet" type="text/css" href="../../res/css/material-list/index.css" />
 		<script src="../../res/js/material-list/index.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="stylesheet" type="text/css" href="../../res/css/material-list/row.css" />
+		<style>
+		
+		</style>
 	</head>
 	<body class="childBody">
-
 		<section class="layui-col-md10">
 			<div class="layui-card">
 				<div class="card-top css-transition">
@@ -61,7 +63,7 @@
 					</div>
 					<div class="layui-card-body">
 						<div id="tableRes" class="table-overlay">
-							<div class="card-body-down">
+							<div class="card-body-left">
 								<div class="scroll-wrap">
 									<ul class="down-ul">
 										<p class="li-title">药材清单（list）</p>
@@ -71,7 +73,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="card-body-top">
+							<div class="card-body-right">
 								<table id="dataTable2" lay-filter="dataTables" class="layui-hide" ></table>
 							</div>
 						</div>
@@ -94,11 +96,6 @@
 		</section>
 		<!--recommended script position-->
 		<script src="../../res/layui/layui.all.js"></script>
-		<script type="text/html" id="myCheckbox">
-    		{{# if(d.id%2 == 0) {  if(d.LAY_CHECKED) { var checked = 'checked=""';}  }}
-   			<input type="checkbox" lay-skin="primary" name="layTableCheckbox" {{checked||''}}  >
-    		{{# } else { layui.table.cache.grid2[d.LAY_TABLE_INDEX].checkDisabled=true;} }}
-		</script>
 		<script type="text/javascript">
 			//准备视图对象
 			window.viewObj = null;
@@ -116,22 +113,19 @@
 			var arr2 = new Array();//表格的数据
 			var tableData = new Array();//第一个表格的数据
 			//layui 模块化引用
-			layui.use(['jquery', 'table', 'layer'], function() {
-				var $ = layui.$,
-					table = layui.table,
-					form = layui.form,
-					layer = layui.layer;
+			layui.use(['table', 'layer', 'element', 'jquery', 'form'], function(table, layer, element, $, form) {
+				// data模式
+				var $ = layui.$, table = layui.table, form = layui.form, layer = layui.layer;
+				
 				//数据表格实例化			
 				var layTableId1 = "layTableId1";
-				var h = autoHeight(layTableId1);
 				var tableIns = table.render({
 					elem: '#dataTable1',
 					id: layTableId1,
 					data: viewObj.data,
-					height: h,
+					height: autoHeight(layTableId1),
 					page: true,
 					loading: true,
-					even: false, //不开启隔行背景
 					cols: [
 							[{checkbox: true},{title: '序号',type: 'numbers'},
 							{field: 'matName',title: '材料名称（name）'},
@@ -162,21 +156,7 @@
 				
 				//定义事件集合
 				var active = {
-					add: function() { //添加一行
-						/* var oldData = table.cache[layTableId1];
-						var newRow = {
-							tempId: new Date().valueOf(),
-							matName: '人参',
-							mlAmount: 0,
-							matPrice: 0,
-							mtName: '根类',
-							matEffect: '活血化瘀',
-							state: 0
-						};
-						oldData.unshift(newRow);
-						tableIns.reload({
-							data: oldData
-						}); */
+					add: function() { 
 					},
 					removeEmptyTableCache: function() {
 						var oldData = table.cache[layTableId1];
@@ -259,19 +239,25 @@
 							break;
 					}
 				});
-				var layTableId2 = "layTableId2";
-				var h = autoHeight(layTableId2);
-				var tableElem = ""
-				var tableInss = table.render({
+
+				
+				
+				
+				var layTableId2 = "table2";
+				var h2 = autoHeight(layTableId2);
+				var tableElem = "";
+				var tableIns = table.render({
 					elem: '#dataTable2',
 					id: layTableId2,
-					url: '../../material/showList.action',
-					height: h,
+					height: h2,
+					url: "../../material/showList.action",
 					page: true,
-					loading: true,
-					even: false, //不开启隔行背景
 					cols: [
-							[{checkbox: true},
+						[ //表头
+							{
+								type: 'checkbox',
+								fixed: true
+							},
 							{title: '序号',type: 'numbers'},
 							{field: 'matId',title: '材料编号（ID）'},
 							{field: 'matName',title: '材料名称（name）'},
@@ -282,37 +268,41 @@
 						]
 					],
 					done: function(res, curr, count) {
-						//viewObj.tbData = res.data;
 						tableElem = this.elem.next('.layui-table-view');
-						for (var i = 0; i < res.data.length; i++) {
+						count || tableElem.find('.layui-table-header').css('overflow', 'auto');
+						layui.each(table.cache[layTableId2], function(index, data) {
 							for (var j = 0; j < arr1.length; j++) {
-								if (res.data[i].matId == arr1[j].matId) {
-									res.data[i]["LAY_CHECKED"] = true;
-									var index = res.data[i]['LAY_TABLE_INDEX'];
+								if (res.data[index].matId == arr1[j].matId) {
+									res.data[index]["LAY_CHECKED"] = true;
 									tableElem.find('tr[data-index=' + index + '] input[type="checkbox"]').prop('checked', true).next().addClass('layui-form-checked');
 								}
 							}
-							for (var k = 0; k < tableData.length; k++) {
-								if (res.data[i].matId == tableData[k].matId) {
-									res.data[i].checkDisabled = true;
-									var index = res.data[i]['LAY_TABLE_INDEX'];
-									tableElem.find('tr[data-index=' + index + '] input[type="checkbox"]').attr({name:'layTableCheckbox_disabled',"disabled":"disabled"});//.next().addClass('layui-checkbox-disbaled layui-disabled');
-									//console.log(tableElem.find('tr[data-index=' + index + '] input[type="checkbox"]').next().parent().children().last().css("display","none"))
-									//$("#dataTable2").next().find('tr[data-index=' + index + '] input[type="checkbox"]').next();
-									//tableElem.find('tr[data-index=' + index + '] input[type="checkbox"]').remove();
-									form.render('checkbox');
-								}
-							}
-						}
-						//设置全选checkbox的选中状态，只有改变LAY_CHECKED的值， table.checkStatus才能抓取到选中的状态 
+						});
 						var checkStatus = table.checkStatus(layTableId2);
 						if (checkStatus.isAll) {
 							tableElem.find('th[data-field="0"] input[type="checkbox"]').prop('checked', true).next().addClass('layui-form-checked');
 						}
+						layui.each(table.cache[layTableId2], function(index, data) {
+							for (var i = 0; i < tableData.length; i++) {
+								if (tableData[i].matId == data.matId) {
+									res.data[index]["LAY_CHECKED"] = false;
+									tableElem.find('tr[data-index="' + index + '"]').find('input[name="layTableCheckbox"]').attr({
+										name: 'layTableCheckbox_disabled',
+										disabled: 'disabled'
+									});
+									res.data[index].checkDisabled = true;
+									return;
+								} else {
+									res.data[index].checkDisabled = false;
+								}
+							}
+						});
+						console.log(table.cache[layTableId2])
+						form.render();
 					}
 				});
-				$(".layui-card").css({"height":h+150});
-				$(".card-body-down").css({"height":h});
+				$(".layui-card").css({"height":h2+150});
+				$(".card-body-left").css({"height":h2});
 				table.on('checkbox(dataTables)', function(obj) {
 					if (obj.checked == true) {
 						if (obj.type == 'one') {
@@ -321,12 +311,16 @@
 							arr1[arr1.length-1]['state']=0;
 						} else {
 							arr2 = table.cache[layTableId2];
+							console.log(arr2);
+							console.log(arr1);
 							for (var i = 0; i < arr2.length; i++) {
-								var stra = arr2[i].matId;
+								var stra = ;
+								var disabled = arr2[i].checkDisabled;
 								var count = 0;
 								for (var j = 0; j < arr1.length; j++) {
-									var strb = arr1[j].matId;
-									if (stra == strb) count++;
+									if ((arr2[i].matId == arr1[j].matId)&&disabled) {
+										count++;
+									}
 								}
 								if (count === 0) {
 									addRow(arr2[i]);
@@ -334,6 +328,8 @@
 									arr1.push(arr2[i])
 								}
 							}
+							arr3 = arr1;
+							console.log(arr3);
 						}
 					} else {
 						if (obj.type == 'one') {
@@ -364,23 +360,11 @@
                  });
 				form.on('select(mat-type)', function(data){
 				  	//带条件查询
-		            tableInss.reload({
+		            tableIns.reload({
 		                where: {"mtName":data.value},
 		                page: { curr: 1 }
 		            });
 				})
-				function autoHeight(tableId){
-					var h = document.body.clientHeight && document.documentElement.clientHeight - 232; //窗口高度
-					//监听改变窗口大小
-					window.onresize = function() {
-						h = document.body.clientHeight && document.documentElement.clientHeight - 232; //窗口高度
-						tableIns.reload(tableId, {
-							height: h
-						}); //刷新数据表格
-						//window.location.reload(); //刷新iframe页面
-					}
-					return h;
-				}
 				//重新渲染表单
 			  	function renderForm(){ 
 		  			layui.use('form', function(){ 
@@ -388,6 +372,20 @@
 			  			form.render(); 
 		  			}); 
 		  		}
+				
+				//窗口自适应
+				function autoHeight(tableId){
+					var h = document.body.clientHeight && document.documentElement.clientHeight - 232; //窗口高度
+					//监听改变窗口大小
+					/* window.onresize = function() {
+						h = document.body.clientHeight && document.documentElement.clientHeight - 232; //窗口高度
+						tableIns2.reload(tableId, {
+							height: h
+						}); //刷新数据表格
+						//window.location.reload(); //刷新iframe页面
+					} */
+					return h;
+				}
 				
 				//移除数组内重复的元素
 				function removeOne(arrId) {
@@ -406,8 +404,8 @@
 					var objStr = tableElem.find("td[data-field='matId']");
 					for (var i = 0; i < objStr.length; i++) {
 						if (objStr[i].innerText == rowId) {
-							//$(objStr[i]).prev().prev().children().children().last().click();
-							tableElem.find('tr[data-index=' + i + '] input[type="checkbox"]').next().click();
+							tableElem.children().find('.layui-table-fixed input[type="checkbox"]').eq(i+1).next().click();
+							tableElem.find('.layui-table-fixed input[type="checkbox"]').eq(i+1).next().removeClass('layui-form-checked');
 						}
 					}
 				}
@@ -437,6 +435,9 @@
 					}, 480);
 				}
 			});
+		</script>
+		<script>
+			
 		</script>
 	</body>
 </html>
