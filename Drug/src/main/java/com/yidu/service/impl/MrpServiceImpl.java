@@ -5,7 +5,9 @@ import com.yidu.dao.MrpMapper;
 import com.yidu.domain.Mrp;
 import com.yidu.service.MrpService;
 import com.yidu.util.PageUtil;
+import com.yidu.util.TimeUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,21 +34,29 @@ public class MrpServiceImpl implements MrpService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("mrp", mrp);
 		map.put("pageUtil", pageUtil);
-		
-	     List<Mrp> list = dao.qureyAll(map);
-		for (Mrp mrp2 : list) {
-			if (mrp2.getMrpState()==0) {
-				mrp2.setStateName("制作中");
-			}else  if (mrp2.getMrpState()==1) {
-				mrp2.setStateName("制作完成");
-			}
-			if (mrp2.getMrpIdea()==0) {
-				mrp2.setIdeaName("停止");
-			}else if (mrp2.getMrpIdea()==1) {
-				mrp2.setIdeaName("继续");
-			}
+	     List<Mrp> list = dao.qureyAll(map); 
+	     
+	    
+	     List<Mrp>  lists =new  ArrayList<>();
+	     for (Mrp mrp2 : list) {
+			mrp2.setMrpOptimeName(TimeUtil.dateToString(mrp2.getMrpOptime(), "yyyy-MM-dd HH:mm:ss"));
+			mrp2.setOptimeName(TimeUtil.dateToString(mrp2.getOptime(), "yyyy-MM-dd HH:mm:ss"));
+			 if (mrp2.getMrpState()==0) {
+					mrp2.setStateName("制作中");
+				}else  if (mrp2.getMrpState()==1) {
+					mrp2.setStateName("制作完成");
+				}
+				if (mrp2.getMrpIdea()==0) {
+					mrp2.setIdeaName("停止");
+				}else if (mrp2.getMrpIdea()==1) {
+					mrp2.setIdeaName("继续");
+				}
+			lists.add(mrp2);
 		}
-		return list;
+		 for (Mrp mrp2 : lists) {
+			 System.out.println("===============+++=="+mrp2.getMrpOptimeName());
+		}
+		return lists;
 	}
 	@Override
 	public int selectCountBySelectiv(Mrp mrp) {
