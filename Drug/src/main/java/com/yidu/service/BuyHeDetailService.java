@@ -3,6 +3,7 @@ package com.yidu.service;
 import java.util.List;
 
 import com.yidu.domain.BuyDetail;
+import com.yidu.util.PageUtil;
 
 /**
  * <p>
@@ -18,10 +19,19 @@ public interface BuyHeDetailService  {
 	
 	/**
 	 * 显示列表
+	 * @param buyId
 	 * @return
 	 */
-	public List<BuyDetail> showList(BuyDetail deta);
+	List<BuyDetail> showListId(BuyDetail detail,PageUtil page);
 	
-	public int add(BuyDetail deta);
+	/**
+	 * 查询行数
+	 * @param detail
+	 * @return
+	 */
+	int selectCount(BuyDetail detail);
+	
+	
+	int add(BuyDetail deta);
 	
 }

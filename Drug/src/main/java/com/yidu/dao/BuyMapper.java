@@ -1,4 +1,4 @@
-package com.yidu.dao;
+﻿package com.yidu.dao;
 
 import java.util.List;
 import java.util.Map;
@@ -32,4 +32,5 @@ public interface BuyMapper {
      * @return
      */
 	public int selectCountBySelective(Buy buy);
+    int selectCount(Buy buy);
 }

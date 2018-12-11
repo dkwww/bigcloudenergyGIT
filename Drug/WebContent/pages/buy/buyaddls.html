@@ -23,11 +23,14 @@
 	</script>
 	
 	<body>
+		<div>
+			<input type="hidden" id="shuju">
+		</div>
 		<div class="kit-table">
 				<!-- 左上角的两个按钮 -->
 		        <div class="kit-table-header">
 		        
-		        <form id="zsum">
+		        <form class="layui-form" lay-filter="kit-search-form">
 		        <div class="kit-search-inputs" style="margin-left: 200px;">
 		                <div class="kit-search-keyword">
 		                    <label class="layui-form-label"><span class="color-red"><span class="color-red"></span>供应商:</label>
@@ -38,7 +41,7 @@
 							  </div>
 		                </div>
 		            </div>
-		            
+		        </form>
 					<div class="layui-form-item">
 					   <label class="layui-form-label">采购总数量</label>
 					   <div class="layui-input-inline">
@@ -50,9 +53,12 @@
 					   </div>
 					</div>
 					
-				</form>
+				
 		            <div class="kit-search-btns" style="width: 100px;margin-left: 630px;margin-top: -60px;">
 		             <a class="layui-btn layui-btn-sm" id="add"><i class="layui-icon"></i> 保存订单</a>
+		        	</div>
+		        	<div class="kit-search-btns" style="width: 100px;margin-left: 720px;margin-top: -60px;">
+		             <a class="layui-btn layui-btn-sm" id="fh"><i class="layui-icon"></i> 返回</a>
 		        	</div>
 		        </div>
 			
@@ -155,8 +161,8 @@
 		        	
 		        	var tables=table.cache.demo;
 		        	data=obj.data;
-		        	 if(obj.checked==true){
-		        		 
+		        	if(obj.checked==true){
+		        		 $("#shuju").val($("#shuju").val()+data.matId+","+data.matName+","+data.matPrice+","+$("#number"+data.matId).val()+","+$("#price"+data.matId).val()+"#");
 		        		 $.each(tables,function(i,item){
 		        			 if(data.matId==item.matId){
 		        				 //取输入数量值
@@ -170,7 +176,25 @@
 		        				 $("#buyMoney").val(parseInt($("#buyMoney").val())+parseInt(b));
 		        			 }
 		        		 });
-		        	 }
+		        		 
+		        		 
+		        		 $("#add").click(function(){
+		 	        		var url="../../buyht/add.action";
+		 					var data={"shuju":$("#shuju").val(),"sumNumber":$("#buyAmount").val(),"sumPrice":$("#buyMoney").val(),"Supplier":$("#edit_exam_school").val()}
+		 					if($("#edit_exam_school").val()!=0){
+		 						$.post(url,data,function(mes){
+			 						if(mes.status==1){
+			 							location.href="purchase.html";
+			 						}
+			 					})
+		 					}else{
+		 						layer.msg('请选择供应商噢', {
+		 							     time: 1000, //1s后自动关闭
+		 							 });
+		 					}
+		 					
+		 				})
+		        	 }	
 		        	 if(obj.checked==false){
 		        		 $.each(tables,function(i,item){
 		        			 if(data.matId==item.matId){
@@ -189,20 +213,7 @@
 		        	 }
 		        });
 		        
-		        $("#add").click(function(){
-					var datas=data.matId;
-					var url="../../buyht/add.action";
-					//var dataobj={$("#zsum").serialize(),"bdetFkId":datas};
-					//var datass=data.matName;
-					//var datasss=data.matPrice;
-					$.post(url,$.param({"bdetFkId":datas})+'&'+$("#zsum").serialize(),function(mes){
-						if(mes.status==1){
-							alert("采购成功");
-						}else{
-							alert("采购失败");
-						}
-					})
-				})
+		        
 		        
 		        
 		        //表单渲染
@@ -233,27 +244,15 @@
 		  			form.render(); 
 	  			}); 
 	  		}
-		    //ajax加载动画
-		    $(function () {
-	            $.ajaxSetup({
-	                layerIndex:-1,
-	                beforeSend: function () {
-	                    this.layerIndex = layer.load(1, { shade: [0.8, '#ffffff'] });
-	                },
-	                complete: function () {
-	                    layer.close(this.layerIndex);
-	                },
-	                error: function () {
-	                    layer.alert('部分数据加载失败，可能会导致页面显示异常，请刷新后重试', {
-	                        skin: 'layui-layer-molv'
-	                       , closeBtn: 0
-	                       , shift: 4 //动画类型
-	                    });
-	                }
-	            });
-	        });
+		    
 		</script>
-		
+		<script>
+			$(function(){
+				$("#fh").click(function(){
+					location.href="purchase.html";
+				})
+			})
+		</script>
 		
 		
 		<script>

@@ -1,9 +1,9 @@
 package com.yidu.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.yidu.domain.BuyDetail;
-import com.yidu.domain.Drug;
 
 public interface BuyDetailMapper {
     int deleteByPrimaryKey(String bdetId);
@@ -22,14 +22,21 @@ public interface BuyDetailMapper {
      * 显示列表
      * @return
      */
-    public List<BuyDetail> findAll();
+    List<BuyDetail> findAll();
     
     /**
-     * 查询所有
+     * 根据id查询所有
      * @param deta
      * @author 邓康威
      * @return
      */
-    public List<BuyDetail> showList(BuyDetail deta);
+    List<BuyDetail> showListId(Map<String,Object> map);
+    
+    /**
+     * 查询所有行数
+     * @param detail
+     * @return
+     */
+    int selectCount(BuyDetail detail);
     
 }

@@ -16,6 +16,7 @@ import com.yidu.dao.BuyMapper;
 import com.yidu.domain.Buy;
 import com.yidu.service.BuyHeService;
 import com.yidu.service.BuyService;
+import com.yidu.util.PageUtil;
 import com.yidu.util.TimeUtil;
 
 /**
@@ -33,10 +34,10 @@ public class BuyHeServiceImpl implements BuyHeService {
 	BuyMapper dao;
 	
 	@Override
-	public List<Buy> showList(Buy buy) {
-		
+	public List<Buy> showList(Buy buy,PageUtil page) {
 		Map<String, Object> map=new HashMap<>();
 		map.put("buy", buy);
+		map.put("page", page);
 		
 		return dao.showList(map);
 	}
@@ -45,8 +46,13 @@ public class BuyHeServiceImpl implements BuyHeService {
 	public int add(Buy buy) {
 		String uuid=UUID.randomUUID().toString().replaceAll("-", "");
 		buy.setBuyId(uuid);
-		
 		return dao.insert(buy);
+	}
+
+	@Override
+	public int selectCount(Buy buy) {
+		
+		return dao.selectCount(buy);
 	}
 
 }

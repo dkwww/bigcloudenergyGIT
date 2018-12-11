@@ -24,30 +24,21 @@
 	
 	<body>
 		<div class="kit-table">
-		    <form class="layui-form" lay-filter="kit-search-form">
-				<!-- 左上角的两个按钮 -->
-		        <div class="kit-table-header">
-		        <form id="zsum">
-		        <div class="kit-search-inputs">
-		                <div class="kit-search-keyword">
-		                    <label class="layui-form-label"><span class="color-red"><span class="color-red"></span>供应商:</label>
-							  <div class="layui-input-inline" style="float:right;">
-							    <select id="edit_exam_school" name="buyCompany">
-							      
-							    </select>
-							  </div>
-		                </div>
-		            </div>
-		            
-					
+			<div class="layui-card-header layui-form" style="padding: 8px 0px;">
+				<!-- 搜索扩展工具条 -->
+				<form class="layui-form" lay-filter="kit-search-form">
+					<div class="layui-form-item">
+						<div style="width: 244px;margin-left: 15px;">
+							<select name="provId" lay-filter="biaodan" id="biaodan">
+								<option value="">供应商</option>
+							<select>
+						</div>
+						<div class="kit-search-btns">
+		                <a class="layui-btn layui-btn-sm" id="add" style="margin-left: 300px;margin-top: -78px;"><i class="layui-icon"></i> 增加</a>
+		           		</div>
+					</div>
 				</form>
-		            <div class="kit-search-btns">
-		                <a class="layui-btn layui-btn-sm" id="add"><i class="layui-icon"></i> 增加</a>
-		            </div>
-		            
-		        </div>
-			
-		    </form>
+			</div>
 		    
 		    
 			<!-- 操作按钮 -->
@@ -83,6 +74,8 @@
 			function lockInput(obj,id){
 				$("#"+id).val($(obj).val());
 			}
+			
+		
 		</script>
 		<script src="../../res/layui/layui.all.js"></script>
 		<script>
@@ -97,7 +90,7 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '449px', //容器高度
-		            url: '../../buy/showList.action',
+		            url: '../../buyht/showList.action',
 		            page: true,
 		            id: 'demo',
 		            cols: [
@@ -119,77 +112,66 @@
 		            loading: true
 		        });
 		        
-				//查询类型下拉框数据
-		        $.ajax({ url:"../../buy/showList.action",
+				//查询供应商下拉框数据
+		        $.ajax({ url:"../../provider/showList.action",
                     type:'post',//method请求方式，get或者post
                     cache: false,//同步
                     dataType:'json',//预期服务器返回的数据类型
                     success:function(mes){//res为相应体,function为回调函数
                     	//循环添加框内的数据
                     	$.each(mes.data,function(index,item){
-                    		$("#edit_exam_school").append("<option value="+item.buyCompany+">"+item.provName+"</option>");
+                    		$("#biaodan").append("<option value="+item.provId+">"+item.provName+"</option>");
                     	});
                     	//渲染框内的下拉框
                     	form.render();
                     }
                  });
-		        
-		        
-		        
-		        
-		        //监听搜索表单提交
-		        form.on('submit(search)', function(data) {  
-		            //带条件查询
+				
+		      	//监听搜索表单提交
+		        form.on('select(biaodan)', function(data){
+				  	//带条件查询
 		            tableIns.reload({
-		                where: data.field,
+		                where: {"buyCompany":data.value},
 		                page: { curr: 1 }
 		            });
-		            $('.kit-search-mored').hide();
-		            return false;
+				})
+		        
+		        
+		        
+		        
+		      
+				//监听工具条按钮点击
+		        table.on('tool(demo)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+		            var data = obj.data; //获得当前行数据
+		            var layEvent = obj.event; //获得 lay-event 对应的值
+		            var tr = obj.tr; //获得当前行 tr 的DOM对象
+		
+		            if (layEvent === 'detail') { //查看
+		                console.log(table.checkStatus('demo'));
+			            var  buyId=data.buyId;
+	                	var index = layer.open({
+	          				  type: 2,
+	          				  title: '采购明细',
+	          				  content: '../buy/detail.html?id='+buyId,
+	          				  area: ['800px', '30px']
+	          				  //maxmin: true
+	          				});
+	          			layer.full(index);
+	          			
+		            } else if (layEvent === 'del') { //删除
+		                layer.confirm('真的删除行么', function(index) {
+		                	layer.close(index);
+		                    update("../../material/addorUpdate.action",{"matId":data.matId,"isva":"0"});
+		                });
+		            } else if (layEvent === 'edit') { //编辑
+		                var d = {
+		                	rowdata: data,
+		                    types: staticData.data
+		                };
+		            }
 		        });
 		        
-		        
-	        	//选中、取消值
-		        table.on('checkbox(demo)', function(obj){
-		        	var tables=table.cache.demo;
-		        	var data=obj.data;
-		        	 if(obj.checked==true){
-		        		 $.each(tables,function(i,item){
-		        			 if(data.matId==item.matId){
-		        				 //取输入数量值
-		        				 var a=$("#number"+data.matId).val();
-		        				 //放入总数量
-		        				 $("#buyAmount").val(parseInt($("#buyAmount").val())+parseInt(a));
-		        				 
-		        				 //取输入小计值
-		        				 var b=$("#price"+data.matId).val();
-		        				 //放入总金额
-		        				 $("#buyMoney").val(parseInt($("#buyMoney").val())+parseInt(b));
-		        			 }
-		        		 });
-		        	 }
-		        	 if(obj.checked==false){
-		        		 $.each(tables,function(i,item){
-		        			 if(data.matId==item.matId){
-		        				 //获取总数量值
-		        				 var zAmount=$("#buyAmount").val();
-	        					 //用总数量值减去输入的值
-		        				 $("#buyAmount").val(parseInt(zAmount)-$("#number"+data.matId).val());
-		        				 
-	        					 
-		        				 //获取总金额值
-		        				 var zMoney=$("#buyMoney").val();
-	        					 //用总金额减去输入的小计值
-		        				 $("#buyMoney").val(parseInt(zMoney)-$("#price"+data.matId).val());
-		        			 }
-		        		 });
-		        		 
-		        	 }
-		        });
-		        
-		        
-		        
-		        
+	        	
 		        //表单渲染
 		        form.render(null, 'kit-search-form');
 		        //更多筛选点击事件

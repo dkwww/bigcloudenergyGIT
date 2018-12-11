@@ -13,14 +13,26 @@
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
+    <result column="mat_name" jdbcType="VARCHAR" property="matName" />
   </resultMap>
   <sql id="Base_Column_List">
     bdet_id, buy_id, bdet_amount, bdet_price, bdet_total, bdet_fk_id, isva, optime, oper, 
     sort
   </sql>
   
-  <select id="showList" parameterType="map" resultMap="BaseResultMap">
-  	SELECT * FROM drug_buy_detail a,drug_material b WHERE a.bdet_fk_id=b.mat_id
+  <select id="showListId" parameterType="map" resultMap="BaseResultMap">
+  	SELECT * FROM drug_buy a,drug_buy_detail b,drug_material c WHERE a.buy_id=b.buy_id AND b.bdet_fk_id=c.mat_id
+  	<if test="detail.matName!=null and detail.matName!='' ">
+  		and c.mat_name like concat("%",#{detail.matName},"%")
+  	</if>
+  	limit #{page.startRows},#{page.rows}
+  </select>
+  
+  <select id="selectCount" parameterType="com.yidu.domain.BuyDetail" resultType="int">
+  	SELECT count(*) FROM drug_buy a,drug_buy_detail b,drug_material c WHERE a.buy_id=b.buy_id AND b.bdet_fk_id=c.mat_id
+  	<if test="matName!=null and matName!='' ">
+  		and c.mat_name like concat("%",#{matName},"%")
+  	</if>
   </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">

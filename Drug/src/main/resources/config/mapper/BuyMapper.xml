@@ -26,6 +26,7 @@
     buy_state, buy_qc, buy_put, buy_mes, isva, optime, oper, sort
   </sql>
   
+<<<<<<< HEAD
   <select id="showList" parameterType="java.util.Map" resultMap="BaseResultMap">
   	SELECT * FROM drug_buy  where 1=1
   	order by sort desc 
@@ -35,6 +36,21 @@
   <select id="selectCountBySelective" parameterType="java.util.Map" resultType="Integer" >
   	select count(*) from drug_buy  where 1=1
   	
+=======
+  <select id="showList" parameterType="map" resultMap="BaseResultMap">
+  	SELECT * FROM drug_buy a,drug_provider b WHERE a.buy_company=b.prov_id
+  	<if test="buy.buyCompany!=null and buy.buyCompany!='' ">
+  		and buy_company like concat("%",#{buy.buyCompany},"%")
+  	</if>
+  	limit #{page.startRows},#{page.rows}
+  </select>
+  
+  <select id="selectCount" parameterType="com.yidu.domain.Buy" resultType="int">
+  	select count(*) from drug_buy a,drug_provider b WHERE a.buy_company=b.prov_id
+  	<if test="buyCompany!=null and buyCompany!='' ">
+  		and buy_company like concat("%",#{buyCompany},"%")
+  	</if>
+>>>>>>> branch 'master' of https://gitee.com/yidu_english/Drug.git
   </select>
   
   

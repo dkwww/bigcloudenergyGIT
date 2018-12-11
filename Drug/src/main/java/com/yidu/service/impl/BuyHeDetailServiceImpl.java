@@ -6,11 +6,14 @@ import com.yidu.dao.BuyMapper;
 import com.yidu.domain.Buy;
 import com.yidu.domain.BuyDetail;
 import com.yidu.service.BuyHeDetailService;
+import com.yidu.util.PageUtil;
 import com.yidu.util.TimeUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -33,10 +36,12 @@ public class BuyHeDetailServiceImpl  implements BuyHeDetailService {
 	BuyDetailMapper dao;
 	
 	@Override
-	public List<BuyDetail> showList(BuyDetail deta) {
+	public List<BuyDetail> showListId(BuyDetail detail,PageUtil page) {
+		Map<String, Object> map=new HashMap<>();
+		map.put("detail", detail);
+		map.put("page", page);
 		
-		
-		return dao.showList(deta);
+		return dao.showListId(map);
 	}
 
 	@Override
@@ -45,6 +50,14 @@ public class BuyHeDetailServiceImpl  implements BuyHeDetailService {
 		deta.setBdetId(uuid);
 		
 		return dao.insert(deta);
+	}
+
+	
+
+	@Override
+	public int selectCount(BuyDetail detail) {
+		
+		return dao.selectCount(detail);
 	}
 
 }
