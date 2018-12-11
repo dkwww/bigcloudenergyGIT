@@ -29,14 +29,4 @@ public class SaleServiceImpl   implements SaleService {
 	 */
 	@Resource
 	private SaleMapper mapper;
-
-	@Override
-	public List<Sale> query(PageUtil util, Sale sale) {
-		//new一个Map集合
-		Map<String, Object> map=new HashMap<>();
-		map.put("util", util);
-		map.put("sale", sale);
-		//返回dao类查询所有的方法
-		return mapper.selectAll(map);
-	}
 }

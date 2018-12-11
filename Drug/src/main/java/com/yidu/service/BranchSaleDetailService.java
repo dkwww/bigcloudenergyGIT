@@ -1,5 +1,6 @@
 package com.yidu.service;
 
+import com.yidu.domain.BranchSaleDetail;
 
 /**
  * <p>
@@ -10,5 +11,7 @@ package com.yidu.service;
  * @since 2018-11-26
  */
 public interface BranchSaleDetailService  {
+
+	int insertSelective(BranchSaleDetail branchSaleDetail);
 
 }

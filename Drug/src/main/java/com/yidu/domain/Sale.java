@@ -1,6 +1,7 @@
 package com.yidu.domain;
 
 import java.math.BigDecimal;
+
 import java.util.Date;
 
 public class Sale {
@@ -21,67 +22,6 @@ public class Sale {
     private String oper;
 
     private String sort;
-    
-    private String saleTimeStr;
-    
-    private String drugName;
-    
-    private String priceMin;
-    
-    private String priceMax;
-    
-    
-
-
-	/**
-	 * @return the priceMin
-	 */
-	public String getPriceMin() {
-		return priceMin;
-	}
-
-	/**
-	 * @param priceMin the priceMin to set
-	 */
-	public void setPriceMin(String priceMin) {
-		this.priceMin = priceMin;
-	}
-
-	/**
-	 * @return the priceMax
-	 */
-	public String getPriceMax() {
-		return priceMax;
-	}
-
-	/**
-	 * @param priceMax the priceMax to set
-	 */
-	public void setPriceMax(String priceMax) {
-		this.priceMax = priceMax;
-	}
-
-	/**
-	 * @return the drugName
-	 */
-	public String getDrugName() {
-		return drugName;
-	}
-
-	/**
-	 * @param drugName the drugName to set
-	 */
-	public void setDrugName(String drugName) {
-		this.drugName = drugName;
-	}
-
-	public String getSaleTimeStr() {
-		return saleTimeStr;
-	}
-
-	public void setSaleTimeStr(String saleTimeStr) {
-		this.saleTimeStr = saleTimeStr;
-	}
 
 	public String getSaleId() {
         return saleId;

@@ -6,7 +6,7 @@
 		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
-		<title>药品管理</title>
+		<title>分店零售管理</title>
     </script>
 	</head>
 	<body>
@@ -20,7 +20,7 @@
 				            </div>
 				            <div class="kit-search-inputs">
 				                <div class="kit-search-keyword">
-				                    <input type="text" class="layui-input" id="serach-one" placeholder="请输入药品名.." onKeyUp="lockInput(this,'serach-two')"/>
+				                    <input type="text" class="layui-input" id="serach-one" placeholder="请输入会员品名.." onKeyUp="lockInput(this,'serach-two')"/>
 				                    <button lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
 				                </div>
 				                <div class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>
@@ -30,17 +30,24 @@
 						<div class="kit-search-mored layui-anim layui-anim-upbit">
 				          <div class="kit-search-body">
 							  <div class="layui-form-item">
-				              <label class="layui-form-label">药品名</label>
+				              <label class="layui-form-label">会员名</label>
 				                   <div class="layui-input-block">
-				                        <input type="text" name="drugName" id="serach-two" placeholder="请输入药品名" autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
+				                        <input type="text" name="menId" id="serach-two" placeholder="请输入会员名" autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
 				                   </div>
 				         </div>
 				         <div class="layui-form-item">
-				              <label class="layui-form-label">销售总数</label>
+				              <label class="layui-form-label">店铺名</label>
 				                   <div class="layui-input-block">
-				                        <input type="text" name="saleAmount" id="serach-two" placeholder="请输入销售总数" autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
+				                        <input type="text" name="comId" id="serach-two" placeholder="请输入店铺名" autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
 				                   </div>
 				         </div>
+				         <div class="layui-form-item">
+				              <label class="layui-form-label">销售总数量</label>
+				                   <div class="layui-input-block">
+				                        <input type="text" name="bsAmount" id="serach-two" placeholder="请输入零售数量" autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
+				                   </div>
+				         </div>
+				         
 		                <div class="layui-form-item">
 		                    <div class="layui-inline">
 		                        <label class="layui-form-label">销售总金额</label>
@@ -78,39 +85,32 @@
 		<script type="text/html" id="edit-tpl">
 		    <div style="margin:10px">
 		        <form class="layui-form" action="" lay-filter="form-edit">
-		            <input type="hidden" name="saleId" value="{{d.rowdata.saleId}}" />
+		            <input type="hidden" name="bsId" value="{{d.rowdata.bsId}}" />
 		            <div class="layui-form-item">
-		                <label class="layui-form-label">药品名</label>
+		                <label class="layui-form-label">会员名</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="drugName" required lay-verify="required" value="{{d.rowdata.drugName}}" placeholder="请输入密码" autocomplete="off" class="layui-input">
+		                    <input type="text" name="menId" required lay-verify="required" value="{{d.rowdata.menId}}" placeholder="请输入会员名" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
-		           
-					<div class="layui-inline">
-				          <label class="layui-form-label">销售时间</label>
-				              <div class="layui-input-block">
-					               <div class="layui-input-inline" style="width: 150px;">
-					                   <input type="text" name="priceMin" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input" onKeyUp="amount(this)">
-					               </div>
-					               <div class="layui-form-mid">-</div>
-					               <div class="layui-input-inline" style="width: 150px;">
-					                   <input type="text" name="priceMax" id="time" lay-verify="time" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input" onKeyUp="amount(this)">
-					               </div>
-				              </div>
-				    </div>
 					<div class="layui-form-item">
-		                <label class="layui-form-label">销售总数</label>
+		                <label class="layui-form-label">店铺名</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="saleAmount" required lay-verify="required" value="{{d.rowdata.saleAmount}}" placeholder="请输入密码" autocomplete="off" class="layui-input">
+		                    <input type="text" name="comId" required lay-verify="required" value="{{d.rowdata.comId}}" placeholder="请输入店铺名" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">销售总数量</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="bsAmount" required lay-verify="required" value="{{d.rowdata.bsAmount}}" placeholder="请输入销售总数量" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">销售总金额</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="saleMoney" required lay-verify="required" value="{{d.rowdata.saleMoney}}" placeholder="请输入密码" autocomplete="off" class="layui-input">
+		                    <input type="text" name="bsPrice" required lay-verify="required" value="{{d.rowdata.bsPrice}}" placeholder="请输入销售总金额" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
-
+					
 		            <div class="layui-form-item" style="display:none;">
 		                <div class="layui-input-block">
 		                    <button class="layui-btn" lay-submit lay-filter="formEdit">立即提交</button>
@@ -148,16 +148,17 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '469px', //容器高度
-		            url: '../../sale/query.action',
+		            url: '../../branchSale/query.action',
 		            page: true,
 		            id: 'demo',
 		            cols: [
 		                [{checkbox: true,fixed: true},
-		                {field: 'saleId',title: 'ID', width: 200,align: 'center'},
-		                {field: 'drugName',title: '药品名',width: 200,align: 'center'},
-		                {field: 'saleTimeStr',title: '销售时间',width: 200,align: 'center'},
-		                {field: 'saleAmount',title: '销售总数',width: 130,align: 'center'},
-		                {field: 'saleMoney',title: '销售总金额',width: 225,align: 'center'},
+		                {field: 'bsId',title: '销售ID', width: 200,align: 'center'},
+		                {field: 'comName',title: '店铺名',width: 180,align: 'center'},
+		                {field: 'menName',title: '会员名',width: 180,align: 'center'},
+		                {field: 'bsAmount',title: '销售总数量',width: 180,align: 'center'},
+		                {field: 'bsPrice',title: '销售总金额',width: 180,align: 'center'},
+		                {field: 'optimeStr',title: '操作时间',width: 225,align: 'center'},
 		                {fixed: 'right',title: '操作',width: 180,align: 'center',toolbar: '#barDemo'}]
 		            ],
 		            done: function(res, curr, count) {
@@ -176,7 +177,8 @@
 		        form.on('submit(search)', function(data) {
 		            //带条件查询
 		            tableIns.reload({
-		                where: data.field
+		                where: data.field,
+		                page: { curr:1 }
 		            });
 		            $('.kit-search-mored').hide();
 		            return false;
@@ -218,7 +220,7 @@
 		            } else if (layEvent === 'del') { //删除
 		                layer.confirm('真的删除行么', function(index) {
 		                	layer.close(index);
-		                    update("../../sale/addSale.action",{"saleId":data.saleId,"isva":"0"});
+		                    update("../../branchSale/addSale.action",{"bsId":data.bsId,"isva":"0"});
 		                });
 		            } else if (layEvent === 'edit') { //编辑
 		                var d = {
@@ -244,7 +246,7 @@
                     	form.render(null, 'form-edit');
                     	return false;
                     }
-                	update("../../sale/addSale.action",data.field);
+                	update("../../branchSale/addSale.action",data.field);
                 	if (close) editIndex && layer.close(editIndex); //关闭弹出层
                 	return false;
 		        });
@@ -259,11 +261,21 @@
 		                    var d = {
 		                		//替换增加页面文本框内出现的undefine
 		                        rowdata: {
-		                        	saleId: '',drugId: '',saleTime: '',saleAmount: '',saleMoney: ''
-		                        },
+		                        	bsId: '',comId: '',menId: '',bsAmount: '',bsPrice: '',optimeStr: ''	                        },
 		                    };
-		                    showlayer(d);
-		                    break;
+		                    //渲染
+		                    laytpl($('#edit-tpl').html()).render(d,
+		                        function(html) {
+		                            layer.open({
+		                                type: 2,
+		                                title: '增加零售订单',
+		                                shadeClose: true,
+		                                shade: false,
+		                                maxmin: true, //开启最大化最小化按钮
+		                                area: ['900px', '450px'],
+		                                content: 'branchSaleAdd.html'
+		                            });
+		                });
 		                    
 		                //点击的是 批量删除按钮
 		                case 'del-bulk':
@@ -281,7 +293,7 @@
 		                    });
 		                    layer.confirm('真的删除行么', function(index) {
 		                    	layer.close(index);
-		                    	update("../../sale/bulkUpdate.action",ids);
+		                    	update("../../branchSale/bulkUpdate.action",ids);
 			                });
 		                    break;
 		            }

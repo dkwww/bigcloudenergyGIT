@@ -172,7 +172,8 @@
 		        form.on('submit(search)', function(data) {
 		            //带条件查询
 		            tableIns.reload({
-		                where: data.field
+		                where: data.field,
+		                page: { curr:1 }
 		            });
 		            $('.kit-search-mored').hide();
 		            return false;
@@ -255,7 +256,7 @@
 		                    var d = {
 		                		//替换增加页面文本框内出现的undefine
 		                        rowdata: {
-		                        	menId: '',menName: '',memPwd: '',memPhone: '',memAddress: '',memPictrue: ''
+		                        	menId: '',menName: '',memPwd: '',memPhone: '',memAddress: '',memPictrue: '',optimeString: '',
 		                        },
 		                    };
 		                    showlayer(d);

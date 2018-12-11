@@ -6,8 +6,8 @@
     <result column="bs_id" jdbcType="VARCHAR" property="bsId" />
     <result column="drug_id" jdbcType="VARCHAR" property="drugId" />
     <result column="bsd_amount" jdbcType="INTEGER" property="bsdAmount" />
-    <result column="bsd_price" jdbcType="DECIMAL" property="bsdPrice" />
-    <result column="bsd_total" jdbcType="DECIMAL" property="bsdTotal" />
+    <result column="bsd_price" jdbcType="VARCHAR" property="bsdPrice" />
+    <result column="bsd_total" jdbcType="VARCHAR" property="bsdTotal" />
     <result column="isva" jdbcType="VARCHAR" property="isva" />
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
@@ -32,7 +32,7 @@
       isva, optime, oper, 
       sort)
     values (#{bsdId,jdbcType=VARCHAR}, #{bsId,jdbcType=VARCHAR}, #{drugId,jdbcType=VARCHAR}, 
-      #{bsdAmount,jdbcType=INTEGER}, #{bsdPrice,jdbcType=DECIMAL}, #{bsdTotal,jdbcType=DECIMAL}, 
+      #{bsdAmount,jdbcType=INTEGER}, #{bsdPrice,jdbcType=VARCHAR}, #{bsdTotal,jdbcType=VARCHAR}, 
       #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, 
       #{sort,jdbcType=VARCHAR})
   </insert>
@@ -84,10 +84,10 @@
         #{bsdAmount,jdbcType=INTEGER},
       </if>
       <if test="bsdPrice != null">
-        #{bsdPrice,jdbcType=DECIMAL},
+        #{bsdPrice,jdbcType=VARCHAR},
       </if>
       <if test="bsdTotal != null">
-        #{bsdTotal,jdbcType=DECIMAL},
+        #{bsdTotal,jdbcType=VARCHAR},
       </if>
       <if test="isva != null">
         #{isva,jdbcType=VARCHAR},
@@ -116,10 +116,10 @@
         bsd_amount = #{bsdAmount,jdbcType=INTEGER},
       </if>
       <if test="bsdPrice != null">
-        bsd_price = #{bsdPrice,jdbcType=DECIMAL},
+        bsd_price = #{bsdPrice,jdbcType=VARCHAR},
       </if>
       <if test="bsdTotal != null">
-        bsd_total = #{bsdTotal,jdbcType=DECIMAL},
+        bsd_total = #{bsdTotal,jdbcType=VARCHAR},
       </if>
       <if test="isva != null">
         isva = #{isva,jdbcType=VARCHAR},
@@ -141,8 +141,8 @@
     set bs_id = #{bsId,jdbcType=VARCHAR},
       drug_id = #{drugId,jdbcType=VARCHAR},
       bsd_amount = #{bsdAmount,jdbcType=INTEGER},
-      bsd_price = #{bsdPrice,jdbcType=DECIMAL},
-      bsd_total = #{bsdTotal,jdbcType=DECIMAL},
+      bsd_price = #{bsdPrice,jdbcType=VARCHAR},
+      bsd_total = #{bsdTotal,jdbcType=VARCHAR},
       isva = #{isva,jdbcType=VARCHAR},
       optime = #{optime,jdbcType=TIMESTAMP},
       oper = #{oper,jdbcType=VARCHAR},

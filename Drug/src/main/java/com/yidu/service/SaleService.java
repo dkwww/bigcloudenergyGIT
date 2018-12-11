@@ -14,12 +14,5 @@ import com.yidu.util.PageUtil;
  * @since 2018-11-26
  */
 public interface SaleService    {
-	/**
-	 * 显示列表
-	 * @param util
-	 * @param sale
-	 * @return
-	 */
-	public List<Sale> query(PageUtil util, Sale sale);
 
 }

@@ -6,33 +6,29 @@
 		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
-		<title>药品管理</title>
+		<title>销售管理</title>
     </script>
 	</head>
 	<body>
 		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-		  <legend>增加批发订单</legend>
+		  <legend>增加销售订单</legend>
 		</fieldset>
 		<div class="layui-form">
 		  <table class="layui-table"  style="width:880px;" lay-filter="test3" id="add">
 			  <thead>
 			    <tr>
-			      <th lay-data="{field:'id', width:150, sort: true, edit: 'text'}">药品名称</th>
-			      <th lay-data="{field:'username', width:100, sort: true, edit: 'text'}">药品类型</th>
+			      <th lay-data="{field:'id', width:150, sort: true, edit: 'text'}">药品名</th>
+			      <th lay-data="{field:'sex', width:50, edit: 'text'}">零售数量</th>
 			      <th lay-data="{field:'email', edit: 'text', width:50}">零售价格</th>
-			      <th lay-data="{field:'sex', width:50, edit: 'text'}">数量</th>
-			      <th lay-data="{field:'city', edit: 'text', width:50}">小计</th>
-			      <th lay-data="{field:'city', edit: 'text', width:50}">批发价</th>
+			      <th lay-data="{field:'email', edit: 'text', width:50}">会员折扣率</th>
+			      <th lay-data="{field:'email', edit: 'text', width:50}">折扣单价</th>
+			      <th lay-data="{field:'email', edit: 'text', width:50}">折扣总金额</th>
 			      <th lay-data="{fixed: 'right',title: '操作',width: 180,align: 'center',toolbar: '#barDemo'}">操作</th>
 			    </tr>
 			  </thead>
 			</table>
 		</div>
-		<button onclick="okpi()" style="position:absolute;top:35px;left:780px;width:100px;" class="layui-btn layui-btn-sm kit-btn">确认批发</button>
-		<div style="position: relative;display: inline;" id="zong">
-			总金额:<input id="zongjin" style="width:120px;" class="layui-input" type="text" />
-			 总数量:<input id="zongshu" style="width:120px;" class="layui-input" type="text" />
-		</div>
+		<button style="top:-80px;left:780px;width:100px;" lay-submit lay-filter="search" class="layui-btn layui-btn-sm kit-btn">确认购买</button>
 		<div class="kit-table">
 		    <form class="layui-form" lay-filter="kit-search-form">
 				<!-- 左上角的两个按钮 -->
@@ -55,7 +51,7 @@
 		                    </div>
 		                </div>
 		                <div class="layui-form-item">
-			                <label class="layui-form-label">类型</label>
+			                <label class="layui-form-label">药品类型</label>
 			                <div class="layui-input-block">
 			                    <select name="dtId" id="drug-type">
 			                      <option value=""></option>
@@ -64,7 +60,7 @@
 		                </div>
 		                <div class="layui-form-item">
 		                    <div class="layui-inline">
-		                        <label class="layui-form-label">范围</label>
+		                        <label class="layui-form-label">药品价格</label>
 		                        <div class="layui-input-block">
 			                        <div class="layui-input-inline" style="width: 100px;">
 			                            <input type="text" name="priceMin" placeholder="￥" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
@@ -134,7 +130,8 @@
 		            cols: [
 		                [{checkbox: true,fixed: true},
 		                {field: 'drugName',title: '药名',width: 175},
-		                {field: 'drugProp',title: '类型',width: 80},
+		                {field: 'dtName',title: '类型',width: 80},
+		                {field: 'drugProp',title: '属性',width: 90},
 		                {field: 'drugPictrue',title: '图片',width: 60,templet:'<div><img style="height:100%;height:30px;" src="../../{{ d.drugPictrue}}"></div>'},
 		                {field: 'drugPrice',title: '价格（元）',width: 150,sort: true},
 		                {fixed: 'right',title: '操作',width: 180,align: 'center',toolbar: '#barDemo'}]
@@ -195,6 +192,8 @@
 		        	$("#zongjin").val(zongs);
 		        });
 		        
+		        
+		        
 		        //监听搜索表单提交
 		        form.on('submit(search)', function(data) {  
 		            //带条件查询
@@ -205,6 +204,8 @@
 		            $('.kit-search-mored').hide();
 		            return false;
 		        });
+		        
+		        
 		        //渲染 修改和增加弹出层
 			    function showlayer(d){
 			    	laytpl($('#edit-tpl').html()).render(d,function(html) {
@@ -225,7 +226,7 @@
 	                        success: function() {
 	                            form.render(null, 'form-edit');
 	                        }
-	                     });
+	                    });
 	                    upload();
 	                });
 			    }
@@ -235,11 +236,12 @@
 		            var data = obj.data; //获得当前行数据
 		            var layEvent = obj.event; //获得 lay-event 对应的值
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
-
+		
 		            if (layEvent === 'detail') { //查看
 		            	
 		            }
 		        });
+		        
 		        //表单渲染
 		        form.render(null, 'kit-search-form');
 		        //更多筛选点击事件
@@ -279,11 +281,11 @@
 			var id = obj.id;
 			var a = obj.value;
 			var b=$(obj).parent().prev().text();
-			var c =parseFloat(a)*parseFloat(b);
 			var d=c*0.8;
-			$(obj).parent().parent().children().eq(5).text(c);
-			$(obj).parent().parent().children().eq(6).text(d);
-			var zongj=$(obj).parent().parent().children().eq(6).text();
+			var c =parseFloat(a)*parseFloat(b);
+			$(obj).parent().parent().children().eq(4).text(c);
+			$(obj).parent().parent().children().eq(5).text(d);
+			var zongJ=$(obj).parent().parent().children().eq(6).text();
 			alert("zongj="+zongj);
 			alert("zongjin="+$("#zongjin").val());
 			var zongmoney=parseInt($("#zongjin").val())+parseInt(zongj);
@@ -299,21 +301,20 @@
 				});
 					html+=$(this).find('td:eq(4) input').val()+"#";
 			});
-			$.ajax({ url:"../../wholesale/Wholesal5emanagement.action",
-                type:'post',//method请求方式，get或者post
-                cache: false,//同步
-                dataType:'json',//预期服务器返回的数据类型
-                data:{"htmlstr":html},//传表格数据
-                success:function(mes){//res为相应体,function为回调函数
-                	 if(mes.msg>=1){
-                		 alert("s");
-                	 }else{
-                		 alert("Ss");
-                	 }
-                }
-             });
-		 }
-		</script>
+		$.ajax({url="../../branchSale/addSale.action",
+			type:'post',//method请求方式，get或者post
+			cache:false,//同步
+			dateType:'json',//预期服务器返回的数据类型
+			data:{"htmlstr":html},//传表格数据
+			success:function(mes){//res为相应体,function为回调函数
+				if(mes.msg>=1){
+           		 	alert("s");
+           	 	}else{
+           		 	alert("Ss");
+           	 	}	
+			}
+		});
+	}
+	</script>
 	</body>
 </html>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               

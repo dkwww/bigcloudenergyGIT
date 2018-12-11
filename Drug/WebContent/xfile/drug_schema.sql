@@ -136,7 +136,6 @@ create table drug_branch_sale
    bs_id                varchar(100) not null comment '销售编号',
    com_id               varchar(100) comment '店铺编号',
    men_id               varchar(100) comment '会员编号',
-   sd_id                varchar(100) not null comment '销售明细编号',
    bs_amount            int(10) comment '物品总数量',
    bs_price             numeric(12,2) comment '物品总价',
    isva                 varchar(50) comment '是否有效',

@@ -12,9 +12,9 @@ public class BranchSaleDetail {
 
     private Integer bsdAmount;
 
-    private BigDecimal bsdPrice;
+    private String bsdPrice;
 
-    private BigDecimal bsdTotal;
+    private String bsdTotal;
 
     private String isva;
 
@@ -56,19 +56,19 @@ public class BranchSaleDetail {
         this.bsdAmount = bsdAmount;
     }
 
-    public BigDecimal getBsdPrice() {
+    public String getBsdPrice() {
         return bsdPrice;
     }
 
-    public void setBsdPrice(BigDecimal bsdPrice) {
+    public void setBsdPrice(String bsdPrice) {
         this.bsdPrice = bsdPrice;
     }
 
-    public BigDecimal getBsdTotal() {
+    public String getBsdTotal() {
         return bsdTotal;
     }
 
-    public void setBsdTotal(BigDecimal bsdTotal) {
+    public void setBsdTotal(String bsdTotal) {
         this.bsdTotal = bsdTotal;
     }
 

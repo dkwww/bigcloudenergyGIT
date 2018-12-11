@@ -3,6 +3,8 @@ package com.yidu.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.aspectj.weaver.AjAttribute.PrivilegedAttribute;
+
 public class BranchSale {
     private String bsId;
 
@@ -10,11 +12,9 @@ public class BranchSale {
 
     private String menId;
 
-    private String sdId;
-
     private Integer bsAmount;
 
-    private BigDecimal bsPrice;
+    private String bsPrice;
 
     private String isva;
 
@@ -23,8 +23,58 @@ public class BranchSale {
     private String oper;
 
     private String sort;
+    
+    private String optimeStr;
+    
+    private String priceMin;
+    
+    private String priceMax;
+    
+    private String comName;
+    
+    private String menName;
 
-    public String getBsId() {
+    public String getComName() {
+		return comName;
+	}
+
+	public void setComName(String comName) {
+		this.comName = comName;
+	}
+
+	public String getMenName() {
+		return menName;
+	}
+
+	public void setMenName(String menName) {
+		this.menName = menName;
+	}
+
+	public String getPriceMin() {
+		return priceMin;
+	}
+
+	public void setPriceMin(String priceMin) {
+		this.priceMin = priceMin;
+	}
+
+	public String getPriceMax() {
+		return priceMax;
+	}
+
+	public void setPriceMax(String priceMax) {
+		this.priceMax = priceMax;
+	}
+
+	public String getOptimeStr() {
+		return optimeStr;
+	}
+
+	public void setOptimeStr(String optimeStr) {
+		this.optimeStr = optimeStr;
+	}
+
+	public String getBsId() {
         return bsId;
     }
 
@@ -48,13 +98,6 @@ public class BranchSale {
         this.menId = menId == null ? null : menId.trim();
     }
 
-    public String getSdId() {
-        return sdId;
-    }
-
-    public void setSdId(String sdId) {
-        this.sdId = sdId == null ? null : sdId.trim();
-    }
 
     public Integer getBsAmount() {
         return bsAmount;
@@ -64,11 +107,11 @@ public class BranchSale {
         this.bsAmount = bsAmount;
     }
 
-    public BigDecimal getBsPrice() {
+    public String getBsPrice() {
         return bsPrice;
     }
 
-    public void setBsPrice(BigDecimal bsPrice) {
+    public void setBsPrice(String bsPrice) {
         this.bsPrice = bsPrice;
     }
 
