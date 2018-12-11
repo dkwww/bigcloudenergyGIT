@@ -40,7 +40,7 @@ public class Admin {
 	}
 
 	public void setComName(String comName) {
-		this.comName = comName == null ? null : adminName.trim();
+		this.comName = comName == null ? null : comName.trim();
 	}
 
 	public String getOptimestring() {

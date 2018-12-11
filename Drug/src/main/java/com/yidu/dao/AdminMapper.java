@@ -31,6 +31,16 @@ public interface AdminMapper {
 	 * @return
 	 */
 	List<Admin> selectAll(Map<String, Object> map);
-
+	/**
+	 * 查询行
+	 * @param admin
+	 * @return
+	 */
 	int selectCount(Admin admin);
+	/**
+	 * 批量删除
+	 * @param ids
+	 * @return
+	 */
+	int bulkDeleteByPrimaryKeySelective(List<String> ids);
 }
