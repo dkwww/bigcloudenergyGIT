@@ -8,9 +8,28 @@
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
 		<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
 		<title>采购管理</title>
+		<style>
+			#kit-table{
+				margin-top:30px;
+			}
+		</style>
 	</head>
 	<body>
+	
+	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+  <legend>采购详情</legend>
+	</fieldset>
+	<div>
+	总金额：
+	<div class="layui-input-inline">
+      	<input type="text" id="zontotal" lay-verify="required" placeholder="总金额" readonly="readonly" autocomplete="off" class="layui-input">
+    </div>
+    总数量：
+    <div class="layui-input-inline">
+      	<input type="text"  id="zonnumber" lay-verify="required" placeholder="总数量" readonly="readonly" autocomplete="off" class="layui-input">
+    </div>
  <input type="button" value="一键添加" id="btn" class="layui-btn layui-btn-lg" />
+ </div>
 <table class="layui-table"  style="width:1000px;" lay-filter="test3" id="add">
   <thead>
     <tr>
@@ -30,7 +49,7 @@
 	
 	
 	
-		<div class="kit-table">
+		<div class="kit-table" id="kit-table">
 		    <form class="layui-form" lay-filter="kit-search-form">
 				<!-- 左上角的两个按钮 -->
 		        <div class="kit-table-header">
@@ -158,17 +177,27 @@
 		    </div>
 		</script>
 		<script>
-
-			 
+			var amount =0;
+			var money = 0.0;
+			
 			//为隐藏的文本框赋值
 			function num(obj){
 				
 				var id = obj.id;
-				var a = obj.value;//数量
+				var a = parseFloat(obj.value);//数量
 				var b=$(obj).parent().next().text();//单价
 				var c =parseFloat(a)*parseFloat(b);//总价
 				$(obj).parent().parent().children().eq(5).text(c);
 				
+				amount = 0;
+				money = 0.0;
+				$("#tbo").find("tr").each(function(){
+					amount += parseFloat($(this).find("td:eq(1) input").val());
+					money += parseFloat($(this).find("td:eq(5)").text());
+				});
+				$("#zontotal").val(money);
+				$("#zonnumber").val(amount);
+								
 				pj();
 			}
 			/**
@@ -184,10 +213,17 @@
 					  });
 					  str+=$(this).find("td:eq(1) input").val()+"#";
 					  str+=$(this).find("td:eq(4) input").val()+"#";
-					  str+=$(this).find("td:eq(7) input").val()+"&";
+					  str+=$(this).find("td:eq(7) input").val()+"#";
+					  str+=amount+"#"+money+"&";
 				});
 				$("#mes").val(str);
-			}			//文本框只能输入金额
+			}
+			function remove(obj){
+				alert(1);
+				$(obj).closest("tr").remove();
+				from.radom
+			}
+						//文本框只能输入金额
 		    function amount(th){
 		        var regStrs = [
 		            ['^0(\\d+)$', '$1'], //禁止录入整数部分两位以上，但首位为0
@@ -200,6 +236,18 @@
 		            th.value = th.value.replace(reg, regStrs[i][1]);
 		        }
 		    }
+			/**
+			* 移除当前行
+			*/
+		    function delrow(obj){
+                //获取按钮所在的行
+                btnTrElement = obj.parentNode.parentNode;
+                //alert(btnTrElement.nodeName);
+                //获取按钮所在的行的上一级也就是TBODY
+                tbodyElemement = btnTrElement.parentNode;
+                //通过tobody干掉tr
+                tbodyElemement.removeChild(btnTrElement);
+            }
 			//搜索框同步输入
 			function lockInput(obj,id){
 				$("#"+id).val($(obj).val());
@@ -253,10 +301,19 @@
 		      	//监听表格复选框选择
 		        table.on('checkbox(demo)', function(obj){
 		        	var data = obj.data;
-		        	$("#tbo").append("<tr><td>"+data.drugName+"</td><td><input type='number' id='up_"+data.drugId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' /></td><td id='pic_"+data.drugId+"'>"+data.drugPrice+"</td><td>"+data.drugUnit+"</td><td><input type='text' id='mes_"+data.drugId+"' style='height:20px; border:0px; width:200px;' onKeyUp='pj()'/></td><td id='total'></td><td><a href='javascript:remove(this);'>删除</a></td><td style='display:none;'><input type='text' id='drugId' value='"+data.drugId+"' /></td></tr>")
+		        	$("#tbo").append("<tr><td>"+data.drugName+"</td><td><input type='number' id='up_"+data.drugId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' value='1' /></td><td id='pic_"+data.drugId+"'>"+data.drugPrice+"</td><td>"+data.drugUnit+"</td><td><input type='text' id='mes_"+data.drugId+"' style='height:20px; border:0px; width:200px;' onKeyUp='pj()'/></td><td id='total'>"+data.drugPrice+"</td><td><a onclick='delrow(this);' class='dels'>删除</a></td><td style='display:none;'><input type='text' id='drugId' value='"+data.drugId+"' /></td></tr>")
 		        	
 		        	
 		        });
+		      	
+		      	/**
+		      	* 采购表移除药品
+		      	*/
+		      	$('body').on('click','dels',function(){
+		      		alert(1);
+		      		$(this).closest('tr').remove();
+		      	})
+		      	
 		        //监听搜索表单提交
 		        form.on('submit(search)', function(data) {
 		            //带条件查询
@@ -276,11 +333,13 @@
 		        var editIndex;
 		    });
 		    
+			/**
+			* 点击行选中
+			*/
 		    $(document).on("click",".layui-table-body table.layui-table tbody tr", function () { var index = $(this).attr('data-index'); var tableBox = $(this).parents('.layui-table-box'); //存在固定列
 		    if (tableBox.find(".layui-table-fixed.layui-table-fixed-l").length>0) { tableDiv = tableBox.find(".layui-table-fixed.layui-table-fixed-l"); } else { tableDiv = tableBox.find(".layui-table-body.layui-table-main"); } var checkCell = tableDiv.find("tr[data-index=" + index + "]").find("td div.laytable-cell-checkbox div.layui-form-checkbox I"); if (checkCell.length>0) { checkCell.click(); } }); $(document).on("click", "td div.laytable-cell-checkbox div.layui-form-checkbox", function (e) { e.stopPropagation(); });
 		    	
 		    $("#btn").click(function(){
-
 					var url="../../buyDetail/add.action";
 					var data={"mes":$("#mes").val()};
 					$.post(url,data,function(mes){
