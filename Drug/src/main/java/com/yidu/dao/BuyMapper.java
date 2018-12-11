@@ -26,4 +26,6 @@ public interface BuyMapper {
      * @return
      */
     public List<Buy> showList(Map<String, Object> map);
+    
+    int selectCount(Buy buy);
 }
