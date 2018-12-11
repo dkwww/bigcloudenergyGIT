@@ -48,23 +48,20 @@ public class MrpController {
 		//前台取过来的分页值
 		pageUtil.setCurPage(page);
 		pageUtil.setRows(limit);
-		 //用于转换时间的List 集合
-		List<Mrp> lists=new ArrayList<Mrp>();
+		 
 		//查询并按照大小分页
 		List<Mrp> list = mrpService.qureyAll(mrp,pageUtil);
 		//查询行数
 		int rows = mrpService.selectCountBySelectiv(mrp);
-		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
-			Mrp mrp2 = (Mrp) iterator.next();
-			TimeUtil.dateToString(mrp2.getOptime(), "yyyy-mm-dd");
-			lists.add(mrp2);
-		} 
+		
+		
+		
 		//layui前台格式
 		Map<String, Object>  map  = new  HashMap<>();
 		map.put("code", 0);
 		map.put("msg", "");
 		map.put("count", rows);
-		map.put("data", lists);
+		map.put("data", list);
 		return  map;
 	}
 

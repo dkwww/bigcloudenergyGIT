@@ -34,12 +34,35 @@ public class Mrp {
     
     private  String  ideaName;
       
-    private  String  drugName;
+    private  String  drugName; 
+    
+    private  String  optimeName;
+    private   String  mrpOptimeName;
     
     
     
     
-    public String getDrugName() {
+    
+    
+    
+
+	public String getOptimeName() {
+		return optimeName;
+	}
+
+	public void setOptimeName(String optimeName) {
+		this.optimeName = optimeName;
+	}
+
+	public String getMrpOptimeName() {
+		return mrpOptimeName;
+	}
+
+	public void setMrpOptimeName(String mrpOptimeName) {
+		this.mrpOptimeName = mrpOptimeName;
+	}
+
+	public String getDrugName() {
 		return drugName;
 	}
 

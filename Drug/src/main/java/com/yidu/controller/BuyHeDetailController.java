@@ -9,6 +9,7 @@ import com.yidu.domain.BuyDetail;
 import com.yidu.service.BuyDetailService;
 import com.yidu.service.BuyHeDetailService;
 import com.yidu.service.BuyService;
+import com.yidu.util.PageUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +24,7 @@ import org.springframework.stereotype.Controller;
  * 采购明细 前端控制器
  * </p>
  *
- * @author Pngjiangping
+ * @author 邓康威
  * @since 2018-11-26
  */
 @Controller
@@ -34,18 +35,24 @@ public class BuyHeDetailController {
 	BuyHeDetailService service;
 	
 	/**
-	 * 显示列表
+	 * 根据id显示列表
 	 * @return
 	 */
-	@RequestMapping("/showList")
+	@RequestMapping("/showListId")
 	@ResponseBody
-	public Map<String,Object> showList(BuyDetail deta) {
-		List<BuyDetail> list = service.showList(deta);
+	public Map<String,Object> showListId(BuyDetail detail,Integer page,Integer limit) {
+		PageUtil PageUtil=new PageUtil();
+		if(page!=null && limit!=null) {
+			PageUtil.setCurPage(page);
+			PageUtil.setRows(limit);
+		}
+		List<BuyDetail> list = service.showListId(detail,PageUtil);
+		int rows =service.selectCount(detail);
 		
 		Map<String, Object> m = new HashMap<>();
 		m.put("code", 0);
 		m.put("msg", "");
-		m.put("count", 10);
+		m.put("count", rows);
 		m.put("data", list);
 		return m;
 	}

@@ -1,10 +1,12 @@
 package com.yidu.controller;
 
 
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yidu.domain.Admin;
+import com.yidu.domain.Drug;
 import com.yidu.service.AdminService;
 import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
@@ -43,12 +45,46 @@ public class AdminController {
 		List<Admin> list = service.findAll(admin,pageUtil);
 		//查询分页的行
 		int rows = service.selectCount(admin);
+		
+		
 		Map<String , Object> map = new HashMap<>();
 		map.put("code",0);
 		map.put("msg","");
 		map.put("count", rows);
 		map.put("data", list);
 		return map;
+	}
+	@RequestMapping("/addAdmin")
+	@ResponseBody
+	public Message addAdmin(@RequestBody Admin admin) {
+		int rows = service.addOrUpdate(admin);
+		Message mes = new Message();
+		if(rows>0) {
+			mes.setStatus(1);
+			mes.setMsg("操作成功");
+		}else {
+			mes.setStatus(0);
+			mes.setMsg("数据异常，请稍后重试！");
+		}
+		return mes;
+	}
+	/**
+	 * 批量删除
+	 * @return
+	 */
+	@RequestMapping("/bulkUpdate")
+	@ResponseBody
+	public Message bulkUpdate(@RequestBody List<String> ids) {
+		int rows = service.bulkUpdate(ids);
+		Message mes = new Message();
+		if(rows>0) {
+			mes.setStatus(1);
+			mes.setMsg("操作成功");
+		}else {
+			mes.setStatus(0);
+			mes.setMsg("数据异常，请稍后重试！");
+		}
+		return mes;
 	}
 	/**
 	 * 查询登录的用户名密码是否存在
@@ -82,7 +118,6 @@ public class AdminController {
 	public Admin getSessions(HttpServletRequest request) {
 		HttpSession session=request.getSession();
 		Admin admin=(Admin) session.getAttribute("user");
-		
 		System.out.println("Seesion==="+admin);
 		if(admin != null) {
 			return admin;

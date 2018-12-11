@@ -489,7 +489,8 @@ alter table drug_module_role comment '模块角色表';
 create table drug_mrp
 (
    mrp_id               varchar(100) not null comment ' 编号',
-   drug_id              varchar(100) comment '药品编号',
+   pd_id              varchar(100) comment '生产明细编号',
+   mrp_num 					int(5) comment '生产个数',
    mrp_optime           datetime comment '制造时间',
    mrp_plan             int(5) comment '计划任务',
    mrp_rate             numeric(5,2) comment '进度',

@@ -122,11 +122,18 @@
       </if>
     </trim>
   </insert>
+  <update id="bulkDeleteByPrimaryKeySelective">
+    update drug_admin set isva = '0'
+    where admin_id in 
+    <foreach collection="list" item="ids" open="(" separator="," close=")">
+      #{ids} 
+    </foreach> 
+  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Admin">
     update drug_admin
     <set>
-      <if test="adminWeb != null">
-        admin_web = #{adminWeb,jdbcType=VARCHAR},
+      <if test="comId != null">
+        com_id = #{comId,jdbcType=VARCHAR},
       </if>
       <if test="adminName != null">
         admin_name = #{adminName,jdbcType=VARCHAR},
@@ -187,7 +194,7 @@
 	<select id="selectCount" parameterType="com.yidu.domain.Admin" resultType="int">
 		select count(*) from drug_admin ad,drug_company co where ad.com_id=co.com_id and ad.isva='1'
 		<if test="adminName!=null and adminName!=''">
-			and ad.admin_name like CONCAT(CONCAT('%',#{admin.adminName,jdbcType=VARCHAR},'%'))
+			and ad.admin_name like CONCAT(CONCAT('%',#{adminName,jdbcType=VARCHAR},'%'))
 		</if>
 		<if test="comId!=null and comId!=''">
 			and co.com_id = #{comId,jdbcType=VARCHAR}
