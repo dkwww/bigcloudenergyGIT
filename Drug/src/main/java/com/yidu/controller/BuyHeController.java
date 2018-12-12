@@ -75,7 +75,6 @@ public class BuyHeController {
 	@RequestMapping("add")
 	@ResponseBody
 	public Message add(String shuju,String sumNumber,String sumPrice,String Supplier) {
-		
 		Buy buy=new Buy();
 		buy.setBuyCompany(Supplier);
 		buy.setBuyAmount(Integer.valueOf(sumNumber));

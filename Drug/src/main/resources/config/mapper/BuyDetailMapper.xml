@@ -21,7 +21,7 @@
   </sql>
   
   <select id="showListId" parameterType="map" resultMap="BaseResultMap">
-  	SELECT * FROM drug_buy a,drug_buy_detail b,drug_material c WHERE a.buy_id=b.buy_id AND b.bdet_fk_id=c.mat_id
+  	SELECT * FROM drug_buy a,drug_buy_detail b,drug_material c WHERE a.buy_id=b.buy_id AND b.bdet_fk_id=c.mat_id and a.buy_id=#{detail.buyId}
   	<if test="detail.matName!=null and detail.matName!='' ">
   		and c.mat_name like concat("%",#{detail.matName},"%")
   	</if>
@@ -29,7 +29,7 @@
   </select>
   
   <select id="selectCount" parameterType="com.yidu.domain.BuyDetail" resultType="int">
-  	SELECT count(*) FROM drug_buy a,drug_buy_detail b,drug_material c WHERE a.buy_id=b.buy_id AND b.bdet_fk_id=c.mat_id
+  	SELECT count(*) FROM drug_buy a,drug_buy_detail b,drug_material c WHERE a.buy_id=b.buy_id AND b.bdet_fk_id=c.mat_id and a.buy_id=#{buyId}
   	<if test="matName!=null and matName!='' ">
   		and c.mat_name like concat("%",#{matName},"%")
   	</if>
