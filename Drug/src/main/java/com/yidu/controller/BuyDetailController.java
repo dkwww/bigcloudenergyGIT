@@ -19,6 +19,7 @@ import com.yidu.domain.Buy;
 import com.yidu.domain.BuyDetail;
 import com.yidu.service.BuyDetailService;
 import com.yidu.service.BuyService;
+import com.yidu.service.SaleDetailService;
 import com.yidu.util.Message;
 
 /**
@@ -39,23 +40,8 @@ public class BuyDetailController {
 	@Resource
 	BuyService buyService;
 	
-	/**
-	 * 显示列表
-	 * @return
-	 */
-	@RequestMapping("/showList")
-	@ResponseBody
-	public Map<String,Object> showList() {
-		List<BuyDetail> list = service.findAll();
-		
-		Map<String, Object> m = new HashMap<>();
-		m.put("code", 0);
-		m.put("msg", "");
-		m.put("count", 10);
-		m.put("data", list);
-		return m;
-	}
-	
+	@Resource
+	SaleDetailService saleDetailService;
 	
 	/**
 	 * 采购
@@ -71,7 +57,9 @@ public class BuyDetailController {
 		String bdetAmount = "";
 		String mess = "";
 		
-		int rows = 0;
+		//定义两个变量用于判断
+		int buyRows = 0;
+		int detailRows = 0;
 		
 		System.out.println(mes);
 		String[] str = mes.split("&");
@@ -119,7 +107,7 @@ public class BuyDetailController {
 			buy.setOper("张三");
 			
 			if(i==0) {
-				buyService.insertSelective(buy);
+				detailRows =buyService.insertSelective(buy);
 			}
 			
 			detail.setBuyId(uuid);
@@ -135,14 +123,16 @@ public class BuyDetailController {
 			detail.setOptime(new Date());
 			
 			
+			buyRows =service.addOrUpdate(detail);
 			
-			
-			rows =service.addOrUpdate(detail);
 		}
 		
+		if(buyRows!=0 && detailRows !=0) {
+			
+		}
 		
 		Message message = new Message();
-		if(rows!=0) {
+		if(buyRows!=0) {
 			message.setMsg("操作成功");
 			message.setStatus(1);
 		}else {

@@ -1,6 +1,6 @@
 package com.yidu.service;
 
-import com.yidu.domain.BuyDetail;
+import com.yidu.domain.SaleDetail;
 
 /**
  * <p>
@@ -17,7 +17,7 @@ public interface SaleDetailService {
 	 * @param detail
 	 * @return
 	 */
-	public int addOrUpdate(BuyDetail detail);
+	public int addOrUpdate(SaleDetail detail);
 	
 	
 	/**
@@ -25,12 +25,12 @@ public interface SaleDetailService {
 	 * @param toy
 	 * @return
 	 */
-	public int updateByPrimaryKeySelective(BuyDetail detail);
+	public int updateByPrimaryKeySelective(SaleDetail detail);
 	
 	/**
 	 * 增加
 	 * @param toy
 	 * @return
 	 */
-	public int insertSelective(BuyDetail detail);
+	public int insertSelective(SaleDetail detail);
 }

@@ -17,13 +17,6 @@ public interface BuyDetailService  {
 	
 	
 	/**
-	 * 显示列表
-	 * @return
-	 */
-	public List<BuyDetail> findAll();
-	
-	
-	/**
 	 * 增加或修改的方法
 	 * @param detail
 	 * @return
