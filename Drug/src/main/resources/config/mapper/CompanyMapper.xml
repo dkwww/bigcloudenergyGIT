@@ -38,12 +38,12 @@
     from drug_company
 
   </select>
-  <!-- 查询总共多少条数据 -->
+  <!-- 根据条件为分店和状态为0的查询总共多少条数据 -->
   <select id="checkselectCount" parameterType="com.yidu.domain.Company" resultType="int">
     select  count(*) from drug_company WHERE com_type='分店' AND isva='0'
 
   </select>
-  <!--审核分页以及模糊查询  -->
+  <!--根据条件为分店和状态为0的审核分页以及模糊查询  -->
   <select id="checkselectAll" parameterType="map" resultMap="BaseResultMap">
   SELECT * FROM  drug_company WHERE com_type='分店' AND isva='0' 
   
@@ -53,7 +53,7 @@
 
   	limit #{pageUtil.startRows},#{pageUtil.rows}
   </select>
-  <!-- 分店批量修改 -->
+  <!-- 分店批量修改为0 -->
   <update id="companyDeleteByPrimaryKeySelective">
     update drug_company set isva = '0'
     where com_id in 
@@ -61,7 +61,7 @@
       #{ids} 
     </foreach> 
   </update>
-  <!-- 审核批量修改 -->
+  <!-- 审核批量修改为1 -->
    <update id="checkcompanyDeleteByPrimaryKeySelective">
     update drug_company set isva = '1'
     where com_id in 

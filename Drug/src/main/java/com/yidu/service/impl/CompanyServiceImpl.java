@@ -74,7 +74,6 @@ public class CompanyServiceImpl  implements CompanyService {
 		List<Company> selectAll = companyMapper.checkselectAll(map);
 		//创建list
 		List<Company>ss=new ArrayList<>(); 
-		
 		for (Company company2 : selectAll) {
 			//调用工具类，装换时间格式
 			company2.setStrTime(Tools.getTimeStr(company2.getOptime()));
@@ -83,19 +82,31 @@ public class CompanyServiceImpl  implements CompanyService {
 		}	
 		return ss;
 	}
-
+	/**
+	 *增加或者修改
+	 */
 	@Override
 	public int addOrUpdate(Company com) {
+		//定义一个rows
 		int rows=0;
+		//判断id不等于空就是修改否则就是增加
 		if (com.getComId()!=null&&!"".equals(com.getComId())) {
+			//调用修改的方法
 			rows=updateByPrimaryKeySelective(com);
 		}else {
+			//uuid
 			String  uuid=UUID.randomUUID().toString().replaceAll("-", "");
+			//增加uuid
 			com.setComId(uuid);
+			//增加分店时默认设置为分店
 			com.setComType("分店");
+			//默认增加当前时间
 			com.setOptime(new Date());
+			//默认为0
 			com.setIsva("0");
+			//默认增加一个排序
 			com.setSort(TimeUtil.getStrDate());
+			//调用增加的方法
 			rows=insertSelective(com);
 		}
 		return rows;
@@ -117,26 +128,34 @@ public class CompanyServiceImpl  implements CompanyService {
 		return companyMapper.checkcompanyDeleteByPrimaryKeySelective(ids);
 	}
 
-
+	/**
+	 * 增加的方法
+	 */
 	@Override
 	public int insertSelective(Company record) {
 		
 		return companyMapper.insertSelective(record);
 	}
-
+	/**
+	 * 修改的方法
+	 */
 	@Override
 	public int updateByPrimaryKeySelective(Company record) {
 	
 		return companyMapper.updateByPrimaryKeySelective(record);
 	}
-
+	/**
+	 * 查询的方法
+	 */
 	@Override
 	public int selectCount(Company company) {
 		
 		return companyMapper.selectCount(company);
 	}
 
-	
+	/**
+	 * 分页
+	 */
 	@Override
 	public int checkselectCount(Company company) {
 		

@@ -53,30 +53,6 @@
 		    </div>
 		</div>
 		
-		<!-- 修改页面 -->
-		<script type="text/html" id="edit-tpl">
-		    <div style="margin:10px">
-		    	<form class="layui-form" action="" lay-filter="form-edit">
-		    		<input type="hidden" name="comId" value="{{d.user.comId}}" />
-		    		
-		    		<div class="layui-form-item">
-		    			<label class="layui-form-label">是否有效</label>
-		    			<div class="layui-input-block">
-		    				<input type="text" name="isva" required lay-verify="required" value="{{d.user.isva}}" placeholder="" autocomplete="off" class="layui-input">
-		    			</div>
-		    		</div>
-		    
-		    	
-					
-		            <div class="layui-form-item" style="display:none;">
-		                <div class="layui-input-block">
-		                    <button class="layui-btn" lay-submit lay-filter="formEdit">立即提交</button>
-		                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-		                </div>
-		            </div>
-		        </form>
-		    </div>
-		</script>
 		<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
 		<script>
 			//文本框只能输入金额
@@ -134,7 +110,7 @@
 		          		width: 125
 		          	}, {
 		          		field: 'isva',
-		          		title: '是否有效',
+		          		title: '是否加盟',
 		          		width: 100
 		          	}, {
 		          		field: 'strTime',

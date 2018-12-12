@@ -6,6 +6,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import com.yidu.domain.Company;
 import com.yidu.service.CompanyService;
 import com.yidu.util.Message;
@@ -43,10 +80,13 @@ public class CompanyController {
 	@RequestMapping("/findAll")
 	@ResponseBody
 	public Map<String, Object> findAll(Company company,Integer page,Integer limit) {
-		
+		//page工具类
 		PageUtil pageUtil = new PageUtil();
+		//判断page和limit不等于空
 		if(page!=null && limit!=null) {
+			//将page赋值到curpage
 			pageUtil.setCurPage(page);
+			//将limit赋值到rows
 			pageUtil.setRows(limit);
 		}
 
@@ -54,15 +94,16 @@ public class CompanyController {
 		HashMap<String , Object> map = new HashMap<>();
 		//创建一个list并调用分店查询所有的方法
 		List<Company> list = companyService.findAll(company,pageUtil);
-		
+		//创建list
 		List<Company>lis=new ArrayList<>();
 		for (Company list2 : list) {
-			System.err.println("sssssssssssssssssssssssssssssssssssssssssssssssssssssss"+list2.getIsva());
+			//将查询出来的0装换为未加盟否则就是已加盟
 			if(list2.getIsva().equals("0")) {
 				list2.setIsva("未加盟");
 			}else {
 				list2.setIsva("已加盟");
 			}
+			//将结果添加到lis
 			lis.add(list2);
 		}
 		
@@ -89,23 +130,30 @@ public class CompanyController {
 	@RequestMapping("/checkfindAll")
 	@ResponseBody
 	public Map<String, Object> checkfindAll(Company company,Integer page,Integer limit) {
+		//page工具类
 		PageUtil pageUtil = new PageUtil();
+		//判断page和limit不等于空
 		if(page!=null && limit!=null) {
+			//将page赋值到curpage
 			pageUtil.setCurPage(page);
+			//将limit赋值到rows
 			pageUtil.setRows(limit);
 		}
+
 		//创建一个map
 		HashMap<String , Object> map = new HashMap<>();
 		//创建一个list并调用分店查询所有的方法
 		List<Company> list = companyService.checkfindAll(company, pageUtil);
-		
+		//创建list
 		List<Company>lis=new ArrayList<>();
 		for (Company list2 : list) {
+			//将查询出来的0装换为未加盟否则就是已加盟
 			if(list2.getIsva().equals("0")) {
 				list2.setIsva("未加盟");
 			}else {
 				list2.setIsva("已加盟");
 			}
+			//将结果添加到lis
 			lis.add(list2);
 		}
 		//查询总共多少条数据
@@ -139,17 +187,20 @@ public class CompanyController {
 		
 		return mes;
 	}
-	
+
 	/**
-	 * 批量删除
-	 * @param ids
-	 * @return
+	 *  分店批量删除
+	 * @param ids 传入一个ids
+	 * @return 返回mes
 	 */
 	@RequestMapping("/companyUpdate")
 	@ResponseBody
 	public Message companyUpdate(@RequestBody List<String> ids) {
+		//调用批量修改的方法
 		int rows = companyService.companyUpdate(ids);
+		//创建message
 		Message mes = new Message();
+		//判断rows大于0就是删除成功，否则就是失败
 		if (rows>0) {
 			mes.setStatus(1);
 			mes.setMsg("删除成功");
@@ -161,15 +212,18 @@ public class CompanyController {
 	}
 	
 	/**
-	 * 批量删除
+	 * 分店批量审核
 	 * @param ids
 	 * @return
 	 */
 	@RequestMapping("/checkcompanyUpdate")
 	@ResponseBody
 	public Message checkcompanyUpdate(@RequestBody List<String> ids) {
+		//调用批量修改的方法
 		int rows = companyService.checkcompanyUpdate(ids);
+		//创建message
 		Message mes = new Message();
+		//判断rows大于0就是删除成功，否则就是失败
 		if (rows>0) {
 			mes.setStatus(1);
 			mes.setMsg("删除成功");
