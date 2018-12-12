@@ -5,6 +5,9 @@ import com.yidu.dao.WholesaleDetailMapper;
 import com.yidu.domain.WholesaleDetail;
 import com.yidu.service.WholesaleDetailService;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -25,6 +28,16 @@ public class WholesaleDetailServiceImpl  implements WholesaleDetailService {
 	@Override
 	public int insertSelective(WholesaleDetail wholesaleDetail) {
 		return wholeMap.insertSelective(wholesaleDetail);
+	}
+
+	@Override
+	public int selectCount(Map<String, Object> map) {
+		return wholeMap.selectCount(map);
+	}
+
+	@Override
+	public List<WholesaleDetail> selectdetaiM(Map<String, Object> map) {
+		return wholeMap.selectdetaiM(map);
 	}
 
 }

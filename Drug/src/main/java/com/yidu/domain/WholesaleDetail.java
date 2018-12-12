@@ -22,7 +22,18 @@ public class WholesaleDetail {
     private String oper;
 
     private String sort;
-    public String getWdId() {
+    
+    private String drugName;
+    
+    public String getDrugName() {
+		return drugName;
+	}
+
+	public void setDrugName(String drugName) {
+		this.drugName = drugName;
+	}
+
+	public String getWdId() {
         return wdId;
     }
 

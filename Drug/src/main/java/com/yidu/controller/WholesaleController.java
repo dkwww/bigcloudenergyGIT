@@ -51,7 +51,7 @@ public class WholesaleController {
 	@ResponseBody
 	public Map<String,Object> selectAll(@RequestParam(value = "limit",required = false)Integer limit,
 			@RequestParam(value = "page" ,required = false)Integer page, Wholesale record){
-		System.err.println("  sdsddddddddddddddddd"+limit+"==================="+page);
+		System.err.println("  sdsddddddddddddddddd"+limit+"==================="+page+"zxczxczxczxc="+record.getWholId());
 		PageUtil pages=new PageUtil();
 		if(limit!=null && page!=null) {
 			pages.setCurPage(page);
@@ -65,6 +65,7 @@ public class WholesaleController {
 		List<Wholesale> lists=new ArrayList<>();
  		List<Wholesale> list = service.selectAll(maps);
  		int selectCount = service.selectCount(maps);
+ 		System.err.println("   总行数的:"+selectCount);
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 			Wholesale wholesale = (Wholesale) iterator.next();
 			TimeUtil.dateToString(wholesale.getOptime(), "yyyy-MM-dd");
@@ -111,14 +112,14 @@ public class WholesaleController {
 	 */
 	@RequestMapping("/Wholesalemanagement")
 	@ResponseBody
-	public Message Wholesalemanagement(String htmlstr) {
+	public Message Wholesalemanagement(String htmlstr,int zongshu,String zongjin) {
 	
 		//创建订单对象
 		Wholesale wholesale=new Wholesale();
 		System.err.println("asdasdasdasd="+htmlstr);
 		
 		int num=0;
-		int zong = 0;
+		double zong = 0;
 		
 		String[] sp=htmlstr.split("#");
 		for (int i = 0; i < sp.length; i++) {
@@ -145,9 +146,9 @@ public class WholesaleController {
 				//店铺ID
 				wholesale.setComId("1");
 				//总数量
-				wholesale.setWholAmount(amount);
+				wholesale.setWholAmount(zongshu);
 				//总价
-				wholesale.setWholPrice(price);
+				wholesale.setWholPrice(Double.valueOf(zongjin));
 				//操作日期
 				wholesale.setOptime(new Date());
 				//是否有效
@@ -182,7 +183,7 @@ public class WholesaleController {
 			//操作人
 			wholesaleDetail.setOper("蛇皮");
 			
-			zong=Integer.valueOf(zong)+Integer.valueOf(price);
+			zong=Double.valueOf(zong)+Double.valueOf(price);
 			
 			int detai=detaiwholesa.insertSelective(wholesaleDetail);
 			if(detai>0) {

@@ -125,6 +125,7 @@
 		            layer = layui.layer,
 		            form = layui.form,
 		            laytpl = layui.laytpl;
+		        var tableElem="";
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '475px', //容器高度
@@ -132,7 +133,8 @@
 		            page: true,
 		            id: 'demo',
 		            cols: [
-		                [{checkbox: true,fixed: true},
+		                [{type: 'checkbox',fixed: true},
+		                {field: 'drugId',title: '药名ID',width: 175},
 		                {field: 'drugName',title: '药名',width: 175},
 		                {field: 'drugProp',title: '类型',width: 80},
 		                {field: 'drugPictrue',title: '图片',width: 60,templet:'<div><img style="height:100%;height:30px;" src="../../{{ d.drugPictrue}}"></div>'},
@@ -140,6 +142,7 @@
 		                {fixed: 'right',title: '操作',width: 180,align: 'center',toolbar: '#barDemo'}]
 		            ],
 		            done: function(res, curr, count) {
+		            	tableElem=this.elem.next('.layui-table-view');
 		                $("[data-field = 'drugProp']").children().each(function(){
 						    if($(this).text() == '1'){
 						    	$(this).text("处方药");
@@ -168,32 +171,52 @@
                     	renderForm();
                     }
                  });
-		        var zongs=0;
+		        var zongj=0.00;
+		        var zongshu=0;
 		        table.on('checkbox(demo)', function(obj){
-		        	var data = obj.data;
+		        	var data = obj.data; //获得当前行数据
+		            var layEvent = obj.event; //获得 lay-event 对应的值
+		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		        	if(obj.checked==true){
+		        		//价格
 		        		var mony = data.drugPrice;
-			        	$("#add").append("<tr><td style='display:none'>"+data.drugId+"</td><td>"+data.drugName+"</td><td>"+data.dtName+"</td><td id='pic_"+data.drugId+"'>"+data.drugPrice+"</td><td><input type='text' id='up_"+data.drugId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' value='1' /></td><td id='zong_"+data.drugId+"'></td><td id='pi_"+data.drugId+"'></td><td><a href='javascript:remove(this);'>删除</a></td></tr>")
-						var num=$(".numbers").val();
-			        	$("#zong_"+data.drugId+"").text(mony*num);
-			        	var pi=mony*num;
+			        	$("#add").append("<tr><td style='display:none'>"+data.drugId+"</td><td>"+data.drugName+"</td><td>"+data.dtName+"</td><td id='pic_"+data.drugId+"'>"+data.drugPrice+"</td><td><input type='text' id='up_"+data.drugId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' value='1' /></td><td id='zong_"+data.drugId+"'></td><td id='pi_"+data.drugId+"'></td><td><a onclick='changeState("+data.drugId+")'>删除</a></td></tr>")
+						//数量
+			        	var num=$(".numbers").val();
+			        	//赋值总价
+			        	$("#zong_"+data.drugId+"").text(parseFloat(mony*num).toFixed(2));
+			        	
+			        	var pi=parseFloat((mony*num)*0.8).toFixed(2);
 			        	$("#pi_"+data.drugId+"").text(pi);
-			        	var lak=parseInt($("#pi_"+data.drugId+"").text());
-			        	zongs+=lak;
+			        	//var lak=pi;
+			        	alert(parseFloat(pi));
+			        	zongj+=parseFloat(pi);
+			        	
+			        	var shu=$("#up_"+data.drugId+"").val();
+			        	zongshu+=parseFloat(shu);
 		        	}
-		        	if(obj.checked==false){
-		        		var mony = data.drugPrice;
-			        	$("#add").html("");
-						var num=$(".numbers").val();
-			        	$("#zong_"+data.drugId+"").text(mony*num);
-			        	var pi=mony*num;
-			        	$("#pi_"+data.drugId+"").text($("#pi_"+data.drugId+"").text-pi);
-			        	var lak=parseInt($("#pi_"+data.drugId+"").text());
-			        	zongs+=lak;
-		        	}
-		        	alert(zongs);
-		        	$("#zongjin").val(zongs);
+		        	$("#zongjin").val(zongj.toFixed(2));
+		        	$("#zongshu").val(zongshu);
 		        });
+		        
+		        
+		        $('body').on('click', '.del', function() { 
+		        		$(this).closest('tr').remove();
+						var zongmoney=0.0;
+						var zongnum=0;
+		        		$("#add tr").not(":first").each(function(){
+							var shu=parseInt($(this).find('td:eq(4) input').val());
+							var pijia=parseFloat($(this).find('td:eq(6)').text()).toFixed(2);
+							zongmoney+=pijia;
+							zongnum+=shu;
+						});
+		        		$("#zongshu").val(zongnum);
+						$("#zongjin").val(zongmoney);
+		        	});
+		        
+		        $(document).on("click",".layui-table-body table.layui-table tbody tr", function () { var index = $(this).attr('data-index'); var tableBox = $(this).parents('.layui-table-box'); //存在固定列
+			    if (tableBox.find(".layui-table-fixed.layui-table-fixed-l").length>0) { tableDiv = tableBox.find(".layui-table-fixed.layui-table-fixed-l"); } else { tableDiv = tableBox.find(".layui-table-body.layui-table-main"); } var checkCell = tableDiv.find("tr[data-index=" + index + "]").find("td div.laytable-cell-checkbox div.layui-form-checkbox I"); if (checkCell.length>0) { checkCell.click(); } }); $(document).on("click", "td div.laytable-cell-checkbox div.layui-form-checkbox", function (e) { e.stopPropagation(); });
+			    
 		        
 		        //监听搜索表单提交
 		        form.on('submit(search)', function(data) {  
@@ -205,6 +228,18 @@
 		            $('.kit-search-mored').hide();
 		            return false;
 		        });
+		        
+		        function changeState(rowId) {
+					var objStr = tableElem.find("td[data-field='drugId']");
+					for (var i = 0; i < objStr.length; i++) {
+						if (objStr[i].innerText == rowId) {
+							tableElem.children().find('.layui-table-fixed input[type="checkbox"]').eq(i+1).next().click();
+							tableElem.find('.layui-table-fixed input[type="checkbox"]').eq(i+1).next().removeClass('layui-form-checked');
+						}
+					}
+				}
+		        
+		        
 		        //渲染 修改和增加弹出层
 			    function showlayer(d){
 			    	laytpl($('#edit-tpl').html()).render(d,function(html) {
@@ -276,19 +311,28 @@
 		</script>
 		<script type="text/javascript">
 		function num(obj){
+			$("#zongjin").val("");
 			var id = obj.id;
 			var a = obj.value;
-			var b=$(obj).parent().prev().text();
-			var c =parseFloat(a)*parseFloat(b);
-			var d=c*0.8;
-			$(obj).parent().parent().children().eq(5).text(c);
-			$(obj).parent().parent().children().eq(6).text(d);
-			var zongj=$(obj).parent().parent().children().eq(6).text();
-			alert("zongj="+zongj);
-			alert("zongjin="+$("#zongjin").val());
-			var zongmoney=parseInt($("#zongjin").val())+parseInt(zongj);
-			$("#zongjin").val(zongmoney);
-			zongmoney=0;
+			if(a!=""&&a!=0){
+				var b=$(obj).parent().prev().text();
+				var c =parseFloat(a).toFixed(2)*parseFloat(b).toFixed(2);
+				var d=c*0.8;
+				$(obj).parent().parent().children().eq(5).text(c);
+				$(obj).parent().parent().children().eq(6).text(parseFloat(d).toFixed(2));
+				
+				var zongmoney=0.0;
+				var zongnum=0;
+				$("#add tr").not(":first").each(function(){
+					zongmoney+=parseFloat($(this).find('td:eq(4) input').val());
+					zongnum+=parseInt($(this).find('td:eq(6)').text());
+				});
+				
+				$("#zongshu").val(zongmoney);
+				$("#zongjin").val(zongnum.toFixed(2));
+			}else{
+				obj.value="1";
+			}
 		}
 		
 		function okpi(){
@@ -299,11 +343,11 @@
 				});
 					html+=$(this).find('td:eq(4) input').val()+"#";
 			});
-			$.ajax({ url:"../../wholesale/Wholesal5emanagement.action",
+			$.ajax({ url:"../../wholesale/Wholesalemanagement.action",
                 type:'post',//method请求方式，get或者post
                 cache: false,//同步
                 dataType:'json',//预期服务器返回的数据类型
-                data:{"htmlstr":html},//传表格数据
+                data:{"htmlstr":html,"zongshu":$("#zongshu").val(),"zongjin":$("#zongjin").val()},//传表格数据
                 success:function(mes){//res为相应体,function为回调函数
                 	 if(mes.msg>=1){
                 		 alert("s");
@@ -312,8 +356,6 @@
                 	 }
                 }
              });
-		 }
+		}
 		</script>
 	</body>
-</html>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               

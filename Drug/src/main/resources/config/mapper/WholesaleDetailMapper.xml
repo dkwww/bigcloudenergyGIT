@@ -6,16 +6,34 @@
     <result column="whol_id" jdbcType="VARCHAR" property="wholId" />
     <result column="drug_id" jdbcType="VARCHAR" property="drugId" />
     <result column="wd_amount" jdbcType="INTEGER" property="wdAmount" />
-    <result column="wd_price" jdbcType="VARCHAR" property="wdPrice" />
+    <result column="wd_price" jdbcType="NUMERIC" property="wdPrice" />
     <result column="wd_total" jdbcType="VARCHAR" property="wdTotal" />
     <result column="isva" jdbcType="VARCHAR" property="isva" />
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
+    <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
   </resultMap>
   <sql id="Base_Column_List">
     wd_id, whol_id, drug_id, wd_amount, wd_price, wd_total, isva, optime, oper, sort
   </sql>
+  <select id="selectdetaiM" parameterType="map" resultMap="BaseResultMap">
+  	SELECT * FROM drug_wholesale dw,drug_wholesale_detail dd,drug_drug dg
+	WHERE dw.whol_id=dd.whol_id
+	AND dd.drug_id=dg.drug_id
+	AND dd.whol_id=#{title,jdbcType=VARCHAR}
+	<if test="kshs !=null and jshs !=null">
+   		limit #{kshs},#{jshs}   <!-- 开始行数到每页多少行 -->
+   	</if>
+  </select>
+  
+    <select id="selectCount" parameterType="map" resultType="integer">
+  	select count(*) from drug_wholesale_detail where 1=1
+  	<if test="title != null and title != '' ">
+  	and whol_id = #{title}
+  	</if>
+  </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -32,7 +50,7 @@
       isva, optime, oper, 
       sort)
     values (#{wdId,jdbcType=VARCHAR}, #{wholId,jdbcType=VARCHAR}, #{drugId,jdbcType=VARCHAR}, 
-      #{wdAmount,jdbcType=INTEGER}, #{wdPrice,jdbcType=VARCHAR}, #{wdTotal,jdbcType=VARCHAR}, 
+      #{wdAmount,jdbcType=INTEGER}, #{wdPrice,jdbcType=NUMERIC}, #{wdTotal,jdbcType=VARCHAR}, 
       #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, 
       #{sort,jdbcType=VARCHAR})
   </insert>
@@ -87,7 +105,7 @@
         #{wdAmount,jdbcType=INTEGER},
       </if>
       <if test="wdPrice != null">
-        #{wdPrice,jdbcType=VARCHAR},
+        #{wdPrice,jdbcType=NUMERIC},
       </if>
       <if test="wdTotal != null">
         #{wdTotal,jdbcType=VARCHAR},
@@ -119,7 +137,7 @@
         wd_amount = #{wdAmount,jdbcType=INTEGER},
       </if>
       <if test="wdPrice != null">
-        wd_price = #{wdPrice,jdbcType=VARCHAR},
+        wd_price = #{wdPrice,jdbcType=NUMERIC},
       </if>
       <if test="wdTotal != null">
         wd_total = #{wdTotal,jdbcType=VARCHAR},
@@ -144,7 +162,7 @@
     set whol_id = #{wholId,jdbcType=VARCHAR},
       drug_id = #{drugId,jdbcType=VARCHAR},
       wd_amount = #{wdAmount,jdbcType=INTEGER},
-      wd_price = #{wdPrice,jdbcType=VARCHAR},
+      wd_price = #{wdPrice,jdbcType=NUMERIC},
       wd_total = #{wdTotal,jdbcType=VARCHAR},
       isva = #{isva,jdbcType=VARCHAR},
       optime = #{optime,jdbcType=TIMESTAMP},

@@ -2,17 +2,16 @@ package com.yidu.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.yidu.domain.Drug;
-import com.yidu.domain.Wholesale;
 import com.yidu.domain.WholesaleDetail;
 import com.yidu.service.WholesaleDetailService;
-import com.yidu.service.WholesaleService;
+import com.yidu.util.PageUtil;
 import com.yidu.util.TimeUtil;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,15 +29,42 @@ import org.springframework.stereotype.Controller;
  * @since 2018-11-26
  */
 @Controller
-@RequestMapping("/wholesaleDetail")
+@RequestMapping("/WholesaleDetail")
 public class WholesaleDetailController {
 	@Resource
 	WholesaleDetailService detailService;
 	
 	
 	@RequestMapping("insertAdd")
-	public int insertAdd(WholesaleDetail wholesaleDetail) {
-		return detailService.insertSelective(wholesaleDetail);
+	public int insertAdd(WholesaleDetail WholesaleDetailDetail) {
+		return detailService.insertSelective(WholesaleDetailDetail);
+	}
+	
+	@RequestMapping("/selectAll")
+	@ResponseBody
+	public Map<String,Object> selectAll(@RequestParam(value = "limit",required = false)Integer limit,
+			@RequestParam(value = "page" ,required = false)Integer page, WholesaleDetail record){
+		System.err.println("  sdsddddddddddddddddd"+limit+"==================="+page);
+		PageUtil pages=new PageUtil();
+		if(limit!=null && page!=null) {
+			pages.setCurPage(page);
+			pages.setRows(limit);
+		}
+		Map<String, Object> maps=new HashMap<String,Object >();
+		maps.put("title",record.getWholId());
+		maps.put("kshs", pages.getStartRows());
+		maps.put("jshs", pages.getRows());
+		
+		
+ 		List<WholesaleDetail> list = detailService.selectdetaiM(maps);
+ 		int selectCount = detailService.selectCount(maps);
+		@SuppressWarnings("unchecked")
+		Map<String,Object> map = new HashedMap();
+		map.put("code", 0);
+		map.put("msg", "");
+		map.put("count", selectCount);
+		map.put("data", list);
+		return map;
 	}
 }
 

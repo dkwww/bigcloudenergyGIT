@@ -10,7 +10,7 @@ public class Wholesale {
 
     private Integer wholAmount;
 
-    private String wholPrice;
+    private Double wholPrice;
 
     private Date optime;
 
@@ -44,11 +44,11 @@ public class Wholesale {
         this.wholAmount = wholAmount;
     }
 
-    public String getWholPrice() {
+    public Double getWholPrice() {
         return wholPrice;
     }
 
-    public void setWholPrice(String wholPrice) {
+    public void setWholPrice(Double wholPrice) {
         this.wholPrice = wholPrice;
     }
 

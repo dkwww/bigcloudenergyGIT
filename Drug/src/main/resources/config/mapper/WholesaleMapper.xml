@@ -5,7 +5,7 @@
     <id column="whol_id" jdbcType="VARCHAR" property="wholId" />
     <result column="com_id" jdbcType="VARCHAR" property="comId" />
     <result column="whol_amount" jdbcType="INTEGER" property="wholAmount" />
-    <result column="whol_price" jdbcType="VARCHAR" property="wholPrice" />
+    <result column="whol_price" jdbcType="NUMERIC" property="wholPrice" />
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
     <result column="isva" jdbcType="VARCHAR" property="isva" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
@@ -48,7 +48,7 @@
       whol_price, optime, isva, 
       oper, sort)
     values (#{wholId,jdbcType=VARCHAR}, #{comId,jdbcType=VARCHAR}, #{wholAmount,jdbcType=INTEGER}, 
-      #{wholPrice,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{isva,jdbcType=VARCHAR}, 
+      #{wholPrice,jdbcType=NUMERIC}, #{optime,jdbcType=TIMESTAMP}, #{isva,jdbcType=VARCHAR}, 
       #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yidu.domain.Wholesale">
@@ -90,7 +90,7 @@
         #{wholAmount,jdbcType=INTEGER},
       </if>
       <if test="wholPrice != null">
-        #{wholPrice,jdbcType=VARCHAR},
+        #{wholPrice,jdbcType=NUMERIC},
       </if>
       <if test="optime != null">
         #{optime,jdbcType=TIMESTAMP},
@@ -116,7 +116,7 @@
         whol_amount = #{wholAmount,jdbcType=INTEGER},
       </if>
       <if test="wholPrice != null">
-        whol_price = #{wholPrice,jdbcType=VARCHAR},
+        whol_price = #{wholPrice,jdbcType=NUMERIC},
       </if>
       <if test="optime != null">
         optime = #{optime,jdbcType=TIMESTAMP},
@@ -137,7 +137,7 @@
     update drug_wholesale
     set com_id = #{comId,jdbcType=VARCHAR},
       whol_amount = #{wholAmount,jdbcType=INTEGER},
-      whol_price = #{wholPrice,jdbcType=VARCHAR},
+      whol_price = #{wholPrice,jdbcType=NUMERIC},
       optime = #{optime,jdbcType=TIMESTAMP},
       isva = #{isva,jdbcType=VARCHAR},
       oper = #{oper,jdbcType=VARCHAR},

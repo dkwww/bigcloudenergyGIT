@@ -1,5 +1,9 @@
 package com.yidu.service;
 
+import java.util.List;
+import java.util.Map;
+
+import com.yidu.domain.Wholesale;
 import com.yidu.domain.WholesaleDetail;
 
 /**
@@ -12,4 +16,8 @@ import com.yidu.domain.WholesaleDetail;
  */
 public interface WholesaleDetailService   {
 	public int insertSelective(WholesaleDetail wholesaleDetail);
+	
+	public int selectCount(Map<String, Object> map);
+	
+	public List<WholesaleDetail> selectdetaiM(Map<String, Object> map);
 }
