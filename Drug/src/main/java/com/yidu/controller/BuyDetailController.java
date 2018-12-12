@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yidu.domain.Buy;
 import com.yidu.domain.BuyDetail;
+import com.yidu.domain.Sale;
+import com.yidu.domain.SaleDetail;
 import com.yidu.service.BuyDetailService;
 import com.yidu.service.BuyService;
 import com.yidu.service.SaleDetailService;
@@ -63,13 +65,18 @@ public class BuyDetailController {
 		
 		System.out.println(mes);
 		String[] str = mes.split("&");
+		//定义一个采购订单对象
 		Buy buy = new Buy();
+		//定义一个销售订单对象
+		Sale sale = new Sale();
+		//定义一个销售订单详情的对象
+		SaleDetail detail = new SaleDetail();
 		
 		String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 		System.out.println("uuid:"+uuid);
 		
 		for (int i = 0; i < str.length; i++) {
-			BuyDetail detail = new BuyDetail();
+			BuyDetail bDetail = new BuyDetail();
 			
 			
 			String[] strOne = str[i].split("#");
@@ -110,26 +117,29 @@ public class BuyDetailController {
 				detailRows =buyService.insertSelective(buy);
 			}
 			
-			detail.setBuyId(uuid);
-			detail.setBdetAmount(Integer.valueOf(bdetAmount));
+			bDetail.setBuyId(uuid);
+			bDetail.setBdetAmount(Integer.valueOf(bdetAmount));
 			BigDecimal bdetPrices = new BigDecimal(bdetPrice);
-			detail.setBdetPrice(bdetPrices);
+			bDetail.setBdetPrice(bdetPrices);
 			BigDecimal bdetTotals = new BigDecimal(bdetTotal);
 			total = total.add(bdetTotals);
-			detail.setBdetTotal(bdetTotals);
-			detail.setBdetFkId(bdetFkId);
-			detail.setIsva("有效");
-			detail.setOper("张三");
-			detail.setOptime(new Date());
+			bDetail.setBdetTotal(bdetTotals);
+			bDetail.setBdetFkId(bdetFkId);
+			bDetail.setIsva("有效");
+			bDetail.setOper("张三");
+			bDetail.setOptime(new Date());
 			
 			
-			buyRows =service.addOrUpdate(detail);
+			buyRows =service.addOrUpdate(bDetail);
+			
+			if(buyRows!=0 && detailRows !=0 && i==str.length-1) {
+				
+			}
+			
 			
 		}
 		
-		if(buyRows!=0 && detailRows !=0) {
-			
-		}
+		
 		
 		Message message = new Message();
 		if(buyRows!=0) {

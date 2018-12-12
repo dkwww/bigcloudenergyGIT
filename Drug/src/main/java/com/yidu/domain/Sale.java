@@ -1,13 +1,10 @@
 package com.yidu.domain;
 
 import java.math.BigDecimal;
-
 import java.util.Date;
 
 public class Sale {
     private String saleId;
-
-    private String drugId;
 
     private Date saleTime;
 
@@ -29,14 +26,6 @@ public class Sale {
 
     public void setSaleId(String saleId) {
         this.saleId = saleId == null ? null : saleId.trim();
-    }
-
-    public String getDrugId() {
-        return drugId;
-    }
-
-    public void setDrugId(String drugId) {
-        this.drugId = drugId == null ? null : drugId.trim();
     }
 
     public Date getSaleTime() {

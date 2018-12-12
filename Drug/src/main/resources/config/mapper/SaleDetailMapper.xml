@@ -3,6 +3,7 @@
 <mapper namespace="com.yidu.dao.SaleDetailMapper">
   <resultMap id="BaseResultMap" type="com.yidu.domain.SaleDetail">
     <id column="sd_id" jdbcType="VARCHAR" property="sdId" />
+    <result column="drug_id" jdbcType="VARCHAR" property="drugId" />
     <result column="sale_id" jdbcType="VARCHAR" property="saleId" />
     <result column="sd_amount" jdbcType="INTEGER" property="sdAmount" />
     <result column="sd_price" jdbcType="DECIMAL" property="sdPrice" />

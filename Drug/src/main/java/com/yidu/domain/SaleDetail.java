@@ -5,6 +5,8 @@ import java.util.Date;
 
 public class SaleDetail {
     private String sdId;
+    
+    private String drugId;
 
     private String saleId;
 
@@ -22,7 +24,17 @@ public class SaleDetail {
 
     private String sort;
 
-    public String getSdId() {
+    
+    
+    public String getDrugId() {
+		return drugId;
+	}
+
+	public void setDrugId(String drugId) {
+		this.drugId = drugId;
+	}
+
+	public String getSdId() {
         return sdId;
     }
 
