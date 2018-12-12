@@ -1,4 +1,4 @@
-package com.yidu.dao;
+﻿package com.yidu.dao;
 
 import java.util.List;
 import java.util.Map;
@@ -20,12 +20,17 @@ public interface BuyMapper {
     int updateByPrimaryKey(Buy record);
     
     
-    
     /**
      * 查询所有
      * @return
      */
     public List<Buy> showList(Map<String, Object> map);
     
+    /**
+     * 查找总行数
+     * @param buy
+     * @return
+     */
+	public int selectCountBySelective(Buy buy);
     int selectCount(Buy buy);
 }

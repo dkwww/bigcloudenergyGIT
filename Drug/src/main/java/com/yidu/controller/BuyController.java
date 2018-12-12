@@ -2,13 +2,16 @@ package com.yidu.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yidu.domain.Buy;
 import com.yidu.domain.BuyDetail;
+import com.yidu.domain.Drug;
 import com.yidu.service.BuyDetailService;
 import com.yidu.service.BuyService;
 import com.yidu.util.Message;
+import com.yidu.util.PageUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,23 +36,29 @@ public class BuyController {
 	@Resource
 	private BuyService service;
 	
-	@Resource
-	private BuyDetailService detaservice;
 	
 	
 	/**
 	 * 显示列表
+	 * @param buy
+	 * @param page
+	 * @param limit
 	 * @return
 	 */
 	@RequestMapping("/showList")
 	@ResponseBody
-	public Map<String,Object> showList(Buy buy) {
-		List<Buy> list = service.showList(buy);
+	public Map<String,Object> showList(Buy buy,Integer page,Integer limit) {
+		PageUtil pageUtil = new PageUtil();
+		pageUtil.setCurPage(page);
+		pageUtil.setRows(limit);
+		
+		List<Buy> list = service.showList(buy,pageUtil);
+		int rows = service.findCount(buy);
 		
 		Map<String, Object> m = new HashMap<>();
 		m.put("code", 0);
 		m.put("msg", "");
-		m.put("count", 10);
+		m.put("count", rows);
 		m.put("data", list);
 		return m;
 	}

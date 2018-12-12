@@ -6,15 +6,19 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yidu.domain.Buy;
 import com.yidu.domain.BuyDetail;
 import com.yidu.service.BuyDetailService;
+import com.yidu.service.BuyService;
 import com.yidu.util.Message;
 
 /**
@@ -32,6 +36,8 @@ public class BuyDetailController {
 	@Resource
 	BuyDetailService service;
 	
+	@Resource
+	BuyService buyService;
 	
 	/**
 	 * 显示列表
@@ -59,11 +65,21 @@ public class BuyDetailController {
 	@RequestMapping("/add")
 	@ResponseBody
 	public Message add(String mes) {
+
+		//总价
+		BigDecimal total = new BigDecimal(0);
+		String bdetAmount = "";
+		String mess = "";
 		
 		int rows = 0;
 		
 		System.out.println(mes);
 		String[] str = mes.split("&");
+		Buy buy = new Buy();
+		
+		String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+		System.out.println("uuid:"+uuid);
+		
 		for (int i = 0; i < str.length; i++) {
 			BuyDetail detail = new BuyDetail();
 			
@@ -77,23 +93,53 @@ public class BuyDetailController {
 			System.out.println("数量单位:"+drugUnit);
 			String bdetTotal = strOne[5];//总价
 			System.out.println("总价:"+bdetTotal);
-			String bdetAmount = strOne[8];//数量
+			bdetAmount = strOne[8];//数量
 			System.out.println("数量:"+bdetAmount);
-			String mess = strOne[9];//备注
+			mess = strOne[9];//备注
 			System.out.println("备注:"+mess);
 			String bdetFkId = strOne[10];//药品id
 			System.out.println("药品id:"+bdetFkId);
+			String amount = strOne[11];//订单总数量
+			BigDecimal money = new BigDecimal(strOne[12]);//订单总金额
 			
+			buy.setBuyId(uuid);
+			buy.setComId("1");
+			buy.setBuyAmount(Integer.valueOf(amount));
+			buy.setBuyMoney(money);
+			buy.setBuyTime(new Date());
+			buy.setBuyCompany("总店");
+			buy.setBuyType("1");
+			buy.setBuyAudit("未审核");
+			buy.setBuyQc("未质检");
+			buy.setBuyState("0");
+			buy.setBuyPut("未入库");
+			buy.setBuyMes(mess);
+			buy.setIsva("有效");
+			buy.setOptime(new Date());
+			buy.setOper("张三");
+			
+			if(i==0) {
+				buyService.insertSelective(buy);
+			}
+			
+			detail.setBuyId(uuid);
 			detail.setBdetAmount(Integer.valueOf(bdetAmount));
 			BigDecimal bdetPrices = new BigDecimal(bdetPrice);
 			detail.setBdetPrice(bdetPrices);
 			BigDecimal bdetTotals = new BigDecimal(bdetTotal);
+			total = total.add(bdetTotals);
 			detail.setBdetTotal(bdetTotals);
 			detail.setBdetFkId(bdetFkId);
+			detail.setIsva("有效");
+			detail.setOper("张三");
 			detail.setOptime(new Date());
+			
+			
+			
 			
 			rows =service.addOrUpdate(detail);
 		}
+		
 		
 		Message message = new Message();
 		if(rows!=0) {

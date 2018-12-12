@@ -187,73 +187,21 @@
 		            page: true,
 		            id: 'demo',
 		            cols: [
-		                [{
-		                    checkbox: true,
-		                    fixed: true
-		                }, {
-		                    field: 'buyId',
-		                    title: '采购编号',
-		                    width: 140
-		                }, {
-		                    field: 'comId',
-		                    title: '店铺编号',
-		                    width: 105
-		                }, {
-		                    field: 'buyAmount',
-		                    title: '商品数量',
-		                    width: 100
-		                }, {
-		                    field: 'buyMoney',
-		                    title: '总金额',
-		                    width: 80
-		                }, {
-		                    field: 'buyTimes',
-		                    title: '采购时间',
-		                    width: 166
-		                }, {
-		                    field: 'buyCompany',
-		                    title: '供应商',
-		                    width: 100
-		                }, {
-		                    field: 'buyType',
-		                    title: '采购类型',
-		                    width: 100
-		                }, {
-		                    field: 'buyAudit',
-		                    title: '审核状态',
-		                    width: 100
-		                }, {
-		                    field: 'buyState',
-		                    title: '采购状态',
-		                    width: 110,
-		                    sort: true
-		                }, {
-		                    field: 'buyQc',
-		                    title: '质检状态',
-		                    width: 110,
-		                    sort: true
-		                }, {
-		                    field: 'buyPut',
-		                    title: '入库状态',
-		                    width: 110,
-		                    sort: true
-		                },{
-		                    field: 'optimes',
-		                    title: '操作时间',
-		                    width: 170,
-		                    sort: true
-		                },{
-		                    field: 'oper',
-		                    title: '操作人',
-		                    width: 100,
-		                    sort: true
-		                }, {
-		                    fixed: 'right',
-		                    title: '操作',
-		                    width: 180,
-		                    align: 'center',
-		                    toolbar: '#barDemo'
-		                }]
+		                [{checkbox: true,fixed: true}, 
+		                {field: 'buyId',title: '采购编号',width: 140}, 
+		                {field: 'comId',title: '店铺编号',width: 105},
+		                {field: 'buyAmount',title: '商品数量',width: 100}, 
+		                {field: 'buyMoney',title: '总金额',width: 80}, 
+		                {field: 'buyTimes',title: '采购时间',width: 166}, 
+		                {field: 'buyCompany',title: '供应商',width: 100}, 
+		                {field: 'buyType',title: '采购类型', width: 100}, 
+		                {field: 'buyAudit',title: '审核状态',width: 100}, 
+		                {field: 'buyState',title: '采购状态',width: 110,sort: true}, 
+		                {field: 'buyQc',title: '质检状态',width: 110,sort: true}, 
+		                {field: 'buyPut',title: '入库状态',width: 110,sort: true },
+		                {field: 'optimes',title: '操作时间',width: 170,sort: true},
+		                {field: 'oper',title: '操作人',width: 100, sort: true}, 
+		                {fixed: 'right',title: '操作',width: 180,align: 'center', toolbar: '#barDemo' }]
 		            ],
 		            done: function(res, curr, count) {
 		                //如果是异步请求数据方式，res即为你接口返回的信息。
@@ -269,32 +217,14 @@
 		        });
 						//城市及角色
 		        var staticData = {
-		            citys: [{
-		                id: 0,
-		                name: '北京'
-		            }, {
-		                id: 1,
-		                name: '广州'
-		            }, {
-		                id: 2,
-		                name: '深圳'
-		            }, {
-		                id: 3,
-		                name: '杭州'
-		            }],
-		            classifies: [{
-		                id: 0,
-		                name: '词人'
-		            }, {
-		                id: 1,
-		                name: '诗人'
-		            }, {
-		                id: 2,
-		                name: '作家'
-		            }, {
-		                id: 3,
-		                name: '酱油'
-		            }]
+		            citys: [{id: 0,name: '北京'},
+		            	{id: 1,name: '广州'}, 
+		            	{id: 2,name: '深圳'}, 
+		            	{id: 3,name: '杭州'}],
+		            classifies: [{id: 0,name: '词人' }, 
+		            	{id: 1,name: '诗人'}, 
+		            	{id: 2,name: '作家'}, 
+		            	{id: 3,name: '酱油'}]
 		        };
 		        //监听搜索表单提交
 		        form.on('submit(search)', function(data) {
