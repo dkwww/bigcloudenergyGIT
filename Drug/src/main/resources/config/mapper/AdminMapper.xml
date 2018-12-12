@@ -128,7 +128,7 @@
 		</trim>
 	</insert>
 	<update id="bulkDeleteByPrimaryKeySelective">
-		update drug_admin set isva = '0'
+		update drug_admin set isva = '0' 
 		where admin_id in
 		<foreach collection="list" item="ids" open="(" separator=","
 			close=")">
