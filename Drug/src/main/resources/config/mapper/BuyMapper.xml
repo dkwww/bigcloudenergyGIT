@@ -36,7 +36,6 @@
   <select id="selectCountBySelective" parameterType="java.util.Map" resultType="Integer" >
   	select count(*) from drug_buy  where 1=1
   	
-=======
   <select id="showList" parameterType="map" resultMap="BaseResultMap">
   	SELECT * FROM drug_buy a,drug_provider b WHERE a.buy_company=b.prov_id
   	<if test="buy.buyCompany!=null and buy.buyCompany!='' ">
@@ -50,7 +49,6 @@
   	<if test="buyCompany!=null and buyCompany!='' ">
   		and buy_company like concat("%",#{buyCompany},"%")
   	</if>
->>>>>>> branch 'master' of https://gitee.com/yidu_english/Drug.git
   </select>
   
   
