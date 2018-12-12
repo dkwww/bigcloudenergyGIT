@@ -1,200 +1,217 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yidu.dao.AdminMapper">
-  <resultMap id="BaseResultMap" type="com.yidu.domain.Admin">
-    <id column="admin_id" jdbcType="VARCHAR" property="adminId" />
-    <result column="com_id" jdbcType="VARCHAR" property="comId" />
-    <result column="admin_name" jdbcType="VARCHAR" property="adminName" />
-    <result column="admin_pwd" jdbcType="VARCHAR" property="adminPwd" />
-    <result column="admin_pictrue" jdbcType="VARCHAR" property="adminPictrue" />
-    <result column="admin_msg" jdbcType="VARCHAR" property="adminMsg" />
-    <result column="isva" jdbcType="VARCHAR" property="isva" />
-    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
-    <result column="oper" jdbcType="VARCHAR" property="oper" />
-    <result column="sort" jdbcType="VARCHAR" property="sort" />
-  </resultMap>
-  
-  <resultMap id="BaseResultMapOne" type="com.yidu.domain.Admin">
-    <id column="admin_id" jdbcType="VARCHAR" property="adminId" />
-    <result column="com_id" jdbcType="VARCHAR" property="comId" />
-    <result column="admin_name" jdbcType="VARCHAR" property="adminName" />
-    <result column="admin_pwd" jdbcType="VARCHAR" property="adminPwd" />
-    <result column="admin_pictrue" jdbcType="VARCHAR" property="adminPictrue" />
-    <result column="admin_msg" jdbcType="VARCHAR" property="adminMsg" />
-    <result column="isva" jdbcType="VARCHAR" property="isva" />
-    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
-    <result column="oper" jdbcType="VARCHAR" property="oper" />
-    <result column="sort" jdbcType="VARCHAR" property="sort" />
-    <result column="com_name" jdbcType="VARCHAR" property="comName" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    admin_id, com_id, admin_name, admin_pwd, admin_pictrue, admin_msg, isva, optime, 
-    oper, sort
-  </sql>
-  <sql id="Base_Column_List_One">
-    ad.admin_id, ad.com_id, ad.admin_name, ad.admin_pwd, ad.admin_pictrue, ad.admin_msg, ad.isva, ad.optime, 
-    ad.oper,ad.sort,co.com_name
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from drug_admin
-    where admin_id = #{adminId,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from drug_admin
-    where admin_id = #{adminId,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.yidu.domain.Admin">
-    insert into drug_admin (admin_id, admin_web, admin_name, 
-      admin_pwd, admin_pictrue, admin_msg, 
-      isva, optime, oper, 
-      sort)
-    values (#{adminId,jdbcType=VARCHAR}, #{adminWeb,jdbcType=VARCHAR}, #{adminName,jdbcType=VARCHAR}, 
-      #{adminPwd,jdbcType=VARCHAR}, #{adminPictrue,jdbcType=VARCHAR}, #{adminMsg,jdbcType=VARCHAR}, 
-      #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, 
-      #{sort,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.yidu.domain.Admin">
-    insert into drug_admin
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="adminId != null">
-        admin_id,
-      </if>
-      <if test="adminWeb != null">
-        admin_web,
-      </if>
-      <if test="adminName != null">
-        admin_name,
-      </if>
-      <if test="adminPwd != null">
-        admin_pwd,
-      </if>
-      <if test="adminPictrue != null">
-        admin_pictrue,
-      </if>
-      <if test="adminMsg != null">
-        admin_msg,
-      </if>
-      <if test="isva != null">
-        isva,
-      </if>
-      <if test="optime != null">
-        optime,
-      </if>
-      <if test="oper != null">
-        oper,
-      </if>
-      <if test="sort != null">
-        sort,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="adminId != null">
-        #{adminId,jdbcType=VARCHAR},
-      </if>
-      <if test="adminWeb != null">
-        #{adminWeb,jdbcType=VARCHAR},
-      </if>
-      <if test="adminName != null">
-        #{adminName,jdbcType=VARCHAR},
-      </if>
-      <if test="adminPwd != null">
-        #{adminPwd,jdbcType=VARCHAR},
-      </if>
-      <if test="adminPictrue != null">
-        #{adminPictrue,jdbcType=VARCHAR},
-      </if>
-      <if test="adminMsg != null">
-        #{adminMsg,jdbcType=VARCHAR},
-      </if>
-      <if test="isva != null">
-        #{isva,jdbcType=VARCHAR},
-      </if>
-      <if test="optime != null">
-        #{optime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="oper != null">
-        #{oper,jdbcType=VARCHAR},
-      </if>
-      <if test="sort != null">
-        #{sort,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="bulkDeleteByPrimaryKeySelective">
-    update drug_admin set isva = '0'
-    where admin_id in 
-    <foreach collection="list" item="ids" open="(" separator="," close=")">
-      #{ids} 
-    </foreach> 
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Admin">
-    update drug_admin
-    <set>
-      <if test="comId != null">
-        com_id = #{comId,jdbcType=VARCHAR},
-      </if>
-      <if test="adminName != null">
-        admin_name = #{adminName,jdbcType=VARCHAR},
-      </if>
-      <if test="adminPwd != null">
-        admin_pwd = #{adminPwd,jdbcType=VARCHAR},
-      </if>
-      <if test="adminPictrue != null">
-        admin_pictrue = #{adminPictrue,jdbcType=VARCHAR},
-      </if>
-      <if test="adminMsg != null">
-        admin_msg = #{adminMsg,jdbcType=VARCHAR},
-      </if>
-      <if test="isva != null">
-        isva = #{isva,jdbcType=VARCHAR},
-      </if>
-      <if test="optime != null">
-        optime = #{optime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="oper != null">
-        oper = #{oper,jdbcType=VARCHAR},
-      </if>
-      <if test="sort != null">
-        sort = #{sort,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where admin_id = #{adminId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Admin">
-    update drug_admin
-    set admin_web = #{adminWeb,jdbcType=VARCHAR},
-      admin_name = #{adminName,jdbcType=VARCHAR},
-      admin_pwd = #{adminPwd,jdbcType=VARCHAR},
-      admin_pictrue = #{adminPictrue,jdbcType=VARCHAR},
-      admin_msg = #{adminMsg,jdbcType=VARCHAR},
-      isva = #{isva,jdbcType=VARCHAR},
-      optime = #{optime,jdbcType=TIMESTAMP},
-      oper = #{oper,jdbcType=VARCHAR},
-      sort = #{sort,jdbcType=VARCHAR}
-    where admin_id = #{adminId,jdbcType=VARCHAR}
-  </update>
-  <!-- 根据用户名和密码查询 -->
-  <select id="queryNameOrPwd" resultMap="BaseResultMap">
-	 select <include refid="Base_Column_List" /> from drug_admin where admin_name = #{adminName,jdbcType=VARCHAR} and admin_pwd=#{adminPwd,jdbcType=VARCHAR}
-  </select>
-  <!-- 查询所有或者根据名字查询 -->
-  <select id="selectAll" parameterType="java.util.Map" resultMap="BaseResultMapOne">
-		select <include refid="Base_Column_List_One" /> from drug_admin ad,drug_company co where ad.com_id=co.com_id and ad.isva='1'
+	<resultMap id="BaseResultMap" type="com.yidu.domain.Admin">
+		<id column="admin_id" jdbcType="VARCHAR" property="adminId" />
+		<result column="com_id" jdbcType="VARCHAR" property="comId" />
+		<result column="admin_name" jdbcType="VARCHAR" property="adminName" />
+		<result column="admin_pwd" jdbcType="VARCHAR" property="adminPwd" />
+		<result column="admin_pictrue" jdbcType="VARCHAR" property="adminPictrue" />
+		<result column="admin_msg" jdbcType="VARCHAR" property="adminMsg" />
+		<result column="isva" jdbcType="VARCHAR" property="isva" />
+		<result column="optime" jdbcType="TIMESTAMP" property="optime" />
+		<result column="oper" jdbcType="VARCHAR" property="oper" />
+		<result column="sort" jdbcType="VARCHAR" property="sort" />
+	</resultMap>
+
+	<resultMap id="BaseResultMapOne" type="com.yidu.domain.Admin">
+		<id column="admin_id" jdbcType="VARCHAR" property="adminId" />
+		<result column="com_id" jdbcType="VARCHAR" property="comId" />
+		<result column="admin_name" jdbcType="VARCHAR" property="adminName" />
+		<result column="admin_pwd" jdbcType="VARCHAR" property="adminPwd" />
+		<result column="admin_pictrue" jdbcType="VARCHAR" property="adminPictrue" />
+		<result column="admin_msg" jdbcType="VARCHAR" property="adminMsg" />
+		<result column="isva" jdbcType="VARCHAR" property="isva" />
+		<result column="optime" jdbcType="TIMESTAMP" property="optime" />
+		<result column="oper" jdbcType="VARCHAR" property="oper" />
+		<result column="sort" jdbcType="VARCHAR" property="sort" />
+		<result column="com_name" jdbcType="VARCHAR" property="comName" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		admin_id, com_id, admin_name, admin_pwd, admin_pictrue, admin_msg, isva,
+		optime,
+		oper, sort
+	</sql>
+	<sql id="Base_Column_List_One">
+		ad.admin_id, ad.com_id, ad.admin_name, ad.admin_pwd, ad.admin_pictrue,
+		ad.admin_msg, ad.isva, ad.optime,
+		ad.oper,ad.sort,co.com_name
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from drug_admin
+		where admin_id = #{adminId,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from drug_admin
+		where admin_id = #{adminId,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.yidu.domain.Admin">
+		insert into drug_admin (admin_id, admin_web, admin_name,
+		admin_pwd, admin_pictrue, admin_msg,
+		isva, optime, oper,
+		sort)
+		values (#{adminId,jdbcType=VARCHAR}, #{adminWeb,jdbcType=VARCHAR},
+		#{adminName,jdbcType=VARCHAR},
+		#{adminPwd,jdbcType=VARCHAR}, #{adminPictrue,jdbcType=VARCHAR}, #{adminMsg,jdbcType=VARCHAR},
+		#{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP},
+		#{oper,jdbcType=VARCHAR},
+		#{sort,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.yidu.domain.Admin">
+		insert into drug_admin
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="adminId != null">
+				admin_id,
+			</if>
+			<if test="adminWeb != null">
+				admin_web,
+			</if>
+			<if test="adminName != null">
+				admin_name,
+			</if>
+			<if test="adminPwd != null">
+				admin_pwd,
+			</if>
+			<if test="adminPictrue != null">
+				admin_pictrue,
+			</if>
+			<if test="adminMsg != null">
+				admin_msg,
+			</if>
+			<if test="isva != null">
+				isva,
+			</if>
+			<if test="optime != null">
+				optime,
+			</if>
+			<if test="oper != null">
+				oper,
+			</if>
+			<if test="sort != null">
+				sort,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="adminId != null">
+				#{adminId,jdbcType=VARCHAR},
+			</if>
+			<if test="adminWeb != null">
+				#{adminWeb,jdbcType=VARCHAR},
+			</if>
+			<if test="adminName != null">
+				#{adminName,jdbcType=VARCHAR},
+			</if>
+			<if test="adminPwd != null">
+				#{adminPwd,jdbcType=VARCHAR},
+			</if>
+			<if test="adminPictrue != null">
+				#{adminPictrue,jdbcType=VARCHAR},
+			</if>
+			<if test="adminMsg != null">
+				#{adminMsg,jdbcType=VARCHAR},
+			</if>
+			<if test="isva != null">
+				#{isva,jdbcType=VARCHAR},
+			</if>
+			<if test="optime != null">
+				#{optime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="oper != null">
+				#{oper,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				#{sort,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="bulkDeleteByPrimaryKeySelective">
+		update drug_admin set isva = '0'
+		where admin_id in
+		<foreach collection="list" item="ids" open="(" separator=","
+			close=")">
+			#{ids}
+		</foreach>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Admin">
+		update drug_admin
+		<set>
+			<if test="comId != null">
+				com_id = #{comId,jdbcType=VARCHAR},
+			</if>
+			<if test="adminName != null">
+				admin_name = #{adminName,jdbcType=VARCHAR},
+			</if>
+			<if test="adminPwd != null">
+				admin_pwd = #{adminPwd,jdbcType=VARCHAR},
+			</if>
+			<if test="adminPictrue != null">
+				admin_pictrue = #{adminPictrue,jdbcType=VARCHAR},
+			</if>
+			<if test="adminMsg != null">
+				admin_msg = #{adminMsg,jdbcType=VARCHAR},
+			</if>
+			<if test="isva != null">
+				isva = #{isva,jdbcType=VARCHAR},
+			</if>
+			<if test="optime != null">
+				optime = #{optime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="oper != null">
+				oper = #{oper,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				sort = #{sort,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where admin_id = #{adminId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.yidu.domain.Admin">
+		update drug_admin
+		set admin_web = #{adminWeb,jdbcType=VARCHAR},
+		admin_name = #{adminName,jdbcType=VARCHAR},
+		admin_pwd = #{adminPwd,jdbcType=VARCHAR},
+		admin_pictrue = #{adminPictrue,jdbcType=VARCHAR},
+		admin_msg = #{adminMsg,jdbcType=VARCHAR},
+		isva = #{isva,jdbcType=VARCHAR},
+		optime = #{optime,jdbcType=TIMESTAMP},
+		oper = #{oper,jdbcType=VARCHAR},
+		sort = #{sort,jdbcType=VARCHAR}
+		where admin_id = #{adminId,jdbcType=VARCHAR}
+	</update>
+	<!-- 根据用户名和密码查询 -->
+	<select id="queryNameOrPwd" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from drug_admin where admin_name = #{adminName,jdbcType=VARCHAR} and
+		admin_pwd=#{adminPwd,jdbcType=VARCHAR}
+	</select>
+	<!-- 查询所有或者根据名字查询 -->
+	<select id="selectAll" parameterType="java.util.Map" resultMap="BaseResultMapOne">
+		select
+		<include refid="Base_Column_List_One" />
+		from drug_admin ad,drug_company co where ad.com_id=co.com_id and
+		ad.isva='1'
 		<if test="admin.adminName!=null and admin.adminName!=''">
-			and ad.admin_name like CONCAT(CONCAT('%',#{admin.adminName,jdbcType=VARCHAR},'%'))
+			and ad.admin_name like
+			CONCAT(CONCAT('%',#{admin.adminName,jdbcType=VARCHAR},'%'))
 		</if>
 		<if test="admin.comId!=null and admin.comId!=''">
 			and co.com_id = #{admin.comId,jdbcType=VARCHAR}
 		</if>
-		order by (ad.sort+0) desc 
-		limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
+		order by (ad.sort+0) desc
+		limit
+		#{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
 	</select>
-	<select id="selectCount" parameterType="com.yidu.domain.Admin" resultType="int">
-		select count(*) from drug_admin ad,drug_company co where ad.com_id=co.com_id and ad.isva='1'
+	<select id="selectCount" parameterType="com.yidu.domain.Admin"
+		resultType="int">
+		select count(*) from drug_admin ad,drug_company co where
+		ad.com_id=co.com_id and ad.isva='1'
 		<if test="adminName!=null and adminName!=''">
-			and ad.admin_name like CONCAT(CONCAT('%',#{adminName,jdbcType=VARCHAR},'%'))
+			and ad.admin_name like
+			CONCAT(CONCAT('%',#{adminName,jdbcType=VARCHAR},'%'))
 		</if>
 		<if test="comId!=null and comId!=''">
 			and co.com_id = #{comId,jdbcType=VARCHAR}

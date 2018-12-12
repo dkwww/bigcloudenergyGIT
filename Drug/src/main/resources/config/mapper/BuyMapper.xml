@@ -34,6 +34,7 @@
   
   <select id="selectCountBySelective" parameterType="java.util.Map" resultType="Integer" >
   	select count(*) from drug_buy  where 1=1
+  </select>
   	
   <select id="showList" parameterType="map" resultMap="BaseResultMap">
   	SELECT * FROM drug_buy a,drug_provider b WHERE a.buy_company=b.prov_id
