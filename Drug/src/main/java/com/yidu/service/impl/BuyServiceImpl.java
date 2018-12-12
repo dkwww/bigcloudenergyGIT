@@ -41,7 +41,7 @@ public class BuyServiceImpl implements BuyService {
 		map.put("pageUtil", pageUtil);
 		
 		
-		return mapper.showList(map);
+		return mapper.findAll(map);
 	}
 
 

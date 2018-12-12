@@ -30,7 +30,7 @@
   	select count(*) from drug_buy  where 1=1
   </select>
   	
-  <select id="showLists" parameterType="map" resultMap="BaseResultMap">
+  <select id="findAll" parameterType="map" resultMap="BaseResultMap">
   	SELECT * FROM drug_buy WHERE 1=1
   	
    	order by sort desc 
