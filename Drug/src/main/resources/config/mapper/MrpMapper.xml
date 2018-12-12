@@ -11,6 +11,8 @@
     <result column="mrp_state" jdbcType="INTEGER" property="mrpState" />
     <result column="mrp_idea" jdbcType="INTEGER" property="mrpIdea" />
     <result column="mrp_amount" jdbcType="INTEGER" property="mrpAmount" />
+    
+    
     <result column="isva" jdbcType="VARCHAR" property="isva" />
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
@@ -27,9 +29,9 @@
     where mrp_id = #{mrpId,jdbcType=VARCHAR}
   </select>
   <select  id="qureyAll" parameterType="java.util.Map"  resultMap="BaseResultMap"> 
- 	SELECT  *  FROM  drug_mrp  a , drug_drug b    WHERE  a.drug_id=b.drug_id 
+ 	 SELECT  *  FROM   drug_mrp a, drug_pmc_details b ,drug_pmc d  , drug_drug c  WHERE   a.pd_id =b.pd_id     AND   b.pmc_id=d.pmc_id   AND  b.drug_id=c.drug_id  
 	 <if test="mrp.drugName != null and mrp.drugName != ''">
-   		and b.drug_name like CONCAT(CONCAT('%',#{mrp.drugName,jdbcType=VARCHAR},'%'))
+   		and c.drug_name like CONCAT(CONCAT('%',#{mrp.drugName,jdbcType=VARCHAR},'%'))
    	</if>
    	order by (a.sort+0) desc 
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
@@ -38,9 +40,9 @@
    
    
     <select id="selectCountBySelective" parameterType="com.yidu.domain.Mrp" resultType="int">
-    SELECT  COUNT(*)  FROM  drug_mrp  a , drug_drug b    WHERE  a.drug_id=b.drug_id   
+    SELECT  COUNT(*)  FROM   drug_mrp a, drug_pmc_details b ,drug_pmc d  , drug_drug c  WHERE   a.pd_id =b.pd_id     AND   b.pmc_id=d.pmc_id   AND  b.drug_id=c.drug_id 
    	<if test="drugName != null and drugName != ''">
-   		and b.drug_name like CONCAT(CONCAT('%',#{drugName,jdbcType=VARCHAR},'%'))
+   		and c.drug_name like CONCAT(CONCAT('%',#{drugName,jdbcType=VARCHAR},'%'))
    	</if>
   </select>
    

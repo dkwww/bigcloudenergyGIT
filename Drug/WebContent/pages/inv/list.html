@@ -13,10 +13,7 @@
 		    <form class="layui-form" lay-filter="kit-search-form">
 						<!-- 左上角的两个按钮 -->
 		        <div class="kit-table-header">
-		            <div class="kit-search-btns">
-		                <a href="javascript:;" data-action="add" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i> 新增</a>
-		                <a href="javascript:;" data-action="del-bulk" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon">&#xe640;</i> 批量删除</a>
-		            </div>
+		             
 		            <div class="kit-search-inputs">
 		                <div class="kit-search-keyword">
 		                    <input type="text" class="layui-input" name="drugName" placeholder="搜索关键字.." />
@@ -184,22 +181,9 @@
 		
 		<!-- 显示表格 -->
 		<script src="../../res/layui/layui.js"></script>
+		<script src="../../res/layui/js/common/parameter.js"></script>
 		<script>
 		    layui.use(['table'], function() {
-		    	function getParameter(param){
-		    		var query = window.location.search;
-		    		var iLen = param.length;
-		    		var iStart = query.indexOf(param);
-		    		if (iStart == -1)
-		    			return "";
-		    		iStart += iLen + 1;
-		    		var iEnd = query.indexOf("&", iStart);
-		    		if (iEnd == -1)
-		    			return query.substring(iStart);
-
-		    		return query.substring(iStart, iEnd);
-		    	}
-		    	
 		    	var diId = getParameter("id");
 		    	
 		        var table = layui.table,
@@ -410,5 +394,6 @@
 		    });
 		   
 		</script>
+		<script type="text/javascript"></script>
 	</body>
 </html>

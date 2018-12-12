@@ -30,7 +30,23 @@ public interface AdminService   {
 	 * @return
 	 */
 	public List<Admin> findAll(Admin admin, PageUtil pageUtil);
-
+	/**
+	 * 查询行
+	 * @param admin
+	 * @return
+	 */
 	public int selectCount(Admin admin);
+	/**
+	 * 增加
+	 * @param admin
+	 * @return
+	 */
+	public int addOrUpdate(Admin admin);
+	/**
+	 * 批量修改
+	 * @param ids
+	 * @return
+	 */
+	public int bulkUpdate(List<String> ids);
 
 }
