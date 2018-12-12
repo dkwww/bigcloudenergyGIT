@@ -30,13 +30,30 @@
   	select count(*) from drug_buy  where 1=1
   </select>
   	
-  <select id="showList" parameterType="map" resultMap="BaseResultMap">
+  <select id="showLists" parameterType="map" resultMap="BaseResultMap">
   	SELECT * FROM drug_buy WHERE 1=1
   	
    	order by sort desc 
   	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
   </select>
   
+  
+  
+  <select id="showList" parameterType="map" resultMap="BaseResultMap">
+  	SELECT * FROM drug_buy a,drug_provider b WHERE a.buy_company=b.prov_id
+  	<if test="buy.buyCompany!=null and buy.buyCompany!='' ">
+  		and buy_company like concat("%",#{buy.buyCompany},"%")
+  	</if>
+  	limit #{page.startRows},#{page.rows}
+  </select>
+  
+  
+  <select id="selectCount" parameterType="com.yidu.domain.Buy" resultType="int">
+  	select count(*) from drug_buy a,drug_provider b WHERE a.buy_company=b.prov_id
+  	<if test="buyCompany!=null and buyCompany!='' ">
+  		and buy_company like concat("%",#{buyCompany},"%")
+  	</if>
+  </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 

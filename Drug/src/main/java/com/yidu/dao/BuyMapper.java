@@ -32,5 +32,7 @@ public interface BuyMapper {
      * @return
      */
 	public int selectCountBySelective(Buy buy);
+	
+	
     int selectCount(Buy buy);
 }
