@@ -26,7 +26,6 @@
     buy_state, buy_qc, buy_put, buy_mes, isva, optime, oper, sort
   </sql>
   
-<<<<<<< HEAD
   <select id="showList" parameterType="java.util.Map" resultMap="BaseResultMap">
   	SELECT * FROM drug_buy  where 1=1
   	order by sort desc 

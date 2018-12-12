@@ -1,6 +1,7 @@
 package com.yidu.service.impl;
 
  
+import com.yidu.domain.BuyDetail;
 import com.yidu.service.SaleDetailService;
 import org.springframework.stereotype.Service;
 
@@ -14,5 +15,23 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SaleDetailServiceImpl  implements SaleDetailService {
+
+	@Override
+	public int addOrUpdate(BuyDetail detail) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(BuyDetail detail) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int insertSelective(BuyDetail detail) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }

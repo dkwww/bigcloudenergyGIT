@@ -1,27 +1,21 @@
 package com.yidu.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.yidu.domain.Member;
-import com.yidu.domain.Sale;
-import com.yidu.domain.SaleDetail;
-import com.yidu.service.SaleService;
-import com.yidu.util.Message;
-import com.yidu.util.PageUtil;
-import com.yidu.util.Tools;
-
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.yidu.domain.Sale;
+import com.yidu.service.SaleService;
+import com.yidu.util.PageUtil;
+import com.yidu.util.Tools;
 
 /**
  * <p>
@@ -39,5 +33,10 @@ public class SaleController {
 	 */
 	@Resource
 	private SaleService service;
+	
+	public void add() {
+		
+	}
+	
 }
 
