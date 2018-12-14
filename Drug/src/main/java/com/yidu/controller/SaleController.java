@@ -34,9 +34,5 @@ public class SaleController {
 	@Resource
 	private SaleService service;
 	
-	public void add() {
-		
-	}
-	
 }
 

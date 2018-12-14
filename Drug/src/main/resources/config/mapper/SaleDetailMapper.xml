@@ -42,6 +42,9 @@
       <if test="sdId != null">
         sd_id,
       </if>
+      <if test="drugId != null">
+        drug_id,
+      </if>
       <if test="saleId != null">
         sale_id,
       </if>
@@ -70,6 +73,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="sdId != null">
         #{sdId,jdbcType=VARCHAR},
+      </if>
+      <if test="drugId != null">
+        #{drugId,jdbcType=VARCHAR},
       </if>
       <if test="saleId != null">
         #{saleId,jdbcType=VARCHAR},
@@ -100,6 +106,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.SaleDetail">
     update drug_sale_detail
     <set>
+      <if test="drugId != null">
+        drug_id = #{drugId,jdbcType=VARCHAR},
+      </if>
       <if test="saleId != null">
         sale_id = #{saleId,jdbcType=VARCHAR},
       </if>
@@ -129,7 +138,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yidu.domain.SaleDetail">
     update drug_sale_detail
-    set sale_id = #{saleId,jdbcType=VARCHAR},
+    set drug_id = #{drugId,jdbcType=VARCHAR},
+      sale_id = #{saleId,jdbcType=VARCHAR},
       sd_amount = #{sdAmount,jdbcType=INTEGER},
       sd_price = #{sdPrice,jdbcType=DECIMAL},
       sd_total = #{sdTotal,jdbcType=DECIMAL},

@@ -14,7 +14,7 @@ import com.yidu.domain.BuyDetail;
  */
 public interface BuyDetailService  {
 	
-	
+	public int purchase(String mes);
 	
 	/**
 	 * 增加或修改的方法

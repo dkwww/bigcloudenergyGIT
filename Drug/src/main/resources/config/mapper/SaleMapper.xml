@@ -12,7 +12,7 @@
     <result column="sort" jdbcType="VARCHAR" property="sort" />
   </resultMap>
   <sql id="Base_Column_List">
-    sale_id, drug_id, sale_time, sale_amount, sale_money, isva, optime, oper, sort
+    sale_id,   sale_time, sale_amount, sale_money, isva, optime, oper, sort
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -25,11 +25,11 @@
     where sale_id = #{saleId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.yidu.domain.Sale">
-    insert into drug_sale (sale_id, drug_id, sale_time, 
+    insert into drug_sale (sale_id, sale_time, 
       sale_amount, sale_money, isva, 
       optime, oper, sort
       )
-    values (#{saleId,jdbcType=VARCHAR}, #{drugId,jdbcType=VARCHAR}, #{saleTime,jdbcType=TIMESTAMP}, 
+    values (#{saleId,jdbcType=VARCHAR}, #{saleTime,jdbcType=TIMESTAMP}, 
       #{saleAmount,jdbcType=INTEGER}, #{saleMoney,jdbcType=DECIMAL}, #{isva,jdbcType=VARCHAR}, 
       #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}
       )
@@ -39,9 +39,6 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="saleId != null">
         sale_id,
-      </if>
-      <if test="drugId != null">
-        drug_id,
       </if>
       <if test="saleTime != null">
         sale_time,
@@ -69,9 +66,7 @@
       <if test="saleId != null">
         #{saleId,jdbcType=VARCHAR},
       </if>
-      <if test="drugId != null">
-        #{drugId,jdbcType=VARCHAR},
-      </if>
+     
       <if test="saleTime != null">
         #{saleTime,jdbcType=TIMESTAMP},
       </if>
@@ -98,9 +93,7 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Sale">
     update drug_sale
     <set>
-      <if test="drugId != null">
-        drug_id = #{drugId,jdbcType=VARCHAR},
-      </if>
+     
       <if test="saleTime != null">
         sale_time = #{saleTime,jdbcType=TIMESTAMP},
       </if>
@@ -127,7 +120,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Sale">
     update drug_sale
-    set drug_id = #{drugId,jdbcType=VARCHAR},
+    set 
       sale_time = #{saleTime,jdbcType=TIMESTAMP},
       sale_amount = #{saleAmount,jdbcType=INTEGER},
       sale_money = #{saleMoney,jdbcType=DECIMAL},

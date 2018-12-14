@@ -27,21 +27,5 @@ import org.springframework.stereotype.Controller;
 public class SaleDetailController {
 	
 	
-	/**
-	 * 采购
-	 * @param mes
-	 * @return
-	 */
-	@RequestMapping("/add")
-	@ResponseBody
-	public Message add(String mes) {
-		
-		
-		
-		
-		Message message = new Message();
-		
-		return message;
-	}
 }
 
