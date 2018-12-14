@@ -1,5 +1,8 @@
 package com.yidu.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.yidu.domain.Role;
 
 public interface RoleMapper {
@@ -14,4 +17,8 @@ public interface RoleMapper {
     int updateByPrimaryKeySelective(Role record);
 
     int updateByPrimaryKey(Role record);
+    
+    List<Role> queryList(Map<String,Object> map);
+    
+    int queryCount(Role role);
 }

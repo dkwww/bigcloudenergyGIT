@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
+		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
+		
+		<title>角色管理</title>
+    <style type="text/css">
+        form {
+            width: 500px;
+            margin: 10px auto;
+        }
+
+        h1, h2, h3 {
+            padding: 10px 0;
+        } 
+
+        a {
+            text-align: right;
+            font-size: 18px;
+            color: #1C86EE;
+        }
+
+        .xtree_contianer {
+            width: 500px;
+            border: 1px solid #9C9C9C;
+            overflow: auto;
+            margin-bottom: 30px;
+            background-color: #fff;
+            padding: 10px 0 25px 5px;
+        }
+
+        .div-btns {
+            margin: 20px 0;
+        }
+
+        .layui-form-label {
+            width: 60px !important;
+        }
+    </style>
+	</head>
+	<body>
+		<div class="kit-table">
+		    <form class="layui-form" lay-filter="kit-search-form">
+				<!-- 左上角的两个按钮 -->
+		        <div class="kit-table-header">
+		            <div class="kit-search-btns">
+		                <a href="javascript:;" data-action="add" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i> 新增</a>
+		                <a href="javascript:;" data-action="del-bulk" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon">&#xe640;</i> 批量删除</a>
+		            </div>
+		            <div class="kit-search-inputs">
+		                <div class="kit-search-keyword">
+		                    <input type="text" class="layui-input" id="serach-one" placeholder="药品.." onKeyUp="lockInput(this,'serach-two')"/>
+		                    <button lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
+		                </div>
+		                <div class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>
+		            </div>
+		        </div>
+				<!-- 搜索扩展工具条 -->
+		        <div class="kit-search-mored layui-anim layui-anim-upbit">
+		            <div class="kit-search-body">
+		                <div class="layui-form-item">
+		                    <label class="layui-form-label">药品名称</label>
+		                    <div class="layui-input-block">
+		                        <input type="text" name="drugName" id="serach-two" placeholder="搜索关键字.." autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
+		                    </div>
+		                </div>
+		                <div class="layui-form-item">
+			                <label class="layui-form-label">类型</label>
+			                <div class="layui-input-block">
+			                    <select name="dtId" id="drug-type">
+			                      <option value=""></option>
+			                    </select>
+			                </div>
+		                </div>
+		                <div class="layui-form-item">
+		                    <div class="layui-inline">
+		                        <label class="layui-form-label">范围</label>
+		                        <div class="layui-input-block">
+			                        <div class="layui-input-inline" style="width: 100px;">
+			                            <input type="text" name="priceMin" placeholder="￥" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
+			                        </div>
+			                        <div class="layui-form-mid">-</div>
+			                        <div class="layui-input-inline" style="width: 100px;">
+			                            <input type="text" name="priceMax" placeholder="￥" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
+			                        </div>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		            <div class="kit-search-footer">
+		                <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary kit-btn reset-btn">重置</button>
+		                <button lay-submit lay-filter="search" class="layui-btn layui-btn-sm kit-btn">确定</button>
+		            </div>
+		        </div>
+		    </form>
+				
+			<!-- 操作按钮 -->
+		    <div class="kit-table-body">
+		        <table id="demo" lay-filter="demo"></table>
+		        <script type="text/html" id="barDemo">
+		            <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+		            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+		            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+		        </script>
+		    </div>
+		</div>
+		
+		<!-- 修改页面 -->
+		<link rel="stylesheet" href="../../res/css/authority/ztree.css">
+		<script type="text/html" id="edit-tpl">
+		    <div style="margin:10px">
+		        <form class="layui-form" action="" lay-filter="form-edit">
+		            <input id="drugId" type="hidden" name="drugId" value="{{d.rowdata.roleId}}" />
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">角色名称</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="drugName" required lay-verify="required" value="{{d.rowdata.roleName}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">角色描述</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="drugUnit" required lay-verify="required" value="{{d.rowdata.roleDescribe}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">角色模块</label>
+		                <div class="layui-input-block">
+							<input id="moduleId" type="hidden" name="moduleId"/>
+		                    <ul id="ztree" class="ztree">
+							</ul>
+		                </div>
+		            </div>
+		            <div class="layui-form-item" style="display:none;">
+		                <div class="layui-input-block">
+		                    <button class="layui-btn" lay-submit lay-filter="formEdit">立即提交</button>
+		                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		                </div>
+		            </div>
+		        </form>
+		    </div>
+		</script>
+		<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
+		<script>
+			//文本框只能输入金额
+		    function amount(th){
+		        var regStrs = [
+		            ['^0(\\d+)$', '$1'], //禁止录入整数部分两位以上，但首位为0
+		            ['[^\\d\\.]+$', ''], //禁止录入任何非数字和点
+		            ['\\.(\\d?)\\.+', '.$1'], //禁止录入两个以上的点
+		            ['^(\\d+\\.\\d{2}).+', '$1'] //禁止录入小数点后两位以上
+		        ];
+		        for(i=0; i<regStrs.length; i++){
+		            var reg = new RegExp(regStrs[i][0]);
+		            th.value = th.value.replace(reg, regStrs[i][1]);
+		        }
+		    }
+			//搜索框同步输入
+			function lockInput(obj,id){
+				$("#"+id).val($(obj).val());
+			}
+		</script>
+		<script src="../../res/layui/layui.all.js"></script>
+		<script src="../../res/js/authority/role.js"></script>
+	</body>
+</html>

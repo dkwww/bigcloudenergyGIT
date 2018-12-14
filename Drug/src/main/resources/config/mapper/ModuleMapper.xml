@@ -13,10 +13,21 @@
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
   </resultMap>
+  <resultMap type="com.yidu.controller.vo.Ztree" id="BaseResultMap2">
+  	<id column="mode_id" property="id" />
+    <result column="dru_mode_id" property="pId" />
+    <result column="mode_name" property="name" />
+  </resultMap>
   <sql id="Base_Column_List">
     mode_id, dru_mode_id, mode_url, mode_name, mode_code, mode_explain, isva, optime, 
     oper, sort
   </sql>
+  <select id="selectList" resultMap="BaseResultMap2">
+  	select * from drug_module
+  </select>
+  <select id="selectZtree" parameterType="java.lang.String" resultMap="BaseResultMap2">
+  	select * from drug_module where dru_mode_id =#{id}
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

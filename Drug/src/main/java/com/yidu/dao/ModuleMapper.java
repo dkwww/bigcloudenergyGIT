@@ -1,5 +1,8 @@
 package com.yidu.dao;
 
+import java.util.List;
+
+import com.yidu.controller.vo.Ztree;
 import com.yidu.domain.Module;
 
 public interface ModuleMapper {
@@ -14,4 +17,7 @@ public interface ModuleMapper {
     int updateByPrimaryKeySelective(Module record);
 
     int updateByPrimaryKey(Module record);
+    
+    List<Ztree> selectList();
+    List<Ztree> selectZtree(String id);
 }

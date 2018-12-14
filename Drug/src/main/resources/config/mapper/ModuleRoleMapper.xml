@@ -6,9 +6,17 @@
     <result column="mode_id" jdbcType="VARCHAR" property="modeId" />
     <result column="role_id" jdbcType="VARCHAR" property="roleId" />
   </resultMap>
+  <resultMap id="BaseResultMap2" type="com.yidu.controller.vo.Ztree">
+    <result column="mode_id" jdbcType="VARCHAR" property="id"/>
+    <result column="dru_mode_id" jdbcType="VARCHAR" property="pId"/>
+    <result column="mode_name" jdbcType="VARCHAR" property="name"/>
+  </resultMap>
   <sql id="Base_Column_List">
     mr_id, mode_id, role_id
   </sql>
+  <select id="queryList" parameterType="java.lang.String" resultMap="BaseResultMap2">
+  	SELECT * FROM drug_module_role d,drug_module m WHERE d.mode_id=m.mode_id AND d.role_id=#{id}
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

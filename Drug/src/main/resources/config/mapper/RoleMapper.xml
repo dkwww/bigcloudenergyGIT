@@ -14,6 +14,38 @@
   <sql id="Base_Column_List">
     role_id, role_name, role_code, role_describe, isva, optime, oper, sort
   </sql>
+  <select id="queryList" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select * from drug_role where 1=1
+  	<if test="role.roleId !=null and role.roleId != '' ">
+  		and role_id=#{role.roleId}
+  	</if>
+  	<if test="role.roleName !=null and role.roleName != '' ">
+  		and role_name=#{role.roleName}
+  	</if>
+  	<if test="role.roleCode !=null and role.roleCode != '' ">
+  		and role_Code=#{role.roleCode}
+  	</if>
+  	<if test="role.roleDescribe !=null and role.roleDescribe != '' ">
+  		and role_describe=#{role.roleDescribe}
+  	</if>
+  	order by (sort+0) desc 
+   	limit #{page.startRows},#{page.rows}
+  </select>
+  <select id="queryCount" parameterType="com.yidu.domain.Role" resultType="int">
+  	select count(*) from drug_role where 1=1
+  	<if test="roleId !=null and roleId != '' ">
+  		and role_id=#{role.roleId}
+  	</if>
+  	<if test="roleName !=null and roleName != '' ">
+  		and role_name=#{role.roleName}
+  	</if>
+  	<if test="roleCode !=null and roleCode != '' ">
+  		and role_Code=#{role.roleCode}
+  	</if>
+  	<if test="roleDescribe !=null and roleDescribe != '' ">
+  		and role_describe=#{role.roleDescribe}
+  	</if>
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
