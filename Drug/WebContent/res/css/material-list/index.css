@@ -22,6 +22,10 @@
 	transition: transform 0.4s ease 0s;
 }
 
+body {
+	background: #FDFDFD;
+}
+
 .layui-table-view .layui-table-body {
 	height: 360px;
 }
@@ -30,22 +34,24 @@
 	border: 1px solid #d2d2d2;
 	background-color: #fff;
 	border-radius: 2px;
-	margin: 37px 0px;
+	margin: 15px 0px;
 	overflow: hidden
 }
 
 .layui-col-md10 {
+	width: 98%;
 	margin: 0 auto;
 	float: none
 }
 
 .card-top {
 	/* display: none; */
-	background: rgba(255,255,250);
+	height: 100%;
 } 
 
 .card-down {
 	/* display: none */
+	height: 100%;
 }
 
 .layui-border-box{
@@ -53,7 +59,7 @@
 }
 
 #tableRes{
-	margin: 10px 0px;
+	margin: 8px 0px;
 	white-space : normal nowrap ;
 }
 .card-body-right{
@@ -98,7 +104,7 @@
 .down-ul li{
 	height: 33px;
 	line-height: 33px;
-	border-bottom: 1px solid #E6E6E6;
+	border-bottom: 1px solid #F0F0F0;
 }
 
 .li-close{
@@ -119,8 +125,14 @@
 	color: #000;
 }
 
+.body-down{
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
 
 /*文本对齐方式*/
 .text-center {
 	text-align: center;
+	line-height: 30px;
 }

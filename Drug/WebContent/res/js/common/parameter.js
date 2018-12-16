@@ -1,5 +1,5 @@
 function getParameter(param){
-	var query = window.location.search;
+	var query = decodeURIComponent(window.location.search);
 	var iLen = param.length;
 	var iStart = query.indexOf(param);
 	if (iStart == -1)

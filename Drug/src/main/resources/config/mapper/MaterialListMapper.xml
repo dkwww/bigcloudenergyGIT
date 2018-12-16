@@ -23,6 +23,7 @@
     <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
     <result column="mat_name" jdbcType="VARCHAR" property="matName" />
     <result column="mat_price" jdbcType="VARCHAR" property="matPrice" />
+    <result column="mat_unit" jdbcType="VARCHAR" property="matUnit" />
     <result column="mt_name" jdbcType="VARCHAR" property="mtName" />
     <result column="mat_effect" jdbcType="VARCHAR" property="matEffect" />
   </resultMap>
@@ -30,7 +31,10 @@
     ml_id, mat_id, drug_id, ml_amount, isva, optime, oper, sort
   </sql>
   <sql id="Base_Column_List_One">
-  	ml.ml_id, ml.mat_id, ml.drug_id, ml.ml_amount, ml.isva, ml.optime, ml.oper, ml.sort, dd.drug_name, mat.mat_name, mat.mat_price, mt.mt_name, mat.mat_effect
+  	ml.ml_id, ml.mat_id, ml.drug_id, ml.ml_amount, ml.isva, ml.optime, ml.oper, ml.sort, dd.drug_name, mat.mat_name, mat.mat_price, mat.mat_unit, mt.mt_name, mat.mat_effect
+  </sql>
+  <sql id="Base_Column_List_Two">
+  	mat.mat_name
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -39,11 +43,17 @@
     where ml_id = #{mlId,jdbcType=VARCHAR}
   </select>
   
+  <select id="selectByDrug" parameterType="String" resultMap="BaseResultMapOne">
+    select 
+    <include refid="Base_Column_List_Two" />
+    from drug_material_list ml,drug_material mat where ml.mat_id = mat.mat_id and ml.drug_id = #{drugId,jdbcType=VARCHAR}
+  </select>
+  
   <select id="selectBySelective" parameterType="java.util.Map" resultMap="BaseResultMapOne">
     select 
     <include refid="Base_Column_List_One" />
     from drug_material_list ml,drug_drug dd,drug_material mat,drug_mat_type mt 
-    where ml.drug_id = dd.drug_id and ml.mat_id = mat.mat_id and mat.mt_id = mt.mt_id and ml.isva = '1'
+    where ml.drug_id = dd.drug_id and ml.mat_id = mat.mat_id and mat.mt_id = mt.mt_id and ml.isva = '1' and dd.drug_id = #{record.drugId,jdbcType=VARCHAR} 
    	order by (dd.sort+0) desc 
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
   </select>
@@ -52,7 +62,7 @@
     select 
     count(*) 
     from drug_material_list ml,drug_drug dd,drug_material mat,drug_mat_type mt 
-    where ml.drug_id = dd.drug_id and ml.mat_id = mat.mat_id and mat.mt_id = mt.mt_id and ml.isva = '1' 
+    where ml.drug_id = dd.drug_id and ml.mat_id = mat.mat_id and mat.mt_id = mt.mt_id and ml.isva = '1' and dd.drug_id = #{drugId,jdbcType=VARCHAR}
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
@@ -68,6 +78,9 @@
       #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yidu.domain.MaterialList">
+  	<selectKey keyProperty="mlId" resultType="string" order="BEFORE">
+	    SELECT REPLACE(UUID(),'-','') AS id;
+	</selectKey>
     insert into drug_material_list
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="mlId != null">

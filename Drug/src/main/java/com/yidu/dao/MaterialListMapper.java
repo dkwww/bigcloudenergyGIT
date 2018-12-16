@@ -21,4 +21,6 @@ public interface MaterialListMapper {
 	List<MaterialList> selectBySelective(Map<String, Object> map);
 
 	int selectCountBySelective(MaterialList record);
+	
+	List<MaterialList> selectByDrug(String drugId);
 }

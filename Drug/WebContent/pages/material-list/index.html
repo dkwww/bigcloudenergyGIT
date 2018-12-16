@@ -10,10 +10,12 @@
 		<meta name="format-detection" content="telephone=no" />
 		<title>原料清单</title>
 		<link rel="stylesheet" href="../../res/layui/css/layui.css" />
+		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
 		<script src="../../res/js/common/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="stylesheet" type="text/css" href="../../res/css/material-list/index.css" />
 		<script src="../../res/js/material-list/index.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="stylesheet" type="text/css" href="../../res/css/material-list/row.css" />
+		<script src="../../res/js/common/parameter.js" type="text/javascript" charset="utf-8"></script>
 		<style>
 		
 		</style>
@@ -23,26 +25,20 @@
 			<div class="layui-card">
 				<div class="card-top css-transition">
 					<div class="layui-card-header">
-						<h3>药品：<font style="color: #DC2D00;">珍视明滴眼液</font>
-						</h3>
+						<h3>药品：<font style="color: #DC2D00;" id="drugName">名称</font></h3>
 					</div>
-					<div class="layui-card-body layui-text">
+					<div class="layui-card-body">
 						<div id="toolbar">
-							<div>
-								<button type="button" class="layui-btn layui-btn-sm add" title="筛选原材料">
-									<i class="layui-icon layui-icon-add-1"></i> 添加原材料
-								</button>
-								<button type="button" class="layui-btn layui-btn-sm layui-btn-danger" data-type="delBulk" title="批量删除">
-									<i class="layui-icon">&#xe640;</i> 批量删除
-								</button>
-							</div>
+							<button type="button" class="layui-btn layui-btn-sm add" title="筛选原材料">
+								<i class="layui-icon">&#xe608;</i> 添加原材料
+							</button>
 						</div>
 						<div id="tableRes" class="table-overlay">
 							<table id="dataTable1" lay-filter="dataTable" class="layui-hide"></table>
 						</div>
 						<div id="action" class="text-center">
-							<button type="button" name="btnSave" class="layui-btn" data-type="save"><i class="layui-icon layui-icon-ok-circle"></i>保存</button>
-							<button type="reset" name="btnReset" class="layui-btn layui-btn-primary">取消</button>
+							<button type="button" name="btnSave" class="layui-btn layui-btn-sm" data-type="save"><i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i> 保存</button>
+							<button type="close" name="close" data-type="close" class="layui-btn layui-btn-sm layui-btn-primary"><i class="fa fa-times-circle-o" aria-hidden="true"></i> 关闭</button>
 						</div>
 					</div>
 				</div>
@@ -51,46 +47,33 @@
 					<div class="layui-card-header layui-form" style="padding: 8px 0px;">
 						<!-- 搜索扩展工具条 -->
 						<form class="layui-form" lay-filter="kit-search-form">
-						<div class="layui-form-item">
-							<label class="layui-form-label" style="padding: 9px 10px;width: 58px;">药材筛选</label>
-							<div style="width: 200px;margin-left: 85px;">
-								<select name="mtName" lay-filter="mat-type" id="mat-type">
-									<option value=""></option>
-								</select>
+							<div class="layui-form-item">
+								<div style="width: 244px;margin-left: 15px;">
+									<select name="mtName" lay-filter="mat-type" id="mat-type">
+										<option value="">药材筛选</option>
+									</select>
+								</div>
 							</div>
-						</div>
 						</form>
 					</div>
-					<div class="layui-card-body">
+					<div class="layui-card-body body-down">
 						<div id="tableRes" class="table-overlay">
 							<div class="card-body-left">
 								<div class="scroll-wrap">
 									<ul class="down-ul">
 										<p class="li-title">药材清单（list）</p>
-										<li>山药</li>
-										<li>人参</li>
-										<li>枸杞</li>
 									</ul>
 								</div>
 							</div>
-							<div class="card-body-right">
+							<div id="tableRes" class="card-body-right">
 								<table id="dataTable2" lay-filter="dataTables" class="layui-hide" ></table>
 							</div>
-						</div>
-						<div id="action" class="text-center">
-							<button type="button" name="btnConfirm" class="layui-btn btnConfirm" data-type="confirm"><i class="layui-icon layui-icon-ok-circle"></i>确定</button>
-							<button type="reset" name="btnCancel" class="layui-btn layui-btn-primary">取消</button>
+							<div id="action" class="text-center">
+								<button type="button" name="btnConfirm" class="layui-btn layui-btn-sm btnConfirm" data-type="confirm"><i class="layui-icon layui-icon-ok-circle"></i>确定</button>
+								<button type="reset" name="btnCancel" class="layui-btn layui-btn-sm layui-btn-primary">返回</button>
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-			<!--保存结果输出-->
-			<div class="layui-card">
-				<div class="layui-card-header">保存结果输出</div>
-				<div class="layui-card-body layui-text">
-					<blockquote class="layui-elem-quote layui-quote-nm">
-						<pre id="jsonResult"><span class="layui-word-aux">请点击“保存”后查看输出信息……</span></pre>
-					</blockquote>
 				</div>
 			</div>
 		</section>
@@ -98,25 +81,31 @@
 		<script src="../../res/layui/layui.all.js"></script>
 		<script type="text/javascript">
 			//准备视图对象
+			var drugId = getParameter("id");
+			$("#drugName").text(getParameter("name"));
 			window.viewObj = null;
+			var newData = new Array();//第一个表格的所有数据
 			$.ajax({
 				url: "../../materialList/showList.action", //json文件位置
-				data: {"page":1,"limit":1000},
+				data: {"page":1,"limit":1000,"drugId":drugId},
 				type: "post",
 				async: false,
 				dataType: "json", //返回数据格式为json
-				success: function(data) { //请求成功完成后要执行的方法
-					viewObj = data;
+				success: function(res) { //请求成功完成后要执行的方法
+					layui.each(res.data, function(index, data) {
+						res.data[index].state=1;
+						res.data[index].checkDisabled == true;
+					});
+					viewObj = res;
+					newData = res.data;
 				}
 			});
 			var arr1 = new Array();//选中的数据
 			var arr2 = new Array();//表格的数据
-			var tableData = new Array();//第一个表格的数据
 			//layui 模块化引用
 			layui.use(['table', 'layer', 'element', 'jquery', 'form'], function(table, layer, element, $, form) {
 				// data模式
 				var $ = layui.$, table = layui.table, form = layui.form, layer = layui.layer;
-				
 				//数据表格实例化			
 				var layTableId1 = "layTableId1";
 				var h1 = autoHeight(layTableId1);
@@ -131,8 +120,9 @@
 						[
 							{title: '序号',type: 'numbers'},
 							{field: 'matName',title: '材料名称（name）'},
-							{field: 'mlAmount',title: '数量（amount）',edit: 'text'},
-							{field: 'matPrice',title: '单价（price）'},
+							{field: 'mlAmount',title: '数量（amount）',edit: 'text',sort: true},
+							{field: 'matUnit',title: '单位',width: 85,align: 'center'},
+							{field: 'matPrice',title: '单价（price）元',sort: true},
 							{field: 'mtName',title: '种类（type）'},
 							{field: 'matEffect',title: '功效（effect）'},
 							{field: 'tempId',title: '操作',
@@ -144,19 +134,19 @@
 						]
 					],
 					done: function(res, curr, count) {
-						layui.each(table.cache[layTableId1], function(index, data) {
-							res.data[index].state=1;
-							res.data[index].checkDisabled == true
-						});
-						tableData = res.data;
-						$("[data-field = 'mlAmount']").keyup(function() {
-							var obj = $(this).children().last();
-							if (obj.prop('maxlength') == -1) {
-								obj.prop('maxlength', 5);
-							}
-							obj.val(obj.val().replace(/[^0-9]*$/, ""));
-							obj.val(obj.val().replace(/^[0]+[0-9]*$/gi, ""));
-						});
+						$("[data-field = 'mlAmount']").not(":first").each(function(){
+							$(this).css({
+								"color": "#0000A0"
+							}).on('focus', '.layui-table-edit', function(){
+								if ($(this).prop('maxlength') == -1) $(this).prop('maxlength', 5);
+							}).on('blur', '.layui-table-edit', function(){
+								if ($(this).val().length < 1) $(this).val(1);
+							}).on('keyup', '.layui-table-edit', function() {
+								var o = $(this);
+								o.val(o.val().replace(/[^0-9]*$/, ""));//正整数
+								o.val(o.val().replace(/^[0]+[0-9]*$/gi, ""));//第一位不能为零
+							});
+					  	});
 					}
 				});
 				
@@ -165,17 +155,7 @@
 					add: function() { 
 					},
 					removeEmptyTableCache: function() {
-						var oldData = table.cache[layTableId1];
-						for (var i = 0, row; i < oldData.length; i++) {
-							row = oldData[i];
-							if (!row || !row.tempId) {
-								oldData.splice(i, 1); //删除一项
-							}
-							continue;
-						}
-						tableIns1.reload({
-							data: oldData
-						});
+						
 					},
 					delBulk: function() {
 						var d = table.checkStatus(layTableId1);
@@ -187,7 +167,6 @@
 							names = [],
 							ids = [];
 						layui.each(data, function(index, item) {
-							console.log(item);
 							names.push(item.username);
 							ids.push(item.id);
 						});
@@ -195,19 +174,13 @@
 						console.log(ids.join(','));
 					},
 					save: function() {
-						var oldData = table.cache[layTableId1];
-						console.log(oldData);
-						for (var i = 0, row; i < oldData.length; i++) {
-							row = oldData[i];
-						}
-						document.getElementById("jsonResult").innerHTML = JSON.stringify(table.cache[layTableId1], null, 2); //使用JSON.stringify() 格式化输出JSON字符串	
+	                    layui.each(newData, function(index, item) {
+	                    	addOrUpdate(JSON.stringify(item));
+	                    });
+	                    closeLayer();
 					},
 					confirm: function() {
-						console.log("newData")
-						console.log(viewObj.data);
-						console.log("arr1")
-						console.log(arr1);
-						var newData = new Array();
+						newData = [];
 						for(var i=0;i<viewObj.data.length;i++){
 							newData.push(viewObj.data[i]);
 						}
@@ -217,8 +190,8 @@
 						tableIns1.reload({
 							data: newData
 						});
-						console.log("newData")
-						console.log(newData)
+					},close: function() {
+						closeLayer();
 					}
 				}
 
@@ -236,19 +209,40 @@
 					var type = $(this).data('type');
 					activeByType(type);
 				});
-
+				
 				//监听工具条
 				table.on('tool(dataTable)', function(obj) {
 					var data = obj.data,
 						event = obj.event,
 						tr = obj.tr; //获得当前行 tr 的DOM对象;
-					console.log(data);
 					switch (event) {
 						case "del":
 							layer.confirm('真的删除行么？', function(index) {
-								obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+								//obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
 								layer.close(index);
-								activeByType('removeEmptyTableCache');
+								for (var i = 0, row; i < newData.length; i++) {
+									row = newData[i];
+									if (data.matId == row.matId) {
+										if (row.state==1) {
+											var arr3 = new Array();
+											for (var j = 0; j < viewObj.data.length; j++) {
+												if (row.matId != viewObj.data[j].matId) {
+													arr3.push(viewObj.data[j]);
+												} else {
+													addOrUpdate(JSON.stringify({"mlId":viewObj.data[j].mlId,"isva":0}));
+												}
+											}
+											viewObj.data = arr3;
+										} else {
+											removeOne(row.matId);
+										}
+										newData.splice(i, 1);
+										break;
+									}
+								}
+								tableIns1.reload({
+									data: newData
+								});
 							});
 							break;
 					}
@@ -258,12 +252,12 @@
 				
 				
 				var layTableId2 = "table2";
-				var h2 = autoHeight(layTableId2);
+				var h2 = autoHeight(layTableId2)+10;
 				var tableElem = "";
 				var tableIns2 = table.render({
 					elem: '#dataTable2',
 					id: layTableId2,
-					height: h2,
+					height: h2+10,
 					url: "../../material/showList.action",
 					page: true,
 					cols: [
@@ -272,8 +266,9 @@
 							{title: '序号',type: 'numbers'},
 							{field: 'matId',title: '材料编号（ID）'},
 							{field: 'matName',title: '材料名称（name）'},
-							{field: 'matAmount',title: '数量（amount）'},
-							{field: 'matPrice',title: '单价（price）'},
+							{field: 'matAmount',title: '数量（amount）',sort: true},
+							{field: 'matUnit',title: '单位（unit）'},
+							{field: 'matPrice',title: '单价（price）',sort: true},
 							{field: 'mtName',title: '种类（type）'},
 							{field: 'matEffect',title: '功效（effect）'}
 						]
@@ -282,8 +277,8 @@
 						tableElem = this.elem.next('.layui-table-view');
 						count || tableElem.find('.layui-table-header').css('overflow', 'auto');
 						layui.each(table.cache[layTableId2], function(index, data) {
-							for (var j = 0; j < tableData.length; j++) {
-								if (tableData[j].matId == data.matId) {
+							for (var j = 0; j < newData.length; j++) {
+								if (newData[j].matId == data.matId) {
 									res.data[index]["LAY_CHECKED"] = true;
 									res.data[index].checkDisabled = true;
 									tableElem.find('tr[data-index="' + index + '"]').find('input[name="layTableCheckbox"]').attr({name: 'layTableCheckbox_disabled',disabled: 'disabled'}).next().removeClass('layui-form-checked');
@@ -294,22 +289,30 @@
 								}
 							}
 							for (var i = 0; i < arr1.length; i++) {
-								if (res.data[index].matId == arr1[i].matId && res.data[index].checkDisabled == false) {
+								if (res.data[index].matId == arr1[i].matId) {
 									res.data[index]["LAY_CHECKED"] = true;
 									tableElem.find('tr[data-index=' + index + '] input[type="checkbox"]').prop('checked', true).next().addClass('layui-form-checked');
-									
 								}
 							}
 						});
 						var checkStatus = table.checkStatus(layTableId2);
 						if (checkStatus.isAll) {
-							tableElem.find('th[data-field="0"] input[type="checkbox"]').prop('checked', true).next().addClass('layui-form-checked');
+							var count = 0;
+							for (var i = 0; i < checkStatus.data.length; i++) {
+								if (!checkStatus.data[i].checkDisabled) count++;
+							}
+							var obj = tableElem.find('th[data-field="0"] input[type="checkbox"]');
+							if (count>0) {
+								obj.prop('checked', true).next().addClass('layui-form-checked');
+							} else {
+								obj.prop('checked', false).next().removeClass('layui-form-checked');
+							}
 						}
 						form.render();
 					}
 				});
-				$(".layui-card").css({"height":h2+150});
-				$(".card-body-left").css({"height":h2});
+				$(".layui-card").css({"height":h2+135});
+				$(".card-body-left").css({"height":h2+8});
 				table.on('checkbox(dataTables)', function(obj) {
 					if (obj.checked == true) {
 						if (obj.type == 'one') {
@@ -317,6 +320,8 @@
 							arr1.push(obj.data);
 							arr1[arr1.length-1]['state']=0;
 							arr1[arr1.length-1]['mlAmount']=1;
+							arr1[arr1.length-1]['drugId']=drugId;
+							arr1[arr1.length-1]['checkDisabled']=false;
 						} else {
 							arr2 = table.cache[layTableId2];
 							for (var i = 0; i < arr2.length; i++) {
@@ -330,6 +335,8 @@
 									addRow(arr2[i]);
 									arr2[i]['state']=0;
 									arr2[i]['mlAmount']=1;
+									arr2[i]['drugId']=drugId;
+									arr2[i]['drugId']['checkDisabled']=false;
 									arr1.push(arr2[i]);
 								}
 							}
@@ -337,15 +344,34 @@
 						}
 					} else {
 						if (obj.type == 'one') {
-							removeOne(obj.data.matId);
+							if (!obj.data.checkDisabled) {
+								removeOne(obj.data.matId);
+							}
 						} else {
 							arr2 = table.cache[layTableId2];
 							for (var i = 0; i < arr2.length; i++) {
-								removeOne(arr2[i].matId);
+								if (!arr2[i].checkDisabled) {
+									removeOne(arr2[i].matId);
+								}
 							}
 						}
 					}
 				});
+				function closeLayer(){
+				    //当你在iframe页面关闭自身时
+					var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+					parent.layer.close(index); //再执行关闭   
+				}
+				function addOrUpdate(data){
+					$.ajax({ 
+    		        	url: '../../materialList/addOrUpdate.action',
+    		        	data: data,
+    		        	cache: false,//同步
+                        type: 'post',//method请求方式，get或者post
+                        contentType: "application/json; charset=utf-8",
+                        dataType: 'json'
+                    });
+				}
 				//查询类型下拉框数据
 		        $.ajax({ 
 		        	url:'../../matType/showList.action',
@@ -378,16 +404,7 @@
 				
 				//窗口自适应
 				function autoHeight(tableId){
-					var h = document.body.clientHeight && document.documentElement.clientHeight - 232; //窗口高度
-					//监听改变窗口大小
-					/* window.onresize = function() {
-						h = document.body.clientHeight && document.documentElement.clientHeight - 232; //窗口高度
-						tableIns2.reload(tableId, {
-							height: h
-						}); //刷新数据表格
-						//window.location.reload(); //刷新iframe页面
-					} */
-					return h;
+					return document.body.clientHeight && document.documentElement.clientHeight - 175; //窗口高度
 				}
 				
 				//移除数组内重复的元素
@@ -439,6 +456,13 @@
 				}
 				$(".add").on("click",function(){
 					$(".card-top,.card-down").addClass("css-showTrans").removeClass("css-closeTrans");
+					$(".old-item").remove();
+					for (var i = 0; i < newData.length; i++) {
+						$("<li />", {
+							'text': newData[newData.length-1-i].matName,
+							'class': 'old-item'
+						}).insertAfter($(".li-title"));
+					}
 					tableIns2.reload();
 				});
 				$(".btnConfirm").on("click",function(){
@@ -449,6 +473,25 @@
 					$(".card-top,.card-down").removeClass("css-showTrans").addClass("css-closeTrans").removeClass("css-closeTrans");
 				});
 			});
+			//ajax加载动画
+		    $(function () {
+	            $.ajaxSetup({
+	                layerIndex:-1,
+	                beforeSend: function () {
+	                    this.layerIndex = layer.load(1, { shade: [0.8, '#ffffff'] });
+	                },
+	                complete: function () {
+	                    layer.close(this.layerIndex);
+	                },
+	                error: function () {
+	                    layer.alert('部分数据加载失败，可能会导致页面显示异常，请刷新后重试', {
+	                        skin: 'layui-layer-molv'
+	                       , closeBtn: 0
+	                       , shift: 4 //动画类型
+	                    });
+	                }
+	            });
+	        });
 		</script>
 	</body>
 </html>

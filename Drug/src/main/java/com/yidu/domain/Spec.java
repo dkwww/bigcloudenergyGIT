@@ -4,6 +4,8 @@ import java.util.Date;
 
 public class Spec {
     private String specId;
+    
+    private String drugId;
 
     private String specName;
 
@@ -36,6 +38,8 @@ public class Spec {
     private String oper;
 
     private String sort;
+    
+    private String specComponent;
 
     public String getSpecId() {
         return specId;
@@ -43,6 +47,14 @@ public class Spec {
 
     public void setSpecId(String specId) {
         this.specId = specId == null ? null : specId.trim();
+    }
+    
+    public String getDrugId() {
+        return drugId;
+    }
+
+    public void setDrugId(String drugId) {
+        this.drugId = drugId == null ? null : drugId.trim();
     }
 
     public String getSpecName() {
@@ -172,4 +184,12 @@ public class Spec {
     public void setSort(String sort) {
         this.sort = sort == null ? null : sort.trim();
     }
+
+	public String getSpecComponent() {
+		return specComponent;
+	}
+
+	public void setSpecComponent(String specComponent) {
+		this.specComponent = specComponent == null ? null : specComponent.trim();
+	}
 }

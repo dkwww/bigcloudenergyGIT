@@ -6,8 +6,8 @@
 		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
+		<script src="../../res/layui/lay/modules/laydate.js" type="text/javascript" charset="utf-8"></script>
 		<title>药品管理</title>
-    </script>
 	</head>
 	<body>
 		<div class="kit-table">
@@ -67,17 +67,18 @@
 				
 			<!-- 操作按钮 -->
 		    <div class="kit-table-body">
+		    	<img id="pic" src="#" style="width:280px;height:280px;display:none;z-index:99;border-radius: 2px;margin: auto;position: absolute;top: 0px;bottom: 0px;left: 0px;right: 0px;border: 1px solid #424242"/>
 		        <table id="demo" lay-filter="demo"></table>
 		        <script type="text/html" id="barDemo">
-		            <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+					<a class="layui-btn layui-btn-xs" lay-event="specification">说明书</a>
+		            <a class="layui-btn layui-btn-xs" lay-event="detail">物料清单</a>
 		            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
 		            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 		        </script>
 		    </div>
 		</div>
-		
-		<!-- 修改页面 -->
-		<script type="text/html" id="edit-tpl">
+		<!-- 药品修改页面 -->
+		<script type="text/html" id="drug-edit-tpl">
 		    <div style="margin:10px">
 		        <form class="layui-form" action="" lay-filter="form-edit">
 		            <input type="hidden" name="drugId" value="{{d.rowdata.drugId}}" />
@@ -133,7 +134,95 @@
 					
 		            <div class="layui-form-item" style="display:none;">
 		                <div class="layui-input-block">
-		                    <button class="layui-btn" lay-submit lay-filter="formEdit">立即提交</button>
+		                    <button class="layui-btn" lay-submit lay-filter="formEdit1">立即提交</button>
+		                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		                </div>
+		            </div>
+		        </form>
+		    </div>
+		</script>
+		<!-- 说明书修改页面 -->
+		<script type="text/html" id="spe-edit-tpl">
+		    <div style="margin:10px">
+		        <form class="layui-form" action="" lay-filter="form-edit">
+		            <input type="hidden" name="drugId" value="{{d.rowdata.drugId}}" />
+					<input type="hidden" name="specId" value="{{d.rowdata.specId}}" />
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">药品名称</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="specName" required lay-verify="required" value="{{d.rowdata.specName}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">性状</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="specTrait" required lay-verify="required" value="{{d.rowdata.specTrait}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">功能主治</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="specPurpose" required lay-verify="required" value="{{d.rowdata.specPurpose}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">规格</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="specSize" required lay-verify="required" value="{{d.rowdata.specSize}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">用法用量</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="specUse" required lay-verify="required" value="{{d.rowdata.specUse}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">不良反应</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="specEffect" required lay-verify="required" value="{{d.rowdata.specEffect}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">禁忌</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="specTaboo" required lay-verify="required" value="{{d.rowdata.specTaboo}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">注意事项</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="specNotice" required lay-verify="required" value="{{d.rowdata.specNotice}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">药物相互作用</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="specInteract" required lay-verify="required" value="{{d.rowdata.specInteract}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">贮藏</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="specDepot" required lay-verify="required" value="{{d.rowdata.specDepot}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">包装</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="specPack" required lay-verify="required" value="{{d.rowdata.specPack}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">有效期</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="specValidity" required lay-verify="required" value="{{d.rowdata.specValidity}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+					
+		            <div class="layui-form-item" style="display:none;">
+		                <div class="layui-input-block">
+		                    <button class="layui-btn" lay-submit lay-filter="formEdit2">立即提交</button>
 		                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
 		                </div>
 		            </div>
@@ -161,14 +250,20 @@
 			}
 		</script>
 		<script src="../../res/layui/layui.all.js"></script>
+		<script type="text/html" id="img">
+			<img style="height:100%;height:30px;" onclick="getPathOver(this)" src="../../{{ d.drugPictrue}}">
+		</script>
 		<script>
+			//弹出层下标
+			var layerIndex1,layerIndex2,editIndex1,editIndex2;
 			//显示表格数据
-		    layui.use(['table','upload'], function() {
+		    layui.use(['table','upload','laydate'], function() {
 		        var table = layui.table,
 		            $ = layui.jquery,
 		            layer = layui.layer,
 		            form = layui.form,
-		            laytpl = layui.laytpl;
+		            laytpl = layui.laytpl,
+		            laydate = layui.laydate; 
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '449px', //容器高度
@@ -177,14 +272,14 @@
 		            id: 'demo',
 		            cols: [
 		                [{checkbox: true,fixed: true},
-		                {field: 'drugId',title: 'ID', width: 273},
-		                {field: 'drugName',title: '药名',width: 175},
+		                {field: 'drugId',title: 'ID',width: 200},
+		                {field: 'drugName',title: '药名'},
 		                {field: 'dtName',title: '类型',width: 80},
 		                {field: 'drugUnit',title: '单位',width: 80},
 		                {field: 'drugProp',title: '属性',width: 90},
-		                {field: 'drugPictrue',title: '图片',width: 60,templet:'<div><img style="height:100%;height:30px;" src="../../{{ d.drugPictrue}}"></div>'},
-		                {field: 'drugPrice',title: '价格（元）',width: 150,sort: true},
-		                {fixed: 'right',title: '操作',width: 180,align: 'center',toolbar: '#barDemo'}]
+		                {field: 'drugPictrue',title: '图片',width: 60,templet:'#img'},
+		                {field: 'drugPrice',title: '价格（元）',width: 140,sort: true},
+		                {fixed: 'right',title: '操作',width: 280,align: 'center',toolbar: '#barDemo'}]
 		            ],
 		            done: function(res, curr, count) {
 		                $("[data-field = 'drugProp']").children().each(function(){
@@ -194,11 +289,12 @@
 						    	$(this).text("非处方药");
 						    }
 					  	});
-		                /* $("[data-field = 'drugPictrue']").children().each(function(){
-						    if($(this).text() == 'null'||$(this).text() == ''){
-						    	$(this).text("暂无");
-						    }
-					  	}); */
+		                $("[data-field = 'drugPictrue']").children().each(function(){
+		                	var obj = $(this);
+		                	obj.find('img').on("error", function () {
+		                		obj.text('');
+		                	});
+					  	});
 		            },
 		            loading: true
 		        });
@@ -207,7 +303,7 @@
 		        var staticData = null;
 		        $.ajax({ url:"../../drugType/showList.action",
                     type:'post',//method请求方式，get或者post
-                    cache: false,//同步
+                    async:false,//同步
                     dataType:'json',//预期服务器返回的数据类型
                     success:function(mes){//res为相应体,function为回调函数
                     	//增加及修改类型下拉框内的数据
@@ -232,40 +328,16 @@
 		            return false;
 		        });
 		        
-		        //渲染 修改和增加弹出层
-			    function showlayer(d){
-			    	laytpl($('#edit-tpl').html()).render(d,function(html) {
-	                    layer.open({
-	                        type: 1,
-	                        title: '表单',
-	                        content: html,
-	                        area: ['800px', '430px'],
-	                        btn: ['提交', '重置', '取消'],
-	                        yes: function(index, layero) {
-	                            editIndex = index;
-	                            $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
-	                        },
-	                        btn2: function(index, layero) {
-	                            $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
-	                            return false;
-	                        },
-	                        success: function() {
-	                            form.render(null, 'form-edit');
-	                        }
-	                    });
-	                    upload();
-	                });
-			    }
-		        
 		        //监听工具条按钮点击
 		        table.on('tool(demo)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
 		            var data = obj.data; //获得当前行数据
 		            var layEvent = obj.event; //获得 lay-event 对应的值
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		
-		            if (layEvent === 'detail') { //查看
-		            	maxlayer();
-		                console.log(table.checkStatus('demo'));
+		            if (layEvent === 'detail') { //物料清单
+		            	layer1(data.drugId,data.drugName);
+		            } else if (layEvent === 'specification') { //说明书
+		            	layer2(data.drugId,data.drugName);
 		            } else if (layEvent === 'del') { //删除
 		                layer.confirm('真的删除行么', function(index) {
 		                	layer.close(index);
@@ -276,7 +348,7 @@
 		                	rowdata: data,
 		                    types: staticData.types
 		                };
-		                showlayer(d);
+		                editLayer1(d);
 		            }
 		        });
 		        
@@ -286,18 +358,26 @@
 		        $('#kit-search-more').on('click', function() {
 		            $('.kit-search-mored').toggle();
 		        });
-		        var editIndex;
 		        
-		        //增加和修改弹出层   提交按钮点击事件
-		        form.on('submit(formEdit)', function(data) {
+		        //药品增加和修改弹出层   提交按钮点击事件
+		        
+		        form.on('submit(formEdit1)', function(data) {
                 	if ($("[name=drugPictrue]").val()=="") {
                 		layer.msg('未上传文件');
                     	$("#fileBtn").html('<span style="color:red"><i class="layui-icon">&#xe67c;</i>选择文件</span>');
                     	form.render(null, 'form-edit');
                     	return false;
                     }
-                	update("../../drug/addDrug.action",data.field);
-                	if (close) editIndex && layer.close(editIndex); //关闭弹出层
+                	var cls = update("../../drug/addDrug.action",data.field);
+                	if (cls) editIndex1 && layer.close(editIndex1); //关闭弹出层
+                	return false;
+		        });
+		        
+		      	//说明书增加和修改弹出层   提交按钮点击事件
+		        form.on('submit(formEdit2)', function(data) {
+		        	var cls = update("../../spec/addOrUpdate.action",data.field);
+                	if (cls) editIndex2 && layer.close(editIndex2); //关闭弹出层
+                	layerIFrameReload(layerIndex2);
                 	return false;
 		        });
 		        
@@ -316,7 +396,7 @@
 		                        //类型下拉框数据
 		                        types: staticData.types
 		                    };
-		                    showlayer(d);
+		                    editLayer1(d);
 		                    break;
 		                    
 		                //点击的是 批量删除按钮
@@ -342,37 +422,138 @@
 		        });
 		    });
 			
-		  	//全屏弹窗
-			function maxlayer(){
-				var index = layer.open({
+		  	//显示 物料清单
+			function layer1(id,name){
+				layerIndex1 = layer.open({
 				  type: 2,
 				  title: '药品配置',
-				  content: 'https://www.baidu.com',
-				  area: ['800px', '430px']
-				  //maxmin: true
+				  content: '../material-list/index.html?id='+id+'&name='+name,
+				  area: ['100%', '100%'],
+				  maxmin: false
 				});
-				layer.full(index);
+				layer.full(layerIndex1);
 			}
-		    
-		    //增加、修改、删除、批量删除 都是用的这一个方法
+		  	
+		  	//显示 说明书
+			function layer2(id,name){
+				layerIndex2 = layer.open({
+				  type: 2,
+				  title: '说明书',
+				  content: '../specification/specification.html?id='+id+'&name='+name,
+				  area: ['800px', '430px'],
+				  maxmin: true,
+				  success: function (layero, index)
+                  {
+                      var body = layer.getChildFrame('body', index);
+                      var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                      body.find("#btn,#btn-err").on("click",function(){
+                    	  showUpdate(id);
+                      });
+                  }
+				});
+		  	}
+		  	
+		  	//渲染 药品修改和增加弹出层
+		    function editLayer1(d){
+	    		layui.laytpl($('#drug-edit-tpl').html()).render(d,function(html) {
+                    layer.open({
+                        type: 1,
+                        title: '药品操作',
+                        content: html,
+                        maxmin: true,
+                        area: ['800px', '430px'],
+                        btn: ['提交', '重置', '取消'],
+                        yes: function(index, layero) {
+                            editIndex1 = index;
+                            $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
+                        },
+                        btn2: function(index, layero) {
+                            $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
+                            return false;
+                        },
+                        success: function() {
+                            layui.form.render(null, 'form-edit');
+                        }
+                    });
+                    upload();
+                });
+	    		return 
+		    }
+		  	
+		  	//渲染 说明书修改和增加弹出层
+		    function editLayer2(d){
+	    		layui.laytpl($('#spe-edit-tpl').html()).render(d,function(html) {
+	    			layer.open({
+                        type: 1,
+                        title: '说明书编辑',
+                        content: html,
+                        maxmin: true,
+                        area: ['800px', '430px'],
+                        btn: ['提交', '重置', '取消'],
+                        yes: function(index, layero) {
+                            editIndex2 = index;
+                            $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
+                        },
+                        btn2: function(index, layero) {
+                            $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
+                            return false;
+                        },
+                        success: function() {
+                        	layui.form.render(null, 'form-edit');
+                        }
+                    });
+                    upload();
+                });
+		    }
+		  	
+		  	//说明书增加修改页面上屏
+	        function showUpdate(id){
+		  		$.ajax({ 
+          		  url:"../../spec/findById.action",
+          		  data:{"drugId":id},
+                    type:'post',//method请求方式，get或者post
+                    async:false,//同步
+                    dataType:'json',//预期服务器返回的数据类型
+                    success:function(mes){//res为相应体,function为回调函数
+                  	  if (mes.data==null) {
+                  		  var d = {
+              				rowdata: {
+              					specId: '', drugId: id, specName: '',specTrait: '',specPurpose: '',specSize: '',specUse: '',specEffect: '',specTaboo: '',specNotice: '',specInteract: '',specDepot: '',specPack: '',specValidity: ''
+		                        }
+						      }; 
+                  	  } else {
+                  		  var d = {
+							rowdata: mes.data
+						  };
+                  	  }
+					  editLayer2(d);
+					  //渲染类型搜索框内的下拉框
+					  renderForm();
+                    }
+                 });
+		  	}
+		  	
+		    //药品增加、修改、删除、批量删除 都是用的这一个方法
 		    function update(url,data){
+		    	var cls = false;
 		    	$.ajax({
 		    		url: url,
                     type:'post',//method请求方式，get或者post
-                    cache: false,//同步
+                    async:false,//同步
                     dataType:'json',//预期服务器返回的数据类型
                     data: JSON.stringify(data),//表格数据序列化
                     contentType: "application/json; charset=utf-8",
                     success:function(mes){//res为相应体,function为回调函数
                     	$(".layui-laypage-btn")[0].click();//当前表格刷新
                         if(mes.status==1){ 
-                        	var close = true;//有弹出层时是关闭弹出层 false不关闭
+                        	cls = true;//有弹出层时是关闭弹出层 false不关闭
 	                        $("#res").click();//调用重置按钮将表单数据清空
                         }
                         layer.msg(mes.msg);
                     },
                    	error:function(){layer.alert('数据异常，请稍后重试！！！',{icon:5});}
                  });
+		    	return cls;
 		    }
 		    
 		    //上传文件
@@ -397,6 +578,10 @@
 	                }
 	            });
 		    }
+		    //刷新弹出层
+		    function layerIFrameReload(layerIndex) {
+	    	  window['layui-layer-iframe' + layerIndex].location.reload();
+	    	}
 		    
 		  	//重新渲染表单
 		  	function renderForm(){ 
@@ -405,6 +590,27 @@
 		  			form.render(); 
 	  			}); 
 	  		}
+		  	
+		  	/**
+			*鼠标进入时
+			*/
+			function getPathOver(obj){
+				$("body").append("<div id='layer'></div>");
+				$("#layer").addClass("layer").fadeIn("slow");
+				$("#layer").click(function(){
+					getPathOut();
+				});
+				$("#pic").fadeIn("slow");
+				$('#pic').attr({"src":obj.src});
+			}
+			/**
+			*鼠标退出时
+			*/
+			function getPathOut(){
+				$("#layer").fadeOut("slow");
+				$("#pic").fadeOut("slow");
+			}
+		  	
 		    //ajax加载动画
 		    $(function () {
 	            $.ajaxSetup({

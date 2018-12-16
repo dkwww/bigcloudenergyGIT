@@ -69,7 +69,6 @@
 		    <div class="kit-table-body">
 		        <table id="demo" lay-filter="demo"></table>
 		        <script type="text/html" id="barDemo">
-		            <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
 		            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
 		            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 		        </script>
@@ -119,7 +118,7 @@
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">价格</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="drugPrice" required lay-verify="required" maxlength="6" value="{{d.rowdata.drugPrice}}" placeholder="请输入认购数额（整数）" autocomplete="off" class="layui-input activity_card_money" onKeyUp="amount(this)">
+		                    <input type="text" name="drugPrice" required lay-verify="required" maxlength="6" value="{{d.rowdata.drugPrice}}" placeholder="请输入认购数额" autocomplete="off" class="layui-input activity_card_money" onKeyUp="amount(this)">
 		                </div>
 		            </div>
 					<div class="layui-upload">
@@ -162,6 +161,8 @@
 		</script>
 		<script src="../../res/layui/layui.all.js"></script>
 		<script>
+			//弹出层下标
+			var editIndex;
 			//显示表格数据
 		    layui.use(['table','upload'], function() {
 		        var table = layui.table,
@@ -176,15 +177,15 @@
 		            page: true,
 		            id: 'demo',
 		            cols: [
-		                [{checkbox: true,fixed: true},
-		                {field: 'drugId',title: 'ID', width: 273},
-		                {field: 'drugName',title: '药名',width: 175},
-		                {field: 'dtName',title: '类型',width: 80},
-		                {field: 'drugUnit',title: '单位',width: 80},
-		                {field: 'drugProp',title: '属性',width: 90},
-		                {field: 'drugPictrue',title: '图片',width: 60,templet:'<div><img style="height:100%;height:30px;" src="../../{{ d.drugPictrue}}"></div>'},
-		                {field: 'drugPrice',title: '价格（元）',width: 150,sort: true},
-		                {fixed: 'right',title: '操作',width: 180,align: 'center',toolbar: '#barDemo'}]
+		            	[{checkbox: true,fixed: true},
+			                {field: 'drugId',title: 'ID',width: 200},
+			                {field: 'drugName',title: '药名'},
+			                {field: 'dtName',title: '类型',width: 100},
+			                {field: 'drugUnit',title: '单位',width: 80},
+			                {field: 'drugProp',title: '属性',width: 90},
+			                {field: 'drugPictrue',title: '图片',width: 60,templet:'<div><img style="height:100%;height:30px;" src="../../{{ d.drugPictrue}}"></div>'},
+			                {field: 'drugPrice',title: '价格（元）',width: 140,sort: true},
+			                {fixed: 'right',title: '操作',width: 200,align: 'center',toolbar: '#barDemo'}]
 		            ],
 		            done: function(res, curr, count) {
 		                $("[data-field = 'drugProp']").children().each(function(){
@@ -231,40 +232,13 @@
 		            return false;
 		        });
 		        
-		        //渲染 修改和增加弹出层
-			    function showlayer(d){
-			    	laytpl($('#edit-tpl').html()).render(d,function(html) {
-	                    layer.open({
-	                        type: 1,
-	                        title: '表单',
-	                        content: html,
-	                        area: ['800px', '430px'],
-	                        btn: ['提交', '重置', '取消'],
-	                        yes: function(index, layero) {
-	                            editIndex = index;
-	                            $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
-	                        },
-	                        btn2: function(index, layero) {
-	                            $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
-	                            return false;
-	                        },
-	                        success: function() {
-	                            form.render(null, 'form-edit');
-	                        }
-	                    });
-	                    upload();
-	                });
-			    }
-		        
 		        //监听工具条按钮点击
 		        table.on('tool(demo)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
 		            var data = obj.data; //获得当前行数据
 		            var layEvent = obj.event; //获得 lay-event 对应的值
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		
-		            if (layEvent === 'detail') { //查看
-		                console.log(table.checkStatus('demo'));
-		            } else if (layEvent === 'del') { //删除
+		            if (layEvent === 'del') { //删除
 		                layer.confirm('真的删除行么', function(index) {
 		                	layer.close(index);
 		                    update("../../drug/addDrug.action",{"drugId":data.drugId,"isva":"0"});
@@ -284,7 +258,6 @@
 		        $('#kit-search-more').on('click', function() {
 		            $('.kit-search-mored').toggle();
 		        });
-		        var editIndex;
 		        
 		        //增加和修改弹出层   提交按钮点击事件
 		        form.on('submit(formEdit)', function(data) {
@@ -309,7 +282,7 @@
 		                    var d = {
 		                		//替换增加页面文本框内出现的undefine
 		                        rowdata: {
-		                        	drugId: '',drugName: '',drugProp: 1,drugUnit: '',drugPrice: '',drugPictrue: '',drugProp: 0
+		                        	drugId: '',drugName: '',drugProp: 1,drugUnit: '',drugPrice: '',drugPictrue: '',drugProp: '0'
 		                        },
 		                        //类型下拉框数据
 		                        types: staticData.types
@@ -341,6 +314,31 @@
 		        });
 		    });
 		    
+		  	//渲染 修改和增加弹出层
+		    function showlayer(d){
+		    	layui.laytpl($('#edit-tpl').html()).render(d,function(html) {
+                    layer.open({
+                        type: 1,
+                        title: '表单',
+                        content: html,
+                        area: ['800px', '430px'],
+                        btn: ['提交', '重置', '取消'],
+                        yes: function(index, layero) {
+                            editIndex = index;
+                            $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
+                        },
+                        btn2: function(index, layero) {
+                            $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
+                            return false;
+                        },
+                        success: function() {
+                        	layui.form.render(null, 'form-edit');
+                        }
+                    });
+                    upload();
+                });
+		    }
+			
 		    //增加、修改、删除、批量删除 都是用的这一个方法
 		    function update(url,data){
 		    	$.ajax({
@@ -379,7 +377,7 @@
 	                	if (res.status=="1") {
 	                		 $("[name=drugPictrue]").val(res.obj);
 	                		 $("#fileBtn").html('<i class="layui-icon">&#xe67c;</i>选择文件');
-	                		 form.render('form-edit');
+	                		 layui.form.render('form-edit');
 	                	}
 	                }
 	            });

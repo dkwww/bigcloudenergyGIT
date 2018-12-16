@@ -1,7 +1,3 @@
-body {
-	font: 12px/1.4 "Lucida Grande", Sans-Serif;
-}
-
 .new-item {
 	-webkit-animation: growHeight 0.5s ease forwards;
 	animation: growHeight 0.5s ease forwards;
@@ -17,7 +13,7 @@ body {
 		max-height: 50px;
 		opacity: 1;
 		transform: scale(1);
-		background: #aeec88;
+		background: #F8F8F8;
 	}
 
 	from {
@@ -34,7 +30,7 @@ body {
 		opacity: 1;
 		-webkit-transform: scale(1);
 		transform: scale(1);
-		background: #aeec88;
+		background: #F8F8F8;
 	}
 
 	from {
@@ -60,7 +56,7 @@ body {
 		opacity: 1;
 		-webkit-transform: scale(1);
 		transform: scale(1);
-		background: #aeec88;
+		background: #F8F8F8;
 	}
 }
 
@@ -78,7 +74,7 @@ body {
 		opacity: 1;
 		-webkit-transform: scale(1);
 		transform: scale(1);
-		background: #aeec88;
+		background: #F8F8F8;
 	}
 }
 

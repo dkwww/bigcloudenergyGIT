@@ -41,4 +41,14 @@ public class MaterialListServiceImpl  implements MaterialListService {
 		return materialListMapper.selectCountBySelective(record);
 	}
 
+	@Override
+	public int addOrUpdate(MaterialList record) {
+		if (record.getMlId()!=null&&!"".equals(record.getMlId())) {
+			return materialListMapper.updateByPrimaryKeySelective(record);
+		} else {
+			return materialListMapper.insertSelective(record);
+		}
+		
+	}
+
 }

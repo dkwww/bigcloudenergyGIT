@@ -3,6 +3,7 @@
 <mapper namespace="com.yidu.dao.SpecMapper">
   <resultMap id="BaseResultMap" type="com.yidu.domain.Spec">
     <id column="spec_id" jdbcType="VARCHAR" property="specId" />
+    <result column="drug_id" jdbcType="VARCHAR" property="drugId" />
     <result column="spec_name" jdbcType="VARCHAR" property="specName" />
     <result column="spec_trait" jdbcType="VARCHAR" property="specTrait" />
     <result column="spec_purpose" jdbcType="VARCHAR" property="specPurpose" />
@@ -21,7 +22,7 @@
     <result column="sort" jdbcType="VARCHAR" property="sort" />
   </resultMap>
   <sql id="Base_Column_List">
-    spec_id, spec_name, spec_trait, spec_purpose, spec_size, spec_use, spec_effect, spec_taboo, 
+    spec_id, drug_id, spec_name, spec_trait, spec_purpose, spec_size, spec_use, spec_effect, spec_taboo, 
     spec_notice, spec_interact, spec_depot, spec_pack, spec_validity, isva, optime, oper, 
     sort
   </sql>
@@ -29,20 +30,23 @@
     select 
     <include refid="Base_Column_List" />
     from drug_spec
-    where spec_id = #{specId,jdbcType=VARCHAR}
+    where drug_id = #{drugId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_spec
     where spec_id = #{specId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.yidu.domain.Spec">
-    insert into drug_spec (spec_id, spec_name, spec_trait, 
+  	<selectKey keyProperty="spec_id" resultType="string" order="BEFORE">
+	    SELECT REPLACE(UUID(),'-','') AS id;
+	</selectKey>
+    insert into drug_spec (spec_id, drug_id, spec_name, spec_trait, 
       spec_purpose, spec_size, spec_use, 
       spec_effect, spec_taboo, spec_notice, 
       spec_interact, spec_depot, spec_pack, 
       spec_validity, isva, optime, 
       oper, sort)
-    values (#{specId,jdbcType=VARCHAR}, #{specName,jdbcType=VARCHAR}, #{specTrait,jdbcType=VARCHAR}, 
+    values (#{specId,jdbcType=VARCHAR}, #{drugId,jdbcType=VARCHAR}, #{specName,jdbcType=VARCHAR}, #{specTrait,jdbcType=VARCHAR}, 
       #{specPurpose,jdbcType=VARCHAR}, #{specSize,jdbcType=VARCHAR}, #{specUse,jdbcType=VARCHAR}, 
       #{specEffect,jdbcType=VARCHAR}, #{specTaboo,jdbcType=VARCHAR}, #{specNotice,jdbcType=VARCHAR}, 
       #{specInteract,jdbcType=VARCHAR}, #{specDepot,jdbcType=VARCHAR}, #{specPack,jdbcType=VARCHAR}, 
@@ -51,9 +55,15 @@
   </insert>
   <insert id="insertSelective" parameterType="com.yidu.domain.Spec">
     insert into drug_spec
+    <selectKey keyProperty="specId" resultType="string" order="BEFORE">
+	    SELECT REPLACE(UUID(),'-','') AS id;
+	</selectKey>
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="specId != null">
         spec_id,
+      </if>
+      <if test="drugId != null">
+        drug_id,
       </if>
       <if test="specName != null">
         spec_name,
@@ -108,6 +118,9 @@
       <if test="specId != null">
         #{specId,jdbcType=VARCHAR},
       </if>
+      <if test="drugId != null">
+        #{drugId,jdbcType=VARCHAR},
+      </if>
       <if test="specName != null">
         #{specName,jdbcType=VARCHAR},
       </if>
@@ -161,6 +174,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Spec">
     update drug_spec
     <set>
+      <if test="drugId != null">
+        drug_id = #{drugId,jdbcType=VARCHAR},
+      </if>
       <if test="specName != null">
         spec_name = #{specName,jdbcType=VARCHAR},
       </if>
@@ -214,7 +230,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Spec">
     update drug_spec
-    set spec_name = #{specName,jdbcType=VARCHAR},
+    set drug_id = #{drugId,jdbcType=VARCHAR},
+      spec_name = #{specName,jdbcType=VARCHAR},
       spec_trait = #{specTrait,jdbcType=VARCHAR},
       spec_purpose = #{specPurpose,jdbcType=VARCHAR},
       spec_size = #{specSize,jdbcType=VARCHAR},

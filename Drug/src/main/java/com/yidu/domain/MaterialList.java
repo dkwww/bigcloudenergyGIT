@@ -25,6 +25,8 @@ public class MaterialList {
     
     private Integer matPrice;
     
+    private String matUnit;
+    
     private String mtName;
     
     private String matEffect;
@@ -115,6 +117,14 @@ public class MaterialList {
 
 	public void setMatPrice(Integer matPrice) {
 		this.matPrice = matPrice;
+	}
+
+	public String getMatUnit() {
+		return matUnit;
+	}
+
+	public void setMatUnit(String matUnit) {
+		this.matUnit = matUnit;
 	}
 
 	public String getMtName() {

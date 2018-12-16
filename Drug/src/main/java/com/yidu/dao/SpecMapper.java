@@ -3,7 +3,7 @@ package com.yidu.dao;
 import com.yidu.domain.Spec;
 
 public interface SpecMapper {
-    int deleteByPrimaryKey(String specId);
+    int deleteByPrimaryKey(String drugId);
 
     int insert(Spec record);
 
