@@ -12,6 +12,14 @@
   <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
+	<!-- <input type="checkbox" name="" title="管理员">
+      						<input type="checkbox" name="" title="专职人员">
+      						<input type="checkbox" name="" title="销售部管理员">
+							<input type="checkbox" name="" title="质检人员">
+      						<input type="checkbox" name="" title="采购部管理员">
+      						<input type="checkbox" name="" title="生产部管理员">
+							<input type="checkbox" name="" title="总店总经理">
+      						<input type="checkbox" name="" title="分公司总经理"> -->
 	<div class="kit-table">
 		<form class="layui-form" lay-filter="kit-search-form">
 			<!-- 左上角的两个按钮 -->
@@ -60,7 +68,6 @@
 			</script>
 		</div>
 	</div> 
-	
 		<!-- 修改页面 -->
 		<script type="text/html" id="edit-tpl">
 		   	<div style="margin:10px">
@@ -109,6 +116,14 @@
 		                    <input type="radio" name="isva" value="0" title="未审核" {{otc}} />
 		                </div>
 		            </div>
+					<div class="layui-form-item">
+    					<label class="layui-form-label">角色</label>
+    					<div class="layui-input-block" id="findJs">
+   						</div>
+  					</div>
+
+					<input type="hidden" id="roid" name="roId" style="width:700px;"/>
+
 		            <div class="layui-form-item" style="display:none;">
 		                <div class="layui-input-block">
 		                    <button class="layui-btn" lay-submit lay-filter="formEdit">立即提交</button>
@@ -127,7 +142,11 @@
 	</script>
 	<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 --> 
 	<script src="../../res/layui/layui.all.js"></script> 
+	<script type="text/html" id="imgTpl">
+        <img src="@{{ ../../{{ d.adminPictrue}} }}">
+    </script>
 	<script>
+		
 		layui.use(['table','upload'], function(){
 		  	var table = layui.table;
 			  	$ = layui.jquery,
@@ -145,8 +164,7 @@
 			      ,{field:'adminId', width:80, title: 'ID', align: 'center'}
 			      ,{field:'comName', width:148, title: '公司名称',align: 'center'}
 			      ,{field:'adminName', width:110, title: '用户名', align: 'center'}
-			      ,{field:'adminPictrue', title: '头像', width: 130,align: 'center',templet:'<div><img style="height:100%;height:30px;" src="../../{{ d.adminPictrue}}"></div>'}
-			      ,{field:'adminMsg', width:80, title: '备注', align: 'center'}
+			      ,{field:'adminPictrue', title: '头像', width: 130,align: 'center',templet:'#imgTpl'}
 			      ,{field:'isva', width:110, title: '审核状态', align: 'center'}
 			      ,{field:'optimestring', width:180, title: '操作时间',align: 'center'}
 			      ,{field:'oper', width:135, title: '操作人', align: 'center'}
@@ -164,6 +182,7 @@
 	            },
 	            loading: true
 	        });
+	        
 	      	//查询类型下拉框数据
 	        var staticData = null;
 	        $.ajax({ url:"../../company/findAll.action",
@@ -182,7 +201,7 @@
                 }
              });
 	        //监听搜索表单提交
-	        form.on('submit(search)', function(data) {
+	        form.on('submit(search)', function(data) { 
 	            //带条件查询
 	            tableIns.reload({
 	                where: data.field
@@ -211,6 +230,19 @@
                             form.render(null, 'form-edit');
                         }
                     });
+                    //查询角色数据
+        	        $.ajax({ url:"../../role/queryList.action",
+                        type:'post',//method请求方式，get或者post
+                        async: false,//同步
+                        dataType:'json',//预期服务器返回的数据类型
+                        success:function(mes){//res为相应体,function为回调函数
+                        	//循环添加角色的数据
+                        	$.each(mes.data,function(index,item){
+                        		$("#findJs").append('<input type="checkbox" class="check" lay-filter="encrypt" value="'+item.roleId+'" name="mul" title="'+item.roleName+'">');
+                        		renderForm();
+                        	});
+                         }
+                     });
                     upload();
                 });
 		    }
@@ -230,11 +262,35 @@
 	                    update("../../admin/addAdmin.action",{"adminId":data.adminId,"isva":"0"});
 	                });
 	            } else if (layEvent === 'edit') { //编辑
-	                var d = {
-	                	rowdata: data,
-	                	types: staticData.data
-	                };
-	                showlayer(d);
+	            	var d = {
+ 	                	rowdata: data,
+ 	                	types: staticData.data
+ 	                };
+	            	showlayer(d);
+	            	 
+	            	 //查询角色数据
+        	        $.ajax({ url:"../../admin/findByRole.action",
+        	        	data:{"adminId":data.adminId},
+                        type:'post',//method请求方式，get或者post
+                       
+                        dataType:'json',//预期服务器返回的数据类型
+                        success:function(mes){//res为相应体,function为回调函数
+                        	
+                        	//循环添加角色的数据
+                        	$.each(mes,function(index,item){
+                        		//alert(item.roleId);
+                        		$("input[name='mul']").each(function(){ 
+                            		if ($(this).val() == item.roleId) {
+                            			$(this).prop("checked",true);
+                            			var str = "";
+                    	      			str+=item.roleId+"@";
+                    	      			$("#roid").val($("#roid").val()+str);
+                            		} 
+                        		});
+                        		renderForm();
+                        	});
+                         }
+                     });
 	            }
 	        });
 	      	
@@ -245,10 +301,32 @@
 	            $('.kit-search-mored').toggle();
 	        });
 	        
+	        
+	        
+	        form.on('checkbox(encrypt)', function(data){
+	        	if(data.elem.checked == true) {
+	      			var str = "";
+	      			str+=data.value+"@";
+	      			$("#roid").val($("#roid").val()+str);
+	      		} else {
+	      			 //取得文本框的值
+	    			 var aa = $("#roid").val();
+	    			 //把文本框清空
+	    			 $("#roid").val("")
+	    			 //文本框的值按取消复选框的id来去除
+	    			 var bb = aa.replace(data.value+"@",'');
+	    			 //把值重新赋给文本框
+	    			 $("#roid").val(bb);
+	      		}
+
+	        });
+	        
+	        
 	        var editIndex;
 	        
 	        //增加和修改弹出层   提交按钮点击事件
 	        form.on('submit(formEdit)', function(data) {
+	        	
             	if ($("[name=adminPictrue]").val()=="") {
             		layer.msg('未上传文件');
                 	$("#fileBtn").html('<span style="color:red"><i class="layui-icon">&#xe67c;</i>选择文件</span>');

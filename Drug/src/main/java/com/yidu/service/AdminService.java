@@ -3,6 +3,7 @@ package com.yidu.service;
 import java.util.List;
 
 import com.yidu.domain.Admin;
+import com.yidu.domain.AdminRole;
 import com.yidu.util.PageUtil;
 
 /**
@@ -48,5 +49,10 @@ public interface AdminService   {
 	 * @return
 	 */
 	public int bulkUpdate(List<String> ids);
-
+	/**
+	 * 根据用户ID查询角色
+	 * @param id
+	 * @return
+	 */
+	List<AdminRole> findByRole(String id);
 }

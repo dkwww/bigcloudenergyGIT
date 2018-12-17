@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.yidu.domain.Admin;
+import com.yidu.domain.AdminRole;
 
 public interface AdminMapper {
     int deleteByPrimaryKey(String adminId);
@@ -43,4 +44,18 @@ public interface AdminMapper {
 	 * @return
 	 */
 	int bulkDeleteByPrimaryKeySelective(List<String> ids);
+	
+	/**
+	 * 根据用户ID查询角色
+	 * @param id
+	 * @return
+	 */
+	List<AdminRole> findByRole(String id);
+	
+	/**
+	 * 根据用户ID删除角色
+	 * @param adminId
+	 * @return
+	 */
+	int deleteById(String adminId);
 }

@@ -20,12 +20,18 @@
     where ar_id = #{arId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.yidu.domain.AdminRole">
+  <selectKey keyProperty="arId" resultType="string" order="BEFORE">
+	    SELECT REPLACE(UUID(),'-','') AS id;
+	</selectKey>
     insert into drug_admin_role (ar_id, admin_id, role_id
       )
     values (#{arId,jdbcType=VARCHAR}, #{adminId,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.yidu.domain.AdminRole">
+  <selectKey keyProperty="arId" resultType="string" order="BEFORE">
+	    SELECT REPLACE(UUID(),'-','') AS id;
+	</selectKey>
     insert into drug_admin_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="arId != null">

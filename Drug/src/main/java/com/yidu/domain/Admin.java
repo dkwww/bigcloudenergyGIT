@@ -27,6 +27,18 @@ public class Admin {
     
     private String comName;
     
+    private String roId;
+    
+    
+    
+	public String getRoId() {
+		return roId;
+	}
+
+	public void setRoId(String roId) {
+		this.roId = roId;
+	}
+
 	public String getComId() {
 		return comId;
 	}

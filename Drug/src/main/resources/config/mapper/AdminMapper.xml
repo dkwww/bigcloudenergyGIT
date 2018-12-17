@@ -27,6 +27,13 @@
 		<result column="sort" jdbcType="VARCHAR" property="sort" />
 		<result column="com_name" jdbcType="VARCHAR" property="comName" />
 	</resultMap>
+	
+	<resultMap id="BaseResultMap2" type="com.yidu.domain.AdminRole">
+    <id column="ar_id" jdbcType="VARCHAR" property="arId" />
+    <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+  </resultMap>
+	
 	<sql id="Base_Column_List">
 		admin_id, com_id, admin_name, admin_pwd, admin_pictrue, admin_msg, isva,
 		optime,
@@ -37,6 +44,18 @@
 		ad.admin_msg, ad.isva, ad.optime,
 		ad.oper,ad.sort,co.com_name
 	</sql>
+	
+	<select id="findByRole" parameterType="java.lang.String" resultMap="BaseResultMap2">
+		SELECT role.* FROM drug_admin admin,drug_admin_role role WHERE 
+		admin.admin_id = role.admin_id AND  
+		admin.admin_id = #{adminId,jdbcType=VARCHAR};
+	</select>
+	
+	<delete id="deleteById" parameterType="java.lang.String">
+    delete from drug_admin_role
+    where admin_id = #{adminId,jdbcType=VARCHAR}
+  </delete>
+	
 	<select id="selectByPrimaryKey" parameterType="java.lang.String"
 		resultMap="BaseResultMap">
 		select
@@ -44,16 +63,20 @@
 		from drug_admin
 		where admin_id = #{adminId,jdbcType=VARCHAR}
 	</select>
+	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
 		delete from drug_admin
 		where admin_id = #{adminId,jdbcType=VARCHAR}
 	</delete>
 	<insert id="insert" parameterType="com.yidu.domain.Admin">
-		insert into drug_admin (admin_id, admin_web, admin_name,
+	<selectKey keyProperty="adminId" resultType="string" order="BEFORE">
+	    SELECT REPLACE(UUID(),'-','') AS id;
+	</selectKey>
+		insert into drug_admin (admin_id, com_id, admin_name,
 		admin_pwd, admin_pictrue, admin_msg,
 		isva, optime, oper,
 		sort)
-		values (#{adminId,jdbcType=VARCHAR}, #{adminWeb,jdbcType=VARCHAR},
+		values (#{adminId,jdbcType=VARCHAR}, #{comId,jdbcType=VARCHAR},
 		#{adminName,jdbcType=VARCHAR},
 		#{adminPwd,jdbcType=VARCHAR}, #{adminPictrue,jdbcType=VARCHAR}, #{adminMsg,jdbcType=VARCHAR},
 		#{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP},
@@ -66,8 +89,8 @@
 			<if test="adminId != null">
 				admin_id,
 			</if>
-			<if test="adminWeb != null">
-				admin_web,
+			<if test="comId != null">
+				com_id,
 			</if>
 			<if test="adminName != null">
 				admin_name,
@@ -98,8 +121,8 @@
 			<if test="adminId != null">
 				#{adminId,jdbcType=VARCHAR},
 			</if>
-			<if test="adminWeb != null">
-				#{adminWeb,jdbcType=VARCHAR},
+			<if test="comId != null">
+				#{comId,jdbcType=VARCHAR},
 			</if>
 			<if test="adminName != null">
 				#{adminName,jdbcType=VARCHAR},
@@ -170,7 +193,7 @@
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.yidu.domain.Admin">
 		update drug_admin
-		set admin_web = #{adminWeb,jdbcType=VARCHAR},
+		set com_id = #{comId,jdbcType=VARCHAR},
 		admin_name = #{adminName,jdbcType=VARCHAR},
 		admin_pwd = #{adminPwd,jdbcType=VARCHAR},
 		admin_pictrue = #{adminPictrue,jdbcType=VARCHAR},
@@ -185,7 +208,7 @@
 	<select id="queryNameOrPwd" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from drug_admin where admin_name = #{adminName,jdbcType=VARCHAR} and
+		from drug_admin where isva='1' and admin_name = #{adminName,jdbcType=VARCHAR} and
 		admin_pwd=#{adminPwd,jdbcType=VARCHAR}
 	</select>
 	<!-- 查询所有或者根据名字查询 -->

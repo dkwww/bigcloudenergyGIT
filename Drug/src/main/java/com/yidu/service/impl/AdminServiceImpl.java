@@ -2,7 +2,9 @@ package com.yidu.service.impl;
 
  
 import com.yidu.dao.AdminMapper;
+import com.yidu.dao.AdminRoleMapper;
 import com.yidu.domain.Admin;
+import com.yidu.domain.AdminRole;
 import com.yidu.service.AdminService;
 import com.yidu.util.PageUtil;
 import com.yidu.util.TimeUtil;
@@ -11,6 +13,7 @@ import com.yidu.util.Tools;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -30,6 +33,8 @@ public class AdminServiceImpl  implements AdminService {
 	@Resource
 	private AdminMapper mapper;
 	
+	@Resource
+	private AdminRoleMapper roleDao;
 	
 	/**
 	 * 查询用户名和密码是否存在
@@ -63,11 +68,29 @@ public class AdminServiceImpl  implements AdminService {
 	@Override
 	public int addOrUpdate(Admin admin) {
 		if(admin.getAdminId()!=null && !"".equals(admin.getAdminId())) {
+			mapper.deleteById(admin.getAdminId());
+			String[] str = admin.getRoId().split("@");
+			for (int i = 0; i < str.length; i++) {
+				AdminRole adminRole = new AdminRole();
+				adminRole.setAdminId(admin.getAdminId());
+				adminRole.setRoleId(str[i]);
+				roleDao.insertSelective(adminRole);
+			}
 			return mapper.updateByPrimaryKeySelective(admin);
 		}else {
+			String UUid = UUID.randomUUID().toString().replaceAll("-", "");
+			admin.setAdminId(UUid);
 			admin.setIsva("1");
 			admin.setSort(TimeUtil.getStrDate());
-			return mapper.insertSelective(admin);
+			int row = mapper.insertSelective(admin);
+			String[] str = admin.getRoId().split("@");
+			for (int i = 0; i < str.length; i++) {
+				AdminRole adminRole = new AdminRole();
+				adminRole.setAdminId(admin.getAdminId());
+				adminRole.setRoleId(str[i]);
+				roleDao.insertSelective(adminRole);
+			}
+			return row;
 		}
 	}
 	/**
@@ -76,5 +99,10 @@ public class AdminServiceImpl  implements AdminService {
 	@Override
 	public int bulkUpdate(List<String> ids) {
 		return mapper.bulkDeleteByPrimaryKeySelective(ids);
+	}
+
+	@Override
+	public List<AdminRole> findByRole(String id) {
+		return mapper.findByRole(id);
 	}
 }

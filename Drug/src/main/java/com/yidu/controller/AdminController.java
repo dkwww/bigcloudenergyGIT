@@ -6,10 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yidu.domain.Admin;
-import com.yidu.domain.Drug;
+import com.yidu.domain.AdminRole;
 import com.yidu.service.AdminService;
 import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
+import com.yidu.util.UploadUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -68,6 +69,21 @@ public class AdminController {
 		}
 		return mes;
 	}
+	@RequestMapping("/upload")
+	@ResponseBody
+	public Message upload(HttpServletRequest req) throws Exception {
+		String fileName = UploadUtil.upload(req);
+		Message mes = new Message();
+		if(fileName!=null) {
+			mes.setStatus(1);
+			mes.setObj(fileName);
+			mes.setMsg("上传成功");
+		}else {
+			mes.setStatus(0);
+			mes.setMsg("服务器错误，请稍后重试！");
+		}
+		return mes;
+	}
 	/**
 	 * 批量删除
 	 * @return
@@ -118,7 +134,6 @@ public class AdminController {
 	public Admin getSessions(HttpServletRequest request) {
 		HttpSession session=request.getSession();
 		Admin admin=(Admin) session.getAttribute("user");
-		System.out.println("Seesion==="+admin);
 		if(admin != null) {
 			return admin;
 		}else {
@@ -131,10 +146,20 @@ public class AdminController {
 	@RequestMapping("/sessionuser")
 	@ResponseBody
 	public Admin sessionuser(HttpServletRequest request) {
-		System.out.println("userseesion");
 		HttpSession session=request.getSession();
 		Admin admin=(Admin) session.getAttribute("user");
 			return admin;
+	}
+	
+	/**
+	 * 根据用户ID查询角色
+	 * @param adminId
+	 * @return
+	 */
+	@RequestMapping("/findByRole")
+	@ResponseBody
+	public List<AdminRole> findByRole(String adminId) {
+		return service.findByRole(adminId);
 	}
 }
 
