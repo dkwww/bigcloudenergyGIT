@@ -23,6 +23,8 @@ public interface DrugMapper {
     int selectCountBySelective(Drug record);
     
 	int bulkDeleteByPrimaryKeySelective(List<String> ids);
-	
-	List<Drug> selectBySelectives(Map<String, Object> map);
+
+	int isCheck(String drugId);
+
+	int checked(String drugId);
 }

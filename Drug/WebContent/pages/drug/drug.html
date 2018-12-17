@@ -69,12 +69,12 @@
 		    <div class="kit-table-body">
 		    	<img id="pic" src="#" style="width:280px;height:280px;display:none;z-index:99;border-radius: 2px;margin: auto;position: absolute;top: 0px;bottom: 0px;left: 0px;right: 0px;border: 1px solid #424242"/>
 		        <table id="demo" lay-filter="demo"></table>
-		        <script type="text/html" id="barDemo">
-					<a class="layui-btn layui-btn-xs" lay-event="specification">说明书</a>
-		            <a class="layui-btn layui-btn-xs" lay-event="detail">物料清单</a>
-					<a class="layui-btn layui-btn-xs" lay-event="check">提交审核</a>
-		            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-		            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+		        <script type="text/html" id="tools">
+					<button class="layui-btn layui-btn-xs" lay-event="specification">说明书</button>
+		            <button class="layui-btn layui-btn-xs" lay-event="detail">物料清单</button>
+					<button class="layui-btn layui-btn-xs" lay-event="check">提交审核</button>
+		            <button class="layui-btn layui-btn-xs" lay-event="edit">编辑</button>
+		            <button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button>
 		        </script>
 		    </div>
 		</div>
@@ -280,9 +280,17 @@
 		                {field: 'drugProp',title: '属性',width: 90},
 		                {field: 'drugPictrue',title: '图片',width: 60,templet:'#img',tips:'单机查看'},
 		                {field: 'drugPrice',title: '价格（元）',width: 120,sort: true},
-		                {fixed: 'right',title: '操作',width: 350,align: 'center',toolbar: '#barDemo'}]
+		                {fixed: 'right',title: '操作',width: 350,align: 'center',toolbar: '#tools'}]
 		            ],
 		            done: function(res, curr, count) {
+		            	var tableElem = this.elem.next('.layui-table-view');
+		            	$("[data-field = 'drugId']").children().not(":first").each(function(index){
+		            		$.post("../../drug/checked.action",{"drugId":$(this).text()},function(mes){
+		            			if (mes>0) {
+		            				tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=check]').addClass('layui-btn-disabled').attr('disabled',true);
+		                    	}
+		            		},"json");
+					  	});
 		                $("[data-field = 'drugProp']").children().each(function(){
 						    if($(this).text() == '1'){
 						    	$(this).text("处方药");
@@ -303,8 +311,7 @@
 		                      	});
 		                	});
 					  	});
-		            },
-		            loading: true
+		            }
 		        });
 		        
 				//查询类型下拉框数据
@@ -332,8 +339,6 @@
 		                where: data.field,
 		                page: { curr: 1 }
 		            });
-		            $('.kit-search-mored').hide();
-		            return false;
 		        });
 		        
 		        //监听工具条按钮点击
@@ -355,9 +360,7 @@
 		                    dataType:'json',//预期服务器返回的数据类型
 		                    success:function(mes){//res为相应体,function为回调函数
 		                    	layer.msg(mes.msg);
-		                    	if (mes.status == 1) {
-		                    		
-		                    	}
+		                    	if (mes.status==1) tableIns.reload();
 		                    }
 		                 });
 		            } else if (layEvent === 'del') { //删除
@@ -449,7 +452,7 @@
 				layerIndex1 = layer.open({
 				  type: 2,
 				  title: '药品配置',
-				  content: '../material-list/index.html?id='+id+'&name='+name,
+				  content: '../material/material-list/matList.html?id='+id+'&name='+name,
 				  area: ['100%', '100%'],
 				  maxmin: false
 				});

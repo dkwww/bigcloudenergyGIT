@@ -11,14 +11,11 @@
 		<title>原料清单</title>
 		<link rel="stylesheet" href="../../res/layui/css/layui.css" />
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
-		<script src="../../res/js/common/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="stylesheet" type="text/css" href="../../res/css/material-list/index.css" />
-		<script src="../../res/js/material-list/index.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="stylesheet" type="text/css" href="../../res/css/material-list/row.css" />
+		<script src="../../res/js/common/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../res/js/material-list/index.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../res/js/common/parameter.js" type="text/javascript" charset="utf-8"></script>
-		<style>
-		
-		</style>
 	</head>
 	<body class="childBody">
 		<section class="layui-col-md10">
@@ -115,7 +112,6 @@
 					data: viewObj.data,
 					height: h1,
 					page: true,
-					loading: true,
 					cols: [
 						[
 							{title: '序号',type: 'numbers'},
@@ -152,27 +148,6 @@
 				
 				//定义事件集合
 				var active = {
-					add: function() { 
-					},
-					removeEmptyTableCache: function() {
-						
-					},
-					delBulk: function() {
-						var d = table.checkStatus(layTableId1);
-						if (d.data.length === 0) {
-							layer.msg('请选择要删除的数据');
-							return;
-						}
-						var data = d.data,
-							names = [],
-							ids = [];
-						layui.each(data, function(index, item) {
-							names.push(item.username);
-							ids.push(item.id);
-						});
-						layer.msg(names.join(','));
-						console.log(ids.join(','));
-					},
 					save: function() {
 	                    layui.each(newData, function(index, item) {
 	                    	addOrUpdate(JSON.stringify(item));
@@ -244,7 +219,7 @@
 									data: newData
 								});
 							});
-							break;
+						break;
 					}
 				});
 
@@ -336,7 +311,7 @@
 									arr2[i]['state']=0;
 									arr2[i]['mlAmount']=1;
 									arr2[i]['drugId']=drugId;
-									arr2[i]['drugId']['checkDisabled']=false;
+									arr2[i]['checkDisabled']=false;
 									arr1.push(arr2[i]);
 								}
 							}
@@ -393,6 +368,8 @@
 		                where: {"mtName":data.value},
 		                page: { curr: 1 }
 		            });
+		            $('.kit-search-mored').hide();//关闭搜索层
+		            return false;
 				})
 				//重新渲染表单
 			  	function renderForm(){ 

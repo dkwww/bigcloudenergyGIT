@@ -21,10 +21,22 @@ public class Pmc {
 
     private String sort;
     
-    private String startTime;
+    private String strStartTime;
     
-    private String endTime;
-
+    private String strEndTime;
+    
+    private Date startTime;
+    
+    private Date endTime;
+    
+    private Date startTimes;
+    
+    private Date endTimes;
+    
+    private Integer maxAmount;
+    
+    private Integer minAmount;
+    
     public String getPmcId() {
         return pmcId;
     }
@@ -97,20 +109,67 @@ public class Pmc {
         this.sort = sort == null ? null : sort.trim();
     }
 
-	public String getStartTime() {
+	public String getStrStartTime() {
+		return strStartTime;
+	}
+
+	public void setStrStartTime(String strStartTime) {
+		this.strStartTime = strStartTime;
+	}
+
+	public String getStrEndTime() {
+		return strEndTime;
+	}
+
+	public void setStrEndTime(String strEndTime) {
+		this.strEndTime = strEndTime;
+	}
+
+	public Date getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(String startTime) {
+	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
 
-	public String getEndTime() {
+	public Date getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(String endTime) {
+	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
-    
+
+	public Date getStartTimes() {
+		return startTimes;
+	}
+
+	public void setStartTimes(Date startTimes) {
+		this.startTimes = startTimes;
+	}
+
+	public Date getEndTimes() {
+		return endTimes;
+	}
+
+	public void setEndTimes(Date endTimes) {
+		this.endTimes = endTimes;
+	}
+
+	public Integer getMaxAmount() {
+		return maxAmount;
+	}
+
+	public void setMaxAmount(Integer maxAmount) {
+		this.maxAmount = maxAmount;
+	}
+
+	public Integer getMinAmount() {
+		return minAmount;
+	}
+
+	public void setMinAmount(Integer minAmount) {
+		this.minAmount = minAmount;
+	}
 }

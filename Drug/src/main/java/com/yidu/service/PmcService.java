@@ -19,4 +19,8 @@ public interface PmcService  {
 
 	int findCount(Pmc record);
 
+	int addOrUpdate(Pmc record);
+
+	int bulkUpdate(List<String> ids);
+
 }

@@ -41,7 +41,7 @@ public class AuditServiceImpl   implements AuditService {
 		}else {
 			audit.setAudTime(new Date());
 			audit.setAudState(null);//这里规定一下 “0” 审核未通过  “1” 审核通过
-			audit.setIsva("0");
+			audit.setIsva("1");
 			audit.setSort(TimeUtil.getStrDate());
 			rows = insertSelective(audit);
 		}
