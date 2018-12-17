@@ -72,6 +72,7 @@
 		        <script type="text/html" id="barDemo">
 					<a class="layui-btn layui-btn-xs" lay-event="specification">说明书</a>
 		            <a class="layui-btn layui-btn-xs" lay-event="detail">物料清单</a>
+					<a class="layui-btn layui-btn-xs" lay-event="check">提交审核</a>
 		            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
 		            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 		        </script>
@@ -277,9 +278,9 @@
 		                {field: 'dtName',title: '类型',width: 80},
 		                {field: 'drugUnit',title: '单位',width: 80},
 		                {field: 'drugProp',title: '属性',width: 90},
-		                {field: 'drugPictrue',title: '图片',width: 60,templet:'#img'},
-		                {field: 'drugPrice',title: '价格（元）',width: 140,sort: true},
-		                {fixed: 'right',title: '操作',width: 280,align: 'center',toolbar: '#barDemo'}]
+		                {field: 'drugPictrue',title: '图片',width: 60,templet:'#img',tips:'单机查看'},
+		                {field: 'drugPrice',title: '价格（元）',width: 120,sort: true},
+		                {fixed: 'right',title: '操作',width: 350,align: 'center',toolbar: '#barDemo'}]
 		            ],
 		            done: function(res, curr, count) {
 		                $("[data-field = 'drugProp']").children().each(function(){
@@ -293,6 +294,13 @@
 		                	var obj = $(this);
 		                	obj.find('img').on("error", function () {
 		                		obj.text('');
+		                	});
+		                	obj.find('img').on("load", function () {
+		                		obj.find('img').mouseover(function() {
+			                		layer.tips("点击查看", this, {
+		                            	tips: [3, "#4794ec"],time: 1000
+		                          	});
+		                      	});
 		                	});
 					  	});
 		            },
@@ -338,6 +346,20 @@
 		            	layer1(data.drugId,data.drugName);
 		            } else if (layEvent === 'specification') { //说明书
 		            	layer2(data.drugId,data.drugName);
+		            } else if (layEvent === 'check') { //提交审核
+		            	$.ajax({ 
+		            		url:"../../drug/isCheck.action",
+		            		data:{"drugId":data.drugId},
+		                    type:'post',//method请求方式，get或者post
+		                    async:false,//同步
+		                    dataType:'json',//预期服务器返回的数据类型
+		                    success:function(mes){//res为相应体,function为回调函数
+		                    	layer.msg(mes.msg);
+		                    	if (mes.status == 1) {
+		                    		
+		                    	}
+		                    }
+		                 });
 		            } else if (layEvent === 'del') { //删除
 		                layer.confirm('真的删除行么', function(index) {
 		                	layer.close(index);

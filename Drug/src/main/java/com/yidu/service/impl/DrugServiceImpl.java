@@ -58,4 +58,15 @@ public class DrugServiceImpl implements DrugService {
 		return drugMapper.selectCountBySelective(record);
 	}
 
+	@Override
+	public int isCheck(String drugId) {
+		return drugMapper.isCheck(drugId);
+	}
+
+	@Override
+	public int addCheck(String drugId) {
+		
+		return 0;
+	}
+
 }

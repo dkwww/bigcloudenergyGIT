@@ -34,6 +34,7 @@ public class SpecServiceImpl   implements SpecService {
 	public Spec findById(String drugId) {
 		List<MaterialList> list = materialListMapper.selectByDrug(drugId);
 		String str = "";
+		if (list.size()<1) str = "未配置";
 		for (int i = 0; i < list.size(); i++) {
 			MaterialList materialList = list.get(i);
 			if (i == list.size()-1) {

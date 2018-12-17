@@ -86,6 +86,10 @@
    	</if>
   </select>
   
+  <select id="isCheck" parameterType="String" resultType="int">
+  	select count(dd.drug_Id) from drug_drug dd,drug_spec ds,drug_material_list ml where ds.drug_id = dd.drug_id and ml.drug_id = dd.drug_id and dd.drug_id = #{drugId,jdbcType=VARCHAR} and dd.isva = '1' and ds.isva = '1' and ml.isva = '1'
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_drug
     where drug_id = #{drugId,jdbcType=VARCHAR}

@@ -148,5 +148,32 @@ public class DrugController {
 		}
 		return mes;
 	}
+	
+	
+	/**
+	 * 检查药品信息是否完善
+	 * @param drugId 药品编号
+	 * @return Message json工具类
+	 */
+	@RequestMapping("/isCheck")
+	@ResponseBody
+	public Message isCheck(String drugId) {
+		Message mes = new Message();
+		int rows = drugService.isCheck(drugId);
+		if (rows>0) {
+			int count = drugService.addCheck(drugId);
+			if (count>0) {
+				mes.setStatus(1);
+				mes.setMsg("提交成功，待审核！");
+			} else {
+				mes.setStatus(0);
+				mes.setMsg("数据异常请稍后重试！");
+			}
+		} else {
+			mes.setStatus(0);
+			mes.setMsg("请完善药品信息！");
+		}
+		return mes;
+	}
 }
 

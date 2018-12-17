@@ -23,5 +23,9 @@ public interface DrugService   {
 	int bulkUpdate(List<String> ids);
 	//查找总行数
 	int findCount(Drug record);
+	//根据药品编号多表查询
+	int isCheck(String drugId);
+	//添加到审核表
+	int addCheck(String drugId);
 
 }
