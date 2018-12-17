@@ -40,8 +40,8 @@ public class AuditServiceImpl   implements AuditService {
 			rows = updateByPrimaryKeySelective(audit);
 		}else {
 			audit.setAudTime(new Date());
-			audit.setAudState("0");//这里规定一下 “0” 未审核  “1” 已审核
-			audit.setIsva("1");
+			audit.setAudState(null);//这里规定一下 “0” 审核未通过  “1” 审核通过
+			audit.setIsva("0");
 			audit.setSort(TimeUtil.getStrDate());
 			rows = insertSelective(audit);
 		}
