@@ -1,7 +1,20 @@
 package com.yidu.service.impl;
 
  
+import com.yidu.dao.DebtyDetailMapper;
+import com.yidu.domain.Debty;
+import com.yidu.domain.DebtyDetail;
 import com.yidu.service.DebtyDetailService;
+import com.yidu.util.PageUtil;
+import com.yidu.util.Tools;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,5 +27,46 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DebtyDetailServiceImpl  implements DebtyDetailService {
+	
+	@Resource
+	private DebtyDetailMapper debtyDetailMapper;
+	
+	@Override
+	public List<DebtyDetail> findAll(DebtyDetail debty, PageUtil pageUtil, String debId) {
+		//创建map
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("title", debId);
+		System.err.println("dadasd="+debId);
+		
+		System.out.println("ssssssssssssss"+pageUtil);
+		//map赋值
+		map.put("debty", debty);
+		//map赋值
+		map.put("pageUtil", pageUtil);
+		System.err.println("asdsadasdasdasd="+debId);
+		
+		//list集合
+		List<DebtyDetail> selectAll = debtyDetailMapper.selectAll(map);
+		System.err.println("sadfsafggggggggg"+selectAll);
+		//创建list
+		List<DebtyDetail> ss=new ArrayList<>(); 
+		
+		for (DebtyDetail Debty2 : selectAll) {
+			//调用工具类，装换时间格式
+			Debty2.setStrTime(Tools.getTimeStr(Debty2.getOptime()));
+			//加入集合
+			ss.add(Debty2);
+		}	
+		return ss;
+	}
+
+	@Override
+	public int selectCount(DebtyDetail debty) {
+		
+		return debtyDetailMapper.selectCount(debty);
+	}
+
+	
 
 }

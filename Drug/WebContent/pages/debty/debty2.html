@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
+		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
+		<title>财务管理</title>
+    </script>
+	</head>
+	<body>
+		
+			<!-- 操作按钮 -->
+		    <div class="kit-table-body">
+		        <table id="demo" lay-filter="demo"></table>
+		        <script type="text/html" id="barDemo">
+		            
+		           <a class="layui-btn layui-btn-xs" lay-event="detail">查看明细</a>
+		        </script>
+		    </div>
+	
+		
+		
+		<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
+		<script>
+			//文本框只能输入金额
+		    function amount(th){
+		        var regStrs = [
+		            ['^0(\\d+)$', '$1'], //禁止录入整数部分两位以上，但首位为0
+		            ['[^\\d\\.]+$', ''], //禁止录入任何非数字和点
+		            ['\\.(\\d?)\\.+', '.$1'], //禁止录入两个以上的点
+		            ['^(\\d+\\.\\d{2}).+', '$1'] //禁止录入小数点后两位以上
+		        ];
+		        for(i=0; i<regStrs.length; i++){
+		            var reg = new RegExp(regStrs[i][0]);
+		            th.value = th.value.replace(reg, regStrs[i][1]);
+		        }
+		    }
+			//搜索框同步输入
+			function lockInput(obj,id){
+				$("#"+id).val($(obj).val());
+			}
+		</script>
+		<script src="../../res/layui/layui.all.js"></script>
+		<script>
+			//显示表格数据
+		    layui.use(['table','upload'], function() {
+		    	function getParameter(param){
+		    		var query = window.location.search;
+		    		var iLen = param.length;
+		    		var iStart = query.indexOf(param);
+		    		if (iStart == -1)
+		    			return "";
+		    		iStart += iLen + 1;
+		    		var iEnd = query.indexOf("&", iStart);
+		    		if (iEnd == -1)
+		    			return query.substring(iStart);
+
+		    		return query.substring(iStart, iEnd);
+		    	}
+				var s= getParameter("id");
+		    	
+		        var table = layui.table,
+		            $ = layui.jquery,
+		            layer = layui.layer,
+		            form = layui.form,
+		            laytpl = layui.laytpl;
+		        var tableIns = table.render({
+		            elem: '#demo',
+		            height: '449px', //容器高度
+		          url: '../../debtyDetail/findAll.action?debId='+getParameter("id"),
+		          page: true,
+		          id: 'demo',
+		          cols: [
+		          	[{
+		          		checkbox: true,
+		          		fixed: true
+		          	}, {
+		          		field: 'ddetId',
+		          		title: '财物明细编号',
+		          		width: 80
+		          	}, {
+		          		field: 'debId',
+		          		title: '财物编号',
+		          		width: 125
+		          	}, {
+		          		field: 'ddetChange',
+		          		title: '资金变动',
+		          		width: 125
+		          	}, {
+		          		field: 'ddettFkId',
+		          		title: '业务编号',
+		          		width: 125
+		          	},{
+		          		field: 'isva',
+		          		title: '是否有效',
+		          		width: 100
+		          	}, {
+		          		field: 'strTime',
+		          		title: '操作时间',
+		          		width: 180
+		          	}, {
+		          		field: 'oper',
+		          		title: '操作人',
+		          		width: 150
+		          	}, {
+		          		field: 'sort',
+		          		title: '排序',
+		          		width: 80
+		          	},{
+		          		fixed: 'right',
+		          		title: '操作',
+		          		width: 200,
+		          		align: 'center',
+		          		toolbar: '#barDemo'
+		          	
+		          	}]
+		          ],
+		            done: function(res, curr, count) {
+		                $("[data-field = 'drugProp']").children().each(function(){
+						    if($(this).text() == '1'){
+						    	$(this).text("处方药");
+						    } else if ($(this).text() == '0') {
+						    	$(this).text("非处方药");
+						    }
+					  	});
+		                /* $("[data-field = 'drugPictrue']").children().each(function(){
+						    if($(this).text() == 'null'||$(this).text() == ''){
+						    	$(this).text("暂无");
+						    }
+					  	}); */
+		            },
+		            loading: true,
+		        });
+		        
+		        var staticData = null;
+		       
+		        
+		        //监听搜索表单提交
+		        form.on('submit(search)', function(data) {
+		            //带条件查询
+		            tableIns.reload({
+		                where: data.field
+		            });
+		            $('.kit-search-mored').hide();
+		            return false;
+		        });
+		        
+		        //渲染 修改和增加弹出层
+			    function showlayer(d){
+			    	laytpl($('#edit-tpl').html()).render(d,function(html) {
+	                    layer.open({
+	                        type: 1,
+	                        title: '表单',
+	                        content: html,
+	                        area: ['800px', '430px'],
+	                        btn: ['提交', '重置', '取消'],
+	                        yes: function(index, layero) {
+	                            editIndex = index;
+	                            $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
+	                        },
+	                        btn2: function(index, layero) {
+	                            $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
+	                            return false;
+	                        },
+	                        success: function() {
+	                            form.render(null, 'form-edit');
+	                        }
+	                    });
+	                    upload();
+	                });
+			    }
+		        
+		        //监听工具条按钮点击
+		        table.on('tool(demo)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+		            var data = obj.data; //获得当前行数据
+		            var layEvent = obj.event; //获得 lay-event 对应的值
+		            var tr = obj.tr; //获得当前行 tr 的DOM对象
+		
+		            if (layEvent === 'detail') { //查看
+		            	 layer.open({
+		            	      type: 2,
+		            	      title: '很多时候，我们想最大化看，比如像这个页面。',
+		            	      shadeClose: true,
+		            	      shade: false,
+		            	      maxmin: true, //开启最大化最小化按钮
+		            	      area: ['893px', '600px'],
+		            	      content: 'https://www.baidu.com/?id='+id
+		            	    });
+		            } else if (layEvent === 'del') { //删除
+		                layer.confirm('真的移除加盟吗', function(index) {
+		                	layer.close(index);
+		                    update("../../company/add.action",{"comId":data.comId,"isva":"0"});
+		                });
+		            } else if (layEvent === 'edit') { //编辑
+		                var d = {
+		                	user: data
+		                };
+		                showlayer(d);
+		            }
+		        });
+		        
+		        //表单渲染
+		        form.render(null, 'kit-search-form');
+		        //更多筛选点击事件
+		        $('#kit-search-more').on('click', function() {
+		            $('.kit-search-mored').toggle();
+		        });
+		        var editIndex;
+		        
+		        form.on('submit(formEdit)', function(data) {
+                    $.ajax({
+                		url: "../../company/add.action",
+                		type: "POST",
+                		cache: false,//同步
+                		data:JSON.stringify(data.field),
+                		dataType: "json",
+                		contentType : "application/json;charset=utf8",
+               			success: function(mes){            
+                    		if(data==0){
+                     			layer.msg(mes.msg, {icon: 5});
+                     			return false;
+                    		}else{   
+                    			$("#res").click();//调用重置按钮将表单数据清空
+		                        editIndex && layer.close(editIndex); //关闭弹出层
+	    			    		$(".layui-laypage-btn")[0].click();//当前表格刷新
+	                        	layer.msg(mes.msg,{icon:1});
+                   			 }
+                		},
+                		error:function(){
+                			return false;
+                		},
+            		});
+		            return false;
+		        });
+		        
+		        //增加、批量删除 按钮点击事件
+		        $('.kit-search-btns').children('a').off('click').on('click', function() {
+		            var $that = $(this),
+		                action = $that.data('action');
+		            switch (action) {
+		            	//点击的是 增加按钮
+		                case 'add':
+		                    var d = {
+		                		//替换增加页面文本框内出现的undefine
+		                        user: {
+		                        	comId: '',comName: '',comPhone: '',comAddress:'',comType: '',isva: '',optime: '',oper: '',sort:''
+		                        }
+		                    };
+		                    showlayer(d);
+		                    break;
+		                    
+		                //点击的是 批量删除按钮
+		                case 'del-bulk':
+		                    var d = table.checkStatus('demo');
+		                    if (d.data.length === 0) {
+		                        layer.msg('请选择要删除的数据');
+		                        return;
+		                    }
+		                    var data = d.data,
+		                        names = [],
+		                        ids = [];
+		                    layui.each(data, function(index, item) {
+		                        names.push(item.comName);
+		                        ids.push(item.comId);
+		                    });
+		                    layer.confirm('真的删除行么', function(index) {
+		                    	layer.close(index);
+		                    	update("../../company/companyUpdate.action",ids);
+			                });
+		                    break;
+		                    
+		            }
+		        });
+		    });
+		    
+		    //增加、修改、删除、批量删除 都是用的这一个方法
+		    function update(url,data){
+		    	$.ajax({
+		    		url: url,
+                    type:'post',//method请求方式，get或者post
+                    cache: false,//同步
+                    dataType:'json',//预期服务器返回的数据类型
+                    data: JSON.stringify(data),//表格数据序列化
+                    contentType: "application/json; charset=utf-8",
+                    success:function(mes){//res为相应体,function为回调函数
+                    	$(".layui-laypage-btn")[0].click();//当前表格刷新
+                        if(mes.status==1){ 
+                        	var close = true;//有弹出层时是关闭弹出层 false不关闭
+	                        $("#res").click();//调用重置按钮将表单数据清空
+                        }
+                        layer.msg(mes.msg);
+                    },
+                   	error:function(){layer.alert('数据异常，请稍后重试！！！',{icon:5});}
+                 });
+		    }
+		    
+		    
+		    
+		    //ajax加载动画
+		    $(function () {
+	            $.ajaxSetup({
+	                layerIndex:-1,
+	                beforeSend: function () {
+	                    this.layerIndex = layer.load(1, { shade: [0.8, '#ffffff'] });
+	                },
+	                complete: function () {
+	                    layer.close(this.layerIndex);
+	                },
+	                error: function () {
+	                    layer.alert('部分数据加载失败，可能会导致页面显示异常，请刷新后重试', {
+	                        skin: 'layui-layer-molv'
+	                       , closeBtn: 0
+	                       , shift: 4 //动画类型
+	                    });
+	                }
+	            });
+	        });
+		</script>
+	</body>
+</html>

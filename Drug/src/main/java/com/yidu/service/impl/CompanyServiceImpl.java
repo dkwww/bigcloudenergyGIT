@@ -154,7 +154,7 @@ public class CompanyServiceImpl  implements CompanyService {
 	}
 
 	/**
-	 * 分页
+	 * 查询总共多少条数据
 	 */
 	@Override
 	public int checkselectCount(Company company) {

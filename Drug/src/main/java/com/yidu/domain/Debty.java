@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Debty {
+	  private String strTime;
     private String debId;
 
     private String comId;
@@ -18,7 +19,16 @@ public class Debty {
 
     private String sort;
 
-    public String getDebId() {
+    
+    public String getStrTime() {
+		return strTime;
+	}
+
+	public void setStrTime(String strTime) {
+		this.strTime = strTime;
+	}
+
+	public String getDebId() {
         return debId;
     }
 

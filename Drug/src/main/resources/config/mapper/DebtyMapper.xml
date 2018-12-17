@@ -19,6 +19,27 @@
     from drug_debty
     where deb_id = #{debId,jdbcType=VARCHAR}
   </select>
+  <!-- 分店分页以及模糊查询 -->
+  <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
+  	select * from  drug_debty 
+  	
+  	limit #{pageUtil.startRows},#{pageUtil.rows}
+  </select>
+  <!-- 查询总共多少条数据 -->
+  <select id="selectCount" parameterType="map" resultType="int">
+    select 
+    count(*) 
+    from drug_debty
+
+  </select>
+   <!-- 分店批量修改为0 -->
+  <update id="companyDeleteByPrimaryKeySelective">
+    update drug_debty set isva = '0'
+    where deb_id in 
+    <foreach collection="list" item="ids" open="(" separator="," close=")">
+      #{ids} 
+    </foreach> 
+  </update>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_debty
     where deb_id = #{debId,jdbcType=VARCHAR}
@@ -104,6 +125,7 @@
     </set>
     where deb_id = #{debId,jdbcType=VARCHAR}
   </update>
+  
   <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Debty">
     update drug_debty
     set com_id = #{comId,jdbcType=VARCHAR},
