@@ -2,6 +2,18 @@ package com.yidu.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.yidu.domain.Audit;
+import com.yidu.domain.Buy;
+import com.yidu.service.AuditService;
+import com.yidu.util.PageUtil;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 
@@ -16,6 +28,32 @@ import org.springframework.stereotype.Controller;
 @Controller
 @RequestMapping("/audit")
 public class AuditController {
-
+	
+	@Resource
+	AuditService service;
+	
+	/**
+	 * 显示列表的方法
+	 * @return
+	 */
+	@RequestMapping("/findAll")
+	@ResponseBody
+	public Map<String, Object> findAll(Audit audit,Integer page,Integer limit){
+		PageUtil pageUtil = new PageUtil();
+		if(page!=null && limit!=null) {
+			pageUtil.setCurPage(page);
+			pageUtil.setRows(limit);
+		}
+		
+		List<Audit> list = service.showList(audit,pageUtil);
+		int rows=service.findCount(audit);
+		
+		Map<String, Object> m = new HashMap<>();
+		m.put("code", 0);
+		m.put("msg", "");
+		m.put("count", rows);
+		m.put("data", list);
+		return m;
+	}
 }
 

@@ -30,6 +30,8 @@ public class Buy {
     private String buyAudit;				//审核状态
 
     private String buyState;				//采购状态
+
+    private String buyStates;				//采购状态
     	
     private String buyQc;					//质检状态
 
@@ -50,6 +52,14 @@ public class Buy {
     
     
    
+
+	public String getBuyStates() {
+		return buyStates;
+	}
+
+	public void setBuyStates(String buyStates) {
+		this.buyStates = buyStates;
+	}
 
 	public String getProvName() {
 		return provName;

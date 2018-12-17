@@ -66,5 +66,17 @@ public class BuyDetailController {
 		return message;
 	}
 	
+	/**
+	 * 根据采购id查询
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/findById")
+	@ResponseBody
+	public List<BuyDetail> findById(String id){
+		
+		return service.findById(id);
+	}
+	
 }
 

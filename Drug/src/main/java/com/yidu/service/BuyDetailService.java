@@ -37,4 +37,11 @@ public interface BuyDetailService  {
 	 * @return
 	 */
 	public int insertSelective(BuyDetail detail);
+	
+	/**
+	 * 根据id查询
+	 * @param id
+	 * @return
+	 */
+	public List<BuyDetail> findById(String id);
 }

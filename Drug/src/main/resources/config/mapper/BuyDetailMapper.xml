@@ -7,6 +7,7 @@
     <result column="bdet_amount" jdbcType="INTEGER" property="bdetAmount" />
     <result column="bdet_price" jdbcType="DECIMAL" property="bdetPrice" />
     <result column="bdet_total" jdbcType="DECIMAL" property="bdetTotal" />
+    <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
     <result column="bdet_fk_id" jdbcType="VARCHAR" property="bdetFkId" />
     <result column="drug_name" jdbcType="VARCHAR" property="bdetFkName" />
     <result column="isva" jdbcType="VARCHAR" property="isva" />
@@ -33,6 +34,14 @@
   	<if test="matName!=null and matName!='' ">
   		and c.mat_name like concat("%",#{matName},"%")
   	</if>
+  </select>
+  
+  <select id="findById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    *
+    from drug_buy_detail de, drug_drug drug 
+    where de.bdet_fk_id = drug.drug_id
+    and buy_id = #{buyId,jdbcType=VARCHAR}
   </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">

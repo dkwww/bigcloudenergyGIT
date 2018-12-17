@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
+		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
+		<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
+		<title>采购详情</title>
+		<style>
+			#kit-table{
+				margin-top:30px;
+			}
+		</style>
+		<script>
+			$(function(){
+				var id = window.location.href.split("?")[1].split("=")[1];
+				var url= "../../buyDetail/findById.action";
+				var data ={"id":id};
+				$.post(url,data,function(mes){
+					$.each(mes,function(i,item){
+						$("#tbo").append("<tr><td>"+item.drugName+"</td><td>"+item.bdetAmount+"</td><td>"+item.bdetPrice+"</td><td>"+item.bdetTotal+"</td></tr>");
+					});
+				},"json");
+			})
+		</script>
+	</head>
+	<body>
+	
+	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+  <legend>采购详情</legend>
+	</fieldset>
+<table class="layui-table"  style="width:1000px;" lay-filter="test3" id="add">
+  <thead>
+    <tr>
+      <th>药品名称</th>
+      <th>数量</th>
+      <th>单价</th>
+      <th>总价</th>
+    </tr>
+  </thead>
+  <tbody id="tbo">
+  	
+  </tbody>
+</table>
+		<script>
+			
+			//文本框只能输入金额
+		    function amount(th){
+		        var regStrs = [
+		            ['^0(\\d+)$', '$1'], //禁止录入整数部分两位以上，但首位为0
+		            ['[^\\d\\.]+$', ''], //禁止录入任何非数字和点
+		            ['\\.(\\d?)\\.+', '.$1'], //禁止录入两个以上的点
+		            ['^(\\d+\\.\\d{2}).+', '$1'] //禁止录入小数点后两位以上
+		        ];
+		        for(i=0; i<regStrs.length; i++){
+		            var reg = new RegExp(regStrs[i][0]);
+		            th.value = th.value.replace(reg, regStrs[i][1]);
+		        }
+		    }
+		</script>
+		<script src="../../res/layui/layui.all.js"></script>
+		<script>
+		
+			//显示表格数据
+		    layui.use(['table','upload'], function() {
+		        var table = layui.table,
+		            $ = layui.jquery,
+		            layer = layui.layer,
+		            form = layui.form,
+		            laytpl = layui.laytpl;
+		        
+		        
+					
+		      	//监听表格复选框选择
+		        table.on('checkbox(demo)', function(obj){
+		        	var data = obj.data;
+		        	$("#tbo").append("<tr><td>"+data.drugName+"</td><td><input type='number' id='up_"+data.drugId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' value='1' /></td><td id='pic_"+data.drugId+"'>"+data.drugPrice+"</td><td>"+data.drugUnit+"</td><td><input type='text' id='mes_"+data.drugId+"' style='height:20px; border:0px; width:200px;' onKeyUp='pj()'/></td><td id='total'>"+data.drugPrice+"</td><td><a onclick='delrow(this);' class='dels'>删除</a></td><td style='display:none;'><input type='text' id='drugId' value='"+data.drugId+"' /></td></tr>")
+		        	
+		        	
+		        });
+		      	
+		      	/**
+		      	* 采购表移除药品
+		      	*/
+		      	$('body').on('click','dels',function(){
+		      		alert(1);
+		      		$(this).closest('tr').remove();
+		      	})
+		      	
+		        //监听搜索表单提交
+		        form.on('submit(search)', function(data) {
+		            //带条件查询
+		            tableIns.reload({
+		                where: data.field
+		            });
+		            $('.kit-search-mored').hide();
+		            return false;
+		        });
+		        
+		        //表单渲染
+		        form.render(null, 'kit-search-form');
+		        //更多筛选点击事件
+		        $('#kit-search-more').on('click', function() {
+		            $('.kit-search-mored').toggle();
+		        });
+		        var editIndex;
+		    });
+		    
+		    	
+		    $("#btn").click(function(){
+					var url="../../buyDetail/add.action";
+					var data={"mes":$("#mes").val()};
+					$.post(url,data,function(mes){
+						if(mes.state==1){
+							alert("菜");
+						}else{
+							alert("牛逼");
+						}
+						
+					},"json");
+				})
+		   
+		   
+		</script>
+		
+   		<input type="hidden" name="mes" id="mes"/>
+	</body>
+</html>

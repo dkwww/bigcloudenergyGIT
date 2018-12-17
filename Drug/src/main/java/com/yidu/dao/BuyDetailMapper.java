@@ -12,7 +12,7 @@ public interface BuyDetailMapper {
 
     int insertSelective(BuyDetail record);
 
-    BuyDetail selectByPrimaryKey(String bdetId);
+    List<BuyDetail> selectByPrimaryKey(String bdetId);
 
     int updateByPrimaryKeySelective(BuyDetail record);
 
@@ -39,4 +39,11 @@ public interface BuyDetailMapper {
      */
     int selectCount(BuyDetail detail);
     
+    /**
+     * 根据id查询
+     * @param id
+     * @author 郑有宏
+     * @return
+     */
+    List<BuyDetail> findById(String id);
 }

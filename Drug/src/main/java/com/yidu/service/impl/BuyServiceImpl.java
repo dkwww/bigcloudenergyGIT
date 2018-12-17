@@ -39,9 +39,24 @@ public class BuyServiceImpl implements BuyService {
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("buy", buy);
 		map.put("pageUtil", pageUtil);
+		List<Buy> list = mapper.findAll(map);
+		for (Buy buy2 : list) {
+			if(buy2.getBuyTime()!=null&&!"".equals(buy2.getBuyTime())) {
+				buy2.setBuyTimes(TimeUtil.dateToString(buy2.getBuyTime(), "yyyy-MM-dd HH:mm:ss"));
+			}
+			if(buy2.getOptime()!=null&&!"".equals(buy2.getOptime())) {
+				buy2.setOptimes(TimeUtil.dateToString(buy2.getOptime(), "yyyy-MM-dd HH:mm:ss"));
+			}
+			if("0".equals(buy2.getBuyState())) {
+				buy2.setBuyStates("采购中");
+			}else if("1".equals(buy2.getBuyState())) {
+				buy2.setBuyStates("采购完成");
+			}else if("2".equals(buy2.getBuyState())) {
+				buy2.setBuyStates("采购失败");
+			}
+		}
 		
-		
-		return mapper.findAll(map);
+		return list;
 	}
 
 

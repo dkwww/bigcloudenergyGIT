@@ -35,11 +35,19 @@ public class BuyDetail {
     private String matAmount;					//材料数量
     
     private String matPrice;					//材料单价
-    
 
+    private String drugName;
     
     
-    public String getMatName() {
+    public String getDrugName() {
+		return drugName;
+	}
+
+	public void setDrugName(String drugName) {
+		this.drugName = drugName;
+	}
+
+	public String getMatName() {
 		return matName;
 	}
 
