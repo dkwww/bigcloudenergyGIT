@@ -6,6 +6,7 @@ import com.yidu.domain.Audit;
 import com.yidu.domain.BuyDetail;
 import com.yidu.service.AuditService;
 import com.yidu.util.PageUtil;
+import com.yidu.util.TimeUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -65,8 +66,28 @@ public class AuditServiceImpl   implements AuditService {
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("audit", audit);
 		map.put("pageUtil", pageUtil);
-		
-		return mapper.findAll(map);
+		List<Audit> list = mapper.findAll(map);
+		for (Audit audit2 : list) {
+			if(audit2.getAudTime()!=null&&!"".equals(audit2.getAudTime())) {
+				audit2.setAudTimes(TimeUtil.dateToString(audit2.getAudTime(), "yyyy-MM-dd HH:mm:ss"));
+			}
+			if(audit2.getOptime()!=null&&!"".equals(audit2.getOptime())) {
+				audit2.setOptimes(TimeUtil.dateToString(audit2.getOptime(), "yyyy-MM-dd HH:mm:ss"));
+			}
+			if(audit2.getAudState()!=null&&!"".equals(audit2.getAudState())) {
+				if("0".equals(audit2.getAudState())) {
+					audit2.setAudStates("审核失败");
+				}
+				if("1".equals(audit2.getAudState())) {
+					audit2.setAudStates("审核中");
+				}
+				if("2".equals(audit2.getAudState())) {
+					audit2.setAudStates("审核通过");
+				}
+			}
+			
+		}
+		return list;
 	}
 
 

@@ -13,7 +13,11 @@ public class Audit {
 
     private Date audTime;
 
+    private String audTimes;
+
     private String audState;
+
+    private String audStates;
 
     private String audIdea;
 
@@ -25,11 +29,39 @@ public class Audit {
 
     private Date optime;
 
+    private String optimes;
+
     private String oper;
 
     private String sort;
 
-    public String getAudId() {
+    
+    
+    public String getAudStates() {
+		return audStates;
+	}
+
+	public void setAudStates(String audStates) {
+		this.audStates = audStates;
+	}
+
+	public String getAudTimes() {
+		return audTimes;
+	}
+
+	public void setAudTimes(String audTimes) {
+		this.audTimes = audTimes;
+	}
+
+	public String getOptimes() {
+		return optimes;
+	}
+
+	public void setOptimes(String optimes) {
+		this.optimes = optimes;
+	}
+
+	public String getAudId() {
         return audId;
     }
 

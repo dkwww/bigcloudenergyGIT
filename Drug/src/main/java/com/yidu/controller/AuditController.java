@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yidu.domain.Audit;
 import com.yidu.domain.Buy;
 import com.yidu.service.AuditService;
+import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
 
 import java.util.HashMap;
@@ -54,6 +55,23 @@ public class AuditController {
 		m.put("count", rows);
 		m.put("data", list);
 		return m;
+	}
+	
+	@RequestMapping("/auditById")
+	@ResponseBody
+	public Message auditById(String id) {
+		Audit audit = new Audit();
+		audit.setAudId(id);
+		audit.setAudState("1");
+		
+		int rows=service.updateByPrimaryKeySelective(audit);
+		Message message = new Message();
+		if(rows!=0) {
+			message.setStatus(1);
+			message.setMsg("操作成功");
+		}
+		
+		return message;
 	}
 }
 
