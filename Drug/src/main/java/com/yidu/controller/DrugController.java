@@ -44,7 +44,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yidu.domain.Audit;
 import com.yidu.domain.Drug;
+import com.yidu.service.AuditService;
 import com.yidu.service.DrugService;
 import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
@@ -64,6 +66,8 @@ public class DrugController {
 	
 	@Resource
 	private DrugService drugService;
+	@Resource
+	private AuditService auditService;
 	
 	/**
 	 * 查询所有
@@ -161,7 +165,9 @@ public class DrugController {
 		Message mes = new Message();
 		int rows = drugService.isCheck(drugId);
 		if (rows>0) {
-			int count = drugService.addCheck(drugId);
+			Audit audit = new Audit();
+			audit.setAudFkId(drugId);
+			int count = auditService.addOrUpdate(audit);
 			if (count>0) {
 				mes.setStatus(1);
 				mes.setMsg("提交成功，待审核！");

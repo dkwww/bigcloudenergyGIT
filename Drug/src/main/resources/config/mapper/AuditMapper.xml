@@ -44,7 +44,7 @@
     where aud_id = #{audId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.yidu.domain.Audit">
-  	<selectKey keyProperty="aud_id" resultType="string" order="BEFORE">
+  	<selectKey keyProperty="audId" resultType="string" order="BEFORE">
 	    SELECT REPLACE(UUID(),'-','') AS id;
 	</selectKey>
     insert into drug_audit (aud_id, aud_fk_id, aud_comtype, 
@@ -59,7 +59,7 @@
       #{sort,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yidu.domain.Audit">
-  	<selectKey keyProperty="aud_id" resultType="string" order="BEFORE">
+  	<selectKey keyProperty="audId" resultType="string" order="BEFORE">
 	    SELECT REPLACE(UUID(),'-','') AS id;
 	</selectKey>
     insert into drug_audit
