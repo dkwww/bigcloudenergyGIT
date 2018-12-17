@@ -22,7 +22,7 @@ import org.springframework.stereotype.Controller;
  * 财物明细 前端控制器
  * </p>
  *
- * @author Pngjiangping
+ * @author liuwenxuan
  * @since 2018-11-26
  */
 @Controller
@@ -36,7 +36,7 @@ public class DebtyDetailController {
 	 * @param Debty 传入Debty
 	 * @param page 传入page
 	 * @param limit 传入limit
-	 * @return
+	 * @return 返回map
 	 */
 	@RequestMapping("/findAll")
 	@ResponseBody
@@ -50,7 +50,7 @@ public class DebtyDetailController {
 			//将limit赋值到rows
 			pageUtil.setRows(limit);
 		}
-System.err.println(debId);
+
 		//创建一个map
 		HashMap<String , Object> map = new HashMap<>();
 		//创建一个list并调用分店查询所有的方法

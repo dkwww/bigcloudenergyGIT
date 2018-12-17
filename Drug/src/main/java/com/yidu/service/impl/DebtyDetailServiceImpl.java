@@ -30,25 +30,22 @@ public class DebtyDetailServiceImpl  implements DebtyDetailService {
 	
 	@Resource
 	private DebtyDetailMapper debtyDetailMapper;
-	
+	/**
+	 * 查询的方法
+	 */
 	@Override
 	public List<DebtyDetail> findAll(DebtyDetail debty, PageUtil pageUtil, String debId) {
 		//创建map
 		Map<String, Object> map = new HashMap<String, Object>();
-		
+		//map赋值id 
 		map.put("title", debId);
-		System.err.println("dadasd="+debId);
-		
-		System.out.println("ssssssssssssss"+pageUtil);
-		//map赋值
+		//map赋值debty
 		map.put("debty", debty);
-		//map赋值
+		//map赋值pageUtil
 		map.put("pageUtil", pageUtil);
-		System.err.println("asdsadasdasdasd="+debId);
 		
 		//list集合
 		List<DebtyDetail> selectAll = debtyDetailMapper.selectAll(map);
-		System.err.println("sadfsafggggggggg"+selectAll);
 		//创建list
 		List<DebtyDetail> ss=new ArrayList<>(); 
 		
@@ -60,7 +57,9 @@ public class DebtyDetailServiceImpl  implements DebtyDetailService {
 		}	
 		return ss;
 	}
-
+	/**
+	 * 查询多少行
+	 */
 	@Override
 	public int selectCount(DebtyDetail debty) {
 		

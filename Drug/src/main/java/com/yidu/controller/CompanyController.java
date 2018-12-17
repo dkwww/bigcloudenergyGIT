@@ -169,14 +169,20 @@ public class CompanyController {
 		return map;
 	}
 	
+	/**
+	 * 增加和修改
+	 * @param com 传入company
+	 * @return 返回mes
+	 */
 	@RequestMapping("/add")
 	@ResponseBody
 	public Message insertUpdate(@RequestBody Company com) {
+		//Message工具类
 		Message mes=new Message();
 		System.err.println("进入了增加修改的方法");
-		
+		//调用增加修改的方法
 		int rows = companyService.addOrUpdate(com);
-		System.err.println(com.getComName());
+		//大于0成功否则失败
 		if(rows>0) {
 			mes.setStatus(1);
 			mes.setMsg("操作成功");
@@ -213,8 +219,8 @@ public class CompanyController {
 	
 	/**
 	 * 分店批量审核
-	 * @param ids
-	 * @return
+	 * @param ids 传入多个id 
+	 * @return 返回mes
 	 */
 	@RequestMapping("/checkcompanyUpdate")
 	@ResponseBody

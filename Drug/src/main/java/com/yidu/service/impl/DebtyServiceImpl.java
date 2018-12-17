@@ -66,7 +66,10 @@ public class DebtyServiceImpl   implements DebtyService {
 		
 		return debtyMapper.selectCount(debty);
 	}
-
+	
+	/**
+	 * 增加和修改的方法
+	 */
 	@Override
 	public int addOrUpdate(Debty det) {
 		//定义一个rows

@@ -25,7 +25,7 @@ import org.springframework.stereotype.Controller;
  * 财务表 前端控制器
  * </p>
  *
- * @author Pngjiangping
+ * @author liuwenxuan
  * @since 2018-11-26
  */
 @Controller
@@ -38,7 +38,7 @@ public class DebtyController {
 	 * @param Debty 传入Debty
 	 * @param page 传入page
 	 * @param limit 传入limit
-	 * @return
+	 * @return 返回map
 	 */
 	@RequestMapping("/findAll")
 	@ResponseBody
@@ -84,15 +84,21 @@ public class DebtyController {
 	}
 	
 	
-	
+	/**
+	 * 增加和修改
+	 * @param deb 传入一个财务对象
+	 * @return 返回mes
+	 */
 	@RequestMapping("/add")
 	@ResponseBody
-	public Message insertUpdate(@RequestBody Debty com) {
+	public Message insertUpdate(@RequestBody Debty deb) {
+		//Message工具类
 		Message mes=new Message();
 		System.err.println("进入了增加修改的方法");
-		
-		int rows = debtyService.addOrUpdate(com);
-		System.err.println(com.getDebMoney());
+		//调用增加修改的方法
+		int rows = debtyService.addOrUpdate(deb);
+		System.err.println(deb.getDebMoney());
+		//大于0成否则失败
 		if(rows>0) {
 			mes.setStatus(1);
 			mes.setMsg("操作成功");
