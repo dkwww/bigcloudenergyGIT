@@ -1,99 +1,131 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
-		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
-		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
-		<title>销售管理</title>
-    </script>
-	</head>
-	<body>
-		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-		  <legend>增加销售订单</legend>
-		</fieldset>
-		<div class="layui-form">
-		  <table class="layui-table"  style="width:880px;" lay-filter="test3" id="add">
-			  <thead>
-			    <tr>
-			      <th lay-data="{field:'id', width:150, sort: true, edit: 'text'}">药品名</th>
-			      <th lay-data="{field:'sex', width:50, edit: 'text'}">零售数量</th>
-			      <th lay-data="{field:'email', edit: 'text', width:50}">零售价格</th>
-			      <th lay-data="{field:'email', edit: 'text', width:50}">会员折扣率</th>
-			      <th lay-data="{field:'email', edit: 'text', width:50}">折扣单价</th>
-			      <th lay-data="{field:'email', edit: 'text', width:50}">折扣总金额</th>
-			      <th lay-data="{fixed: 'right',title: '操作',width: 180,align: 'center',toolbar: '#barDemo'}">操作</th>
-			    </tr>
-			  </thead>
-			</table>
-		</div>
-		<button style="top:-80px;left:780px;width:100px;" lay-submit lay-filter="search" class="layui-btn layui-btn-sm kit-btn">确认购买</button>
-		<div class="kit-table">
-		    <form class="layui-form" lay-filter="kit-search-form">
-				<!-- 左上角的两个按钮 -->
-		        <div class="kit-table-header">
-		            <div style="left:30px;" class="kit-search-inputs">
-		                <div class="kit-search-keyword">
-		                    <input type="text" class="layui-input" id="serach-one" placeholder="药品.." onKeyUp="lockInput(this,'serach-two')"/>
-		                    <button style="left:170px;" lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
-		                </div>
-		                <div style="left:230px;" class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>
-		            </div>
-		        </div>
-				<!-- 搜索扩展工具条 -->
-		        <div class="kit-search-mored layui-anim layui-anim-upbit">
-		            <div class="kit-search-body">
-		                <div class="layui-form-item">
-		                    <label class="layui-form-label">药品名称</label>
-		                    <div class="layui-input-block">
-		                        <input type="text" name="drugName" id="serach-two" placeholder="搜索关键字.." autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
-		                    </div>
-		                </div>
-		                <div class="layui-form-item">
-			                <label class="layui-form-label">药品类型</label>
-			                <div class="layui-input-block">
-			                    <select name="dtId" id="drug-type">
-			                      <option value=""></option>
-			                    </select>
-			                </div>
-		                </div>
-		                <div class="layui-form-item">
-		                    <div class="layui-inline">
-		                        <label class="layui-form-label">药品价格</label>
-		                        <div class="layui-input-block">
-			                        <div class="layui-input-inline" style="width: 100px;">
-			                            <input type="text" name="priceMin" placeholder="￥" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
-			                        </div>
-			                        <div class="layui-form-mid">-</div>
-			                        <div class="layui-input-inline" style="width: 100px;">
-			                            <input type="text" name="priceMax" placeholder="￥" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
-			                        </div>
-		                        </div>
-		                    </div>
-		                </div>
-		            </div>
-		            <div class="kit-search-footer">
-		                <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary kit-btn reset-btn">重置</button>
-		                <button lay-submit lay-filter="search" class="layui-btn layui-btn-sm kit-btn">确定</button>
-		            </div>
-		        </div>
-		    </form>
-			<!-- 操作按钮 -->
-		    <div class="kit-table-body">
-		        <table id="demo" lay-filter="demo"></table>
-		        <script type="text/html" id="barDemo">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
+<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
+<script type="text/javascript" src="https://lib.baomitu.com/jquery/1.11.2/jquery.min.js"></script>
+<title>零售管理</title>
+</script>
+</head>
+<body>
+	<fieldset class="layui-elem-field layui-field-title"
+		style="margin-top: 20px;">
+		<legend>增加零售订单</legend>
+	</fieldset>
+	
+	<form class="layui-form" action="">
+	<button style="width: 100px;float: right;margin-right: 150px;margin-top: -10px;" lay-submit lay-filter="search"
+		class="layui-btn layui-btn-sm kit-btn"> 确认购买</button>
+		
+		
+	<div class="layui-form-item">
+		<label class="layui-form-label">会员名</label>
+			<div class="layui-input-block" style="width:200px;">
+				<select name="menId" id="memSelect" lay-filter="memSelect">
+					<option value=""></option>
+				</select>
+		    </div>
+   </div>
+   
+   <div style="position: relative;display: inline;margin-bottom: 400px" id="zong">
+			总金额:<input id="zongjin" style="width:120px;height: 35px;" class="layui-input" type="text" />
+			 总数量:<input id="zongshu" style="width:120px;height: 35px;" class="layui-input" type="text" />
+   </div>
+	</form>
+	<div class="layui-form">
+		<table class="layui-table" style="width: 880px;" lay-filter="test3" id="add">
+			<thead>
+				<tr>
+					<th lay-data="{field:'id', width:150, sort: true, edit: 'text'}">药品名</th>
+					<th lay-data="{field:'amount', width:50, edit: 'text'}">零售数量</th>
+					<th lay-data="{field:'price', edit: 'text', width:50}">零售单价</th>
+					<th lay-data="{field:'prices', edit: 'text', width:50}">零售总金额</th>
+					<th lay-data="{field:'zl', edit: 'text', width:50}">会员折扣率</th>
+					<th lay-data="{field:'zj', edit: 'text', width:50}">折扣单价</th>
+					<th lay-data="{field:'ze', edit: 'text', width:50}">折扣总金额</th>
+					<th lay-data="{fixed: 'right',title: '操作',width: 180,align: 'center',toolbar: '#barDemo'}">操作</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+
+	<div class="kit-table">
+		<form class="layui-form" lay-filter="kit-search-form">
+			<!-- 左上角的两个按钮 -->
+			<div class="kit-table-header">
+				<div style="left: 30px;" class="kit-search-inputs">
+					<div class="kit-search-keyword">
+						<input type="text" class="layui-input" id="serach-one"
+							placeholder="药品.." onKeyUp="lockInput(this,'serach-two')" />
+						<button style="left: 170px;" lay-submit lay-filter="search">
+							<i class="layui-icon">&#xe615;</i>
+						</button>
+					</div>
+					<div style="left: 230px;" class="kit-search-more" id="kit-search-more">
+						更多筛选<i class="layui-icon">&#xe61a;</i>
+					</div>
+				</div>
+			</div>
+			<!-- 搜索扩展工具条 -->
+			<div class="kit-search-mored layui-anim layui-anim-upbit">
+				<div class="kit-search-body">
+					<div class="layui-form-item">
+						<label class="layui-form-label">药品名称</label>
+						<div class="layui-input-block">
+							<input type="text" name="drugName" id="serach-two"
+								placeholder="搜索关键字.." autocomplete="off" class="layui-input"
+								onKeyUp="lockInput(this,'serach-one')">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">药品类型</label>
+						<div class="layui-input-block">
+							<select name="dtId" id="drug-type">
+								<option value=""></option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<label class="layui-form-label">药品价格</label>
+							<div class="layui-input-block">
+								<div class="layui-input-inline" style="width: 100px;">
+									<input type="text" name="priceMin" placeholder="￥"
+										autocomplete="off" class="layui-input" maxlength="6"
+										onKeyUp="amount(this)">
+								</div>
+								<div class="layui-form-mid">-</div>
+								<div class="layui-input-inline" style="width: 100px;">
+									<input type="text" name="priceMax" placeholder="￥"
+										autocomplete="off" class="layui-input" maxlength="6"
+										onKeyUp="amount(this)">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="kit-search-footer">
+					<button type="reset"
+						class="layui-btn layui-btn-sm layui-btn-primary kit-btn reset-btn">重置</button>
+					<button lay-submit lay-filter="search"
+						class="layui-btn layui-btn-sm kit-btn">确定</button>
+				</div>
+			</div>
+		</form>
+		<!-- 操作按钮 -->
+		<div class="kit-table-body">
+			<table id="demo" lay-filter="demo"></table>
+			<script type="text/html" id="barDemo">
 		            <a class="layui-btn layui-btn-xs" lay-event="detail">添加到清单</a>
 		        </script>
-		    </div>
 		</div>
-		
-		<!-- 修改页面 -->
-		<script type="text/html" id="edit-tpl">
-		    	
-		</script>
-		<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
-		<script>
+	</div>
+
+	<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
+	<script>
 			//文本框只能输入金额
 		    function amount(th){
 		        var regStrs = [
@@ -111,10 +143,27 @@
 			function lockInput(obj,id){
 				$("#"+id).val($(obj).val());
 			}
-		</script>
-		<script src="../../res/layui/layui.all.js"></script>
-		<script>
-			//显示表格数据
+	</script>
+	<script src="../../res/layui/layui.all.js"></script>
+	<script>
+	//查询类型下拉框数据
+    var staticData = null;
+    $.ajax({ url:"../../member/query.action?page=1&limit=100",
+        type:'post',//method请求方式，get或者post
+        cache: false,//同步
+        dataType:'json',//预期服务器返回的数据类型
+        success:function(mes){//res为相应体,function为回调函数
+        	//增加及修改类型下拉框内的数据
+        	staticData = mes;
+        	//循环添加类型搜索框内的数据
+        	$.each(mes.data,function(index,item){
+        		$("#memSelect").append("<option value="+item.menId+">"+item.menName+"</option>");
+        	});
+        	//渲染类型搜索框内的下拉框
+        	renderForm();
+        }
+     });
+			//显示数据
 		    layui.use(['table','upload'], function() {
 		        var table = layui.table,
 		            $ = layui.jquery,
@@ -165,34 +214,94 @@
                     	renderForm();
                     }
                  });
-		        var zongs=0;
+		        var zongj=0.00;
+		        var zongshu=0;
 		        table.on('checkbox(demo)', function(obj){
-		        	var data = obj.data;
+		        	var data = obj.data; //获得当前行数据
+		            var layEvent = obj.event; //获得 lay-event 对应的值
+		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		        	if(obj.checked==true){
+		        		//价格
 		        		var mony = data.drugPrice;
-			        	$("#add").append("<tr><td style='display:none'>"+data.drugId+"</td><td>"+data.drugName+"</td><td>"+data.dtName+"</td><td id='pic_"+data.drugId+"'>"+data.drugPrice+"</td><td><input type='text' id='up_"+data.drugId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' value='1' /></td><td id='zong_"+data.drugId+"'></td><td id='pi_"+data.drugId+"'></td><td><a href='javascript:remove(this);'>删除</a></td></tr>")
-						var num=$(".numbers").val();
-			        	$("#zong_"+data.drugId+"").text(mony*num);
-			        	var pi=mony*num;
-			        	$("#pi_"+data.drugId+"").text(pi);
-			        	var lak=parseInt($("#pi_"+data.drugId+"").text());
-			        	zongs+=lak;
+		        		if($("#memSelect").val()==""){
+		        			$("#add").append("<tr><td style='display:none'>"+data.drugId+"</td><td>"+data.drugName+"</td><td><input type='text' id='up_"+data.drugId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' value='1' /></td><td id='pic_"+data.drugId+"' class='lsd'>"+data.drugPrice+"</td><td id='zong_"+data.drugId+"' class='lsz'></td><td class='zkl' id='zk"+data.drugId+"'></td><td id='zkMoney_"+data.drugId+"'></td><td id='zkzong_"+data.drugId+"' class='zkz'></td><td><button class='layui-btn layui-btn-xs' onclick='changeState("+data.drugId+")'>删除</button></td></tr>");
+		        		}else{
+		        		var url="../../member/findById.action";
+						  var datas={"menId":$("#memSelect").val()};
+						  $.post(url,datas,function(mes){
+							  var zk="";
+							  if(mes.oper=="普通会员"){
+								  zk="0.9";
+								  zkd="lsd*zkl";
+							  }else if(mes.oper=="高级会员"){
+								  zk="0.85";
+								  zkd="lsd*zkl";
+							  }else if(mes.oper=="顶级会员"){
+								  zk="0.8";
+							  }
+							  $("#add").append("<tr><td style='display:none'>"+data.drugId+"</td><td>"+data.drugName+"</td><td><input type='text' id='up_"+data.drugId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' value='1' /></td><td id='pic_"+data.drugId+"' class='lsd'>"+data.drugPrice+"</td><td id='zong_"+data.drugId+"' class='lsz'></td><td class='zkl' id='zk"+data.drugId+"'>"+zk+"</td><td id='zkMoney_"+data.drugId+"'></td><td id='zkzong_"+data.drugId+"' class='zkz'></td><td><button class='layui-btn layui-btn-xs' onclick='changeState("+data.drugId+")'>删除</button></td></tr>");
+						  	  $("#zong_"+data.drugId).html(parseFloat($("#up_"+data.drugId).val())*parseFloat(data.drugPrice));
+						  	  $("#zkMoney_"+data.drugId).html(parseFloat(data.drugPrice)*parseFloat(zk));
+						  	  $("#zkzong_"+data.drugId).html(parseFloat($("#zong_"+data.drugId).html())*parseFloat(zk));
+						  },"json");
+		        		}
+						//数量
+			        	var num=$(".numbers").val();
+			        	//赋值总价
+			        	$("#zong_"+data.drugId+"").text(parseFloat(mony*num).toFixed(2));
+			        	
+			        	
+			        	var shu=$("#up_"+data.drugId+"").val();
+			        	zongshu+=parseFloat(shu);
 		        	}
-		        	if(obj.checked==false){
-		        		var mony = data.drugPrice;
-			        	$("#add").html("");
-						var num=$(".numbers").val();
-			        	$("#zong_"+data.drugId+"").text(mony*num);
-			        	var pi=mony*num;
-			        	$("#pi_"+data.drugId+"").text($("#pi_"+data.drugId+"").text-pi);
-			        	var lak=parseInt($("#pi_"+data.drugId+"").text());
-			        	zongs+=lak;
-		        	}
-		        	alert(zongs);
-		        	$("#zongjin").val(zongs);
+		        	$("#zongjin").val(zongj.toFixed(2));
+		        	$("#zongshu").val(zongshu);
 		        });
 		        
+		       
 		        
+		        form.on('select(memSelect)', function(data){
+				  var url="../../member/findById.action";
+				  var data={"menId":$("#memSelect").val()};
+				  $.post(url,data,function(mes){
+					  var zk="";
+					  if(mes.oper=="普通会员"){
+						  zk="0.9";
+						  zkd="lsd*zkl";
+					  }else if(mes.oper=="高级会员"){
+						  zk="0.85";
+						  zkd="lsd*zkl";
+					  }else if(mes.oper=="顶级会员"){
+						  zk="0.8";
+						  zkd="lsd*zkl";
+					  }
+					  $.each($(".zkl"),function(index,item){
+						  alert(item.id);
+						  $("#"+item.id).html(zk);
+						  $("#"+item.id).next().html(parseFloat($("#"+item.id).prev().prev().html())*parseFloat(zk));
+						  $("#"+item.id).next().next().html(parseFloat($("#"+item.id).prev().html())*parseFloat(zk));
+					  });
+					  
+				  },"json");
+				})
+
+		        
+		        $('body').on('click', '.del', function() { 
+		        		$(this).closest('tr').remove();
+						var zongmoney=0.0;
+						var zongnum=0;
+		        		$("#add tr").not(":first").each(function(){
+							var shu=parseInt($(this).find('td:eq(4) input').val());
+							var pijia=parseFloat($(this).find('td:eq(6)').text()).toFixed(2);
+							zongmoney+=pijia;
+							zongnum+=shu;
+						});
+		        		$("#zongshu").val(zongnum);
+						$("#zongjin").val(zongmoney);
+		        	});
+		        
+		        $(document).on("click",".layui-table-body table.layui-table tbody tr", function () { var index = $(this).attr('data-index'); var tableBox = $(this).parents('.layui-table-box'); //存在固定列
+			    if (tableBox.find(".layui-table-fixed.layui-table-fixed-l").length>0) { tableDiv = tableBox.find(".layui-table-fixed.layui-table-fixed-l"); } else { tableDiv = tableBox.find(".layui-table-body.layui-table-main"); } var checkCell = tableDiv.find("tr[data-index=" + index + "]").find("td div.laytable-cell-checkbox div.layui-form-checkbox I"); if (checkCell.length>0) { checkCell.click(); } }); $(document).on("click", "td div.laytable-cell-checkbox div.layui-form-checkbox", function (e) { e.stopPropagation(); });
 		        
 		        //监听搜索表单提交
 		        form.on('submit(search)', function(data) {  
@@ -258,6 +367,7 @@
 	  		}
 		    //ajax加载动画
 		    $(function () {
+		    	
 	            $.ajaxSetup({
 	                layerIndex:-1,
 	                beforeSend: function () {
@@ -275,46 +385,10 @@
 	                }
 	            });
 	        });
+		    function num(obj){
+				$("#"+obj.id).parent().next().next().html(parseFloat($("#"+obj.id).parent().next().html())*parseFloat($("#"+obj.id).val()));		 
+				$("#"+obj.id).parent().next().next().next().next().next().html(parseFloat($("#"+obj.id).parent().next().next().next().next().html())*parseFloat($("#"+obj.id).val()));
+		    }
 		</script>
-		<script type="text/javascript">
-		function num(obj){
-			var id = obj.id;
-			var a = obj.value;
-			var b=$(obj).parent().prev().text();
-			var d=c*0.8;
-			var c =parseFloat(a)*parseFloat(b);
-			$(obj).parent().parent().children().eq(4).text(c);
-			$(obj).parent().parent().children().eq(5).text(d);
-			var zongJ=$(obj).parent().parent().children().eq(6).text();
-			alert("zongj="+zongj);
-			alert("zongjin="+$("#zongjin").val());
-			var zongmoney=parseInt($("#zongjin").val())+parseInt(zongj);
-			$("#zongjin").val(zongmoney);
-			zongmoney=0;
-		}
-		
-		function okpi(){
-			var html="";
-			$("#add tr").not(":first").each(function(){
-				$(this).find("td").each(function(j){
-					html+=$(this).text()+",";
-				});
-					html+=$(this).find('td:eq(4) input').val()+"#";
-			});
-		$.ajax({url="../../branchSale/addSale.action",
-			type:'post',//method请求方式，get或者post
-			cache:false,//同步
-			dateType:'json',//预期服务器返回的数据类型
-			data:{"htmlstr":html},//传表格数据
-			success:function(mes){//res为相应体,function为回调函数
-				if(mes.msg>=1){
-           		 	alert("s");
-           	 	}else{
-           		 	alert("Ss");
-           	 	}	
-			}
-		});
-	}
-	</script>
-	</body>
+</body>
 </html>

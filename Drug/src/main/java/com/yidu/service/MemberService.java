@@ -48,6 +48,12 @@ public interface MemberService   {
 	 * @return
 	 */
 	public int findCount(Member member);
+	/**
+	 * 根据ID查询
+	 * @param menId 
+	 * @return
+	 */
+	public Member findById(String menId);
 	
 	
 }

@@ -152,5 +152,17 @@ public class MemberController {
 		}
 		return msg;
 	}
+	
+	/**
+	 * 根据ID查询
+	 * @param menId
+	 * @return
+	 */
+	@RequestMapping("/findById")
+	@ResponseBody
+	public Member findById(String menId) {
+		return service.findById(menId);
+		
+	}
 }
 

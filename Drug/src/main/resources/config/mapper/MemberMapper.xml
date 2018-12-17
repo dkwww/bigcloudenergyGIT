@@ -168,6 +168,9 @@
       <if test="member.memAddress != null and member.memAddress != '' ">
        and mem_address like CONCAT(CONCAT('%',#{member.memAddress,jdbcType=VARCHAR},'%'))
       </if>
+      <if test="member.oper != null and member.oper != '' ">
+       and oper like CONCAT(CONCAT('%',#{member.oper,jdbcType=VARCHAR},'%'))
+      </if>
   	order by optime desc
   	 limit #{util.startRows},#{util.rows}
   </select>
@@ -182,6 +185,9 @@
       </if>
       <if test="memAddress != null and memAddress != '' ">
        and mem_address like CONCAT(CONCAT('%',#{memAddress,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test="oper != null and oper != '' ">
+       and oper like CONCAT(CONCAT('%',#{oper,jdbcType=VARCHAR},'%'))
       </if>
   </select>
   

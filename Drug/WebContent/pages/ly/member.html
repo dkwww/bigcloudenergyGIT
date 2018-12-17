@@ -47,6 +47,12 @@
 		                        <input type="text" name="memAddress" id="serach-two" placeholder="请输入地址" autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
 		                    </div>
 		                </div>
+		                <div class="layui-form-item">
+		                    <label class="layui-form-label">会员等级</label>
+		                    <div class="layui-input-block">
+		                        <input type="text" name="oper" id="serach-two" placeholder="请输入会员等级" autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
+		                    </div>
+		                </div>
 		                
 		            </div>
 		            <div class="kit-search-footer">
@@ -97,8 +103,14 @@
 		                    <input type="text" name="memAddress" required lay-verify="required" value="{{d.rowdata.memAddress}}" placeholder="请输入密码" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">会员等级</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="oper" required lay-verify="required" value="{{d.rowdata.oper}}" placeholder="请输入会员等级" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
 					<div class="layui-upload">
-                		<label class="layui-form-label">头像:</label>
+                		<label class="layui-form-label">头像</label>
                 		<div class="layui-upload layui-input-block">
                     		<input type="hidden" name="memPictrue" value="{{d.rowdata.memPictrue}}"/>
                     		<button type="button" class="layui-btn layui-btn-primary" id="fileBtn"><i class="layui-icon">&#xe67c;</i>选择文件</button>
@@ -147,11 +159,12 @@
 		            id: 'demo',
 		            cols: [
 		                [{checkbox: true,fixed: true},
-		                {field: 'menId',title: 'ID', width: 145,align: 'center'},
+		                {field: 'menId',title: 'ID', width: 110,align: 'center'},
 		                {field: 'menName',title: '用户名',width: 100,align: 'center'},
 		                {field: 'memPwd',title: '密码',width: 100,align: 'center'},
 		                {field: 'memPhone',title: '电话号码',width: 130,align: 'center'},
-		                {field: 'memAddress',title: '地址',width: 210,align: 'center'},
+		                {field: 'memAddress',title: '地址',width: 120,align: 'center'},
+		                {field: 'oper',title: '会员等级',width: 120,align: 'center'},
 		                {field: 'memPictrue',title: '头像',width: 100,align: 'center',templet:'<div><img style="height:100%;height:30px;" src="../../{{ d.memPictrue}}"></div>'},
 		                {field: 'optimeString',title: '操作时间',width: 170},
 		                {fixed: 'right',title: '操作',width: 180,align: 'center',toolbar: '#barDemo'}]
@@ -256,7 +269,7 @@
 		                    var d = {
 		                		//替换增加页面文本框内出现的undefine
 		                        rowdata: {
-		                        	menId: '',menName: '',memPwd: '',memPhone: '',memAddress: '',memPictrue: '',optimeString: '',
+		                        	menId: '',menName: '',memPwd: '',memPhone: '',memAddress: '',memPictrue: '',optimeString: '',oper: '',
 		                        },
 		                    };
 		                    showlayer(d);

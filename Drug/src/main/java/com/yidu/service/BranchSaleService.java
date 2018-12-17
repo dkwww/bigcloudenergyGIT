@@ -3,6 +3,7 @@ package com.yidu.service;
 import java.util.List;
 
 
+
 import com.yidu.domain.BranchSale;
 import com.yidu.util.PageUtil;
 
@@ -21,7 +22,7 @@ public interface BranchSaleService   {
 	 * @param sale model
 	 * @return
 	 */
-	public List<BranchSale > query(PageUtil util, BranchSale branchSale);
+	public List<BranchSale> query(PageUtil util, BranchSale branchSale);
 	/**
 	 * 分页
 	 * @param sale model

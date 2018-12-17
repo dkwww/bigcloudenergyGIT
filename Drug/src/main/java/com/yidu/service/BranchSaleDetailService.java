@@ -13,5 +13,5 @@ import com.yidu.domain.BranchSaleDetail;
 public interface BranchSaleDetailService  {
 
 	int insertSelective(BranchSaleDetail branchSaleDetail);
-
 }
+

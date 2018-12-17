@@ -175,6 +175,6 @@ public class BranchSaleController {
 		}else {
 			mes.setMsg("2");
 		}
-		return null;
+		return mes;
 	}
 }

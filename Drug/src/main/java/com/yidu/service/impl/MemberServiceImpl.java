@@ -89,4 +89,11 @@ public class MemberServiceImpl   implements MemberService {
 	public int findCount(Member member) {
 		return mapper.findCount(member);
 	}
+	/**
+	 * 根据ID查询
+	 */
+	@Override
+	public Member findById(String menId) {
+		return mapper.selectByPrimaryKey(menId);
+	}
 }

@@ -20,7 +20,7 @@
 				            </div>
 				            <div class="kit-search-inputs">
 				                <div class="kit-search-keyword">
-				                    <input type="text" class="layui-input" id="serach-one" placeholder="请输入会员品名.." onKeyUp="lockInput(this,'serach-two')"/>
+				                    <input type="text" class="layui-input" id="serach-one" placeholder="请输入会员名.." onKeyUp="lockInput(this,'serach-two')"/>
 				                    <button lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
 				                </div>
 				                <div class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>
@@ -32,13 +32,13 @@
 							  <div class="layui-form-item">
 				              <label class="layui-form-label">会员名</label>
 				                   <div class="layui-input-block">
-				                        <input type="text" name="menId" id="serach-two" placeholder="请输入会员名" autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
+				                        <input type="text" name="menName" id="serach-two" placeholder="请输入会员名" autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
 				                   </div>
 				         </div>
 				         <div class="layui-form-item">
 				              <label class="layui-form-label">店铺名</label>
 				                   <div class="layui-input-block">
-				                        <input type="text" name="comId" id="serach-two" placeholder="请输入店铺名" autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
+				                        <input type="text" name="comName" id="serach-two" placeholder="请输入店铺名" autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
 				                   </div>
 				         </div>
 				         <div class="layui-form-item">
@@ -153,12 +153,12 @@
 		            id: 'demo',
 		            cols: [
 		                [{checkbox: true,fixed: true},
-		                {field: 'bsId',title: '销售ID', width: 200,align: 'center'},
-		                {field: 'comName',title: '店铺名',width: 180,align: 'center'},
-		                {field: 'menName',title: '会员名',width: 180,align: 'center'},
-		                {field: 'bsAmount',title: '销售总数量',width: 180,align: 'center'},
-		                {field: 'bsPrice',title: '销售总金额',width: 180,align: 'center'},
-		                {field: 'optimeStr',title: '操作时间',width: 225,align: 'center'},
+		                {field: 'bsId',title: '销售ID', width: 190,align: 'center'},
+		                {field: 'comName',title: '店铺名',width: 185,align: 'center'},
+		                {field: 'menName',title: '会员名',width: 130,align: 'center'},
+		                {field: 'bsAmount',title: '销售总数量',width: 115,align: 'center'},
+		                {field: 'bsPrice',title: '销售总金额',width: 130,align: 'center'},
+		                {field: 'optimeStr',title: '操作时间',width: 220,align: 'center'},
 		                {fixed: 'right',title: '操作',width: 180,align: 'center',toolbar: '#barDemo'}]
 		            ],
 		            done: function(res, curr, count) {
