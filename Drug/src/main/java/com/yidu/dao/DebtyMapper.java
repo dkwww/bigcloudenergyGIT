@@ -1,9 +1,5 @@
 package com.yidu.dao;
 
-import java.util.List;
-import java.util.Map;
-
-
 import com.yidu.domain.Debty;
 
 public interface DebtyMapper {
@@ -18,17 +14,4 @@ public interface DebtyMapper {
     int updateByPrimaryKeySelective(Debty record);
 
     int updateByPrimaryKey(Debty record);
-    
-    /**
-     * 查询所有
-     * @param vo
-     * @return
-     */
-    List<Debty> selectAll(Map<String, Object> map);
- 
-    
-    int selectCount(Debty debty);
-  
-    int DebtyDeleteByPrimaryKeySelective(List<String> ids);
 }
-   

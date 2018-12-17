@@ -44,9 +44,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.yidu.domain.Audit;
 import com.yidu.domain.Drug;
-import com.yidu.service.AuditService;
 import com.yidu.service.DrugService;
 import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
@@ -66,8 +64,6 @@ public class DrugController {
 	
 	@Resource
 	private DrugService drugService;
-	@Resource
-	private AuditService auditService;
 	
 	/**
 	 * 查询所有
@@ -91,6 +87,31 @@ public class DrugController {
 		map.put("data", list);
 		return map;
 	}
+	
+	/**
+	 * 查询所有
+	 * @return List<Drug> 药品集合
+	 */
+	@RequestMapping("/showLists")
+	@ResponseBody
+	public Map<String,Object> showLists(Drug record,Integer page,Integer limit) {
+		PageUtil pageUtil = new PageUtil();
+		pageUtil.setCurPage(page);
+		pageUtil.setRows(limit);
+		
+		List<Drug> list = drugService.selectBySelectives(record,pageUtil);
+		int rows = drugService.findCount(record);
+		
+		@SuppressWarnings("unchecked")
+		Map<String,Object> map = new HashedMap();
+		map.put("code", 0);
+		map.put("msg", "");
+		map.put("count", rows);
+		map.put("data", list);
+		return map;
+	}
+	
+	
 	
 	/**
 	 * 上传文件
@@ -149,35 +170,6 @@ public class DrugController {
 		} else {
 			mes.setStatus(0);
 			mes.setMsg("数据异常，请稍后重试！");
-		}
-		return mes;
-	}
-	
-	
-	/**
-	 * 检查药品信息是否完善
-	 * @param drugId 药品编号
-	 * @return Message json工具类
-	 */
-	@RequestMapping("/isCheck")
-	@ResponseBody
-	public Message isCheck(String drugId) {
-		Message mes = new Message();
-		int rows = drugService.isCheck(drugId);
-		if (rows>0) {
-			Audit audit = new Audit();
-			audit.setAudFkId(drugId);
-			int count = auditService.addOrUpdate(audit);
-			if (count>0) {
-				mes.setStatus(1);
-				mes.setMsg("提交成功，待审核！");
-			} else {
-				mes.setStatus(0);
-				mes.setMsg("数据异常请稍后重试！");
-			}
-		} else {
-			mes.setStatus(0);
-			mes.setMsg("请完善药品信息！");
 		}
 		return mes;
 	}
