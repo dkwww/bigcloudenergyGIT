@@ -4,8 +4,13 @@
   <resultMap id="BaseResultMap" type="com.yidu.domain.PmcDetails">
     <id column="pd_id" jdbcType="VARCHAR" property="pdId" />
     <result column="pmc_id" jdbcType="VARCHAR" property="pmcId" />
+    <result column="pmc_start" jdbcType="TIMESTAMP" property="pmcStart" />
+     <result column="pmc_end" jdbcType="TIMESTAMP" property="pmcEnd" />
     <result column="drug_id" jdbcType="VARCHAR" property="drugId" />
+    <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
+     <result column="drug_unit" jdbcType="VARCHAR" property="drugUnit" />
     <result column="pd_amount" jdbcType="INTEGER" property="pdAmount" />
+    <result column="hang" jdbcType="INTEGER" property="hangName" />
     <result column="pd_state" jdbcType="VARCHAR" property="pdState" />
     <result column="isva" jdbcType="VARCHAR" property="isva" />
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
@@ -15,6 +20,32 @@
   <sql id="Base_Column_List">
     pd_id, pmc_id, drug_id, pd_amount, pd_state, isva, optime, oper, sort
   </sql>
+  
+  
+   <update  id="updatedrug"    parameterType="com.yidu.domain.PmcDetails"  >
+ 		 UPDATE      drug_pmc_details    SET   hang= #{hangName,jdbcType=INTEGER}  WHERE   drug_id= #{drugId,jdbcType=INTEGER}
+  </update>
+  
+  
+  
+  
+   <select id="findById" parameterType="java.util.Map" resultMap="BaseResultMap">
+   SELECT  * FROM  drug_pmc a  , drug_pmc_details b , drug_drug c  WHERE   a.pmc_id=b.pmc_id  AND  b.drug_id=c.drug_id  and  b.pmc_id = #{pmcDetails.pmcId,jdbcType=VARCHAR}
+    <if test="pmcDetails.drugName != null and pmcDetails.drugName != ''">
+   		and c.drug_name like CONCAT(CONCAT('%',#{pmcDetails.drugName,jdbcType=VARCHAR},'%'))
+   	</if>
+   	order by (a.sort+0) desc 
+   	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
+   
+  </select>
+  
+  
+  <select id="selectCountBySelective" parameterType="com.yidu.domain.PmcDetails"  resultType="int">
+    SELECT  COUNT(*)  FROM    drug_pmc a  , drug_pmc_details b , drug_drug c  WHERE   a.pmc_id=b.pmc_id  AND  b.drug_id=c.drug_id  and  b.pmc_id = #{pmcId,jdbcType=VARCHAR} 
+   	<if test="drugName != null and drugName != ''">
+   		and c.drug_name like CONCAT(CONCAT('%',#{drugName,jdbcType=VARCHAR},'%'))
+   	</if>
+  </select> 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

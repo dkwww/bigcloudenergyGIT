@@ -1,5 +1,10 @@
 package com.yidu.service;
- 
+
+import java.util.List;
+
+import com.yidu.domain.PmcDetails;
+import com.yidu.util.PageUtil;
+
 /**
  * <p>
  * 生产计划明细 服务类
@@ -10,4 +15,13 @@ package com.yidu.service;
  */
 public interface PmcDetailsService   {
 
+ 
+	 
+	List<PmcDetails>  findById(PmcDetails pmcDetails,PageUtil  page);
+	
+	
+	int selectCountBySelective  (PmcDetails pmcDetail);
+	
+	int   updateHang  (PmcDetails pmcDetail);
 }
+ 

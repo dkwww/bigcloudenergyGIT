@@ -11,12 +11,17 @@
     <result column="mrp_state" jdbcType="INTEGER" property="mrpState" />
     <result column="mrp_idea" jdbcType="INTEGER" property="mrpIdea" />
     <result column="mrp_amount" jdbcType="INTEGER" property="mrpAmount" />
-    
-    
+    <result column="pmc_id" jdbcType="VARCHAR" property="pmcId" /> 
     <result column="isva" jdbcType="VARCHAR" property="isva" />
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
+    <result column="pd_id" jdbcType="VARCHAR" property="pdId" />
+    <result column="mrp_num" jdbcType="INTEGER" property="mrpNum" />
+     <result column="pmc_start" jdbcType="TIMESTAMP" property="pmcStart" />
+     <result column="pmc_end" jdbcType="TIMESTAMP" property="pmcEnd" />
+    
+    
   </resultMap>
   <sql id="Base_Column_List">
     mrp_id, drug_id, mrp_optime, mrp_plan, mrp_rate, mrp_state, mrp_idea, mrp_amount, 

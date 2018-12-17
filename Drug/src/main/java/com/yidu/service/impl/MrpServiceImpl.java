@@ -41,6 +41,8 @@ public class MrpServiceImpl implements MrpService {
 	     for (Mrp mrp2 : list) {
 			mrp2.setMrpOptimeName(TimeUtil.dateToString(mrp2.getMrpOptime(), "yyyy-MM-dd HH:mm:ss"));
 			mrp2.setOptimeName(TimeUtil.dateToString(mrp2.getOptime(), "yyyy-MM-dd HH:mm:ss"));
+			mrp2.setPmcStartName(TimeUtil.dateToString(mrp2.getPmcStart(), "yyyy-MM-dd HH:mm:ss"));
+			mrp2.setPmcEndName(TimeUtil.dateToString(mrp2.getPmcEnd(), "yyyy-MM-dd HH:mm:ss"));
 			 if (mrp2.getMrpState()==0) {
 					mrp2.setStateName("制作中");
 				}else  if (mrp2.getMrpState()==1) {

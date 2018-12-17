@@ -7,7 +7,7 @@
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
 		<script src="../../res/layui/layui.js"></script>
-		<title>制造计划管理</title>
+		<title>药品质检管理</title>
 		
 	</head>
 	 	<script>
@@ -49,17 +49,11 @@
 	
 	
 	<body>
-	<div class="layui-progress layui-progress-big" lay-showpercent="true">
- 		 <div class="layui-progress-bar" lay-percent="50%"></div>
-		</div>
+	 
 		<div class="kit-table">
 		    <form class="layui-form" lay-filter="kit-search-form">
 						<!-- 左上角的两个按钮 -->
 		        <div class="kit-table-header">
-		            <div class="kit-search-btns">
-		                <a href="javascript:;" data-action="add" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i> 新增</a>
-		                <a href="javascript:;" data-action="del-bulk" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon">&#xe640;</i> 批量删除</a>
-		            </div>
 		            <div class="kit-search-inputs">
 		                <div class="kit-search-keyword">
 		                    <input type="text" class="layui-input" name="drugName" placeholder="搜索关键字.." />
@@ -128,8 +122,8 @@
 		    <div class="kit-table-body">
 		        <table id="demo" lay-filter="demo"></table>
 		      <script type="text/html" id="barDemo">
-					<a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="edit">制作成品</a>
-   					  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">提交质检</a>
+					<a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="edit">立即质检</a>
+   					  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">入库</a>
 		        </script>
 		    </div>
 		</div>
@@ -237,7 +231,7 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: 'full', //容器高度
-		            url: '../../mrp/qureyAll.action',
+		            url: '../../qc/qureyAll.action',
 		            page: true,
 		            id: 'demo',
 		            cols: [
@@ -245,32 +239,28 @@
 		                    checkbox: true,
 		                    fixed: true
 		                }, {
-		                    field: 'mrpId',
-		                    title: '任务ID',
+		                    field: 'qcId',
+		                    title: '质检ID',
 		                    width: 190
 		                }, {
-		                    field: 'pmcStartName',
-		                    title: '开始制造时间',
+		                    field: 'qcAmount',
+		                    title: '质检总数',
 		                    width: 150
-		                },  {
-		                    field: 'pmcEndName',
-		                    title: '预计结束时间',
-		                    width: 160
 		                }, {
-		                    field: 'mrpPlan',
-		                    title: '计划任务',
+		                    field: 'qcFail',
+		                    title: '未通过数',
 		                    width: 150
 		                }, { 
-		                    field: 'mrpIdea',
-		                    title: '进度1',
+		                    field: 'qcRate',
+		                    title: '通过率',
 		                    width: 160
 		                }, { 
-		                    field: 'ideaName',
-		                    title: '处理方案',
+		                    field: 'qcOptime',
+		                    title: '质检时间',
 		                    width: 160
-		                }, {
-		                    field: 'mrpAmount',
-		                    title: '制造次数',
+		                }, { 
+		                    field: 'qcConpany',
+		                    title: '质检厂家',
 		                    width: 160
 		                }, {
 		                    fixed: 'right',
@@ -281,11 +271,7 @@
 		                }]
 		            ],
 		            done: function(res, curr, count) {
-		            	$("[data-field = 'mrpIdea']").children().not(":first").each(function(){
-		            	 	
-					    	$(this).html('<div  width="50px"  height="20px"  color="red"  ></div>');
-					    	
-					    }); 
+		            	 
 		            	
 		                //如果是异步请求数据方式，res即为你接口返回的信息。
 		                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
@@ -358,12 +344,12 @@
 		                    classifies: staticData.classifies
 		                };
 		                laytpl($('#edit-tpl').html()).render(d, function(html) {
-		                	var  pmcId=d.user.pmcId;
-		                	alert(pmcId);
+		                	var  qcId=d.user.qcId;
+		                	alert(qcId);
 		                	var index = layer.open({
 		          				  type: 2,
 		          				  title: '制作药品',
-		          				  content: '../plan/ManufacturingList.html?id='+pmcId,
+		          				  content: '../quality/DrugqualityList.html?id='+qcId,
 		          				  area: ['800px', '30px']
 		          				  //maxmin: true
 		          				});

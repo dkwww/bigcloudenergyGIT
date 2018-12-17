@@ -1,5 +1,8 @@
 package com.yidu.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.yidu.domain.Qc;
 
 public interface QcMapper {
@@ -14,4 +17,10 @@ public interface QcMapper {
     int updateByPrimaryKeySelective(Qc record);
 
     int updateByPrimaryKey(Qc record);
+    
+    
+    List<Qc>  selectqctype(Map<String, Object> map);
+    
+    int selectCountBySelective(Qc record);
 }
+

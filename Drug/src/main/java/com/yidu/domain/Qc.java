@@ -18,7 +18,7 @@ public class Qc {
 
     private String qcConpany;
 
-    private String qcType;
+    private Integer qcType;
 
     private String isva;
 
@@ -27,6 +27,8 @@ public class Qc {
     private String oper;
 
     private String sort;
+    
+ 
 
     public String getQcId() {
         return qcId;
@@ -84,15 +86,17 @@ public class Qc {
         this.qcConpany = qcConpany == null ? null : qcConpany.trim();
     }
 
-    public String getQcType() {
-        return qcType;
-    }
+    
 
-    public void setQcType(String qcType) {
-        this.qcType = qcType == null ? null : qcType.trim();
-    }
+    public Integer getQcType() {
+		return qcType;
+	}
 
-    public String getIsva() {
+	public void setQcType(Integer qcType) {
+		this.qcType = qcType;
+	}
+
+	public String getIsva() {
         return isva;
     }
 

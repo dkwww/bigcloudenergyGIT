@@ -8,6 +8,8 @@ public class PmcDetails {
     private String pmcId;
 
     private String drugId;
+    
+    private  String   drugName;
 
     private Integer pdAmount;
 
@@ -20,8 +22,107 @@ public class PmcDetails {
     private String oper;
 
     private String sort;
+    
+    private   Date   pmcStart;  //开始时间
+    
+    private  Date  pmcEnd ;  //结束时间
+    
+    
+     private  String pmcStartName;  //用于开始转换时间
+     private   String  pmcEndName;   //用于结束转换时间
+     
+     private   String   drugUnit;  //药品单位   
+     
+       private   String    mrpIdea ;   //进度
+       
+       private   Integer   hangName;   //已完成数量
+       
+       private     String   shujuName;
+       
+       
+       
+       
+       
+     
+     
+     
+     
+    
+ 
 
-    public String getPdId() {
+	public String getShujuName() {
+		return shujuName;
+	}
+
+	public void setShujuName(String shujuName) {
+		this.shujuName = shujuName;
+	}
+
+	public Integer getHangName() {
+		return hangName;
+	}
+
+	public void setHangName(Integer hangName) {
+		this.hangName = hangName;
+	}
+
+	public String getMrpIdea() {
+		return mrpIdea;
+	}
+
+	public void setMrpIdea(String mrpIdea) {
+		this.mrpIdea = mrpIdea;
+	}
+
+	public String getDrugUnit() {
+		return drugUnit;
+	}
+
+	public void setDrugUnit(String drugUnit) {
+		this.drugUnit = drugUnit;
+	}
+
+	public Date getPmcStart() {
+		return pmcStart;
+	}
+
+	public void setPmcStart(Date pmcStart) {
+		this.pmcStart = pmcStart;
+	}
+
+	public Date getPmcEnd() {
+		return pmcEnd;
+	}
+
+	public void setPmcEnd(Date pmcEnd) {
+		this.pmcEnd = pmcEnd;
+	}
+
+	public String getPmcStartName() {
+		return pmcStartName;
+	}
+
+	public void setPmcStartName(String pmcStartName) {
+		this.pmcStartName = pmcStartName;
+	}
+
+	public String getPmcEndName() {
+		return pmcEndName;
+	}
+
+	public void setPmcEndName(String pmcEndName) {
+		this.pmcEndName = pmcEndName;
+	}
+
+	public String getDrugName() {
+		return drugName;
+	}
+
+	public void setDrugName(String drugName) {
+		this.drugName = drugName;
+	}
+
+	public String getPdId() {
         return pdId;
     }
 

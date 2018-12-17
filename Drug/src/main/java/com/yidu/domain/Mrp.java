@@ -34,17 +34,84 @@ public class Mrp {
     
     private  String  ideaName;
       
-    private  String  drugName; 
+    private  String  drugName;  //药品名称
     
-    private  String  optimeName;
-    private   String  mrpOptimeName;
+    private  String  optimeName;   //操作时间转换用的
+    
+    private   String  mrpOptimeName;   //开始时间转换用的
+    
+    private  String  pmcId;   // 这是外键但是
+    
+    private  String  pdId;   //这也是外键
+    
+    private  Integer  mrpNum;  //这是生产数量
+    
+    
+    private   Date   pmcStart;  
+    
+    private   String    pmcStartName;
+    
+    	private   Date   pmcEnd;
+    	private  String  pmcEndName;
     
     
     
-    
-    
-    
-    
+
+	public Date getPmcStart() {
+			return pmcStart;
+		}
+
+		public void setPmcStart(Date pmcStart) {
+			this.pmcStart = pmcStart;
+		}
+
+		public String getPmcStartName() {
+			return pmcStartName;
+		}
+
+		public void setPmcStartName(String pmcStartName) {
+			this.pmcStartName = pmcStartName;
+		}
+
+		public Date getPmcEnd() {
+			return pmcEnd;
+		}
+
+		public void setPmcEnd(Date pmcEnd) {
+			this.pmcEnd = pmcEnd;
+		}
+
+		public String getPmcEndName() {
+			return pmcEndName;
+		}
+
+		public void setPmcEndName(String pmcEndName) {
+			this.pmcEndName = pmcEndName;
+		}
+
+	public String getPmcId() {
+		return pmcId;
+	}
+
+	public void setPmcId(String pmcId) {
+		this.pmcId = pmcId;
+	}
+
+	public String getPdId() {
+		return pdId;
+	}
+
+	public void setPdId(String pdId) {
+		this.pdId = pdId;
+	}
+
+	public Integer getMrpNum() {
+		return mrpNum;
+	}
+
+	public void setMrpNum(Integer mrpNum) {
+		this.mrpNum = mrpNum;
+	}
 
 	public String getOptimeName() {
 		return optimeName;
