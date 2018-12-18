@@ -67,7 +67,6 @@
 				
 			<!-- 操作按钮 -->
 		    <div class="kit-table-body">
-		    	<img id="pic" src="#" style="width:280px;height:280px;display:none;z-index:99;border-radius: 2px;margin: auto;position: absolute;top: 0px;bottom: 0px;left: 0px;right: 0px;border: 1px solid #424242"/>
 		        <table id="demo" lay-filter="demo"></table>
 		        <script type="text/html" id="tools">
 					<button class="layui-btn layui-btn-xs" lay-event="specification">说明书</button>
@@ -278,7 +277,7 @@
 		                {field: 'dtName',title: '类型',width: 80},
 		                {field: 'drugUnit',title: '单位',width: 80},
 		                {field: 'drugProp',title: '属性',width: 90},
-		                {field: 'drugPictrue',title: '图片',width: 60,templet:'#img',tips:'单机查看'},
+		                {field: 'drugPictrue',title: '图片',width: 60,templet:'#img'},
 		                {field: 'drugPrice',title: '价格（元）',width: 120,sort: true},
 		                {fixed: 'right',title: '操作',width: 350,align: 'center',toolbar: '#tools'}]
 		            ],
@@ -339,6 +338,8 @@
 		                where: data.field,
 		                page: { curr: 1 }
 		            });
+		            $('.kit-search-mored').hide();//关闭搜索层
+		            return false;
 		        });
 		        
 		        //监听工具条按钮点击
@@ -452,7 +453,7 @@
 				layerIndex1 = layer.open({
 				  type: 2,
 				  title: '药品配置',
-				  content: '../material/material-list/index.html?id='+id+'&name='+name,
+				  content: '../material-list/index.html?id='+id+'&name='+name,
 				  area: ['100%', '100%'],
 				  maxmin: false
 				});
@@ -620,7 +621,7 @@
 			*鼠标进入时
 			*/
 			function getPathOver(obj){
-				$("body").append("<div id='layer'></div>");
+				$("body").append('<div id="layer"></div><img id="pic" src="#" style="width:280px;height:280px;display:none;z-index:99;border-radius: 2px;margin: auto;position: absolute;top: 0px;bottom: 0px;left: 0px;right: 0px;border: 1px solid #424242"/>');
 				$("#layer").addClass("layer").fadeIn("slow");
 				$("#layer").click(function(){
 					getPathOut();

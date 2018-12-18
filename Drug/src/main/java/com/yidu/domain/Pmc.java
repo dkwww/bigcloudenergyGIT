@@ -4,6 +4,8 @@ import java.util.Date;
 
 public class Pmc {
     private String pmcId;
+    
+    private String pmcName;
 
     private Integer pmcAmount;
 
@@ -37,26 +39,22 @@ public class Pmc {
     
     private Integer minAmount;
     
+    private String comName;
     
-    private  String   comId;
-    
-    
-    
-    
-    public String getComId() {
-		return comId;
-	}
-
-	public void setComId(String comId) {
-		this.comId = comId;
-	}
-
-	public String getPmcId() {
+    public String getPmcId() {
         return pmcId;
     }
 
     public void setPmcId(String pmcId) {
         this.pmcId = pmcId == null ? null : pmcId.trim();
+    }
+    
+    public String getPmcName() {
+        return pmcName;
+    }
+
+    public void setPmcName(String pmcName) {
+        this.pmcName = pmcName == null ? null : pmcName.trim();
     }
 
     public Integer getPmcAmount() {
@@ -186,4 +184,13 @@ public class Pmc {
 	public void setMinAmount(Integer minAmount) {
 		this.minAmount = minAmount;
 	}
+
+	public String getComName() {
+		return comName;
+	}
+
+	public void setComName(String comName) {
+		this.comName = comName;
+	}
+	
 }

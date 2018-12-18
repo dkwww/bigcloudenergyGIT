@@ -66,10 +66,20 @@ public class PmcServiceImpl  implements PmcService {
 
 	@Override
 	public int addOrUpdate(Pmc record) {
+		try {
+			if (record.getStrStartTime()!=null&&!"".equals(record.getStrStartTime())) {
+				record.setPmcStart(TimeUtil.stringToDate(record.getStrStartTime().split("到")[0],  "yyyy-MM-dd HH:mm:ss"));
+				record.setPmcEnd(TimeUtil.stringToDate(record.getStrStartTime().split("到")[1],  "yyyy-MM-dd HH:mm:ss"));
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		record.setOptime(new Date());
 		if (record.getPmcId()!=null&&!"".equals(record.getPmcId())) {
 			return pmcMapper.updateByPrimaryKeySelective(record);
 		} else {
+			record.setPmcAmount(0);
+			record.setPmcState("-1");
 			record.setIsva("1");
 			return pmcMapper.insertSelective(record);
 		}

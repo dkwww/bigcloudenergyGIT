@@ -9,20 +9,21 @@
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="format-detection" content="telephone=no" />
 		<title>原料清单</title>
-		<link rel="stylesheet" href="../../res/layui/css/layui.css" />
-		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
-		<link rel="stylesheet" type="text/css" href="../../res/css/material-list/index.css" />
-		<link rel="stylesheet" type="text/css" href="../../res/css/material-list/row.css" />
-		<script src="../../res/js/common/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../res/js/material-list/index.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../res/js/common/parameter.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" href="../../../../res/layui/css/layui.css" />
+		<link rel="stylesheet" href="../../../../res/css/common/font-awesome.min.css" media="all">
+		<link rel="stylesheet" href="../../../../res/layui-config/css/app.css" media="all">
+		<link rel="stylesheet" type="text/css" href="../../../../res/css/material-list/index.css" />
+		<link rel="stylesheet" type="text/css" href="../../../../res/css/material-list/row.css" />
+		<script src="../../../../res/js/common/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../../../res/js/material-list/index.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../../../res/js/common/parameter.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body class="childBody">
 		<section class="layui-col-md10">
 			<div class="layui-card">
 				<div class="card-top css-transition">
 					<div class="layui-card-header">
-						<h3>药品：<font style="color: #DC2D00;" id="drugName">名称</font></h3>
+						<h3>药品：<font style="color: #DC2D00;" id="pmcName">计划名称</font></h3>
 					</div>
 					<div class="layui-card-body">
 						<div id="toolbar">
@@ -47,7 +48,7 @@
 							<div class="layui-form-item">
 								<div style="width: 244px;margin-left: 15px;">
 									<select name="mtName" lay-filter="mat-type" id="mat-type">
-										<option value="">药材筛选</option>
+										<option value="">药品筛选</option>
 									</select>
 								</div>
 							</div>
@@ -58,7 +59,7 @@
 							<div class="card-body-left">
 								<div class="scroll-wrap">
 									<ul class="down-ul">
-										<p class="li-title">药材清单（list）</p>
+										<p class="li-title">药品清单（list）</p>
 									</ul>
 								</div>
 							</div>
@@ -75,16 +76,19 @@
 			</div>
 		</section>
 		<!--recommended script position-->
-		<script src="../../res/layui/layui.all.js"></script>
+		<script src="../../../../res/layui/layui.all.js"></script>
+		<script type="text/html" id="img">
+			<img style="height:100%;height:30px;" onclick="getPathOver(this)" src="../../../../{{ d.drugPictrue}}">
+		</script>
 		<script type="text/javascript">
 			//准备视图对象
-			var drugId = getParameter("id");
-			$("#drugName").text(getParameter("name"));
+			var pmcId = getParameter("id");
+			$("#pmcName").text(getParameter("name"));
 			window.viewObj = null;
 			var newData = new Array();//第一个表格的所有数据
 			$.ajax({
-				url: "../../materialList/showList.action", //json文件位置
-				data: {"page":1,"limit":1000,"drugId":drugId},
+				url: "../../../../pmcDetails/findById.action", //json文件位置
+				data: {"page":1,"limit":1000,"pmcId":pmcId},
 				type: "post",
 				async: false,
 				dataType: "json", //返回数据格式为json
@@ -115,12 +119,11 @@
 					cols: [
 						[
 							{title: '序号',type: 'numbers'},
-							{field: 'matName',title: '材料名称（name）'},
-							{field: 'mlAmount',title: '数量（amount）',edit: 'text',sort: true},
-							{field: 'matUnit',title: '单位',width: 85,align: 'center'},
-							{field: 'matPrice',title: '单价（price）元',sort: true},
-							{field: 'mtName',title: '种类（type）'},
-							{field: 'matEffect',title: '功效（effect）'},
+							{field: 'drugName',title: '药品名称（name）'},
+							{field: 'pdAmount',title: '数量（amount）',edit: 'text',sort: true},
+							{field: 'drugUnit',title: '单位',width: 85,align: 'center'},
+							{field: 'drugPrice',title: '单价（price）元',sort: true},
+							{field: 'drugProp',title: '种类（type）'},
 							{field: 'tempId',title: '操作',
 								templet: function(d) {
 									return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.tempId +
@@ -130,7 +133,7 @@
 						]
 					],
 					done: function(res, curr, count) {
-						$("[data-field = 'mlAmount']").not(":first").each(function(){
+						$("[data-field = 'pdAmount']").not(":first").each(function(){
 							$(this).css({
 								"color": "#0000A0"
 							}).on('focus', '.layui-table-edit', function(){
@@ -142,6 +145,13 @@
 								o.val(o.val().replace(/[^0-9]*$/, ""));//正整数
 								o.val(o.val().replace(/^[0]+[0-9]*$/gi, ""));//第一位不能为零
 							});
+					  	});
+						$("[data-field = 'drugProp']").children().each(function(){
+						    if($(this).text() == '1'){
+						    	$(this).text("处方药");
+						    } else if ($(this).text() == '0') {
+						    	$(this).text("非处方药");
+						    }
 					  	});
 					}
 				});
@@ -197,14 +207,14 @@
 								layer.close(index);
 								for (var i = 0, row; i < newData.length; i++) {
 									row = newData[i];
-									if (data.matId == row.matId) {
+									if (data.drugId == row.drugId) {
 										if (row.state==1) {
 											var arr3 = new Array();
 											for (var j = 0; j < viewObj.data.length; j++) {
-												if (row.matId != viewObj.data[j].matId) {
+												if (row.drugId != viewObj.data[j].drugId) {
 													arr3.push(viewObj.data[j]);
 												} else {
-													addOrUpdate(JSON.stringify({"mlId":viewObj.data[j].mlId,"isva":0}));
+													addOrUpdate(JSON.stringify({"pdId":viewObj.data[j].pdId,"isva":0}));
 												}
 											}
 											viewObj.data = arr3;
@@ -233,27 +243,47 @@
 					elem: '#dataTable2',
 					id: layTableId2,
 					height: h2+10,
-					url: "../../material/showList.action",
+					url: "../../../../drug/showList.action",
 					page: true,
 					cols: [
 						[
 							{type: 'checkbox',fixed: true},
 							{title: '序号',type: 'numbers'},
-							{field: 'matId',title: '材料编号（ID）'},
-							{field: 'matName',title: '材料名称（name）'},
-							{field: 'matAmount',title: '数量（amount）',sort: true},
-							{field: 'matUnit',title: '单位（unit）'},
-							{field: 'matPrice',title: '单价（price）',sort: true},
-							{field: 'mtName',title: '种类（type）'},
-							{field: 'matEffect',title: '功效（effect）'}
+							{field: 'drugId',title: 'ID',width: 200},
+			                {field: 'drugName',title: '药名'},
+			                {field: 'dtName',title: '类型',width: 80},
+			                {field: 'drugUnit',title: '单位',width: 80},
+			                {field: 'drugProp',title: '属性',width: 90},
+			                {field: 'drugPictrue',title: '图片',width: 60,templet:'#img'},
+			                {field: 'drugPrice',title: '价格（元）',width: 120,sort: true}
 						]
 					],
 					done: function(res, curr, count) {
 						tableElem = this.elem.next('.layui-table-view');
 						count || tableElem.find('.layui-table-header').css('overflow', 'auto');
 						layui.each(table.cache[layTableId2], function(index, data) {
+							$("[data-field = 'drugPictrue']").children().each(function(){
+			                	var obj = $(this);
+			                	obj.find('img').on("error", function () {
+			                		obj.text('');
+			                	});
+			                	obj.find('img').on("load", function () {
+			                		obj.find('img').mouseover(function() {
+				                		layer.tips("点击查看", this, {
+			                            	tips: [3, "#4794ec"],time: 1000
+			                          	});
+			                      	});
+			                	});
+						  	});
+							$("[data-field = 'drugProp']").children().each(function(){
+							    if($(this).text() == '1'){
+							    	$(this).text("处方药");
+							    } else if ($(this).text() == '0') {
+							    	$(this).text("非处方药");
+							    }
+						  	});
 							for (var j = 0; j < newData.length; j++) {
-								if (newData[j].matId == data.matId) {
+								if (newData[j].drugId == data.drugId) {
 									res.data[index]["LAY_CHECKED"] = true;
 									res.data[index].checkDisabled = true;
 									tableElem.find('tr[data-index="' + index + '"]').find('input[name="layTableCheckbox"]').attr({name: 'layTableCheckbox_disabled',disabled: 'disabled'}).next().removeClass('layui-form-checked');
@@ -264,7 +294,7 @@
 								}
 							}
 							for (var i = 0; i < arr1.length; i++) {
-								if (res.data[index].matId == arr1[i].matId) {
+								if (res.data[index].drugId == arr1[i].drugId) {
 									res.data[index]["LAY_CHECKED"] = true;
 									tableElem.find('tr[data-index=' + index + '] input[type="checkbox"]').prop('checked', true).next().addClass('layui-form-checked');
 								}
@@ -294,23 +324,23 @@
 							addRow(obj.data);
 							arr1.push(obj.data);
 							arr1[arr1.length-1]['state']=0;
-							arr1[arr1.length-1]['mlAmount']=1;
-							arr1[arr1.length-1]['drugId']=drugId;
+							arr1[arr1.length-1]['pdAmount']=1;
+							arr1[arr1.length-1]['pmcId']=pmcId;
 							arr1[arr1.length-1]['checkDisabled']=false;
 						} else {
 							arr2 = table.cache[layTableId2];
 							for (var i = 0; i < arr2.length; i++) {
 								var count = 0;
 								for (var j = 0; j < arr1.length; j++) {
-									if (arr2[i].matId == arr1[j].matId) {
+									if (arr2[i].drugId == arr1[j].drugId) {
 										count++;
 									}
 								}
 								if (count === 0&&!arr2[i].checkDisabled) {
 									addRow(arr2[i]);
 									arr2[i]['state']=0;
-									arr2[i]['mlAmount']=1;
-									arr2[i]['drugId']=drugId;
+									arr2[i]['pdAmount']=1;
+									arr2[i]['pmcId']=pmcId;
 									arr2[i]['checkDisabled']=false;
 									arr1.push(arr2[i]);
 								}
@@ -320,17 +350,18 @@
 					} else {
 						if (obj.type == 'one') {
 							if (!obj.data.checkDisabled) {
-								removeOne(obj.data.matId);
+								removeOne(obj.data.drugId);
 							}
 						} else {
 							arr2 = table.cache[layTableId2];
 							for (var i = 0; i < arr2.length; i++) {
 								if (!arr2[i].checkDisabled) {
-									removeOne(arr2[i].matId);
+									removeOne(arr2[i].drugId);
 								}
 							}
 						}
 					}
+					console.log(arr1);
 				});
 				function closeLayer(){
 				    //当你在iframe页面关闭自身时
@@ -339,7 +370,7 @@
 				}
 				function addOrUpdate(data){
 					$.ajax({ 
-    		        	url: '../../materialList/addOrUpdate.action',
+    		        	url: '../../../../pmc/addOrUpdate.action',
     		        	data: data,
     		        	cache: false,//同步
                         type: 'post',//method请求方式，get或者post
@@ -348,24 +379,26 @@
                     });
 				}
 				//查询类型下拉框数据
-		        $.ajax({ 
-		        	url:'../../matType/showList.action',
+		        var staticData = null;
+		        $.ajax({ url:"../../drugType/showList.action",
                     type:'post',//method请求方式，get或者post
-                    cache: false,//同步
+                    async:false,//同步
                     dataType:'json',//预期服务器返回的数据类型
                     success:function(mes){//res为相应体,function为回调函数
+                    	//增加及修改类型下拉框内的数据
+                    	staticData = mes;
                     	//循环添加类型搜索框内的数据
-                    	$.each(mes.data,function(index,item){
-                    		$("#mat-type").append("<option value="+item.mtName+">"+item.mtName+"</option>");
+                    	$.each(mes.types,function(index,item){
+                    		$("#drug-type").append("<option value="+item.dtId+">"+item.dtName+"</option>");
                     	});
                     	//渲染类型搜索框内的下拉框
                     	renderForm();
                     }
                  });
 				form.on('select(mat-type)', function(data){
-				  	//带条件查询
-		            tableIns2.reload({
-		                where: {"mtName":data.value},
+					//带条件查询
+		            tableIns.reload({
+		                where: data.field,
 		                page: { curr: 1 }
 		            });
 		            $('.kit-search-mored').hide();//关闭搜索层
@@ -380,16 +413,22 @@
 		  		}
 				
 				//窗口自适应
-				function autoHeight(tableId){
-					return document.body.clientHeight && document.documentElement.clientHeight - 175; //窗口高度
+				function autoHeight(tableId) {
+					var h = document.body.clientHeight && document.documentElement.clientHeight - 175; //窗口高度
+					//监听改变窗口大小
+					window.onresize = function() {
+						h = document.body.clientHeight && document.documentElement.clientHeight - 175; //窗口高度
+						location = location;
+					}
+					return h;
 				}
 				
 				//移除数组内重复的元素
 				function removeOne(arrId) {
 					var arr3 = new Array();
 					for (var i = 0; i < arr1.length; i++) {
-						if (arr1[i].matId == arrId) {
-							removeRow(arr1[i].matId);
+						if (arr1[i].drugId == arrId) {
+							removeRow(arr1[i].drugId);
 						} else {
 							arr3.push(arr1[i]);
 						}
@@ -398,7 +437,7 @@
 				}
 				
 				function changeState(rowId) {
-					var objStr = tableElem.find("td[data-field='matId']");
+					var objStr = tableElem.find("td[data-field='drugId']");
 					for (var i = 0; i < objStr.length; i++) {
 						if (objStr[i].innerText == rowId) {
 							tableElem.children().find('.layui-table-fixed input[type="checkbox"]').eq(i+1).next().click();
@@ -417,11 +456,11 @@
 
 				function addRow(data) {
 					$("<li />", {
-						'id': data.matId,
-						'text': data.matName,
+						'id': data.drugId,
+						'text': data.drugName,
 						'class': "new-item "
 					}).insertAfter($(".li-title"));
-					addClose($("#" + data.matId));
+					addClose($("#" + data.drugId));
 				}
 				
 				function removeRow(id) {
@@ -431,6 +470,7 @@
 						$(".remove-item").remove();
 					}, 480);
 				}
+				
 				$(".add").on("click",function(){
 					$(".card-top,.card-down").addClass("css-showTrans").removeClass("css-closeTrans");
 					$(".old-item").remove();
@@ -450,6 +490,27 @@
 					$(".card-top,.card-down").removeClass("css-showTrans").addClass("css-closeTrans").removeClass("css-closeTrans");
 				});
 			});
+			
+			/**
+			*鼠标进入时
+			*/
+			function getPathOver(obj){
+				$("body").append('<div id="layer"></div><img id="pic" src="#" style="width:280px;height:280px;display:none;z-index:999;border-radius: 2px;margin: auto;position: absolute;top: 0px;bottom: 0px;left: 0px;right: 0px;border: 1px solid #424242"/>');
+				$("#layer").addClass("layer").fadeIn("slow");
+				$("#layer").click(function(){
+					getPathOut();
+				});
+				$("#pic").fadeIn("slow");
+				$('#pic').attr({"src":obj.src});
+			}
+			/**
+			*鼠标退出时
+			*/
+			function getPathOut(){
+				$("#layer").fadeOut("slow");
+				$("#pic").fadeOut("slow");
+			}
+			
 			//ajax加载动画
 		    $(function () {
 	            $.ajaxSetup({

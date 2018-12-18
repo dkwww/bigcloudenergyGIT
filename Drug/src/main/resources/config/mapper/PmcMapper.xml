@@ -3,22 +3,25 @@
 <mapper namespace="com.yidu.dao.PmcMapper">
   <resultMap id="BaseResultMap" type="com.yidu.domain.Pmc">
     <id column="pmc_id" jdbcType="VARCHAR" property="pmcId" />
+    <result column="pmc_name" jdbcType="VARCHAR" property="pmcName" />
     <result column="pmc_amount" jdbcType="INTEGER" property="pmcAmount" />
     <result column="pmc_start" jdbcType="TIMESTAMP" property="pmcStart" />
     <result column="pmc_end" jdbcType="TIMESTAMP" property="pmcEnd" />
     <result column="pmc_state" jdbcType="VARCHAR" property="pmcState" />
+    <result column="com_name" jdbcType="VARCHAR" property="comName" />
     <result column="isva" jdbcType="VARCHAR" property="isva" />
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
-    <result column="com_id" jdbcType="VARCHAR" property="comId" />
   </resultMap>
   <resultMap id="BaseResultMapOne" type="com.yidu.domain.Pmc">
     <id column="pmc_id" jdbcType="VARCHAR" property="pmcId" />
+    <result column="pmc_name" jdbcType="VARCHAR" property="pmcName" />
     <result column="pmc_amount" jdbcType="INTEGER" property="pmcAmount" />
     <result column="pmc_start" jdbcType="TIMESTAMP" property="pmcStart" />
     <result column="pmc_end" jdbcType="TIMESTAMP" property="pmcEnd" />
     <result column="pmc_state" jdbcType="VARCHAR" property="pmcState" />
+    <result column="com_name" jdbcType="VARCHAR" property="comName" />
     <result column="isva" jdbcType="VARCHAR" property="isva" />
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
@@ -31,12 +34,18 @@
     <result column="end_times" jdbcType="TIMESTAMP" property="endTimes" />
   </resultMap>
   <sql id="Base_Column_List">
-    pmc_id, pmc_amount, pmc_start, pmc_end, pmc_state, isva, optime, oper, sort
+    pmc_id, pmc_name, pmc_amount, pmc_start, pmc_end, pmc_state, com_name, isva, optime, oper, sort
   </sql>
   <select id="selectBySelective" parameterType="java.util.Map" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from drug_pmc where isva = '1'
+    <if test="record.pmcName != null and record.pmcName != ''">
+   		and pmc_name like CONCAT('%',#{record.pmcName,jdbcType=VARCHAR},'%')
+   	</if>
+   	<if test="record.comName != null and record.comName != ''">
+   		and com_name like CONCAT('%',#{record.comName,jdbcType=VARCHAR},'%')
+   	</if>
     <if test="record.minAmount != null and record.minAmount != ''">
    		and pmc_amount &gt; #{record.minAmount,jdbcType=VARCHAR}
    	</if>
@@ -66,6 +75,12 @@
     select 
     count(pmc_id) 
     from drug_pmc where isva = '1'
+    <if test="pmcName != null and pmcName != ''">
+   		and pmc_name like CONCAT('%',#{pmcName,jdbcType=VARCHAR},'%')
+   	</if>
+   	<if test="comName != null and comName != ''">
+   		and com_name like CONCAT('%',#{record.comName,jdbcType=VARCHAR},'%')
+   	</if>
     <if test="minAmount != null and minAmount != ''">
    		and pmc_amount &gt; #{minAmount,jdbcType=VARCHAR}
    	</if>
@@ -102,12 +117,12 @@
   	<selectKey keyProperty="pmcId" resultType="string" order="BEFORE">
 	    SELECT REPLACE(UUID(),'-','') AS id;
 	</selectKey>
-    insert into drug_pmc (pmc_id, pmc_amount, pmc_start, 
-      pmc_end, pmc_state, isva, 
+    insert into drug_pmc (pmc_id, pmc_name, pmc_amount, pmc_start, 
+      pmc_end, pmc_state, com_name, isva, 
       optime, oper, sort
       )
-    values (#{pmcId,jdbcType=VARCHAR}, #{pmcAmount,jdbcType=INTEGER}, #{pmcStart,jdbcType=TIMESTAMP}, 
-      #{pmcEnd,jdbcType=TIMESTAMP}, #{pmcState,jdbcType=VARCHAR}, #{isva,jdbcType=VARCHAR}, 
+    values (#{pmcId,jdbcType=VARCHAR}, #{pmcName,jdbcType=VARCHAR}, #{pmcAmount,jdbcType=INTEGER}, #{pmcStart,jdbcType=TIMESTAMP}, 
+      #{pmcEnd,jdbcType=TIMESTAMP}, #{pmcState,jdbcType=VARCHAR} ,#{comName,jdbcType=VARCHAR}, #{isva,jdbcType=VARCHAR}, 
       #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}
       )
   </insert>
@@ -120,6 +135,9 @@
       <if test="pmcId != null">
         pmc_id,
       </if>
+      <if test="pmcName != null">
+        pmc_name,
+      </if>
       <if test="pmcAmount != null">
         pmc_amount,
       </if>
@@ -131,6 +149,9 @@
       </if>
       <if test="pmcState != null">
         pmc_state,
+      </if>
+      <if test="comName != null">
+        com_name,
       </if>
       <if test="isva != null">
         isva,
@@ -149,6 +170,9 @@
       <if test="pmcId != null">
         #{pmcId,jdbcType=VARCHAR},
       </if>
+      <if test="pmcName != null">
+        #{pmcName,jdbcType=VARCHAR},
+      </if>
       <if test="pmcAmount != null">
         #{pmcAmount,jdbcType=INTEGER},
       </if>
@@ -160,6 +184,9 @@
       </if>
       <if test="pmcState != null">
         #{pmcState,jdbcType=VARCHAR},
+      </if>
+      <if test="comName != null">
+        #{comName,jdbcType=VARCHAR},
       </if>
       <if test="isva != null">
         #{isva,jdbcType=VARCHAR},
@@ -187,6 +214,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Pmc">
     update drug_pmc
     <set>
+      <if test="pmcName != null">
+        pmc_name = #{pmcName,jdbcType=INTEGER},
+      </if>
       <if test="pmcAmount != null">
         pmc_amount = #{pmcAmount,jdbcType=INTEGER},
       </if>
@@ -198,6 +228,9 @@
       </if>
       <if test="pmcState != null">
         pmc_state = #{pmcState,jdbcType=VARCHAR},
+      </if>
+      <if test="comName != null">
+        com_name = #{comName,jdbcType=VARCHAR},
       </if>
       <if test="isva != null">
         isva = #{isva,jdbcType=VARCHAR},
@@ -216,10 +249,12 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Pmc">
     update drug_pmc
-    set pmc_amount = #{pmcAmount,jdbcType=INTEGER},
+    set pmc_name = #{pmcName,jdbcType=VARCHAR},
+      pmc_amount = #{pmcAmount,jdbcType=INTEGER},
       pmc_start = #{pmcStart,jdbcType=TIMESTAMP},
       pmc_end = #{pmcEnd,jdbcType=TIMESTAMP},
       pmc_state = #{pmcState,jdbcType=VARCHAR},
+      com_name = #{comName,jdbcType=VARCHAR},
       isva = #{isva,jdbcType=VARCHAR},
       optime = #{optime,jdbcType=TIMESTAMP},
       oper = #{oper,jdbcType=VARCHAR},

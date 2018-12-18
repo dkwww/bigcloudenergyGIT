@@ -3,9 +3,9 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
-		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
-		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
+		<link rel="stylesheet" href="../../../res/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../../res/css/common/font-awesome.min.css" media="all">
+		<link rel="stylesheet" href="../../../res/layui-config/css/app.css" media="all">
 		<title>药品管理</title>
     </script>
 	</head>
@@ -19,32 +19,45 @@
 		                <a href="javascript:;" data-action="del-bulk" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon">&#xe640;</i> 批量删除</a>
 		            </div>
 		            <div class="kit-search-inputs">
+		            	<div class="kit-search-keyword">
+		                    <input type="text" class="layui-input" id="serach-one" placeholder="名称.." onKeyUp="lockInput(this,'serach-two')"/>
+		                    <button lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
+		                </div>
 		                <div class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>
 		            </div>
 		        </div>
 				<!-- 搜索扩展工具条 -->
 		        <div class="kit-search-mored layui-anim layui-anim-upbit">
 		            <div class="kit-search-body">
+		            	<div class="layui-form-item">
+		                    <label class="layui-form-label">计划名称</label>
+		                    <div class="layui-input-block">
+		                        <input type="text" name="pmcName" id="serach-two" placeholder="搜索关键字.." autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
+		                    </div>
+		                </div>
+		                <div class="layui-form-item">
+		                    <label class="layui-form-label">计划制造商</label>
+		                    <div class="layui-input-block">
+		                        <input type="text" name="comName" placeholder="制造商.." autocomplete="off" class="layui-input" >
+		                    </div>
+		                </div>
 		                <div class="layui-form-item">
 			                <label class="layui-form-label">开始日期</label>
 			                <div class="layui-input-block">
-				                <div class="layui-input-inline" style="width: 300px;">
 				                    <input type="text" name="strStartTime" id="startDate" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
-				                </div>
 			                </div>
 		                </div>
 		                <div class="layui-form-item">
 			                <label class="layui-form-label">生产期限</label>
 			                <div class="layui-input-block">
-				                <div class="layui-input-inline" style="width: 300px;">
 				                    <input type="text" name="strEndTime" id="endDate" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
-				                </div>
 			                </div>
 		                </div>
 		                <div class="layui-form-item">
 			                <label class="layui-form-label">属性</label>
 			                <div class="layui-input-block">
 			                	<input type="radio" name="pmcState" value="" title="不选" checked/>
+			                	<input type="radio" name="pmcState" value="-1" title="未生产"/>
 			                    <input type="radio" name="pmcState" value="0" title="生产中"/>
 			                    <input type="radio" name="pmcState" value="1" title="已完成"/>
 			                </div>
@@ -53,11 +66,11 @@
 		                    <div class="layui-inline">
 		                        <label class="layui-form-label">数量</label>
 		                        <div class="layui-input-block">
-			                        <div class="layui-input-inline" style="width: 137px;">
+			                        <div class="layui-input-inline">
 			                            <input type="text" name="minAmount" autocomplete="off" class="layui-input" maxlength="9" onKeyUp="amount(this)">
 			                        </div>
 			                        <div class="layui-form-mid">-</div>
-			                        <div class="layui-input-inline" style="width: 137px;">
+			                        <div class="layui-input-inline">
 			                            <input type="text" name="maxAmount" autocomplete="off" class="layui-input" maxlength="9" onKeyUp="amount(this)">
 			                        </div>
 		                        </div>
@@ -70,18 +83,54 @@
 		            </div>
 		        </div>
 		    </form>
-				
+		    <script type="text/html" id="pmc-edit-tpl">
+				<div style="height: 90px;margin:auto;position: absolute;top: 0px;bottom: 0px;left: 0px;right: 0px">
+					<form class="layui-form" action="" lay-filter="form-edit">
+						<input type="hidden" name="pmcId" value="{{d.rowdata.pmcId}}" />
+						<div class="layui-form-item">
+			        		<label class="layui-form-label">计划日期</label>
+			        		<div class="layui-input-block">
+				       			<div class="layui-input-inline" style="width: 100%;">                    
+		                      		{{# if(d.rowdata.strStartTime !== ''){}}
+		                      			<input type="text" name="strStartTime" required lay-verify="required" value="{{d.rowdata.strStartTime}} 到 {{d.rowdata.strEndTime}}" id="planDate" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+		                      		{{#}else{}}
+		                      			<input type="text" name="strStartTime" required lay-verify="required" id="planDate" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+		                      		{{#};}}
+				       			</div>
+			        		</div>
+		        		</div>
+						<div class="layui-form-item">
+		                	<label class="layui-form-label">计划名称</label>
+		                	<div class="layui-input-block">
+		                    	<input type="text" name="pmcName" required lay-verify="required" value="{{d.rowdata.pmcName}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                	</div>
+		            	</div>
+						<div class="layui-form-item">
+		                	<label class="layui-form-label">计划制造商</label>
+		                	<div class="layui-input-block">
+		                    	<input type="text" name="comName" required lay-verify="required" value="{{d.rowdata.comName}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                	</div>
+		            	</div>
+						<div class="layui-form-item" style="display:none;">
+		                	<div class="layui-input-block">
+		                    	<button class="layui-btn" lay-submit lay-filter="formEdit">立即提交</button>
+		                    	<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		                	</div>
+		            	</div>
+					</form>
+				</div>
+			</script>
 			<!-- 操作按钮 -->
 		    <div class="kit-table-body">
 		        <table id="demo" lay-filter="demo"></table>
 		        <script type="text/html" id="barDemo">
-		            <button class="layui-btn layui-btn-xs" lay-event="detail">查看明细</button>
+		            <button class="layui-btn layui-btn-xs" lay-event="detail">配置药品</button>
 		            <button class="layui-btn layui-btn-xs" lay-event="edit">编辑</button>
 		            <button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button>
 		        </script>
 		    </div>
 		</div>
-		<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
+		<script src="../../../res/js/common/jquery-1.11.2.min.js"></script>
 		<script>
 			//文本框只能输入金额
 		    function amount(th){
@@ -101,7 +150,7 @@
 				$("#"+id).val($(obj).val());
 			}
 		</script>
-		<script src="../../res/layui/layui.all.js"></script>
+		<script src="../../../res/layui/layui.all.js"></script>
 		<script>
 			//弹出层下标
 			var editIndex;
@@ -116,12 +165,14 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '449px', //容器高度
-		            url: '../../pmc/showList.action',
+		            url: '../../../pmc/showList.action',
 		            page: true,
 		            id: 'demo',
 		            cols: [
 		                [{checkbox: true,fixed: true},
-		                {field: 'pmcId',title: '编号'},
+		               	{title: '序号',type: 'numbers'},
+		                {field: 'pmcName',title: '计划名称'},
+		                {field: 'comName',title: '计划制造商'},
 		                {field: 'pmcAmount',title: '数量',sort: true},
 		                {field: 'strStartTime',title: '开始时间',sort: true},
 		                {field: 'strEndTime',title: '生产期限',sort: true},
@@ -134,6 +185,8 @@
 						    	$(this).text("已完成");
 						    } else if ($(this).text() == '0') {
 						    	$(this).text("生产中...");
+						    } else if ($(this).text() == '-1'){
+						    	$(this).text("未生产");
 						    }
 					  	});
 		            }
@@ -160,18 +213,17 @@
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		
 		            if (layEvent === 'detail') { //查看
-		            	
+		            	maxlayer(data.pmcId,data.pmcName);
 		            } else if (layEvent === 'del') { //删除
 		                layer.confirm('真的删除行么', function(index) {
 		                	layer.close(index);
-		                    update("../../pmc/addOrUpdate.action",{"pmcId":data.pmcId,"isva":"0"});
+		                    update("../../../pmc/addOrUpdate.action",{"pmcId":data.pmcId,"isva":"0"});
 		                });
 		            } else if (layEvent === 'edit') { //编辑
 		                var d = {
-		                	rowdata: data,
-		                    types: staticData.types
+		                	rowdata: data
 		                };
-		                showlayer(d);
+		                editLayer1(d);
 		            }
 		        });
 		        
@@ -184,13 +236,7 @@
 		        
 		        //增加和修改弹出层   提交按钮点击事件
 		        form.on('submit(formEdit)', function(data) {
-                	if ($("[name=drugPictrue]").val()=="") {
-                		layer.msg('未上传文件');
-                    	$("#fileBtn").html('<span style="color:red"><i class="layui-icon">&#xe67c;</i>选择文件</span>');
-                    	form.render(null, 'form-edit');
-                    	return false;
-                    }
-                	update("../../drug/addDrug.action",data.field);
+                	update("../../../pmc/addOrUpdate.action",data.field);
                 	if (close) editIndex && layer.close(editIndex); //关闭弹出层
                 	return false;
 		        });
@@ -202,7 +248,13 @@
 		            switch (action) {
 		            	//点击的是 增加按钮
 		                case 'add':
-		                	maxlayer();
+		                	var d = {
+		                		//替换增加页面文本框内出现的undefine
+		                        rowdata: {
+		                        	pmcId: '',pmcName: '',strStartTime: '',strEndTime: ''
+		                        }
+		                    };
+		                	editLayer1(d);
 		                    break;
 		                    
 		                //点击的是 批量删除按钮
@@ -219,37 +271,36 @@
 		                    });
 		                    layer.confirm('真的删除行么', function(index) {
 		                    	layer.close(index);
-		                    	update("../../pmc/bulkUpdate.action",ids);
+		                    	update("../../../pmc/bulkUpdate.action",ids);
 			                });
-		                    break;
-		                    
+		                break;
 		            }
 		        });
 		    });
 			
 		  	//全屏弹窗
-			function maxlayer(){
+			function maxlayer(id,name){
 				var index = layer.open({
 				  type: 2,
 				  title: '药品配置',
-				  content: 'https://www.baidu.com',
-				  area: ['800px', '430px']
-				  //maxmin: true
+				  content: '../../../pages/plan/pmc/details/index.html?pmcId='+id+"&name="+name,
+				  area: ['800px', '430px'],
+				  maxmin: true
 				});
 				layer.full(index);
 			}
-		    
-			//渲染 修改和增加弹出层
-		    function showlayer(d){
-		    	layui.laytpl($('#edit-tpl').html()).render(d,function(html) {
-                    layer.open({
+		  	
+			//渲染 药品修改和增加弹出层
+		    function editLayer1(d){
+	    		layui.laytpl($('#pmc-edit-tpl').html()).render(d,function(html) {
+	    			editIndex = layer.open({
                         type: 1,
-                        title: '表单',
+                        title: '药品操作',
                         content: html,
-                        area: ['800px', '430px'],
+                        maxmin: true,
+                        area: ['600px', '400px'],
                         btn: ['提交', '重置', '取消'],
                         yes: function(index, layero) {
-                            editIndex = index;
                             $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
                         },
                         btn2: function(index, layero) {
@@ -257,12 +308,26 @@
                             return false;
                         },
                         success: function() {
-                            form.render(null, 'form-edit');
+                            layui.form.render(null, 'form-edit');
                         }
                     });
+                  	//日期下拉框渲染
+       		 		var layd = laydate.render({
+       	        	  elem: '#planDate'
+       	        	  ,type: 'datetime'
+       	        	  ,calendar: true
+               	      ,range: '到'
+               	      ,format: 'yyyy-M-d H:m:s'
+               	      ,min: minDate(d)
+               	      ,max: maxDate(d)
+	               	  ,ready: function(){
+	               		layd.hint('日期可选范围在<br> 6个月内');
+	               	  }
+       	        	});
                 });
+	    		return 
 		    }
-		  	
+		    
 		    //增加、修改、删除、批量删除 都是用的这一个方法
 		    function update(url,data){
 		    	$.ajax({
@@ -284,10 +349,44 @@
                  });
 		    }
 		    
+		    function addMouth(date, num) {
+				//date为格式化后的日期字符yyyy-MM-dd,num为增加的月份 
+				var monthnum = parseInt(num);
+				var year = parseInt(date.substring(0, 4));
+				var month = parseInt(date.substring(5, 7));
+				var day = parseInt(date.substring(8, 10));
+				var time = new Date(date).toLocaleTimeString('chinese', { hour12: false });
+				if (month + monthnum > 12) {
+					var newyear = year + 1;
+					var newmonth = month + monthnum - 12;
+					var newday = day;
+				} else {
+					var newyear = year
+					var newmonth = month + monthnum;
+					var newday = day;
+				}
+				var newdate = newyear + "-" + newmonth + "-" + newday + " " + time;
+				return newdate;
+			}
+		    
 		 	// 设置最小可选的日期
-		    function minDate(){
+		    function minDate(d){
 		        var now = new Date();
-		        return now.getFullYear()+"-" + (now.getMonth()+1) + "-" + now.getDate();
+		        if (d.rowdata.strStartTime != null && d.rowdata.strStartTime != "") {
+		        	return d.rowdata.strStartTime;
+		        } else {
+		        	return now.getFullYear()+"-" + (now.getMonth()+1) + "-" + now.getDate();
+		        }
+		    }
+		 	
+		 	// 设置最大可选的日期
+		    function maxDate(d){
+		        var now = new Date();
+		        if (d.rowdata.strStartTime != null && d.rowdata.strStartTime != "") {
+		        	return addMouth(d.rowdata.strStartTime,6);
+		        } else {
+		        	return now.getFullYear()+"-" + (now.getMonth()+6) + "-" + now.getDate();
+		        }
 		    }
 		 	
 		  	//日期下拉框渲染
@@ -298,7 +397,6 @@
 	        	  ,calendar: true
         	      ,range: '到'
         	      ,format: 'yyyy-M-d H:m:s'
-        	      //,min: minDate()
 	        	});
 		 	}
 		    
