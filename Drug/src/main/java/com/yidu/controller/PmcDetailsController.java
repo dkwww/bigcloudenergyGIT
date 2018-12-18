@@ -1,6 +1,7 @@
 package com.yidu.controller;
 
 
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -79,6 +80,24 @@ public class PmcDetailsController {
 		 }
 	
 		 return message;
+	}
+	
+	/**
+	 * 增加或修改
+	 */
+	@RequestMapping("/addOrUpdate")
+	@ResponseBody
+	public Message addOrUpdate(@RequestBody PmcDetails record) {
+		int rows = pmcDetailsService.addOrUpdate(record);
+		Message mes = new Message();
+		if (rows > 0) {
+			mes.setStatus(1);
+			mes.setMsg("操作成功！");
+		} else {
+			mes.setStatus(0);
+			mes.setMsg("操作失败，请稍后重试！");
+		}
+		return mes;
 	}
 }
 

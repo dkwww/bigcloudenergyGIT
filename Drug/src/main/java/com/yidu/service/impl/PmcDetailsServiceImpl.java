@@ -8,6 +8,7 @@ import com.yidu.util.PageUtil;
 import com.yidu.util.TimeUtil;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +61,18 @@ public class PmcDetailsServiceImpl  implements PmcDetailsService {
 	public int updateHang(PmcDetails pmcDetail) {
 		
 		return dao.updatedrug(pmcDetail);
+	}
+
+	@Override
+	public int addOrUpdate(PmcDetails record) {
+		record.setOptime(new Date());
+		if (record.getPdId()!=null && !"".equals(record.getPdId())) {
+			return dao.updateByPrimaryKeySelective(record);
+		} else {
+			record.setPdState("0");
+			record.setIsva("1");
+			return dao.insertSelective(record);
+		}
 	}
 
 }

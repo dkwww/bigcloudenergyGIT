@@ -23,5 +23,8 @@ public interface PmcDetailsService   {
 	int selectCountBySelective  (PmcDetails pmcDetail);
 	
 	int   updateHang  (PmcDetails pmcDetail);
+
+
+	int addOrUpdate(PmcDetails record);
 }
  

@@ -84,7 +84,7 @@
 		        </div>
 		    </form>
 		    <script type="text/html" id="pmc-edit-tpl">
-				<div style="height: 90px;margin:auto;position: absolute;top: 0px;bottom: 0px;left: 0px;right: 0px">
+				<div style="height: 145px;margin:auto;position: absolute;top: 0px;bottom: 0px;left: 0px;right: 0px">
 					<form class="layui-form" action="" lay-filter="form-edit">
 						<input type="hidden" name="pmcId" value="{{d.rowdata.pmcId}}" />
 						<div class="layui-form-item">
@@ -102,13 +102,13 @@
 						<div class="layui-form-item">
 		                	<label class="layui-form-label">计划名称</label>
 		                	<div class="layui-input-block">
-		                    	<input type="text" name="pmcName" required lay-verify="required" value="{{d.rowdata.pmcName}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                    	<input type="text" name="pmcName" required lay-verify="required" value="{{d.rowdata.pmcName}}" placeholder="请输入名称" autocomplete="off" class="layui-input">
 		                	</div>
 		            	</div>
 						<div class="layui-form-item">
 		                	<label class="layui-form-label">计划制造商</label>
 		                	<div class="layui-input-block">
-		                    	<input type="text" name="comName" required lay-verify="required" value="{{d.rowdata.comName}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                    	<input type="text" name="comName" required lay-verify="required" value="{{d.rowdata.comName}}" placeholder="请输入制造商" autocomplete="off" class="layui-input">
 		                	</div>
 		            	</div>
 						<div class="layui-form-item" style="display:none;">
@@ -251,7 +251,7 @@
 		                	var d = {
 		                		//替换增加页面文本框内出现的undefine
 		                        rowdata: {
-		                        	pmcId: '',pmcName: '',strStartTime: '',strEndTime: ''
+		                        	pmcId: '',pmcName: '',strStartTime: '',strEndTime: '',comName: ''
 		                        }
 		                    };
 		                	editLayer1(d);
@@ -283,7 +283,7 @@
 				var index = layer.open({
 				  type: 2,
 				  title: '药品配置',
-				  content: '../../../pages/plan/pmc/details/index.html?pmcId='+id+"&name="+name,
+				  content: '../../../pages/plan/pmc/details/index.html?id='+id+"&name="+name,
 				  area: ['800px', '430px'],
 				  maxmin: true
 				});
@@ -298,7 +298,7 @@
                         title: '药品操作',
                         content: html,
                         maxmin: true,
-                        area: ['600px', '400px'],
+                        area: ['800px', '430px'],
                         btn: ['提交', '重置', '取消'],
                         yes: function(index, layero) {
                             $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();

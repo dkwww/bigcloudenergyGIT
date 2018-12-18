@@ -8,6 +8,7 @@
      <result column="pmc_end" jdbcType="TIMESTAMP" property="pmcEnd" />
     <result column="drug_id" jdbcType="VARCHAR" property="drugId" />
     <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
+    <result column="drug_price" jdbcType="DECIMAL" property="drugPrice" />
      <result column="drug_unit" jdbcType="VARCHAR" property="drugUnit" />
     <result column="pd_amount" jdbcType="INTEGER" property="pdAmount" />
     <result column="hang" jdbcType="INTEGER" property="hangName" />
@@ -57,6 +58,9 @@
     where pd_id = #{pdId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.yidu.domain.PmcDetails">
+  	<selectKey keyProperty="pdId" resultType="string" order="BEFORE">
+	    SELECT REPLACE(UUID(),'-','') AS id;
+	</selectKey>
     insert into drug_pmc_details (pd_id, pmc_id, drug_id, 
       pd_amount, pd_state, isva, 
       optime, oper, sort
@@ -67,6 +71,9 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.yidu.domain.PmcDetails">
+  	<selectKey keyProperty="pdId" resultType="string" order="BEFORE">
+	    SELECT REPLACE(UUID(),'-','') AS id;
+	</selectKey>
     insert into drug_pmc_details
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="pdId != null">

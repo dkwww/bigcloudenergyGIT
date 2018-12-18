@@ -10,6 +10,8 @@ public class PmcDetails {
     private String drugId;
     
     private  String   drugName;
+    
+    private Double drugPrice;
 
     private Integer pdAmount;
 
@@ -193,4 +195,13 @@ public class PmcDetails {
     public void setSort(String sort) {
         this.sort = sort == null ? null : sort.trim();
     }
+
+	public Double getDrugPrice() {
+		return drugPrice;
+	}
+
+	public void setDrugPrice(Double drugPrice) {
+		this.drugPrice = drugPrice;
+	}
+    
 }
