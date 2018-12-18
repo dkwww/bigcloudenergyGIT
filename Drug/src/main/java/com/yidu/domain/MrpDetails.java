@@ -9,7 +9,6 @@ public class MrpDetails {
 	 private  String  comId ;  //计划厂家 
 	 private  String  drugId ;   //药品ID  外键
 	 private  Integer    mdPlan ;  //计划任务
-	 private  Double    mdRate  ;  //进度 
 	 private   String  mdState ;    //  状态
 	 private   Integer  mdRough;    //未完成部分
 	 private   String  mdView  ;    //  处理意见
@@ -48,12 +47,7 @@ public class MrpDetails {
 	public void setMdPlan(Integer mdPlan) {
 		this.mdPlan = mdPlan;
 	}
-	public Double getMdRate() {
-		return mdRate;
-	}
-	public void setMdRate(Double mdRate) {
-		this.mdRate = mdRate;
-	}
+	 
 	public String getMdState() {
 		return mdState;
 	}

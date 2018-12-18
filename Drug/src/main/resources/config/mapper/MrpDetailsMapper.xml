@@ -8,7 +8,6 @@
      <result column="md_Plan" jdbcType="INTEGER" property="mdPlan" />
     <result column="md_State" jdbcType="VARCHAR" property="mdState" />
     <result column="md_Rough" jdbcType="INTEGER" property="mdRough" />
-    <result column="md_Rate" jdbcType="INTEGER" property="mdRate" />
      <result column="md_View" jdbcType="VARCHAR" property="mdView" />
     <result column="mrp_Amount" jdbcType="INTEGER" property="mrpAmount" /> 
     <result column="isva" jdbcType="VARCHAR" property="isva" />

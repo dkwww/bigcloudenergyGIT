@@ -2,7 +2,7 @@ package com.yidu.service;
 
 import java.util.List;
 
-import com.yidu.domain.Debty;
+
 import com.yidu.domain.DebtyDetail;
 import com.yidu.util.PageUtil;
 
