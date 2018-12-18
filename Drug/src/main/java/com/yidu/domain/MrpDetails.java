@@ -2,7 +2,6 @@ package com.yidu.domain;
 
 import java.util.Date;
 
-import javax.mail.search.StringTerm;
 
 public class MrpDetails {
    	 private  String   mdId;  //主键  ID

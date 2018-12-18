@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.dao.MrpDetailsMapper">
+  <resultMap id="BaseResultMap" type="com.yidu.domain.MrpDetails">
+    <id column="md_Id" jdbcType="VARCHAR" property="mdId" />
+    <result column="mrp_Id" jdbcType="VARCHAR" property="mrpId" />
+    <result column="com_Id" jdbcType="VARCHAR" property="comId" />
+     <result column="md_Plan" jdbcType="INTEGER" property="mdPlan" />
+    <result column="md_State" jdbcType="VARCHAR" property="mdState" />
+    <result column="md_Rough" jdbcType="INTEGER" property="mdRough" />
+    <result column="md_Rate" jdbcType="INTEGER" property="mdRate" />
+     <result column="md_View" jdbcType="VARCHAR" property="mdView" />
+    <result column="mrp_Amount" jdbcType="INTEGER" property="mrpAmount" /> 
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+  </resultMap>
+  
+</mapper>
