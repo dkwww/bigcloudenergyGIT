@@ -46,9 +46,10 @@ public class BuyHeDetailServiceImpl  implements BuyHeDetailService {
 
 	@Override
 	public int add(BuyDetail deta) {
+		
 		String uuid=UUID.randomUUID().toString().replaceAll("-", "");
 		deta.setBdetId(uuid);
-		
+			
 		return dao.insert(deta);
 	}
 
@@ -58,6 +59,12 @@ public class BuyHeDetailServiceImpl  implements BuyHeDetailService {
 	public int selectCount(BuyDetail detail) {
 		
 		return dao.selectCount(detail);
+	}
+	
+	@Override
+	public int deleteDetail(String buyId) {
+		
+		return dao.deleteByPrimaryKeys(buyId);
 	}
 
 }

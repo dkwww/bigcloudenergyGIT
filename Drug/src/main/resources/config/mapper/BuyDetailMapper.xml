@@ -15,6 +15,9 @@
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
     <result column="mat_name" jdbcType="VARCHAR" property="matName" />
+    <result column="buy_money" jdbcType="VARCHAR" property="buyMoney" />
+    <result column="prov_id" jdbcType="VARCHAR" property="provId" />
+    <result column="prov_name" jdbcType="VARCHAR" property="provName" />
   </resultMap>
   <sql id="Base_Column_List">
     bdet_id, buy_id, bdet_amount, bdet_price, bdet_total, bdet_fk_id, isva, optime, oper, 
@@ -50,6 +53,10 @@
     from drug_buy_detail
     where bdet_id = #{bdetId,jdbcType=VARCHAR}
   </select>
+  <delete id="deleteByPrimaryKeys" parameterType="java.lang.String">
+    delete from drug_buy_detail
+    where buy_id = #{buyId,jdbcType=VARCHAR}
+  </delete>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_buy_detail
     where bdet_id = #{bdetId,jdbcType=VARCHAR}

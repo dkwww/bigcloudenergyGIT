@@ -23,6 +23,7 @@
 	</script>
 	
 	<body>
+		
 		<div class="kit-table">
 			<div class="layui-card-header layui-form" style="padding: 8px 0px;">
 				<!-- 搜索扩展工具条 -->
@@ -164,10 +165,15 @@
 		                    update("../../material/addorUpdate.action",{"matId":data.matId,"isva":"0"});
 		                });
 		            } else if (layEvent === 'edit') { //编辑
-		                var d = {
-		                	rowdata: data,
-		                    types: staticData.data
-		                };
+			            var  buyId=data.buyId;
+	                	var index = layer.open({
+	          				  type: 2,
+	          				  title: '原材料',
+	          				  content: '../buy/buyaddls2.html?ids='+buyId,
+	          				  area: ['800px', '30px']
+	          				  //maxmin: true
+	          				});
+	          			layer.full(index);
 		            }
 		        });
 		        

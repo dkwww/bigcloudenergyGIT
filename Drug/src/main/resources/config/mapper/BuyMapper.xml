@@ -40,7 +40,7 @@
   
   
   <select id="showList" parameterType="map" resultMap="BaseResultMap">
-  	SELECT * FROM drug_buy a,drug_provider b WHERE a.buy_company=b.prov_id
+  	SELECT * FROM drug_buy a,drug_provider b WHERE a.buy_company=b.prov_id and a.buy_type = 0
   	<if test="buy.buyCompany!=null and buy.buyCompany!='' ">
   		and buy_company like concat("%",#{buy.buyCompany},"%")
   	</if>

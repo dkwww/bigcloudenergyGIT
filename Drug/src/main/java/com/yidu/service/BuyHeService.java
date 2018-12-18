@@ -23,6 +23,8 @@ public interface BuyHeService   {
 	
 	int selectCount(Buy buy);
 	
-	int add(Buy buy);
+	int addorUpdate(Buy buy);
+	
+	int delete(String buyId);
 	
 }

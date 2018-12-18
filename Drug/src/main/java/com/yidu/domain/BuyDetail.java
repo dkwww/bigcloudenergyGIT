@@ -38,8 +38,39 @@ public class BuyDetail {
 
     private String drugName;
     
+    private BigDecimal buyMoney;				//总金额
     
-    public String getDrugName() {
+    private String provId;						//供应商外键
+    
+    private String provName;					//供应商名
+    
+    
+    
+    public BigDecimal getBuyMoney() {
+		return buyMoney;
+	}
+
+	public void setBuyMoney(BigDecimal buyMoney) {
+		this.buyMoney = buyMoney;
+	}
+
+	public String getProvId() {
+		return provId;
+	}
+
+	public void setProvId(String provId) {
+		this.provId = provId;
+	}
+
+	public String getProvName() {
+		return provName;
+	}
+
+	public void setProvName(String provName) {
+		this.provName = provName;
+	}
+
+	public String getDrugName() {
 		return drugName;
 	}
 

@@ -6,25 +6,40 @@
 		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
-		<title>采购增加页面(原材料)</title>
+		<title>采购修改页面(原材料)</title>
     </script>
 	</head>
 	
 	<script type="text/html" id="input">
 	<div class="layui-inline">
-		<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="matAmount"  autocomplete="off"  value="{{d.matAmount}}" id="number{{d.matId}}" onkeyup="Pressdown(this);">
+		<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="bdetAmount"  autocomplete="off"  value="{{d.bdetAmount}}" id="number{{d.bdetFkId}}" onkeyup="Pressdown(this)">
 	</div>
 	</script>
 	
 	<script type="text/html" id="inputss">
 	<div class="layui-inline">
-		<input class="layui-input layui-disabled"  readonly="readonly"  value="0" maxlength="9" style="border:none;padding-bottom:8px;" name="bdetTotal" id="price{{d.matId}}" autocomplete="off"">
+		<input class="layui-input layui-disabled"  readonly="readonly"  value="{{d.bdetTotal}}" maxlength="9" style="border:none;padding-bottom:8px;" name="bdetTotal" id="price{{d.bdetFkId}}" autocomplete="off">
 	</div>
 	</script>
 	
+	
+	
+	<script type="text/html" id="input2">
+	<div class="layui-inline">
+		<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="matAmount"  autocomplete="off"  value="{{d.matAmount}}" id="numbers{{d.matId}}" onkeyup="Pressdown(this);">
+	</div>
+	</script>
+	
+	<script type="text/html" id="inputs2">
+	<div class="layui-inline">
+		<input class="layui-input layui-disabled"  readonly="readonly"  value="0" maxlength="9" style="border:none;padding-bottom:8px;" name="bdetTotal" id="prices{{d.matId}}" autocomplete="off"">
+	</div>
+	</script>
+	
+	
 	<body>
 		<div>
-			<input type="hidden" id="shuju">
+			<input type="text" id="shuju" style="width: 100%">
 		</div>
 		<div class="kit-table">
 				<!-- 左上角的两个按钮 -->
@@ -35,7 +50,7 @@
 		                <div class="kit-search-keyword">
 		                    <label class="layui-form-label"><span class="color-red"><span class="color-red"></span>供应商:</label>
 							  <div class="layui-input-inline" style="float:right;">
-							    <select id="edit_exam_school" name="buyCompany">
+							    <select id="edit_exam_school" name="provId">
 							      <option value="">请选择</option>
 							    </select>
 							  </div>
@@ -73,6 +88,7 @@
 		            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 		        </script>
 		    </div>
+		    <table id="demos" lay-filter="demos"></table>
 		</div>
 		
 		
@@ -97,30 +113,80 @@
 			}
 		</script>
 		<script src="../../res/layui/layui.all.js"></script>
+		<script src="../../res/js/common/parameter.js"></script>
 		<script>
 			window.windata=null;
 			//显示表格数据
+			var tableElem;
 		    layui.use(['table','upload'], function() {
+		    	var id = window.location.href.split("?")[1].split("=")[1];
+		    	var buyId = getParameter("id");
+		    	
 		        var table = layui.table,
 		            $ = layui.jquery,
 		            layer = layui.layer,
 		            form = layui.form,
 		            laytpl = layui.laytpl;
+		        
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '449px', //容器高度
-		            url: '../../material/showList.action',
+		            url: '../../buyheDetail/showListId.action?buyId'+buyId,
 		            page: true,
 		            id: 'demo',
+		            cols: [
+		                [
+		                {field: 'bdetFkId',title: 'ID',width: 120},	
+		                {field: 'matName',title: '材料名',width: 120},
+		                {field: 'bdetPrice',title: '单价',width: 120},
+		                {field: 'bdetAmount',title: '数量',width: 120,templet:'#input'},
+		                {field: 'bdetTotal',title: '小计',width: 150,templet:'#inputss'}]
+		            ],
+		            done: function(res, curr, count) {
+		            	tableElem = this.elem.next('.layui-table-view');
+		            	 var tables=table.cache.demo;
+		            	 
+		            	 for (var i = 0; i < tables.length; i++) {
+							$("#edit_exam_school").val(tables[i].provId);
+							renderForm();
+						}
+		            	 
+		            	$.each(tables,function(i,item){
+				        	$("#shuju").val($("#shuju").val()+item.bdetFkId+","+item.matName+","+item.bdetPrice+","+$("#number"+item.bdetFkId).val()+","+$("#price"+item.bdetFkId).val()+"#");	
+		            	})
+		            	
+		            	var amount = 0;
+		            	var price=0;
+		            	$("[data-field = 'bdetAmount']").children().not(":first").each(function(){
+						    var obj = $(this).children().find("input");
+						    amount += parseInt(obj.val());
+					  	});
+		            	$("[data-field = 'bdetTotal']").children().not(":first").each(function(){
+						    var obj = $(this).children().find("input");
+						    price += parseInt(obj.val());
+					  	});
+		            	$("#buyAmount").val(amount); 
+		            	$("#buyMoney").val(price);
+		            },
+		            loading: true
+		        });
+		        
+		        var tableIns = table.render({
+		            elem: '#demos',
+		            height: '449px', //容器高度
+		            url: '../../material/showList.action',
+		            page: true,
+		            id: 'demos',
 		            cols: [
 		                [{checkbox: true,fixed: true},
 		                {field: 'matId',title: 'ID',width: 120},	
 		                {field: 'matName',title: '材料名',width: 120},
 		                {field: 'matPrice',title: '单价',width: 120},
-		                {field: 'matAmount',title: '数量',width: 120,templet:'#input'},
-		                {title: '小计',width: 150,templet:'#inputss'}]
+		                {field: 'matAmount',title: '数量',width: 120,templet:'#input2'},
+		                {title: '小计',width: 150,templet:'#inputs2'}]
 		            ],
 		            done: function(res, curr, count) {
+		            	
 		            	windata=res.data;
 		            },
 		            loading: true
@@ -154,52 +220,33 @@
 		            return false;
 		        });
 		        
+		        //console.info
 		        
+		      
+		        
+		        //下面的数据
 	        	//选中、取消值
 	        	var data=null;
-		        table.on('checkbox(demo)', function(obj){
+		        table.on('checkbox(demos)', function(obj){
 		        	var tables=table.cache.demo;
 		        	data=obj.data;
 		        	
 		        	if(obj.checked==true){
-		        		 $("#shuju").val($("#shuju").val()+data.matId+","+data.matName+","+data.matPrice+","+$("#number"+data.matId).val()+","+$("#price"+data.matId).val()+"#");
-		        		 
-		        		 $.each(tables,function(i,item){
-		        			 if(data.matId==item.matId){
-		        				 //取输入数量值
-		        				 var a=$("#number"+data.matId).val();
-		        				 //放入总数量
-		        				 $("#buyAmount").val(parseInt($("#buyAmount").val())+parseInt(a));
-		        				 
-		        				 //取输入小计值
-		        				 var b=$("#price"+data.matId).val();
-		        				 //放入总金额
-		        				 $("#buyMoney").val(parseInt($("#buyMoney").val())+parseInt(b));
-		        			 }
-		        		 });
-		        		 
+		        		$("#shuju").val($("#shuju").val()+data.matId+","+data.matName+","+data.matPrice+","+$("#numbers"+data.matId).val()+","+$("#prices"+data.matId).val()+"#");
+		        		tableElem.find("tbody").append('<tr data-index='+data.matId+' class=""><td data-field="bdetFkId"><div class="layui-table-cell laytable-cell-1-bdetFkId">'+data.matId+'</div></td><td data-field="matName"><div class="layui-table-cell laytable-cell-1-matName">'+data.matName+'</div></td><td data-field="bdetPrice"><div class="layui-table-cell laytable-cell-1-bdetPrice">'+data.matPrice+'</div></td><td data-field="bdetAmount" data-content="22"><div class="layui-table-cell laytable-cell-1-bdetAmount"> <div class="layui-inline"> <input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="bdetAmount" autocomplete="off" value="0" id="numberd6484a14498b47f78cccc1242f5eab6ewerdf" onkeyup="Pressdown(this);"> </div> </div></td><td data-field="bdetTotal" data-content="440"><div class="layui-table-cell laytable-cell-1-bdetTotal"> <div class="layui-inline"> <input class="layui-input layui-disabled" readonly="readonly" value="0" maxlength="9" style="border:none;padding-bottom:8px;" name="bdetTotal" id="priced6484a14498b47f78cccc1242f5eab6ewerdf" autocomplete="off" "=""> </div> </div></td></tr>');
 		        	 }	
 		        	 if(obj.checked==false){
-		        		 $.each(tables,function(i,item){
-		        			 if(data.matId==item.matId){
-		        				 //获取总数量值
-		        				 var zAmount=$("#buyAmount").val();
-	        					 //用总数量值减去输入的值
-		        				 $("#buyAmount").val(parseInt(zAmount)-$("#number"+data.matId).val());
-	        					 
-		        				 //获取总金额值
-		        				 var zMoney=$("#buyMoney").val();
-	        					 //用总金额减去输入的小计值
-		        				 $("#buyMoney").val(parseInt(zMoney)-$("#price"+data.matId).val());
-		        			 }
-		        		 });
+		        		 
 		        	 }
 		        });
 		        
+		        
+		     
+		        
 		        $("#add").click(function(){
    	        		var url="../../buyht/add.action";
-   					var data={"shuju":$("#shuju").val(),"sumNumber":$("#buyAmount").val(),"sumPrice":$("#buyMoney").val(),"Supplier":$("#edit_exam_school").val()}
-   					
+   					var data={"id":id,"shuju":$("#shuju").val(),"sumNumber":$("#buyAmount").val(),"sumPrice":$("#buyMoney").val(),"Supplier":$("#edit_exam_school").val()}
+   				 	
    					if($("#edit_exam_school").val()!=0){
    						$.post(url,data,function(mes){
   	 						if(mes.status==1){
@@ -223,6 +270,8 @@
 		        var editIndex;
 		    });
 			
+			
+			
 		  	//全屏弹窗
 			function maxlayer(){
 				var index = layer.open({
@@ -243,6 +292,68 @@
 	  			}); 
 	  		}
 		    
+		  	
+		  	function Pressdown(obj){
+				obj.value = obj.value.replace(/[^\d]/g,"");//清除“数字”和“.”以外的字符  
+			    if(obj.value ==0){
+			    	obj.value = "0";
+			    }
+			    if(obj.value.indexOf(".")< 0 && obj.value !=""){//以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额 
+			        obj.value= parseFloat(obj.value); 
+			    }
+			    if(obj.value.indexOf(".")==0){//第一个字符不能为.
+			    	 obj.value="0";
+			    }
+			    var id = obj.id;
+			    
+				var a = obj.value;//数量值
+				
+				var b=$(obj).parent().parent().parent().prev().children().html();//获取this的父类节点
+				var c =parseFloat(a)*parseFloat(b);//用this*数量
+				//计算结果显示
+				$(obj).parent().parent().parent().next().children().children().children().val(c);
+				
+				
+				var amounts = allAmount();
+				$("#buyAmount").val(amounts);
+				
+				var moneys=allMoney();
+				$("#buyMoney").val(moneys)
+				
+			}
+		  	
+		  	
+			
+		  	//数量相加
+			function allAmount(){
+				var amount = 0;
+				$.each(tableElem.find('td[data-field="bdetAmount"]').find('input'),function(index,item){
+					amount += parseInt($(this).val());
+				});
+				return amount;
+			}
+		  	
+		  	//金额相加
+		  	function allMoney(){
+		  		var money=0;
+		  		$.each(tableElem.find('td[data-field="bdetTotal"]').find('input'),function(index,item){
+		  			money += parseInt($(this).val());
+				});
+		  		return money;
+		  	}
+		</script>
+		<script src="../../res/js/common/parameter.js"></script>
+		<script>
+		/*$(function(){
+			var buyId = getParameter("id");
+			alert(buyId)
+			var url='../../buyheDetail/showListId.action'
+			var data={buyId:buyId}
+			$.post(url,data,function(mes){
+				alert(mes.buyMoney)
+				$("#edit_exam_school").val(mes.buyMoney);
+			});
+		})*/
 		</script>
 		<script>
 			$(function(){
@@ -255,26 +366,8 @@
 		
 		<script>
 			
-			function Pressdown(obj){
-				obj.value = obj.value.replace(/[^\d]/g,"");//清除“数字”和“.”以外的字符  
-			    if(obj.value ==0){
-			    	obj.value = "0";
-			    }
-			    if(obj.value.indexOf(".")< 0 && obj.value !=""){//以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额 
-			        obj.value= parseFloat(obj.value); 
-			    }
-			    if(obj.value.indexOf(".")==0){//第一个字符不能为.
-			    	 obj.value="0";
-			    }
-			    
-			    var id = obj.id;
-			    
-				var a = obj.value;//数量值
-				var b=$(obj).parent().parent().parent().prev().children().html();//获取this的父类节点
-				var c =parseFloat(a)*parseFloat(b);//用this*数量
-				//计算结果显示
-				$(obj).parent().parent().parent().next().children().children().children().val(c);
-			}
+			
+			
 		</script>
 		
 	</body>

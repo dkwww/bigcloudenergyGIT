@@ -74,21 +74,41 @@ public class BuyHeController {
 	 */
 	@RequestMapping("add")
 	@ResponseBody
-	public Message add(String shuju,String sumNumber,String sumPrice,String Supplier) {
+	public Message add(String id,String shuju,String sumNumber,String sumPrice,String Supplier) {
+		//创建采购订单对象
 		Buy buy=new Buy();
+		//创建采购明细对象
+		BuyDetail detail = new BuyDetail();
+		
+		//根据前台传来的值用"#"分割
+		String [] data=shuju.split("#");
+		
+		for (int i = 0; i < data.length; i++) {
+			//删除明细
+			detaservice.deleteDetail(id);
+		}
+		//删除订单
+		service.delete(id);
+		
+		
+		//存进供应商外键
 		buy.setBuyCompany(Supplier);
+		//存进总数量,是int类型必须强转下
 		buy.setBuyAmount(Integer.valueOf(sumNumber));
+		//存进总金额
 		BigDecimal buyMoney = new BigDecimal(sumPrice);
 		buy.setBuyMoney(buyMoney);
-		service.add(buy);
+		buy.setBuyType("0");
 		
-		//以前台的#号来进行拆分
-		String [] data=shuju.split("#");
+		//放入dao
+		service.addorUpdate(buy);
+		
+		
 		//循环明细数据的数据
 		for (int i = 0; i < data.length; i++) {
-			//创建采购明细对象
-			BuyDetail detail = new BuyDetail();
 			
+			
+			//循环数据里面的内容要以','分割
 			String [] datas=data[i].split(",");
 			String buyId=datas[0];
 			System.out.println(" id"+buyId);
@@ -101,7 +121,6 @@ public class BuyHeController {
 			String bdetTotal=datas[4];
 			System.out.println(" 小计"+bdetTotal);
 			
-			
 			detail.setBdetFkId(buyId);
 			BigDecimal bdetPrices = new BigDecimal(bdetPrice);
 			detail.setBdetPrice(bdetPrices);
@@ -109,15 +128,17 @@ public class BuyHeController {
 			BigDecimal bdetTotals = new BigDecimal(bdetTotal);
 			detail.setBdetTotal(bdetTotals);
 			detail.setBuyId(buy.getBuyId());
+			
 			detaservice.add(detail);
 		}
+		
 		
 		//获取message对象
 		Message me=new Message();
 		//是1的话
 		me.setStatus(1);
-		//增加成功
-		me.setMsg("增加成功");
+		//操作成功
+		me.setMsg("操作成功");
 
 		return me;
 	}

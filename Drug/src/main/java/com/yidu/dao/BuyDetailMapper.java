@@ -46,4 +46,8 @@ public interface BuyDetailMapper {
      * @return
      */
     List<BuyDetail> findById(String id);
+    
+    
+    
+    int deleteByPrimaryKeys(String buyId);
 }

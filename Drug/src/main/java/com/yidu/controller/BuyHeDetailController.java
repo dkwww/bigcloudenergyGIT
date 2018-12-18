@@ -41,6 +41,7 @@ public class BuyHeDetailController {
 	@RequestMapping("/showListId")
 	@ResponseBody
 	public Map<String,Object> showListId(BuyDetail detail,Integer page,Integer limit) {
+		
 		PageUtil PageUtil=new PageUtil();
 		if(page!=null && limit!=null) {
 			PageUtil.setCurPage(page);

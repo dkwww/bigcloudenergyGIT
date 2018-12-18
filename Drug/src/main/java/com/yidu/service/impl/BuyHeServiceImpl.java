@@ -43,16 +43,32 @@ public class BuyHeServiceImpl implements BuyHeService {
 	}
 
 	@Override
-	public int add(Buy buy) {
-		String uuid=UUID.randomUUID().toString().replaceAll("-", "");
-		buy.setBuyId(uuid);
-		return dao.insert(buy);
+	public int addorUpdate(Buy buy) {
+		int rows=0;
+		
+		rows=dao.deleteByPrimaryKey(buy.getBuyId());
+		
+		if(buy.getBuyId()!=null && !"".equals(buy.getBuyId())) {
+			rows=dao.updateByPrimaryKeySelective(buy);
+		}else {
+			String uuid=UUID.randomUUID().toString().replaceAll("-", "");
+			buy.setBuyId(uuid);
+			rows=dao.insert(buy);
+		}
+		
+		return rows;
 	}
 
 	@Override
 	public int selectCount(Buy buy) {
 		
 		return dao.selectCount(buy);
+	}
+
+	@Override
+	public int delete(String buyId) {
+		
+		return dao.deleteByPrimaryKey(buyId);
 	}
 
 }
