@@ -37,7 +37,21 @@ public class Pmc {
     
     private Integer minAmount;
     
-    public String getPmcId() {
+    
+    private  String   comId;
+    
+    
+    
+    
+    public String getComId() {
+		return comId;
+	}
+
+	public void setComId(String comId) {
+		this.comId = comId;
+	}
+
+	public String getPmcId() {
         return pmcId;
     }
 

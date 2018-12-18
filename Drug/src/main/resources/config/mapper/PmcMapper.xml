@@ -11,6 +11,7 @@
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
+    <result column="com_id" jdbcType="VARCHAR" property="comId" />
   </resultMap>
   <resultMap id="BaseResultMapOne" type="com.yidu.domain.Pmc">
     <id column="pmc_id" jdbcType="VARCHAR" property="pmcId" />
