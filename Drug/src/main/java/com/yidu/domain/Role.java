@@ -18,8 +18,19 @@ public class Role {
     private String oper;
 
     private String sort;
+    
+    private String moduleId;
+    
+    
+    public String getModuleId() {
+		return moduleId;
+	}
 
-    public String getRoleId() {
+	public void setModuleId(String moduleId) {
+		this.moduleId = moduleId;
+	}
+
+	public String getRoleId() {
         return roleId;
     }
 

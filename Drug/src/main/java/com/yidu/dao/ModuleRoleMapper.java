@@ -18,4 +18,5 @@ public interface ModuleRoleMapper {
 
     int updateByPrimaryKey(ModuleRole record);
     List<Ztree> queryList(String id);
+    int deleteId(String roleId);
 }

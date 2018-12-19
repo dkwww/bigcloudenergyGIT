@@ -1,6 +1,7 @@
 package com.yidu.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.yidu.controller.vo.Ztree;
 import com.yidu.domain.Module;
@@ -20,4 +21,6 @@ public interface ModuleMapper {
     
     List<Ztree> selectList();
     List<Ztree> selectZtree(String id);
+    List<Module> queryList(Map<String,Object> map);
+    int queryCount(Module module);
 }

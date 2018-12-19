@@ -5,8 +5,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yidu.controller.vo.Ztree;
+import com.yidu.domain.ModuleRole;
+import com.yidu.domain.Role;
 import com.yidu.service.ModuleRoleService;
 import com.yidu.util.Message;
+import com.yidu.util.Tools;
 
 import java.util.List;
 
@@ -33,11 +36,6 @@ public class ModuleRoleController {
 	public List<Ztree> queryIdModule(String drugId){
 		List<Ztree> list=moroService.queryList(drugId);
 		return list;
-	}
-	public Message updateId(String moduleId){
-		Message mes=new Message();
-		
-		return mes;
 	}
 }
 

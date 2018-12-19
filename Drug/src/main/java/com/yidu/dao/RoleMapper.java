@@ -14,11 +14,12 @@ public interface RoleMapper {
 
     Role selectByPrimaryKey(String roleId);
 
-    int updateByPrimaryKeySelective(Role record);
+    int updateByPrimaryKeySelective(Role role);
 
     int updateByPrimaryKey(Role record);
     
     List<Role> queryList(Map<String,Object> map);
     
     int queryCount(Role role);
+    int batchdelete(List<String> ids);
 }

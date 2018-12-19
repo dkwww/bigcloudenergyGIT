@@ -10,16 +10,16 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '449px', //容器高度
-		            url: '../../role/queryList.action',
+		            url: '../../module/queryList.action',
 		            page: true,
 		            id: 'demo',
 		            cols: [
 		                [{checkbox: true,fixed: true},
-		                {field: 'roleId',title: 'ID', width: 273},
-		                {field: 'roleName',title: '角色名称',width: 145},
-		                {field: 'roleCode',title: '角色编号',width: 150},
-		                {field: 'roleDescribe',title: '角色描述',width: 150},
-		                {field: 'isva',title: '是否有效',width: 90},
+		                {field: 'modeId',title: '模块ID', width: 273},
+		                {field: 'druModeId',title: '上级模块ID',width: 145},
+		                {field: 'modeUrl',title: '模块地址',width: 150},
+		                {field: 'modeName',title: '模块名称',width: 150},
+		                {field: 'modeExplain',title: '模块介绍',width: 90},
 		                {field: 'optime',title: '操作时间',width: 60},
 		                {field: 'oper',title: '操作者',width: 150},
 		                {fixed: 'right',title: '操作',width: 180,align: 'center',toolbar: '#barDemo'}]
@@ -42,16 +42,17 @@
 		        });
 				//查询类型下拉框数据
 		        var staticData = null;
-		        $.ajax({ url:"../../drugType/showList.action",
+		        $.ajax({ url:"../../module/queryList.action",
                     type:'post',//method请求方式，get或者post
                     cache: false,//同步
                     dataType:'json',//预期服务器返回的数据类型
+                    data:{"druModeId":null,"limit":10,"page":1},
                     success:function(mes){//res为相应体,function为回调函数
                     	//增加及修改类型下拉框内的数据
                     	staticData = mes;
                     	//循环添加类型搜索框内的数据
                     	$.each(mes.types,function(index,item){
-                    		$("#drug-type").append("<option value="+item.dtId+">"+item.dtName+"</option>");
+                    		$("#drug-type").append("<option value="+item.modeId+">"+item.modeName+"</option>");
                     	});
                     	//渲染类型搜索框内的下拉框
                     	renderForm();
@@ -90,75 +91,7 @@
 	                            form.render(null, 'form-edit');
 	                        }
 	                    });
-	                    layui.config({
-	                        base: '../../res/layui-config/js/'
-	                    }).use(['ztree', 'layer'], function() {
-	                    	var url="../../role/queryModule.action";
-	                    	var data=null;
-	                    	$.post(url,data,function(mes){
-	                		 var $ = layui.jquery,
-	                         layer = layui.layer;
-	                         var zNodes = mes;
-	                         var setting = {
-	                             view: {
-	                                 addHoverDom: addHoverDom,
-	                                 removeHoverDom: removeHoverDom,
-	                                 selectedMulti: false
-	                             },
-	                             check: {
-	                                 enable: true
-	                                 
-	                             },
-	                             data: {
-	                                 simpleData: {
-	                                     enable: true
-	                                 }
-	                             },
-	                             edit: {
-	                                 enable: true
-	                             },
-	                             callback: {
-	                                 onClick: function(e, treeId, treeNode) {
-	                                     console.log(treeNode);
-	                                 }
-	                             }
-	                         };
-
-
-	                         $(document).ready(function() {
-	                             $.fn.zTree.init($("#ztree"), setting, zNodes);
-	                         });
-	                         setAllId($("#roleId").val());
-	                         var newCount = 1;
-
-	                         function addHoverDom(treeId, treeNode) {
-	                             var sObj = $("#" + treeNode.tId + "_span");
-	                             if (treeNode.editNameFlag || $("#addBtn_" + treeNode.tId).length > 0)
-	                                 return;
-	                             var addStr = "<span class='button add' id='addBtn_" + treeNode.tId +
-	                                 "' title='add node' onfocus='this.blur();'></span>";
-	                             sObj.after(addStr);
-	                             var btn = $("#addBtn_" + treeNode.tId);
-	                             if (btn) {
-	                                 btn.bind("click", function() {
-	                                     var zTree = $.fn.zTree.getZTreeObj("ztree");
-	                                     zTree.addNodes(treeNode, {
-	                                         id: (100 + newCount),
-	                                         pId: treeNode.id,
-	                                         name: "new node" + (newCount++)
-	                                     });
-	                                     return false;
-	                                 });
-	                             }
-	                         };
-
-	                         function removeHoverDom(treeId, treeNode) {
-	                             $("#addBtn_" + treeNode.tId).unbind().remove();
-	                         };
-	                    	},"json");
-	                    });
 	                    upload();
-	                   
 	                });
 			    }
 		        
@@ -174,12 +107,12 @@
 		            } else if (layEvent === 'del') { //删除
 		                layer.confirm('真的删除行么', function(index) {
 		                	layer.close(index);
-		                    update("../../role/delete.action",{"roleId":data.roleId,"isva":"否"});
+		                    update("../../module/updateId.action",{"modeId":data.modeId,"isva":"否"});
 		                });
 		            } else if (layEvent === 'edit') { //编辑
 		                var d = {
 		                	rowdata: data,
-		                    types: staticData.types
+		                    types: staticData.data
 		                };
 		                showlayer(d);
 		            }
@@ -194,9 +127,7 @@
 		        
 		    //增加和修改弹出层   提交按钮点击事件
 		        form.on('submit(formEdit)', function(data) {
-		        	$("#moduleId").val(getAllId());
-		        	data.field.moduleId=getAllId();
-                	update("../../role/updateId.action",data.field);
+                	update("../../module/updateId.action",data.field);
                 	if (close) editIndex && layer.close(editIndex); //关闭弹出层
                 	return false;
 		        });
@@ -211,10 +142,10 @@
 		                    var d = {
 		                		//替换增加页面文本框内出现的undefine
 		                        rowdata: {
-		                        	roleId:'',roleName: '',roleDescribe: ''
+		                        	modeId:'',modeName: '',modeUrl: '',modeExplain:''
 		                        },
 		                        //类型下拉框数据
-		                        types: staticData.types
+		                        types: staticData.data
 		                    };
 		                    showlayer(d);
 		                    break;

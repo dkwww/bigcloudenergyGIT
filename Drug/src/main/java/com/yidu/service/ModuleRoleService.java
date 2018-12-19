@@ -3,6 +3,7 @@ package com.yidu.service;
 import java.util.List;
 
 import com.yidu.controller.vo.Ztree;
+import com.yidu.domain.ModuleRole;
 
 /**
  * <p>
@@ -14,4 +15,6 @@ import com.yidu.controller.vo.Ztree;
  */
 public interface ModuleRoleService   {
 	List<Ztree> queryList(String id);
+	int deleteId(String roleId);
+	int insert(ModuleRole moduleRoler);
 }

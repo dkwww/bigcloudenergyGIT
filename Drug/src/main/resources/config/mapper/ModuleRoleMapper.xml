@@ -17,6 +17,9 @@
   <select id="queryList" parameterType="java.lang.String" resultMap="BaseResultMap2">
   	SELECT * FROM drug_module_role d,drug_module m WHERE d.mode_id=m.mode_id AND d.role_id=#{id}
   </select>
+  <delete id="deleteId" parameterType="java.lang.String">
+  	DELETE FROM drug_module_role WHERE role_id=#{roleId}
+  </delete>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

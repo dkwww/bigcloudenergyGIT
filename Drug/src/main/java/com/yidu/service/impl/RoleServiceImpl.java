@@ -8,7 +8,9 @@ import com.yidu.domain.Module;
 import com.yidu.domain.Role;
 import com.yidu.service.RoleService;
 import com.yidu.util.PageUtil;
+import com.yidu.util.Tools;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +54,25 @@ public class RoleServiceImpl   implements RoleService {
 	@Override
 	public List<Ztree> selectZtree(String id) {
 		return moMapper.selectZtree(id);
+	}
+
+	@Override
+	public int updateId(Role role) {
+		role.setOptime(new Date());
+		return rolemapper.updateByPrimaryKeySelective(role);
+	}
+
+	@Override
+	public int insert(Role role) {
+		role.setOptime(new Date());
+		role.setRoleId(Tools.getRandomString());
+		role.setIsva("是");
+		return rolemapper.insertSelective(role);
+	}
+
+	@Override
+	public int batchdelete(List<String> ids) {
+		return rolemapper.batchdelete(ids);
 	}
 
 	

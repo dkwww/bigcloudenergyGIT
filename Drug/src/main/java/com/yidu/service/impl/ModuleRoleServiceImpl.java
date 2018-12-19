@@ -4,6 +4,7 @@ package com.yidu.service.impl;
 import com.yidu.controller.vo.Ztree;
 import com.yidu.dao.ModuleMapper;
 import com.yidu.dao.ModuleRoleMapper;
+import com.yidu.domain.ModuleRole;
 import com.yidu.service.ModuleRoleService;
 
 import java.util.List;
@@ -28,5 +29,13 @@ public class ModuleRoleServiceImpl  implements ModuleRoleService {
 	public List<Ztree> queryList(String id) {
 		return moroMapper.queryList(id);
 	}
-
+	@Override
+	public int deleteId(String roleId) {
+		return moroMapper.deleteId(roleId);
+	}
+	@Override
+	public int insert(ModuleRole moduleRoler) {
+		return moroMapper.insert(moduleRoler);
+	}
+	
 }

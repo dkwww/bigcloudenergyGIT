@@ -2,28 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yidu.dao.RoleMapper">
   <resultMap id="BaseResultMap" type="com.yidu.domain.Role">
-    <id column="role_id" jdbcType="VARCHAR" property="roleId" />
-    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
-    <result column="role_code" jdbcType="VARCHAR" property="roleCode" />
-    <result column="role_describe" jdbcType="VARCHAR" property="roleDescribe" />
-    <result column="isva" jdbcType="VARCHAR" property="isva" />
-    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
-    <result column="oper" jdbcType="VARCHAR" property="oper" />
-    <result column="sort" jdbcType="VARCHAR" property="sort" />
+    <id column="role_id" property="roleId" />
+    <result column="role_name" property="roleName" />
+    <result column="role_code" property="roleCode" />
+    <result column="role_describe" property="roleDescribe" />
+    <result column="isva" property="isva" />
+    <result column="optime" property="optime" />
+    <result column="oper" property="oper" />
+    <result column="sort" property="sort" />
   </resultMap>
   <sql id="Base_Column_List">
     role_id, role_name, role_code, role_describe, isva, optime, oper, sort
   </sql>
   <select id="queryList" parameterType="java.util.Map" resultMap="BaseResultMap">
-  	select * from drug_role where 1=1
+  	select * from drug_role where isva ='是' 
   	<if test="role.roleId !=null and role.roleId != '' ">
   		and role_id=#{role.roleId}
   	</if>
   	<if test="role.roleName !=null and role.roleName != '' ">
-  		and role_name=#{role.roleName}
+  		and role_name like CONCAT(CONCAT('%',#{role.roleName},'%'))
   	</if>
   	<if test="role.roleCode !=null and role.roleCode != '' ">
-  		and role_Code=#{role.roleCode}
+  		and role_code=#{role.roleCode}
   	</if>
   	<if test="role.roleDescribe !=null and role.roleDescribe != '' ">
   		and role_describe=#{role.roleDescribe}
@@ -32,18 +32,18 @@
    	limit #{page.startRows},#{page.rows}
   </select>
   <select id="queryCount" parameterType="com.yidu.domain.Role" resultType="int">
-  	select count(*) from drug_role where 1=1
+  	select count(*) from drug_role where isva ='是'
   	<if test="roleId !=null and roleId != '' ">
-  		and role_id=#{role.roleId}
+  		and role_id=#{roleId}
   	</if>
   	<if test="roleName !=null and roleName != '' ">
-  		and role_name=#{role.roleName}
+  		and role_name like CONCAT(CONCAT('%',#{roleName},'%'))
   	</if>
   	<if test="roleCode !=null and roleCode != '' ">
-  		and role_Code=#{role.roleCode}
+  		and role_Code=#{roleCode}
   	</if>
   	<if test="roleDescribe !=null and roleDescribe != '' ">
-  		and role_describe=#{role.roleDescribe}
+  		and role_describe=#{roleDescribe}
   	</if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -156,5 +156,12 @@
       oper = #{oper,jdbcType=VARCHAR},
       sort = #{sort,jdbcType=VARCHAR}
     where role_id = #{roleId,jdbcType=VARCHAR}
+  </update>
+  <update id="batchdelete" >
+  	update drug_role set isva = '否'
+    where role_id in 
+    <foreach collection="list" item="ids" open="(" separator="," close=")">
+      #{ids} 
+    </foreach>
   </update>
 </mapper>

@@ -22,6 +22,50 @@
     mode_id, dru_mode_id, mode_url, mode_name, mode_code, mode_explain, isva, optime, 
     oper, sort
   </sql>
+  <select id="queryList" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select * from drug_module where isva ='是'
+  	  <if test="module.modeId !=null and module.modeId != '' ">
+  	   and mode_id=#{module.modeId}
+  	  </if>
+  	  <if test="module.druModeId != null and module.druModeId != '' ">
+       and dru_mode_id = #{module.druModeId}
+      </if>
+      <if test="module.modeUrl != null and module.modeUrl != '' ">
+       and mode_url = #{module.modeUrl}
+      </if>
+      <if test="module.modeName != null and module.modeName != '' ">
+       and mode_name like CONCAT(CONCAT('%',#{module.modeName},'%'))
+      </if>
+      <if test="module.modeCode != null and module.modeCode != '' ">
+       and mode_code = #{module.modeCode}
+      </if>
+      <if test="module.modeExplain != null and module.modeExplain != '' ">
+       and mode_explain = #{module.modeExplain}
+      </if>
+      order by (sort+0) desc 
+   	  limit #{page.startRows},#{page.rows}
+  </select>
+  <select id="queryCount" parameterType="com.yidu.domain.Module" resultType="int">
+  	select count(*) from drug_module where isva ='是'
+  	<if test="modeId !=null and modeId != '' ">
+  	   and mode_id=#{modeId}
+  	  </if>
+  	  <if test="druModeId != null and druModeId != '' ">
+       and dru_mode_id = #{druModeId}
+      </if>
+      <if test="modeUrl != null and modeUrl != '' ">
+       and mode_url = #{modeUrl}
+      </if>
+      <if test="modeName != null and modeName != '' ">
+       and mode_name like CONCAT(CONCAT('%',#{modeName},'%'))
+      </if>
+      <if test="modeCode != null and modeCode != '' ">
+       and mode_code = #{modeCode}
+      </if>
+      <if test="modeExplain != null and modeExplain != '' ">
+       and mode_explain = #{modeExplain}
+      </if>
+  </select>
   <select id="selectList" resultMap="BaseResultMap2">
   	select * from drug_module
   </select>
@@ -54,7 +98,7 @@
       <if test="modeId != null">
         mode_id,
       </if>
-      <if test="druModeId != null">
+      <if test="druModeId != null and druModeId != '' ">
         dru_mode_id,
       </if>
       <if test="modeUrl != null">
@@ -86,7 +130,7 @@
       <if test="modeId != null">
         #{modeId,jdbcType=VARCHAR},
       </if>
-      <if test="druModeId != null">
+      <if test="druModeId != null and druModeId != '' ">
         #{druModeId,jdbcType=VARCHAR},
       </if>
       <if test="modeUrl != null">
@@ -118,31 +162,31 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Module">
     update drug_module
     <set>
-      <if test="druModeId != null">
+      <if test="druModeId != null and druModeId != '' ">
         dru_mode_id = #{druModeId,jdbcType=VARCHAR},
       </if>
-      <if test="modeUrl != null">
+      <if test="modeUrl != null and modeUrl != '' ">
         mode_url = #{modeUrl,jdbcType=VARCHAR},
       </if>
-      <if test="modeName != null">
+      <if test="modeName != null and modeName != '' ">
         mode_name = #{modeName,jdbcType=VARCHAR},
       </if>
-      <if test="modeCode != null">
+      <if test="modeCode != null and modeCode != '' ">
         mode_code = #{modeCode,jdbcType=VARCHAR},
       </if>
-      <if test="modeExplain != null">
+      <if test="modeExplain != null and modeExplain != '' ">
         mode_explain = #{modeExplain,jdbcType=VARCHAR},
       </if>
-      <if test="isva != null">
+      <if test="isva != null and isva != '' ">
         isva = #{isva,jdbcType=VARCHAR},
       </if>
-      <if test="optime != null">
+      <if test="optime != null and optime != '' ">
         optime = #{optime,jdbcType=TIMESTAMP},
       </if>
-      <if test="oper != null">
+      <if test="oper != null and oper != '' ">
         oper = #{oper,jdbcType=VARCHAR},
       </if>
-      <if test="sort != null">
+      <if test="sort != null and sort != '' ">
         sort = #{sort,jdbcType=VARCHAR},
       </if>
     </set>

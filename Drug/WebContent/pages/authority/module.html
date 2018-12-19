@@ -7,7 +7,7 @@
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
 		
-		<title>角色管理</title>
+		<title>模块管理</title>
     <style type="text/css">
         form {
             width: 500px;
@@ -53,7 +53,7 @@
 		            </div>
 		            <div class="kit-search-inputs">
 		                <div class="kit-search-keyword">
-		                    <input type="text" class="layui-input" id="serach-one" placeholder="角色.." onKeyUp="lockInput(this,'serach-two')"/>
+		                    <input type="text" class="layui-input" id="serach-one" placeholder="模块.." onKeyUp="lockInput(this,'serach-two')"/>
 		                    <button lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
 		                </div>
 		                <div class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>
@@ -63,9 +63,9 @@
 		        <div class="kit-search-mored layui-anim layui-anim-upbit">
 		            <div class="kit-search-body">
 		                <div class="layui-form-item">
-		                    <label class="layui-form-label">角色名称</label>
+		                    <label class="layui-form-label">模块名称</label>
 		                    <div class="layui-input-block">
-		                        <input type="text" name="roleName" id="serach-two" placeholder="搜索关键字.." autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
+		                        <input type="text" name="modeName" id="serach-two" placeholder="搜索关键字.." autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
 		                    </div>
 		                </div>
 		            </div>
@@ -91,26 +91,39 @@
 		<link rel="stylesheet" href="../../res/css/authority/ztree.css">
 		<script type="text/html" id="edit-tpl">
 		    <div style="margin:10px">
-		        <form class="layui-form" action="" lay-filter="form-edit" id="myform">
-		            <input id="roleId" type="hidden" name="roleId" value="{{d.rowdata.roleId}}" />
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">角色名称</label>
+		        <form class="layui-form" action="" lay-filter="form-edit">
+		            <input id="modeId" type="hidden" name="modeId" value="{{d.rowdata.modeId}}" />
+					 <div class="layui-form-item">
+		                <label class="layui-form-label">上级模块</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="roleName" required lay-verify="required" value="{{d.rowdata.roleName}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                    <select name="druModeId">
+		                      <option value=""></option>
+		                      {{# layui.each(d.types,function(index,item){ }}                      
+		                      {{# if(item.modeId===d.rowdata.druModeId){}}
+		                      <option value="{{item.modeId}}" selected>{{item.modeName}}</option>
+		                      {{#}else{}}
+		                      <option value="{{item.modeId}}">{{item.modeName}}</option>
+		                      {{#};}}
+		                      {{# }); }}
+		                    </select>
 		                </div>
 		            </div>
 					<div class="layui-form-item">
-		                <label class="layui-form-label">角色描述</label>
+		                <label class="layui-form-label">模块地址</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="roleDescribe" required lay-verify="required" value="{{d.rowdata.roleDescribe}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                    <input type="text" name="modeUrl" required lay-verify="required" value="{{d.rowdata.modeUrl}}" placeholder="请输入地址" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 		            <div class="layui-form-item">
-		                <label class="layui-form-label">角色模块</label>
+		                <label class="layui-form-label">模块名称</label>
 		                <div class="layui-input-block">
-							<input id="moduleId" type="hidden" name="moduleId" value="{{d.rowdata.moduleId}}"/>
-		                    <ul id="ztree" class="ztree">
-							</ul>
+		                    <input type="text" name="modeName" required lay-verify="required" value="{{d.rowdata.modeName}}" placeholder="请输入名称" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">模块介绍</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="modeExplain" required lay-verify="required" value="{{d.rowdata.modeExplain}}" placeholder="请输入介绍" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 		            <div class="layui-form-item" style="display:none;">
@@ -143,6 +156,6 @@
 			}
 		</script>
 		<script src="../../res/layui/layui.all.js"></script>
-		<script src="../../res/js/authority/role.js"></script>
+		<script src="../../res/js/authority/module.js"></script>
 	</body>
 </html>

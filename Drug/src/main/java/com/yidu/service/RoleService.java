@@ -19,4 +19,7 @@ public interface RoleService  {
 	int queryCount(Role role);
 	List<Ztree> queryModule();
 	List<Ztree> selectZtree(String id);
+	int updateId(Role role);
+	int insert(Role role);
+	int batchdelete(List<String> ids);
 }
