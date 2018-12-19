@@ -188,5 +188,29 @@ public class DrugController {
 	public int checked(String drugId) {
 		return drugService.checked(drugId);
 	}
+	
+	
+	/**
+	 * 查询所有
+	 * @return List<Drug> 药品集合
+	 */
+	@RequestMapping("/showLists")
+	@ResponseBody
+	public Map<String,Object> showLists(Drug record,Integer page,Integer limit) {
+		PageUtil pageUtil = new PageUtil();
+		pageUtil.setCurPage(page);
+		pageUtil.setRows(limit);
+		
+		List<Drug> list = drugService.selectBySelectives(record,pageUtil);
+		int rows = drugService.findCount(record);
+		
+		@SuppressWarnings("unchecked")
+		Map<String,Object> map = new HashedMap();
+		map.put("code", 0);
+		map.put("msg", "");
+		map.put("count", rows);
+		map.put("data", list);
+		return map;
+	}
 }
 

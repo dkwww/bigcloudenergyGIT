@@ -14,7 +14,6 @@ import com.yidu.util.PageUtil;
  * @since 2018-11-26
  */
 public interface DrugService   {
-	
 	//查询所有
 	List<Drug> findAll(Drug record, PageUtil pageUtil);
 	//增加药品
@@ -27,5 +26,7 @@ public interface DrugService   {
 	int isCheck(String drugId);
 	//检查
 	int checked(String drugId);
+	//查询所有附加库存
+	List<Drug> selectBySelectives(Drug record, PageUtil pageUtil);
 
 }

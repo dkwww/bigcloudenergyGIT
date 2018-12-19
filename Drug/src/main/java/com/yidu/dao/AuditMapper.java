@@ -42,4 +42,10 @@ public interface AuditMapper {
      * @return
      */
     public List<Audit> showCEO(Map<String, Object> map);
+    
+    /**
+     * 显示财务总经理表
+     * @return
+     */
+    public List<Audit> wholeceo(Map<String, Object> map);
 }

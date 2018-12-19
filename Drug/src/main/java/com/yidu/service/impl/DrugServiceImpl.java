@@ -67,5 +67,12 @@ public class DrugServiceImpl implements DrugService {
 	public int checked(String drugId) {
 		return drugMapper.checked(drugId);
 	}
-
+	
+	@Override
+	public List<Drug> selectBySelectives(Drug record, PageUtil pageUtil) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("record", record);
+		map.put("pageUtil", pageUtil);
+		return drugMapper.selectBySelectives(map);
+	}
 }

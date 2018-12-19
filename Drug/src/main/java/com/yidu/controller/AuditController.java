@@ -134,6 +134,32 @@ public class AuditController {
 		return service.findById(audId);
 	}
 	
+	/**
+	 * 批发总经理审核
+	 * @param audit
+	 * @param page
+	 * @param limit
+	 * @return
+	 */
+	@RequestMapping("/wholeceo")
+	@ResponseBody
+	public Map<String, Object> wholeceo(Audit audit,Integer page,Integer limit){
+		PageUtil pageUtil = new PageUtil();
+		if(page!=null && limit!=null) {
+			pageUtil.setCurPage(page);
+			pageUtil.setRows(limit);
+		}
+		
+		List<Audit> list = service.wholeceo(audit,pageUtil);
+		int rows=service.findCount(audit);
+		
+		Map<String, Object> m = new HashMap<>();
+		m.put("code", 0);
+		m.put("msg", "");
+		m.put("count", rows);
+		m.put("data", list);
+		return m;
+	}
 	
 	@RequestMapping("/examine")
 	@ResponseBody

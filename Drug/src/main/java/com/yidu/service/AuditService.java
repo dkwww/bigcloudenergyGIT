@@ -71,4 +71,13 @@ public interface AuditService   {
 	 * @return
 	 */
 	public Audit findById(String id);
+	
+	
+	/**
+	 * 显示批发总经理审核
+	 * @param audit
+	 * @param pageUtil
+	 * @return
+	 */
+	public List<Audit> wholeceo(Audit audit,PageUtil pageUtil);
 }

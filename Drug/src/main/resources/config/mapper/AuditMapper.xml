@@ -33,8 +33,15 @@
   	select * from drug_audit a ,drug_buy b where a.aud_fk_id = b.buy_id
   	order by a.sort desc 
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
-  
   </select>
+  
+  <select id="wholeceo" parameterType="java.util.Map" resultMap="BaseResultMap" >
+  	SELECT * FROM drug_audit WHERE 
+	aud_state = 28 OR aud_state = 29 OR aud_state = 30
+  	ORDER BY sort DESC 
+   	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
+  </select>
+  
   
   <select id="showCEO" parameterType="java.util.Map" resultMap="BaseResultMap" >
   	

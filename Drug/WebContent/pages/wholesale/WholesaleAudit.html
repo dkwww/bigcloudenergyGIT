@@ -111,7 +111,7 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '475px', //容器高度
-		            url: '../../audit/findAll.action',
+		            url: '../../audit/wholeceo.action',
 		            page: true,
 		            id: 'demo',
 		            cols: [
@@ -198,7 +198,7 @@
 		                    type:'post',//method请求方式，get或者post
 		                    cache: false,//同步
 		                    dataType:'json',//预期服务器返回的数据类型
-		                    data:{""},//传表格数据
+		                    /*data:{""},//传表格数据*/
 		                    success:function(mes){//res为相应体,function为回调函数
 		                    	 if(mes.msg>=1){
 		                    		 layer.msg('添加成功'); 

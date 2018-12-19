@@ -27,4 +27,6 @@ public interface DrugMapper {
 	int isCheck(String drugId);
 
 	int checked(String drugId);
+	
+	List<Drug> selectBySelectives(Map<String, Object> map);
 }

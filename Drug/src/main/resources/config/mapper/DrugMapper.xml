@@ -39,6 +39,11 @@
     dd.isva, dd.optime, dd.oper, dd.sort, dt.dt_name
   </sql>
   
+   <sql id="Base_Column_List_Tne">
+    dd.drug_id, dd.dt_id, dd.drug_name, dd.drug_unit, dd.drug_prop, dd.drug_pictrue, dd.drug_price, 
+    dd.isva, dd.optime, dd.oper, dd.sort, dt.dt_name,di.di_amount
+  </sql>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -85,6 +90,28 @@
    		and dd.drug_price &lt; #{priceMax,jdbcType=DECIMAL}
    	</if>
   </select>
+  
+  <select id="selectBySelectives" parameterType="java.util.Map" resultMap="BaseResultMapOne">
+    select 
+    <include refid="Base_Column_List_Tne" />
+    from drug_drug dd,drug_drug_type dt,drug_drug_inv di
+    where dd.dt_id = dt.dt_id and di.drug_id=dd.drug_id and dd.isva = '1'
+   	<if test="record.drugName != null and record.drugName != ''">
+   		and dd.drug_name like CONCAT(CONCAT('%',#{record.drugName,jdbcType=VARCHAR},'%'))
+   	</if>
+   	<if test="record.dtId != null and record.dtId != ''">
+   		and dt.dt_id = #{record.dtId,jdbcType=VARCHAR}
+   	</if>
+   	<if test="record.priceMin !=null and record.priceMin != ''">
+   		and dd.drug_price &gt; #{record.priceMin,jdbcType=DECIMAL}
+   	</if>
+   	<if test="record.priceMax !=null and record.priceMax !='' ">
+   		and dd.drug_price &lt; #{record.priceMax,jdbcType=DECIMAL}
+   	</if>
+   	order by (dd.sort+0) desc 
+   	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
+  </select>
+  
   
   <select id="isCheck" parameterType="String" resultType="int">
   	select count(dd.drug_Id) from drug_drug dd,drug_spec ds,drug_material_list ml where ds.drug_id = dd.drug_id and ml.drug_id = dd.drug_id and dd.drug_id = #{drugId,jdbcType=VARCHAR} and dd.isva = '1' and ds.isva = '1' and ml.isva = '1'

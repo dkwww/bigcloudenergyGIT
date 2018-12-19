@@ -204,7 +204,7 @@ public class WholesaleController {
 		String uuids=UUID.randomUUID().toString().replace("-","");
 		Audit audit=new Audit();
 		audit.setAudFkId(wholesale.getWholId());
-		audit.setAudState("0");
+		audit.setAudState("28");
 		int audis=audits.addOrUpdate(audit);
 		if(audis>0) {
 			System.out.println("添加审核成功");
