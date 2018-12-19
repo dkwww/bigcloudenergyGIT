@@ -109,7 +109,7 @@ public class AdminController {
 	 */
 	@RequestMapping("/queryNameOrPwd")
 	@ResponseBody
-	public Message queryNameOrPwd(Admin admin,HttpServletRequest request) {
+	public Message queryNameOrPwd(Admin admin,HttpSession session) {
 		Admin admin2 = service.queryNameOrPwd(admin);
 		Message msg = new Message();
 		if(admin2==null) {
@@ -118,7 +118,6 @@ public class AdminController {
 		}else {
 			msg.setStatus(1);
 			msg.setMsg("登录成功");
-			HttpSession session=request.getSession();
 			session.setAttribute("user", admin2);
 		}
 		return msg;

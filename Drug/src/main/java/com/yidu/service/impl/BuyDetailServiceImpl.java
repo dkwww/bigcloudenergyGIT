@@ -135,7 +135,7 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 			buy.setBuyType("1");
 			buy.setBuyAudit("未审核");
 			buy.setBuyQc("未质检");
-			buy.setBuyState("0");
+			buy.setBuyState("1");
 			buy.setBuyPut("未入库");
 			buy.setBuyMes(mess);
 			buy.setIsva("有效");
@@ -150,7 +150,7 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 				audit.setAudComtype("1");
 				audit.setQcFkId(null);
 				audit.setAudTime(new Date());
-				audit.setAudState("未审核");
+				audit.setAudState("1");
 				audit.setAudIdea("分公司增加库存");
 				audit.setAudName("张三");
 				audit.setAudMes(null);

@@ -6,6 +6,7 @@
     <result column="drug_id" jdbcType="VARCHAR" property="drugId" />
     <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
     <result column="mrp_optime" jdbcType="TIMESTAMP" property="mrpOptime" />
+    <result column="mrp_endtime" jdbcType="TIMESTAMP" property="mrpEndtime" />
     <result column="mrp_plan" jdbcType="INTEGER" property="mrpPlan" />
     <result column="mrp_rate" jdbcType="DECIMAL" property="mrpRate" />
     <result column="mrp_state" jdbcType="INTEGER" property="mrpState" />
@@ -34,20 +35,20 @@
     where mrp_id = #{mrpId,jdbcType=VARCHAR}
   </select>
   <select  id="qureyAll" parameterType="java.util.Map"  resultMap="BaseResultMap"> 
- 	 SELECT  *  FROM   drug_mrp a, drug_pmc_details b ,drug_pmc d  , drug_drug c  WHERE   a.pd_id =b.pd_id     AND   b.pmc_id=d.pmc_id   AND  b.drug_id=c.drug_id  
-	 <if test="mrp.drugName != null and mrp.drugName != ''">
-   		and c.drug_name like CONCAT(CONCAT('%',#{mrp.drugName,jdbcType=VARCHAR},'%'))
+ 	 SELECT  *  FROM   drug_mrp      where 1=1
+	 <if test="mrp.mrpPlan != null and mrp.mrpPlan != ''">
+   		and mrp_plan like CONCAT(CONCAT('%',#{mrpPlan,jdbcType=VARCHAR},'%'))
    	</if>
-   	order by (a.sort+0) desc 
+   	order by (sort+0) desc 
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
    	
    </select>
    
    
     <select id="selectCountBySelective" parameterType="com.yidu.domain.Mrp" resultType="int">
-    SELECT  COUNT(*)  FROM   drug_mrp a, drug_pmc_details b ,drug_pmc d  , drug_drug c  WHERE   a.pd_id =b.pd_id     AND   b.pmc_id=d.pmc_id   AND  b.drug_id=c.drug_id 
-   	<if test="drugName != null and drugName != ''">
-   		and c.drug_name like CONCAT(CONCAT('%',#{drugName,jdbcType=VARCHAR},'%'))
+    SELECT  count(*)  FROM   drug_mrp      where 1=1
+   	 <if test="mrpPlan != null and mrpPlan != ''">
+   		and mrp_plan like CONCAT(CONCAT('%',#{mrpPlan,jdbcType=VARCHAR},'%'))
    	</if>
   </select>
    

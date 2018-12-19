@@ -28,7 +28,9 @@ public class Mrp {
 
     private String sort;
     
+    private   Date   mrpEndtime;
     
+    private   String   mrpEndtimeName;
     private String   stateName;
     
     
@@ -54,8 +56,26 @@ public class Mrp {
     	private   Date   pmcEnd;
     	private  String  pmcEndName;
     
+    	
+    	
     
     
+
+	public Date getMrpEndtime() {
+			return mrpEndtime;
+		}
+
+		public void setMrpEndtime(Date mrpEndtime) {
+			this.mrpEndtime = mrpEndtime;
+		}
+
+		public String getMrpEndtimeName() {
+			return mrpEndtimeName;
+		}
+
+		public void setMrpEndtimeName(String mrpEndtimeName) {
+			this.mrpEndtimeName = mrpEndtimeName;
+		}
 
 	public Date getPmcStart() {
 			return pmcStart;

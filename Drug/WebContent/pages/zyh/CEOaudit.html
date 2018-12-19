@@ -6,20 +6,20 @@
 		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
-		<title>采购审核</title>
+		<title>总经理审核</title>
 	</head>
 	<body>
 	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-  <legend>采购审核</legend>
+  <legend>总经理审核</legend>
 	</fieldset>
 		<div class="kit-table">
 				<!-- 操作按钮 -->
 		    <div class="kit-table-body">
 		        <table id="demo" lay-filter="demo"></table>
 		        <script type="text/html" id="barDemo">
-		            <button class="layui-btn layui-btn-xs" lay-event="edit">查看订单详情</button>
-		            <button class="layui-btn layui-btn-xs" lay-event="detail">审核</button>
-		            <button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">不审核</button>
+		            <a class="layui-btn layui-btn-xs" lay-event="edit">查看订单详情</a>
+		            <a class="layui-btn layui-btn-xs" lay-event="detail">审核</a>
+		            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">不审核</a>
 		        </script>
 		    </div>
 		</div>
@@ -115,42 +115,25 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: 'full', //容器高度
-		            url: '../../audit/showBuy.action',
+		            url: '../../audit/showCEO.action',
 		            page: true,
 		            id: 'demo',
 		            cols: [
 		            	 [{field: 'audId',title: 'ID', width: 273},
 		                {field: 'audFkId',title: '采购单号',width: 175},
+		                {field: 'audComtype',title: '厂家',width: 80},
 		                {field: 'qcFkId',title: '公司编号',width: 130},
 		                {field: 'audTimes',title: '审核时间',width: 170},
-		                {field: 'audStates',title: '审核状态',width: 150},
+		                {field: 'audStates',title: '审核状态',width: 90},
 		                {field: 'audIdea',title: '审核意见',width: 150},
 		                {field: 'audName',title: '审核人',width: 90},
 		                {field: 'audMes',title: '备注',width: 90},
 		                {field: 'optimes',title: '操作时间',width: 170},
 		                {field: 'oper',title: '操作人',width: 95,sort: true}, 
-		                {fixed: 'right',title: '操作',width: 250,align: 'center', toolbar: '#barDemo' }]
+		                {fixed: 'right',title: '操作',width: 220,align: 'center', toolbar: '#barDemo' }]
 		            ],
 		            done: function(res, curr, count) {
-		            	var tableElem = this.elem.next('.layui-table-view');
-		            	$("[data-field = 'audId']").children().not(":first").each(function(index){
-			            	var url = "../../audit/findById.action";  
-			            	var data = {"audId":$(this).text()};	
-			            	$.post(url,data,function(mes){
-			            		if(mes.audState==2||mes.audState==0){
-			            			tableElem.find('tr[data-index="'+ index +'"]').find('button[lay-event=detail]').addClass('layui-btn-disabled').attr('disabled',true);
-			            			tableElem.find('tr[data-index="'+ index +'"]').find('button[lay-event=del]').addClass('layui-btn-disabled').attr('disabled',true);
-					            	
-			            		}
-			            		
-		            		},"json");
-					  	});
-		            	$("[data-field = 'audStates']").children().not(":first").each(function(index){
-			            	if($(this).text()=="审核未通过"){
-			            		$(this).html("<font style='color:red;'>审核未通过</font>");
-			            	}
-					  	});
-            			
+						
 		            },
 		            loading: true,
 		            //method: 'post'
@@ -195,16 +178,13 @@
 		            	},"json");
 		            	console.log(table.checkStatus('demo'));
 		            } else if (layEvent === 'del') { //不审核
-		            	var url = "../../audit/auditById.action";  
-		            	var data = {"id":data.audId,"state":0};	
-		            	$.post(url,data,function(mes){
-		            		if(mes.status==1){
-		            			alert("操作成功");
-		            		}else{
-		            			alert("操作失败");
-		            		}
-		            		
-		            	},"json");
+		                layer.confirm('真的删除行么', function(index) {
+		                	
+		                	
+		                    obj.del(); //删除对应行（tr）的DOM结构
+		                    layer.close(index);
+		                    //向服务端发送删除指令
+		                });
 		            } else if (layEvent === 'edit') { //查看详情
 		                var d = {
 		                    user: data,

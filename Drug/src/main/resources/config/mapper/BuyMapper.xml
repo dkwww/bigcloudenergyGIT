@@ -31,7 +31,7 @@
   </select>
   	
   <select id="findAll" parameterType="map" resultMap="BaseResultMap">
-  	SELECT * FROM drug_buy WHERE 1=1
+  	SELECT * FROM drug_buy WHERE buy_type = 1
   	
    	order by sort desc 
   	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}

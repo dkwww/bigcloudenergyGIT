@@ -1,6 +1,9 @@
 package com.yidu.service;
 
- 
+import java.util.List;
+
+import com.yidu.domain.MrpDetails;
+import com.yidu.util.PageUtil;
 
 /**
  * <p>
@@ -12,7 +15,15 @@ package com.yidu.service;
  */
 public interface MrpDetailsService   {
 
- 
+   List<MrpDetails>  findById(MrpDetails   mrpDetails ,PageUtil  page);
+   
+   
+   
+   
+   
+   int  findBycount(MrpDetails   mrpDetails);
+   
+   int  findStatistics(MrpDetails   mrpDetails);
 	  
  
 }
