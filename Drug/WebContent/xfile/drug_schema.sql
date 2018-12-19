@@ -512,6 +512,7 @@ alter table drug_mrp comment '制造计划';
 create table drug_pmc
 (
    pmc_id               varchar(100) not null comment '生产计划编号',
+   com_id 				varchar(50) comment '店铺ID',
    pmc_amount           int(10) comment '生产数量',
    pmc_start            datetime comment '开始时间',
    pmc_end              datetime comment '生产期限',

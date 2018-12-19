@@ -33,8 +33,22 @@ public class Mrp {
     private   String   mrpEndtimeName;
     private String   stateName;
     
+    private   String  comName;
+     
     
-    private  String  ideaName;
+     
+    
+    
+    
+    public String getComName() {
+		return comName;
+	}
+
+	public void setComName(String comName) {
+		this.comName = comName;
+	}
+
+	private  String  ideaName;
       
     private  String  drugName;  //药品名称
     

@@ -17,21 +17,21 @@
 	</script>
 	<script type="text/javascript">
 	$(function(){
+		
+		var mrpId = getParameter("mrpId");
+		$("#mrpId").val(mrpId);
+		
 	 $("#tijiao").click(function (){ 
 		 alert("123321");
 		var   shu= $("#shuju").val(); 
-			alert(shu);
-		 var url ="../../pmcDetails/update.action";
-		 var  data={"shujuName" : shu};
+		var  mrp  =$("#mrpId").val();
+		
+			alert(mrp);
+		 var url ="../../mrpDetails/update.action";
+		 var  data={"shujuName" : shu , "mrpId"  :  mrp};
 		 $.post(url,data,function(mes){
+			 layer.msg("保存成功"); 
 			 
-			if(mes.status==1){
-			 
-				 layer.msg(mes.msg); 
-				 closeLayer();
-			}else{
-				 layer.msg("保存失败");
-			}
 		},"json");
 		 
 	 });
@@ -48,6 +48,7 @@
 	
 	
 	<input  type="text"  id="shuju"        style="width: 100%;">
+	<input  type="text"  id="mrpId"   style="width: 100%;">
 		<div class="kit-table">
 		    <form class="layui-form" lay-filter="kit-search-form">
 						<!-- 左上角的两个按钮 -->
@@ -246,11 +247,7 @@
 		            page: true,
 		            id: 'demos',
 		            cols: [
-		                [{ 
-		                    field: 'comName',
-		                    title: '制造厂家',
-		                    width: 160
-		                }, { 
+		                [  { 
 		                    field: 'drugName',
 		                    title: '药品名称',
 		                    width: 160
@@ -302,15 +299,11 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: 'full', //容器高度
-		            url: '../../pmcDetails/findById.action?pmcId='+pmcId,
+		            url: '../../pmcDetails/findAll.action?pmcId='+pmcId,
 		            page: true,
 		            id: 'demo',
 		            cols: [
 		                [{
-		                    field: 'comName',
-		                    title: '店铺ID',
-		                    width: 190
-		                }  ,{
 		                    field: 'drugName',
 		                    title: '药品名称',
 		                    width: 190
@@ -336,7 +329,8 @@
 		            done: function(res, curr, count) {
 		            	var tables=table.cache.demo;
 		            	 $.each(tables,function(i,item){
-		            		 $("#shuju").val($("#shuju").val()+item.drugId+","+item.pdAmount+","+item.pmcId+","+item.comName+","+$("#number"+item.pdId).val()+"#");
+		            		 
+		            		 $("#shuju").val($("#shuju").val()+item.drugId+","+item.pdAmount+","+$("#number"+item.pdId).val()+"#");
 		            	 })
 		            	
 		            	
@@ -402,7 +396,7 @@
 		        	data=obj.data;
 		        	
 		        	if(obj.checked==true){
-		        		 $("#shuju").val($("#shuju").val()+item.drugId+","+item.pdAmount+","+item.pmcId+","+item.comName+","+$("#number"+item.pdId).val()+"#");
+		        		 $("#shuju").val($("#shuju").val()+item.drugId+","+item.pdAmount+","+$("#number"+item.pdId).val()+"#");
 		        		 $.each(tables,function(i,item){
 		        			 if(data.pdId==item.pdId){
 		        				 //取输入数量值
@@ -562,9 +556,7 @@
             			 var table=layui.table;
             			 var tables=table.cache.demo;      
 		            	 $.each(tables,function(i,item){
-		            		
-		            		 
-		            		 $("#shuju").val($("#shuju").val()+item.drugId+","+item.pdAmount+","+item.pmcId+","+item.comName+","+$("#number"+item.pdId).val()+"#");
+		            		 $("#shuju").val($("#shuju").val()+item.drugId+","+item.pdAmount+","+$("#number"+item.pdId).val()+"#");
 		            			
 		            	 })
             		 });

@@ -12,12 +12,14 @@
     <result column="mrp_state" jdbcType="INTEGER" property="mrpState" />
     <result column="mrp_idea" jdbcType="INTEGER" property="mrpIdea" />
     <result column="mrp_amount" jdbcType="INTEGER" property="mrpAmount" />
+       <result column="com_Name" jdbcType="VARCHAR" property="comName" /> 
     <result column="pmc_id" jdbcType="VARCHAR" property="pmcId" /> 
     <result column="isva" jdbcType="VARCHAR" property="isva" />
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
     <result column="pd_id" jdbcType="VARCHAR" property="pdId" />
+      <result column="mrp_id" jdbcType="VARCHAR" property="mrpId" />
     <result column="mrp_num" jdbcType="INTEGER" property="mrpNum" />
      <result column="pmc_start" jdbcType="TIMESTAMP" property="pmcStart" />
      <result column="pmc_end" jdbcType="TIMESTAMP" property="pmcEnd" />

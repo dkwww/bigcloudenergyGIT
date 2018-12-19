@@ -4,7 +4,6 @@
   <resultMap id="BaseResultMap" type="com.yidu.domain.MrpDetails">
     <id column="md_Id" jdbcType="VARCHAR" property="mdId" />
     <result column="mrp_Id" jdbcType="VARCHAR" property="mrpId" />
-     <result column="com_name" jdbcType="VARCHAR" property="comName" />
      <result column="drug_Id" jdbcType="VARCHAR" property="drugId" />
       <result column="drug_Name" jdbcType="VARCHAR" property="drugName" />
      <result column="md_Plan" jdbcType="INTEGER" property="mdPlan" />

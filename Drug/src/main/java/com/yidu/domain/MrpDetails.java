@@ -28,9 +28,18 @@ public class MrpDetails {
 	 private   Integer   mdAmount;   
 	 
 	 
+	 private   String  shujuName;
 	 
 	 
 	 
+	 
+	 
+	public String getShujuName() {
+		return shujuName;
+	}
+	public void setShujuName(String shujuName) {
+		this.shujuName = shujuName;
+	}
 	public String getDrugId() {
 		return drugId;
 	}
