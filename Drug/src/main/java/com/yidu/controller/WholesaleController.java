@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mysql.fabric.xmlrpc.base.Array;
+import com.yidu.domain.Audit;
 import com.yidu.domain.Drug;
 import com.yidu.domain.Wholesale;
 import com.yidu.domain.WholesaleDetail;
+import com.yidu.service.AuditService;
 import com.yidu.service.WholesaleDetailService;
 import com.yidu.service.WholesaleService;
 import com.yidu.util.Message;
@@ -46,6 +48,9 @@ public class WholesaleController {
 	
 	@Resource
 	private WholesaleDetailService detaiwholesa;
+	
+	@Resource
+	AuditService audits;
 	
 	@RequestMapping("/selectAll")
 	@ResponseBody
@@ -195,6 +200,17 @@ public class WholesaleController {
 			}
 		}
 		System.out.println(zong);
+		
+		String uuids=UUID.randomUUID().toString().replace("-","");
+		Audit audit=new Audit();
+		audit.setAudFkId(wholesale.getWholId());
+		audit.setAudState("0");
+		int audis=audits.addOrUpdate(audit);
+		if(audis>0) {
+			System.out.println("添加审核成功");
+		}else {
+			System.out.println("添加审核失败");
+		}
 		
 		Message mes = new Message();
 		if(num>=2) {
