@@ -6,13 +6,11 @@ public class PmcDetails {
     private String pdId;
 
     private String pmcId;
+    
+    private String pmcName;
 
     private String drugId;
     
-    private  String   drugName;
-    
-    private Double drugPrice;
-
     private Integer pdAmount;
 
     private String pdState;
@@ -25,104 +23,9 @@ public class PmcDetails {
 
     private String sort;
     
-    private   Date   pmcStart;  //开始时间
+    private String drugName;
     
-    private  Date  pmcEnd ;  //结束时间
-    
-    
-     private  String pmcStartName;  //用于开始转换时间
-     private   String  pmcEndName;   //用于结束转换时间
-     
-     private   String   drugUnit;  //药品单位   
-     
-       private   String    mrpIdea ;   //进度
-       
-       private   Integer   hangName;   //已完成数量
-       
-       private     String   shujuName;
-       
-       
-       
-       
-       
-     
-     
-     
-     
-    
- 
-
-	public String getShujuName() {
-		return shujuName;
-	}
-
-	public void setShujuName(String shujuName) {
-		this.shujuName = shujuName;
-	}
-
-	public Integer getHangName() {
-		return hangName;
-	}
-
-	public void setHangName(Integer hangName) {
-		this.hangName = hangName;
-	}
-
-	public String getMrpIdea() {
-		return mrpIdea;
-	}
-
-	public void setMrpIdea(String mrpIdea) {
-		this.mrpIdea = mrpIdea;
-	}
-
-	public String getDrugUnit() {
-		return drugUnit;
-	}
-
-	public void setDrugUnit(String drugUnit) {
-		this.drugUnit = drugUnit;
-	}
-
-	public Date getPmcStart() {
-		return pmcStart;
-	}
-
-	public void setPmcStart(Date pmcStart) {
-		this.pmcStart = pmcStart;
-	}
-
-	public Date getPmcEnd() {
-		return pmcEnd;
-	}
-
-	public void setPmcEnd(Date pmcEnd) {
-		this.pmcEnd = pmcEnd;
-	}
-
-	public String getPmcStartName() {
-		return pmcStartName;
-	}
-
-	public void setPmcStartName(String pmcStartName) {
-		this.pmcStartName = pmcStartName;
-	}
-
-	public String getPmcEndName() {
-		return pmcEndName;
-	}
-
-	public void setPmcEndName(String pmcEndName) {
-		this.pmcEndName = pmcEndName;
-	}
-
-	public String getDrugName() {
-		return drugName;
-	}
-
-	public void setDrugName(String drugName) {
-		this.drugName = drugName;
-	}
+    private String drugUnit;
 
 	public String getPdId() {
         return pdId;
@@ -138,6 +41,14 @@ public class PmcDetails {
 
     public void setPmcId(String pmcId) {
         this.pmcId = pmcId == null ? null : pmcId.trim();
+    }
+    
+    public String getPmcName() {
+        return pmcName;
+    }
+
+    public void setPmcName(String pmcName) {
+        this.pmcName = pmcName == null ? null : pmcName.trim();
     }
 
     public String getDrugId() {
@@ -196,12 +107,20 @@ public class PmcDetails {
         this.sort = sort == null ? null : sort.trim();
     }
 
-	public Double getDrugPrice() {
-		return drugPrice;
+	public String getDrugName() {
+		return drugName;
 	}
 
-	public void setDrugPrice(Double drugPrice) {
-		this.drugPrice = drugPrice;
+	public void setDrugName(String drugName) {
+		this.drugName = drugName == null ? null : drugName.trim();
+	}
+
+	public String getDrugUnit() {
+		return drugUnit;
+	}
+
+	public void setDrugUnit(String drugUnit) {
+		 this.drugUnit = drugUnit == null ? null : drugUnit.trim();
 	}
     
 }

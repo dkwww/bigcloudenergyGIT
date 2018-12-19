@@ -31,7 +31,7 @@
 								<button type="button" class="layui-btn layui-btn-sm add" title="筛选原材料">
 									<i class="layui-icon">&#xe608;</i> 添加原材料
 								</button>
-								<div class="layui-inline" style="margin-left: 20px;">总金额：<span style="color: #E45000;margin-right: 20px;">355.35</span>总数量：<span style="color: #0000A0">222</span></div>
+								<div class="layui-inline" style="margin-left: 20px;">总数量：<span style="color: #0000A0">222</span></div>
 						  	</div>
 							<!-- <div class="layui-input-inline" style="width: 140px;">
 								<input type="text" name="drugName" placeholder="搜索关键字.." autocomplete="off" class="layui-input" style="height: 30px;">
@@ -154,7 +154,7 @@
 			window.viewObj = null;
 			var newData = new Array();//第一个表格的所有数据
 			$.ajax({
-				url: "../../../../pmcDetails/findById.action", //json文件位置
+				url: "../../../../pmcDetails/findAll.action", //json文件位置
 				data: {"page":1,"limit":1000,"pmcId":pmcId},
 				type: "post",
 				async: false,

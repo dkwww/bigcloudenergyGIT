@@ -4,48 +4,66 @@
   <resultMap id="BaseResultMap" type="com.yidu.domain.PmcDetails">
     <id column="pd_id" jdbcType="VARCHAR" property="pdId" />
     <result column="pmc_id" jdbcType="VARCHAR" property="pmcId" />
-    <result column="pmc_start" jdbcType="TIMESTAMP" property="pmcStart" />
-     <result column="pmc_end" jdbcType="TIMESTAMP" property="pmcEnd" />
     <result column="drug_id" jdbcType="VARCHAR" property="drugId" />
-    <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
-    <result column="drug_price" jdbcType="DECIMAL" property="drugPrice" />
-     <result column="drug_unit" jdbcType="VARCHAR" property="drugUnit" />
     <result column="pd_amount" jdbcType="INTEGER" property="pdAmount" />
-    <result column="hang" jdbcType="INTEGER" property="hangName" />
     <result column="pd_state" jdbcType="VARCHAR" property="pdState" />
     <result column="isva" jdbcType="VARCHAR" property="isva" />
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
   </resultMap>
+  <resultMap id="BaseResultMapOne" type="com.yidu.domain.PmcDetails">
+    <id column="pd_id" jdbcType="VARCHAR" property="pdId" />
+    <result column="pmc_id" jdbcType="VARCHAR" property="pmcId" />
+    <result column="drug_id" jdbcType="VARCHAR" property="drugId" />
+    <result column="pd_amount" jdbcType="INTEGER" property="pdAmount" />
+    <result column="pd_state" jdbcType="VARCHAR" property="pdState" />
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+    <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
+    <result column="drug_unit" jdbcType="VARCHAR" property="drugUnit" />
+  </resultMap>
+  
   <sql id="Base_Column_List">
     pd_id, pmc_id, drug_id, pd_amount, pd_state, isva, optime, oper, sort
   </sql>
   
+  <sql id="Base_Column_List_One">
+    pd.pd_id, dd.drug_id, dp.pmc_name, dd.drug_name, pd.pd_amount, dd.drug_unit, dd.drug_prop
+  </sql>
   
-   <update  id="updatedrug"    parameterType="com.yidu.domain.PmcDetails"  >
- 		 UPDATE      drug_pmc_details    SET   hang= #{hangName,jdbcType=INTEGER}  WHERE   drug_id= #{drugId,jdbcType=INTEGER}
-  </update>
-  
-  
-  
-  
-   <select id="findById" parameterType="java.util.Map" resultMap="BaseResultMap">
-   SELECT  * FROM  drug_pmc a  , drug_pmc_details b , drug_drug c  WHERE   a.pmc_id=b.pmc_id  AND  b.drug_id=c.drug_id  and  b.pmc_id = #{pmcDetails.pmcId,jdbcType=VARCHAR}
-    <if test="pmcDetails.drugName != null and pmcDetails.drugName != ''">
-   		and c.drug_name like CONCAT(CONCAT('%',#{pmcDetails.drugName,jdbcType=VARCHAR},'%'))
-   	</if>
-   	order by (a.sort+0) desc 
+  <select id="selectBySelective" parameterType="java.util.Map" resultMap="BaseResultMapOne">
+    select 
+    <include refid="Base_Column_List_One" />
+    from drug_pmc_details pd,drug_pmc dp,drug_drug dd where pd.pmc_id = dp.pmc_id and pd.drug_id = dd.drug_id 
+    <if test="record.pmcId !=null and record.pmcId !='' ">
+    	and pd.pmc_id = #{record.pmcId,jdbcType=VARCHAR}
+    </if>
+    <if test="record.pmcName !=null and record.pmcName !='' ">
+    	and pd.pmc_name like CONCAT('%',#{record.pmcName,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="record.drugName !=null and record.drugName !='' ">
+    	and dd.drug_name like CONCAT('%',#{record.drugName,jdbcType=VARCHAR},'%')
+    </if>
+    order by (dd.sort+0) desc 
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
-   
   </select>
   
-  
   <select id="selectCountBySelective" parameterType="com.yidu.domain.PmcDetails"  resultType="int">
-    SELECT  COUNT(*)  FROM    drug_pmc a  , drug_pmc_details b , drug_drug c  WHERE   a.pmc_id=b.pmc_id  AND  b.drug_id=c.drug_id  and  b.pmc_id = #{pmcId,jdbcType=VARCHAR} 
-   	<if test="drugName != null and drugName != ''">
-   		and c.drug_name like CONCAT(CONCAT('%',#{drugName,jdbcType=VARCHAR},'%'))
-   	</if>
+    select 
+    count(pd.pd_id) 
+    from drug_pmc_details pd,drug_pmc dp,drug_drug dd where pd.pmc_id = dp.pmc_id and pd.drug_id = dd.drug_id 
+    <if test="pmcId !=null and pmcId !='' ">
+    	and pd.pmc_id = #{pmcName,jdbcType=VARCHAR}
+    </if>
+    <if test="pmcName !=null and pmcName !='' ">
+    	and pd.pmc_name like CONCAT('%',#{pmcName,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="drugName !=null and drugName !='' ">
+    	and dd.drug_name like CONCAT('%',#{drugName,jdbcType=VARCHAR},'%')
+    </if>
   </select> 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 

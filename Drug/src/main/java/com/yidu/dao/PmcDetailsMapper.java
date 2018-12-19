@@ -18,11 +18,7 @@ public interface PmcDetailsMapper {
 
     int updateByPrimaryKey(PmcDetails record);
     
+    int selectCountBySelective (PmcDetails record);
     
-    List<PmcDetails>  findById  (Map<String , Object>  map); 
-    
-    
-    int selectCountBySelective   (PmcDetails record);
-    
-    int   updatedrug(PmcDetails record);
+    List<PmcDetails> selectBySelective(Map<String , Object> map);
 } 

@@ -30,57 +30,26 @@ import org.springframework.stereotype.Controller;
 @RequestMapping("/pmcDetails")
 public class PmcDetailsController {
 	@Resource
-	private    PmcDetailsService   pmcDetailsService  ;
+	private PmcDetailsService pmcDetailsService;
 	
-	
-	@RequestMapping("/findById")
+	@RequestMapping("/findAll")
 	@ResponseBody
-	public   Map<String, Object>   findById(PmcDetails  pmcDetails   ,Integer  page , Integer  limit){
-				//分页
-				PageUtil pageUtil = new PageUtil();
-				//前台取过来的分页值
-				pageUtil.setCurPage(page);
-				pageUtil.setRows(limit);
-				List<PmcDetails> list = pmcDetailsService.findById(pmcDetails, pageUtil); 
-				 int rows = pmcDetailsService.selectCountBySelective(pmcDetails);
-				Map<String , Object>  map  =new  HashMap<>();
-				map.put("code", 0);
-				map.put("msg", "");
-				map.put("count", rows);
-				map.put("data", list);
-				return  map;
-	}
-	
-	@RequestMapping("/update")
-	@ResponseBody
-	public Message update(PmcDetails  pmcDetails) {
-	System.out.println("===============jin================");
-		Message  message =new   Message();
-		 
-		  String   name = pmcDetails.getShujuName();
-		  int rows=0;
-		  String   nameOne[]=name.split("#");
-		  PmcDetails  pmcDetailss =null;
-		  for (int i = 0; i < nameOne.length; i++) {
-			  pmcDetailss=  new  PmcDetails();
-			  String   nametow[] = nameOne[i].split(",");
-			  pmcDetailss.setDrugId(nametow[0]);
-			  pmcDetailss.setHangName(Integer.valueOf(nametow[1]));
-			  rows = pmcDetailsService.updateHang(pmcDetailss);
-			  
-		}
+	public Map<String, Object> findAll(PmcDetails record,Integer page, Integer limit){
+		PageUtil pageUtil = new PageUtil();
+		pageUtil.setCurPage(page);
+		pageUtil.setRows(limit);
 		
-		 if(rows>0) {
-			 message.setMsg("保存成功");
-			 message.setStatus(1);
-		 }else{
-			 message.setMsg("保存失败");
-			 message.setStatus(0);
-			 
-		 }
-	
-		 return message;
+		List<PmcDetails> list = pmcDetailsService.findAll(record, pageUtil); 
+		int rows = pmcDetailsService.selectCountBySelective(record);
+		
+		Map<String , Object>  map  =new  HashMap<>();
+		map.put("code", 0);
+		map.put("msg", "");
+		map.put("count", rows);
+		map.put("data", list);
+		return  map;
 	}
+	
 	
 	/**
 	 * 增加或修改

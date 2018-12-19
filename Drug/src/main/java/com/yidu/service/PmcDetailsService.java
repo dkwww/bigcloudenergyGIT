@@ -15,16 +15,10 @@ import com.yidu.util.PageUtil;
  */
 public interface PmcDetailsService   {
 
- 
-	 
-	List<PmcDetails>  findById(PmcDetails pmcDetails,PageUtil  page);
+	int selectCountBySelective (PmcDetails pmcDetail);
 	
-	
-	int selectCountBySelective  (PmcDetails pmcDetail);
-	
-	int   updateHang  (PmcDetails pmcDetail);
-
-
 	int addOrUpdate(PmcDetails record);
+
+	List<PmcDetails> findAll(PmcDetails record, PageUtil pageUtil);
 }
  
