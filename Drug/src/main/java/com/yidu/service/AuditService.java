@@ -48,4 +48,27 @@ public interface AuditService   {
 	 * @return
 	 */
 	public int findCount(Audit audit);
+	
+	/**
+	 * 显示采购审核
+	 * @param audit
+	 * @param pageUtil
+	 * @return
+	 */
+	public List<Audit> showBuy(Audit audit,PageUtil pageUtil);
+	
+	/**
+	 * 显示总经理审核
+	 * @param audit
+	 * @param pageUtil
+	 * @return
+	 */
+	public List<Audit> showCEO(Audit audit,PageUtil pageUtil);
+	
+	/**
+	 * 根据id查询
+	 * @param id
+	 * @return
+	 */
+	public Audit findById(String id);
 }

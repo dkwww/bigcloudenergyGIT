@@ -30,4 +30,16 @@ public interface AuditMapper {
      * @return
      */
 	int findCount(Audit audit);
+	
+	/**
+     * 显示采购审核
+     * @return
+     */
+    public List<Audit> showBuy(Map<String, Object> map);
+	
+	/**
+     * 显示总经理表
+     * @return
+     */
+    public List<Audit> showCEO(Map<String, Object> map);
 }
