@@ -122,6 +122,8 @@
 		                {field: 'audIdea',title: '审核意见说明',width: 150},
 		                {field: 'audName',title: '审核人',width: 150},
 		                {field: 'audMes',title: '备注',width: 150},
+		                {field: 'wholAmount',title: '数量',width: 150},
+		                {field: 'wholPrice',title: '价格',width: 150},
 		                {fixed: 'right',title: '操作',width: 180,align: 'center',toolbar: '#barDemo'}]
 		            ],
 		            done: function(res, curr, count) {
@@ -181,9 +183,7 @@
 		            var data = obj.data; //获得当前行数据
 		            var layEvent = obj.event; //获得 lay-event 对应的值
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
-
 		            if (layEvent === 'detail') { //审核
-		            	alert("s="+data.audFkId);
 		            	layer.open({
                             type: 2,
                             title: '增加批发订单',
@@ -193,6 +193,23 @@
                             area: ['900px', '450px'],
                             content: 'detailwhol.html?whoid='+data.audFkId+''
                         });
+		            } else if (layEvent === 'shenhe') {
+		            	$.ajax({ url:"../../audit/examine.action",
+		                    type:'post',//method请求方式，get或者post
+		                    cache: false,//同步
+		                    dataType:'json',//预期服务器返回的数据类型
+		                    data:{""},//传表格数据
+		                    success:function(mes){//res为相应体,function为回调函数
+		                    	 if(mes.msg>=1){
+		                    		 layer.msg('添加成功'); 
+		                    		 location.reload();
+		                    		$("#zongshu").val("");
+		             				$("#zongjin").val("");
+		                    	 }else{
+		                    		 layer.msg('添加失败'); 
+		                    	 }
+		                    }
+		                 });
 		            }
 		        });
 		        //表单渲染

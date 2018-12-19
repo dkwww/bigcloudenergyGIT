@@ -134,5 +134,14 @@ public class AuditController {
 		return service.findById(audId);
 	}
 	
+	
+	@RequestMapping("/examine")
+	@ResponseBody
+	public Message examine() {
+		Message message = new Message();
+		
+		
+		return message;
+	}
 }
 
