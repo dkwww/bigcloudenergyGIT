@@ -18,4 +18,5 @@ public interface ModuleService   {
 	int queryCount(Module module);
 	int updateId(Module module);
 	int insert(Module module);
+	List<Module> queryId();
 }

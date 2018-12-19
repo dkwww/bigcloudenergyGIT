@@ -23,4 +23,5 @@ public interface ModuleMapper {
     List<Ztree> selectZtree(String id);
     List<Module> queryList(Map<String,Object> map);
     int queryCount(Module module);
+    List<Module> queryId();
 }

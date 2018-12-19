@@ -42,16 +42,16 @@
 		        });
 				//查询类型下拉框数据
 		        var staticData = null;
-		        $.ajax({ url:"../../module/queryList.action",
+		        $.ajax({ url:"../../module/queryId.action",
                     type:'post',//method请求方式，get或者post
                     cache: false,//同步
                     dataType:'json',//预期服务器返回的数据类型
-                    data:{"druModeId":null,"limit":10,"page":1},
+                    data:null,
                     success:function(mes){//res为相应体,function为回调函数
                     	//增加及修改类型下拉框内的数据
                     	staticData = mes;
                     	//循环添加类型搜索框内的数据
-                    	$.each(mes.types,function(index,item){
+                    	$.each(mes,function(index,item){
                     		$("#drug-type").append("<option value="+item.modeId+">"+item.modeName+"</option>");
                     	});
                     	//渲染类型搜索框内的下拉框
@@ -112,7 +112,7 @@
 		            } else if (layEvent === 'edit') { //编辑
 		                var d = {
 		                	rowdata: data,
-		                    types: staticData.data
+		                    types: staticData
 		                };
 		                showlayer(d);
 		            }
@@ -145,7 +145,7 @@
 		                        	modeId:'',modeName: '',modeUrl: '',modeExplain:''
 		                        },
 		                        //类型下拉框数据
-		                        types: staticData.data
+		                        types: staticData
 		                    };
 		                    showlayer(d);
 		                    break;
@@ -256,29 +256,3 @@
 	                }
 	            });
 	        });
-		    
-		    
-		    function getAllId(){
-		    	　var treeObj = $.fn.zTree.getZTreeObj("ztree");
-		    	　　var nodes = treeObj.getCheckedNodes(true);//在提交表单之前将选中的checkbox收集
-		    	　　var array = new Array();
-		    	　　for(var i=0;i<nodes.length;i++){
-		    		if(nodes[i].pId!=0&&nodes[i].pId!=null){
-		    			array.push(nodes[i].id);
-		    		}
-		    	　　}
-		    	　　var functionIds = array.join(",");
-		    	return functionIds;
-		    }
-		    function setAllId(id){
-		    	　var zTree = $.fn.zTree.getZTreeObj("ztree");
-		    	  var url="../../moduleRole/queryIdModule.action";
-		    	  var data={"drugId":id}
-		    	  $.post(url,data,function(mes){
-		    		  var node=null;
-		    		  $.each(mes,function(index,a){
-		    			   	node= zTree.getNodeByParam("id",a.id);
-    	                    zTree.checkNode(node, true, true);
-		    		  })
-		    	  },"json");
-		    }

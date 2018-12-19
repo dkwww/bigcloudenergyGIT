@@ -22,6 +22,9 @@
     mode_id, dru_mode_id, mode_url, mode_name, mode_code, mode_explain, isva, optime, 
     oper, sort
   </sql>
+  <select id="queryId" resultMap="BaseResultMap">
+  	select * from drug_module where isva ='是' and  dru_mode_id is null
+  </select>
   <select id="queryList" parameterType="java.util.Map" resultMap="BaseResultMap">
   	select * from drug_module where isva ='是'
   	  <if test="module.modeId !=null and module.modeId != '' ">

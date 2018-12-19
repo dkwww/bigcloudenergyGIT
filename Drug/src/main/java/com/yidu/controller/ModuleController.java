@@ -58,8 +58,8 @@ public class ModuleController {
 	}
 	@RequestMapping("updateId")
 	@ResponseBody
-	public Message updateId(HttpServletRequest request,Module module) {
-		
+	public Message updateId(HttpServletRequest request,@RequestBody Module module) {
+		System.out.println("测试++++++"+module.getModeId());
 		Message mes=new Message();
 		int rows=0;
 		HttpSession session=request.getSession();
@@ -80,6 +80,12 @@ public class ModuleController {
 			mes.setStatus(0);
 		}
 		return mes;
+	}
+	@RequestMapping("queryId")
+	@ResponseBody
+	public List<Module> queryId(){
+		List<Module> list=moduService.queryId();
+		return list;
 	}
 }
 

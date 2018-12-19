@@ -195,6 +195,7 @@
 		    //增加和修改弹出层   提交按钮点击事件
 		        form.on('submit(formEdit)', function(data) {
 		        	$("#moduleId").val(getAllId());
+		        	alert(getAllId());
 		        	data.field.moduleId=getAllId();
                 	update("../../role/updateId.action",data.field);
                 	if (close) editIndex && layer.close(editIndex); //关闭弹出层
@@ -332,9 +333,7 @@
 		    	　　var nodes = treeObj.getCheckedNodes(true);//在提交表单之前将选中的checkbox收集
 		    	　　var array = new Array();
 		    	　　for(var i=0;i<nodes.length;i++){
-		    		if(nodes[i].pId!=0&&nodes[i].pId!=null){
 		    			array.push(nodes[i].id);
-		    		}
 		    	　　}
 		    	　　var functionIds = array.join(",");
 		    	return functionIds;
@@ -347,7 +346,12 @@
 		    		  var node=null;
 		    		  $.each(mes,function(index,a){
 		    			   	node= zTree.getNodeByParam("id",a.id);
-    	                    zTree.checkNode(node, true, true);
+		    			   	
+		    			   	console.info(node);
+		    			   	zTree.selectNode(node);
+		    			   	node.checked = true;
+		    			   	node.halfCheck=true;
+		    				zTree.updateNode(node);   //异步加载成功后刷新树节点
 		    		  })
 		    	  },"json");
 		    }

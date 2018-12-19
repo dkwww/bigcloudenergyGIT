@@ -113,13 +113,13 @@ public class RoleController {
 			role.setRoleId(roleId);
 			//增加角色
 			rows=roleService.insert(role);
-			//根据增加的角色Id循环增加角色模块
-			for (int i = 0; i < split.length; i++) {
-				moduleRoler.setModeId(split[i]);
-				moduleRoler.setRoleId(roleId);
-				moduleRoler.setMrId(Tools.getRandomString());
-				int add=moroService.insert(moduleRoler);
-			}
+				//根据增加的角色Id循环增加角色模块
+				for (int i = 0; i < split.length; i++) {
+					moduleRoler.setModeId(split[i]);
+					moduleRoler.setRoleId(role.getRoleId());
+					moduleRoler.setMrId(Tools.getRandomString());
+					int add=moroService.insert(moduleRoler);
+				}
 		}
 		Message mes=new Message();
 		if(rows==0) {

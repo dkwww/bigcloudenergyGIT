@@ -59,4 +59,9 @@ public class ModuleServiceImpl  implements ModuleService {
 		return modumapper.insertSelective(module);
 	}
 
+	@Override
+	public List<Module> queryId() {
+		return modumapper.queryId();
+	}
+
 }
