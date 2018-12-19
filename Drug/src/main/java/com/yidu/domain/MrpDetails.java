@@ -6,17 +6,85 @@ import java.util.Date;
 public class MrpDetails {
    	 private  String   mdId;  //主键  ID
 	 private  String   mrpId  ; //  制造计划ID  无关联外键
-	 private  String  comId ;  //计划厂家 
+	 
 	 private  String  drugId ;   //药品ID  外键
+	 private   String   drugName;
 	 private  Integer    mdPlan ;  //计划任务
-	 private   String  mdState ;    //  状态
+ 
+	 private    Integer mdState ;    //  状态
+	 private    String   mdStateName;  
 	 private   Integer  mdRough;    //未完成部分
-	 private   String  mdView  ;    //  处理意见
+	 private   Integer  mdView  ;    //  处理意见
+	 private   String   mdViewName;  //处理意见
 	 private Integer mrpAmount  ;  //制造次数
 	 private  String    Isva ;   //是否有效
 	 private   Date  optime ;    //操作时间
 	 private   String   oper;	  //操作人
 	 private   String  sort;	//排序 
+	 private   String   comName;
+	 private    Date   mdTime;
+	 private  String    mdTimeName;
+	 
+	 private   Integer   mdAmount;   
+	 
+	 
+	 
+	 
+	 
+	public String getDrugId() {
+		return drugId;
+	}
+	public void setDrugId(String drugId) {
+		this.drugId = drugId;
+	}
+	public Integer getMdAmount() {
+		return mdAmount;
+	}
+	public void setMdAmount(Integer mdAmount) {
+		this.mdAmount = mdAmount;
+	}
+	public Date getMdTime() {
+		return mdTime;
+	}
+	public void setMdTime(Date mdTime) {
+		this.mdTime = mdTime;
+	}
+	public String getMdTimeName() {
+		return mdTimeName;
+	}
+	public void setMdTimeName(String mdTimeName) {
+		this.mdTimeName = mdTimeName;
+	}
+	public Integer getMdView() {
+		return mdView;
+	}
+	public void setMdView(Integer mdView) {
+		this.mdView = mdView;
+	}
+	public String getMdViewName() {
+		return mdViewName;
+	}
+	public void setMdViewName(String mdViewName) {
+		this.mdViewName = mdViewName;
+	}
+	public String getMdStateName() {
+		return mdStateName;
+	}
+	public void setMdStateName(String mdStateName) {
+		this.mdStateName = mdStateName;
+	}
+	public String getComName() {
+		return comName;
+	}
+	public void setComName(String comName) {
+		this.comName = comName;
+	}
+	public String getDrugName() {
+		return drugName;
+	}
+	public void setDrugName(String drugName) {
+		this.drugName = drugName;
+	}
 	public String getMdId() {
 		return mdId;
 	}
@@ -29,18 +97,8 @@ public class MrpDetails {
 	public void setMrpId(String mrpId) {
 		this.mrpId = mrpId;
 	}
-	public String getComId() {
-		return comId;
-	}
-	public void setComId(String comId) {
-		this.comId = comId;
-	}
-	public String getDrugId() {
-		return drugId;
-	}
-	public void setDrugId(String drugId) {
-		this.drugId = drugId;
-	}
+	
+	 
 	public Integer getMdPlan() {
 		return mdPlan;
 	}
@@ -48,10 +106,11 @@ public class MrpDetails {
 		this.mdPlan = mdPlan;
 	}
 	 
-	public String getMdState() {
+	 
+	public Integer getMdState() {
 		return mdState;
 	}
-	public void setMdState(String mdState) {
+	public void setMdState(Integer mdState) {
 		this.mdState = mdState;
 	}
 	public Integer getMdRough() {
@@ -60,12 +119,7 @@ public class MrpDetails {
 	public void setMdRough(Integer mdRough) {
 		this.mdRough = mdRough;
 	}
-	public String getMdView() {
-		return mdView;
-	}
-	public void setMdView(String mdView) {
-		this.mdView = mdView;
-	}
+	 
 	public Integer getMrpAmount() {
 		return mrpAmount;
 	}

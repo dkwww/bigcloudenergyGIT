@@ -12,7 +12,7 @@
 	</head>
 	<script type="text/html" id="input">
 		<div class="layui-inline">
-				<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="hangName"  autocomplete="off"  value="{{d.hangName}}" id="number{{d.pdId}}" onkeyup="Pressdown(this);">
+				<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="hangName"  autocomplete="off"  value="0" id="number{{d.pdId}}" onkeyup="Pressdown(this);">
 		</div>
 	</script>
 	<script type="text/javascript">
@@ -20,12 +20,13 @@
 	 $("#tijiao").click(function (){ 
 		 alert("123321");
 		var   shu= $("#shuju").val(); 
+			alert(shu);
 		 var url ="../../pmcDetails/update.action";
 		 var  data={"shujuName" : shu};
 		 $.post(url,data,function(mes){
-			 alert("=============11111111=============");
+			 
 			if(mes.status==1){
-			  alert("==========================");
+			 
 				 layer.msg(mes.msg); 
 				 closeLayer();
 			}else{
@@ -46,7 +47,7 @@
 	<body>
 	
 	
-	<input  type="text"  id="shuju"        >
+	<input  type="text"  id="shuju"        style="width: 100%;">
 		<div class="kit-table">
 		    <form class="layui-form" lay-filter="kit-search-form">
 						<!-- 左上角的两个按钮 -->
@@ -231,6 +232,7 @@
 		    	 
 		    	
 		    	var pmcId = getParameter("id");
+		    	var mrpId = getParameter("mrpId");
 		    	 
 		        var table = layui.table,
 		            $ = layui.jquery,
@@ -240,29 +242,45 @@
 		        var tableIns = table.render({
 		            elem: '#demos',
 		            height: 'full', //容器高度
-		            url: '../../pmcDetails/findById.action?pmcId='+pmcId,
+		            url: '../../mrpDetails/findById.action?mrpId='+mrpId,
 		            page: true,
 		            id: 'demos',
 		            cols: [
-		                [{
-		                    checkbox: true,
-		                    fixed: true
-		                }, {
+		                [{ 
+		                    field: 'comName',
+		                    title: '制造厂家',
+		                    width: 160
+		                }, { 
 		                    field: 'drugName',
 		                    title: '药品名称',
-		                    width: 190
-		                }, { 
-		                    field: 'drugUnit',
-		                    title: '单位',
 		                    width: 160
 		                },{
-		                    field: 'pdAmount',
-		                    title: '制造数量',
+		                    field: 'mdPlan',
+		                    title: '任务计划',
+		                    width: 150
+		                },{
+		                    field: 'mdAmount',
+		                    title: '本次完成个数',
 		                    width: 150
 		                }, { 
-		                    field: 'hangName',
-		                    title: '已完成数量',
-		                    templet:'#input' ,
+		                    field: 'mdStateName',
+		                    title: '状态',
+		                    width: 160
+		                }, { 
+		                    field: 'mdRough',
+		                    title: '未完成部分',
+		                    width: 160
+		                }, { 
+		                    field: 'mdViewName',
+		                    title: '处理意见',
+		                    width: 160
+		                }, { 
+		                    field: 'mdTimeName',
+		                    title: '制造时间',
+		                    width: 160
+		                }, { 
+		                    field: 'mrpAmount',
+		                    title: '制造次数',
 		                    width: 160
 		                }]
 		            ],
@@ -289,9 +307,10 @@
 		            id: 'demo',
 		            cols: [
 		                [{
-		                    checkbox: true,
-		                    fixed: true
-		                }, {
+		                    field: 'comName',
+		                    title: '店铺ID',
+		                    width: 190
+		                }  ,{
 		                    field: 'drugName',
 		                    title: '药品名称',
 		                    width: 190
@@ -306,11 +325,22 @@
 		                }, { 
 		                    field: 'hangName',
 		                    title: '已完成数量',
+		                    width: 160
+		                }, { 
+		                    field: 'hangName',
+		                    title: '完成数量',
 		                    templet:'#input' ,
 		                    width: 160
 		                }]
 		            ],
 		            done: function(res, curr, count) {
+		            	var tables=table.cache.demo;
+		            	 $.each(tables,function(i,item){
+		            		 $("#shuju").val($("#shuju").val()+item.drugId+","+item.pdAmount+","+item.pmcId+","+item.comName+","+$("#number"+item.pdId).val()+"#");
+		            	 })
+		            	
+		            	
+
 		                //如果是异步请求数据方式，res即为你接口返回的信息。
 		                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
 		                // console.log(res);
@@ -372,7 +402,7 @@
 		        	data=obj.data;
 		        	
 		        	if(obj.checked==true){
-		        		 $("#shuju").val($("#shuju").val()+data.drugId+","+$("#number"+data.pdId).val()+"#");
+		        		 $("#shuju").val($("#shuju").val()+item.drugId+","+item.pdAmount+","+item.pmcId+","+item.comName+","+$("#number"+item.pdId).val()+"#");
 		        		 $.each(tables,function(i,item){
 		        			 if(data.pdId==item.pdId){
 		        				 //取输入数量值
@@ -380,9 +410,6 @@
 		        				 //pdAmount
 		        				 var b=a.parent().parent().parent().prev().children().children().children().val();
 		        				 alert(b);*/
-		        				 
-		        				 
-		        				
 		        			 }
 		        		 });
 		        		 
@@ -520,13 +547,27 @@
 		   
 		    
 		    function  Pressdown(obj){
-            	var a=obj.value;
-            	var b=$(obj).parent().parent().parent().prev().children().text();
+            	var a=obj.value;   //  完成数量  
+            	var b=$(obj).parent().parent().parent().prev().children().text();   //已完成数量
+            	var c=$(obj).parent().parent().parent().prev().prev().children().text();   //计划数量
+            	 var  d=parseInt(c)-parseInt(b);
+             
+            	if(a>d){
             	
-            	if(parseInt(a)>parseInt(b)){
-            	
-            		$(obj).val(b);
-            		 layer.msg("不能大于制造的数量"); 
+            		$(obj).val(d);
+            		 layer.msg("不能大于未完成的数量"); 
+            	}else{
+            		 $("#shuju").val("")
+            		 layui.use(['table'], function() {
+            			 var table=layui.table;
+            			 var tables=table.cache.demo;      
+		            	 $.each(tables,function(i,item){
+		            		
+		            		 
+		            		 $("#shuju").val($("#shuju").val()+item.drugId+","+item.pdAmount+","+item.pmcId+","+item.comName+","+$("#number"+item.pdId).val()+"#");
+		            			
+		            	 })
+            		 });
             	}
 		    }
 		    
