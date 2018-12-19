@@ -26,6 +26,8 @@ public class PmcDetails {
     private String drugName;
     
     private String drugUnit;
+    
+    private Integer finisded;
 
 	public String getPdId() {
         return pdId;
@@ -122,5 +124,12 @@ public class PmcDetails {
 	public void setDrugUnit(String drugUnit) {
 		 this.drugUnit = drugUnit == null ? null : drugUnit.trim();
 	}
-    
+
+	public Integer getFinisded() {
+		return finisded;
+	}
+
+	public void setFinisded(Integer finisded) {
+		this.finisded = finisded;
+	}
 }

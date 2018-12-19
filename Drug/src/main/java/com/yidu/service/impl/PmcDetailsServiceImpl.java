@@ -1,6 +1,7 @@
 package com.yidu.service.impl;
 
  
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +11,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.yidu.dao.MrpDetailsMapper;
 import com.yidu.dao.PmcDetailsMapper;
+import com.yidu.domain.MrpDetails;
 import com.yidu.domain.PmcDetails;
 import com.yidu.service.PmcDetailsService;
 import com.yidu.util.PageUtil;
@@ -28,6 +31,8 @@ public class PmcDetailsServiceImpl  implements PmcDetailsService {
 	
 	@Resource 
 	private PmcDetailsMapper pmcDetailsMapper;
+	@Resource
+	private MrpDetailsMapper mrpDetailMapper;
 
 	@Override
 	public int selectCountBySelective(PmcDetails pmcDetail) {
@@ -52,6 +57,24 @@ public class PmcDetailsServiceImpl  implements PmcDetailsService {
 		map.put("record", record);
 		map.put("pageUtil", pageUtil);
 		return pmcDetailsMapper.selectBySelective(map);
+	}
+
+	@Override
+	public List<PmcDetails> findByPmc(PmcDetails record, PageUtil pageUtil, String mrpId) {
+		Map<String , Object>  map  =new  HashMap<>();
+		map.put("record", record);
+		map.put("pageUtil", pageUtil);
+		List<PmcDetails> list =  pmcDetailsMapper.selectBySelective(map);
+		List<PmcDetails> lists = new ArrayList<PmcDetails>();
+		for (PmcDetails pmcDetails : list) {
+			MrpDetails records = new MrpDetails();
+			records.setMrpId(mrpId);
+			records.setDrugId(pmcDetails.getDrugId());
+			int amount = mrpDetailMapper.findStatistics(records);
+			pmcDetails.setFinisded(amount);
+			lists.add(pmcDetails);
+		}
+		return lists;
 	}
 
 }
