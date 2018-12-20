@@ -19,4 +19,5 @@ public interface ModuleService   {
 	int updateId(Module module);
 	int insert(Module module);
 	List<Module> queryId();
+	List<Module> findByModule(String adminId);
 }

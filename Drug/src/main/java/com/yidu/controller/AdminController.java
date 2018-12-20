@@ -69,6 +69,20 @@ public class AdminController {
 		}
 		return mes;
 	}
+	@RequestMapping("/delete")
+	@ResponseBody
+	public Message delete(@RequestBody Admin admin) {
+		int rows = service.delete(admin);
+		Message mes = new Message();
+		if(rows>0) {
+			mes.setStatus(1);
+			mes.setMsg("操作成功");
+		}else {
+			mes.setStatus(0);
+			mes.setMsg("数据异常，请稍后重试！");
+		}
+		return mes;
+	}
 	@RequestMapping("/upload")
 	@ResponseBody
 	public Message upload(HttpServletRequest req) throws Exception {

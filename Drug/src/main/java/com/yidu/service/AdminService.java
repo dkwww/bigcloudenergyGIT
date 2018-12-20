@@ -55,4 +55,6 @@ public interface AdminService   {
 	 * @return
 	 */
 	List<AdminRole> findByRole(String id);
+
+	public int delete(Admin admin);
 }

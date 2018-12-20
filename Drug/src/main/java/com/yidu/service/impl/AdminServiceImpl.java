@@ -105,4 +105,9 @@ public class AdminServiceImpl  implements AdminService {
 	public List<AdminRole> findByRole(String id) {
 		return mapper.findByRole(id);
 	}
+
+	@Override
+	public int delete(Admin admin) {
+		return mapper.updateByPrimaryKeySelective(admin);
+	}
 }

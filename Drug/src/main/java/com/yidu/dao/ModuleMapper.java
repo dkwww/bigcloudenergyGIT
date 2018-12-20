@@ -24,4 +24,5 @@ public interface ModuleMapper {
     List<Module> queryList(Map<String,Object> map);
     int queryCount(Module module);
     List<Module> queryId();
+    List<Module> findByModule(String adminId);
 }

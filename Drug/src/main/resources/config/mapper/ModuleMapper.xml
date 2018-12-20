@@ -69,6 +69,13 @@
        and mode_explain = #{modeExplain}
       </if>
   </select>
+  <select id="findByModule" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	  SELECT * FROM drug_module mo,drug_role ro,drug_module_role mr,drug_admin ad,drug_admin_role ar 
+  	  WHERE ad.admin_id = ar.admin_id AND 
+	  ar.role_id = ro.role_id AND 
+	  ro.role_id = mr.role_id AND 
+	  mr.mode_id = mo.mode_id AND ad.admin_id=#{adminId,jdbcType=VARCHAR}
+  </select>
   <select id="selectList" resultMap="BaseResultMap2">
   	select * from drug_module
   </select>

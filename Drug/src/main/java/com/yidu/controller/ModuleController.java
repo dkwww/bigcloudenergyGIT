@@ -87,5 +87,10 @@ public class ModuleController {
 		List<Module> list=moduService.queryId();
 		return list;
 	}
+	@RequestMapping("findByModule")
+	@ResponseBody
+	public List<Module> findByModule(String adminId){
+		return moduService.findByModule(adminId);
+	}
 }
 

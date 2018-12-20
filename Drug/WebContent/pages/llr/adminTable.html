@@ -118,8 +118,7 @@
 		            </div>
 					<div class="layui-form-item">
     					<label class="layui-form-label">角色</label>
-    					<div class="layui-input-block" id="findJs">
-   						</div>
+    					<div class="layui-input-block" id="findJs"></div>
   					</div>
 
 					<input type="hidden" id="roid" name="roId" style="width:700px;"/>
@@ -259,7 +258,7 @@
 	            } else if (layEvent === 'del') { //删除
 	                layer.confirm('真的删除行么', function(index) {
 	                	layer.close(index);
-	                    update("../../admin/addAdmin.action",{"adminId":data.adminId,"isva":"0"});
+	                    update("../../admin/delete.action",{"adminId":data.adminId,"isva":"0"});
 	                });
 	            } else if (layEvent === 'edit') { //编辑
 	            	var d = {
@@ -275,10 +274,8 @@
                        
                         dataType:'json',//预期服务器返回的数据类型
                         success:function(mes){//res为相应体,function为回调函数
-                        	
                         	//循环添加角色的数据
                         	$.each(mes,function(index,item){
-                        		//alert(item.roleId);
                         		$("input[name='mul']").each(function(){ 
                             		if ($(this).val() == item.roleId) {
                             			$(this).prop("checked",true);
