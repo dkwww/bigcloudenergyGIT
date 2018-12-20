@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -40,6 +41,7 @@ public class AuditServiceImpl   implements AuditService {
 			rows = updateByPrimaryKeySelective(audit);
 		}else {
 			audit.setAudTime(new Date());
+			audit.setAudState(null);//这里规定一下 “0” 审核未通过  “1” 审核通过
 			audit.setIsva("1");
 			audit.setSort(TimeUtil.getStrDate());
 			rows = insertSelective(audit);
@@ -61,36 +63,15 @@ public class AuditServiceImpl   implements AuditService {
 		return mapper.insertSelective(audit);
 	}
 
-	
+
 	@Override
 	public List<Audit> showList(Audit audit,PageUtil pageUtil) {
 		
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("audit", audit);
 		map.put("pageUtil", pageUtil);
-		List<Audit> list = mapper.findAll(map);
-		for (Audit audit2 : list) {
-			if(audit2.getAudTime()!=null&&!"".equals(audit2.getAudTime())) {
-				audit2.setAudTimes(TimeUtil.dateToString(audit2.getAudTime(), "yyyy-MM-dd HH:mm:ss"));
-			}
-			if(audit2.getOptime()!=null&&!"".equals(audit2.getOptime())) {
-				audit2.setOptimes(TimeUtil.dateToString(audit2.getOptime(), "yyyy-MM-dd HH:mm:ss"));
-			}
-			if(audit2.getAudState()!=null&&!"".equals(audit2.getAudState())) {
-				if("0".equals(audit2.getAudState())) {
-					audit2.setAudStates("审核失败");
-				}
-				if("1".equals(audit2.getAudState())) {
-					audit2.setAudStates("审核中");
-				}
-				if("2".equals(audit2.getAudState())) {
-					audit2.setAudStates("审核通过");
-				}
-			}
-			
-		}
 		
-		return list;
+		return mapper.findAll(map);
 	}
 
 
@@ -101,99 +82,27 @@ public class AuditServiceImpl   implements AuditService {
 
 
 	@Override
-	public List<Audit> showCEO(Audit audit, PageUtil pageUtil) {
-		Map<String, Object> map=new HashMap<String, Object>();
+	public int add(Audit audit) {
+		String uuid=UUID.randomUUID().toString().replaceAll("-", "");
+		audit.setAudId(uuid);
+		return mapper.insert(audit);
+	}
+
+
+	@Override
+	public List<Audit> bushowList(Audit audit, PageUtil page) {
+		Map<String, Object> map=new HashMap<>();
 		map.put("audit", audit);
-		map.put("pageUtil", pageUtil);
-		List<Audit> list = mapper.showCEO(map);
-		for (Audit audit2 : list) {
-			if(audit2.getAudTime()!=null&&!"".equals(audit2.getAudTime())) {
-				audit2.setAudTimes(TimeUtil.dateToString(audit2.getAudTime(), "yyyy-MM-dd HH:mm:ss"));
-			}
-			if(audit2.getOptime()!=null&&!"".equals(audit2.getOptime())) {
-				audit2.setOptimes(TimeUtil.dateToString(audit2.getOptime(), "yyyy-MM-dd HH:mm:ss"));
-			}
-			if(audit2.getAudState()!=null&&!"".equals(audit2.getAudState())) {
-				if("0".equals(audit2.getAudState())) {
-					audit2.setAudStates("审核失败");
-				}
-				if("1".equals(audit2.getAudState())) {
-					audit2.setAudStates("审核中");
-				}
-				if("2".equals(audit2.getAudState())) {
-					audit2.setAudStates("审核通过,等待总经理审核");
-				}
-			}
-			
-		}
+		map.put("page", page);
 		
-		return list;
+		return mapper.showList(map);
 	}
 
 
 	@Override
-	public List<Audit> showBuy(Audit audit, PageUtil pageUtil) {
-		Map<String, Object> map=new HashMap<String, Object>();
-		map.put("audit", audit);
-		map.put("pageUtil", pageUtil);
-		List<Audit> list = mapper.showBuy(map);
-		for (Audit audit2 : list) {
-			if(audit2.getAudTime()!=null&&!"".equals(audit2.getAudTime())) {
-				audit2.setAudTimes(TimeUtil.dateToString(audit2.getAudTime(), "yyyy-MM-dd HH:mm:ss"));
-			}
-			if(audit2.getOptime()!=null&&!"".equals(audit2.getOptime())) {
-				audit2.setOptimes(TimeUtil.dateToString(audit2.getOptime(), "yyyy-MM-dd HH:mm:ss"));
-			}
-			if(audit2.getAudState()!=null&&!"".equals(audit2.getAudState())) {
-				if("0".equals(audit2.getAudState())) {
-					audit2.setAudStates("审核失败");
-				}
-				if("1".equals(audit2.getAudState())) {
-					audit2.setAudStates("审核中");
-				}
-				if("2".equals(audit2.getAudState())) {
-					audit2.setAudStates("审核通过,等待总经理审核");
-				}
-			}
-			
-		}
+	public int selectCount(Audit audit) {
 		
-		return list;
-	}
-
-	@Override
-	public Audit findById(String id) {
-		return mapper.selectByPrimaryKey(id);
-	}
-
-
-	@Override
-	public List<Audit> wholeceo(Audit audit, PageUtil pageUtil) {
-		Map<String, Object> map=new HashMap<String, Object>();
-		map.put("audit", audit);
-		map.put("pageUtil", pageUtil);
-		List<Audit> list = mapper.wholeceo(map);
-		for (Audit audit2 : list) {
-			if(audit2.getAudTime()!=null&&!"".equals(audit2.getAudTime())) {
-				audit2.setAudTimes(TimeUtil.dateToString(audit2.getAudTime(), "yyyy-MM-dd HH:mm:ss"));
-			}
-			if(audit2.getOptime()!=null&&!"".equals(audit2.getOptime())) {
-				audit2.setOptimes(TimeUtil.dateToString(audit2.getOptime(), "yyyy-MM-dd HH:mm:ss"));
-			}
-			if(audit2.getAudState()!=null&&!"".equals(audit2.getAudState())) {
-				if("30".equals(audit2.getAudState())) {
-					audit2.setAudStates("审核失败");
-				}
-				if("28".equals(audit2.getAudState())) {
-					audit2.setAudStates("审核中");
-				}
-				if("29".equals(audit2.getAudState())) {
-					audit2.setAudStates("审核通过");
-				}
-			}
-			
-		}
-		return list;
+		return mapper.selectCount(audit);
 	}
 
 }

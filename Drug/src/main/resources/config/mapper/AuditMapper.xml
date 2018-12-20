@@ -15,8 +15,6 @@
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
-    <result column="whol_amount" jdbcType="INTEGER" property="wholAmount" />
-    <result column="whol_price" jdbcType="NUMERIC" property="wholPrice" />
   </resultMap>
   <sql id="Base_Column_List">
     aud_id, aud_fk_id, aud_comtype, qc_fk_id, aud_time, aud_state, aud_idea, aud_name, 
@@ -24,39 +22,26 @@
   </sql>
   
   <select id="findAll" parameterType="java.util.Map" resultMap="BaseResultMap" >
-  	select da.*,dw.whol_amount,dw.whol_price from drug_audit da,drug_wholesale dw WHERE da.aud_fk_id=dw.whol_id 
+  	select * from drug_audit
   	order by sort desc 
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
-  </select>
-  
-  <select id="showBuy" parameterType="java.util.Map" resultMap="BaseResultMap" >
-  	select * from drug_audit a ,drug_buy b where a.aud_fk_id = b.buy_id
-  	order by a.sort desc 
-   	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
-  </select>
-  
-  <select id="wholeceo" parameterType="java.util.Map" resultMap="BaseResultMap" >
-  	SELECT * FROM drug_audit WHERE 
-	aud_state = 28 OR aud_state = 29 OR aud_state = 30
-  	ORDER BY sort DESC 
-   	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
-  </select>
-  
-  
-  <select id="showCEO" parameterType="java.util.Map" resultMap="BaseResultMap" >
-  	
-	SELECT * FROM drug_audit WHERE 
-	aud_state = 2 OR aud_state = 11 OR aud_state = 12
-  	ORDER BY sort DESC 
-   	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
   
   </select>
-  
   
   <select id="findCount" parameterType="com.yidu.domain.Audit" resultType="Integer">
   	select count(*) from drug_audit 
   	
   </select>
+  
+  <select id="showList" parameterType="map" resultMap="BaseResultMap">
+  	SELECT * FROM drug_audit a,drug_buy b WHERE a.qc_fk_id=b.buy_id AND a.qc_fk_id=#{audit.qcFkId}
+  </select>
+  
+  
+  <select id="selectCount" parameterType="com.yidu.domain.Audit" resultType="int">
+  	SELECT count(*) FROM drug_audit a,drug_buy b WHERE a.qc_fk_id=b.buy_id AND a.qc_fk_id=#{qcFkId}
+  </select>
+  
   
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 

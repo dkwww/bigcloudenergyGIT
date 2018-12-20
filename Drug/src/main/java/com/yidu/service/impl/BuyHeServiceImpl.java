@@ -44,19 +44,9 @@ public class BuyHeServiceImpl implements BuyHeService {
 
 	@Override
 	public int addorUpdate(Buy buy) {
-		int rows=0;
-		
-		rows=dao.deleteByPrimaryKey(buy.getBuyId());
-		
-		if(buy.getBuyId()!=null && !"".equals(buy.getBuyId())) {
-			rows=dao.updateByPrimaryKeySelective(buy);
-		}else {
-			String uuid=UUID.randomUUID().toString().replaceAll("-", "");
-			buy.setBuyId(uuid);
-			rows=dao.insert(buy);
-		}
-		
-		return rows;
+		String uuid=UUID.randomUUID().toString().replaceAll("-", "");
+		buy.setBuyId(uuid);
+		return dao.insert(buy);
 	}
 
 	@Override
@@ -69,6 +59,29 @@ public class BuyHeServiceImpl implements BuyHeService {
 	public int delete(String buyId) {
 		
 		return dao.deleteByPrimaryKey(buyId);
+	}
+
+	@Override
+	public List<Buy> AuditshowList(Buy buy, PageUtil page) {
+		Map<String, Object> map=new HashMap<>();
+		map.put("buy", buy);
+		map.put("page", page);
+		return dao.AuditshowList(map);
+	}
+
+	@Override
+	public int AuditselectCount(Buy buy) {
+		
+		return dao.AuditselectCount(buy);
+	}
+
+	@Override
+	public int update(Buy buy) {
+		int rows=0;
+		if(buy.getBuyId()!=null && !"".equals(buy.getBuyId())) {
+			rows=dao.updateByPrimaryKeySelective(buy);
+		}
+		return rows;
 	}
 
 }

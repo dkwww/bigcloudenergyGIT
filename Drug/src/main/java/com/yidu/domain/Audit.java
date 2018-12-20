@@ -34,25 +34,20 @@ public class Audit {
     private String oper;
 
     private String sort;
-
-    private Integer wholAmount;
-
-    private Double wholPrice;
     
-    public Integer getWholAmount() {
-		return wholAmount;
+    private String auName;
+    
+    
+    
+
+    
+    
+    public String getAuName() {
+		return auName;
 	}
 
-	public void setWholAmount(Integer wholAmount) {
-		this.wholAmount = wholAmount;
-	}
-
-	public Double getWholPrice() {
-		return wholPrice;
-	}
-
-	public void setWholPrice(Double wholPrice) {
-		this.wholPrice = wholPrice;
+	public void setAuName(String auName) {
+		this.auName = auName;
 	}
 
 	public String getAudStates() {

@@ -31,21 +31,20 @@ public interface AuditMapper {
      */
 	int findCount(Audit audit);
 	
-	/**
-     * 显示采购审核
-     * @return
-     */
-    public List<Audit> showBuy(Map<String, Object> map);
 	
 	/**
-     * 显示总经理表
-     * @return
-     */
-    public List<Audit> showCEO(Map<String, Object> map);
-    
-    /**
-     * 显示财务总经理表
-     * @return
-     */
-    public List<Audit> wholeceo(Map<String, Object> map);
+	 * 查询所有
+	 * @param map
+	 * @author 邓康威
+	 * @return
+	 */
+	List<Audit> showList(Map<String, Object> map);
+	
+	/**
+	 * 查询总行数
+	 * @param audit
+	 * @author 邓康威
+	 * @return
+	 */
+	int selectCount(Audit audit);
 }

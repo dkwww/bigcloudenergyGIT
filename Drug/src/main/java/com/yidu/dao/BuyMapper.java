@@ -45,4 +45,18 @@ public interface BuyMapper {
      * @return
      */
     int selectCount(Buy buy);
+    
+    /**
+     * 审核查询所有
+     * @param map
+     * @return
+     */
+    public List<Buy> AuditshowList(Map<String,Object> map);
+    
+    /**
+     * 审核查询总行数
+     * @param buy
+     * @return
+     */
+    public int AuditselectCount(Buy buy);
 }

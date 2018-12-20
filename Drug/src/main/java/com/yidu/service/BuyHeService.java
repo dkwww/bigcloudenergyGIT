@@ -21,10 +21,47 @@ public interface BuyHeService   {
 	 */
 	List<Buy> showList(Buy buy,PageUtil page);
 	
+	/**
+	 * 查询总行数
+	 * @param buy
+	 * @return
+	 */
 	int selectCount(Buy buy);
 	
+	/**
+	 * 采购材料增加
+	 * @param buy
+	 * @return
+	 */
 	int addorUpdate(Buy buy);
 	
+	/**
+	 * 采购材料删除
+	 * @param buyId
+	 * @return
+	 */
 	int delete(String buyId);
+	
+	/**
+	 * 审核查询所有
+	 * @param buy
+	 * @param page
+	 * @return
+	 */
+	List<Buy> AuditshowList(Buy buy,PageUtil page);
+	
+	/**
+	 * 审核查询总行数
+	 * @param buy
+	 * @return
+	 */
+	int AuditselectCount(Buy buy);
+	
+	/**
+	 * 审核增加或修改
+	 * @param buy
+	 * @return
+	 */
+	int update(Buy buy);
 	
 }

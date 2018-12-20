@@ -147,10 +147,11 @@
 		            	 var tables=table.cache.demo;
 		            	 
 		            	 for (var i = 0; i < tables.length; i++) {
+		            		 
 							$("#edit_exam_school").val(tables[i].provId);
 							renderForm();
 						}
-		            	 
+		            	  
 		            	$.each(tables,function(i,item){
 				        	$("#shuju").val($("#shuju").val()+item.bdetFkId+","+item.matName+","+item.bdetPrice+","+$("#number"+item.bdetFkId).val()+","+$("#price"+item.bdetFkId).val()+"#");	
 		            	})
@@ -233,7 +234,7 @@
 		        	
 		        	if(obj.checked==true){
 		        		$("#shuju").val($("#shuju").val()+data.matId+","+data.matName+","+data.matPrice+","+$("#numbers"+data.matId).val()+","+$("#prices"+data.matId).val()+"#");
-		        		tableElem.find("tbody").append('<tr data-index='+data.matId+' class=""><td data-field="bdetFkId"><div class="layui-table-cell laytable-cell-1-bdetFkId">'+data.matId+'</div></td><td data-field="matName"><div class="layui-table-cell laytable-cell-1-matName">'+data.matName+'</div></td><td data-field="bdetPrice"><div class="layui-table-cell laytable-cell-1-bdetPrice">'+data.matPrice+'</div></td><td data-field="bdetAmount" data-content="22"><div class="layui-table-cell laytable-cell-1-bdetAmount"> <div class="layui-inline"> <input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="bdetAmount" autocomplete="off" value="0" id="numberd6484a14498b47f78cccc1242f5eab6ewerdf" onkeyup="Pressdown(this);"> </div> </div></td><td data-field="bdetTotal" data-content="440"><div class="layui-table-cell laytable-cell-1-bdetTotal"> <div class="layui-inline"> <input class="layui-input layui-disabled" readonly="readonly" value="0" maxlength="9" style="border:none;padding-bottom:8px;" name="bdetTotal" id="priced6484a14498b47f78cccc1242f5eab6ewerdf" autocomplete="off" "=""> </div> </div></td></tr>');
+		        		tableElem.find("tbody").append('<tr data-index='+data.matId+' class=""><td data-field="bdetFkId"><div class="layui-table-cell laytable-cell-1-bdetFkId">'+data.matId+'</div></td><td data-field="matName"><div class="layui-table-cell laytable-cell-1-matName">'+data.matName+'</div></td><td data-field="bdetPrice"><div class="layui-table-cell laytable-cell-1-bdetPrice">'+data.matPrice+'</div></td><td data-field="bdetAmount" data-content="22"><div class="layui-table-cell laytable-cell-1-bdetAmount"> <div class="layui-inline"> <input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="bdetAmount" autocomplete="off" value="0" id="number'+data.matId+'" onkeyup="Pressdown(this);"> </div> </div></td><td data-field="bdetTotal" data-content="440"><div class="layui-table-cell laytable-cell-1-bdetTotal"> <div class="layui-inline"> <input class="layui-input layui-disabled" readonly="readonly" value="0" maxlength="9" style="border:none;padding-bottom:8px;" name="bdetTotal" id="price'+data.matId+'" autocomplete="off" "=""> </div> </div></td></tr>');
 		        	 }	
 		        	 if(obj.checked==false){
 		        		 
@@ -313,12 +314,25 @@
 				//计算结果显示
 				$(obj).parent().parent().parent().next().children().children().children().val(c);
 				
-				
+				//总数量
 				var amounts = allAmount();
 				$("#buyAmount").val(amounts);
-				
+				//总金额
 				var moneys=allMoney();
 				$("#buyMoney").val(moneys)
+				
+				
+				$("#shuju").val("");
+				 var tbody=$(obj).parent().parent().parent().parent().parent();
+				 $.each($(tbody).find("tr"),function(i,item){
+					var bdetFkId=$(item).children().get(0);
+					var matName=$(item).children().get(1);
+					var bdetPrice=$(item).children().get(2);
+					
+					$("#shuju").val($("#shuju").val()+$(bdetFkId).text()+","+$(matName).text()+","+$(bdetPrice).text()+","+$("#number"+$(bdetFkId).text()).val()+","+$("#price"+$(bdetFkId).text()).val()+"#");	
+				 })
+					 
+					  
 				
 			}
 		  	

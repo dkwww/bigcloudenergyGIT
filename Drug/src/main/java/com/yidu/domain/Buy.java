@@ -49,9 +49,30 @@ public class Buy {
 
     private String sort;					//排序
     
+    private   String    auName;
+    
+    private String audIdea;					//审核意见说明
     
     
-   
+    
+    
+    
+
+	public String getAudIdea() {
+		return audIdea;
+	}
+
+	public void setAudIdea(String audIdea) {
+		this.audIdea = audIdea;
+	}
+
+	public String getAuName() {
+		return auName;
+	}
+
+	public void setAuName(String auName) {
+		this.auName = auName;
+	}
 
 	public String getBuyStates() {
 		return buyStates;
@@ -124,6 +145,7 @@ public class Buy {
     public void setBuyTime(Date buyTime) {
         this.buyTime = buyTime;
     }
+    
 
     public String getBuyCompany() {
         return buyCompany;
