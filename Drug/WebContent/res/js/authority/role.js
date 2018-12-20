@@ -195,7 +195,6 @@
 		    //增加和修改弹出层   提交按钮点击事件
 		        form.on('submit(formEdit)', function(data) {
 		        	$("#moduleId").val(getAllId());
-		        	alert(getAllId());
 		        	data.field.moduleId=getAllId();
                 	update("../../role/updateId.action",data.field);
                 	if (close) editIndex && layer.close(editIndex); //关闭弹出层

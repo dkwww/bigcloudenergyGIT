@@ -100,12 +100,15 @@ public class RoleController {
 				//根据角色ID删除和他关联的角色模块
 				int dele=moroService.deleteId(role.getRoleId());
 				//根据选中的模块ID循环增加角色模块
-				for (int i = 0; i < split.length; i++) {
-					moduleRoler.setModeId(split[i]);
-					moduleRoler.setRoleId(role.getRoleId());
-					moduleRoler.setMrId(Tools.getRandomString());
-					int add=moroService.insert(moduleRoler);
+				if(role.getModuleId()!=null&&!"".equals(role.getModuleId())) {
+					for (int i = 0; i < split.length; i++) {
+						moduleRoler.setModeId(split[i]);
+						moduleRoler.setRoleId(role.getRoleId());
+						moduleRoler.setMrId(Tools.getRandomString());
+						int add=moroService.insert(moduleRoler);
+					}
 				}
+				
 				//修改角色
 				rows=roleService.updateId(role);
 		}else {
