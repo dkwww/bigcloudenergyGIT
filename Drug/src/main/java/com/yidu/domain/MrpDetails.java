@@ -28,12 +28,20 @@ public class MrpDetails {
 	 private   Integer   mdAmount;   
 	 
 	 
-	 private   String  shujuName;
+	 private   String  shujuName; 
+	 
+	 private   Integer  mrpPlan;
 	 
 	 
 	 
 	 
 	 
+	public Integer getMrpPlan() {
+		return mrpPlan;
+	}
+	public void setMrpPlan(Integer mrpPlan) {
+		this.mrpPlan = mrpPlan;
+	}
 	public String getShujuName() {
 		return shujuName;
 	}

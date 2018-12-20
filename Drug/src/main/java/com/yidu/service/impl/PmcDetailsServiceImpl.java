@@ -70,8 +70,14 @@ public class PmcDetailsServiceImpl  implements PmcDetailsService {
 			MrpDetails records = new MrpDetails();
 			records.setMrpId(mrpId);
 			records.setDrugId(pmcDetails.getDrugId());
-			int amount = mrpDetailMapper.findStatistics(records);
-			pmcDetails.setFinisded(amount);
+			System.out.println("====="+mrpId+"======"+pmcDetails.getDrugId());
+			Integer amount = mrpDetailMapper.findStatistics(records);
+			if (amount!=null&&!"".equals(amount)) {
+				pmcDetails.setFinisded(amount);
+			} else {
+				pmcDetails.setFinisded(0);
+			}
+			System.out.println(amount);
 			lists.add(pmcDetails);
 		}
 		return lists;

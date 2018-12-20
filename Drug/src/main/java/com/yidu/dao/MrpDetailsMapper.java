@@ -24,5 +24,11 @@ public interface MrpDetailsMapper {
 	int   findBycount(MrpDetails  mrpDetails);
    
 	 
-    int   findStatistics (MrpDetails  mrpDetails);
+    Integer   findStatistics (MrpDetails  mrpDetails);  
+    
+    int   findmax  (MrpDetails  mrpDetails);
+    
+    int  findPercentage  (MrpDetails  mrpDetails);
+    
+    
 } 

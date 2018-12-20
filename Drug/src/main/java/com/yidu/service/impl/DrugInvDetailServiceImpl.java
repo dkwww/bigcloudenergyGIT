@@ -25,13 +25,22 @@ public class DrugInvDetailServiceImpl   implements DrugInvDetailService {
   private  DrugInvDetailMapper   dao;
 	@Override
 	public List<DrugInvDetail> findById(String id) {
-		System.out.println("-------------------2-"+id);
+	 
 		List<DrugInvDetail> list = dao.selectByPrimaryKey(id);
+		
+		for (DrugInvDetail drugInvDetail : list) {
+			if (drugInvDetail.getRemarks()==1) {
+				drugInvDetail.setRemarksName("销售出库");
+			}else {
+				drugInvDetail.setRemarksName("生产入库");
+			}
+			
+		}
 		return list  ;
 	}
 	@Override
 	public int selectcount(String id) {
-		 System.out.println("--------------------"+id);
+ 
 		return dao.selectcount(id);
 	}
 

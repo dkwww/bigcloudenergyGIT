@@ -24,6 +24,15 @@ public interface MrpDetailsService   {
    int  findBycount(MrpDetails   mrpDetails);
    
    int  findStatistics(MrpDetails   mrpDetails);
+   
+   
+   int   add(MrpDetails   mrpDetails);
+   
+   int   findmax  (MrpDetails  mrpDetails);
+   
+   int   findPercentage(MrpDetails  mrpDetails);  
+   
+   
 	  
  
 }

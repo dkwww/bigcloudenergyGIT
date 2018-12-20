@@ -7,6 +7,7 @@
      <result column="drug_Id" jdbcType="VARCHAR" property="drugId" />
       <result column="drug_Name" jdbcType="VARCHAR" property="drugName" />
      <result column="md_Plan" jdbcType="INTEGER" property="mdPlan" />
+     <result column="mrp_Plan" jdbcType="INTEGER" property="mrpPlan" />
     <result column="md_State" jdbcType="INTEGER" property="mdState" />
     <result column="md_Rough" jdbcType="INTEGER" property="mdRough" />
     <result column="md_Rate" jdbcType="INTEGER" property="mdRate" />
@@ -31,8 +32,14 @@
    </select>
    
    
+    	<select  id="findmax" parameterType="com.yidu.domain.MrpDetails"   resultType="int"> 
+  			SELECT      mrp_plan   FROM drug_mrp  WHERE mrp_id = #{mrpId,jdbcType=VARCHAR}  
     
-   	
+   </select>
+   	<select  id="findPercentage" parameterType="com.yidu.domain.MrpDetails"   resultType="int"> 
+  	SELECT sum(md_amount) FROM drug_mrp_detail WHERE mrp_id = #{mrpId,jdbcType=VARCHAR} 
+    
+   </select>
    	
    	
    	<select  id="findStatistics" parameterType="com.yidu.domain.MrpDetails"   resultType="int"> 
@@ -42,7 +49,7 @@
    </select>
    
    
-   <select  id="findBycount" parameterType="com.yidu.domain.MrpDetails"   resultType="int"> 
+   <select  id="findBycount" parameterType="com.yidu.domain.MrpDetails"   resultType="Integer"> 
   	SELECT   count(*)  FROM     drug_mrp_detail a, drug_mrp   b , drug_drug  c   WHERE  a.mrp_id=b.mrp_id  AND   a.drug_id =c.drug_id  AND   b.mrp_id=#{mrpId,jdbcType=VARCHAR} 
 	 <if test="drugName != null and drugName != ''">
    		and c.drug_name like CONCAT(CONCAT('%',#{drugName,jdbcType=VARCHAR},'%'))
@@ -51,7 +58,7 @@
    	
    </select>
     <sql id="Base_Column_List">
-    md_id, mrp_id, com_name, drug_id, md_plan, md_state, md_rough, md_view, mrp_amount, 
+    md_id, mrp_id,   drug_id, md_plan, md_state, md_rough, md_view, mrp_amount, 
     isva, optime, oper, sort, md_time, md_amount
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -65,13 +72,13 @@
     where md_id = #{mdId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.yidu.domain.MrpDetails">
-    insert into drug_mrp_detail (md_id, mrp_id, com_name, 
+    insert into drug_mrp_detail (md_id, mrp_id,   
       drug_id, md_plan, md_state, 
       md_rough, md_view, mrp_amount, 
       isva, optime, oper, 
       sort, md_time, md_amount
       )
-    values (#{mdId,jdbcType=VARCHAR}, #{mrpId,jdbcType=VARCHAR}, #{comName,jdbcType=VARCHAR}, 
+    values (#{mdId,jdbcType=VARCHAR}, #{mrpId,jdbcType=VARCHAR}, 
       #{drugId,jdbcType=VARCHAR}, #{mdPlan,jdbcType=INTEGER}, #{mdState,jdbcType=INTEGER}, 
       #{mdRough,jdbcType=INTEGER}, #{mdView,jdbcType=INTEGER}, #{mrpAmount,jdbcType=INTEGER}, 
       #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, 
@@ -87,9 +94,7 @@
       <if test="mrpId != null">
         mrp_id,
       </if>
-      <if test="comName != null">
-        com_name,
-      </if>
+      
       <if test="drugId != null">
         drug_id,
       </if>
@@ -133,9 +138,6 @@
       </if>
       <if test="mrpId != null">
         #{mrpId,jdbcType=VARCHAR},
-      </if>
-      <if test="comName!= null">
-        #{comName,jdbcType=VARCHAR},
       </if>
       <if test="drugId != null">
         #{drugId,jdbcType=VARCHAR},
@@ -181,9 +183,7 @@
       <if test="mrpId != null">
         mrp_id = #{mrpId,jdbcType=VARCHAR},
       </if>
-      <if test="comName != null">
-        com_name = #{comId,jdbcType=VARCHAR},
-      </if>
+       
       <if test="drugId != null">
         drug_id = #{drugId,jdbcType=VARCHAR},
       </if>
@@ -226,7 +226,6 @@
   <update id="updateByPrimaryKey" parameterType="com.yidu.domain.MrpDetails">
     update drug_mrp_detail
     set mrp_id = #{mrpId,jdbcType=VARCHAR},
-      com_name = #{comName,jdbcType=VARCHAR},
       drug_id = #{drugId,jdbcType=VARCHAR},
       md_plan = #{mdPlan,jdbcType=INTEGER},
       md_state = #{mdState,jdbcType=INTEGER},

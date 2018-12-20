@@ -1,6 +1,5 @@
 package com.yidu.domain;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class Mrp {
@@ -12,7 +11,8 @@ public class Mrp {
 
     private Integer mrpPlan;
 
-    private BigDecimal mrpRate;
+    private String mrpRate;
+    private   String   mrpRateName;
 
     private Integer  mrpState;
 
@@ -40,7 +40,23 @@ public class Mrp {
     
     
     
-    public String getComName() {
+    public String getMrpRateName() {
+		return mrpRateName;
+	}
+
+	public void setMrpRateName(String mrpRateName) {
+		this.mrpRateName = mrpRateName;
+	}
+
+	public Integer getMrpState() {
+		return mrpState;
+	}
+
+	public void setMrpState(Integer mrpState) {
+		this.mrpState = mrpState;
+	}
+
+	public String getComName() {
 		return comName;
 	}
 
@@ -74,6 +90,8 @@ public class Mrp {
     	
     
     
+
+	 
 
 	public Date getMrpEndtime() {
 			return mrpEndtime;
@@ -219,23 +237,19 @@ public class Mrp {
         this.mrpPlan = mrpPlan;
     }
 
-    public BigDecimal getMrpRate() {
-        return mrpRate;
-    }
-
-    public void setMrpRate(BigDecimal mrpRate) {
-        this.mrpRate = mrpRate;
-    }
+    
 
     
     
-    public Integer getMrpState() {
-		return mrpState;
+    public String getMrpRate() {
+		return mrpRate;
 	}
 
-	public void setMrpState(Integer mrpState) {
-		this.mrpState = mrpState;
+	public void setMrpRate(String mrpRate) {
+		this.mrpRate = mrpRate;
 	}
+
+	 
 
 	public Integer getMrpIdea() {
 		return mrpIdea;

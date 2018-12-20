@@ -74,6 +74,24 @@ public class MrpDetailsServiceImpl  implements MrpDetailsService {
 		return dao.findStatistics(mrpDetails);
 	}
 
+	@Override
+	public int add(MrpDetails mrpDetails) {
+	
+		return dao.insert(mrpDetails);
+	}
+
+	@Override
+	public int findmax(MrpDetails mrpDetails) {
+		 
+		return dao.findmax(mrpDetails);
+	}
+
+	@Override
+	public int findPercentage(MrpDetails mrpDetails) {
+	 
+		return dao.findPercentage(mrpDetails);
+	}
+
 	 
 	 
 	 

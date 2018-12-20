@@ -60,4 +60,14 @@ public class MrpServiceImpl implements MrpService {
 	 
 		return dao.selectCountBySelective(mrp);
 	}
+	@Override
+	public int Modifyprogress(Mrp record) {
+		 
+		return dao.Modifyprogress(record);
+	}
+	@Override
+	public int Modifyprogresss(Mrp record) {
+		 
+		return dao.Modifyprogresss(record);
+	}
 }

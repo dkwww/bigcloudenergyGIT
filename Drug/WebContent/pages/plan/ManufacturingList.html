@@ -1,21 +1,41 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
-		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
-		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
-		<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
-		<title>制造计划管理</title>
-		
-	</head>
-	<script type="text/html" id="input">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css"
+	media="all">
+<link rel="stylesheet" href="../../res/layui-config/css/app.css"
+	media="all">
+<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
+<title>制造计划管理</title>
+<style type="text/css">
+    #drugId{
+       width: 150px;
+       margin-left: 140px;
+    }
+ 
+ 
+ #tijiao{
+    margin-left: 30px;
+    
+  	
+     
+ 
+ }
+
+
+</style>
+
+</head>
+<script type="text/html" id="input">
 		<div class="layui-inline">
 				<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="hangName"  autocomplete="off"  value="0" id="number{{d.pdId}}" onkeyup="Pressdown(this);">
 		</div>
 	</script>
-	<script type="text/javascript">
+
+<script type="text/javascript">
 	$(function(){
 		
 		var mrpId = getParameter("mrpId");
@@ -27,10 +47,19 @@
 		var  mrp  =$("#mrpId").val();
 		
 			alert(mrp);
+			alert(shu);
 		 var url ="../../mrpDetails/update.action";
-		 var  data={"shujuName" : shu , "mrpId"  :  mrp};
+		 var  data={"shujuName" : shu ,"mrpId":mrp};
 		 $.post(url,data,function(mes){
-			 layer.msg("保存成功"); 
+			 if(mes.status==1){
+				 layer.msg("保存成功"); 
+				 
+			 }else{
+				 layer.msg("保存失败"); 
+			 }
+			 
+			 
+			 
 			 
 		},"json");
 		 
@@ -43,98 +72,51 @@
 	}
 	</script>
 	
-	
-	<body>
-	
-	
-	<input  type="text"  id="shuju"        style="width: 100%;">
-	<input  type="text"  id="mrpId"   style="width: 100%;">
-		<div class="kit-table">
-		    <form class="layui-form" lay-filter="kit-search-form">
-						<!-- 左上角的两个按钮 -->
-		        <div class="kit-table-header">
-		            <div class="kit-search-btns">
-		                 
-		                <button  id="tijiao"  class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon">&#xe6b2;</i> 保存</button>
-		            </div>
-		            <div class="kit-search-inputs">
-		                <div class="kit-search-keyword">
-		                    <input type="text" class="layui-input" name="drugName" placeholder="搜索关键字.." />
-		                    <button lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
-		                </div>
-		                <div class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>
-		            </div>
-		        </div>
-						<!-- 搜索扩展工具条 -->
-		        <div class="kit-search-mored layui-anim layui-anim-upbit">
-		            <div class="kit-search-body">
-		                <div class="layui-form-item">
-		                    <label class="layui-form-label">输入框</label>
-		                    <div class="layui-input-block">
-		                        <input type="text" name="title" placeholder="请输入标题" autocomplete="off" class="layui-input">
-		                    </div>
-		                </div>
-		                <div class="layui-form-item">
-		                    <div class="layui-inline">
-		                        <label class="layui-form-label">验证手机</label>
-		                        <div class="layui-input-inline">
-		                            <input type="tel" name="phone" autocomplete="off" class="layui-input">
-		                        </div>
-		                    </div>
-		                    <div class="layui-inline">
-		                        <label class="layui-form-label">验证邮箱</label>
-		                        <div class="layui-input-inline">
-		                            <input type="text" name="email" autocomplete="off" class="layui-input">
-		                        </div>
-		                    </div>
-		                </div>
-		                <div class="layui-form-item">
-		                    <div class="layui-inline">
-		                        <label class="layui-form-label">范围</label>
-		                        <div class="layui-input-inline" style="width: 100px;">
-		                            <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input">
-		                        </div>
-		                        <div class="layui-form-mid">-</div>
-		                        <div class="layui-input-inline" style="width: 100px;">
-		                            <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input">
-		                        </div>
-		                    </div>
-		                </div>
-		                <div class="layui-form-item">
-		                    <label class="layui-form-label">单行选择框</label>
-		                    <div class="layui-input-block">
-		                        <select name="interest" lay-filter="aihao">
-		                            <option value=""></option>
-		                            <option value="0">写作</option>
-		                            <option value="1" selected="">阅读</option>
-		                            <option value="2">游戏</option>
-		                            <option value="3">音乐</option>
-		                            <option value="4">旅行</option>
-		                          </select>
-		                    </div>
-		                </div>
-		            </div>
-		            <div class="kit-search-footer">
-		                <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary kit-btn">重置</button>
-		                <button lay-submit lay-filter="search" class="layui-btn layui-btn-sm kit-btn">确定</button>
-		            </div>
-		        </div>
-		    </form>
-				
-				<!-- 操作按钮 -->
-		    <div class="kit-table-body">
-		        <table id="demo" lay-filter="demo"></table>
-		        <script type="text/html" id="barDemo">
+
+
+<body>
+
+
+	<input type="hidden" id="shuju"   >
+	<input type="hidden" id="mrpId"  >
+	<div class="kit-table">
+		<form class="layui-form" lay-filter="kit-search-form">
+			<!-- 左上角的两个按钮 -->
+			<div class="kit-table-header">
+				<div class="kit-search-btns">
+
+					<input type="button" id="tijiao"   	class="layui-btn layui-btn-normal"     value="保存" >
+				</div
+				<div class="kit-search-inputs">
+					<div class="kit-search-keyword">
+						<input type="text" class="layui-input" name="drugName"   id="drugId" placeholder="搜索关键字.." />
+						<button lay-submit lay-filter="search">
+							<i class="layui-icon">&#xe615;</i>
+						</button>
+					</div>
+					 
+				</div>
+			</div>
+			 
+				 
+			  
+			</div>
+		</form>
+
+		<!-- 操作按钮 -->
+		<div class="kit-table-body">
+			<table id="demo" lay-filter="demo"></table>
+			<script type="text/html" id="barDemo">
 		            <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
 		            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
 		            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 		        </script>
-		    </div>
-		     <table id="demos" lay-filter="demos"></table>
 		</div>
-		
-		<!-- 修改页面 -->
-		<script type="text/html" id="edit-tpl">
+		<table id="demos" lay-filter="demos"></table>
+	</div>
+
+	<!-- 修改页面 -->
+	<script type="text/html" id="edit-tpl">
 		    <div style="margin:10px">
 		        <form class="layui-form" action="" lay-filter="form-edit">
 		            <input type="hidden" name="id" value="{{d.user.id}}" />
@@ -222,11 +204,11 @@
 		        </form>
 		    </div>
 		</script>
-		
-		<!-- 显示表格 -->
-		<script src="../../res/layui/layui.js"></script>
-		<script src="../../res/js/common/parameter.js"></script>
-		<script>
+
+	<!-- 显示表格 -->
+	<script src="../../res/layui/layui.js"></script>
+	<script src="../../res/js/common/parameter.js"></script>
+	<script>
 	
 		
 		    layui.use(['table'], function() {
@@ -299,12 +281,12 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: 'full', //容器高度
-		            url: '../../pmcDetails/findAll.action?pmcId='+pmcId,
+		            url: '../../pmcDetails/findByPmc.action?mrpId='+mrpId+'&pmcId='+pmcId,
 		            page: true,
 		            id: 'demo',
 		            cols: [
 		                [{
-		                    field: 'drugName',
+		                    field: 'drugName',    
 		                    title: '药品名称',
 		                    width: 190
 		                }, { 
@@ -316,7 +298,7 @@
 		                    title: '制造数量',
 		                    width: 150
 		                }, { 
-		                    field: 'hangName',
+		                    field: 'finisded',
 		                    title: '已完成数量',
 		                    width: 160
 		                }, { 
@@ -330,7 +312,7 @@
 		            	var tables=table.cache.demo;
 		            	 $.each(tables,function(i,item){
 		            		 
-		            		 $("#shuju").val($("#shuju").val()+item.drugId+","+item.pdAmount+","+$("#number"+item.pdId).val()+"#");
+		            		 $("#shuju").val($("#shuju").val()+item.drugId+","+item.pdAmount+","+item.finisded+","+$("#number"+item.pdId).val()+"#");
 		            	 })
 		            	
 		            	
@@ -396,7 +378,7 @@
 		        	data=obj.data;
 		        	
 		        	if(obj.checked==true){
-		        		 $("#shuju").val($("#shuju").val()+item.drugId+","+item.pdAmount+","+$("#number"+item.pdId).val()+"#");
+		        		 $("#shuju").val($("#shuju").val()+item.drugId+","+item.pdAmount+","+item.finisded+","+$("#number"+item.pdId).val()+"#");
 		        		 $.each(tables,function(i,item){
 		        			 if(data.pdId==item.pdId){
 		        				 //取输入数量值
@@ -550,13 +532,14 @@
             	
             		$(obj).val(d);
             		 layer.msg("不能大于未完成的数量"); 
+            		
             	}else{
             		 $("#shuju").val("")
             		 layui.use(['table'], function() {
             			 var table=layui.table;
             			 var tables=table.cache.demo;      
 		            	 $.each(tables,function(i,item){
-		            		 $("#shuju").val($("#shuju").val()+item.drugId+","+item.pdAmount+","+$("#number"+item.pdId).val()+"#");
+		            		 $("#shuju").val($("#shuju").val()+item.drugId+","+item.pdAmount+","+item.finisded+","+$("#number"+item.pdId).val()+"#");
 		            			
 		            	 })
             		 });
@@ -586,5 +569,5 @@
 		    
 		    
 		</script>
-	</body>
+</body>
 </html>

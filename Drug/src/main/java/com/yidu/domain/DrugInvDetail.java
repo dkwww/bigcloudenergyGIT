@@ -19,10 +19,12 @@ public class DrugInvDetail {
     
     private  String   drugName;  //药品名称
     
-   private  String  Remarks;   //y备注 
+   private  Integer Remarks;   //y备注 
     
    private  Double  drugPrice;  //药品价格
    
+   
+    private   String  RemarksName;
    
    
    
@@ -30,6 +32,14 @@ public class DrugInvDetail {
    
    
  
+
+	public String getRemarksName() {
+		return RemarksName;
+	}
+
+	public void setRemarksName(String remarksName) {
+		RemarksName = remarksName;
+	}
 
 	public Double getDrugPrice() {
 	return drugPrice;
@@ -47,11 +57,13 @@ public void setDrugName(String drugName) {
 	this.drugName = drugName;
 }
 
-public String getRemarks() {
+ 
+
+	public Integer getRemarks() {
 	return Remarks;
 }
 
-public void setRemarks(String remarks) {
+public void setRemarks(Integer remarks) {
 	Remarks = remarks;
 }
 

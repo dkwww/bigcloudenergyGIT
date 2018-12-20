@@ -8,11 +8,11 @@
     <result column="mrp_optime" jdbcType="TIMESTAMP" property="mrpOptime" />
     <result column="mrp_endtime" jdbcType="TIMESTAMP" property="mrpEndtime" />
     <result column="mrp_plan" jdbcType="INTEGER" property="mrpPlan" />
-    <result column="mrp_rate" jdbcType="DECIMAL" property="mrpRate" />
+    <result column="mrp_rate" jdbcType="VARCHAR" property="mrpRate" />
     <result column="mrp_state" jdbcType="INTEGER" property="mrpState" />
     <result column="mrp_idea" jdbcType="INTEGER" property="mrpIdea" />
     <result column="mrp_amount" jdbcType="INTEGER" property="mrpAmount" />
-       <result column="com_Name" jdbcType="VARCHAR" property="comName" /> 
+     <result column="com_Name" jdbcType="VARCHAR" property="comName" /> 
     <result column="pmc_id" jdbcType="VARCHAR" property="pmcId" /> 
     <result column="isva" jdbcType="VARCHAR" property="isva" />
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
@@ -53,6 +53,19 @@
    		and mrp_plan like CONCAT(CONCAT('%',#{mrpPlan,jdbcType=VARCHAR},'%'))
    	</if>
   </select>
+
+
+
+<update id="Modifyprogress"    parameterType="com.yidu.domain.Mrp"    >
+  UPDATE     drug_mrp     SET    mrp_rate = #{mrpRate,jdbcType=DECIMAL}  WHERE    mrp_id=   #{mrpId,jdbcType=VARCHAR}
+
+</update>
+
+<update id="Modifyprogresss"    parameterType="com.yidu.domain.Mrp"    >
+  UPDATE     drug_mrp     SET     mrp_state=#{mrpState,jdbcType=INTEGER},  mrp_idea=  #{mrpIdea,jdbcType=INTEGER}   WHERE    mrp_id=   #{mrpId,jdbcType=VARCHAR}
+
+</update>
+  
    
   
   
@@ -68,7 +81,7 @@
       optime, oper, sort
       )
     values (#{mrpId,jdbcType=VARCHAR}, #{drugId,jdbcType=VARCHAR}, #{mrpOptime,jdbcType=TIMESTAMP}, 
-      #{mrpPlan,jdbcType=INTEGER}, #{mrpRate,jdbcType=DECIMAL}, #{mrpState,jdbcType=VARCHAR}, 
+      #{mrpPlan,jdbcType=INTEGER}, #{mrpRate,jdbcType=DECIMAL}, #{mrpState,jdbcType=INTEGER}, 
       #{mrpIdea,jdbcType=VARCHAR}, #{mrpAmount,jdbcType=INTEGER}, #{isva,jdbcType=VARCHAR}, 
       #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}
       )

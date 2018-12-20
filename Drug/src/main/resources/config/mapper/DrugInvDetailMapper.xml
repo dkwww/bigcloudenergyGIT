@@ -6,7 +6,7 @@
     <result column="di_id" jdbcType="VARCHAR" property="diId" />
     <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
       <result column="drug_price" jdbcType="DECIMAL" property="drugPrice" />
-     <result column="Remarks" jdbcType="VARCHAR" property="Remarks" />
+     <result column="Remarks" jdbcType="INTEGER" property="Remarks" />
     <result column="di_amount" jdbcType="INTEGER" property="diAmount" />
     <result column="isva" jdbcType="VARCHAR" property="isva" />
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
