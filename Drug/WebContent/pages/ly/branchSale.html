@@ -81,6 +81,23 @@
 		    </div>
 		</div>
 		
+		<div id="detailDiv" style="display: none;">
+			<table id="myTable" class="layui-table"
+			lay-data="{ url:'../../branchSaleDetail/query.action', page:true, id:'cxDetailTable'}"
+			lay-filter="myTableDemo">
+			<thead>
+				<tr>
+					<th lay-data="{field:'bsdId',align:'center',width:250}">零售明细编号</th>
+					<th lay-data="{field:'drugName', align:'center',width:183}">药品名</th>
+					<th lay-data="{field:'bsdAmount', align:'center',width:100}">药品数量</th>
+					<th lay-data="{field:'bsdPrice', align:'center',width:130}">药品单价</th>
+					<th lay-data="{field:'bsdTotal', align:'center',width:130}">小计</th>
+					<th lay-data="{field:'optimestr', align:'center',width:200,sort: true}">操作时间</th>
+				</tr>
+			</thead>
+		</table>
+		</div>
+		
 		<!-- 修改页面 -->
 		<script type="text/html" id="edit-tpl">
 		    <div style="margin:10px">
@@ -153,13 +170,13 @@
 		            id: 'demo',
 		            cols: [
 		                [{checkbox: true,fixed: true},
-		                {field: 'bsId',title: '销售ID', width: 190,align: 'center'},
-		                {field: 'comName',title: '店铺名',width: 185,align: 'center'},
-		                {field: 'menName',title: '会员名',width: 130,align: 'center'},
-		                {field: 'bsAmount',title: '销售总数量',width: 115,align: 'center'},
-		                {field: 'bsPrice',title: '销售总金额',width: 130,align: 'center'},
-		                {field: 'optimeStr',title: '操作时间',width: 220,align: 'center'},
-		                {fixed: 'right',title: '操作',width: 180,align: 'center',toolbar: '#barDemo'}]
+		                {field: 'bsId',title: '销售ID', width: 160,align: 'center'},
+		                {field: 'comName',title: '店铺名',width: 170,align: 'center'},
+		                {field: 'menName',title: '会员名',width: 110,align: 'center'},
+		                {field: 'bsAmount',title: '销售总数量',width: 100,align: 'center'},
+		                {field: 'bsPrice',title: '销售总金额',width: 110,align: 'center'},
+		                {field: 'optimeStr',title: '操作时间',width: 175,align: 'center'},
+		                {fixed: 'right',title: '操作',width: 179.5,align: 'center',toolbar: '#barDemo'}]
 		            ],
 		            done: function(res, curr, count) {
 		                $("[date-fixed='isva']").children().each(function(){
@@ -216,7 +233,27 @@
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		
 		            if (layEvent === 'detail') { //查看
-		                console.log(table.checkStatus('demo'));
+		                layer.open({
+		    				type: 1	 //此处以iframe举例
+		    				,title: '查看详情'
+		    					,area: ['1000px','490px']
+		    				,offset: 'auto'
+		    				,content:$('#detailDiv')
+		    				,success: function(layero){
+		    					table.reload('cxDetailTable', {
+		    						page: {
+		    							curr: 1 //重新从第 1 页开始
+		    						}
+			    					,where: {
+			    						bsId: data.bsId,
+			    					}
+		    					});
+		    				},end : function() {
+		    					//弹框关闭的回调函数
+		    					$("#detailDiv").hide();
+		    				}
+		    			});
+		            
 		            } else if (layEvent === 'del') { //删除
 		                layer.confirm('真的删除行么', function(index) {
 		                	layer.close(index);
@@ -274,6 +311,13 @@
 		                                maxmin: true, //开启最大化最小化按钮
 		                                area: ['900px', '450px'],
 		                                content: 'branchSaleAdd.html'
+		                                ,end:function(){
+		                                	table.reload('demo', {
+		                    					page: {
+		                    						curr: 1 //重新从第 1 页开始
+		                    					}
+		                    				});
+		                                }
 		                            });
 		                });
 		                    

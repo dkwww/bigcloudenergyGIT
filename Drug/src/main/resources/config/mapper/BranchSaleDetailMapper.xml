@@ -149,4 +149,20 @@
       sort = #{sort,jdbcType=VARCHAR}
     where bsd_id = #{bsdId,jdbcType=VARCHAR}
   </update>
+  
+  <select id="query" parameterType="map" resultMap="BaseResultMap">
+  	select * from drug_branch_sale_detail where isva='1'
+  	<if test=" detail.bsId !=null and detail.bsId !='' ">
+  		and bs_id=#{detail.bsId}
+  	</if>
+  	order by sort desc
+  	limit #{page.startRows},#{page.rows}
+  </select>
+  
+  <select id="findCount" parameterType="com.yidu.domain.BranchSaleDetail" resultType="integer">
+  	select count(*) from drug_branch_sale_detail where isva='1'
+  	<if test="bsId !=null and bsId !='' ">
+  		and bs_id=#{bsId}
+  	</if>
+  </select>
 </mapper>

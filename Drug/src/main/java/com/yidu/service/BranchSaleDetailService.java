@@ -1,6 +1,9 @@
 package com.yidu.service;
 
+import java.util.List;
+
 import com.yidu.domain.BranchSaleDetail;
+import com.yidu.util.PageUtil;
 
 /**
  * <p>
@@ -13,5 +16,9 @@ import com.yidu.domain.BranchSaleDetail;
 public interface BranchSaleDetailService  {
 
 	int insertSelective(BranchSaleDetail branchSaleDetail);
+
+	List<BranchSaleDetail> query(PageUtil util, BranchSaleDetail saleDetail);
+
+	int findCount(BranchSaleDetail saleDetail);
 }
 

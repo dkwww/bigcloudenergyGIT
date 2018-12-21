@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import com.yidu.domain.BranchSale;
+import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
 
 /**
@@ -31,4 +32,12 @@ public interface BranchSaleService   {
 	public int findCount(BranchSale branchSale);
 	
 	public int insertSelective(BranchSale branchSale);
+	/**
+	 * 增加到零售明细
+	 * @param sum
+	 * @param menId
+	 * @param comId
+	 * @return
+	 */
+	public Message addSale(String sum, String menId, String comId);
 }

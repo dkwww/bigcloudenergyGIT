@@ -69,6 +69,7 @@ public class Tools extends StringUtils{
 	 * yyyy-MM-dd HH:mm:ss
 	 */
 	public static SimpleDateFormat SDF_TIME = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	public static SimpleDateFormat SDF_TIMES = new SimpleDateFormat("yyyyMMddHHmmss");
 	
 	static Random random = new Random();
 
@@ -173,7 +174,7 @@ public class Tools extends StringUtils{
 	 */
 	public static String getDateOrderNo(){
 		Date date = new Date();
-		String temp = SDF_TIME.format(date);
+		String temp = SDF_TIMES.format(date);
 		temp = temp+getRandomString(10);
 		return temp ;
 	}

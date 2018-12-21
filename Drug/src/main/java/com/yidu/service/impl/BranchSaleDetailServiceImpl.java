@@ -4,6 +4,11 @@ package com.yidu.service.impl;
 import com.yidu.dao.BranchSaleDetailMapper;
 import com.yidu.domain.BranchSaleDetail;
 import com.yidu.service.BranchSaleDetailService;
+import com.yidu.util.PageUtil;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -25,6 +30,19 @@ public class BranchSaleDetailServiceImpl  implements BranchSaleDetailService {
 	@Override
 	public int insertSelective(BranchSaleDetail branchSaleDetail) {
 		return mapper.insertSelective(branchSaleDetail);
+	}
+
+	@Override
+	public List<BranchSaleDetail> query(PageUtil util, BranchSaleDetail saleDetail) {
+		Map<String, Object> map=new HashMap<>();
+		map.put("page", util);
+		map.put("detail", saleDetail);
+		return mapper.query(map);
+	}
+
+	@Override
+	public int findCount(BranchSaleDetail saleDetail) {
+		return mapper.findCount(saleDetail);
 	}
 
 }

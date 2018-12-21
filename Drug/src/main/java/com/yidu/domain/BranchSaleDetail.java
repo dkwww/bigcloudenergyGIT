@@ -19,12 +19,30 @@ public class BranchSaleDetail {
     private String isva;
 
     private Date optime;
+    
+    private String optimestr;
 
     private String oper;
 
     private String sort;
 
-    public String getBsdId() {
+    
+    
+    /**
+	 * @return the optimestr
+	 */
+	public String getOptimestr() {
+		return optimestr;
+	}
+
+	/**
+	 * @param optimestr the optimestr to set
+	 */
+	public void setOptimestr(String optimestr) {
+		this.optimestr = optimestr;
+	}
+
+	public String getBsdId() {
         return bsdId;
     }
 
