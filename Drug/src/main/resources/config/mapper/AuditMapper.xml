@@ -47,14 +47,14 @@
   
   <select id="wholeceo" parameterType="java.util.Map" resultMap="BaseResultMap" >
   	SELECT * FROM drug_audit da,drug_wholesale dw WHERE da.aud_fk_id=dw.whol_id
-	and da.aud_state = 28 OR da.aud_state = 29 OR da.aud_state = 30
+	and da.aud_state in (28,29,30)
   	ORDER BY da.sort DESC 
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
   </select>
   
   <select id="financeo" parameterType="java.util.Map" resultMap="BaseResultMap" >
    	SELECT * FROM drug_audit da,drug_wholesale dw WHERE da.aud_fk_id=dw.whol_id
-	and da.aud_state = 29 OR da.aud_state = 32 OR da.aud_state = 31
+	and da.aud_state in (29,32,31)
   	ORDER BY da.sort DESC 
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
   </select>
