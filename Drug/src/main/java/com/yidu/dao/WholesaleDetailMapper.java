@@ -22,4 +22,6 @@ public interface WholesaleDetailMapper {
     public List<WholesaleDetail> selectdetaiM(Map<String, Object> map);
     
     public int selectCount(Map<String, Object> map);
+    
+    public List<WholesaleDetail> finanAll(String wholId);
 }

@@ -40,4 +40,9 @@ public class WholesaleDetailServiceImpl  implements WholesaleDetailService {
 		return wholeMap.selectdetaiM(map);
 	}
 
+	@Override
+	public List<WholesaleDetail> finanAll(String wholId) {
+		return wholeMap.finanAll(wholId);
+	}
+
 }

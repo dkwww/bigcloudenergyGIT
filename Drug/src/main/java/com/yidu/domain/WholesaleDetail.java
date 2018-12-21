@@ -25,7 +25,17 @@ public class WholesaleDetail {
     
     private String drugName;
     
-    public String getDrugName() {
+    private String comId;
+    
+    public String getComId() {
+		return comId;
+	}
+
+	public void setComId(String comId) {
+		this.comId = comId;
+	}
+
+	public String getDrugName() {
 		return drugName;
 	}
 

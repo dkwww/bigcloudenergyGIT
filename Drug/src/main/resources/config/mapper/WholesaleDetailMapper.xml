@@ -13,6 +13,7 @@
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
     <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
+    <result column="com_id" jdbcType="VARCHAR" property="comId" />
   </resultMap>
   <sql id="Base_Column_List">
     wd_id, whol_id, drug_id, wd_amount, wd_price, wd_total, isva, optime, oper, sort
@@ -27,12 +28,19 @@
    	</if>
   </select>
   
-    <select id="selectCount" parameterType="map" resultType="integer">
+   <select id="selectCount" parameterType="map" resultType="integer">
   	select count(*) from drug_wholesale_detail where 1=1
   	<if test="title != null and title != '' ">
   	and whol_id = #{title}
   	</if>
   </select>
+  
+  <select id="finanAll" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select dwd.*,dw.com_id from drug_wholesale_detail dwd,drug_wholesale dw where 
+  	dwd.whol_id=dw.whol_id 
+  	and	dw.whol_id=#{wholId,jdbcType=VARCHAR}
+  </select>
+  
   
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 

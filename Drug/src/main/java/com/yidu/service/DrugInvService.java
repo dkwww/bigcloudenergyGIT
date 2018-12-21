@@ -25,5 +25,14 @@ public interface DrugInvService  {
 	  * @return
 	  */
 	  int  selectCountBySelective(DrugInve drugInve);
+	  
+	 List<DrugInve> findselect(DrugInve drugInve);
+	 
+	 /**
+	  * 减库存
+	  * @param drugInve
+	  * @return
+	  */
+	 int amountupdate(DrugInve drugInve);
 
 }

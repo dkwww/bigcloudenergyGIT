@@ -30,5 +30,12 @@ public interface DebtyMapper {
     int selectCount(Debty debty);
   
     int DebtyDeleteByPrimaryKeySelective(List<String> ids);
+    
+    /**
+     * 财务审核完成修改金额
+     * @param debty
+     * @return
+     */
+    int moneyupdate(Debty debty);
 }
    

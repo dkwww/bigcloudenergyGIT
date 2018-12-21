@@ -47,4 +47,21 @@ public interface AuditMapper {
 	 * @return
 	 */
 	int selectCount(Audit audit);
+	
+	/**
+     * 显示财务总经理表
+     * @return
+     */
+    public List<Audit> wholeceo(Map<String, Object> map);
+    
+    public int wholeceoupdate(String audId);
+    
+    /**
+     * 显示财务审核表
+     * @return
+     */
+    public List<Audit> financeo(Map<String, Object> map);
+    
+    
+    public int finanupdate(String audId);
 }

@@ -77,4 +77,37 @@ public interface AuditService   {
 	 * @return
 	 */
 	int add(Audit audit);
+	
+	
+	/**
+	 * 显示批发总经理审核
+	 * @param audit
+	 * @param pageUtil
+	 * @return
+	 */
+	public List<Audit> wholeceo(Audit audit,PageUtil pageUtil);
+	
+	/**
+	 * 修改状态为29
+	 * @param audId
+	 * @return
+	 */
+	public int wholeceoupdate(String audId);
+	
+	
+	/**
+	 * 显示批发财务审核
+	 * @param audit
+	 * @param pageUtil
+	 * @return
+	 */
+	public List<Audit> financeo(Audit audit,PageUtil pageUtil);
+	
+	
+	/**
+	 * 修改状态为30
+	 * @param audId
+	 * @return
+	 */
+	public int finanupdate(String audId);
 }

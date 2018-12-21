@@ -55,4 +55,14 @@ public class DrugInvServiceImpl    implements DrugInvService {
 		return  dao.selectCountBySelective(drugInve);
 	}
 
+	@Override
+	public List<DrugInve> findselect(DrugInve drugInve) {
+		return dao.findselect(drugInve);
+	}
+
+	@Override
+	public int amountupdate(DrugInve drugInve) {
+		return dao.amountupdate(drugInve);
+	}
+
 }

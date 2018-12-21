@@ -9,9 +9,9 @@
 		<title>药品管理</title>
 	</head>
 	<body>
-		<select name="comName" lay-filter="mat-type" id="mat-type">
+		<!-- <select name="comName" lay-filter="mat-type" id="mat-type">
 				<option value="">店铺选择</option>
-		</select>
+		</select> -->
 		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
 		  <legend>增加批发订单</legend>
 		</fieldset>
@@ -30,7 +30,7 @@
 			  </thead>
 			</table>
 		</div>
-		<button onclick="okpi()" style="position:absolute;top:55px;left:780px;width:100px;" class="layui-btn layui-btn-sm kit-btn">确认批发</button>
+		<button onclick="okpi()" style="position:absolute;top:38px;left:780px;width:100px;" class="layui-btn layui-btn-sm kit-btn">确认批发</button>
 		<div style="position: relative;display: inline;" id="zong">
 			总金额:<input id="zongjin" style="width:120px;" class="layui-input" type="text" />
 			 总数量:<input id="zongshu" style="width:120px;" class="layui-input" type="text" />
@@ -62,6 +62,14 @@
 			                    <select name="dtId" id="drug-type">
 			                      <option value=""></option>
 			                    </select>
+			                </div>
+		                </div>
+		                <div class="layui-form-item">
+			                <label class="layui-form-label">店铺</label>
+			                <div class="layui-input-block">
+			                     <select name="comId" lay-filter="mat-type" id="mat-type">
+									<option value="">店铺选择</option>
+								</select>
 			                </div>
 		                </div>
 		                <div class="layui-form-item">
@@ -172,13 +180,15 @@
                     	renderForm();
                     }
                  });
-		        
+		        var staticData = null;
 		        $.ajax({ 
 		        	url:'../../company/findAll.action',
                     type:'post',//method请求方式，get或者post
                     cache: false,//同步
                     dataType:'json',//预期服务器返回的数据类型
                     success:function(mes){//res为相应体,function为回调函数
+                    	//增加及修改类型下拉框内的数据
+                    	staticData = mes;
                     	//循环添加类型搜索框内的数据
                     	$.each(mes.data,function(index,item){
                     		$("#mat-type").append("<option value="+item.comId+">"+item.comName+"</option>");

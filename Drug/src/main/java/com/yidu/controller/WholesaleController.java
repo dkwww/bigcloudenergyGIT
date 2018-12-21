@@ -205,6 +205,8 @@ public class WholesaleController {
 		Audit audit=new Audit();
 		audit.setAudFkId(wholesale.getWholId());
 		audit.setAudState("28");
+		audit.setWholAmount(zongshu);
+		audit.setWholPrice(Double.valueOf(zongjin));
 		int audis=audits.addOrUpdate(audit);
 		if(audis>0) {
 			System.out.println("添加审核成功");

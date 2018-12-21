@@ -20,4 +20,11 @@ public interface WholesaleDetailService   {
 	public int selectCount(Map<String, Object> map);
 	
 	public List<WholesaleDetail> selectdetaiM(Map<String, Object> map);
+	
+	/**
+	 * 查询明细的所有
+	 * @param wholId
+	 * @return
+	 */
+	public List<WholesaleDetail> finanAll(String wholId);
 }

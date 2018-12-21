@@ -57,4 +57,11 @@ public interface DebtyService   {
      * @return
      */
     int updateByPrimaryKeySelective(Debty record);
+    
+    /**
+     * 审核修改金额
+     * @param debty
+     * @return
+     */
+    int moneyupdate(Debty debty);
 }

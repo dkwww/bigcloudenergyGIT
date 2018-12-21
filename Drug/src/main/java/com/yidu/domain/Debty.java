@@ -4,12 +4,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Debty {
-	  private String strTime;
+	private String strTime;
     private String debId;
 
     private String comId;
 
-    private BigDecimal debMoney;
+    private Double debMoney;
 
     private Date optime;
 
@@ -44,11 +44,11 @@ public class Debty {
         this.comId = comId == null ? null : comId.trim();
     }
 
-    public BigDecimal getDebMoney() {
+    public Double getDebMoney() {
         return debMoney;
     }
 
-    public void setDebMoney(BigDecimal debMoney) {
+    public void setDebMoney(Double debMoney) {
         this.debMoney = debMoney;
     }
 

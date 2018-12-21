@@ -29,5 +29,14 @@ public interface DrugInveMapper {
     	 * @return
     	 */
     	
-    	 int  selectCountBySelective(DrugInve  record);
+    int  selectCountBySelective(DrugInve  record);
+    
+    public List<DrugInve> findselect(DrugInve drugInve);
+    
+    /**
+     * 减库存
+     * @param drugInve
+     * @return
+     */
+    public int amountupdate(DrugInve drugInve);
 }

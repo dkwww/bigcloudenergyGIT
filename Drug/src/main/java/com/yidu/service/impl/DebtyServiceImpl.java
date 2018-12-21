@@ -120,5 +120,9 @@ public class DebtyServiceImpl   implements DebtyService {
 		
 		return debtyMapper.insertSelective(record);
 	}
+	@Override
+	public int moneyupdate(Debty debty) {
+		return debtyMapper.moneyupdate(debty);
+	}
 
 }

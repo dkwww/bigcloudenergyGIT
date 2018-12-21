@@ -8,7 +8,6 @@
      <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
       <result column="dt_name" jdbcType="VARCHAR" property="typeName" />
     <result column="di_amount" jdbcType="INTEGER" property="diAmount" />
-    <result column="di_amount" jdbcType="INTEGER" property="diAmount" />
     <result column="di_comtype" jdbcType="VARCHAR" property="diComtype" />
     <result column="isva" jdbcType="VARCHAR" property="isva" />
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
@@ -18,6 +17,16 @@
   <sql id="Base_Column_List">
     di_id, com_id, drug_id, di_amount, di_comtype, isva, optime, oper, sort
   </sql>
+  
+  <select id="findselect" parameterType="com.yidu.domain.DrugInve" resultMap="BaseResultMap">
+  	SELECT dd.drug_name,dc.com_name,di.* FROM drug_drug dd,drug_drug_inv di,drug_company dc WHERE di.drug_id=dd.drug_id
+	AND dc.com_id=di.com_id
+	AND dc.com_id=#{comId,jdbcType=VARCHAR} AND dd.drug_id=#{drugId,jdbcType=VARCHAR}
+  </select>
+  
+  <update id="amountupdate" parameterType="com.yidu.domain.DrugInve">
+  		update drug_drug_inv set di_amount=di_amount-#{diAmount,jdbcType=VARCHAR} where di_Id=#{diId,jdbcType=VARCHAR}
+  </update>
   
   <select id="qureyAll"  parameterType="java.util.Map"   resultMap="BaseResultMap">
     SELECT  * FROM   drug_drug_inv  a  , drug_drug b   ,drug_drug_type c  WHERE  a.drug_id =b.drug_id  AND  b.dt_id =c.dt_id 

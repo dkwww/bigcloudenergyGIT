@@ -32,5 +32,4 @@ public interface DrugService   {
 	List<Drug> showAudit(Drug record, PageUtil pageUtil);
 	//获得审核列表总行数
 	int findAuditCount(Drug record);
-
 }

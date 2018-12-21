@@ -7,8 +7,10 @@ public class Drug {
     private String drugId;
 
     private String dtId;
+    
+    private String comId;
 
-    private String drugName;
+	private String drugName;
 
     private String drugUnit;
 
@@ -34,6 +36,24 @@ public class Drug {
     
     private String status;
     
+    private Integer diAmount; 
+    
+    
+    public Integer getDiAmount() {
+		return diAmount;
+	}
+
+	public void setDiAmount(Integer diAmount) {
+		this.diAmount = diAmount;
+	}
+
+	public String getComId() {
+		return comId;
+	}
+
+	public void setComId(String comId) {
+		this.comId = comId;
+	}
     public String getDrugId() {
         return drugId;
     }

@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.yidu.domain.Debty">
     <id column="deb_id" jdbcType="VARCHAR" property="debId" />
     <result column="com_id" jdbcType="VARCHAR" property="comId" />
-    <result column="deb_money" jdbcType="DECIMAL" property="debMoney" />
+    <result column="deb_money" jdbcType="NUMERIC" property="debMoney" />
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
     <result column="isva" jdbcType="VARCHAR" property="isva" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
@@ -48,7 +48,7 @@
     insert into drug_debty (deb_id, com_id, deb_money, 
       optime, isva, oper, 
       sort)
-    values (#{debId,jdbcType=VARCHAR}, #{comId,jdbcType=VARCHAR}, #{debMoney,jdbcType=DECIMAL}, 
+    values (#{debId,jdbcType=VARCHAR}, #{comId,jdbcType=VARCHAR}, #{debMoney,jdbcType=NUMERIC}, 
       #{optime,jdbcType=TIMESTAMP}, #{isva,jdbcType=VARCHAR}, #{oper,jdbcType=VARCHAR}, 
       #{sort,jdbcType=VARCHAR})
   </insert>
@@ -85,7 +85,7 @@
         #{comId,jdbcType=VARCHAR},
       </if>
       <if test="debMoney != null">
-        #{debMoney,jdbcType=DECIMAL},
+        #{debMoney,jdbcType=NUMERIC},
       </if>
       <if test="optime != null">
         #{optime,jdbcType=TIMESTAMP},
@@ -108,7 +108,7 @@
         com_id = #{comId,jdbcType=VARCHAR},
       </if>
       <if test="debMoney != null">
-        deb_money = #{debMoney,jdbcType=DECIMAL},
+        deb_money = #{debMoney,jdbcType=NUMERIC},
       </if>
       <if test="optime != null">
         optime = #{optime,jdbcType=TIMESTAMP},
@@ -129,11 +129,15 @@
   <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Debty">
     update drug_debty
     set com_id = #{comId,jdbcType=VARCHAR},
-      deb_money = #{debMoney,jdbcType=DECIMAL},
+      deb_money = #{debMoney,jdbcType=NUMERIC},
       optime = #{optime,jdbcType=TIMESTAMP},
       isva = #{isva,jdbcType=VARCHAR},
       oper = #{oper,jdbcType=VARCHAR},
       sort = #{sort,jdbcType=VARCHAR}
     where deb_id = #{debId,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="moneyupdate" parameterType="com.yidu.domain.Debty">
+  		update drug_debty set deb_money=deb_money+#{debMoney,jdbcType=NUMERIC} where com_id=#{comID,jdbcType=VARCHAR}
   </update>
 </mapper>
