@@ -4,6 +4,7 @@ import com.yidu.dao.QcMapper;
 import com.yidu.domain.Qc;
 import com.yidu.service.QcService;
 import com.yidu.util.PageUtil;
+import com.yidu.util.TimeUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +34,11 @@ public class QcServiceImpl   implements QcService {
 		 map.put("qc", qc);
 		 map.put("pageUtil", pageUtil);
 		 List<Qc> list = dao.selectqctype(map);
-		 
+		 for (Qc qc2 : list) {
+			 System.out.println("+++++++++++我只知道这东西很重要+++++++++++"+qc.getPmcId());
+			 System.out.println("+++++++++++我只知道这东西也很重要+++++++++++"+qc2.getQcOptime());
+			 qc2.setQcOptiemName(TimeUtil.dateToString(qc2.getQcOptime(), "yyyy-dd-mm"));
+		} 
 		return list;
 	}
 
@@ -41,6 +46,12 @@ public class QcServiceImpl   implements QcService {
 	public int selectCountBySelective(Qc qc) {
 		 
 		return dao.selectCountBySelective(qc);
+	}
+
+	@Override
+	public int add(Qc qc) {
+		 
+		return dao.insert(qc);
 	}
 
 }

@@ -7,7 +7,7 @@
     <result column="qdet_fk_id" jdbcType="VARCHAR" property="qdetFkId" />
     <result column="qdet_amount" jdbcType="INTEGER" property="qdetAmount" />
     <result column="qdet_fail" jdbcType="INTEGER" property="qdetFail" />
-    <result column="qdet_rate" jdbcType="DECIMAL" property="qdetRate" />
+    <result column="qdet_rate" jdbcType="VARCHAR" property="qdetRate" />
     <result column="qdet_optime" jdbcType="TIMESTAMP" property="qdetOptime" />
     <result column="isva" jdbcType="VARCHAR" property="isva" />
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
@@ -34,7 +34,7 @@
       qdet_optime, isva, optime, 
       oper, sort)
     values (#{qdetId,jdbcType=VARCHAR}, #{qcId,jdbcType=VARCHAR}, #{qdetFkId,jdbcType=VARCHAR}, 
-      #{qdetAmount,jdbcType=INTEGER}, #{qdetFail,jdbcType=INTEGER}, #{qdetRate,jdbcType=DECIMAL}, 
+      #{qdetAmount,jdbcType=INTEGER}, #{qdetFail,jdbcType=INTEGER}, #{qdetRate,jdbcType=VARCHAR}, 
       #{qdetOptime,jdbcType=TIMESTAMP}, #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, 
       #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR})
   </insert>
@@ -92,7 +92,7 @@
         #{qdetFail,jdbcType=INTEGER},
       </if>
       <if test="qdetRate != null">
-        #{qdetRate,jdbcType=DECIMAL},
+        #{qdetRate,jdbcType=VARCHAR},
       </if>
       <if test="qdetOptime != null">
         #{qdetOptime,jdbcType=TIMESTAMP},
@@ -127,7 +127,7 @@
         qdet_fail = #{qdetFail,jdbcType=INTEGER},
       </if>
       <if test="qdetRate != null">
-        qdet_rate = #{qdetRate,jdbcType=DECIMAL},
+        qdet_rate = #{qdetRate,jdbcType=VARCHAR},
       </if>
       <if test="qdetOptime != null">
         qdet_optime = #{qdetOptime,jdbcType=TIMESTAMP},
@@ -153,7 +153,7 @@
       qdet_fk_id = #{qdetFkId,jdbcType=VARCHAR},
       qdet_amount = #{qdetAmount,jdbcType=INTEGER},
       qdet_fail = #{qdetFail,jdbcType=INTEGER},
-      qdet_rate = #{qdetRate,jdbcType=DECIMAL},
+      qdet_rate = #{qdetRate,jdbcType=VARCHAR},
       qdet_optime = #{qdetOptime,jdbcType=TIMESTAMP},
       isva = #{isva,jdbcType=VARCHAR},
       optime = #{optime,jdbcType=TIMESTAMP},

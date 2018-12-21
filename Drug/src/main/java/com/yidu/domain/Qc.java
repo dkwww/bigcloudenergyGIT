@@ -25,12 +25,22 @@ public class Qc {
     private Date optime;
 
     private String oper;
-
+ 
     private String sort;
+    
+    private String   qcOptiemName;
     
  
 
-    public String getQcId() {
+    public String getQcOptiemName() {
+		return qcOptiemName;
+	}
+
+	public void setQcOptiemName(String qcOptiemName) {
+		this.qcOptiemName = qcOptiemName;
+	}
+
+	public String getQcId() {
         return qcId;
     }
 

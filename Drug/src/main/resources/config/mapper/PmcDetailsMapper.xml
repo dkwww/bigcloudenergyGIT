@@ -54,6 +54,9 @@
     </if>
   </select>
   
+  
+  
+  
   <select id="selectCountBySelective" parameterType="com.yidu.domain.PmcDetails"  resultType="int">
     select 
     count(pd.pd_id) 

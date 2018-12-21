@@ -19,6 +19,10 @@ public interface QcService  {
 	List<Qc>  selectqctype(Qc  qc,PageUtil pageUtil);
 	
 	
-	int selectCountBySelective(Qc  qc);
+	int  selectCountBySelective(Qc  qc);
+	
+	int  add(Qc  qc);
+	
+	
 
 }

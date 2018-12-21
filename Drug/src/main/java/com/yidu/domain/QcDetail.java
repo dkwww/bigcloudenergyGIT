@@ -14,7 +14,7 @@ public class QcDetail {
 
     private Integer qdetFail;
 
-    private BigDecimal qdetRate;
+    private String qdetRate;
 
     private Date qdetOptime;
 
@@ -66,15 +66,17 @@ public class QcDetail {
         this.qdetFail = qdetFail;
     }
 
-    public BigDecimal getQdetRate() {
-        return qdetRate;
-    }
+     
 
-    public void setQdetRate(BigDecimal qdetRate) {
-        this.qdetRate = qdetRate;
-    }
+    public String getQdetRate() {
+		return qdetRate;
+	}
 
-    public Date getQdetOptime() {
+	public void setQdetRate(String qdetRate) {
+		this.qdetRate = qdetRate;
+	}
+
+	public Date getQdetOptime() {
         return qdetOptime;
     }
 

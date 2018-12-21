@@ -241,7 +241,7 @@
 		            id: 'demo',
 		            cols: [
 		                [{
-		                    field: 'mrpId',
+		                    field: 'pmcId',
 		                    title: '质检ID',
 		                    width: 190
 		                },{
@@ -257,7 +257,7 @@
 		                    title: '通过率',
 		                    width: 160
 		                }, { 
-		                    field: 'qcOptime',
+		                    field: 'qcOptiemName',
 		                    title: '质检时间',
 		                    width: 160
 		                }, { 
@@ -375,12 +375,13 @@
 		                    classifies: staticData.classifies
 		                };
 		                laytpl($('#edit-tpl').html()).render(d, function(html) {
-		                	var  mrpId=d.user.mrpId;
-		                	alert(mrpId);
+		                	var  pmcId=d.user.pmcId;
+		                	var  qcId=d.user.qcId;
+		               
 		                	var index = layer.open({
 		          				  type: 2,
-		          				  title: '制作药品',
-		          				  content: '../quality/DrugqualityList.html?id='+mrpId,
+		          				  title: '质检药品',
+		          				  content: '../quality/DrugqualityList.html?id='+pmcId,
 		          				  area: ['800px', '30px']
 		          				  //maxmin: true
 		          				});
