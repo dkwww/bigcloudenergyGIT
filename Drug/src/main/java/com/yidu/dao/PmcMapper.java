@@ -26,5 +26,7 @@ public interface PmcMapper {
 
 	int check(String pmcId);
 
-	int isCheck(String pmcId);
+	int isCheck(String pmcId);  
+	
+	Pmc selectById(String pmcId);
 }

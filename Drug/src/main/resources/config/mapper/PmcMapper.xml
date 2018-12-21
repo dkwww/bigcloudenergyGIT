@@ -73,6 +73,13 @@
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
   </select>
   
+  
+  
+   
+  
+  
+  
+  
   <select id="selectCountBySelective" parameterType="com.yidu.domain.Pmc" resultType="int">
     select 
     count(pmc_id) 
@@ -105,6 +112,11 @@
    		and pmc_state = #{pmcState,jdbcType=VARCHAR}
    	</if>
   </select>
+  
+  <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select  *  from drug_pmc   where pmc_id = #{pmcId,jdbcType=VARCHAR}
+  </select>
+  
   
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 

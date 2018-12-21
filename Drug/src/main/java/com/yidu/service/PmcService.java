@@ -26,5 +26,7 @@ public interface PmcService  {
 	int check(String pmcId);
 
 	int isChack(String pmcId);
+	
+	Pmc selectById(String pmcId);
 
 }

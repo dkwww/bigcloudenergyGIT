@@ -100,4 +100,10 @@ public class PmcServiceImpl  implements PmcService {
 		return pmcMapper.isCheck(pmcId);
 	}
 
+	@Override
+	public Pmc selectById(String pmcId) {
+		 
+		return pmcMapper.selectById(pmcId) ;
+	}
+
 }
