@@ -3,10 +3,10 @@
 <mapper namespace="com.yidu.dao.QcMapper">
   <resultMap id="BaseResultMap" type="com.yidu.domain.Qc">
     <id column="qc_id" jdbcType="VARCHAR" property="qcId" />
-    <result column="com_id" jdbcType="VARCHAR" property="comId" />
+    <result column="mrp_id" jdbcType="VARCHAR" property="mrpId" />
     <result column="qc_amount" jdbcType="INTEGER" property="qcAmount" />
     <result column="qc_fail" jdbcType="INTEGER" property="qcFail" />
-    <result column="qc_rate" jdbcType="DECIMAL" property="qcRate" />
+    <result column="qc_rate" jdbcType="VARCHAR" property="qcRate" />
     <result column="qc_optime" jdbcType="TIMESTAMP" property="qcOptime" />
     <result column="qc_conpany" jdbcType="VARCHAR" property="qcConpany" />
     <result column="qc_type" jdbcType="INTEGER" property="qcType" />
@@ -16,7 +16,7 @@
     <result column="sort" jdbcType="VARCHAR" property="sort" />
   </resultMap>
   <sql id="Base_Column_List">
-    qc_id, com_id, qc_amount, qc_fail, qc_rate, qc_optime, qc_conpany, qc_type, isva, 
+    qc_id, mrp_id, qc_amount, qc_fail, qc_rate, qc_optime, qc_conpany, qc_type, isva, 
     optime, oper, sort
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -50,12 +50,12 @@
     where qc_id = #{qcId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.yidu.domain.Qc">
-    insert into drug_qc (qc_id, com_id, qc_amount, 
+    insert into drug_qc (qc_id, mrp_id, qc_amount, 
       qc_fail, qc_rate, qc_optime, 
       qc_conpany, qc_type, isva, 
       optime, oper, sort
       )
-    values (#{qcId,jdbcType=VARCHAR}, #{comId,jdbcType=VARCHAR}, #{qcAmount,jdbcType=INTEGER}, 
+    values (#{qcId,jdbcType=VARCHAR}, #{mrpId,jdbcType=VARCHAR}, #{qcAmount,jdbcType=INTEGER}, 
       #{qcFail,jdbcType=INTEGER}, #{qcRate,jdbcType=DECIMAL}, #{qcOptime,jdbcType=TIMESTAMP}, 
       #{qcConpany,jdbcType=VARCHAR}, #{qcType,jdbcType=VARCHAR}, #{isva,jdbcType=VARCHAR}, 
       #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}
@@ -67,8 +67,8 @@
       <if test="qcId != null">
         qc_id,
       </if>
-      <if test="comId != null">
-        com_id,
+      <if test="mrpId != null">
+        mrp_id,
       </if>
       <if test="qcAmount != null">
         qc_amount,
@@ -105,8 +105,8 @@
       <if test="qcId != null">
         #{qcId,jdbcType=VARCHAR},
       </if>
-      <if test="comId != null">
-        #{comId,jdbcType=VARCHAR},
+      <if test="mrpId != null">
+        #{mrpId,jdbcType=VARCHAR},
       </if>
       <if test="qcAmount != null">
         #{qcAmount,jdbcType=INTEGER},
@@ -143,8 +143,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Qc">
     update drug_qc
     <set>
-      <if test="comId != null">
-        com_id = #{comId,jdbcType=VARCHAR},
+      <if test="mrpId != null">
+        mrp_id = #{mrpId,jdbcType=VARCHAR},
       </if>
       <if test="qcAmount != null">
         qc_amount = #{qcAmount,jdbcType=INTEGER},
@@ -181,7 +181,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Qc">
     update drug_qc
-    set com_id = #{comId,jdbcType=VARCHAR},
+    set mrp_id = #{mrpId,jdbcType=VARCHAR},
       qc_amount = #{qcAmount,jdbcType=INTEGER},
       qc_fail = #{qcFail,jdbcType=INTEGER},
       qc_rate = #{qcRate,jdbcType=DECIMAL},

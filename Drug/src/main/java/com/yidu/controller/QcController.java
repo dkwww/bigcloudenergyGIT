@@ -6,11 +6,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yidu.domain.Qc;
 import com.yidu.service.QcService;
+import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -49,6 +51,27 @@ public class QcController {
 			map.put("data", list);
 			return  map;
 	} 
+	@RequestMapping("/add")
+	@ResponseBody
+	public   Message    add(Qc  qc) {
+		Message message  =new   Message();
+		String    string= UUID.randomUUID().toString().replaceAll("-", "");
+		qc.setQcId(string);
+		String   pmcId="d6484a14498b47f78cccc1242f5eab6ewerdfc2d23e78fc9446cf96af250812f923a992";
+		qc.setPmcId(pmcId);
+		qc.setQcAmount(600);
+		qc.setQcRate("50");
+		
+		int  rows = 1;
+		if (rows>0) {
+			message.setStatus(1);
+		}else {
+			message.setStatus(0);
+		}
+		
+		return  message;
+	}
+	
 	
 	
 	

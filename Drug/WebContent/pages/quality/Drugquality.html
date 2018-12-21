@@ -241,13 +241,10 @@
 		            id: 'demo',
 		            cols: [
 		                [{
-		                    checkbox: true,
-		                    fixed: true
-		                }, {
-		                    field: 'qcId',
+		                    field: 'mrpId',
 		                    title: '质检ID',
 		                    width: 190
-		                }, {
+		                },{
 		                    field: 'qcAmount',
 		                    title: '质检总数',
 		                    width: 150
@@ -255,7 +252,7 @@
 		                    field: 'qcFail',
 		                    title: '未通过数',
 		                    width: 150
-		                }, { 
+		                },{ 
 		                    field: 'qcRate',
 		                    title: '通过率',
 		                    width: 160
@@ -328,6 +325,32 @@
 		            });
 		            return false;
 		        });
+		        
+		        
+		      //药品增加、修改、删除、批量删除 都是用的这一个方法
+			    function update(url,data){
+			    	var cls = false;
+			    	$.ajax({
+			    		url: url,
+	                    type:'post',//method请求方式，get或者post
+	                    async:false,//同步
+	                    dataType:'json',//预期服务器返回的数据类型
+	                    data: JSON.stringify(data),//表格数据序列化
+	                    contentType: "application/json; charset=utf-8",
+	                    success:function(mes){//res为相应体,function为回调函数
+	                    	$(".layui-laypage-btn")[0].click();//当前表格刷新
+	                        if(mes.status==1){ 
+	                        	cls = true;//有弹出层时是关闭弹出层 false不关闭
+		                        $("#res").click();//调用重置按钮将表单数据清空
+	                        }
+	                        layer.msg(mes.msg);
+	                    },
+	                   	error:function(){layer.alert('数据异常，请稍后重试！！！',{icon:5});}
+	                 });
+			    	return cls;
+			    }
+		        
+		        
 		        //监听工具条
 		        table.on('tool(demo)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
 		            var data = obj.data; //获得当前行数据
@@ -338,7 +361,10 @@
 		                console.log(table.checkStatus('demo'));
 		            } else if (layEvent === 'del') { //删除
 		                layer.confirm('真的提交质检么', function(index) {
-		                    obj.del(); //删除对应行（tr）的DOM结构
+		                	
+		                	
+		                	
+		                   
 		                    layer.close(index);
 		                    //向服务端发送删除指令
 		                });
@@ -349,12 +375,12 @@
 		                    classifies: staticData.classifies
 		                };
 		                laytpl($('#edit-tpl').html()).render(d, function(html) {
-		                	var  qcId=d.user.qcId;
-		                	alert(qcId);
+		                	var  mrpId=d.user.mrpId;
+		                	alert(mrpId);
 		                	var index = layer.open({
 		          				  type: 2,
 		          				  title: '制作药品',
-		          				  content: '../quality/DrugqualityList.html?id='+qcId,
+		          				  content: '../quality/DrugqualityList.html?id='+mrpId,
 		          				  area: ['800px', '30px']
 		          				  //maxmin: true
 		          				});

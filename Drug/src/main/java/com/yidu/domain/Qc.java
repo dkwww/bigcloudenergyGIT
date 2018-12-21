@@ -6,13 +6,13 @@ import java.util.Date;
 public class Qc {
     private String qcId;
 
-    private String comId;
+    private String pmcId;
 
     private Integer qcAmount;
 
     private Integer qcFail;
 
-    private BigDecimal qcRate;
+    private String qcRate;
 
     private Date qcOptime;
 
@@ -38,15 +38,18 @@ public class Qc {
         this.qcId = qcId == null ? null : qcId.trim();
     }
 
-    public String getComId() {
-        return comId;
-    }
+   
 
-    public void setComId(String comId) {
-        this.comId = comId == null ? null : comId.trim();
-    }
+     
+	public String getPmcId() {
+		return pmcId;
+	}
 
-    public Integer getQcAmount() {
+	public void setPmcId(String pmcId) {
+		this.pmcId = pmcId;
+	}
+
+	public Integer getQcAmount() {
         return qcAmount;
     }
 
@@ -62,15 +65,17 @@ public class Qc {
         this.qcFail = qcFail;
     }
 
-    public BigDecimal getQcRate() {
-        return qcRate;
-    }
+     
 
-    public void setQcRate(BigDecimal qcRate) {
-        this.qcRate = qcRate;
-    }
+    public String getQcRate() {
+		return qcRate;
+	}
 
-    public Date getQcOptime() {
+	public void setQcRate(String qcRate) {
+		this.qcRate = qcRate;
+	}
+
+	public Date getQcOptime() {
         return qcOptime;
     }
 

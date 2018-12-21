@@ -122,7 +122,8 @@ public class MrpDetailsController {
 		if (Percentage>0.1) {
 			 mrpService.Modifyprogress(mrp);
 		} 
-		if(Integer.valueOf(progress)==100.00) {
+		Integer   stt= Integer.valueOf((int) 100.00);
+		if(Integer.valueOf(progress)==stt) {
 			mrp.setMrpId(mrpDetails.getMrpId());
 			mrp.setMrpState(1);
 			mrp.setMrpIdea(1);
