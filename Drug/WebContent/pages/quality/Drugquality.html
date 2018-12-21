@@ -241,6 +241,10 @@
 		            id: 'demo',
 		            cols: [
 		                [{
+		                    field: 'qcId',
+		                    title: '质检ID',
+		                    width: 190
+		                },{
 		                    field: 'pmcId',
 		                    title: '质检ID',
 		                    width: 190
@@ -377,11 +381,11 @@
 		                laytpl($('#edit-tpl').html()).render(d, function(html) {
 		                	var  pmcId=d.user.pmcId;
 		                	var  qcId=d.user.qcId;
-		               
+		              			 
 		                	var index = layer.open({
 		          				  type: 2,
 		          				  title: '质检药品',
-		          				  content: '../quality/DrugqualityList.html?id='+pmcId,
+		          				  content: '../quality/DrugqualityList.html?id='+pmcId+'&qcId='+qcId,
 		          				  area: ['800px', '30px']
 		          				  //maxmin: true
 		          				});

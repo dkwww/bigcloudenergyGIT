@@ -70,9 +70,9 @@ public class QcController {
 	@ResponseBody
 	public   Message    add(Qc  qc) {
 		String    string= UUID.randomUUID().toString().replaceAll("-", "");
-		String    strings= UUID.randomUUID().toString().replaceAll("-", "");
+		System.out.println(string); 
 		//分页
-		 
+		Date   date =new Date();
 		Message message  =new   Message();
 		Pmc pmc = pmcService.selectById(qc.getPmcId());
 		PmcDetails  pmcDetails=new   PmcDetails();
@@ -80,13 +80,17 @@ public class QcController {
 		pmcDetails.setPmcId(qc.getPmcId());
 		List<PmcDetails> list = pmcDetailsService.findAll(pmcDetails, null);
 		for (PmcDetails pmcDetails2 : list) {
+			String    strings= UUID.randomUUID().toString().replaceAll("-", "");
 			QcDetail  qcDetail=  new   QcDetail();
 			qcDetail.setQcId(string);
+			qcDetail.setQdetFkId(pmcDetails2.getDrugId());
 			qcDetail.setQdetId(strings);
 			qcDetail.setQdetAmount(pmcDetails2.getPdAmount());
 			qcDetail.setQdetFail(0);
 			qcDetail.setQdetRate("0%");
-			
+			qcDetail.setQdetOptime(date);
+			qcDetailService.insert(qcDetail);
+			System.out.println("增加完成");
 		} 
 		qc.setQcId(string);
 		qc.setPmcId(pmc.getPmcId());
@@ -95,7 +99,7 @@ public class QcController {
 		qc.setQcFail(0);
 		qc.setQcConpany("目前不知道是啥工厂");
 		qc.setQcType(0); 
-		Date   date =new Date();
+		
 		qc.setOptime(date);
 		int rows= qcService.add(qc); 
 		if (rows>0) {

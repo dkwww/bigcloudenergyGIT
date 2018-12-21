@@ -46,6 +46,11 @@
 				  });
 				});
 </script>
+<script type="text/html" id="input">
+	<div class="layui-inline">
+		<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="qdetAmount"   value="0"  autocomplete="off"    id="number{{d.qdetId}}" onkeyup="Pressdown(this);">
+	</div>
+	</script>
 	
 	
 	<body>
@@ -53,6 +58,7 @@
 		<div class="kit-table">
 		    <form class="layui-form" lay-filter="kit-search-form">
 						<!-- 左上角的两个按钮 -->
+	<input type="button" id="tijiao"   	class="layui-btn layui-btn-normal"     value="保存" >
 		        <div class="kit-table-header">
 		            <div class="kit-search-inputs">
 		                <div class="kit-search-keyword">
@@ -224,8 +230,9 @@
 		<script>
 		    layui.use(['table'], function() { 
 		    	
-		    	var   mrpId=getParameter("id");
-		    	alert(mrpId);
+		    	 
+		    	var   qcId=getParameter("qcId");
+		     
 		        var table = layui.table,
 		            $ = layui.jquery,
 		            layer = layui.layer,
@@ -234,22 +241,23 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: 'full', //容器高度
-		            url: '../../qc/qureyAll.action',
+		            url: '../../qcDetail/qureyById.action?qcId='+qcId,
 		            page: true,
 		            id: 'demo',
 		            cols: [
 		                [{
-		                    checkbox: true,
-		                    fixed: true
-		                }, {
 		                    field: 'qcId',
 		                    title: '质检ID',
 		                    width: 190
 		                }, {
-		                    field: 'qcAmount',
-		                    title: '质检总数',
+		                    field: 'drugName',
+		                    title: '药品名称',
 		                    width: 150
-		                }, {
+		                },{
+		                    field: 'qdetAmount',
+		                    title: '质检数量',
+		                    width: 190
+		                },{
 		                    field: 'qcFail',
 		                    title: '未通过数',
 		                    templet:'#input' ,
@@ -259,19 +267,9 @@
 		                    title: '通过率',
 		                    width: 160
 		                }, { 
-		                    field: 'qcOptime',
+		                    field: 'qdetOptime',
 		                    title: '质检时间',
 		                    width: 160
-		                }, { 
-		                    field: 'qcConpany',
-		                    title: '质检厂家',
-		                    width: 160
-		                }, {
-		                    fixed: 'right',
-		                    title: '操作',
-		                    width: 180,
-		                    align: 'center',
-		                    toolbar: '#barDemo'
 		                }]
 		            ],
 		            done: function(res, curr, count) {
