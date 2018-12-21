@@ -212,5 +212,31 @@ public class DrugController {
 		map.put("data", list);
 		return map;
 	}
+	
+	/**
+	 * 显示审核列表
+	 * @param record
+	 * @param page
+	 * @param limit
+	 * @return
+	 */
+	@RequestMapping("/showAudit")
+	@ResponseBody
+	public Map<String,Object> showAudit(Drug record,Integer page,Integer limit) {
+		PageUtil pageUtil = new PageUtil();
+		pageUtil.setCurPage(page);
+		pageUtil.setRows(limit);
+		
+		List<Drug> list = drugService.showAudit(record,pageUtil);
+		int rows = drugService.findAuditCount(record);
+		
+		@SuppressWarnings("unchecked")
+		Map<String,Object> map = new HashedMap();
+		map.put("code", 0);
+		map.put("msg", "");
+		map.put("count", rows);
+		map.put("data", list);
+		return map;
+	}
 }
 

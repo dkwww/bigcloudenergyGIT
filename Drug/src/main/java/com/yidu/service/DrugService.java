@@ -28,5 +28,9 @@ public interface DrugService   {
 	int checked(String drugId);
 	//查询所有附加库存
 	List<Drug> selectBySelectives(Drug record, PageUtil pageUtil);
+	//显示审核列表
+	List<Drug> showAudit(Drug record, PageUtil pageUtil);
+	//获得审核列表总行数
+	int findAuditCount(Drug record);
 
 }

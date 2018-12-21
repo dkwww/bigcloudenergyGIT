@@ -32,6 +32,8 @@ public class Drug {
     
     private Double priceMax;
     
+    private String status;
+    
     public String getDrugId() {
         return drugId;
     }
@@ -142,6 +144,14 @@ public class Drug {
 
 	public void setPriceMax(Double priceMax) {
 		this.priceMax = priceMax;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
     
 }

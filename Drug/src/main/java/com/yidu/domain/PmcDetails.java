@@ -27,6 +27,8 @@ public class PmcDetails {
     
     private String drugUnit;
     
+    private String drugProp;
+    
     private Integer finisded;
 
 	public String getPdId() {
@@ -123,6 +125,14 @@ public class PmcDetails {
 
 	public void setDrugUnit(String drugUnit) {
 		 this.drugUnit = drugUnit == null ? null : drugUnit.trim();
+	}
+
+	public String getDrugProp() {
+		return drugProp;
+	}
+
+	public void setDrugProp(String drugProp) {
+		this.drugProp = drugProp;
 	}
 
 	public Integer getFinisded() {

@@ -26,7 +26,7 @@
 					</div>
 					<div class="layui-card-body">
 						<div id="toolbar">
-							<button type="button" class="layui-btn layui-btn-sm add" title="筛选原材料">
+							<button type="button" class="layui-btn layui-btn-sm add remove" title="筛选原材料">
 								<i class="layui-icon">&#xe608;</i> 添加原材料
 							</button>
 						</div>
@@ -34,13 +34,13 @@
 							<table id="dataTable1" lay-filter="dataTable" class="layui-hide"></table>
 						</div>
 						<div id="action" class="text-center">
-							<button type="button" name="btnSave" class="layui-btn layui-btn-sm" data-type="save"><i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i> 保存</button>
-							<button type="close" name="close" data-type="close" class="layui-btn layui-btn-sm layui-btn-primary"><i class="fa fa-times-circle-o" aria-hidden="true"></i> 关闭</button>
+							<button type="button" name="btnSave" class="layui-btn layui-btn-sm remove" data-type="save"><i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i> 保存</button>
+							<button type="close" name="close" data-type="close" class="layui-btn layui-btn-sm layui-btn-primary remove"><i class="fa fa-times-circle-o" aria-hidden="true"></i> 关闭</button>
 						</div>
 					</div>
 				</div>
 
-				<div class="card-down css-transition">
+				<div class="card-down css-transition remove">
 					<div class="layui-card-header layui-form" style="padding: 8px 0px;">
 						<!-- 搜索扩展工具条 -->
 						<form class="layui-form" lay-filter="kit-search-form">

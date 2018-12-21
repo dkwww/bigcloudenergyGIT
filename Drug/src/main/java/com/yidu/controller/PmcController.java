@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yidu.domain.Audit;
 import com.yidu.domain.Pmc;
+import com.yidu.service.AuditService;
 import com.yidu.service.PmcService;
 import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
@@ -31,6 +33,8 @@ public class PmcController {
 
 	@Resource
 	private PmcService pmcService;
+	@Resource
+	private AuditService auditService;
 	
 	@RequestMapping("/showList")
 	@ResponseBody
@@ -84,6 +88,45 @@ public class PmcController {
 			mes.setMsg("数据异常，请稍后重试！");
 		}
 		return mes;
+	}
+	
+	/**
+	 * 检查生产计划信息是否完善
+	 * @param drugId
+	 * @return
+	 */
+	@RequestMapping("/check")
+	@ResponseBody
+	public Message check(String pmcId) {
+		Message mes = new Message();
+		int rows = pmcService.check(pmcId);
+		if (rows>0) {
+			Audit audit = new Audit();
+			audit.setAudFkId(pmcId);
+			audit.setAudState("0");// 总经理审核 （0 未处理，-1未通过，1通过）
+			int count = auditService.addOrUpdate(audit);
+			if (count>0) {
+				mes.setStatus(1);
+				mes.setMsg("提交成功，待审核！");
+			} else {
+				mes.setStatus(0);
+				mes.setMsg("数据异常请稍后重试！");
+			}
+		} else {
+			mes.setStatus(0);
+			mes.setMsg("请完善计划药品信息！");
+		}
+		return mes;
+	}
+	
+	/**
+	 * 检查是否已经提交审核
+	 * @return
+	 */
+	@RequestMapping("/isCheck")
+	@ResponseBody
+	public int isCheck(String pmcId) {
+		return pmcService.isChack(pmcId);
 	}
 }
 

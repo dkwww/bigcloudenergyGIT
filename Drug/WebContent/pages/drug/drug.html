@@ -3,10 +3,10 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>药品管理</title>
 		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
-		<title>药品管理</title>
 	</head>
 	<body>
 		<div class="kit-table">
@@ -256,13 +256,12 @@
 			//弹出层下标
 			var layerIndex1,layerIndex2,editIndex1,editIndex2;
 			//显示表格数据
-		    layui.use(['table','upload','laydate'], function() {
+		    layui.use(['table','upload'], function() {
 		        var table = layui.table,
 		            $ = layui.jquery,
 		            layer = layui.layer,
 		            form = layui.form,
-		            laytpl = layui.laytpl,
-		            laydate = layui.laydate; 
+		            laytpl = layui.laytpl;
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '449px', //容器高度
@@ -555,7 +554,7 @@
 					  //渲染类型搜索框内的下拉框
 					  renderForm();
                     }
-                 });
+                });
 		  	}
 		  	
 		    //药品增加、修改、删除、批量删除 都是用的这一个方法

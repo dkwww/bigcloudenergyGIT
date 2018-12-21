@@ -31,7 +31,7 @@
 								<button type="button" class="layui-btn layui-btn-sm add" title="筛选原材料">
 									<i class="layui-icon">&#xe608;</i> 添加原材料
 								</button>
-								<div class="layui-inline" style="margin-left: 20px;">总数量：<span style="color: #0000A0">222</span></div>
+								<div class="layui-inline" style="margin-left: 20px;">总数量：<span style="color: #0000A0" id="allAmount">0</span></div>
 						  	</div>
 							<!-- <div class="layui-input-inline" style="width: 140px;">
 								<input type="text" name="drugName" placeholder="搜索关键字.." autocomplete="off" class="layui-input" style="height: 30px;">
@@ -189,7 +189,6 @@
 							{field: 'drugName',title: '药品名称（name）'},
 							{field: 'pdAmount',title: '数量（amount）',width: 200,edit: 'text',sort: true},
 							{field: 'drugUnit',title: '单位',width: 85,align: 'center'},
-							{field: 'drugPrice',title: '单价（price）元',width: 150,sort: true},
 							{field: 'drugProp',title: '种类（type）',width: 150},
 							{field: 'tempId',title: '操作',width: '15%',
 								templet: function(d) {
@@ -200,19 +199,33 @@
 						]
 					],
 					done: function(res, curr, count) {
+						//计算数量
+						function count(o){
+							var amount = o.val() =='' ? 0 : parseInt(o.val());
+							o.parents('tr').siblings().find('td[data-field="pdAmount"]').each(function(){
+								amount += parseInt($(this).text());
+							});
+							$("#allAmount").text(amount);
+						}
+						
 						$("[data-field = 'pdAmount']").not(":first").each(function(){
+							$("#allAmount").text(parseInt($("#allAmount").text())+parseInt($(this).text()));
 							$(this).css({
 								"color": "#0000A0"
 							}).on('focus', '.layui-table-edit', function(){
 								if ($(this).prop('maxlength') == -1) $(this).prop('maxlength', 5);
 							}).on('blur', '.layui-table-edit', function(){
-								if ($(this).val().length < 1) $(this).val(1);
+								var o = $(this);
+								if (o.val().length < 1) o.val(1);
+								count(o);
 							}).on('keyup', '.layui-table-edit', function() {
 								var o = $(this);
 								o.val(o.val().replace(/[^0-9]*$/, ""));//正整数
 								o.val(o.val().replace(/^[0]+[0-9]*$/gi, ""));//第一位不能为零
+								count(o);
 							});
 					  	});
+						
 						$("[data-field = 'drugProp']").children().each(function(){
 						    if($(this).text() == '1'){
 						    	$(this).text("处方药");
@@ -227,9 +240,9 @@
 				var active = {
 					save: function() {
 	                    layui.each(newData, function(index, item) {
-	                    	addOrUpdate(JSON.stringify(item));
+	                    	addOrUpdate(item);
 	                    });
-	                    closeLayer();
+	                    save({"pmcId": pmcId,"pmcAmount": $("#allAmount").text()});
 					},
 					confirm: function() {
 						newData = [];
@@ -281,12 +294,12 @@
 												if (row.drugId != viewObj.data[j].drugId) {
 													arr3.push(viewObj.data[j]);
 												} else {
-													addOrUpdate(JSON.stringify({"pdId":viewObj.data[j].pdId,"isva":0}));
+													addOrUpdate({"pdId":viewObj.data[j].pdId,"isva":0});
 												}
 											}
 											viewObj.data = arr3;
 										} else {
-											removeOne(row.matId);
+											removeOne(row.drugId);
 										}
 										newData.splice(i, 1);
 										break;
@@ -471,10 +484,29 @@
 					var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 					parent.layer.close(index); //再执行关闭   
 				}
+				function save(data){
+					$.ajax({ 
+    		        	url: '../../../../pmc/addOrUpdate.action',
+    		        	data: JSON.stringify(data),
+    		        	cache: false,//同步
+                        type: 'post',//method请求方式，get或者post
+                        contentType: "application/json; charset=utf-8",
+                        dataType: 'json',
+                        success:function(mes){
+                        	layer.msg(mes.msg);
+                        	if (mes.status==1) {
+                        		setTimeout(function () {
+                        			closeLayer();
+                            		window.parent.location.reload();
+                            	},1000);
+                        	}
+                        }
+                    });
+				}
 				function addOrUpdate(data){
 					$.ajax({ 
     		        	url: '../../../../pmcDetails/addOrUpdate.action',
-    		        	data: data,
+    		        	data: JSON.stringify(data),
     		        	cache: false,//同步
                         type: 'post',//method请求方式，get或者post
                         contentType: "application/json; charset=utf-8",
@@ -500,13 +532,7 @@
 				
 				//窗口自适应
 				function autoHeight(tableId) {
-					var h = document.body.clientHeight && document.documentElement.clientHeight - 175; //窗口高度
-					//监听改变窗口大小
-					window.onresize = function() {
-						h = document.body.clientHeight && document.documentElement.clientHeight - 175; //窗口高度
-						location = location;
-					}
-					return h;
+					return document.body.clientHeight && document.documentElement.clientHeight - 175; //窗口高度
 				}
 				
 				//移除数组内重复的元素

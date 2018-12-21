@@ -33,9 +33,11 @@
     <result column="start_times" jdbcType="TIMESTAMP" property="startTimes" />
     <result column="end_times" jdbcType="TIMESTAMP" property="endTimes" />
   </resultMap>
+  
   <sql id="Base_Column_List">
     pmc_id, pmc_name, pmc_amount, pmc_start, pmc_end, pmc_state, com_name, isva, optime, oper, sort
   </sql>
+  
   <select id="selectBySelective" parameterType="java.util.Map" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -103,12 +105,28 @@
    		and pmc_state = #{pmcState,jdbcType=VARCHAR}
    	</if>
   </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from drug_pmc
     where pmc_id = #{pmcId,jdbcType=VARCHAR}
   </select>
+  
+  <select id="check" parameterType="java.lang.String" resultType="int">
+    select
+    count(dp.pmc_id)
+    from drug_pmc dp,drug_pmc_details pd 
+    where dp.pmc_id = pd.pmc_id and dp.pmc_id = #{pmcId,jdbcType=VARCHAR} and dp.isva = '1' and pd.isva = '1'
+  </select>
+  
+  <select id="isCheck" parameterType="java.lang.String" resultType="int">
+    select
+    count(dp.pmc_id)
+    from drug_pmc dp,drug_audit da 
+    where dp.pmc_id = da.aud_fk_id and dp.pmc_id = #{pmcId,jdbcType=VARCHAR} and dp.isva = '1' and da.isva = '1'
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_pmc
     where pmc_id = #{pmcId,jdbcType=VARCHAR}

@@ -75,4 +75,17 @@ public class DrugServiceImpl implements DrugService {
 		map.put("pageUtil", pageUtil);
 		return drugMapper.selectBySelectives(map);
 	}
+
+	@Override
+	public List<Drug> showAudit(Drug record, PageUtil pageUtil) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("record", record);
+		map.put("pageUtil", pageUtil);
+		return drugMapper.selectByAudit(map);
+	}
+
+	@Override
+	public int findAuditCount(Drug record) {
+		return drugMapper.selectAuditCount(record);
+	}
 }

@@ -3,10 +3,10 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>生产计划</title>
 		<link rel="stylesheet" href="../../../res/layui/css/layui.css" media="all">
 		<link rel="stylesheet" href="../../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../../res/layui-config/css/app.css" media="all">
-		<title>药品管理</title>
     </script>
 	</head>
 	<body>
@@ -66,11 +66,11 @@
 		                    <div class="layui-inline">
 		                        <label class="layui-form-label">数量</label>
 		                        <div class="layui-input-block">
-			                        <div class="layui-input-inline">
+			                        <div class="layui-input-inline" style="width: 40%;">
 			                            <input type="text" name="minAmount" autocomplete="off" class="layui-input" maxlength="9" onKeyUp="amount(this)">
 			                        </div>
 			                        <div class="layui-form-mid">-</div>
-			                        <div class="layui-input-inline">
+			                        <div class="layui-input-inline" style="width: 40%;">
 			                            <input type="text" name="maxAmount" autocomplete="off" class="layui-input" maxlength="9" onKeyUp="amount(this)">
 			                        </div>
 		                        </div>
@@ -125,6 +125,7 @@
 		        <table id="demo" lay-filter="demo"></table>
 		        <script type="text/html" id="barDemo">
 		            <button class="layui-btn layui-btn-xs" lay-event="detail">配置药品</button>
+					<button class="layui-btn layui-btn-xs" lay-event="check">提交审核</button>
 		            <button class="layui-btn layui-btn-xs" lay-event="edit">编辑</button>
 		            <button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button>
 		        </script>
@@ -155,7 +156,7 @@
 			//弹出层下标
 			var editIndex;
 			//显示表格数据
-		    layui.use(['table','upload'], function() {
+		    layui.use(['table','laydate'], function() {
 		        var table = layui.table,
 		            $ = layui.jquery,
 		            layer = layui.layer,
@@ -180,6 +181,14 @@
 		                {fixed: 'right',title: '操作',width: 280,align: 'center',toolbar: '#barDemo'}]
 		            ],
 		            done: function(res, curr, count) {
+		            	var tableElem = this.elem.next('.layui-table-view');
+		            	layui.each(res.data,function(index,item){
+		            		$.post("../../../pmc/isCheck.action",{"pmcId":item.pmcId},function(mes){
+		            			if (mes>0) {
+		            				tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=check],button[lay-event=edit]').addClass('layui-btn-disabled').attr('disabled',true);
+		                    	}
+		            		},"json");
+		            	});
 		                $("[data-field = 'pmcState']").children().each(function(){
 						    if($(this).text() == '1'){
 						    	$(this).text("已完成");
@@ -212,18 +221,30 @@
 		            var layEvent = obj.event; //获得 lay-event 对应的值
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		
-		            if (layEvent === 'detail') { //查看
+		            if (layEvent === 'detail') { //配置药品
 		            	maxlayer(data.pmcId,data.pmcName);
-		            } else if (layEvent === 'del') { //删除
+		            } else if (layEvent === 'check') { //提交审核
+		            	$.ajax({ 
+		            		url:"../../../pmc/check.action",
+		            		data:{"pmcId":data.pmcId},
+		                    type:'post',//method请求方式，get或者post
+		                    async:false,//同步
+		                    dataType:'json',//预期服务器返回的数据类型
+		                    success:function(mes){//res为相应体,function为回调函数
+		                    	layer.msg(mes.msg);
+		                    	if (mes.status==1) tableIns.reload();
+		                    }
+		                 });
+		            } else if (layEvent === 'edit') { //编辑
+		                var d = {
+			                	rowdata: data
+			                };
+			            editLayer1(d);
+			        } else if (layEvent === 'del') { //删除
 		                layer.confirm('真的删除行么', function(index) {
 		                	layer.close(index);
 		                    update("../../../pmc/addOrUpdate.action",{"pmcId":data.pmcId,"isva":"0"});
 		                });
-		            } else if (layEvent === 'edit') { //编辑
-		                var d = {
-		                	rowdata: data
-		                };
-		                editLayer1(d);
 		            }
 		        });
 		        
@@ -284,8 +305,7 @@
 				  type: 2,
 				  title: '药品配置',
 				  content: '../../../pages/plan/pmc/details/index.html?id='+id+"&name="+name,
-				  area: ['800px', '430px'],
-				  maxmin: true
+				  area: ['800px', '430px']
 				});
 				layer.full(index);
 			}

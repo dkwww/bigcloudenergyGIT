@@ -23,4 +23,8 @@ public interface PmcMapper {
 	int selectCountBySelective(Pmc record);
 	
 	int bulkDeleteByPrimaryKeySelective(List<String> ids);
+
+	int check(String pmcId);
+
+	int isCheck(String pmcId);
 }

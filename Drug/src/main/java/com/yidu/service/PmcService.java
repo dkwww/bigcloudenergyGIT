@@ -23,4 +23,8 @@ public interface PmcService  {
 
 	int bulkUpdate(List<String> ids);
 
+	int check(String pmcId);
+
+	int isChack(String pmcId);
+
 }

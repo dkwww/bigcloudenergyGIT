@@ -24,6 +24,7 @@
     <result column="sort" jdbcType="VARCHAR" property="sort" />
     <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
     <result column="drug_unit" jdbcType="VARCHAR" property="drugUnit" />
+    <result column="drug_prop" jdbcType="VARCHAR" property="drugProp" />
   </resultMap>
   
   <sql id="Base_Column_List">
@@ -37,7 +38,7 @@
   <select id="selectBySelective" parameterType="java.util.Map" resultMap="BaseResultMapOne">
     select 
     <include refid="Base_Column_List_One" />
-    from drug_pmc_details pd,drug_pmc dp,drug_drug dd where pd.pmc_id = dp.pmc_id and pd.drug_id = dd.drug_id 
+    from drug_pmc_details pd,drug_pmc dp,drug_drug dd where pd.pmc_id = dp.pmc_id and pd.drug_id = dd.drug_id and pd.isva = '1' 
     <if test="record.pmcId !=null and record.pmcId !='' ">
     	and pd.pmc_id = #{record.pmcId,jdbcType=VARCHAR}
     </if>
@@ -54,7 +55,7 @@
   <select id="selectCountBySelective" parameterType="com.yidu.domain.PmcDetails"  resultType="int">
     select 
     count(pd.pd_id) 
-    from drug_pmc_details pd,drug_pmc dp,drug_drug dd where pd.pmc_id = dp.pmc_id and pd.drug_id = dd.drug_id 
+    from drug_pmc_details pd,drug_pmc dp,drug_drug dd where pd.pmc_id = dp.pmc_id and pd.drug_id = dd.drug_id and pd.isva = '1' 
     <if test="pmcId !=null and pmcId !='' ">
     	and pd.pmc_id = #{pmcName,jdbcType=VARCHAR}
     </if>

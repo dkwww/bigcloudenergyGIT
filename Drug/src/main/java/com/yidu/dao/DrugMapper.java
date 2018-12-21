@@ -29,4 +29,8 @@ public interface DrugMapper {
 	int checked(String drugId);
 	
 	List<Drug> selectBySelectives(Map<String, Object> map);
+
+	List<Drug> selectByAudit(Map<String, Object> map);
+
+	int selectAuditCount(Drug record);
 }

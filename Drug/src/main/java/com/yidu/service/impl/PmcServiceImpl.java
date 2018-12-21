@@ -90,4 +90,14 @@ public class PmcServiceImpl  implements PmcService {
 		return pmcMapper.bulkDeleteByPrimaryKeySelective(ids);
 	}
 
+	@Override
+	public int check(String pmcId) {
+		return pmcMapper.check(pmcId);
+	}
+
+	@Override
+	public int isChack(String pmcId) {
+		return pmcMapper.isCheck(pmcId);
+	}
+
 }
