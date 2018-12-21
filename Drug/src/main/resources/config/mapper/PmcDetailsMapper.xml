@@ -49,7 +49,9 @@
     	and dd.drug_name like CONCAT('%',#{record.drugName,jdbcType=VARCHAR},'%')
     </if>
     order by (dd.sort+0) desc 
-   	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
+    <if test="pageUtil !=null">
+   		limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
+    </if>
   </select>
   
   <select id="selectCountBySelective" parameterType="com.yidu.domain.PmcDetails"  resultType="int">
