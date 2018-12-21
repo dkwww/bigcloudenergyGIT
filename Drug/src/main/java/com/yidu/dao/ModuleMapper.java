@@ -25,4 +25,6 @@ public interface ModuleMapper {
     int queryCount(Module module);
     List<Module> queryId();
     List<Module> findByModule(String adminId);
+
+	List<Module> findByZiModule(String modeId);
 }

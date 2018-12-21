@@ -74,7 +74,10 @@
   	  WHERE ad.admin_id = ar.admin_id AND 
 	  ar.role_id = ro.role_id AND 
 	  ro.role_id = mr.role_id AND 
-	  mr.mode_id = mo.mode_id AND ad.admin_id=#{adminId,jdbcType=VARCHAR}
+	  mr.mode_id = mo.mode_id AND ad.admin_id=#{adminId,jdbcType=VARCHAR} and mo.dru_mode_id IS NULL
+  </select>
+  <select id="findByZiModule" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	  SELECT * FROM drug_module WHERE dru_mode_id = #{modeId,jdbcType=VARCHAR}
   </select>
   <select id="selectList" resultMap="BaseResultMap2">
   	select * from drug_module

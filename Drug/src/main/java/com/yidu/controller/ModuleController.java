@@ -92,5 +92,10 @@ public class ModuleController {
 	public List<Module> findByModule(String adminId){
 		return moduService.findByModule(adminId);
 	}
+	@RequestMapping("findByZiModule")
+	@ResponseBody
+	public List<Module> findByZiModule(String modeId){
+		return moduService.findByZiModule(modeId);
+	}
 }
 

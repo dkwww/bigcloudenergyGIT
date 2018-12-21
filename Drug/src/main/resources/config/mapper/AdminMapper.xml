@@ -48,7 +48,7 @@
 	<select id="findByRole" parameterType="java.lang.String" resultMap="BaseResultMap2">
 		SELECT role.* FROM drug_admin admin,drug_admin_role role WHERE 
 		admin.admin_id = role.admin_id AND  
-		admin.admin_id = #{adminId,jdbcType=VARCHAR};
+		admin.admin_id = #{adminId,jdbcType=VARCHAR}
 	</select>
 	
 	<delete id="deleteById" parameterType="java.lang.String">

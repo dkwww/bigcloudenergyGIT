@@ -68,4 +68,9 @@ public class ModuleServiceImpl  implements ModuleService {
 	public List<Module> findByModule(String adminId) {
 		return modumapper.findByModule(adminId);
 	}
+
+	@Override
+	public List<Module> findByZiModule(String modeId) {
+		return modumapper.findByZiModule(modeId);
+	}
 }
