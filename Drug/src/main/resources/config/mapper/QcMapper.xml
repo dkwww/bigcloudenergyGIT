@@ -14,9 +14,10 @@
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
+    <result column="buy_amount" jdbcType="VARCHAR" property="buyAmount" />
   </resultMap>
   <sql id="Base_Column_List">
-    qc_id, pmc_id, qc_amount, qc_fail, qc_rate, qc_optime, qc_conpany, qc_type, isva, 
+    qc_id, mrp_id, qc_amount, qc_fail, qc_rate, qc_optime, qc_conpany, qc_type, isva, 
     optime, oper, sort
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -36,6 +37,8 @@
   </select>
   
   
+  
+  
     <select id="selectCountBySelective" parameterType="com.yidu.domain.Qc" resultType="int">
 	    SELECT  COUNT(*)  FROM    drug_qc  where    qc_type = 0  
 	    <if test="qcConpany != null and qcConpany != ''">
@@ -43,6 +46,15 @@
 	   	</if>
   </select>
    
+   
+   <select id="showList" parameterType="map" resultMap="BaseResultMap">
+  	SELECT * FROM drug_qc a,drug_buy b WHERE a.pmc_id=b.buy_id
+  </select>
+  
+  
+  <select id="selectCount" parameterType="com.yidu.domain.Qc" resultType="int">
+  	SELECT count(*) FROM drug_qc a,drug_buy b WHERE a.pmc_id=b.buy_id
+  </select>
   
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
@@ -68,7 +80,7 @@
         qc_id,
       </if>
       <if test="pmcId != null">
-        pmc_id,
+        mrp_id,
       </if>
       <if test="qcAmount != null">
         qc_amount,
@@ -106,7 +118,7 @@
         #{qcId,jdbcType=VARCHAR},
       </if>
       <if test="pmcId != null">
-        #{pmcId,jdbcType=VARCHAR},
+        #{mrpId,jdbcType=VARCHAR},
       </if>
       <if test="qcAmount != null">
         #{qcAmount,jdbcType=INTEGER},
@@ -181,7 +193,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Qc">
     update drug_qc
-    set pmc_id = #{pmcId,jdbcType=VARCHAR},
+    set mrp_id = #{mrpId,jdbcType=VARCHAR},
       qc_amount = #{qcAmount,jdbcType=INTEGER},
       qc_fail = #{qcFail,jdbcType=INTEGER},
       qc_rate = #{qcRate,jdbcType=DECIMAL},

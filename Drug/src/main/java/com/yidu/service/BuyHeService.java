@@ -64,4 +64,6 @@ public interface BuyHeService   {
 	 */
 	int update(Buy buy);
 	
+	
+	
 }

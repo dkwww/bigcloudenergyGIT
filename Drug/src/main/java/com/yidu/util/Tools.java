@@ -70,7 +70,6 @@ public class Tools extends StringUtils{
 	 */
 	public static SimpleDateFormat SDF_TIME = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	public static SimpleDateFormat SDF_TIMES = new SimpleDateFormat("yyyyMMddHHmmss");
-	
 	static Random random = new Random();
 
 	static char[] char_random = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '2', '3', '4', '5', '6', '7', '8', '9', '0' };

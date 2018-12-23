@@ -67,4 +67,10 @@ public class BuyHeDetailServiceImpl  implements BuyHeDetailService {
 		return dao.deleteByPrimaryKeys(buyId);
 	}
 
+	@Override
+	public List<BuyDetail> findBuyId(String buyId) {
+		return dao.findBuyId(buyId);
+	}
+	
+
 }

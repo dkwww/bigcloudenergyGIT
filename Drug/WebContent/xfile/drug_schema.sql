@@ -567,7 +567,7 @@ alter table drug_provider comment '原料供应商';
 create table drug_qc
 (
    qc_id                varchar(100) not null comment '原材料质检编号',
-   com_id               varchar(100) comment '店铺编号',
+   pmc_id               varchar(100) comment '业务id',
    qc_amount            int(10) comment '质检总数',
    qc_fail              int(10) comment '未通过数',
    qc_rate              numeric(5,2) comment '总通过率',

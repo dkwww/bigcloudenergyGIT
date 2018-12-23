@@ -10,11 +10,11 @@ public class QcDetail {
 
     private String qdetFkId;
 
-    private Integer qdetAmount;
+    private Integer qdetAmount;			//数量
 
-    private Integer qdetFail;
+    private Integer qdetFail;			//未通过数
 
-    private String qdetRate;
+    private String qdetRate;			//通过率
 
     private Date qdetOptime;
 
@@ -24,23 +24,9 @@ public class QcDetail {
 
     private String oper;
 
-    private String sort; 
-    
-    
-    private   String  drugName;
-    
-    
-    
+    private String sort;
 
-    public String getDrugName() {
-		return drugName;
-	}
-
-	public void setDrugName(String drugName) {
-		this.drugName = drugName;
-	}
-
-	public String getQdetId() {
+    public String getQdetId() {
         return qdetId;
     }
 
@@ -55,20 +41,16 @@ public class QcDetail {
     public void setQcId(String qcId) {
         this.qcId = qcId == null ? null : qcId.trim();
     }
-    
-    
-    
 
-     
     public String getQdetFkId() {
-		return qdetFkId;
-	}
+        return qdetFkId;
+    }
 
-	public void setQdetFkId(String qdetFkId) {
-		this.qdetFkId = qdetFkId;
-	}
+    public void setQdetFkId(String qdetFkId) {
+        this.qdetFkId = qdetFkId == null ? null : qdetFkId.trim();
+    }
 
-	public Integer getQdetAmount() {
+    public Integer getQdetAmount() {
         return qdetAmount;
     }
 

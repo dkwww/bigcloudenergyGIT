@@ -69,7 +69,11 @@ public class MaterialController {
 	@RequestMapping("addorUpdate")
 	@ResponseBody
 	public Message addorUpdate(@RequestBody Material mat) {
+		
+		
 		matservice.addorUpdate(mat);
+		
+		
 		Message me=new Message();
 		me.setStatus(1);
 		me.setMsg("操作成功");

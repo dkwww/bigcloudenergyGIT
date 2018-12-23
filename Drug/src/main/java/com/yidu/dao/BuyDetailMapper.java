@@ -50,4 +50,14 @@ public interface BuyDetailMapper {
     
     
     int deleteByPrimaryKeys(String buyId);
+    
+    /**
+     * 根据id查询所有
+     * @param deta
+     * @author 邓康威
+     * @return
+     */
+    List<BuyDetail> showListIds(Map<String,Object> map);
+    
+	List<BuyDetail> findBuyId(String buyId);
 }

@@ -22,5 +22,21 @@ public interface QcMapper {
     List<Qc>  selectqctype(Map<String, Object> map);
     
     int selectCountBySelective(Qc record);
+    
+    /**
+     * 材料查询所有
+     * @param map
+     * @author 邓康威
+     * @return
+     */
+    List<Qc>  showList(Map<String, Object> map);
+    
+    /**
+     * 查看总行数
+     * @param qc
+     * @author 邓康威
+     * @return
+     */
+    int selectCount(Qc qc);
 }
 

@@ -97,27 +97,13 @@
 		                    </select>
 		                </div>
 		            </div>
-					<div class="layui-form-item">
-		                <label class="layui-form-label">是否有效</label>
-		                <div class="layui-input-block">
-		                    {{# var woman = d.rowdata.isva === 0?'checked':'';}} {{# var man = d.rowdata.isva === 1?'checked':'';}}
-		                    <input type="radio" name="isva" value="1" title="是" {{man}} />
-		                    <input type="radio" name="isva" value="0" title="否" {{woman}} />
-		                </div>
-		            </div>
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">药材名称</label>
 		                <div class="layui-input-block">
 		                    <input type="text" name="matName" required lay-verify="required" value="{{d.rowdata.matName}}" placeholder="请输入药材名称" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
-					<div class="layui-form-item">
-		                <label class="layui-form-label">数量</label>
-		                <div class="layui-input-block">
-		                    <input type="text" name="matAmount" required lay-verify="required" value="{{d.rowdata.matAmount}}" placeholder="请输入数量" autocomplete="off" class="layui-input">
-		                </div>
-		            </div>
-					
+						
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">单价</label>
 		                <div class="layui-input-block">

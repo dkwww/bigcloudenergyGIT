@@ -114,4 +114,13 @@
       sort = #{sort,jdbcType=VARCHAR}
     where mi_id = #{miId,jdbcType=VARCHAR}
   </update>
+  
+  <select id="showList" parameterType="map" resultMap="BaseResultMap">
+  	select * from drug_mat_inv
+  </select>
+  
+  
+  <select id="selectCount" parameterType="com.yidu.domain.MatInv" resultType="int">
+  	select count(*) from drug_mat_inv
+  </select>
 </mapper>

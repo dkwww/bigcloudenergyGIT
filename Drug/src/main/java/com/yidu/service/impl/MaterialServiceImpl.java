@@ -46,6 +46,8 @@ public class MaterialServiceImpl   implements MaterialService {
 		}else {
 			String uuid=UUID.randomUUID().toString().replaceAll("-", "");
 			mat.setMatId(uuid);
+			mat.setMatAmount(0);
+			mat.setIsva("1");
 			dao.insert(mat);
 		}
 		return rows;

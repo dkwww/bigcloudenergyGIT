@@ -1,6 +1,9 @@
 package com.yidu.service;
 
- 
+import java.util.List;
+
+import com.yidu.domain.MatInv;
+import com.yidu.util.PageUtil;
 
 /**
  * <p>
@@ -12,4 +15,20 @@ package com.yidu.service;
  */
 public interface MatInvService  {
 
+	
+	/**
+	 * 查询所有
+	 * @param matinv
+	 * @return
+	 */
+	List<MatInv> showList(MatInv matinv,PageUtil page);
+	
+	/**
+	 * 查询总行数
+	 * @param matinv
+	 * @return
+	 */
+	int selectCount(MatInv matinv);
+
+	
 }

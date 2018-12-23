@@ -35,5 +35,8 @@ public interface BuyHeDetailService  {
 	int add(BuyDetail deta);
 	
 	int deleteDetail(String buyId);
+
+	List<BuyDetail> findBuyId(String buyId);
+	
 	
 }

@@ -53,10 +53,33 @@ public class Buy {
     
     private String audIdea;					//审核意见说明
     
+    private String buySubmission;			//提交状态
+    
+    private String buySubmissions;			//提交状态
     
     
     
     
+    
+    
+    
+    
+
+	public String getBuySubmissions() {
+		return buySubmissions;
+	}
+
+	public void setBuySubmissions(String buySubmissions) {
+		this.buySubmissions = buySubmissions;
+	}
+
+	public String getBuySubmission() {
+		return buySubmission;
+	}
+
+	public void setBuySubmission(String buySubmission) {
+		this.buySubmission = buySubmission;
+	}
 
 	public String getAudIdea() {
 		return audIdea;

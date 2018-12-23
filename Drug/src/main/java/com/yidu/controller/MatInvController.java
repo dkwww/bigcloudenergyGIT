@@ -2,6 +2,17 @@ package com.yidu.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.yidu.domain.MatInv;
+import com.yidu.service.MatInvService;
+import com.yidu.util.PageUtil;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 
@@ -16,6 +27,30 @@ import org.springframework.stereotype.Controller;
 @Controller
 @RequestMapping("/matInv")
 public class MatInvController {
-
+	
+	@Resource
+	private MatInvService matinvservice;
+	
+	@RequestMapping("showList")
+	@ResponseBody
+	public Map<String, Object> showList(MatInv matinv,Integer page,Integer limit){
+		PageUtil PageUtil=new PageUtil();
+		if(page!=null && limit!=null) {
+			PageUtil.setCurPage(page);
+			PageUtil.setRows(limit);
+		}
+		
+		List<MatInv> list=matinvservice.showList(matinv, PageUtil);
+		int rows=matinvservice.selectCount(matinv);
+		
+		Map<String, Object> map=new HashMap<>();
+		map.put("code", 0);
+		map.put("msg", "");
+		map.put("count", rows);
+		map.put("data", list);
+		
+		return null;
+		
+	}
 }
 

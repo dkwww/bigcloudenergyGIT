@@ -16,9 +16,7 @@ public interface QcDetailMapper {
 
     int updateByPrimaryKeySelective(QcDetail record);
 
-    int updateByPrimaryKey(QcDetail record);  
+    int updateByPrimaryKey(QcDetail record);
     
-    List<QcDetail>  selectbyId(Map<String, Object>  map); 
-    
-    int  selectbycount(QcDetail record);
+    List<QcDetail> findById(Map<String, Object> map);
 }

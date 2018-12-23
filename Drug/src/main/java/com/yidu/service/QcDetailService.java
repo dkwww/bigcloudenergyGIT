@@ -3,7 +3,6 @@ package com.yidu.service;
 import java.util.List;
 
 import com.yidu.domain.QcDetail;
-import com.yidu.util.PageUtil;
 
 /**
  * <p>
@@ -15,9 +14,17 @@ import com.yidu.util.PageUtil;
  */
 public interface QcDetailService   {
 	
-	int  insert  (QcDetail  qcDetail);
 	
-	List<QcDetail>  selectbyId(QcDetail record ,PageUtil   pageUtil);
+	/**
+	 * 增加
+	 * @param qcdetail
+	 * @author	邓康威
+	 * @return
+	 */
+	int add(QcDetail qcdetail);
+
+	List<QcDetail> findById(QcDetail qcdetail);
 	
-	 int  selectbycount(QcDetail record); 
+	
+	
 }

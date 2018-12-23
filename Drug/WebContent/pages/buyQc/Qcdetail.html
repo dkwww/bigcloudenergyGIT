@@ -6,19 +6,21 @@
 		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
-		<title>采购增加页面(原材料)</title>
+		<title>质检明细</title>
     </script>
 	</head>
 	
+	
+	
 	<script type="text/html" id="input">
 	<div class="layui-inline">
-		<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="matAmount"  autocomplete="off"  value="{{d.matAmount}}" id="number{{d.matId}}" onkeyup="Pressdown(this);">
+		<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="qcFail" value="0"  autocomplete="off" id="number{{d.qdetId}}" onkeyup="Pressdown(this)">
 	</div>
 	</script>
 	
 	<script type="text/html" id="inputss">
 	<div class="layui-inline">
-		<input class="layui-input layui-disabled"  readonly="readonly"  value="0" maxlength="9" style="border:none;padding-bottom:8px;" name="bdetTotal" id="price{{d.matId}}" autocomplete="off"">
+		<input class="layui-input layui-disabled"  readonly="readonly" name="qdetRate" value="0"  maxlength="6" style="border:none;padding-bottom:8px;" id="price{{d.qdetId}}" autocomplete="off">
 	</div>
 	</script>
 	
@@ -27,43 +29,30 @@
 			<input type="text" id="shuju" style="width: 100%">
 		</div>
 		<div class="kit-table">
-				<!-- 左上角的两个按钮 -->
+			<!-- 左上角的两个按钮 -->
+		        <!-- 左上角的两个按钮 -->
 		        <div class="kit-table-header">
 		        
-		        <form class="layui-form" lay-filter="kit-search-form">
-		        <div class="kit-search-inputs" style="margin-left: 200px;">
-		                <div class="kit-search-keyword">
-		                    <label class="layui-form-label"><span class="color-red"><span class="color-red"></span>供应商:</label>
-							  <div class="layui-input-inline" style="float:right;">
-							    <select id="edit_exam_school" name="buyCompany">
-							      <option value="">请选择</option>
-							    </select>
-							  </div>
-		                </div>
-		            </div>
-		        </form>
 					<div class="layui-form-item">
-					   <label class="layui-form-label">采购总数量</label>
+					   <label class="layui-form-label">质检未通数</label>
 					   <div class="layui-input-inline">
-					     <input type="text" name="buyAmount" value="0" id="buyAmount" autocomplete="off" class="layui-input layui-disabled" readonly="readonly">
+					     <input type="text" name="qcFail" value="0" id="qcFail" autocomplete="off" class="layui-input layui-disabled" readonly="readonly">
 					   </div>
-					   <label class="layui-form-label">采购总金额</label>
+					   <label class="layui-form-label">质检总概率</label>
 					   <div class="layui-input-inline">
-					     <input type="text" name="buyMoney" value="0" id="buyMoney" autocomplete="off" class="layui-input layui-disabled" readonly="readonly">
+					     <input type="text" name="qcRate" value="0" id="qcRate" autocomplete="off" class="layui-input layui-disabled" readonly="readonly">
 					   </div>
 					</div>
 					
 				
 		            <div class="kit-search-btns" style="width: 100px;margin-left: 630px;margin-top: -60px;">
-		             <a class="layui-btn layui-btn-sm" id="add"><i class="layui-icon"></i> 保存订单</a>
+		             <a class="layui-btn layui-btn-sm" id="add"><i class="layui-icon"></i> 提交</a>
 		        	</div>
 		        	<div class="kit-search-btns" style="width: 100px;margin-left: 720px;margin-top: -60px;">
 		             <a class="layui-btn layui-btn-sm" id="fh"><i class="layui-icon"></i> 返回</a>
 		        	</div>
 		        </div>
 			
-		    
-		    
 			<!-- 操作按钮 -->
 		    <div class="kit-table-body">
 		        <table id="demo" lay-filter="demo"></table>
@@ -97,10 +86,13 @@
 			}
 		</script>
 		<script src="../../res/layui/layui.all.js"></script>
+		<script src="../../res/js/common/parameter.js"></script>
 		<script>
 			window.windata=null;
+			var tableElem;
 			//显示表格数据
 		    layui.use(['table','upload'], function() {
+		    	var qcId = getParameter("id");
 		        var table = layui.table,
 		            $ = layui.jquery,
 		            layer = layui.layer,
@@ -109,37 +101,31 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '449px', //容器高度
-		            url: '../../material/showList.action',
+		            url: '../../qcDetail/findById.action?qcId='+qcId,
 		            page: true,
 		            id: 'demo',
 		            cols: [
-		                [{checkbox: true,fixed: true},
-		                {field: 'matId',title: 'ID',width: 120},	
+		                [ 
+		                {field: 'qdetId',title: 'ID',width: 120},	
 		                {field: 'matName',title: '材料名',width: 120},
-		                {field: 'matPrice',title: '单价',width: 120},
-		                {field: 'matAmount',title: '数量',width: 120,templet:'#input'},
-		                {title: '小计',width: 150,templet:'#inputss'}]
+		                {field: 'qdetFail',title: '未通过数量',width: 120,templet:'#input'},
+		                {field: 'qdetAmount',title: '质检数量',width: 120},
+		                {field: 'qdetRate',title: '质检总概率',width: 150,templet:'#inputss'}]
 		            ],
 		            done: function(res, curr, count) {
 		            	windata=res.data;
+		            	tableElem = this.elem.next('.layui-table-view');
+		            	var tables=table.cache.demo;
+		            	
+		            	$.each(tables,function(i,item){
+				        	$("#shuju").val($("#shuju").val()+item.qdetId+","+item.matName+","+$("#number"+item.qdetId).val()+","+item.qdetAmount+","+$("#price"+item.qdetId).val()+"#");	
+		            	})
+		            	
 		            },
 		            loading: true
 		        });
 		        
-				//查询类型下拉框数据
-		        $.ajax({ url:"../../provider/showList.action",
-                    type:'post',//method请求方式，get或者post
-                    cache: false,//同步
-                    dataType:'json',//预期服务器返回的数据类型
-                    success:function(mes){//res为相应体,function为回调函数
-                    	//循环添加框内的数据
-                    	$.each(mes.data,function(index,item){
-                    		$("#edit_exam_school").append("<option value="+item.provId+">"+item.provName+"</option>");
-                    	});
-                    	//渲染框内的下拉框
-                    	form.render();
-                    }
-                 });
+				
 		        
 		        
 		        
@@ -197,20 +183,15 @@
 		        });
 		        
 		        $("#add").click(function(){
-   	        		var url="../../buyht/add.action";
-   					var data={"shuju":$("#shuju").val(),"sumNumber":$("#buyAmount").val(),"sumPrice":$("#buyMoney").val(),"Supplier":$("#edit_exam_school").val()}
+   	        		var url="../../qc/Qcadd.action";
+   					var data={"id":qcId,"shuju":$("#shuju").val(),"sumAmout":$("#qcFail").val(),"sumRate":$("#qcRate").val()}
    					
-   					if($("#edit_exam_school").val()!=0){
-   						$.post(url,data,function(mes){
-  	 						if(mes.status==1){
-  	 							location.href="purchase.html";
-  	 						}
-  	 					})
-   					}else{
-   						layer.msg('请选择供应商噢', {
-   							     time: 1500, //1.5s后自动关闭
-   							 });
-   					}
+					$.post(url,data,function(mes){
+						if(mes.status==1){
+							location.href="Qcbuy.html";
+						}
+					})
+   					
    				})
 		        
 		        
@@ -270,11 +251,60 @@
 			    var id = obj.id;
 			    
 				var a = obj.value;//数量值
-				var b=$(obj).parent().parent().parent().prev().children().html();//获取this的父类节点
-				var c =parseFloat(a)*parseFloat(b);//用this*数量
+				var b=$(obj).parent().parent().parent().next().children().html();//获取this的父类节点
+				var c =parseFloat(a)/parseFloat(b);//用this*数量
+				var d=c.toFixed(2);
 				//计算结果显示
-				$(obj).parent().parent().parent().next().children().children().children().val(c);
+				$(obj).parent().parent().parent().next().next().children().children().children().val(d);
+				
+				if(parseInt(a)>parseInt(b)){
+					obj.value = "0";
+					layer.msg("不能大于质检数量噢");
+				}
+				
+				//质检总未通过数
+				var amo=allAmount();
+				$("#qcFail").val(amo);
+				
+				var probity=allprobability();
+				var bit=probity.toFixed(2);
+				$("#qcRate").val(bit);
+				
+				//改变上面的动态值
+				$("#shuju").val("");
+				 var tbody=$(obj).parent().parent().parent().parent().parent();
+				 $.each($(tbody).find("tr"),function(i,item){
+					 
+					var bdetFkId=$(item).children().get(0);
+					var matName=$(item).children().get(1);
+					var zjNumber=$(item).children().get(3); 
+					 
+					$("#shuju").val($("#shuju").val()+$(bdetFkId).children().text()+","+$(matName).text()+","+$("#number"+$(bdetFkId).children().text()).val()+","+$(zjNumber).children().text()+","+$("#price"+$(bdetFkId).children().text()).val()+"#");	
+				 })
+				
+				
 			}
+			
+			
+			
+			
+			//未通过数量相加
+			function allAmount(){
+				var amount = 0;
+				$.each(tableElem.find('td[data-field="qdetFail"]').find('input'),function(index,item){
+					amount += parseInt($(this).val());
+				});
+				return amount;
+			}
+		  	
+		  	//质检总概率相加
+		  	function allprobability(){
+		  		var probability=0;
+		  		$.each(tableElem.find('td[data-field="qdetRate"]').find('input'),function(index,item){
+		  			probability += parseFloat($(this).val());
+				});
+		  		return probability;
+		  	}
 		</script>
 		
 	</body>

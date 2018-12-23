@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yidu.domain.QcDetail;
 import com.yidu.service.QcDetailService;
-import com.yidu.util.PageUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,27 +26,30 @@ import org.springframework.stereotype.Controller;
 @Controller
 @RequestMapping("/qcDetail")
 public class QcDetailController {
-	@Resource
-	private QcDetailService   qcDetailService;
 	
-	@RequestMapping("/qureyById")
-	@ResponseBody 
-	public   Map<String, Object>  qureyById(QcDetail  qcDetail, Integer  page , Integer  limit){
-		//分页
-		PageUtil pageUtil = new PageUtil();
-		//前台取过来的分页值
-		pageUtil.setCurPage(page);
-		pageUtil.setRows(limit);
-		List<QcDetail> list = qcDetailService.selectbyId(qcDetail, pageUtil);
-		int  rows=qcDetailService.selectbycount(qcDetail);
-		Map<String , Object>  map  =new  HashMap<>();
+	@Resource
+	private QcDetailService qcdetaService;
+	
+	/**
+	 * 根据id查询
+	 * @param qcdetail
+	 * @return
+	 */
+	@RequestMapping("findById")
+	@ResponseBody
+	public Map<String, Object> findById(QcDetail qcdetail){
+		
+		System.err.println("========="+qcdetail);
+		List <QcDetail> list=qcdetaService.findById(qcdetail);
+		Map<String, Object> map=new HashMap<>();
 		map.put("code", 0);
 		map.put("msg", "");
-		map.put("count", rows);
+		map.put("count", 0);
 		map.put("data", list);
-		return  map; 
+		
+		
+		return map;
+		
 	}
-	
-
 }
 

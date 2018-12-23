@@ -6,13 +6,13 @@ import java.util.Date;
 public class Qc {
     private String qcId;
 
-    private String pmcId;
+    private String pmcId;				//业务id
 
-    private Integer qcAmount;
+    private Integer qcAmount;			//质检总数
 
-    private Integer qcFail;
+    private Integer qcFail;				//未通过数
 
-    private String qcRate;
+    private String qcRate;				//总通过率
 
     private Date qcOptime;
 
@@ -25,19 +25,19 @@ public class Qc {
     private Date optime;
 
     private String oper;
- 
+
     private String sort;
     
-    private String   qcOptiemName;
+    private String buyAmount;
     
- 
+    
 
-    public String getQcOptiemName() {
-		return qcOptiemName;
+    public String getBuyAmount() {
+		return buyAmount;
 	}
 
-	public void setQcOptiemName(String qcOptiemName) {
-		this.qcOptiemName = qcOptiemName;
+	public void setBuyAmount(String buyAmount) {
+		this.buyAmount = buyAmount;
 	}
 
 	public String getQcId() {
