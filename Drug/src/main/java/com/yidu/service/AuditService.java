@@ -34,14 +34,14 @@ public interface AuditService   {
 	
 	/**
 	 * 修改
-	 * @param toy
+	 * @param audit
 	 * @return
 	 */
 	public int updateByPrimaryKeySelective(Audit audit);
 	
 	/**
 	 * 增加
-	 * @param toy
+	 * @param audit
 	 * @return
 	 */
 	public int insertSelective(Audit audit);

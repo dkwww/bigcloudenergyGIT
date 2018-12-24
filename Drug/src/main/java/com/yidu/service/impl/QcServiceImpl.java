@@ -5,12 +5,14 @@ import com.yidu.dao.BuyDetailMapper;
 import com.yidu.dao.BuyMapper;
 import com.yidu.dao.QcDetailMapper;
 import com.yidu.dao.QcMapper;
+import com.yidu.domain.Audit;
 import com.yidu.domain.Buy;
 import com.yidu.domain.BuyDetail;
 import com.yidu.domain.Qc;
 import com.yidu.domain.QcDetail;
 import com.yidu.service.QcService;
 import com.yidu.util.PageUtil;
+import com.yidu.util.TimeUtil;
 import com.yidu.util.Tools;
 
 import java.util.Date;
@@ -136,5 +138,36 @@ public class QcServiceImpl   implements QcService {
 		}
 		return rows;
 	}
+	
+
+	@Override
+	public int addOrUpdate(Qc qc) {
+		
+		int rows = 0;
+		
+		if(qc.getQcId()!=null &&!"".equals(qc.getQcId())) {
+			rows = updateByPrimaryKeySelective(qc);
+		}else {
+			String uuid=UUID.randomUUID().toString().replaceAll("-", "");
+			qc.setQcId(uuid);
+			rows = insertSelective(qc);
+		}
+		
+		return rows;
+	}
+	
+	
+	@Override
+	public int updateByPrimaryKeySelective(Qc qc) {
+		return dao.updateByPrimaryKeySelective(qc);
+	}
+
+
+
+	@Override
+	public int insertSelective(Qc qc) {
+		return dao.insertSelective(qc);
+	}
+
 
 }

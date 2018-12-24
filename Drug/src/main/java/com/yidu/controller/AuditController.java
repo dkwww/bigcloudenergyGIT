@@ -17,11 +17,13 @@ import com.yidu.domain.Audit;
 import com.yidu.domain.Buy;
 import com.yidu.domain.Debty;
 import com.yidu.domain.DrugInve;
+import com.yidu.domain.Qc;
 import com.yidu.domain.WholesaleDetail;
 import com.yidu.service.AuditService;
 import com.yidu.service.BuyService;
 import com.yidu.service.DebtyService;
 import com.yidu.service.DrugInvService;
+import com.yidu.service.QcService;
 import com.yidu.service.WholesaleDetailService;
 import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
@@ -56,6 +58,9 @@ public class AuditController {
 	
 	@Resource
 	BuyService buyService;
+	
+	@Resource
+	QcService qcService;
 	
 	/**
 	 * 显示列表的方法
@@ -335,9 +340,18 @@ public class AuditController {
 			Debty debty2 = new Debty();//定义一个新的财务对象
 			debty2.setDebId(debty1.getDebId());
 			debty2.setDebMoney(money);
+			//修改总店总金额
 			int count = debtyService.updateByPrimaryKeySelective(debty2);
 			if(count!=0) {
-				
+				Qc qc = new Qc();
+				qc.setPmcId(buy.getBuyId());//业务id
+				qc.setQcAmount(buy.getBuyAmount());//质检总数
+				qc.setQcConpany(buy.getBuyCompany());//质检厂家
+				qc.setQcType(1);//质检类型为药品
+				qc.setIsva("1");
+				//质检
+				qcService.insertSelective(qc);
+				//审核
 				int rows=service.updateByPrimaryKeySelective(audit);
 				
 				if(rows!=0) {

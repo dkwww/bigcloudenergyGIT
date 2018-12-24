@@ -2,6 +2,7 @@ package com.yidu.service;
 
 import java.util.List;
 
+import com.yidu.domain.Audit;
 import com.yidu.domain.Buy;
 import com.yidu.domain.Qc;
 import com.yidu.util.PageUtil;
@@ -21,6 +22,30 @@ public interface QcService  {
 	
 	
 	int selectCountBySelective(Qc  qc);
+	
+	/**
+	 * 增加或修改的方法
+	 * @param qc
+	 * @author zhengyouhong
+	 * @return
+	 */
+	public int addOrUpdate(Qc qc);
+	
+	/**
+	 * 修改
+	 * @param qc
+	 * @author zhengyouhong
+	 * @return
+	 */
+	public int updateByPrimaryKeySelective(Qc qc);
+	
+	/**
+	 * 增加
+	 * @param qc
+	 * @author zhengyouhong
+	 * @return
+	 */
+	public int insertSelective(Qc qc);
 	
 	
 	/**
