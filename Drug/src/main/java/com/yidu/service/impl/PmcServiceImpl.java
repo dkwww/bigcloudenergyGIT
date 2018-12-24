@@ -54,6 +54,12 @@ public class PmcServiceImpl  implements PmcService {
 		for (Pmc pmc : list) {
 			pmc.setStrStartTime(TimeUtil.dateToString(pmc.getPmcStart(), "yyyy-MM-dd HH:mm:ss"));
 			pmc.setStrEndTime(TimeUtil.dateToString(pmc.getPmcEnd(), "yyyy-MM-dd HH:mm:ss"));
+			String str = pmcMapper.isCheck(pmc.getPmcId());
+			if (str!=null && !"".equals(str)) {
+				pmc.setAudState(str);
+			} else {
+				pmc.setAudState("-1");
+			}
 			newList.add(pmc);
 		}
 		return newList;
@@ -96,14 +102,29 @@ public class PmcServiceImpl  implements PmcService {
 	}
 
 	@Override
-	public int isChack(String pmcId) {
-		return pmcMapper.isCheck(pmcId);
-	}
-
-	@Override
 	public Pmc selectById(String pmcId) {
 		 
 		return pmcMapper.selectById(pmcId) ;
+	}
+
+	@Override
+	public List<Pmc> showAudit(Pmc record, PageUtil pageUtil) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("record", record);
+		map.put("pageUtil", pageUtil);
+		List<Pmc> list = pmcMapper.selectByAudit(map);
+		List<Pmc> newList = new ArrayList<Pmc>();
+		for (Pmc pmc : list) {
+			pmc.setStrStartTime(TimeUtil.dateToString(pmc.getPmcStart(), "yyyy-MM-dd HH:mm:ss"));
+			pmc.setStrEndTime(TimeUtil.dateToString(pmc.getPmcEnd(), "yyyy-MM-dd HH:mm:ss"));
+			newList.add(pmc);
+		}
+		return newList;
+	}
+
+	@Override
+	public int findAuditCount(Pmc record) {
+		return pmcMapper.selectAuditCount(record);
 	}
 
 }

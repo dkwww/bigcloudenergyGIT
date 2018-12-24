@@ -11,6 +11,8 @@ public class PmcDetails {
 
     private String drugId;
     
+    private String dtId;
+    
     private Integer pdAmount;
 
     private String pdState;
@@ -30,6 +32,8 @@ public class PmcDetails {
     private String drugProp;
     
     private Integer finisded;
+    
+    private String dtName;
 
 	public String getPdId() {
         return pdId;
@@ -61,6 +65,14 @@ public class PmcDetails {
 
     public void setDrugId(String drugId) {
         this.drugId = drugId == null ? null : drugId.trim();
+    }
+    
+    public String getDtId() {
+        return dtId;
+    }
+
+    public void setDtId(String dtId) {
+        this.dtId = dtId == null ? null : dtId.trim();
     }
 
     public Integer getPdAmount() {
@@ -141,5 +153,13 @@ public class PmcDetails {
 
 	public void setFinisded(Integer finisded) {
 		this.finisded = finisded;
+	}
+
+	public String getDtName() {
+		return dtName;
+	}
+
+	public void setDtName(String dtName) {
+		this.dtName = dtName;
 	}
 }

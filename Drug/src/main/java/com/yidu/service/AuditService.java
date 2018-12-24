@@ -132,7 +132,7 @@ public interface AuditService   {
 	 * @param id
 	 * @return
 	 */
-	public Audit findById(String id);
+	public Audit findById(String audId);
 	
 	
 	/**

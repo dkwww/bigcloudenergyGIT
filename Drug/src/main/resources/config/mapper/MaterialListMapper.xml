@@ -15,6 +15,7 @@
     <id column="ml_id" jdbcType="VARCHAR" property="mlId" />
     <result column="mat_id" jdbcType="VARCHAR" property="matId" />
     <result column="drug_id" jdbcType="VARCHAR" property="drugId" />
+    <result column="dt_id" jdbcType="VARCHAR" property="dtId" />
     <result column="ml_amount" jdbcType="INTEGER" property="mlAmount" />
     <result column="isva" jdbcType="VARCHAR" property="isva" />
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
@@ -52,8 +53,29 @@
   <select id="selectBySelective" parameterType="java.util.Map" resultMap="BaseResultMapOne">
     select 
     <include refid="Base_Column_List_One" />
-    from drug_material_list ml,drug_drug dd,drug_material mat,drug_mat_type mt 
-    where ml.drug_id = dd.drug_id and ml.mat_id = mat.mat_id and mat.mt_id = mt.mt_id and ml.isva = '1' and dd.drug_id = #{record.drugId,jdbcType=VARCHAR} 
+    from drug_material_list ml,drug_drug dd,drug_material mat,drug_mat_type mt,drug_drug_type dt
+    where ml.drug_id = dd.drug_id and ml.mat_id = mat.mat_id and mat.mt_id = mt.mt_id and dd.dt_id = dt.dt_id and ml.isva = '1' and dd.drug_id = #{record.drugId,jdbcType=VARCHAR} 
+    <if test="record.matName != null and record.matName != ''">
+   		and mat.mat_name like CONCAT(CONCAT('%',#{record.matName,jdbcType=VARCHAR},'%'))
+   	</if>
+   	<if test="record.mtId != null and record.mtId != '' ">
+   		and mt.mt_id = #{record.mtId,jdbcType=VARCHAR}
+   	</if>
+   	<if test="record.dtId != null and record.dtId != '' ">
+   		and dt.dt_id = #{record.dtId,jdbcType=VARCHAR}
+   	</if>
+   	<if test="record.amountMin !=null and record.amountMin != '' ">
+   		and ml.ml_amount &gt; #{record.amountMin,jdbcType=VARCHAR}
+   	</if>
+   	<if test="record.amountMax !=null and record.amountMax !='' ">
+   		and ml.ml_amount &lt; #{record.amountMax,jdbcType=VARCHAR}
+   	</if>
+   	<if test="record.priceMin !=null and record.priceMin != '' ">
+   		and mat.mat_price &gt; #{record.priceMin,jdbcType=DECIMAL}
+   	</if>
+   	<if test="record.priceMax !=null and record.priceMax !='' ">
+   		and mat.mat_price &lt; #{record.priceMax,jdbcType=DECIMAL}
+   	</if>
    	order by (dd.sort+0) desc 
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
   </select>
@@ -61,8 +83,29 @@
   <select id="selectCountBySelective" parameterType="com.yidu.domain.Drug" resultType="int">
     select 
     count(*) 
-    from drug_material_list ml,drug_drug dd,drug_material mat,drug_mat_type mt 
-    where ml.drug_id = dd.drug_id and ml.mat_id = mat.mat_id and mat.mt_id = mt.mt_id and ml.isva = '1' and dd.drug_id = #{drugId,jdbcType=VARCHAR}
+    from drug_material_list ml,drug_drug dd,drug_material mat,drug_mat_type mt,drug_drug_type dt
+    where ml.drug_id = dd.drug_id and ml.mat_id = mat.mat_id and mat.mt_id = mt.mt_id and dd.dt_id = dt.dt_id and ml.isva = '1' and dd.drug_id = #{drugId,jdbcType=VARCHAR} 
+    <if test="matName != null and matName != ''">
+   		and mat.mat_name like CONCAT(CONCAT('%',#{matName,jdbcType=VARCHAR},'%'))
+   	</if>
+   	<if test="mtId != null and mtId != ''">
+   		and mt.mt_id = #{mtId,jdbcType=VARCHAR}
+   	</if>
+   	<if test="dtId != null and dtId != ''">
+   		and dt.dt_id = #{dtId,jdbcType=VARCHAR}
+   	</if>
+   	<if test="amountMin !=null and amountMin != '' ">
+   		and ml.ml_amount &gt; #{amountMin,jdbcType=VARCHAR}
+   	</if>
+   	<if test="amountMax !=null and amountMax !='' ">
+   		and ml.ml_amount &lt; #{amountMax,jdbcType=VARCHAR}
+   	</if>
+   	<if test="priceMin !=null and priceMin !=''">
+   		and dd.drug_price &gt; #{priceMin,jdbcType=DECIMAL}
+   	</if>
+   	<if test="priceMax !=null and priceMax !=''">
+   		and dd.drug_price &lt; #{priceMax,jdbcType=DECIMAL}
+   	</if>
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">

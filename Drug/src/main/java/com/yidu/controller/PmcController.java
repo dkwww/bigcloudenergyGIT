@@ -103,7 +103,7 @@ public class PmcController {
 		if (rows>0) {
 			Audit audit = new Audit();
 			audit.setAudFkId(pmcId);
-			audit.setAudState("0");// 总经理审核 （0 未处理，-1未通过，1通过）
+			audit.setAudState("10001");
 			int count = auditService.addOrUpdate(audit);
 			if (count>0) {
 				mes.setStatus(1);
@@ -114,19 +114,35 @@ public class PmcController {
 			}
 		} else {
 			mes.setStatus(0);
-			mes.setMsg("请完善计划药品信息！");
+			mes.setMsg("请配置计划药品信息！");
 		}
 		return mes;
 	}
 	
 	/**
-	 * 检查是否已经提交审核
+	 * 显示审核列表
+	 * @param record
+	 * @param page
+	 * @param limit
 	 * @return
 	 */
-	@RequestMapping("/isCheck")
+	@RequestMapping("/showAudit")
 	@ResponseBody
-	public int isCheck(String pmcId) {
-		return pmcService.isChack(pmcId);
+	public Map<String,Object> showAudit(Pmc record,Integer page,Integer limit) {
+		PageUtil pageUtil = new PageUtil();
+		pageUtil.setCurPage(page);
+		pageUtil.setRows(limit);
+		
+		List<Pmc> list = pmcService.showAudit(record,pageUtil);
+		int rows = pmcService.findAuditCount(record);
+		
+		@SuppressWarnings("unchecked")
+		Map<String,Object> map = new HashedMap();
+		map.put("code", 0);
+		map.put("msg", "");
+		map.put("count", rows);
+		map.put("data", list);
+		return map;
 	}
 }
 

@@ -8,6 +8,10 @@ public class MaterialList {
     private String matId;
 
     private String drugId;
+    
+    private String dtId;
+    
+    private String mtId;
 
     private Integer mlAmount;
 
@@ -30,6 +34,14 @@ public class MaterialList {
     private String mtName;
     
     private String matEffect;
+    
+    private String amountMin;
+    
+    private String amountMax;
+    
+    private Double priceMin;
+    
+    private Double priceMax;
 
     public String getMlId() {
         return mlId;
@@ -53,6 +65,22 @@ public class MaterialList {
 
     public void setDrugId(String drugId) {
         this.drugId = drugId == null ? null : drugId.trim();
+    }
+    
+    public String getDtId() {
+        return dtId;
+    }
+
+    public void setDtId(String dtId) {
+        this.dtId = dtId == null ? null : dtId.trim();
+    }
+    
+    public String getMtId() {
+        return mtId;
+    }
+
+    public void setMtId(String mtId) {
+        this.mtId = mtId == null ? null : mtId.trim();
     }
 
     public Integer getMlAmount() {
@@ -142,5 +170,36 @@ public class MaterialList {
 	public void setMatEffect(String matEffect) {
 		this.matEffect = matEffect;
 	}
-    
+
+	public String getAmountMin() {
+		return amountMin;
+	}
+
+	public void setAmountMin(String amountMin) {
+		this.amountMin = amountMin;
+	}
+
+	public String getAmountMax() {
+		return amountMax;
+	}
+
+	public void setAmountMax(String amountMax) {
+		this.amountMax = amountMax;
+	}
+
+	public Double getPriceMin() {
+		return priceMin;
+	}
+
+	public void setPriceMin(Double priceMin) {
+		this.priceMin = priceMin;
+	}
+
+	public Double getPriceMax() {
+		return priceMax;
+	}
+
+	public void setPriceMax(Double priceMax) {
+		this.priceMax = priceMax;
+	}
 }

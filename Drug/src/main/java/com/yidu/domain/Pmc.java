@@ -41,6 +41,12 @@ public class Pmc {
     
     private String comName;
     
+    private String audId;
+    
+    private String audState;
+    
+    private Integer audType;
+    
     public String getPmcId() {
         return pmcId;
     }
@@ -192,5 +198,28 @@ public class Pmc {
 	public void setComName(String comName) {
 		this.comName = comName;
 	}
-	
+
+	public String getAudId() {
+		return audId;
+	}
+
+	public void setAudId(String audId) {
+		this.audId = audId;
+	}
+
+	public String getAudState() {
+		return audState;
+	}
+
+	public void setAudState(String audState) {
+		this.audState = audState;
+	}
+
+	public Integer getAudType() {
+		return audType;
+	}
+
+	public void setAudType(Integer audType) {
+		this.audType = audType;
+	}
 }

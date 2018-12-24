@@ -11,6 +11,7 @@
 		<title>原料清单</title>
 		<link rel="stylesheet" href="../../res/layui/css/layui.css" />
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
+		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
 		<link rel="stylesheet" type="text/css" href="../../res/css/material-list/index.css" />
 		<link rel="stylesheet" type="text/css" href="../../res/css/material-list/row.css" />
 		<script src="../../res/js/common/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
@@ -20,45 +21,154 @@
 	<body class="childBody">
 		<section class="layui-col-md10">
 			<div class="layui-card">
-				<div class="card-top css-transition">
-					<div class="layui-card-header">
-						<h3>药品：<font style="color: #DC2D00;" id="drugName">名称</font></h3>
-					</div>
+				<div class="card-top css-transition kit-table">
+					<form class="layui-form" lay-filter="kit-search-form">
+						<!-- 左上角的两个按钮 -->
+				        <div class="kit-table-header">
+				        	<div class="kit-search-btns" style="height: 30px;line-height: 30px;margin-left: 10px;font-size: 16px">
+				        		药品：<font style="color: #DC2D00;" id="drugName">名称</font>
+				            </div>
+				            <div class="kit-search-inputs">
+				                <div class="kit-search-keyword">
+				                    <input type="text" class="layui-input" id="serach-one" placeholder="药材.." onKeyUp="lockInput(this,'serach-two')"/>
+				                    <button lay-submit lay-filter="search1"><i class="layui-icon">&#xe615;</i></button>
+				                </div>
+				                <div class="kit-search-more" id="kit-search-more-one">更多筛选<i class="layui-icon">&#xe61a;</i></div>
+				            </div>
+				        </div>
+						<!-- 搜索扩展工具条 -->
+				        <div class="kit-search-mored layui-anim layui-anim-upbit" id="kit-search-mored-one">
+				            <div class="kit-search-body">
+				                <div class="layui-form-item">
+				                    <label class="layui-form-label">药材名称</label>
+				                    <div class="layui-input-block">
+				                        <input type="text" name="matName" id="serach-two" placeholder="搜索关键字.." autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
+				                    </div>
+				                </div>
+				                <div class="layui-form-item">
+					                <label class="layui-form-label">类型</label>
+					                <div class="layui-input-block">
+					                    <select name="mtId" class="drug-type">
+					                      <option value="">药材类型</option>
+					                    </select>
+					                </div>
+				                </div>
+				                <div class="layui-form-item">
+				                    <div class="layui-inline">
+				                        <label class="layui-form-label">数量范围</label>
+				                        <div class="layui-input-block">
+					                        <div class="layui-input-inline" style="width: 100px;">
+					                            <input type="text" name="amountMin" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
+					                        </div>
+					                        <div class="layui-form-mid">-</div>
+					                        <div class="layui-input-inline" style="width: 100px;">
+					                            <input type="text" name="amountMax" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
+					                        </div>
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class="layui-form-item">
+				                    <div class="layui-inline">
+				                        <label class="layui-form-label">价格范围</label>
+				                        <div class="layui-input-block">
+					                        <div class="layui-input-inline" style="width: 100px;">
+					                            <input type="text" name="priceMin" placeholder="￥" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
+					                        </div>
+					                        <div class="layui-form-mid">-</div>
+					                        <div class="layui-input-inline" style="width: 100px;">
+					                            <input type="text" name="priceMax" placeholder="￥" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
+					                        </div>
+				                        </div>
+				                    </div>
+				                </div>
+				            </div>
+				            <div class="kit-search-footer">
+				                <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary kit-btn reset-btn">重置</button>
+				                <button lay-submit lay-filter="search1" class="layui-btn layui-btn-sm kit-btn">确定</button>
+				            </div>
+				        </div>
+				    </form>
+				    
 					<div class="layui-card-body">
 						<div id="toolbar">
-							<button type="button" class="layui-btn layui-btn-sm add remove" title="筛选原材料">
-								<i class="layui-icon">&#xe608;</i> 添加原材料
-							</button>
+							<div class="layui-inline">
+								<button type="button" class="layui-btn layui-btn-sm add remove" title="筛选原材料">
+									<i class="layui-icon">&#xe608;</i> 添加原材料
+								</button>
+						  	</div>
 						</div>
 						<div id="tableRes" class="table-overlay">
 							<table id="dataTable1" lay-filter="dataTable" class="layui-hide"></table>
 						</div>
 						<div id="action" class="text-center">
-							<button type="button" name="btnSave" class="layui-btn layui-btn-sm remove" data-type="save"><i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i> 保存</button>
-							<button type="close" name="close" data-type="close" class="layui-btn layui-btn-sm layui-btn-primary remove"><i class="fa fa-times-circle-o" aria-hidden="true"></i> 关闭</button>
+							<button type="button" name="btnSave" class="layui-btn layui-btn-sm" data-type="save"><i class="fa fa-floppy-o fa-lg"></i> 保存</button>
+							<button type="close" name="close" data-type="close" class="layui-btn layui-btn-sm layui-btn-primary"><i class="fa fa-times-circle-o" aria-hidden="true"></i> 放弃</button>
 						</div>
 					</div>
 				</div>
 
-				<div class="card-down css-transition remove">
-					<div class="layui-card-header layui-form" style="padding: 8px 0px;">
+				<div class="card-down css-transition kit-table">
+					
+					<form class="layui-form" lay-filter="kit-search-form">
+						<!-- 左上角的两个按钮 -->
+				        <div class="kit-table-header">
+				        	<div class="kit-search-btns" style="height: 30px;line-height: 30px;margin: 0px 15px;font-size: 16px">
+				        		药材筛选
+				            </div>
+				            <div class="kit-search-inputs">
+				                <div class="kit-search-keyword">
+				                    <input type="text" class="layui-input" id="serach-three" placeholder="药材.." onKeyUp="lockInput(this,'serach-four')"/>
+				                    <button lay-submit lay-filter="search2"><i class="layui-icon">&#xe615;</i></button>
+				                </div>
+				                <div class="kit-search-more" id="kit-search-more-two">更多筛选<i class="layui-icon">&#xe61a;</i></div>
+				            </div>
+				        </div>
 						<!-- 搜索扩展工具条 -->
-						<form class="layui-form" lay-filter="kit-search-form">
-							<div class="layui-form-item">
-								<div style="width: 244px;margin-left: 15px;">
-									<select name="mtName" lay-filter="mat-type" id="mat-type">
-										<option value="">药材筛选</option>
-									</select>
-								</div>
-							</div>
-						</form>
-					</div>
+				        <div class="kit-search-mored layui-anim layui-anim-upbit" id="kit-search-mored-two">
+				            <div class="kit-search-body">
+				                <div class="layui-form-item">
+				                    <label class="layui-form-label">药品名称</label>
+				                    <div class="layui-input-block">
+				                        <input type="text" name="matName" id="serach-four" placeholder="搜索关键字.." autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-three')">
+				                    </div>
+				                </div>
+				                <div class="layui-form-item">
+					                <label class="layui-form-label">类型</label>
+					                <div class="layui-input-block">
+					                    <select name="mtName" class="drug-type">
+					                      <option value=""></option>
+					                    </select>
+					                </div>
+				                </div>
+				                <div class="layui-form-item">
+				                    <div class="layui-inline">
+				                        <label class="layui-form-label">范围</label>
+				                        <div class="layui-input-block">
+					                        <div class="layui-input-inline" style="width: 100px;">
+					                            <input type="text" name="priceMin" placeholder="￥" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
+					                        </div>
+					                        <div class="layui-form-mid">-</div>
+					                        <div class="layui-input-inline" style="width: 100px;">
+					                            <input type="text" name="priceMax" placeholder="￥" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
+					                        </div>
+				                        </div>
+				                    </div>
+				                </div>
+				            </div>
+				            <div class="kit-search-footer">
+				                <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary kit-btn reset-btn">重置</button>
+				                <button lay-submit lay-filter="search2" class="layui-btn layui-btn-sm kit-btn">确定</button>
+				            </div>
+				        </div>
+				    </form>
+					
+					
 					<div class="layui-card-body body-down">
 						<div id="tableRes" class="table-overlay">
 							<div class="card-body-left">
 								<div class="scroll-wrap">
 									<ul class="down-ul">
-										<p class="li-title">药材清单（list）</p>
+										<p class="li-title">药品清单（list）</p>
 									</ul>
 								</div>
 							</div>
@@ -67,14 +177,33 @@
 							</div>
 							<div id="action" class="text-center">
 								<button type="button" name="btnConfirm" class="layui-btn layui-btn-sm btnConfirm" data-type="confirm"><i class="fa fa-check-circle-o fa-lg" aria-hidden="true"></i> 确定</button>
-								<button type="reset" name="btnCancel" class="layui-btn layui-btn-sm layui-btn-primary"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> 返回</button>
+								<button type="reset" name="btnCancel" class="layui-btn layui-btn-sm layui-btn-primary"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> 取消</button>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
-		<!--recommended script position-->
+		<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
+		<script>
+			//文本框只能输入金额
+		    function amount(th){
+		        var regStrs = [
+		            ['^0(\\d+)$', '$1'], //禁止录入整数部分两位以上，但首位为0
+		            ['[^\\d\\.]+$', ''], //禁止录入任何非数字和点
+		            ['\\.(\\d?)\\.+', '.$1'], //禁止录入两个以上的点
+		            ['^(\\d+\\.\\d{2}).+', '$1'] //禁止录入小数点后两位以上
+		        ];
+		        for(i=0; i<regStrs.length; i++){
+		            var reg = new RegExp(regStrs[i][0]);
+		            th.value = th.value.replace(reg, regStrs[i][1]);
+		        }
+		    }
+			//搜索框同步输入
+			function lockInput(obj,id){
+				$("#"+id).val($(obj).val());
+			}
+		</script>
 		<script src="../../res/layui/layui.all.js"></script>
 		<script type="text/javascript">
 			//准备视图对象
@@ -84,7 +213,7 @@
 			var newData = new Array();//第一个表格的所有数据
 			$.ajax({
 				url: "../../materialList/showList.action", //json文件位置
-				data: {"page":1,"limit":1000,"drugId":drugId},
+				data: {"page":1,"limit":10000,"drugId":drugId},
 				type: "post",
 				async: false,
 				dataType: "json", //返回数据格式为json
@@ -93,7 +222,7 @@
 						res.data[index].state=1;
 						res.data[index].checkDisabled == true;
 					});
-					viewObj = res;
+					viewObj = res; 
 					newData = res.data;
 				}
 			});
@@ -145,6 +274,46 @@
 					  	});
 					}
 				});
+				
+				//监听搜索表单提交
+		        form.on('submit(search1)', function(data) {
+		        	layer.confirm('你还没有保存确定要执行吗？', function(index) {
+		        		layer.close(index);
+			        	data.field["page"]=1;
+			        	data.field["limit"]=10000;
+			        	data.field["drugId"]=drugId;
+			        	var viewObjs = null;
+			        	$.ajax({
+							url: "../../materialList/showList.action", //json文件位置
+							data: data.field,
+							type: "post",
+							async: false,
+							dataType: "json", //返回数据格式为json
+							success: function(res) { //请求成功完成后要执行的方法
+								viewObjs = res;
+							}
+						});
+			            //带条件查询
+			            tableIns1.reload({
+			            	data: viewObjs.data
+			            });
+			            arr1 = [];
+			            newData = [];
+			            for (x in viewObj.data) {
+			            	newData.push(viewObj.data[x])
+			            }
+			            $('#kit-search-mored-one').hide();
+		        	});
+		            return false;
+		        });
+				
+		      	//表单渲染
+		        form.render(null, 'kit-search-form');
+				
+		      	//更多筛选点击事件
+		        $('#kit-search-more-one').on('click', function() {
+		            $('#kit-search-mored-one').toggle();
+		        });
 				
 				//定义事件集合
 				var active = {
@@ -232,7 +401,7 @@
 				var tableIns2 = table.render({
 					elem: '#dataTable2',
 					id: layTableId2,
-					height: h2+10,
+					height: h2+20,
 					url: "../../material/showList.action",
 					page: true,
 					cols: [
@@ -286,8 +455,46 @@
 						form.render();
 					}
 				});
+				
+				//查询类型下拉框数据
+		        var staticData = null;
+		        $.ajax({ url:"../../matType/showList.action",
+                   type:'post',//method请求方式，get或者post
+                   cache: false,//同步
+                   dataType:'json',//预期服务器返回的数据类型
+                   success:function(mes){//res为相应体,function为回调函数
+                   	//增加及修改类型下拉框内的数据
+                   	staticData = mes;
+                   	//循环添加类型搜索框内的数据
+                   	$.each(mes.data,function(index,item){
+                   		$(".drug-type").append("<option value="+item.mtId+">"+item.mtName+"</option>");
+                   	});
+                   	//渲染类型搜索框内的下拉框
+                   	renderForm();
+                   }
+                });
+		        
+		      	//监听搜索表单提交
+		        form.on('submit(search2)', function(data) {
+		            //带条件查询
+		            tableIns2.reload({
+		                where: data.field
+		            });
+		            $('#kit-search-mored-two').hide();
+		            return false;
+		        });
+		      	
+		      	//表单渲染
+		        form.render(null, 'kit-search-form');
+		      	
+		        //更多筛选点击事件
+		        $('#kit-search-more-two').on('click', function() {
+		            $('#kit-search-mored-two').toggle();
+		        });
+		        
 				$(".layui-card").css({"height":h2+135});
-				$(".card-body-left").css({"height":h2+8});
+				$(".card-body-left").css({"height":h2+18});
+				
 				table.on('checkbox(dataTables)', function(obj) {
 					if (obj.checked == true) {
 						if (obj.type == 'one') {
@@ -368,7 +575,7 @@
 		                where: {"mtName":data.value},
 		                page: { curr: 1 }
 		            });
-		            $('.kit-search-mored').hide();//关闭搜索层
+		            $('.kit-search-mored-two').hide();//关闭搜索层
 		            return false;
 				})
 				//重新渲染表单
@@ -380,7 +587,7 @@
 		  		}
 				
 				//窗口自适应
-				function autoHeight(tableId){
+				function autoHeight(tableId) {
 					return document.body.clientHeight && document.documentElement.clientHeight - 175; //窗口高度
 				}
 				

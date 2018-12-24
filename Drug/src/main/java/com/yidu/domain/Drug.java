@@ -34,9 +34,11 @@ public class Drug {
     
     private Double priceMax;
     
-    private String status;
-    
     private Integer diAmount; 
+    
+    private String audId;
+    
+    private String audState;
     
     
     public Integer getDiAmount() {
@@ -165,13 +167,20 @@ public class Drug {
 	public void setPriceMax(Double priceMax) {
 		this.priceMax = priceMax;
 	}
-
-	public String getStatus() {
-		return status;
+	
+	public String getAudId() {
+		return audId;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setAudId(String audId) {
+		this.audId = audId;
 	}
-    
+
+	public String getAudState() {
+		return audState;
+	}
+
+	public void setAudState(String audState) {
+		this.audState = audState;
+	}
 }

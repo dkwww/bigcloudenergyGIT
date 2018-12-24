@@ -34,8 +34,34 @@
     <result column="end_times" jdbcType="TIMESTAMP" property="endTimes" />
   </resultMap>
   
+  <resultMap id="BaseResultMapTwo" type="com.yidu.domain.Pmc">
+    <id column="pmc_id" jdbcType="VARCHAR" property="pmcId" />
+    <result column="pmc_name" jdbcType="VARCHAR" property="pmcName" />
+    <result column="pmc_amount" jdbcType="INTEGER" property="pmcAmount" />
+    <result column="pmc_start" jdbcType="TIMESTAMP" property="pmcStart" />
+    <result column="pmc_end" jdbcType="TIMESTAMP" property="pmcEnd" />
+    <result column="pmc_state" jdbcType="VARCHAR" property="pmcState" />
+    <result column="com_name" jdbcType="VARCHAR" property="comName" />
+    <result column="isva" jdbcType="VARCHAR" property="isva" />
+    <result column="optime" jdbcType="TIMESTAMP" property="optime" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+    <result column="min_amount" jdbcType="VARCHAR" property="minAmount" />
+    <result column="max_amount" jdbcType="VARCHAR" property="maxAmount" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="start_times" jdbcType="TIMESTAMP" property="startTimes" />
+    <result column="end_times" jdbcType="TIMESTAMP" property="endTimes" />
+    <result column="aud_id" jdbcType="VARCHAR" property="audId" />
+    <result column="aud_state" jdbcType="VARCHAR" property="audState" />
+  </resultMap>
+  
   <sql id="Base_Column_List">
     pmc_id, pmc_name, pmc_amount, pmc_start, pmc_end, pmc_state, com_name, isva, optime, oper, sort
+  </sql>
+  
+  <sql id="Base_Column_List_One">
+    dp.pmc_id, dp.pmc_name, dp.pmc_amount, dp.pmc_start, dp.pmc_end, dp.pmc_state, dp.com_name, dp.isva, dp.optime, dp.oper, dp.sort, da.aud_id, da.aud_state
   </sql>
   
   <select id="selectBySelective" parameterType="java.util.Map" resultMap="BaseResultMap">
@@ -73,13 +99,6 @@
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
   </select>
   
-  
-  
-   
-  
-  
-  
-  
   <select id="selectCountBySelective" parameterType="com.yidu.domain.Pmc" resultType="int">
     select 
     count(pmc_id) 
@@ -88,7 +107,7 @@
    		and pmc_name like CONCAT('%',#{pmcName,jdbcType=VARCHAR},'%')
    	</if>
    	<if test="comName != null and comName != ''">
-   		and com_name like CONCAT('%',#{record.comName,jdbcType=VARCHAR},'%')
+   		and com_name like CONCAT('%',#{comName,jdbcType=VARCHAR},'%')
    	</if>
     <if test="minAmount != null and minAmount != ''">
    		and pmc_amount &gt; #{minAmount,jdbcType=VARCHAR}
@@ -132,11 +151,92 @@
     where dp.pmc_id = pd.pmc_id and dp.pmc_id = #{pmcId,jdbcType=VARCHAR} and dp.isva = '1' and pd.isva = '1'
   </select>
   
-  <select id="isCheck" parameterType="java.lang.String" resultType="int">
+  <select id="isCheck" parameterType="java.lang.String" resultType="String">
     select
-    count(dp.pmc_id)
+    da.aud_state
     from drug_pmc dp,drug_audit da 
     where dp.pmc_id = da.aud_fk_id and dp.pmc_id = #{pmcId,jdbcType=VARCHAR} and dp.isva = '1' and da.isva = '1'
+    order by da.optime desc limit 1
+  </select>
+  
+  <select id="selectByAudit" parameterType="java.util.Map" resultMap="BaseResultMapTwo">
+    select 
+    <include refid="Base_Column_List_One" />
+    from drug_pmc dp, drug_audit da where dp.pmc_id = da.aud_fk_id and dp.isva = '1' and da.isva = '1'
+    <if test="record.audType == 0 ">
+    	and da.aud_state in ('10001','10010','10011')
+    </if>
+    <if test="record.audType == 1 ">
+    	and da.aud_state in ('10101','10110','10111')
+    </if>
+    <if test="record.pmcName != null and record.pmcName != ''">
+   		and dp.pmc_name like CONCAT('%',#{record.pmcName,jdbcType=VARCHAR},'%')
+   	</if>
+   	<if test="record.comName != null and record.comName != ''">
+   		and dp.com_name like CONCAT('%',#{record.comName,jdbcType=VARCHAR},'%')
+   	</if>
+    <if test="record.minAmount != null and record.minAmount != ''">
+   		and dp.pmc_amount &gt; #{record.minAmount,jdbcType=VARCHAR}
+   	</if>
+   	<if test="record.maxAmount != null and record.maxAmount != ''">
+   		and dp.pmc_amount &lt; #{record.maxAmount,jdbcType=VARCHAR}
+   	</if>
+   	<if test="record.startTime != null and record.startTime != ''">
+   		and dp.pmc_start &gt; #{record.startTime,jdbcType=TIMESTAMP}
+   	</if>
+   	<if test="record.endTime != null and record.endTime != ''">
+   		and dp.pmc_start &lt; #{record.endTime,jdbcType=TIMESTAMP}
+   	</if>
+   	<if test="record.startTimes != null and record.startTimes != ''">
+   		and dp.pmc_end &gt; #{record.startTimes,jdbcType=TIMESTAMP}
+   	</if>
+   	<if test="record.endTimes != null and record.endTimes != ''">
+   		and dp.pmc_end &lt; #{record.endTimes,jdbcType=TIMESTAMP}
+   	</if>
+   	<if test="record.pmcState != null and record.pmcState != ''">
+   		and dp.pmc_state = #{record.pmcState,jdbcType=VARCHAR}
+   	</if>
+   	order by (da.sort+0) desc 
+   	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAuditCount" parameterType="com.yidu.domain.Pmc" resultType="int">
+    select 
+    count(dp.pmc_id) 
+    from drug_pmc dp, drug_audit da where dp.pmc_id = da.aud_fk_id and dp.isva = '1' and da.isva = '1'
+    <if test="audType == 0 ">
+    	and da.aud_state in ('10001','10010','10011')
+    </if>
+    <if test="audType == 1 ">
+    	and da.aud_state in ('10101','10110','10111')
+    </if>
+    <if test="pmcName != null and pmcName != ''">
+   		and dp.pmc_name like CONCAT('%',#{pmcName,jdbcType=VARCHAR},'%')
+   	</if>
+   	<if test="comName != null and comName != ''">
+   		and dp.com_name like CONCAT('%',#{comName,jdbcType=VARCHAR},'%')
+   	</if>
+    <if test="minAmount != null and minAmount != ''">
+   		and dp.pmc_amount &gt; #{minAmount,jdbcType=VARCHAR}
+   	</if>
+   	<if test="maxAmount != null and maxAmount != ''">
+   		and dp.pmc_amount &lt; #{maxAmount,jdbcType=VARCHAR}
+   	</if>
+   	<if test="startTime != null and startTime != ''">
+   		and dp.pmc_start &gt; #{startTime,jdbcType=TIMESTAMP}
+   	</if>
+   	<if test="endTime != null and endTime != ''">
+   		and dp.pmc_start &lt; #{endTime,jdbcType=TIMESTAMP}
+   	</if>
+   	<if test="startTimes != null and startTimes != ''">
+   		and dp.pmc_end &gt; #{startTimes,jdbcType=TIMESTAMP}
+   	</if>
+   	<if test="endTimes != null and endTimes != ''">
+   		and dp.pmc_end &lt; #{endTimes,jdbcType=TIMESTAMP}
+   	</if>
+   	<if test="pmcState != null and pmcState != ''">
+   		and dp.pmc_state = #{pmcState,jdbcType=VARCHAR}
+   	</if>
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">

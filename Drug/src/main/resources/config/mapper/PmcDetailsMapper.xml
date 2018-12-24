@@ -16,6 +16,7 @@
     <id column="pd_id" jdbcType="VARCHAR" property="pdId" />
     <result column="pmc_id" jdbcType="VARCHAR" property="pmcId" />
     <result column="drug_id" jdbcType="VARCHAR" property="drugId" />
+    <result column="dt_id" jdbcType="VARCHAR" property="dtId" />
     <result column="pd_amount" jdbcType="INTEGER" property="pdAmount" />
     <result column="pd_state" jdbcType="VARCHAR" property="pdState" />
     <result column="isva" jdbcType="VARCHAR" property="isva" />
@@ -25,6 +26,7 @@
     <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
     <result column="drug_unit" jdbcType="VARCHAR" property="drugUnit" />
     <result column="drug_prop" jdbcType="VARCHAR" property="drugProp" />
+    <result column="dt_name" jdbcType="VARCHAR" property="dtName" />
   </resultMap>
   
   <sql id="Base_Column_List">
@@ -32,16 +34,19 @@
   </sql>
   
   <sql id="Base_Column_List_One">
-    pd.pd_id, dd.drug_id, dp.pmc_name, dd.drug_name, pd.pd_amount, dd.drug_unit, dd.drug_prop
+    pd.pd_id, dd.drug_id, dp.pmc_name, dd.drug_name, pd.pd_amount, dd.drug_unit, dd.drug_prop, dt.dt_name
   </sql>
   
   <select id="selectBySelective" parameterType="java.util.Map" resultMap="BaseResultMapOne">
     select 
     <include refid="Base_Column_List_One" />
-    from drug_pmc_details pd,drug_pmc dp,drug_drug dd where pd.pmc_id = dp.pmc_id and pd.drug_id = dd.drug_id and pd.isva = '1' 
+    from drug_pmc_details pd,drug_pmc dp,drug_drug dd,drug_drug_type dt where pd.pmc_id = dp.pmc_id and pd.drug_id = dd.drug_id and dt.dt_id = dd.dt_id and pd.isva = '1' 
     <if test="record.pmcId !=null and record.pmcId !='' ">
     	and pd.pmc_id = #{record.pmcId,jdbcType=VARCHAR}
     </if>
+    <if test="record.dtId != null and record.dtId != ''">
+   		and dt.dt_id = #{record.dtId,jdbcType=VARCHAR}
+   	</if>
     <if test="record.pmcName !=null and record.pmcName !='' ">
     	and pd.pmc_name like CONCAT('%',#{record.pmcName,jdbcType=VARCHAR},'%')
     </if>
@@ -49,28 +54,26 @@
     	and dd.drug_name like CONCAT('%',#{record.drugName,jdbcType=VARCHAR},'%')
     </if>
     order by (dd.sort+0) desc 
-    <if test="pageUtil !=null">
-   		limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
-    </if>
+   	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
   </select>
-  
-  
-  
   
   <select id="selectCountBySelective" parameterType="com.yidu.domain.PmcDetails"  resultType="int">
     select 
     count(pd.pd_id) 
-    from drug_pmc_details pd,drug_pmc dp,drug_drug dd where pd.pmc_id = dp.pmc_id and pd.drug_id = dd.drug_id and pd.isva = '1' 
+    from drug_pmc_details pd,drug_pmc dp,drug_drug dd,drug_drug_type dt where pd.pmc_id = dp.pmc_id and pd.drug_id = dd.drug_id and dt.dt_id = dd.dt_id and pd.isva = '1' 
     <if test="pmcId !=null and pmcId !='' ">
     	and pd.pmc_id = #{pmcName,jdbcType=VARCHAR}
     </if>
+    <if test="dtId != null and dtId != ''">
+   		and dt.dt_id = #{dtId,jdbcType=VARCHAR}
+   	</if>
     <if test="pmcName !=null and pmcName !='' ">
     	and pd.pmc_name like CONCAT('%',#{pmcName,jdbcType=VARCHAR},'%')
     </if>
     <if test="drugName !=null and drugName !='' ">
     	and dd.drug_name like CONCAT('%',#{drugName,jdbcType=VARCHAR},'%')
     </if>
-  </select> 
+  </select>  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

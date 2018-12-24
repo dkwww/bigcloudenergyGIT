@@ -26,7 +26,11 @@ public interface PmcMapper {
 
 	int check(String pmcId);
 
-	int isCheck(String pmcId);  
+	String isCheck(String pmcId);  
 	
 	Pmc selectById(String pmcId);
+
+	List<Pmc> selectByAudit(Map<String, Object> map);
+
+	int selectAuditCount(Pmc record);
 }

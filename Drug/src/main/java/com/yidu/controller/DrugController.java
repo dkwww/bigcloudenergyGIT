@@ -159,11 +159,11 @@ public class DrugController {
 	 * @param drugId 药品编号
 	 * @return Message json工具类
 	 */
-	@RequestMapping("/isCheck")
+	@RequestMapping("/check")
 	@ResponseBody
-	public Message isCheck(String drugId) {
+	public Message check(String drugId) {
 		Message mes = new Message();
-		int rows = drugService.isCheck(drugId);
+		int rows = drugService.check(drugId);
 		if (rows>0) {
 			Audit audit = new Audit();
 			audit.setAudFkId(drugId);
@@ -181,14 +181,6 @@ public class DrugController {
 		}
 		return mes;
 	}
-	
-	
-	@RequestMapping("/checked")
-	@ResponseBody
-	public int checked(String drugId) {
-		return drugService.checked(drugId);
-	}
-	
 	
 	/**
 	 * 查询所有

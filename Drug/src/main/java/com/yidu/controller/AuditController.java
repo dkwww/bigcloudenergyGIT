@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -471,6 +472,27 @@ public class AuditController {
 	@ResponseBody
 	public Audit findById(String audId) {
 		return service.findById(audId);
+	}
+	
+	
+	/**
+	 * 增加或修改
+	 * @param audit
+	 * @return
+	 */
+	@RequestMapping("/addOrUpdate")
+	@ResponseBody
+	public Message addOrUpdate(@RequestBody Audit audit) {
+		Message mes = new Message();
+		int rows = service.addOrUpdate(audit);
+		if (rows>0) {
+			mes.setStatus(1);
+			mes.setMsg("操作成功！");
+		} else {
+			mes.setStatus(0);
+			mes.setMsg("操作失败！");
+		}
+		return mes;
 	}
 }
 

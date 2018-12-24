@@ -270,24 +270,18 @@
 		            id: 'demo',
 		            cols: [
 		                [{checkbox: true,fixed: true},
-		                {field: 'drugId',title: 'ID',width: 200},
+		                {field: 'drugId',title: 'ID',width: 150},
 		                {field: 'drugName',title: '药名'},
-		                {field: 'dtName',title: '类型',width: 80},
 		                {field: 'drugUnit',title: '单位',width: 80},
+		                {field: 'dtName',title: '类型',width: 90},
 		                {field: 'drugProp',title: '属性',width: 90},
 		                {field: 'drugPictrue',title: '图片',width: 60,templet:'#img'},
 		                {field: 'drugPrice',title: '价格（元）',width: 120,sort: true},
+		                {field: 'audState',title: '审核状态',width: 120},
 		                {fixed: 'right',title: '操作',width: 350,align: 'center',toolbar: '#tools'}]
 		            ],
 		            done: function(res, curr, count) {
 		            	var tableElem = this.elem.next('.layui-table-view');
-		            	$("[data-field = 'drugId']").children().not(":first").each(function(index){
-		            		$.post("../../drug/checked.action",{"drugId":$(this).text()},function(mes){
-		            			if (mes>0) {
-		            				tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=check]').addClass('layui-btn-disabled').attr('disabled',true);
-		                    	}
-		            		},"json");
-					  	});
 		                $("[data-field = 'drugProp']").children().each(function(){
 						    if($(this).text() == '1'){
 						    	$(this).text("处方药");
@@ -298,7 +292,7 @@
 		                $("[data-field = 'drugPictrue']").children().each(function(){
 		                	var obj = $(this);
 		                	obj.find('img').on("error", function () {
-		                		obj.text('');
+		                		obj.text('无');
 		                	});
 		                	obj.find('img').on("load", function () {
 		                		obj.find('img').mouseover(function() {
@@ -308,12 +302,29 @@
 		                      	});
 		                	});
 					  	});
+		                $("[data-field = 'audState']").children().not(":first").each(function(index){
+		                	var id = $(this).parents('tr').find('td[data-field="drugId"]').text();
+		                	var o = $(this);
+	            			if (o.text() == '10001') {
+	            				o.html('<font style="color: #0000F0">等待审核</font>');
+	            				tableElem.find('tr[data-index="' + index + '"]').find('button').addClass('layui-btn-disabled').attr('disabled',true);
+	            			} else if (o.text() == '10010') {
+	            				o.html('<font style="color: #F00000">不通过</font>');
+	            			} else if (o.text() == '10011') {
+	            				o.html('<font style="color: #00F000">通过</font>');
+	            				tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event="check"]').addClass('layui-btn-disabled').attr('disabled',true);
+	            			} else if (o.text() == '-1') {
+	            				o.text("未审核");
+	            			}
+					  	});
+		                renderForm();
 		            }
 		        });
 		        
 				//查询类型下拉框数据
 		        var staticData = null;
-		        $.ajax({ url:"../../drugType/showList.action",
+		        $.ajax({ 
+		        	url:"../../drugType/showList.action",
                     type:'post',//method请求方式，get或者post
                     async:false,//同步
                     dataType:'json',//预期服务器返回的数据类型
@@ -352,7 +363,7 @@
 		            	layer2(data.drugId,data.drugName);
 		            } else if (layEvent === 'check') { //提交审核
 		            	$.ajax({ 
-		            		url:"../../drug/isCheck.action",
+		            		url:"../../drug/check.action",
 		            		data:{"drugId":data.drugId},
 		                    type:'post',//method请求方式，get或者post
 		                    async:false,//同步

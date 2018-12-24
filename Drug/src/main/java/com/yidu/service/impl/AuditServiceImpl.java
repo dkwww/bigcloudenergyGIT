@@ -41,7 +41,6 @@ public class AuditServiceImpl   implements AuditService {
 			rows = updateByPrimaryKeySelective(audit);
 		}else {
 			audit.setAudTime(new Date());
-			audit.setAudState(null);//这里规定一下 “0” 审核未通过  “1” 审核通过
 			audit.setIsva("1");
 			audit.setSort(TimeUtil.getStrDate());
 			rows = insertSelective(audit);
@@ -338,8 +337,10 @@ public class AuditServiceImpl   implements AuditService {
 	}
 
 	@Override
-	public Audit findById(String id) {
-		return mapper.selectByPrimaryKey(id);
+	public Audit findById(String audId) {
+		Audit record = mapper.selectByPrimaryKey(audId);
+		record.setAudTimes(TimeUtil.dateToString(record.getAudTime(), "yyyy-MM-dd HH:mm:ss"));
+		return record;
 	}
 	
 	

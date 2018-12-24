@@ -1,6 +1,7 @@
 package com.yidu.service.impl;
 
  
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,18 @@ public class DrugServiceImpl implements DrugService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("record", record);
 		map.put("pageUtil", pageUtil);
-		return drugMapper.selectBySelective(map);
+		List<Drug> list = drugMapper.selectBySelective(map);
+		List<Drug> lists = new ArrayList<Drug>();
+		for (Drug drug : list) {
+			String str = drugMapper.isCheck(drug.getDrugId());
+			if (str!=null && !"".equals(str)) {
+				drug.setAudState(str);
+			} else {
+				drug.setAudState("-1");
+			}
+			lists.add(drug);
+		}
+		return lists;
 	}
 
 	@Override
@@ -59,13 +71,8 @@ public class DrugServiceImpl implements DrugService {
 	}
 
 	@Override
-	public int isCheck(String drugId) {
-		return drugMapper.isCheck(drugId);
-	}
-
-	@Override
-	public int checked(String drugId) {
-		return drugMapper.checked(drugId);
+	public int check(String drugId) {
+		return drugMapper.check(drugId);
 	}
 	
 	@Override

@@ -123,11 +123,14 @@
 			<!-- 操作按钮 -->
 		    <div class="kit-table-body">
 		        <table id="demo" lay-filter="demo"></table>
-		        <script type="text/html" id="barDemo">
-		            <button class="layui-btn layui-btn-xs" lay-event="detail">配置药品</button>
+		        <script type="text/html" id="tools">
+		            <button class="layui-btn layui-btn-xs" lay-event="config">配置药品</button>
 					<button class="layui-btn layui-btn-xs" lay-event="check">提交审核</button>
 		            <button class="layui-btn layui-btn-xs" lay-event="edit">编辑</button>
 		            <button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button>
+		        </script>
+		        <script type="text/html" id="see">
+					<button class="layui-btn layui-btn-xs" lay-event="detail">生产明细</button>
 		        </script>
 		    </div>
 		</div>
@@ -178,17 +181,12 @@
 		                {field: 'strStartTime',title: '开始时间',sort: true},
 		                {field: 'strEndTime',title: '生产期限',sort: true},
 		                {field: 'pmcState',title: '状态'},
-		                {fixed: 'right',title: '操作',width: 280,align: 'center',toolbar: '#barDemo'}]
+		                {field: 'audState',title: '审核状态',width: 140},
+		                {fixed: 'right',title: '查看',width: 100,align: 'center',toolbar: '#see'},
+		                {field: 'tools',fixed: 'right',title: '操作',width: 280,align: 'center',toolbar: '#tools'}]
 		            ],
 		            done: function(res, curr, count) {
 		            	var tableElem = this.elem.next('.layui-table-view');
-		            	layui.each(res.data,function(index,item){
-		            		$.post("../../../pmc/isCheck.action",{"pmcId":item.pmcId},function(mes){
-		            			if (mes>0) {
-		            				tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=check],button[lay-event=edit]').addClass('layui-btn-disabled').attr('disabled',true);
-		                    	}
-		            		},"json");
-		            	});
 		                $("[data-field = 'pmcState']").children().each(function(){
 						    if($(this).text() == '1'){
 						    	$(this).text("已完成");
@@ -197,6 +195,26 @@
 						    } else if ($(this).text() == '-1'){
 						    	$(this).text("未生产");
 						    }
+					  	});
+		                $("[data-field = 'audState']").children().not(":first").each(function(index){
+		                	var id = $(this).parents('tr').find('td[data-field="pmcId"]').text();
+		                	var o = $(this);
+	            			if (o.text() == '10001') {
+	            				o.html('<font style="color: #0000F0">等待财物审核</font>');
+	            				tableElem.find('tr[data-index="' + index + '"]').find('td[data-field="tools"] button').addClass('layui-btn-disabled').attr('disabled',true);
+	            			} else if (o.text() == '10101' || o.text() == '10011') {
+	            				o.html('<font style="color: #0000F0">等待总经理审核</font>');
+	            				tableElem.find('tr[data-index="' + index + '"]').find('td[data-field="tools"] button').addClass('layui-btn-disabled').attr('disabled',true);
+	            			} else if (o.text() == '10010') {
+	            				o.html('<font style="color: #F00000">财物不通过</font>');
+	            			} else if (o.text() == '10110') {
+	            				o.html('<font style="color: #F00000">总经理不通过</font>');
+	            			} else if (o.text() == '10111') {
+	            				o.html('<font style="color: #00F000">通过</font>');
+	            				tableElem.find('tr[data-index="' + index + '"]').find('td[data-field="tools"] button').addClass('layui-btn-disabled').attr('disabled',true);
+	            			} else if (o.text() == '-1') {
+	            				o.text("未审核");
+	            			}
 					  	});
 		            }
 		        });
@@ -221,8 +239,10 @@
 		            var layEvent = obj.event; //获得 lay-event 对应的值
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		
-		            if (layEvent === 'detail') { //配置药品
-		            	maxlayer(data.pmcId,data.pmcName);
+		            if (layEvent === 'detail') { //物料清单
+		            	layer1(data.pmcId,data.pmcName);
+		            } else if (layEvent === 'config') { //配置药品
+		            	layer2(data.pmcId,data.pmcName);
 		            } else if (layEvent === 'check') { //提交审核
 		            	$.ajax({ 
 		            		url:"../../../pmc/check.action",
@@ -299,15 +319,26 @@
 		        });
 		    });
 			
-		  	//全屏弹窗
-			function maxlayer(id,name){
-				var index = layer.open({
+		  	//物料明细弹窗
+			function layer1(id,name){
+				var layerIndex1 = layer.open({
+					  type: 2,
+					  title: '药品明细',
+					  content: '../../plan/pmc/details/index2.html?id='+id+"&name="+name,
+					  area: ['100%', '100%']
+					});
+				layer.full(layerIndex1);
+			}
+			
+		  	//配置药品弹窗
+			function layer2(id,name){
+				var layerIndex2 = layer.open({
 				  type: 2,
 				  title: '药品配置',
-				  content: '../../../pages/plan/pmc/details/index.html?id='+id+"&name="+name,
-				  area: ['800px', '430px']
+				  content: '../../plan/pmc/details/index.html?id='+id+"&name="+name,
+				  area: ['100%', '100%']
 				});
-				layer.full(index);
+				layer.full(layerIndex2);
 			}
 		  	
 			//渲染 药品修改和增加弹出层

@@ -25,8 +25,10 @@ public interface PmcService  {
 
 	int check(String pmcId);
 
-	int isChack(String pmcId);
-	
 	Pmc selectById(String pmcId);
+
+	List<Pmc> showAudit(Pmc record, PageUtil pageUtil);
+
+	int findAuditCount(Pmc record);
 
 }

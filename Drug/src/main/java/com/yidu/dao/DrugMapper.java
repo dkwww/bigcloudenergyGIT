@@ -24,9 +24,9 @@ public interface DrugMapper {
     
 	int bulkDeleteByPrimaryKeySelective(List<String> ids);
 
-	int isCheck(String drugId);
+	int check(String drugId);
 
-	int checked(String drugId);
+	String isCheck(String drugId);
 	
 	List<Drug> selectBySelectives(Map<String, Object> map);
 
