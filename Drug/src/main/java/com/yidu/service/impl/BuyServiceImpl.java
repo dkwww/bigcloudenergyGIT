@@ -41,10 +41,10 @@ public class BuyServiceImpl implements BuyService {
 		map.put("pageUtil", pageUtil);
 		List<Buy> list = mapper.findAll(map);
 		for (Buy buy2 : list) {
-			if(buy2.getBuyTime()!=null&&!"".equals(buy2.getBuyTime())) {
+			if(buy2.getBuyTime()!=null) {
 				buy2.setBuyTimes(TimeUtil.dateToString(buy2.getBuyTime(), "yyyy-MM-dd HH:mm:ss"));
 			}
-			if(buy2.getOptime()!=null&&!"".equals(buy2.getOptime())) {
+			if(buy2.getOptime()!=null) {
 				buy2.setOptimes(TimeUtil.dateToString(buy2.getOptime(), "yyyy-MM-dd HH:mm:ss"));
 			}
 			if("0".equals(buy2.getBuyState())) {
@@ -92,6 +92,12 @@ public class BuyServiceImpl implements BuyService {
 	@Override
 	public int findCount(Buy buy) {
 		return mapper.selectCountBySelective(buy);
+	}
+
+
+	@Override
+	public Buy findById(String id) {
+		return mapper.selectByPrimaryKey(id);
 	}
 
 }

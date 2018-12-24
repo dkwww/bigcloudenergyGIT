@@ -24,6 +24,13 @@
 	AND dc.com_id=#{comId,jdbcType=VARCHAR} AND dd.drug_id=#{drugId,jdbcType=VARCHAR}
   </select>
   
+  <select id="findDrug" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select 
+    *
+    from drug_drug_inv
+    where drug_id = #{drugId,jdbcType=VARCHAR}
+  </select>
+  
   <update id="amountupdate" parameterType="com.yidu.domain.DrugInve">
   		update drug_drug_inv set di_amount=di_amount-#{diAmount,jdbcType=VARCHAR} where di_Id=#{diId,jdbcType=VARCHAR}
   </update>

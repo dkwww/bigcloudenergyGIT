@@ -1,6 +1,15 @@
 package com.yidu.controller;
 
 
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -10,21 +19,13 @@ import com.yidu.domain.Debty;
 import com.yidu.domain.DrugInve;
 import com.yidu.domain.WholesaleDetail;
 import com.yidu.service.AuditService;
+import com.yidu.service.BuyService;
 import com.yidu.service.DebtyService;
 import com.yidu.service.DrugInvService;
 import com.yidu.service.WholesaleDetailService;
 import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
 import com.yidu.util.Tools;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Controller;
 
 /**
  * <p>
@@ -49,6 +50,12 @@ public class AuditController {
 	
 	@Resource
 	DebtyService debtyservice;
+	
+	@Resource
+	DebtyService debtyService;
+	
+	@Resource
+	BuyService buyService;
 	
 	/**
 	 * 显示列表的方法
@@ -237,7 +244,7 @@ public class AuditController {
 					druginvservice.amountupdate(drugInve);
 					Debty debty=new Debty();
 					debty.setComId(druginv.getComId());
-					debty.setDebMoney(zongjia);
+					//debty.setDebMoney(zongjia);
 					int money=debtyservice.moneyupdate(debty);
 					if(money>0) {
 						l=1;
@@ -257,5 +264,199 @@ public class AuditController {
 		return message;
 	}
 	
+
+	/**                       
+	 * 审核的方法
+	 * @param id
+	 * @param state
+	 * @return
+	 */
+	@RequestMapping("/auditByaudId")
+	@ResponseBody
+	public Message auditById(String id,String state,String buyId) {
+		
+		System.out.println("   aaaaaaaaaaaaa     "+buyId);
+		
+		//用于页面上的判断
+		Message message = new Message();
+		
+		//定义一个盒子
+		BigDecimal money = new BigDecimal(0);
+		
+		Audit audit = new Audit();
+		audit.setAudId(id);
+		audit.setAudState(state);
+		
+		
+		if("12".equals(state)) {
+			//如果分店总经理审核通过，则根据id查询出
+			Buy buy = buyService.findById(buyId);
+			//根据订单中的店铺id查找这个店铺的总余额
+			Debty debty1 = debtyService.findByComId(buy.getComId());
+			System.out.println(" 财务余额："+debty1.getDebMoney()+"     订单总金额"+buy.getBuyMoney());
+			int a =debty1.getDebMoney().compareTo(buy.getBuyMoney());
+			Debty debty2 = new Debty();//定义一个新的财务对象
+			debty2.setDebId(debty1.getDebId());
+			//如果店铺余额大于总金额,则
+			if(a==1||a==0) {
+				money = debty1.getDebMoney().subtract(debty1.getDebMoney());
+				//将需要修改的数据传入新对象中
+				debty2.setDebMoney(money);
+				int count = debtyService.updateByPrimaryKeySelective(debty2);
+				if(count!=0) {
+					int rows=service.updateByPrimaryKeySelective(audit);
+					
+					if(rows!=0) {
+						message.setStatus(1);
+						message.setMsg("操作成功");
+					}else {
+						message.setStatus(0);
+						message.setMsg("操作失败");
+					}
+				}else {
+					message.setStatus(0);
+					message.setMsg("操作失败");
+				}
+				
+			}else if(a==-1) {
+				message.setStatus(0);
+				message.setMsg("本店余额不足");
+			}
+			
+		}else if("16".equals(state)) {
+			//如果总店总经理审核通过，则根据id查询出
+			Buy buy = buyService.findById(buyId);
+			//根据订单中的店铺id查找这个店铺的总余额
+			Debty debty1 = debtyService.findByComId(buy.getComId());
+			System.out.println(" 财务余额："+debty1.getDebMoney());
+			System.out.println(" 订单总金额"+buy.getBuyMoney());
+			//将两个金额相加
+			money =debty1.getDebMoney().add(buy.getBuyMoney());
+			Debty debty2 = new Debty();//定义一个新的财务对象
+			debty2.setDebId(debty1.getDebId());
+			debty2.setDebMoney(money);
+			int count = debtyService.updateByPrimaryKeySelective(debty2);
+			if(count!=0) {
+				
+				int rows=service.updateByPrimaryKeySelective(audit);
+				
+				if(rows!=0) {
+					message.setStatus(1);
+					message.setMsg("操作成功");
+				}else {
+					message.setStatus(0);
+					message.setMsg("操作失败");
+				}
+			}
+			
+		}else {
+			
+			int rows=service.updateByPrimaryKeySelective(audit);
+			
+			if(rows!=0) {
+				message.setStatus(1);
+				message.setMsg("操作成功");
+			}else {
+				message.setStatus(0);
+				message.setMsg("操作失败");
+			}
+		}
+		
+		
+		
+		return message;
+	}
+	
+	@RequestMapping("/showBuy")
+	@ResponseBody
+	public Map<String, Object> showBuy(Audit audit,Integer page,Integer limit){
+		PageUtil pageUtil = new PageUtil();
+		if(page!=null && limit!=null) {
+			pageUtil.setCurPage(page);
+			pageUtil.setRows(limit);
+		}
+		
+		List<Audit> list = service.showBuy(audit,pageUtil);
+		int rows=service.findCount(audit);
+		
+		Map<String, Object> m = new HashMap<>();
+		m.put("code", 0);
+		m.put("msg", "");
+		m.put("count", rows);
+		m.put("data", list);
+		return m;
+	}
+	
+	
+	@RequestMapping("/showCEO")
+	@ResponseBody
+	public Map<String, Object> showCEO(Audit audit,Integer page,Integer limit){
+		PageUtil pageUtil = new PageUtil();
+		if(page!=null && limit!=null) {
+			pageUtil.setCurPage(page);
+			pageUtil.setRows(limit);
+		}
+		
+		List<Audit> list = service.showCEO(audit,pageUtil);
+		int rows=service.findCount(audit);
+		
+		Map<String, Object> m = new HashMap<>();
+		m.put("code", 0);
+		m.put("msg", "");
+		m.put("count", rows);
+		m.put("data", list);
+		return m;
+	}
+	
+
+	@RequestMapping("/findSale")
+	@ResponseBody
+	public Map<String, Object> findSale(Audit audit,Integer page,Integer limit){
+		PageUtil pageUtil = new PageUtil();
+		if(page!=null && limit!=null) {
+			pageUtil.setCurPage(page);
+			pageUtil.setRows(limit);
+		}
+		
+		List<Audit> list = service.findSale(audit,pageUtil);
+		int rows=service.findCount(audit);
+		
+		Map<String, Object> m = new HashMap<>();
+		m.put("code", 0);
+		m.put("msg", "");
+		m.put("count", rows);
+		m.put("data", list);
+		return m;
+	}
+	
+
+	@RequestMapping("/findCEO")
+	@ResponseBody
+	public Map<String, Object> findCEO(Audit audit,Integer page,Integer limit){
+		PageUtil pageUtil = new PageUtil();
+		if(page!=null && limit!=null) {
+			pageUtil.setCurPage(page);
+			pageUtil.setRows(limit);
+		}
+		
+		List<Audit> list = service.findCEO(audit,pageUtil);
+		int rows=service.findCount(audit);
+		
+		Map<String, Object> m = new HashMap<>();
+		m.put("code", 0);
+		m.put("msg", "");
+		m.put("count", rows);
+		m.put("data", list);
+		return m;
+	}
+	/**
+	 * 查询审核状态
+	 * @return
+	 */
+	@RequestMapping("/findById")
+	@ResponseBody
+	public Audit findById(String audId) {
+		return service.findById(audId);
+	}
 }
 

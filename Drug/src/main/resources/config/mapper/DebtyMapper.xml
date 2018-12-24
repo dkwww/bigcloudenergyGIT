@@ -19,6 +19,13 @@
     from drug_debty
     where deb_id = #{debId,jdbcType=VARCHAR}
   </select>
+  <!-- 根据店铺id查询 -->
+   <select id="findByComId" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select 
+    *
+    from drug_debty
+    where com_id = #{comId,jdbcType=VARCHAR}
+  </select>
   <!-- 分店分页以及模糊查询 -->
   <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
   	select * from  drug_debty 

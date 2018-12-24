@@ -64,4 +64,11 @@ public interface DebtyService   {
      * @return
      */
     int moneyupdate(Debty debty);
+    
+    /**
+     * 根据药品id查询
+     * @param drugId
+     * @return
+     */
+    Debty findByComId(String drugId);
 }

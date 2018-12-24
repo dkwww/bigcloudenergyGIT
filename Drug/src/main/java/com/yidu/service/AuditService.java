@@ -110,4 +110,45 @@ public interface AuditService   {
 	 * @return
 	 */
 	public int finanupdate(String audId);
+	
+	/**
+	 * 显示总店财务审核
+	 * @param audit
+	 * @param pageUtil
+	 * @return
+	 */
+	public List<Audit> findSale(Audit audit,PageUtil pageUtil);
+	
+	/**
+	 * 显示总店总经理审核
+	 * @param audit
+	 * @param pageUtil
+	 * @return
+	 */
+	public List<Audit> findCEO(Audit audit,PageUtil pageUtil);
+	
+	/**
+	 * 根据id查询
+	 * @param id
+	 * @return
+	 */
+	public Audit findById(String id);
+	
+	
+	/**
+	 * 显示分店财务审核
+	 * @param audit
+	 * @param pageUtil
+	 * @return
+	 */
+	public List<Audit> showBuy(Audit audit,PageUtil pageUtil);
+	
+	/**
+	 * 显示分店总经理审核
+	 * @param audit
+	 * @param pageUtil
+	 * @return
+	 */
+	public List<Audit> showCEO(Audit audit,PageUtil pageUtil);
+	
 }

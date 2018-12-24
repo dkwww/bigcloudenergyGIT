@@ -64,4 +64,29 @@ public interface AuditMapper {
     
     
     public int finanupdate(String audId);
+
+	
+	/**
+     * 显示分店财务审核
+     * @return
+     */
+    public List<Audit> showBuy(Map<String, Object> map);
+	
+	/**
+     * 显示分店总经理表
+     * @return
+     */
+    public List<Audit> showCEO(Map<String, Object> map);
+    
+    /**
+     * 显示总店财务审核
+     * @return
+     */
+    public List<Audit> findSale(Map<String, Object> map);
+	
+	/**
+     * 显示总店总经理审核
+     * @return
+     */
+    public List<Audit> findCEO(Map<String, Object> map);
 }

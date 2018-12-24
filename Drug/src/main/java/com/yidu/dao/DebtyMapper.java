@@ -37,5 +37,12 @@ public interface DebtyMapper {
      * @return
      */
     int moneyupdate(Debty debty);
+    
+    /**
+     * 根据店铺id查询
+     * @param comId
+     * @return
+     */
+	Debty findByComId(String comId);
 }
    

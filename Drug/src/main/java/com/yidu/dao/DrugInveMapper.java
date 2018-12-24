@@ -39,4 +39,6 @@ public interface DrugInveMapper {
      * @return
      */
     public int amountupdate(DrugInve drugInve);
+    
+    DrugInve findDrug(String id);
 }

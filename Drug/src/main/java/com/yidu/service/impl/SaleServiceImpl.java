@@ -2,10 +2,12 @@ package com.yidu.service.impl;
 
  
 import com.yidu.dao.SaleMapper;
+import com.yidu.domain.Buy;
 import com.yidu.domain.Sale;
 import com.yidu.domain.SaleDetail;
 import com.yidu.service.SaleService;
 import com.yidu.util.PageUtil;
+import com.yidu.util.TimeUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -59,6 +61,24 @@ public class SaleServiceImpl implements SaleService {
 	@Override
 	public int insertSelective(Sale sale) {
 		return mapper.insertSelective(sale);
+	}
+
+
+	@Override
+	public List<Sale> showList(Sale sale, PageUtil pageUtil) {
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("sale", sale);
+		map.put("pageUtil", pageUtil);
+		List<Sale> list = mapper.findAll(map);
+		
+		
+		return list;
+	}
+
+
+	@Override
+	public int findCount(Sale sale) {
+		return mapper.findCount(sale);
 	}
 	
 	

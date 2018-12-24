@@ -20,6 +20,18 @@
     from drug_sale
     where sale_id = #{saleId,jdbcType=VARCHAR}
   </select>
+  
+  <select id="findAll" parameterType="map" resultMap="BaseResultMap">
+  	SELECT * FROM drug_sale WHERE 1=1
+  	
+   	order by sort desc 
+  	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
+  </select>
+  
+  <select id="findCount" parameterType="java.util.Map" resultType="Integer" >
+  	select count(*) from drug_sale  where 1=1
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_sale
     where sale_id = #{saleId,jdbcType=VARCHAR}

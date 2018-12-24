@@ -52,4 +52,11 @@ public interface BuyService   {
 	 * @return
 	 */
 	public int insertSelective(Buy buy);
+	
+	/**
+	 * 根据id查询
+	 * @param id
+	 * @return
+	 */
+	public Buy findById(String id);
 }

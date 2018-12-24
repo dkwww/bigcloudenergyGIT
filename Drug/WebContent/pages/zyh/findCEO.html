@@ -6,86 +6,20 @@
 		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
-		<title>采购单</title>
+		<title>总店总经理审核</title>
 	</head>
 	<body>
+	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+  		<legend>总店总经理审核</legend>
+	</fieldset>
 		<div class="kit-table">
-		    <form class="layui-form" lay-filter="kit-search-form">
-						<!-- 左上角的两个按钮 -->
-		        <div class="kit-table-header">
-		            <div class="kit-search-btns">
-		                <a href="javascript:;" data-action="add" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i> 新增</a>
-		            </div>
-		            <div class="kit-search-inputs">
-		                <div class="kit-search-keyword">
-		                    <input type="text" class="layui-input" name="keyword" placeholder="搜索关键字.." />
-		                    <button lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
-		                </div>
-		                <div class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>
-		            </div>
-		        </div>
-						<!-- 搜索扩展工具条 -->
-		        <div class="kit-search-mored layui-anim layui-anim-upbit">
-		            <div class="kit-search-body">
-		                <div class="layui-form-item">
-		                    <label class="layui-form-label">输入框</label>
-		                    <div class="layui-input-block">
-		                        <input type="text" name="title" placeholder="请输入标题" autocomplete="off" class="layui-input">
-		                    </div>
-		                </div>
-		                <div class="layui-form-item">
-		                    <div class="layui-inline">
-		                        <label class="layui-form-label">验证手机</label>
-		                        <div class="layui-input-inline">
-		                            <input type="tel" name="phone" autocomplete="off" class="layui-input">
-		                        </div>
-		                    </div>
-		                    <div class="layui-inline">
-		                        <label class="layui-form-label">验证邮箱</label>
-		                        <div class="layui-input-inline">
-		                            <input type="text" name="email" autocomplete="off" class="layui-input">
-		                        </div>
-		                    </div>
-		                </div>
-		                <div class="layui-form-item">
-		                    <div class="layui-inline">
-		                        <label class="layui-form-label">范围</label>
-		                        <div class="layui-input-inline" style="width: 100px;">
-		                            <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input">
-		                        </div>
-		                        <div class="layui-form-mid">-</div>
-		                        <div class="layui-input-inline" style="width: 100px;">
-		                            <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input">
-		                        </div>
-		                    </div>
-		                </div>
-		                <div class="layui-form-item">
-		                    <label class="layui-form-label">单行选择框</label>
-		                    <div class="layui-input-block">
-		                        <select name="interest" lay-filter="aihao">
-		                            <option value=""></option>
-		                            <option value="0">写作</option>
-		                            <option value="1" selected="">阅读</option>
-		                            <option value="2">游戏</option>
-		                            <option value="3">音乐</option>
-		                            <option value="4">旅行</option>
-		                          </select>
-		                    </div>
-		                </div>
-		            </div>
-		            <div class="kit-search-footer">
-		                <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary kit-btn">重置</button>
-		                <button lay-submit lay-filter="search" class="layui-btn layui-btn-sm kit-btn">确定</button>
-		            </div>
-		        </div>
-		    </form>
-				
 				<!-- 操作按钮 -->
 		    <div class="kit-table-body">
 		        <table id="demo" lay-filter="demo"></table>
 		        <script type="text/html" id="barDemo">
-		            <a class="layui-btn layui-btn-xs" lay-event="detail">查看订单详情</a>
-		            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+		            <a class="layui-btn layui-btn-xs" lay-event="edit">查看订单详情</a>
+		            <a class="layui-btn layui-btn-xs" lay-event="detail">审核</a>
+		            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">不审核</a>
 		        </script>
 		    </div>
 		</div>
@@ -181,33 +115,25 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: 'full', //容器高度
-		            url: '../../buy/showList.action',
+		            url: '../../audit/findCEO.action',
 		            page: true,
 		            id: 'demo',
 		            cols: [
-		                [{checkbox: true,fixed: true}, 
-		                {field: 'buyId',title: '采购编号',width: 140}, 
-		                {field: 'comId',title: '店铺编号',width: 105},
-		                {field: 'buyAmount',title: '商品数量',width: 100}, 
-		                {field: 'buyMoney',title: '总金额',width: 80}, 
-		                {field: 'buyTimes',title: '采购时间',width: 166}, 
-		                {field: 'buyCompany',title: '供应商',width: 100}, 
-		                {field: 'buyAudit',title: '审核状态',width: 100}, 
-		                {field: 'buyStates',title: '采购状态',width: 110,sort: true}, 
-		                {field: 'buyQc',title: '质检状态',width: 110,sort: true}, 
-		                {field: 'buyPut',title: '入库状态',width: 110,sort: true },
-		                {field: 'optimes',title: '操作时间',width: 170,sort: true},
-		                {field: 'oper',title: '操作人',width: 100, sort: true}, 
-		                {fixed: 'right',title: '操作',width: 180,align: 'center', toolbar: '#barDemo' }]
+		            	 [{field: 'audId',title: 'ID', width: 273},
+		                {field: 'audFkId',title: '采购单号',width: 175},
+		                {field: 'audComtype',title: '厂家',width: 80},
+		                {field: 'qcFkId',title: '公司编号',width: 130},
+		                {field: 'audTimes',title: '审核时间',width: 170},
+		                {field: 'audStates',title: '审核状态',width: 90},
+		                {field: 'audIdea',title: '审核意见',width: 150},
+		                {field: 'audName',title: '审核人',width: 90},
+		                {field: 'audMes',title: '备注',width: 90},
+		                {field: 'optimes',title: '操作时间',width: 170},
+		                {field: 'oper',title: '操作人',width: 95,sort: true}, 
+		                {fixed: 'right',title: '操作',width: 220,align: 'center', toolbar: '#barDemo' }]
 		            ],
 		            done: function(res, curr, count) {
-		                //如果是异步请求数据方式，res即为你接口返回的信息。
-		                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
-		                // console.log(res);
-		                // //得到当前页码
-		                // console.log(curr);
-		                // //得到数据总量
-		                // console.log(count);
+						
 		            },
 		            loading: true,
 		            //method: 'post'
@@ -239,34 +165,31 @@
 		            var layEvent = obj.event; //获得 lay-event 对应的值
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		
-		            if (layEvent === 'detail') { //查看
-		            	  layer.open({
-                              type: 2,
-                              title: '信息',
-                              content:['findDetail.html?id='+data.buyId, 'no'],
-                              area: ['800px', '450px'],
-                              yes: function(index, layero) {
-                                  editIndex = index;
-                                  $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
-                              },
-                              btn2: function(index, layero) {
-                                  $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
-                                  return false;
-                              },
-                              success: function() {
-                                  form.render(null, 'form-edit');
-                              }
-                          });
-		                console.log(table.checkStatus('demo'));
-		            } else if (layEvent === 'del') { //删除
-		                layer.confirm('真的删除行么', function(index) {
-		                	
-		                	
-		                    obj.del(); //删除对应行（tr）的DOM结构
-		                    layer.close(index);
+		            if (layEvent === 'detail') { //审核
+		            	var url = "../../audit/auditByaudId.action";  
+		            	var data = {"id":data.audId,"state":16,"buyId":data.audFkId};	
+		            	$.post(url,data,function(mes){
+		            		if(mes.status==1){
+		            			alert("审核成功");
+		            		}else{
+		            			alert("审核失败");
+		            		}
+		            		
+		            	},"json");
+		            	console.log(table.checkStatus('demo'));
+		            } else if (layEvent === 'del') { //不审核
+		                	var url = "../../audit/auditByaudId.action";  
+			            	var data = {"id":data.audId,"state":15,"buyId":data.audFkId};	
+			            	$.post(url,data,function(mes){
+			            		if(mes.status==1){
+			            			console.log("操作成功");
+			            		}else{
+			            			console.log("操作失败");
+			            		}
+			            		
+			            	},"json");
 		                    //向服务端发送删除指令
-		                });
-		            } else if (layEvent === 'edit') { //编辑
+		            } else if (layEvent === 'edit') { //查看详情
 		                var d = {
 		                    user: data,
 		                    citys: staticData.citys,
@@ -331,27 +254,6 @@
 		                        citys: staticData.citys,
 		                        classifies: staticData.classifies
 		                    };
-		                    //增加
-		                    laytpl($('#edit-tpl').html()).render(d,
-		                        function(html) {
-		                            layer.open({
-		                                type: 2,
-		                                title: '信息',
-		                                content:['buyDetail.html', 'no'],
-		                                area: ['1200px', '800px'],
-		                                yes: function(index, layero) {
-		                                    editIndex = index;
-		                                    $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
-		                                },
-		                                btn2: function(index, layero) {
-		                                    $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
-		                                    return false;
-		                                },
-		                                success: function() {
-		                                    form.render(null, 'form-edit');
-		                                }
-		                            });
-		                        });
 		                    break;
 		                case 'del-bulk':
 		                    var d = table.checkStatus('demo');

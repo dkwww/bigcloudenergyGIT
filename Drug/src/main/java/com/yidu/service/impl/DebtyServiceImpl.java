@@ -125,4 +125,11 @@ public class DebtyServiceImpl   implements DebtyService {
 		return debtyMapper.moneyupdate(debty);
 	}
 
+	/**
+	 * 根据店铺id查询
+	 */
+	@Override
+	public Debty findByComId(String id) {
+		return debtyMapper.findByComId(id);
+	}
 }

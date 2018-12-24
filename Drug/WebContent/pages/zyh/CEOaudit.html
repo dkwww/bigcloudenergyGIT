@@ -166,8 +166,8 @@
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		
 		            if (layEvent === 'detail') { //审核
-		            	var url = "../../audit/auditById.action";  
-		            	var data = {"id":data.audId,"state":2};	
+		            	var url = "../../audit/auditByaudId.action";  
+		            	var data = {"id":data.audId,"state":12,"buyId":data.audFkId};	
 		            	$.post(url,data,function(mes){
 		            		if(mes.status==1){
 		            			alert("审核成功");
@@ -180,8 +180,16 @@
 		            } else if (layEvent === 'del') { //不审核
 		                layer.confirm('真的删除行么', function(index) {
 		                	
-		                	
-		                    obj.del(); //删除对应行（tr）的DOM结构
+		                	var url = "../../audit/auditByaudId.action";  
+			            	var data = {"id":data.audId,"state":11,"buyId":data.audFkId};	
+			            	$.post(url,data,function(mes){
+			            		if(mes.status==1){
+			            			console.log("操作成功");
+			            		}else{
+			            			console.log("操作失败");
+			            		}
+			            		
+			            	},"json");
 		                    layer.close(index);
 		                    //向服务端发送删除指令
 		                });

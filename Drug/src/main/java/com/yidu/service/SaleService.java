@@ -2,6 +2,7 @@ package com.yidu.service;
 
 import java.util.List;
 
+import com.yidu.domain.Buy;
 import com.yidu.domain.Sale;
 import com.yidu.domain.SaleDetail;
 import com.yidu.util.PageUtil;
@@ -15,6 +16,21 @@ import com.yidu.util.PageUtil;
  * @since 2018-11-26
  */
 public interface SaleService    {
+	
+	/**
+	 * 查询所有
+	 * @param buy
+	 * @param pageUtil
+	 * @return
+	 */
+	public List<Sale> showList(Sale sale,PageUtil pageUtil);
+	
+	/**
+	 * 查找总行数
+	 * @param buy
+	 * @return
+	 */
+	public int findCount(Sale sale);
 
 	/**
 	 * 增加或修改的方法

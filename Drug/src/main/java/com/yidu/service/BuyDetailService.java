@@ -2,6 +2,7 @@ package com.yidu.service;
 
 import java.util.List;
 
+import com.yidu.domain.Admin;
 import com.yidu.domain.BuyDetail;
 
 /**
@@ -14,7 +15,13 @@ import com.yidu.domain.BuyDetail;
  */
 public interface BuyDetailService  {
 	
-	public int purchase(String mes);
+	/**
+	 * 采购的方法
+	 * @param mes
+	 * @param admin
+	 * @return
+	 */
+	public int purchase(String mes,Admin admin);
 	
 	/**
 	 * 增加或修改的方法

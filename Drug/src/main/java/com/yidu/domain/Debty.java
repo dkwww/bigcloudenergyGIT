@@ -9,7 +9,7 @@ public class Debty {
 
     private String comId;
 
-    private Double debMoney;
+    private BigDecimal debMoney;
 
     private Date optime;
 
@@ -44,12 +44,12 @@ public class Debty {
         this.comId = comId == null ? null : comId.trim();
     }
 
-    public Double getDebMoney() {
+    public BigDecimal getDebMoney() {
         return debMoney;
     }
 
-    public void setDebMoney(Double debMoney) {
-        this.debMoney = debMoney;
+    public void setDebMoney(BigDecimal money) {
+        this.debMoney = money;
     }
 
     public Date getOptime() {

@@ -9,12 +9,14 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yidu.domain.Admin;
 import com.yidu.domain.Buy;
 import com.yidu.domain.BuyDetail;
 import com.yidu.domain.Sale;
@@ -49,9 +51,16 @@ public class BuyDetailController {
 	 */
 	@RequestMapping("/add")
 	@ResponseBody
-	public Message add(String mes) {
+	public Message add(String mes,HttpSession session) {
+		//得到session
+		Admin admin = (Admin) session.getAttribute("user");
 		
-		int buyRows = service.purchase(mes);
+		Admin admin2 = new Admin();
+		admin2.setComId("0");
+		admin2.setAdminName("管理员");
+		admin2.setAdminId("1");
+		
+		int buyRows = service.purchase(mes,admin2);
 		
 		
 		Message message = new Message();
@@ -59,7 +68,7 @@ public class BuyDetailController {
 			message.setMsg("操作成功");
 			message.setStatus(1);
 		}else {
-			message.setMsg("操作失败");
+			message.setMsg("你所购买的药品库存不足");
 			message.setStatus(0);
 		}
 		

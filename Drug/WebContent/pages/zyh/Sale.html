@@ -15,7 +15,6 @@
 		        <div class="kit-table-header">
 		            <div class="kit-search-btns">
 		                <a href="javascript:;" data-action="add" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i> 新增</a>
-		                <a href="javascript:;" data-action="del-bulk" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon">&#xe640;</i> 批量删除</a>
 		            </div>
 		            <div class="kit-search-inputs">
 		                <div class="kit-search-keyword">
@@ -182,22 +181,16 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: 'full', //容器高度
-		            url: '../../buy/showList.action',
+		            url: '../../sale/showList.action',
 		            page: true,
 		            id: 'demo',
 		            cols: [
 		                [{checkbox: true,fixed: true}, 
-		                {field: 'buyId',title: '采购编号',width: 140}, 
-		                {field: 'comId',title: '店铺编号',width: 105},
-		                {field: 'buyAmount',title: '商品数量',width: 100}, 
-		                {field: 'buyMoney',title: '总金额',width: 80}, 
-		                {field: 'buyTimes',title: '采购时间',width: 166}, 
-		                {field: 'buyCompany',title: '供应商',width: 100}, 
-		                {field: 'buyAudit',title: '审核状态',width: 100}, 
-		                {field: 'buyStates',title: '采购状态',width: 110,sort: true}, 
-		                {field: 'buyQc',title: '质检状态',width: 110,sort: true}, 
-		                {field: 'buyPut',title: '入库状态',width: 110,sort: true },
-		                {field: 'optimes',title: '操作时间',width: 170,sort: true},
+		                {field: 'saleId',title: '销售单号',width: 140}, 
+		                {field: 'saleAmount',title: '药品总数',width: 105},
+		                {field: 'saleMoney',title: '订单总金额',width: 100}, 
+		                {field: 'isva',title: '是否有效',width: 166}, 
+		                {field: 'optime',title: '操作时间',width: 100}, 
 		                {field: 'oper',title: '操作人',width: 100, sort: true}, 
 		                {fixed: 'right',title: '操作',width: 180,align: 'center', toolbar: '#barDemo' }]
 		            ],
@@ -340,7 +333,6 @@
 		                                title: '信息',
 		                                content:['buyDetail.html', 'no'],
 		                                area: ['1200px', '800px'],
-		                                btn: ['提交', '重置', '取消'],
 		                                yes: function(index, layero) {
 		                                    editIndex = index;
 		                                    $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();

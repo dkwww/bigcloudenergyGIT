@@ -19,7 +19,7 @@
 		        <script type="text/html" id="barDemo">
 		            <button class="layui-btn layui-btn-xs" lay-event="edit">查看订单详情</button>
 		            <button class="layui-btn layui-btn-xs" lay-event="detail">审核</button>
-		            <button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">不审核</button>
+		            <button class="layui-btn layui-btn-xs" lay-event="del">不审核</button>
 		        </script>
 		    </div>
 		</div>
@@ -132,7 +132,7 @@
 		                {fixed: 'right',title: '操作',width: 250,align: 'center', toolbar: '#barDemo' }]
 		            ],
 		            done: function(res, curr, count) {
-		            	var tableElem = this.elem.next('.layui-table-view');
+		            	/*var tableElem = this.elem.next('.layui-table-view');
 		            	$("[data-field = 'audId']").children().not(":first").each(function(index){
 			            	var url = "../../audit/findById.action";  
 			            	var data = {"audId":$(this).text()};	
@@ -144,7 +144,7 @@
 			            		}
 			            		
 		            		},"json");
-					  	});
+					  	});*/
 		            	$("[data-field = 'audStates']").children().not(":first").each(function(index){
 			            	if($(this).text()=="审核未通过"){
 			            		$(this).html("<font style='color:red;'>审核未通过</font>");
@@ -183,23 +183,57 @@
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		
 		            if (layEvent === 'detail') { //审核
-		            	var url = "../../audit/auditById.action";  
-		            	var data = {"id":data.audId,"state":2};	
-		            	$.post(url,data,function(mes){
-		            		if(mes.status==1){
-		            			alert("审核成功");
-		            		}else{
-		            			alert("审核失败");
-		            		}
-		            		
-		            	},"json");
-		            	console.log(table.checkStatus('demo'));
-		            } else if (layEvent === 'del') { //不审核
-		            	var url = "../../audit/auditById.action";  
-		            	var data = {"id":data.audId,"state":0};	
+		            	/*layer.open({
+		            		type:2
+		            		,title:'审核'
+		            		,area: ['600px', '500px']
+		            	  ,content: ['auditFrom.html', 'no']
+		            	,success:function(layero, index){
+		            		var body = layer.getChildFrame('body', index);
+		        	    	 var iframe = window[layero.find('iframe')[0]['name']]; 
+		        	    	 var url="../../audit/findById.action";
+		        	    	 var data={"id":data.audId};
+		        	    	 $.ajax({
+		        	    		 async:false,
+		        	    		 url:url,
+		        	    		 data:data,
+		        	    		 dataType:"json",
+		        	    		 success:function(mes){
+		        		    			 iframe.$("#audId").val(mes.audId); 
+		        			    		 iframe.$("#audFkId").val(mes.audFkId);
+		        			    		 iframe.$("#toyName").val(mes.toyName);
+		        			    		 iframe.$("#toyMoney").val(mes.toyMoney);
+		        			    		 iframe.$("#toyAge").val(mes.toyAge);
+		        			    		 iframe.load();
+		        	    		 }
+		        	    	 }); 
+		            	}
+		            	//操作完成执行刷新 
+		            	,end:function(index,layero){
+		            		location.reload();
+		            	}
+		            	});*/
+		            	
+		            	var url = "../../audit/auditByaudId.action";  
+		            	var data = {"id":data.audId,"state":2,"buyId":data.audFkId};	
 		            	$.post(url,data,function(mes){
 		            		if(mes.status==1){
 		            			alert("操作成功");
+								location.reload();
+		            		}else{
+		            			alert("操作失败");
+								location.reload();
+		            		}
+		            		
+		            	},"json");
+		            	
+		            } else if (layEvent === 'del') { //不审核
+		            	var url = "../../audit/auditByaudId.action";  
+		            	var data = {"id":data.audId,"state":0,"buyId":data.audFkId};	
+		            	$.post(url,data,function(mes){
+		            		if(mes.status==1){
+		            			alert("操作成功");
+								location.reload();
 		            		}else{
 		            			alert("操作失败");
 		            		}
@@ -212,24 +246,24 @@
 		                    classifies: staticData.classifies
 		                };
 		                laytpl($('#edit-tpl').html()).render(d, function(html) {
-		                    layer.open({
-		                        type: 1,
-		                        title: '信息',
-		                        content: html,
-		                        area: ['800px', '450px'],
-		                        btn: ['提交', '重置', '取消'],
-		                        yes: function(index, layero) {
-		                            editIndex = index;
-		                            $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
-		                        },
-		                        btn2: function(index, layero) {
-		                            $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
-		                            return false;
-		                        },
-		                        success: function() {
-		                            form.render(null, 'form-edit');
-		                        }
-		                    });
+		                	 layer.open({
+	                              type: 2,
+	                              title: '信息',
+	                              content:['findDetail.html?id='+data.audFkId, 'no'],
+	                              area: ['800px', '450px'],
+	                              yes: function(index, layero) {
+	                                  editIndex = index;
+	                                  $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
+	                              },
+	                              btn2: function(index, layero) {
+	                                  $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
+	                                  return false;
+	                              },
+	                              success: function() {
+	                                  form.render(null, 'form-edit');
+	                              }
+	                          });
+				              console.log(table.checkStatus('demo'));
 		                });
 		                //同步更新缓存对应的值
 		                // obj.update({

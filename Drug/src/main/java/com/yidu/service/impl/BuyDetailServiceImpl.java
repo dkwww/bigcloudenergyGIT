@@ -9,18 +9,22 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
 import com.yidu.dao.BuyDetailMapper;
+import com.yidu.domain.Admin;
 import com.yidu.domain.Audit;
 import com.yidu.domain.Buy;
 import com.yidu.domain.BuyDetail;
+import com.yidu.domain.DrugInve;
 import com.yidu.domain.Sale;
 import com.yidu.domain.SaleDetail;
 import com.yidu.service.AuditService;
 import com.yidu.service.BuyDetailService;
 import com.yidu.service.BuyService;
+import com.yidu.service.DrugInvService;
 import com.yidu.service.SaleDetailService;
 import com.yidu.service.SaleService;
 import com.yidu.util.TimeUtil;
@@ -51,6 +55,9 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 	
 	@Resource
 	AuditService auditService;
+	
+	@Resource
+	DrugInvService invService;
 
 	@Override
 	public int addOrUpdate(BuyDetail detail) {
@@ -82,7 +89,7 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 
 
 	@Override
-	public int purchase(String mes) {
+	public int purchase(String mes,Admin admin) {
 		
 		//总价
 		String bdetAmount = "";
@@ -91,7 +98,7 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 		//定义两个变量用于判断
 		int buyRows = 0;
 		
-		System.out.println(mes);
+		
 		String[] str = mes.split("&");
 		//定义一个采购订单对象
 		Buy buy = new Buy();
@@ -126,85 +133,96 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 			String amount = strOne[11];//订单总数量
 			BigDecimal money = new BigDecimal(strOne[12]);//订单总金额
 			
-			buy.setBuyId(uuidOne);
-			buy.setComId("1");
-			buy.setBuyAmount(Integer.valueOf(amount));
-			buy.setBuyMoney(money);
-			buy.setBuyTime(new Date());
-			buy.setBuyCompany("总店");
-			buy.setBuyType("1");
-			buy.setBuyAudit("未审核");
-			buy.setBuyQc("未质检");
-			buy.setBuyState("1");
-			buy.setBuyPut("未入库");
-			buy.setBuyMes(mess);
-			buy.setIsva("有效");
-			buy.setOptime(new Date());
-			buy.setOper("张三");
-			
-			if(i==0) {
-				//采购订单增加的方法
-				buyService.insertSelective(buy);
+			DrugInve drugInv = invService.findDrug(bdetFkId);
+			if(drugInv.getDiId()!=null&&!"".equals(drugInv.getDiId())) {
+				System.out.println("找到了药品");
 				
-				audit.setAudFkId(uuidOne);
-				audit.setAudComtype("1");
-				audit.setQcFkId(null);
-				audit.setAudTime(new Date());
-				audit.setAudState("1");
-				audit.setAudIdea("分公司增加库存");
-				audit.setAudName("张三");
-				audit.setAudMes(null);
-				audit.setIsva("有效");
-				audit.setOptime(new Date());
-				audit.setOper("张三");
-				audit.setSort(TimeUtil.getStrDate());
-				auditService.addOrUpdate(audit);
+				buy.setBuyId(uuidOne);
+				buy.setComId(admin.getComId());
+				buy.setBuyAmount(Integer.valueOf(amount));
+				buy.setBuyMoney(money);
+				buy.setBuyTime(new Date());
+				buy.setBuyCompany("总店");
+				buy.setBuyType("1");
+				buy.setBuyAudit("1");
+				buy.setBuyQc("0");
+				buy.setBuyState("1");
+				buy.setBuyPut("0");
+				buy.setBuyMes(mess);
+				buy.setIsva("有效");
+				buy.setOptime(new Date());
+				buy.setOper(admin.getAdminName());
+				buy.setSort(TimeUtil.getStrDate());;
+				
+				if(i==0) {
+					//采购订单增加的方法
+					buyService.insertSelective(buy);
+					
+					audit.setAudFkId(uuidOne);
+					audit.setAudComtype("1");
+					audit.setQcFkId(admin.getComId());
+					audit.setAudTime(new Date());
+					audit.setAudState("1");
+					audit.setAudIdea("分公司增加库存");
+					audit.setAudName(admin.getAdminName());
+					audit.setAudMes(null);
+					audit.setIsva("有效");
+					audit.setOptime(new Date());
+					audit.setOper(admin.getAdminName());
+					audit.setSort(TimeUtil.getStrDate());
+					auditService.addOrUpdate(audit);//审核
+				}
+				
+				bDetail.setBuyId(uuidOne);
+				bDetail.setBdetAmount(Integer.valueOf(bdetAmount));
+				BigDecimal bdetPrices = new BigDecimal(bdetPrice);
+				bDetail.setBdetPrice(bdetPrices);
+				BigDecimal bdetTotals = new BigDecimal(bdetTotal);
+				bDetail.setBdetTotal(bdetTotals);
+				bDetail.setBdetFkId(bdetFkId);
+				bDetail.setIsva("有效");
+				bDetail.setOper(admin.getAdminName());
+				bDetail.setOptime(new Date());
+				
+				
+				buyRows =addOrUpdate(bDetail);
+				
+				if(i==0) {
+					
+					//给销售单定义一个id
+					uuidTwo = UUID.randomUUID().toString().replaceAll("-", "");
+					System.out.println("uuid:"+uuidOne);
+					sale.setSaleId(uuidTwo);
+					sale.setSaleTime(new Date());
+					sale.setSaleAmount(Integer.valueOf(amount));
+					sale.setSaleMoney(money);
+					sale.setIsva("有效");
+					sale.setOptime(new Date());
+					sale.setOper(null);
+					//调用销售单增加的方法
+					saleService.insertSelective(sale);
+					
+					
+				}
+				//定义一个销售订单详情的对象
+				SaleDetail detail = new SaleDetail();
+				
+				detail.setDrugId(bdetFkId);
+				detail.setSaleId(uuidTwo);
+				detail.setSdAmount(Integer.valueOf(bdetAmount));
+				detail.setSdPrice(bdetPrices);
+				detail.setSdTotal(bdetTotals);
+				detail.setIsva("有效");
+				detail.setOptime(new Date());
+				detail.setOper(null);
+				
+				saleDetailService.addOrUpdate(detail);
+				
+			
+			}else {
+				buyRows=0;
 			}
 			
-			bDetail.setBuyId(uuidOne);
-			bDetail.setBdetAmount(Integer.valueOf(bdetAmount));
-			BigDecimal bdetPrices = new BigDecimal(bdetPrice);
-			bDetail.setBdetPrice(bdetPrices);
-			BigDecimal bdetTotals = new BigDecimal(bdetTotal);
-			bDetail.setBdetTotal(bdetTotals);
-			bDetail.setBdetFkId(bdetFkId);
-			bDetail.setIsva("有效");
-			bDetail.setOper("张三");
-			bDetail.setOptime(new Date());
-			
-			
-			buyRows =addOrUpdate(bDetail);
-			
-			if(i==0) {
-				
-				//给销售单定义一个id
-				uuidTwo = UUID.randomUUID().toString().replaceAll("-", "");
-				System.out.println("uuid:"+uuidOne);
-				sale.setSaleId(uuidTwo);
-				sale.setSaleTime(new Date());
-				sale.setSaleAmount(Integer.valueOf(amount));
-				sale.setSaleMoney(money);
-				sale.setIsva("有效");
-				sale.setOptime(new Date());
-				sale.setOper("张三");
-				//调用销售单增加的方法
-				saleService.insertSelective(sale);
-				
-				
-			}
-			//定义一个销售订单详情的对象
-			SaleDetail detail = new SaleDetail();
-			
-			detail.setDrugId(bdetFkId);
-			detail.setSaleId(uuidTwo);
-			detail.setSdAmount(Integer.valueOf(bdetAmount));
-			detail.setSdPrice(bdetPrices);
-			detail.setSdTotal(bdetTotals);
-			detail.setIsva("有效");
-			detail.setOptime(new Date());
-			detail.setOper("张三");
-			
-			saleDetailService.addOrUpdate(detail);
 			
 		}
 				

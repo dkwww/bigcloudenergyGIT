@@ -177,4 +177,170 @@ public class AuditServiceImpl   implements AuditService {
 		return mapper.finanupdate(audId);
 	}
 	
+	
+
+
+	@Override
+	public List<Audit> showBuy(Audit audit, PageUtil pageUtil) {
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("audit", audit);
+		map.put("pageUtil", pageUtil);
+		List<Audit> list = mapper.showBuy(map);
+		for (Audit audit2 : list) {
+			if(audit2.getAudTime()!=null) {
+				audit2.setAudTimes(TimeUtil.dateToString(audit2.getAudTime(), "yyyy-MM-dd HH:mm:ss"));
+			}
+			if(audit2.getOptime()!=null) {
+				audit2.setOptimes(TimeUtil.dateToString(audit2.getOptime(), "yyyy-MM-dd HH:mm:ss"));
+			}
+			if(audit2.getAudState()!=null&&!"".equals(audit2.getAudState())) {
+				if("0".equals(audit2.getAudState())) {
+					audit2.setAudStates("审核失败");
+				}
+				if("1".equals(audit2.getAudState())) {
+					audit2.setAudStates("审核中");
+				}
+				if("2".equals(audit2.getAudState())) {
+					audit2.setAudStates("审核通过,等待总经理审核");
+				}
+				if("11".equals(audit2.getAudState())) {
+					audit2.setAudStates("分店财务部不予通过");
+				}
+				if("12".equals(audit2.getAudState())) {
+					audit2.setAudStates("审核通过,等待总店审核");
+				}
+				if("13".equals(audit2.getAudState())) {
+					audit2.setAudStates("总店销售部不予通过");
+				}
+				if("14".equals(audit2.getAudState())) {
+					audit2.setAudStates("审核通过,等待总店总经理审核");
+				}
+				if("15".equals(audit2.getAudState())) {
+					audit2.setAudStates("总店总经理不予通过");
+				}
+				if("16".equals(audit2.getAudState())) {
+					audit2.setAudStates("总店总经理审核通过");
+				}
+			}
+			
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public List<Audit> showCEO(Audit audit, PageUtil pageUtil) {
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("audit", audit);
+		map.put("pageUtil", pageUtil);
+		List<Audit> list = mapper.showCEO(map);
+		for (Audit audit2 : list) {
+			if(audit2.getAudTime()!=null) {
+				audit2.setAudTimes(TimeUtil.dateToString(audit2.getAudTime(), "yyyy-MM-dd HH:mm:ss"));
+			}
+			if(audit2.getOptime()!=null) {
+				audit2.setOptimes(TimeUtil.dateToString(audit2.getOptime(), "yyyy-MM-dd HH:mm:ss"));
+			}
+			if(audit2.getAudState()!=null&&!"".equals(audit2.getAudState())) {
+				if("2".equals(audit2.getAudState())) {
+					audit2.setAudStates("等待审核");
+				}
+				if("11".equals(audit2.getAudState())) {
+					audit2.setAudStates("分店财务部不予通过");
+				}
+				if("12".equals(audit2.getAudState())) {
+					audit2.setAudStates("审核通过,等待总店审核");
+				}
+				if("13".equals(audit2.getAudState())) {
+					audit2.setAudStates("总店销售部不予通过");
+				}
+				if("14".equals(audit2.getAudState())) {
+					audit2.setAudStates("审核通过,等待总店总经理审核");
+				}
+				if("15".equals(audit2.getAudState())) {
+					audit2.setAudStates("总店总经理不予通过");
+				}
+				if("16".equals(audit2.getAudState())) {
+					audit2.setAudStates("总店总经理审核通过");
+				}
+			}
+			
+		}
+		
+		return list;
+	}
+
+	
+	@Override
+	public List<Audit> findSale(Audit audit, PageUtil pageUtil) {
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("audit", audit);
+		map.put("pageUtil", pageUtil);
+		List<Audit> list = mapper.findSale(map);
+		for (Audit audit2 : list) {
+			if(audit2.getAudTime()!=null) {
+				audit2.setAudTimes(TimeUtil.dateToString(audit2.getAudTime(), "yyyy-MM-dd HH:mm:ss"));
+			}
+			if(audit2.getOptime()!=null) {
+				audit2.setOptimes(TimeUtil.dateToString(audit2.getOptime(), "yyyy-MM-dd HH:mm:ss"));
+			}
+			if(audit2.getAudState()!=null&&!"".equals(audit2.getAudState())) {
+				if("12".equals(audit2.getAudState())) {
+					audit2.setAudStates("审核中");
+				}
+				if("13".equals(audit2.getAudState())) {
+					audit2.setAudStates("审核失败");
+				}
+				if("14".equals(audit2.getAudState())) {
+					audit2.setAudStates("审核通过,等待总经理审核");
+				}
+				if("15".equals(audit2.getAudState())) {
+					audit2.setAudStates("总店总经理不予通过");
+				}
+				if("16".equals(audit2.getAudState())) {
+					audit2.setAudStates("总店总经理审核通过");
+				}
+			}
+			
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public List<Audit> findCEO(Audit audit, PageUtil pageUtil) {
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("audit", audit);
+		map.put("pageUtil", pageUtil);
+		List<Audit> list = mapper.findCEO(map);
+		for (Audit audit2 : list) {
+			if(audit2.getAudTime()!=null) {
+				audit2.setAudTimes(TimeUtil.dateToString(audit2.getAudTime(), "yyyy-MM-dd HH:mm:ss"));
+			}
+			if(audit2.getOptime()!=null) {
+				audit2.setOptimes(TimeUtil.dateToString(audit2.getOptime(), "yyyy-MM-dd HH:mm:ss"));
+			}
+			if(audit2.getAudState()!=null&&!"".equals(audit2.getAudState())) {
+				if("14".equals(audit2.getAudState())) {
+					audit2.setAudStates("审核中");
+				}
+				if("15".equals(audit2.getAudState())) {
+					audit2.setAudStates("审核不通过");
+				}
+				if("16".equals(audit2.getAudState())) {
+					audit2.setAudStates("总经理审核通过");
+				}
+			}
+			
+		}
+		
+		return list;
+	}
+
+	@Override
+	public Audit findById(String id) {
+		return mapper.selectByPrimaryKey(id);
+	}
+	
+	
 }

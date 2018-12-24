@@ -115,8 +115,10 @@
 					$.post(url,data,function(mes){
 						if(mes.state==1){
 							alert("菜");
+							location.reload();
 						}else{
 							alert("牛逼");
+							location.reload();
 						}
 						
 					},"json");

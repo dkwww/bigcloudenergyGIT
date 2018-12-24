@@ -34,5 +34,12 @@ public interface DrugInvService  {
 	  * @return
 	  */
 	 int amountupdate(DrugInve drugInve);
+	 
+	 /**
+	   * 根据药品id查询库存
+	   * @param id
+	   * @return
+	   */
+	  public DrugInve findDrug(String id);
 
 }
