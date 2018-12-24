@@ -7,24 +7,6 @@
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
 		<title>分店财务from</title>
-		<script>
-			$(function(){
-				$("#audit").click(function(){
-					var url = "../../audit/auditByaudId.action";  
-	            	var data = {"id":$("#auditId").val(),"state":$(".audState").val(),"buyId":null,"mes":$("#mess").text()}
-            		$.post(url,data,function(mes){
-	            		if(mes.audState==2||mes.audState==0){
-	            			tableElem.find('tr[data-index="'+ index +'"]').find('button[lay-event=detail]').addClass('layui-btn-disabled').attr('disabled',true);
-	            			tableElem.find('tr[data-index="'+ index +'"]').find('button[lay-event=del]').addClass('layui-btn-disabled').attr('disabled',true);
-			            	
-	            		}
-	            		
-            		},"json");
-					
-				});
-				
-			})
-		</script>
 	</head>
 	<body>
               
@@ -37,7 +19,7 @@
   <div class="layui-form-item">
     <label class="layui-form-label">审核部门</label>
     <div class="layui-input-block">
-      <input type="text" name="user" id="user" lay-verify="title" disabled="disabled" autocomplete="off" placeholder="请输入标题" class="layui-input">
+      <input type="text" name="auditId" id="auditId" lay-verify="title" disabled="disabled" autocomplete="off" placeholder="请输入标题" class="layui-input">
     </div>
   </div>
   <div class="layui-form-item">
@@ -51,19 +33,19 @@
   <div class="layui-form-item">
     <label class="layui-form-label">是否通过</label>
     <div class="layui-input-block">
-      <input type="radio" name="audState" id="audState1" class="audState" title="是" value="2" >
-      <input type="radio" name="audState" id="audState2" class="audState" title="否" value="0">
+      <input type="radio" name="audState" id="audState" title="是" value="13" >
+      <input type="radio" name="audState" id="audState" title="否" value="14">
     </div>
   </div>
   <div class="layui-form-item layui-form-text">
     <label class="layui-form-label">审核意见</label>
     <div class="layui-input-block">
-      <textarea placeholder="请输入内容" id="mess" class="layui-textarea"></textarea>
+      <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
     </div>
   </div>
   <div class="layui-form-item">
     <div class="layui-input-block">
-      <input type="button" class="layui-btn" id="audit" value="立即提交" lay-filter="demo1"/>
+      <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
       <button type="reset" class="layui-btn layui-btn-primary">重置</button>
     </div>
   </div>

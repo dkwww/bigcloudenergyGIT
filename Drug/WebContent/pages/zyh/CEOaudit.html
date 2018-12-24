@@ -19,7 +19,6 @@
 		        <script type="text/html" id="barDemo">
 		            <a class="layui-btn layui-btn-xs" lay-event="edit">查看订单详情</a>
 		            <a class="layui-btn layui-btn-xs" lay-event="detail">审核</a>
-		            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">不审核</a>
 		        </script>
 		    </div>
 		</div>
@@ -166,7 +165,35 @@
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		
 		            if (layEvent === 'detail') { //审核
-		            	var url = "../../audit/auditByaudId.action";  
+		            	
+		            	layer.open({
+		            		type:2
+		            		,title:'审核'
+		            		,area: ['600px', '500px']
+		            	  ,content: ['auditFrom2.html', 'no']
+		            	,success:function(layero, index){
+		            		var body = layer.getChildFrame('body', index);
+		        	    	 var iframe = window[layero.find('iframe')[0]['name']]; 
+		        	    	 var url="../../audit/findById.action";
+		        	    	 var data={"audId":data.audId};
+		        	    	 $.ajax({
+		        	    		 async:false,
+		        	    		 url:url,
+		        	    		 data:data,
+		        	    		 dataType:"json",
+		        	    		 success:function(mes){
+		        		    			 iframe.$("#audId").val(mes.audId); 
+		        			    		 iframe.$("#audFkId").val(mes.audFkId);
+		        			    		 iframe.load();
+		        	    		 }
+		        	    	 }); 
+		            	}
+		            	//操作完成执行刷新 
+		            	,end:function(index,layero){
+		            		location.reload();
+		            	}
+		            	});
+		            	/*var url = "../../audit/auditByaudId.action";  
 		            	var data = {"id":data.audId,"state":12,"buyId":data.audFkId};	
 		            	$.post(url,data,function(mes){
 		            		if(mes.status==1){
@@ -176,7 +203,7 @@
 		            		}
 		            		
 		            	},"json");
-		            	console.log(table.checkStatus('demo'));
+		            	console.log(table.checkStatus('demo'));*/
 		            } else if (layEvent === 'del') { //不审核
 		                layer.confirm('真的删除行么', function(index) {
 		                	

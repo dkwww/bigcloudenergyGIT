@@ -37,8 +37,9 @@
   
   
   <select id="showBuy" parameterType="java.util.Map" resultMap="BaseResultMap" >
-  	select * from drug_audit a ,drug_buy b where b.buy_type = 1 and a.aud_fk_id = b.buy_id
-  	order by a.sort desc 
+  	SELECT * FROM drug_audit a ,drug_buy b WHERE b.buy_type = 1 AND a.aud_fk_id = b.buy_id 
+	AND a.aud_state IN (0,1,2)
+  	ORDER BY a.sort DESC 
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
   
   </select>
@@ -46,9 +47,7 @@
   <select id="showCEO" parameterType="java.util.Map" resultMap="BaseResultMap" >
   	
 	SELECT * FROM drug_audit a ,drug_buy b where b.buy_type = 1 and a.aud_fk_id = b.buy_id 
-	and a.aud_state = 2 OR a.aud_state = 11
-	OR a.aud_state = 12 OR a.aud_state = 13 
-	OR a.aud_state = 14 OR a.aud_state = 15 OR a.aud_state = 16
+	and a.aud_state IN (2,11,12)
   	ORDER BY a.sort DESC 
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
   
@@ -56,8 +55,7 @@
   
   <select id="findSale" parameterType="java.util.Map" resultMap="BaseResultMap" >
   	SELECT * FROM drug_audit a ,drug_buy b where b.buy_type = 1 and a.aud_fk_id = b.buy_id 
-	and a.aud_state = 12 OR a.aud_state = 13 
-	OR a.aud_state = 14 OR a.aud_state = 15 OR a.aud_state = 16
+	and a.aud_state IN (12,13,14)
   	ORDER BY a.sort DESC 
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
   
@@ -66,7 +64,7 @@
   <select id="findCEO" parameterType="java.util.Map" resultMap="BaseResultMap" >
   	
 	SELECT * FROM drug_audit a ,drug_buy b where b.buy_type = 1 and a.aud_fk_id = b.buy_id 
-	and  a.aud_state = 14 OR a.aud_state = 15 OR a.aud_state = 16
+	and  a.aud_state IN (14,15,16)
   	ORDER BY a.sort DESC  
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
   

@@ -279,9 +279,12 @@ public class AuditController {
 	 */
 	@RequestMapping("/auditByaudId")
 	@ResponseBody
-	public Message auditById(String id,String state,String buyId) {
-		
-		System.out.println("   aaaaaaaaaaaaa     "+buyId);
+	public Message auditById(@RequestBody Audit audits) {
+
+		System.out.println("   aaaaaaaaaaaaa     "+audits.getAudFkId());
+		System.out.println("   bbbbbbbbbbbbb     "+audits.getAudId());
+		System.out.println("   ccccccccccccc     "+audits.getAudState());
+		System.out.println("   ddddddddddddd     "+audits.getAudMes());
 		
 		//用于页面上的判断
 		Message message = new Message();
@@ -290,13 +293,13 @@ public class AuditController {
 		BigDecimal money = new BigDecimal(0);
 		
 		Audit audit = new Audit();
-		audit.setAudId(id);
-		audit.setAudState(state);
+		audit.setAudId(audits.getAudId());
+		audit.setAudState(audits.getAudState());
 		
 		
-		if("12".equals(state)) {
+		if("12".equals(audits.getAudState())) {
 			//如果分店总经理审核通过，则根据id查询出
-			Buy buy = buyService.findById(buyId);
+			Buy buy = buyService.findById(audits.getAudFkId());
 			//根据订单中的店铺id查找这个店铺的总余额
 			Debty debty1 = debtyService.findByComId(buy.getComId());
 			System.out.println(" 财务余额："+debty1.getDebMoney()+"     订单总金额"+buy.getBuyMoney());
@@ -329,9 +332,9 @@ public class AuditController {
 				message.setMsg("本店余额不足");
 			}
 			
-		}else if("16".equals(state)) {
+		}else if("16".equals(audits.getAudState())) {
 			//如果总店总经理审核通过，则根据id查询出
-			Buy buy = buyService.findById(buyId);
+			Buy buy = buyService.findById(audits.getAudFkId());
 			//根据订单中的店铺id查找这个店铺的总余额
 			Debty debty1 = debtyService.findByComId(buy.getComId());
 			System.out.println(" 财务余额："+debty1.getDebMoney());

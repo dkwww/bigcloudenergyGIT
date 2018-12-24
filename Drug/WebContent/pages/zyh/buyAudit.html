@@ -7,6 +7,27 @@
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
 		<title>采购审核</title>
+		<script>
+			$(function(){
+				
+				$("#audit").click(function(){
+					var url = "../../audit/auditByaudId.action";  
+	            	var data = {"id":data.audId,"state":2,"buyId":data.audFkId};	
+	            	$.post(url,data,function(mes){
+	            		if(mes.status==1){
+	            			alert("操作成功");
+							location.reload();
+	            		}else{
+	            			alert("操作失败");
+							location.reload();
+	            		}
+	            		
+	            	},"json");
+				});
+				
+				
+			})
+		</script>
 	</head>
 	<body>
 	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
@@ -19,7 +40,6 @@
 		        <script type="text/html" id="barDemo">
 		            <button class="layui-btn layui-btn-xs" lay-event="edit">查看订单详情</button>
 		            <button class="layui-btn layui-btn-xs" lay-event="detail">审核</button>
-		            <button class="layui-btn layui-btn-xs" lay-event="del">不审核</button>
 		        </script>
 		    </div>
 		</div>
@@ -27,78 +47,41 @@
 		<!-- 修改页面 -->
 		<script type="text/html" id="edit-tpl">
 		    <div style="margin:10px">
-		        <form class="layui-form" action="" lay-filter="form-edit">
-		            <input type="hidden" name="id" value="{{d.user.id}}" />
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">用户名</label>
-		                <div class="layui-input-block">
-		                    <input type="text" name="username" required lay-verify="required" value="{{d.user.username}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
-		                </div>
-		            </div>
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">密码框</label>
-		                <div class="layui-input-inline">
-		                    <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
-		                </div>
-		                <div class="layui-form-mid layui-word-aux">辅助文字</div>
-		            </div>
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">单选框</label>
-		                <div class="layui-input-block">
-		                    {{# var woman = d.user.sex === 0?'checked':'';}} {{# var man = d.user.sex === 1?'checked':'';}}
-		                    <input type="radio" name="sex" value="男" title="男" {{man}} />
-		                    <input type="radio" name="sex" value="女" title="女" {{woman}} />
-		                </div>
-		            </div>
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">城市</label>
-		                <div class="layui-input-block">
-		                    <select name="city" lay-verify="required">
-		                      <option value=""></option>
-		                      {{# layui.each(d.citys,function(index,item){ }}                      
-		                      {{# if(item.id===d.user.city){}}
-		                      <option value="{{item.id}}" selected>{{item.name}}</option>
-		                      {{#}else{}}
-		                      <option value="{{item.id}}">{{item.name}}</option>
-		                      {{#};}}
-		                      {{# }); }}
-		                    </select>
-		                </div>
-		            </div>
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">积分</label>
-		                <div class="layui-input-block">
-		                    <input type="number" name="experience" required lay-verify="required" value="{{d.user.experience}}" placeholder="请输入积分" autocomplete="off" class="layui-input">
-		                </div>
-		            </div>
-		            
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">职业</label>
-		                <div class="layui-input-block">
-		                    <select name="classify" lay-verify="required">
-		                        <option value=""></option>                        
-		                      {{# layui.each(d.classifies,function(index,item){ }}
-		                      {{# if(item.id===d.user.classify){}}
-		                      <option value="{{item.id}}" selected>{{item.name}}</option>
-		                      {{#}else{}}
-		                      <option value="{{item.id}}">{{item.name}}</option>
-		                      {{#};}}
-		                      {{# }); }}
-		                    </select>
-		                </div>
-		            </div>
-		            <div class="layui-form-item layui-form-text">
-		                <label class="layui-form-label">签名</label>
-		                <div class="layui-input-block">
-		                    <textarea name="sign" placeholder="请输入个性签名" class="layui-textarea">{{d.user.sign}}</textarea>
-		                </div>
-		            </div>
-		            <div class="layui-form-item" style="display:none;">
-		                <div class="layui-input-block">
-		                    <button class="layui-btn" lay-submit lay-filter="formEdit">立即提交</button>
-		                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-		                </div>
-		            </div>
+		        <form class="layui-form" action="../../audit/auditByaudId.action" lay-filter="form-edit">
+		           <input type="text" value="{{d.rowdata.audId}}" name="audId"/>
+					<div class="layui-form-item">
+						<label class="layui-form-label">审核部门</label>
+						<div class="layui-input-block">
+							<input type="text" name="user" id="user" lay-verify="title" disabled="disabled" autocomplete="off" placeholder="请输入标题" class="layui-input">
+						</div>
+					</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">订单编号</label>
+					<div class="layui-input-block">
+						<input type="text" name="audFkId" value="{{d.rowdata.audFkId}}" lay-verify="title" placeholder="" disabled="disabled" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+  
+  
+				<div class="layui-form-item">
+					<label class="layui-form-label">是否通过</label>
+					<div class="layui-input-block">
+						<input type="radio" name="audState" id="audState1" title="是" value="2" >
+						<input type="radio" name="audState" id="audState2" title="否" value="0">
+					</div>
+				</div>
+				<div class="layui-form-item layui-form-text">
+					<label class="layui-form-label">审核意见</label>
+					<div class="layui-input-block">
+						<textarea placeholder="请输入内容" id="audMes" name="audMes" class="layui-textarea"></textarea>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<input class="layui-btn" type="submit" id="audit" value="立即提交" lay-filter="formEdit"/>
+						<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+					</div>
+				</div>
 		        </form>
 		    </div>
 		</script>
@@ -183,38 +166,13 @@
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		
 		            if (layEvent === 'detail') { //审核
-		            	/*layer.open({
-		            		type:2
-		            		,title:'审核'
-		            		,area: ['600px', '500px']
-		            	  ,content: ['auditFrom.html', 'no']
-		            	,success:function(layero, index){
-		            		var body = layer.getChildFrame('body', index);
-		        	    	 var iframe = window[layero.find('iframe')[0]['name']]; 
-		        	    	 var url="../../audit/findById.action";
-		        	    	 var data={"id":data.audId};
-		        	    	 $.ajax({
-		        	    		 async:false,
-		        	    		 url:url,
-		        	    		 data:data,
-		        	    		 dataType:"json",
-		        	    		 success:function(mes){
-		        		    			 iframe.$("#audId").val(mes.audId); 
-		        			    		 iframe.$("#audFkId").val(mes.audFkId);
-		        			    		 iframe.$("#toyName").val(mes.toyName);
-		        			    		 iframe.$("#toyMoney").val(mes.toyMoney);
-		        			    		 iframe.$("#toyAge").val(mes.toyAge);
-		        			    		 iframe.load();
-		        	    		 }
-		        	    	 }); 
-		            	}
-		            	//操作完成执行刷新 
-		            	,end:function(index,layero){
-		            		location.reload();
-		            	}
-		            	});*/
+		            	console.log(data);
+		            		var d = {
+		            				rowdata: data
+				                };
+		            		showlayer(d);
 		            	
-		            	var url = "../../audit/auditByaudId.action";  
+		            	/*var url = "../../audit/auditByaudId.action";  
 		            	var data = {"id":data.audId,"state":2,"buyId":data.audFkId};	
 		            	$.post(url,data,function(mes){
 		            		if(mes.status==1){
@@ -225,7 +183,7 @@
 								location.reload();
 		            		}
 		            		
-		            	},"json");
+		            	},"json");*/
 		            	
 		            } else if (layEvent === 'del') { //不审核
 		            	var url = "../../audit/auditByaudId.action";  
@@ -272,6 +230,8 @@
 		                // });
 		            }
 		        });
+		            
+		            
 		        form.render(null, 'kit-search-form');
 		        $('#kit-search-more').on('click', function() {
 		            $('.kit-search-mored').toggle();
@@ -282,6 +242,29 @@
 		            editIndex && layer.close(editIndex); //关闭弹出层
 		            return false;
 		        });
+		      //渲染 修改和增加弹出层
+			   function showlayer(d){
+			    	laytpl($('#edit-tpl').html()).render(d,function(html) {
+	                    layer.open({
+	                        type: 1,
+	                        title: '表单',
+	                        content: html,
+	                        area: ['600px', '500px'],
+	                        btn: ['提交', '重置', '取消'],
+	                        yes: function(index, layero) {
+	                            editIndex = index;
+	                            $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
+	                        },
+	                        btn2: function(index, layero) {
+	                            $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
+	                            return false;
+	                        },
+	                        success: function() {
+	                            form.render(null, 'form-edit');
+	                        }
+	                    });
+	                });
+			    }
 		        $('.kit-search-btns').children('a').off('click').on('click', function() {
 		            var $that = $(this),
 		                action = $that.data('action');
@@ -324,6 +307,7 @@
 		                    break;
 		            }
 		        });
+		        
 		    });
 		</script>
 	</body>

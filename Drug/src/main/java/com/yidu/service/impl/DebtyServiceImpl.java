@@ -83,8 +83,6 @@ public class DebtyServiceImpl   implements DebtyService {
 			String  uuid=UUID.randomUUID().toString().replaceAll("-", "");
 			//增加uuid
 			det.setDebId(uuid);
-			det.setComId("");
-			
 			//默认增加当前时间
 			det.setOptime(new Date());
 			//默认为0
