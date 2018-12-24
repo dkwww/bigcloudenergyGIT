@@ -49,7 +49,7 @@ public class MatInvController {
 		map.put("count", rows);
 		map.put("data", list);
 		
-		return null;
+		return map;
 		
 	}
 }

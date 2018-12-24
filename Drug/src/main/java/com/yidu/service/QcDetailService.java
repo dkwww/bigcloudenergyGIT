@@ -25,6 +25,8 @@ public interface QcDetailService   {
 
 	List<QcDetail> findById(QcDetail qcdetail);
 	
+	List<QcDetail> findByIds(String qcId);
+	
 	
 	
 }

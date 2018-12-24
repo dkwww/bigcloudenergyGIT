@@ -13,6 +13,10 @@
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
+    <result column="mat_name" jdbcType="VARCHAR" property="matName" />
+    <result column="mat_id" jdbcType="VARCHAR" property="matId" />
+    
+    
   </resultMap>
   <sql id="Base_Column_List">
     qdet_id, qc_id, qdet_fk_id, qdet_amount, qdet_fail, qdet_rate, qdet_optime, isva, 
@@ -164,6 +168,14 @@
   
   
   <select id="findById" parameterType="map" resultMap="BaseResultMap">
-  	SELECT * FROM drug_qc a,drug_qc_detail b WHERE a.qc_id=b.qc_id AND a.qc_id=#{qcdetail.qcId}
+  	SELECT * FROM drug_qc a,drug_qc_detail b,drug_buy c,drug_buy_detail d,drug_material f
+	WHERE a.qc_id=b.qc_id AND a.pmc_id=c.buy_id AND c.buy_id=d.buy_id AND d.bdet_fk_id=f.mat_id
+	AND a.qc_id=#{qcdetail.qcId}
   </select>
+  
+  
+  <select id="findByIds" parameterType="string" resultMap="BaseResultMap">
+  	SELECT * FROM drug_qc a,drug_qc_detail b WHERE a.qc_id=b.qc_id AND a.qc_id=#{qcId}
+  </select>
+  
 </mapper>

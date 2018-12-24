@@ -16,8 +16,56 @@ public class MatInv {
     private String oper;
 
     private String sort;
+    
+    private String matName;		//药材名称
+    
+    private String mtName;		//药材类型名称
+    
+    private String mtId;		//类型id
+    
+    private String qdetFkId;	//质检业务id
+    
+    
+    
+    
+    
+    
 
-    public String getMiId() {
+    public String getQdetFkId() {
+		return qdetFkId;
+	}
+
+	public void setQdetFkId(String qdetFkId) {
+		this.qdetFkId = qdetFkId;
+	}
+
+	public String getMtName() {
+		return mtName;
+	}
+
+	public void setMtName(String mtName) {
+		this.mtName = mtName;
+	}
+
+	public String getMtId() {
+		return mtId;
+	}
+
+	public void setMtId(String mtId) {
+		this.mtId = mtId;
+	}
+
+	public String getMatName() {
+		return matName;
+	}
+
+	public void setMatName(String matName) {
+		this.matName = matName;
+	}
+
+	
+
+	public String getMiId() {
         return miId;
     }
 

@@ -19,4 +19,6 @@ public interface QcDetailMapper {
     int updateByPrimaryKey(QcDetail record);
     
     List<QcDetail> findById(Map<String, Object> map);
+    
+    List<QcDetail> findByIds(String qcId);
 }

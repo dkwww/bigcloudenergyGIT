@@ -9,6 +9,11 @@
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
+    <result column="mat_name" jdbcType="VARCHAR" property="matName" />
+    <result column="mt_id" jdbcType="VARCHAR" property="mtId" />
+    <result column="mt_name" jdbcType="VARCHAR" property="mtName" />
+    <result column="qdet_fk_id" jdbcType="VARCHAR" property="qdetFkId" />
+    
   </resultMap>
   <sql id="Base_Column_List">
     mi_id, mi_amount, mat_id, isva, optime, oper, sort
@@ -115,12 +120,19 @@
     where mi_id = #{miId,jdbcType=VARCHAR}
   </update>
   
+  
   <select id="showList" parameterType="map" resultMap="BaseResultMap">
-  	select * from drug_mat_inv
+  	SELECT * FROM drug_material a,drug_mat_type b,drug_mat_inv c WHERE a.mt_id=b.mt_id AND a.mat_id=c.mat_id
   </select>
   
   
   <select id="selectCount" parameterType="com.yidu.domain.MatInv" resultType="int">
-  	select count(*) from drug_mat_inv
+  	SELECT count(*) FROM drug_material a,drug_mat_type b,drug_mat_inv c WHERE a.mt_id=b.mt_id AND a.mat_id=c.mat_id
   </select>
+  
+  <select id="findQcId" parameterType="string" resultMap="BaseResultMap">
+	SELECT * FROM drug_qc_detail a,drug_mat_inv b WHERE a.qdet_fk_id=b.mat_id AND a.qdet_fk_id=#{qdetFkId}  
+  </select>
+  
+  
 </mapper>

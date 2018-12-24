@@ -1,6 +1,5 @@
 package com.yidu.domain;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class QcDetail {
@@ -25,8 +24,32 @@ public class QcDetail {
     private String oper;
 
     private String sort;
+    
+    private String matName;
+    
+    private String matId;
+    
+    
+    
+    
 
-    public String getQdetId() {
+    public String getMatId() {
+		return matId;
+	}
+
+	public void setMatId(String matId) {
+		this.matId = matId;
+	}
+
+	public String getMatName() {
+		return matName;
+	}
+
+	public void setMatName(String matName) {
+		this.matName = matName;
+	}
+
+	public String getQdetId() {
         return qdetId;
     }
 

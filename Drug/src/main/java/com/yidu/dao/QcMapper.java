@@ -38,5 +38,7 @@ public interface QcMapper {
      * @return
      */
     int selectCount(Qc qc);
+    
+    List<Qc> findById(String qcId);
 }
 

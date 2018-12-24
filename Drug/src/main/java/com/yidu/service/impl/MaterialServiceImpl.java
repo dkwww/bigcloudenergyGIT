@@ -1,7 +1,7 @@
 package com.yidu.service.impl;
 
  
-import com.yidu.dao.MatTypeMapper;
+import com.yidu.dao.MatInvMapper;
 import com.yidu.dao.MaterialMapper;
 import com.yidu.domain.Material;
 import com.yidu.service.MaterialService;
@@ -29,6 +29,7 @@ public class MaterialServiceImpl   implements MaterialService {
 	
 	@Resource
 	private MaterialMapper dao;
+	
 	
 	@Override
 	public List<Material> showList(Material material,PageUtil page) {

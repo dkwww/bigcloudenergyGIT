@@ -5,6 +5,7 @@ import com.yidu.dao.MatInvMapper;
 import com.yidu.domain.MatInv;
 import com.yidu.service.MatInvService;
 import com.yidu.util.PageUtil;
+import com.yidu.util.Tools;
 
 import java.util.HashMap;
 import java.util.List;
@@ -45,5 +46,35 @@ public class MatInvServiceImpl  implements MatInvService {
 		
 		return matinvmapper.selectCount(matinv);
 	}
+
+
+	@Override
+	public int add(MatInv matinv) {
+		int rows=0;
+		if(matinv.getMiId()!=null && !"".equals(matinv.getMiId())) {
+			System.err.println("进入修改");
+			rows=matinvmapper.updateByPrimaryKeySelective(matinv);
+		}else {
+			matinv.setMiId(Tools.getDateOrderNo());
+			matinv.setMiAmount(0);
+			rows=matinvmapper.insert(matinv);
+			System.out.println("进入增加");
+		}
+		
+		return rows;
+	}
+
+
+	
+
+
+	@Override
+	public List<MatInv> findQcId(String qcFkId) {
+		
+		return matinvmapper.findQcId(qcFkId);
+	}
+
+
+	
 
 }

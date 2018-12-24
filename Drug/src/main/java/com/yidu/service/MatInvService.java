@@ -31,4 +31,10 @@ public interface MatInvService  {
 	int selectCount(MatInv matinv);
 
 	
+	int add(MatInv matinv);
+	
+	
+	
+	List<MatInv> findQcId(String qcFkId);
+	
 }

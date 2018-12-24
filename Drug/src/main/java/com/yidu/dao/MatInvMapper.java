@@ -32,4 +32,8 @@ public interface MatInvMapper {
      * @return
      */
     int selectCount(MatInv matinv);
+    
+	List<MatInv> findQcId(String qcFkId);
+	
+	
 }

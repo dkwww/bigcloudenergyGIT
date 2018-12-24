@@ -46,6 +46,12 @@ public class QcDetailServiceImpl   implements QcDetailService {
 		return dao.findById(map);
 	}
 
+	@Override
+	public List<QcDetail> findByIds(String qcId) {
+		
+		return dao.findByIds(qcId);
+	}
+
 	
 
 }

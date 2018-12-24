@@ -1,17 +1,21 @@
 package com.yidu.controller;
 
 
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yidu.domain.MatInv;
 import com.yidu.domain.Qc;
 import com.yidu.domain.QcDetail;
+import com.yidu.service.MatInvService;
 import com.yidu.service.QcDetailService;
 import com.yidu.service.QcService;
 import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -36,6 +40,9 @@ public class QcController {
 	 
 	 @Resource
 	 private QcDetailService QcDetailService;
+	 
+	 @Resource
+	 private MatInvService invservice;
 	 
 	//查询 药品质检
 	@RequestMapping("/qureyAll")
@@ -111,6 +118,7 @@ public class QcController {
 	 * @param shuju
 	 * @param sumAmout
 	 * @param sumRate
+	 * @author 邓康威
 	 * @return
 	 */
 	@RequestMapping("Qcadd")
@@ -146,6 +154,34 @@ public class QcController {
 			
 		}
 		
+		Message me=new Message();
+		me.setStatus(1);
+		me.setMsg("操作成功");
+		
+		return me;
+	}
+	
+	
+	/**
+	 * 材料质检入库
+	 * @author 邓康威
+	 * @param qc
+	 * @return
+	 */
+	@RequestMapping("addkc")
+	@ResponseBody
+	public Message addkc(@RequestBody Qc qc) {
+		
+		List<QcDetail> list=QcDetailService.findByIds(qc.getQcId());
+		
+		for (QcDetail qcDetail : list) {
+			List<MatInv> invlist=invservice.findQcId(qcDetail.getQdetFkId());
+			for (MatInv matInv : invlist) {
+				matInv.setMiId(matInv.getMiId());
+				matInv.setMiAmount(qcDetail.getQdetAmount());
+				invservice.add(matInv);
+			}
+		}
 		Message me=new Message();
 		me.setStatus(1);
 		me.setMsg("操作成功");

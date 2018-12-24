@@ -59,5 +59,11 @@ public interface BuyDetailMapper {
      */
     List<BuyDetail> showListIds(Map<String,Object> map);
     
+    /**
+     * 根据id查询所有
+     * @param buyId
+     * @author 邓康威
+     * @return
+     */
 	List<BuyDetail> findBuyId(String buyId);
 }

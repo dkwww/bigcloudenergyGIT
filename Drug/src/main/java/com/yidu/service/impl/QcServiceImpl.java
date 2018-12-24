@@ -5,14 +5,12 @@ import com.yidu.dao.BuyDetailMapper;
 import com.yidu.dao.BuyMapper;
 import com.yidu.dao.QcDetailMapper;
 import com.yidu.dao.QcMapper;
-import com.yidu.domain.Audit;
 import com.yidu.domain.Buy;
 import com.yidu.domain.BuyDetail;
 import com.yidu.domain.Qc;
 import com.yidu.domain.QcDetail;
 import com.yidu.service.QcService;
 import com.yidu.util.PageUtil;
-import com.yidu.util.TimeUtil;
 import com.yidu.util.Tools;
 
 import java.util.Date;
@@ -97,6 +95,7 @@ public class QcServiceImpl   implements QcService {
 		Integer count=0;
 		List<BuyDetail> list=detaMapper.findBuyId(buy.getBuyId());
 		for (BuyDetail buyDetail : list) {
+			
 			count+=buyDetail.getBdetAmount();
 		}
 		
@@ -124,6 +123,7 @@ public class QcServiceImpl   implements QcService {
 			detail.setIsva("1");
 			detail.setOptime(new Date());
 			detail.setSort(Tools.getTimeStamp());
+			detail.setQdetFkId(buyDetail.getBdetFkId());
 			rows=qcdetailMapper.insertSelective(detail);
 		}
 		
@@ -138,36 +138,11 @@ public class QcServiceImpl   implements QcService {
 		}
 		return rows;
 	}
-	
 
 	@Override
-	public int addOrUpdate(Qc qc) {
+	public List<Qc> findById(String qcId) {
 		
-		int rows = 0;
-		
-		if(qc.getQcId()!=null &&!"".equals(qc.getQcId())) {
-			rows = updateByPrimaryKeySelective(qc);
-		}else {
-			String uuid=UUID.randomUUID().toString().replaceAll("-", "");
-			qc.setQcId(uuid);
-			rows = insertSelective(qc);
-		}
-		
-		return rows;
+		return dao.findById(qcId);
 	}
-	
-	
-	@Override
-	public int updateByPrimaryKeySelective(Qc qc) {
-		return dao.updateByPrimaryKeySelective(qc);
-	}
-
-
-
-	@Override
-	public int insertSelective(Qc qc) {
-		return dao.insertSelective(qc);
-	}
-
 
 }

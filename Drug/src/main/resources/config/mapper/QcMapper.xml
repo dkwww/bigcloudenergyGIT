@@ -56,6 +56,9 @@
   	SELECT count(*) FROM drug_qc a,drug_buy b WHERE a.pmc_id=b.buy_id
   </select>
   
+  <select id="findById" parameterType="string" resultMap="BaseResultMap">
+  	SELECT * FROM drug_qc a,drug_qc_detail b WHERE a.qc_id=b.qc_id AND a.qc_id=#{qcId}
+  </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_qc

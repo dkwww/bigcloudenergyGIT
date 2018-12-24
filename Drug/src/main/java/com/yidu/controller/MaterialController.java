@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yidu.domain.MatInv;
 import com.yidu.domain.Material;
+import com.yidu.service.MatInvService;
 import com.yidu.service.MaterialService;
 import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
@@ -33,9 +35,13 @@ public class MaterialController {
 	private MaterialService matservice;
 	
 	
+	@Resource
+	private MatInvService matinvService;
+	
 	/**
 	 * 查询所有
 	 * @param material
+	 * @author 邓康威
 	 * @return
 	 */
 	@RequestMapping("showList")
@@ -64,6 +70,7 @@ public class MaterialController {
 	/**
 	 * 增加或修改
 	 * @param mat
+	 * @author 邓康威
 	 * @return
 	 */
 	@RequestMapping("addorUpdate")
@@ -73,6 +80,10 @@ public class MaterialController {
 		
 		matservice.addorUpdate(mat);
 		
+		MatInv inv=new MatInv();
+		inv.setMatId(mat.getMatId());
+		
+		matinvService.add(inv);
 		
 		Message me=new Message();
 		me.setStatus(1);
