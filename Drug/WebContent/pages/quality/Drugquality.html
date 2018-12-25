@@ -257,7 +257,7 @@
 		                    title: '未通过数',
 		                    width: 150
 		                },{ 
-		                    field: 'qcRate',
+		                    field: 'qcRateName',
 		                    title: '通过率',
 		                    width: 160
 		                }, { 
@@ -364,7 +364,19 @@
 		            if (layEvent === 'detail') { //查看
 		                console.log(table.checkStatus('demo'));
 		            } else if (layEvent === 'del') { //删除
-		                layer.confirm('真的提交质检么', function(index) {
+		                layer.confirm('确定要加入库存？', function(index) {
+		                	
+		                	var d = {
+				                    user: data,
+				                    citys: staticData.citys,
+				                    classifies: staticData.classifies
+				                };
+		                	
+		                	var  qcId=d.user.qcId;
+		                		alert(qcId);
+		                	update("../../qc/addAll.action?pmcId="+qcId,null);
+		                    layer.close(index);
+		                    //向服务端发送删除指令
 		                	
 		                	
 		                	
@@ -381,7 +393,7 @@
 		                laytpl($('#edit-tpl').html()).render(d, function(html) {
 		                	var  pmcId=d.user.pmcId;
 		                	var  qcId=d.user.qcId;
-		              			 
+		              			 alert(qcId);
 		                	var index = layer.open({
 		          				  type: 2,
 		          				  title: '质检药品',

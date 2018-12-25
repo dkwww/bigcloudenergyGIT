@@ -1,4 +1,4 @@
-package com.yidu.dao;
+ package com.yidu.dao;
 
 import java.util.List;
 import java.util.Map;
@@ -21,4 +21,10 @@ public interface QcDetailMapper {
     List<QcDetail> findById(Map<String, Object> map);
     
     List<QcDetail> findByIds(String qcId);
+    
+    
+    List<QcDetail>   selectbyId (Map<String, Object> map);
+    
+    
+     int    selectbycount  (QcDetail  qcDetail);
 }

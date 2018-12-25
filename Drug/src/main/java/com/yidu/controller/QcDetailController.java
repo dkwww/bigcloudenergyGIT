@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yidu.domain.QcDetail;
 import com.yidu.service.QcDetailService;
+import com.yidu.util.PageUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,17 +38,18 @@ public class QcDetailController {
 	 */
 	@RequestMapping("findById")
 	@ResponseBody
-	public Map<String, Object> findById(QcDetail qcdetail){
-		
-		System.err.println("========="+qcdetail+"==========");
-		List <QcDetail> list=qcdetaService.findById(qcdetail);
+	public Map<String, Object> findById(QcDetail qcdetail, Integer  page , Integer  limit){
+		PageUtil pageUtil = new PageUtil();
+		//前台取过来的分页值
+		pageUtil.setCurPage(page);
+		pageUtil.setRows(limit);
+		List <QcDetail> list=qcdetaService.selectbyId(qcdetail,pageUtil);
+		int  rows  = qcdetaService.selectbycount(qcdetail);
 		Map<String, Object> map=new HashMap<>();
 		map.put("code", 0);
 		map.put("msg", "");
-		map.put("count", 0);
-		map.put("data", list);
-		
-		
+		map.put("count", rows);
+		map.put("data", list); 
 		return map;
 		
 	}

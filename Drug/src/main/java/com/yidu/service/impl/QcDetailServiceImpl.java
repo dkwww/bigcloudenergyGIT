@@ -4,11 +4,12 @@ package com.yidu.service.impl;
 import com.yidu.dao.QcDetailMapper;
 import com.yidu.domain.QcDetail;
 import com.yidu.service.QcDetailService;
+import com.yidu.util.PageUtil;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+ 
 
 import javax.annotation.Resource;
 
@@ -52,6 +53,38 @@ public class QcDetailServiceImpl   implements QcDetailService {
 		return dao.findByIds(qcId);
 	}
 
+	@Override
+	public int insert(QcDetail qcDetail) {
+
+		return dao.insert(qcDetail);
+	}
+
+	@Override
+	public List<QcDetail> selectbyId(QcDetail record,PageUtil  pageUtil) {
+		Map<String, Object>  map  = new   HashMap<>();
+		map.put("qcDetail", record);
+		map.put("pageUtil", pageUtil);
+		List<QcDetail> list = dao.selectbyId(map);
+		return list;
+	}
+
+	@Override
+	public int selectbycount(QcDetail record) {
+		
+		return dao.selectbycount(record);
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(QcDetail record) {
+		 
+		return dao.updateByPrimaryKeySelective(record);
+	}
+
+	@Override
+	public List<QcDetail> selectqctype(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }
