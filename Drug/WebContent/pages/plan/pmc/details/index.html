@@ -78,7 +78,7 @@
 						<div id="toolbar">
 							<div class="layui-inline">
 								<button type="button" class="layui-btn layui-btn-sm add" title="筛选原材料">
-									<i class="layui-icon">&#xe608;</i> 添加原材料
+									<i class="layui-icon">&#xe608;</i> 添加药品
 								</button>
 								<div class="layui-inline" style="margin-left: 20px;">总数量：<span style="color: #0000A0" id="allAmount">0</span></div>
 						  	</div>
@@ -115,7 +115,7 @@
 				                <div class="layui-form-item">
 				                    <label class="layui-form-label">药品名称</label>
 				                    <div class="layui-input-block">
-				                        <input type="text" name="drugName" id="serach-three" placeholder="搜索关键字.." autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-three')">
+				                        <input type="text" name="drugName" id="serach-four" placeholder="搜索关键字.." autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-three')">
 				                    </div>
 				                </div>
 				                <div class="layui-form-item">
@@ -326,10 +326,23 @@
 				//定义事件集合
 				var active = {
 					save: function() {
-	                    layui.each(newData, function(index, item) {
-	                    	addOrUpdate(item);
+	                    /* layui.each(newData, function(index, item) {
+	                    	//addOrUpdate(item);
+	                    	console.log(item);
+	                    	
+	                    }); */
+	                    $.ajax({ 
+	    		        	url: '../../../../pmcDetails/checkInv.action',
+	    		        	data: JSON.stringify(newData),
+	    		        	cache: false,//同步
+	                        type: 'post',//method请求方式，get或者post
+	                        contentType: "application/json; charset=utf-8",
+	                        dataType: 'json',
+	                        success:function(mes){
+	                        	
+	                        }
 	                    });
-	                    save({"pmcId": pmcId,"pmcAmount": $("#allAmount").text()});
+	                    //save({"pmcId": pmcId,"pmcAmount": $("#allAmount").text()});
 					},
 					confirm: function() {
 						newData = [];

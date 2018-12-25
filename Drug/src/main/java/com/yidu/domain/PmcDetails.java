@@ -34,6 +34,14 @@ public class PmcDetails {
     private Integer finisded;
     
     private String dtName;
+    
+    private String matId;
+    
+    private String matName;
+    
+    private String miAmount;
+    
+    private String mlAmount;
 
 	public String getPdId() {
         return pdId;
@@ -161,5 +169,37 @@ public class PmcDetails {
 
 	public void setDtName(String dtName) {
 		this.dtName = dtName;
+	}
+
+	public String getMatId() {
+		return matId;
+	}
+
+	public void setMatId(String matId) {
+		this.matId = matId;
+	}
+
+	public String getMatName() {
+		return matName;
+	}
+
+	public void setMatName(String matName) {
+		this.matName = matName;
+	}
+
+	public String getMiAmount() {
+		return miAmount;
+	}
+
+	public void setMiAmount(String miAmount) {
+		this.miAmount = miAmount;
+	}
+
+	public String getMlAmount() {
+		return mlAmount;
+	}
+
+	public void setMlAmount(String mlAmount) {
+		this.mlAmount = mlAmount;
 	}
 }

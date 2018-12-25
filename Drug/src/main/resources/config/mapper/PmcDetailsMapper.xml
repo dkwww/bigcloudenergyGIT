@@ -28,6 +28,12 @@
     <result column="drug_prop" jdbcType="VARCHAR" property="drugProp" />
     <result column="dt_name" jdbcType="VARCHAR" property="dtName" />
   </resultMap>
+  <resultMap id="BaseResultMapTwo" type="com.yidu.domain.PmcDetails">
+    <result column="mat_id" jdbcType="VARCHAR" property="matId" />
+    <result column="mat_name" jdbcType="VARCHAR" property="matName" />
+    <result column="mi_amount" jdbcType="VARCHAR" property="miAmount" />
+    <result column="ml_amount" jdbcType="VARCHAR" property="mlAmount" />
+  </resultMap>
   
   <sql id="Base_Column_List">
     pd_id, pmc_id, drug_id, pd_amount, pd_state, isva, optime, oper, sort
@@ -35,6 +41,10 @@
   
   <sql id="Base_Column_List_One">
     pd.pd_id, dd.drug_id, dp.pmc_name, dd.drug_name, pd.pd_amount, dd.drug_unit, dd.drug_prop, dt.dt_name
+  </sql>
+  
+  <sql id="Base_Column_List_Two">
+    mat.mat_id, mat.mat_name, mi.mi_amount, ml.ml_amount
   </sql>
   
   <select id="selectBySelective" parameterType="java.util.Map" resultMap="BaseResultMapOne">
@@ -74,12 +84,21 @@
     	and dd.drug_name like CONCAT('%',#{drugName,jdbcType=VARCHAR},'%')
     </if>
   </select>  
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from drug_pmc_details
     where pd_id = #{pdId,jdbcType=VARCHAR}
   </select>
+  
+  <select id="selectMatInv" parameterType="com.yidu.domain.PmcDetails" resultMap="BaseResultMapTwo">
+    select 
+    <include refid="Base_Column_List_Two" />
+    from drug_material_list ml,drug_material mat,drug_mat_inv mi 
+    where ml.mat_id = mat.mat_id and mi.mat_id = mat.mat_id and ml.drug_id = #{drugId,jdbcType=VARCHAR}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_pmc_details
     where pd_id = #{pdId,jdbcType=VARCHAR}

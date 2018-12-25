@@ -12,10 +12,29 @@
   <sql id="Base_Column_List">
     dt_id, dt_name, isva, optime, oper, sort
   </sql>
-  <select id="selectAll" resultMap="BaseResultMap">
+  <select id="selectList" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from drug_drug_type where isva = '1'
+  </select>
+  <select id="selectBySelective" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_drug_type where isva = '1'
+   	<if test="record.dtName != null and record.dtName != ''">
+   		and dt_name like CONCAT(CONCAT('%',#{record.dtName,jdbcType=VARCHAR},'%'))
+   	</if>
+   	order by (sort+0) desc 
+   	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectCountBySelective" parameterType="com.yidu.domain.Drug" resultType="int">
+    select 
+    count(*) 
+    from drug_drug_type where isva = '1'
+   	<if test="dtName != null and dtName != ''">
+   		and dt_name like CONCAT(CONCAT('%',#{dtName,jdbcType=VARCHAR},'%'))
+   	</if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -28,6 +47,9 @@
     where dt_id = #{dtId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.yidu.domain.DrugType">
+  	<selectKey keyProperty="dtId" resultType="string" order="BEFORE">
+	    SELECT REPLACE(UUID(),'-','') AS id;
+	</selectKey>
     insert into drug_drug_type (dt_id, dt_name, isva, 
       optime, oper, sort
       )
@@ -36,6 +58,9 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.yidu.domain.DrugType">
+  	<selectKey keyProperty="dtId" resultType="string" order="BEFORE">
+	    SELECT REPLACE(UUID(),'-','') AS id;
+	</selectKey>
     insert into drug_drug_type
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="dtId != null">
@@ -78,6 +103,15 @@
       </if>
     </trim>
   </insert>
+  
+  <update id="bulkDeleteByPrimaryKeySelective">
+    update drug_drug_type set isva = '0',optime = sysdate() 
+    where dt_id in 
+    <foreach collection="list" item="ids" open="(" separator="," close=")">
+      #{ids} 
+    </foreach> 
+  </update>
+  
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.DrugType">
     update drug_drug_type
     <set>
