@@ -60,10 +60,12 @@ public class DebtyDetailController {
 		List<DebtyDetail>lis=new ArrayList<>();
 		for (DebtyDetail list2 : list) {
 			//将查询出来的0装换为未加盟否则就是已加盟
-			if(list2.getIsva().equals("0")) {
+			if(list2.getIsva().equals("0")&&list2.getDdettFkId().equals("0")) {
 				list2.setIsva("无效");
+				list2.setDdettFkId("收入");
 			}else {
 				list2.setIsva("有效");
+				list2.setDdettFkId("支出");
 			}
 			//将结果添加到lis
 			lis.add(list2);
