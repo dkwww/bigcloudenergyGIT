@@ -27,7 +27,7 @@ function getSession(){
 				var datass = {"modeId":item.modeId};
 				$.post(urlss,datass,function(mes){
 					$.each(mes,function(indexs,items){
-						$("#"+item.modeId).append("<dd><a href='javascript:;' kit-target data-options='{url:"+items.modeUrl+",icon:'&#xe614;',title:"+items.modeName+",id:"+items.modeId+"}'><i class='layui-icon'>&#xe614;</i><span> "+items.modeName+"</span></a></dd>");
+						$("#"+item.modeId).append("<dd><a href='javascript:;' kit-target data-options={url:'./"+items.modeUrl+"',icon:'&#xe658;',title:'"+items.modeName+"',id:'"+items.modeId+"'}><i class='layui-icon'>&#xe614;</i><span> "+items.modeName+"</span></a></dd>")
 					})
 				},"json")
 			});
