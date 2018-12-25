@@ -167,6 +167,7 @@ public class DrugController {
 		if (rows>0) {
 			Audit audit = new Audit();
 			audit.setAudFkId(drugId);
+			audit.setAudState("10001");
 			int count = auditService.addOrUpdate(audit);
 			if (count>0) {
 				mes.setStatus(1);
