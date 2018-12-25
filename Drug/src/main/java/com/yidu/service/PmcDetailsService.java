@@ -24,5 +24,7 @@ public interface PmcDetailsService   {
 	List<PmcDetails> findByPmc(PmcDetails record, PageUtil pageUtil, String mrpId);
 
 	boolean checkInv(List<PmcDetails> list);
+	
+    List<PmcDetails> selectPmcId(String id);
 }
  

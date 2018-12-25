@@ -84,7 +84,6 @@ public class QcController {
 	public   Message    add(Qc  qc) {
 		
 		
-		System.out.println("===============123===================="+qc.getPmcId());
 		String    string= UUID.randomUUID().toString().replaceAll("-", "");
 		System.out.println(string);
 		//分页
@@ -93,7 +92,7 @@ public class QcController {
 		Pmc pmc = pmcService.selectById(qc.getPmcId());
 		PmcDetails  pmcDetails=new   PmcDetails();
 		pmcDetails.setPmcId(qc.getPmcId());
-		
+		 List<PmcDetails>  list  = pmcDetailsService.selectPmcId(qc.getPmcId());
 		for (PmcDetails pmcDetails2 : list) {
 			String    strings= UUID.randomUUID().toString().replaceAll("-", "");
 			QcDetail  qcDetail=  new   QcDetail();

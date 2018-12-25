@@ -22,4 +22,6 @@ public interface PmcDetailsMapper {
     
     List<PmcDetails> selectBySelective(Map<String , Object> map);
     
+    List<PmcDetails> selectPmcId(String id);
+    
 } 

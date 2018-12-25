@@ -92,6 +92,13 @@
     where pd_id = #{pdId,jdbcType=VARCHAR}
   </select>
   
+  
+  
+   <select id="selectPmcId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *    from drug_pmc_details
+    where pmc_id = #{pmcId,jdbcType=VARCHAR}
+  </select>
+  
   <select id="selectMatInv" parameterType="com.yidu.domain.PmcDetails" resultMap="BaseResultMapTwo">
     select 
     <include refid="Base_Column_List_Two" />
