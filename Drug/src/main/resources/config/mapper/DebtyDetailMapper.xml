@@ -27,10 +27,8 @@
   	limit #{pageUtil.startRows},#{pageUtil.rows}
   </select>
   <!-- 查询总共多少条数据 -->
-  <select id="selectCount" parameterType="map" resultType="int">
-    select 
-    count(*) 
-    from drug_debty_detail
+  <select id="selectCount" parameterType="com.yidu.domain.DebtyDetail" resultType="int">
+   SELECT count(*) FROM drug_debty_detail dd,drug_debty d WHERE d.deb_id=dd.deb_id AND d.deb_id=#{debId}
 
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
