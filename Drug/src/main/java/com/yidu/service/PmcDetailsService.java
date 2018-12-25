@@ -22,5 +22,7 @@ public interface PmcDetailsService   {
 	int addOrUpdate(PmcDetails record);
 
 	List<PmcDetails> findByPmc(PmcDetails record, PageUtil pageUtil, String mrpId);
+
+	boolean checkInv(List<PmcDetails> list);
 }
  

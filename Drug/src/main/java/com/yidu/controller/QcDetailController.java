@@ -39,7 +39,7 @@ public class QcDetailController {
 	@ResponseBody
 	public Map<String, Object> findById(QcDetail qcdetail){
 		
-		System.err.println("========="+qcdetail);
+		System.err.println("========="+qcdetail+"==========");
 		List <QcDetail> list=qcdetaService.findById(qcdetail);
 		Map<String, Object> map=new HashMap<>();
 		map.put("code", 0);

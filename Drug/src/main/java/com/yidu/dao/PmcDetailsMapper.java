@@ -21,4 +21,5 @@ public interface PmcDetailsMapper {
     int selectCountBySelective (PmcDetails record);
     
     List<PmcDetails> selectBySelective(Map<String , Object> map);
+    
 } 

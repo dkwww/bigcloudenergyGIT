@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>生产计划总经理审核</title>
+		<link rel="stylesheet" href="../../../res/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../../res/css/common/font-awesome.min.css" media="all">
+		<link rel="stylesheet" href="../../../res/layui-config/css/app.css" media="all">
+    </script>
+	</head>
+	<body>
+		<div class="kit-table">
+		    <form class="layui-form" lay-filter="kit-search-form">
+				<!-- 左上角的两个按钮 -->
+		        <div class="kit-table-header">
+		            <div class="kit-search-inputs">
+		            	<div class="kit-search-keyword">
+		                    <input type="text" class="layui-input" id="serach-one" placeholder="名称.." onKeyUp="lockInput(this,'serach-two')"/>
+		                    <button lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
+		                </div>
+		                <div class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>
+		            </div>
+		        </div>
+				<!-- 搜索扩展工具条 -->
+		        <div class="kit-search-mored layui-anim layui-anim-upbit">
+		            <div class="kit-search-body">
+		            	<div class="layui-form-item">
+		                    <label class="layui-form-label">计划名称</label>
+		                    <div class="layui-input-block">
+		                        <input type="text" name="pmcName" id="serach-two" placeholder="搜索关键字.." autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
+		                    </div>
+		                </div>
+		                <div class="layui-form-item">
+		                    <label class="layui-form-label">计划制造商</label>
+		                    <div class="layui-input-block">
+		                        <input type="text" name="comName" placeholder="制造商.." autocomplete="off" class="layui-input" >
+		                    </div>
+		                </div>
+		                <div class="layui-form-item">
+			                <label class="layui-form-label">开始日期</label>
+			                <div class="layui-input-block">
+				                    <input type="text" name="strStartTime" id="startDate" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+			                </div>
+		                </div>
+		                <div class="layui-form-item">
+			                <label class="layui-form-label">生产期限</label>
+			                <div class="layui-input-block">
+				                    <input type="text" name="strEndTime" id="endDate" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+			                </div>
+		                </div>
+		                <div class="layui-form-item">
+			                <label class="layui-form-label">属性</label>
+			                <div class="layui-input-block">
+			                	<input type="radio" name="pmcState" value="" title="不选" checked/>
+			                	<input type="radio" name="pmcState" value="-1" title="未生产"/>
+			                    <input type="radio" name="pmcState" value="0" title="生产中"/>
+			                    <input type="radio" name="pmcState" value="1" title="已完成"/>
+			                </div>
+			            </div>
+			            <div class="layui-form-item">
+		                    <div class="layui-inline">
+		                        <label class="layui-form-label">数量</label>
+		                        <div class="layui-input-block">
+			                        <div class="layui-input-inline" style="width: 40%;">
+			                            <input type="text" name="minAmount" autocomplete="off" class="layui-input" maxlength="9" onKeyUp="amount(this)">
+			                        </div>
+			                        <div class="layui-form-mid">-</div>
+			                        <div class="layui-input-inline" style="width: 40%;">
+			                            <input type="text" name="maxAmount" autocomplete="off" class="layui-input" maxlength="9" onKeyUp="amount(this)">
+			                        </div>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		            <div class="kit-search-footer">
+		                <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary kit-btn reset-btn">重置</button>
+		                <button lay-submit lay-filter="search" class="layui-btn layui-btn-sm kit-btn">确定</button>
+		            </div>
+		        </div>
+		    </form>
+			<!-- 操作按钮 -->
+		    <div class="kit-table-body">
+		        <table id="demo" lay-filter="demo"></table>
+		        <script type="text/html" id="tools">
+					<button class="layui-btn layui-btn-xs" lay-event="audit">审核</button>
+		        </script>
+		        <script type="text/html" id="views">
+		            <button class="layui-btn layui-btn-xs" lay-event="pmcDetail">生产明细</button>
+					<button class="layui-btn layui-btn-xs" lay-event="aduitDetail">审核明细</button>
+		        </script>
+		    </div>
+		</div>
+		<script src="../../../res/js/common/jquery-1.11.2.min.js"></script>
+		<script>
+			//文本框只能输入金额
+		    function amount(th){
+		        var regStrs = [
+		            ['^0(\\d+)$', '$1'], //禁止录入整数部分两位以上，但首位为0
+		            ['[^\\d\\.]+$', ''], //禁止录入任何非数字和点
+		            ['\\.(\\d?)\\.+', '.$1'], //禁止录入两个以上的点
+		            ['^(\\d+\\.\\d{2}).+', '$1'] //禁止录入小数点后两位以上
+		        ];
+		        for(i=0; i<regStrs.length; i++){
+		            var reg = new RegExp(regStrs[i][0]);
+		            th.value = th.value.replace(reg, regStrs[i][1]);
+		        }
+		    }
+			//搜索框同步输入
+			function lockInput(obj,id){
+				$("#"+id).val($(obj).val());
+			}
+		</script>
+		<script src="../../../res/layui/layui.all.js"></script>
+		<script type="text/html" id="aduit-detail-tpl">
+		    <div style="margin:10px">
+		        <form class="layui-form" action="" lay-filter="form-edit">
+					<div class="layui-form-item" style="padding: 8px 0px 0px 8px;color: #FF5722;">
+		                <h3>总经理审核</h3>
+		            </div>
+		            <input type="hidden" name="audId" value="{{d.rowdata.audId}}" />
+					<div class="layui-form-item">
+		                <label class="layui-form-label">审核人：</label>
+		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
+						{{# if(d.rowdata.bln == true){}}
+							<input type="text" name="audName" required lay-verify="required" placeholder="你的名字" autocomplete="off" class="layui-input">
+						{{#}else{}}
+							<div>{{d.rowdata.audName}}</div>
+		                {{#};}}
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">审核状态：</label>
+		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
+						{{# if(d.rowdata.bln == false && d.rowdata.audState == '10110'){}}
+							<div>不通过</div>
+		                {{#}else if(d.rowdata.bln == false && d.rowdata.audState == '10111'){}}
+							<div>通过</div>
+						{{#}else{}}
+							<input type="radio" name="audState" value="10111" title="通过" />
+		                    <input type="radio" name="audState" value="10110" title="不通过" checked/>
+		                {{#};}}
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">审核意见：</label>
+		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
+						{{# if(d.rowdata.bln == true){}}
+							<textarea name="audIdea" required lay-verify="required" placeholder="意见" autocomplete="off" class="layui-textarea"></textarea>
+						{{#}else{}}
+							<div>{{d.rowdata.audIdea}}</div>
+		                {{#};}}
+		                </div>
+		            </div>
+					{{# if(d.rowdata.bln == false){}}
+						<div class="layui-form-item">
+		                	<label class="layui-form-label">审核时间：</label>
+		                	<div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
+								<div>{{d.rowdata.audTimes}}</div>
+		                	</div>
+		            	</div>
+					{{#}else{}}
+						<div class="layui-form-item">
+		                	<div class="layui-input-block" style="padding-left: 8px;">
+		                    	<input type="button" class="layui-btn layui-btn-sm" lay-submit lay-filter="formEdit" style="padding: 0px 20px" value='提交'>
+								<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">重置</button>
+		                	</div>
+		            	</div>
+		            {{#};}}
+		        </form>
+		    </div>
+		</script>
+		<script>
+			//弹出层下标
+			var layerIndex1,layerIndex2,editIndex;
+			//显示表格数据
+		    layui.use(['table','laydate'], function() {
+		        var table = layui.table,
+		            $ = layui.jquery,
+		            layer = layui.layer,
+		            form = layui.form,
+		            laytpl = layui.laytpl;
+		        var tableIns = table.render({
+		            elem: '#demo',
+		            height: '449px', //容器高度
+		            url: '../../../pmc/showAudit.action',
+		            where: {'audType': 1},
+		            page: true,
+		            id: 'demo',
+		            cols: [
+		                [{checkbox: true,fixed: true},
+		               	{title: '序号',type: 'numbers'},
+		                {field: 'pmcName',title: '计划名称'},
+		                {field: 'comName',title: '计划制造商'},
+		                {field: 'pmcAmount',title: '数量',sort: true},
+		                {field: 'strStartTime',title: '开始时间',sort: true},
+		                {field: 'strEndTime',title: '生产期限',sort: true},
+		                {field: 'pmcState',title: '状态',width: 80},
+		                {field: 'audState',title: '审核状态',width: 120},
+		                {fixed: 'right',title: '查看',width: 180,align: 'center',toolbar: '#views'},
+		                {fixed: 'right',title: '操作',width: 100,align: 'center',toolbar: '#tools'}]
+		            ],
+		            done: function(res, curr, count) {
+		            	var tableElem = this.elem.next('.layui-table-view');
+		            	$("[data-field = 'pmcState']").children().each(function(){
+						    if($(this).text() == '1'){
+						    	$(this).text("已完成");
+						    } else if ($(this).text() == '0') {
+						    	$(this).text("生产中...");
+						    } else if ($(this).text() == '-1'){
+						    	$(this).text("未生产");
+						    }
+					  	});
+		                $("[data-field = 'drugPictrue']").children().each(function(){
+		                	var obj = $(this);
+		                	obj.find('img').on("error", function () {
+		                		obj.text('无');
+		                	});
+		                	obj.find('img').on("load", function () {
+		                		obj.find('img').mouseover(function() {
+			                		layer.tips("点击查看", this, {
+		                            	tips: [3, "#4794ec"],time: 1000
+		                          	});
+		                      	});
+		                	});
+					  	});
+		                $("[data-field = 'audState']").children().not(":first").each(function(index){
+						    if($(this).text() == '10101'){
+						    	$(this).text("未审核");
+						    	tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=aduitDetail]').addClass('layui-btn-disabled').attr('disabled',true);
+						    } else if ($(this).text() == '10110' || $(this).text() == '10111') {
+						    	$(this).text("审核完成");
+						    	tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=audit]').addClass('layui-btn-disabled').attr('disabled',true);
+						    }
+					  	});
+		            }
+		        });
+		        
+		        //监听搜索表单提交
+		        form.on('submit(search)', function(data) {  
+		            //带条件查询
+		            tableIns.reload({
+		                where: data.field,
+		                page: { curr: 1 }
+		            });
+		            $('.kit-search-mored').hide();
+		            return false;
+		        });
+		        
+		        //监听工具条按钮点击
+		        table.on('tool(demo)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+		            var data = obj.data; //获得当前行数据
+		            var layEvent = obj.event; //获得 lay-event 对应的值
+		            var tr = obj.tr; //获得当前行 tr 的DOM对象
+		
+		            if (layEvent === 'pmcDetail') { //生产明细
+		            	maxlayer(data.pmcId,data.pmcName);
+		            } else if (layEvent === 'audit') { //审核
+	            		var d = {
+		                	rowdata: {
+		                		audId: data.audId,bln: true
+	                        }
+		                };
+		            	editLayer(d);
+		            } else if (layEvent === 'aduitDetail') {//审核明细
+		            	$.post("../../../audit/findById.action",{"audId":data.audId},function(mes){
+		            		mes["bln"] = false;
+		                	 var d = {
+		 		                rowdata: mes
+		 		             };
+		                	 editLayer(d);
+		                 },"json");
+		            }
+		        });
+		        
+		        //表单渲染
+		        form.render(null, 'kit-search-form');
+		        
+		        //更多筛选点击事件
+		        $('#kit-search-more').on('click', function() {
+		            $('.kit-search-mored').toggle();
+		        });
+		        
+		        //审核弹出层   提交按钮点击事件
+		        form.on('submit(formEdit)', function(data) {
+		        	update(data.field);
+                	return false;
+		        });
+		        
+		    });
+			
+		  	//全屏弹窗
+			function maxlayer(id,name){
+				layerIndex1 = layer.open({
+				  type: 2,
+				  title: '药品配置',
+				  content: '../../../pages/plan/pmc/details/index2.html?id='+id+"&name="+name,
+				  area: ['800px', '430px']
+				});
+				layer.full(layerIndex1);
+			}
+		  	
+		  	//渲染 生产计划审核和审核明细弹出层
+		    function editLayer(d){
+	    		layui.laytpl($('#aduit-detail-tpl').html()).render(d,function(html) {
+	    			editIndex = layer.open({
+                        type: 1,
+                        title: '审核明细',
+                        content: html,
+                        maxmin: true,
+                        area: ['600px', '380px'],
+                        success: function() {
+                            layui.form.render(null, 'form-edit');
+                        }
+                    });
+                });
+	    		return 
+		    }
+		    
+		  	//进行审核
+		    function update(data){
+		    	$.ajax({
+		    		url: "../../../audit/addOrUpdate.action",
+                    type:'post',//method请求方式，get或者post
+                    async:false,//同步
+                    dataType:'json',//预期服务器返回的数据类型
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(data),//表格数据序列化
+                    success:function(mes){//res为相应体,function为回调函数
+                    	if(mes.status==1){ 
+                        	editIndex && layer.close(editIndex); //关闭弹出层
+	                        $("#res").click();//调用重置按钮将表单数据清空 
+	                        $(".layui-laypage-btn")[0].click();//当前表格刷新
+                        }
+                        layer.msg(mes.msg);
+                    },
+                   	error:function(){layer.alert('数据异常，请稍后重试！！！',{icon:5});}
+                 });
+		    }
+		    
+		  	//重新渲染表单
+		  	function renderForm(){ 
+	  			layui.use('form', function(){ 
+		  			var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加() 
+		  			form.render(); 
+	  			}); 
+	  		}
+		  	
+		    //ajax加载动画
+		    $(function () {
+	            $.ajaxSetup({
+	                layerIndex:-1,
+	                beforeSend: function () {
+	                    this.layerIndex = layer.load(1, { shade: [0.8, '#ffffff'] });
+	                },
+	                complete: function () {
+	                    layer.close(this.layerIndex);
+	                },
+	                error: function () {
+	                    layer.alert('部分数据加载失败，可能会导致页面显示异常，请刷新后重试', {
+	                        skin: 'layui-layer-molv'
+	                       , closeBtn: 0
+	                       , shift: 4 //动画类型
+	                    });
+	                }
+	            });
+	        });
+		</script>
+	</body>
+</html>
