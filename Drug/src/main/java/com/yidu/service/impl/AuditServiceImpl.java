@@ -342,6 +342,13 @@ public class AuditServiceImpl   implements AuditService {
 		record.setAudTimes(TimeUtil.dateToString(record.getAudTime(), "yyyy-MM-dd HH:mm:ss"));
 		return record;
 	}
+
+
+	@Override
+	public List<Audit> findByIdsh(String buyId) {
+		
+		return mapper.findById(buyId);
+	}
 	
 	
 }

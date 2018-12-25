@@ -188,5 +188,7 @@
     where com_id = #{comId,jdbcType=VARCHAR}
   </update>
   
-  
+  <select id="findDeId" parameterType="string" resultMap="BaseResultMap">
+  SELECT * FROM drug_audit a,drug_company b WHERE a.qc_fk_id=b.com_id AND a.qc_fk_id=#{comId}
+  </select>
 </mapper>

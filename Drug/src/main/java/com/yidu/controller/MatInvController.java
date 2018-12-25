@@ -27,10 +27,17 @@ import org.springframework.stereotype.Controller;
 @Controller
 @RequestMapping("/matInv")
 public class MatInvController {
-	
+	//原材料库存service
 	@Resource
 	private MatInvService matinvservice;
 	
+	/**
+	 * 查询所有
+	 * @param matinv
+	 * @param page
+	 * @param limit
+	 * @return
+	 */
 	@RequestMapping("showList")
 	@ResponseBody
 	public Map<String, Object> showList(MatInv matinv,Integer page,Integer limit){

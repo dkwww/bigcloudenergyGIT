@@ -89,4 +89,13 @@ public interface AuditMapper {
      * @return
      */
     public List<Audit> findCEO(Map<String, Object> map);
+    
+    
+    /**
+     * 根据采购id查询审核
+     * @param buyId
+     * @author 邓康威
+     * @return
+     */
+	List<Audit> findById(String buyId);
 }

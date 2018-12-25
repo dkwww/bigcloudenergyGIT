@@ -32,10 +32,14 @@ import org.springframework.stereotype.Controller;
 public class BuyHeDetailController {
 	
 	@Resource
-	BuyHeDetailService service;
+	BuyHeDetailService service;	//采购明细service
 	
 	/**
 	 * 根据id显示列表
+	 * @param detail
+	 * @param page
+	 * @param limit
+	 * @author 邓康威
 	 * @return
 	 */
 	@RequestMapping("/showListId")

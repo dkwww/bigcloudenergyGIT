@@ -1,8 +1,11 @@
 package com.yidu.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 import com.yidu.domain.Debty;
 
@@ -44,5 +47,22 @@ public interface DebtyMapper {
      * @return
      */
 	Debty findByComId(String comId);
+
+	/**
+	 * 根据店铺id查询财务
+	 * @author 邓康威
+	 * @param comId
+	 * @return
+	 */
+	List<Debty> findcomIds(String comId);
+	
+	/**
+	 * 
+	 * @param money
+	 * @param debtyId
+	 * @return
+	 */
+	@Update("UPDATE drug_debty SET deb_money = deb_money - #{money} WHERE deb_id = #{debtyId}")
+	int updateMoney(@Param("money")BigDecimal money,@Param("debtyId")String debtyId);
 }
    

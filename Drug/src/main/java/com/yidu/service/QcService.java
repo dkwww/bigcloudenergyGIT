@@ -49,16 +49,28 @@ public interface QcService  {
 	int selectCount(Qc qc);
 
 	
-	
+	/**
+	 * 采购订单增加到质检
+	 * @param buy
+	 * @author 邓康威
+	 * @return
+	 */
 	int addQc(Buy buy);
 	
+	/**
+	 * 修改
+	 * @param buy
+	 * @author 邓康威
+	 * @return
+	 */
 	int update(Buy buy);
 	
+	/**
+	 * 根据id查询
+	 * @param qcId
+	 * @author 邓康威
+	 * @return
+	 */
 	List<Qc> findById(String qcId);
-	int  add(Qc  qc);
-	
-	int updateByPrimaryKeySelective(Qc record);
-
-	void insertSelective(Qc qc);
 
 }

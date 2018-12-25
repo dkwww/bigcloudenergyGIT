@@ -34,7 +34,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class QcServiceImpl   implements QcService {
 	@Resource
-	private  QcMapper  dao;
+	private   QcMapper   dao;
 	
 	@Resource
 	QcDetailMapper qcdetailMapper;
@@ -107,6 +107,7 @@ public class QcServiceImpl   implements QcService {
 		qc.setQcFail(0);
 		qc.setQcRate("0");
 		qc.setQcAmount(count);
+		qc.setQcConpany("666");
 		qc.setOptime(new Date());
 		String uuid=UUID.randomUUID().toString().replaceAll("-", "");
 		qc.setQcId(uuid);
@@ -143,25 +144,6 @@ public class QcServiceImpl   implements QcService {
 	public List<Qc> findById(String qcId) {
 		
 		return dao.findById(qcId);
-	}
-
-	@Override
-	public void insertSelective(Qc qc) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int add(Qc qc) {
-		 
-		return dao.insert(qc);
-	}
-
-
-	@Override
-	public int updateByPrimaryKeySelective(Qc record) {
-		
-		return dao.updateByPrimaryKeySelective(record);
 	}
 
 }

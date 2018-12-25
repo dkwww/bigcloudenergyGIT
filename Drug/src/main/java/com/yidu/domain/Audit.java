@@ -1,29 +1,30 @@
 package com.yidu.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Audit {
-    private String audId;
+    private String audId;					//审核编号
 
-    private String audFkId;
+    private String audFkId;					//业务编号
 
-    private String audComtype;
+    private String audComtype;				//厂家（0总公司、1分公司）
 
-    private String qcFkId;
+    private String qcFkId;					//业务编号（公司编号）
 
-    private Date audTime;
+    private Date audTime;					//审核时间
 
-    private String audTimes;
+    private String audTimes;				//审核时间
 
-    private String audState;
+    private String audState;				//审核状态
 
-    private String audStates;
+    private String audStates;				//审核状态
 
-    private String audIdea;
+    private String audIdea;					//审核意见说明
 
-    private String audName;
+    private String audName;					//审核人
 
-    private String audMes;
+    private String audMes;					//备注
 
     private String isva;
 
@@ -41,8 +42,20 @@ public class Audit {
 
     private Double wholPrice;
     
+    private BigDecimal buyMoney;
     
-    public Integer getWholAmount() {
+    
+    
+    
+    public BigDecimal getBuyMoney() {
+		return buyMoney;
+	}
+
+	public void setBuyMoney(BigDecimal buyMoney) {
+		this.buyMoney = buyMoney;
+	}
+
+	public Integer getWholAmount() {
 		return wholAmount;
 	}
 

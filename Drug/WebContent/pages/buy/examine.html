@@ -143,9 +143,8 @@
 		                {field: 'buyMoney',title: '采购总价格',width: 120},
 		                {field: 'buyTimes',title: '采购时间',width: 120},
 		                {field:	'auName',title: '审核状态',width: 150},
-		                {field:	'buyState',title: '采购状态',width: 150},
-		                {field:	'buyQc',title: '质检状态',width: 150},
-		                {field:	'buyPut',title: '入库状态',width: 150},
+		                {field:	'comName',title: '分店名称',width: 150},
+		                
 		                {fixed: 'right',title: '操作',width: 250,align: 'center',toolbar: '#barDemo'}]
 		            ],
 		            done: function(res, curr, count) {
@@ -212,9 +211,10 @@
 		            var layEvent = obj.event; //获得 lay-event 对应的值
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		
-		            if (layEvent === 'detail') { //查看
+		            if (layEvent === 'detail') { //订单详情
 		                console.log(table.checkStatus('demo'));
 			            var  buyId=data.buyId;
+			            
 	                	var index = layer.open({
 	          				  type: 2,
 	          				  title: '采购明细',

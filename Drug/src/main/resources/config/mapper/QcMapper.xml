@@ -15,6 +15,8 @@
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
     <result column="buy_amount" jdbcType="VARCHAR" property="buyAmount" />
+    <result column="com_name" jdbcType="VARCHAR" property="comName" />
+    
   </resultMap>
   <sql id="Base_Column_List">
     qc_id, mrp_id, qc_amount, qc_fail, qc_rate, qc_optime, qc_conpany, qc_type, isva, 
@@ -48,12 +50,12 @@
    
    
    <select id="showList" parameterType="map" resultMap="BaseResultMap">
-  	SELECT * FROM drug_qc a,drug_buy b WHERE a.pmc_id=b.buy_id
+  	SELECT * FROM drug_qc a,drug_buy b,drug_company c WHERE a.pmc_id=b.buy_id AND a.qc_conpany=c.com_id
   </select>
   
   
   <select id="selectCount" parameterType="com.yidu.domain.Qc" resultType="int">
-  	SELECT count(*) FROM drug_qc a,drug_buy b WHERE a.pmc_id=b.buy_id
+  	SELECT count(*) FROM drug_qc a,drug_buy b,drug_company c WHERE a.pmc_id=b.buy_id AND a.qc_conpany=c.com_id
   </select>
   
   <select id="findById" parameterType="string" resultMap="BaseResultMap">

@@ -151,4 +151,11 @@ public interface AuditService   {
 	 */
 	public List<Audit> showCEO(Audit audit,PageUtil pageUtil);
 	
+	/**
+	 * 根据采购订单id查询审核内容
+	 * @param buyId
+	 * 邓康威
+	 * @return
+	 */
+	List<Audit> findByIdsh(String buyId);
 }

@@ -3,6 +3,7 @@
 import java.util.List;
 import java.util.Map;
 
+import com.yidu.domain.Audit;
 import com.yidu.domain.Buy;
 
 
@@ -49,6 +50,7 @@ public interface BuyMapper {
     /**
      * 审核查询所有
      * @param map
+     * 邓康威
      * @return
      */
     public List<Buy> AuditshowList(Map<String,Object> map);
@@ -56,7 +58,10 @@ public interface BuyMapper {
     /**
      * 审核查询总行数
      * @param buy
+     * @author 邓康威
      * @return
      */
     public int AuditselectCount(Buy buy);
+
+    
 }
