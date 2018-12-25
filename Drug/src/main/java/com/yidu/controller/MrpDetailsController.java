@@ -23,9 +23,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
-import javax.swing.JInternalFrame;
 
-import org.springframework.dao.support.DaoSupport;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -39,7 +37,6 @@ import org.springframework.stereotype.Controller;
 @Controller
 @RequestMapping("/mrpDetails")
 public class MrpDetailsController {
-
 	@Resource   
 	private  MrpDetailsService  mrpDetailService; 
 	@Resource   
@@ -48,8 +45,6 @@ public class MrpDetailsController {
 	private QcDetailService   qcDetailService;
 	@Resource
 	private   QcService   qcService;
-
-
 	@RequestMapping("findById")
 	@ResponseBody
 	public   Map<String, Object>  findById(MrpDetails  mrpDetails,Integer page,Integer limit){
@@ -68,14 +63,11 @@ public class MrpDetailsController {
 		map.put("data", list);
 		return  map;
 	}
-
 	@RequestMapping("update")
 	@ResponseBody
 	public   Message   update(MrpDetails  mrpDetails) {
 		//传过来的数据
 		String   name = mrpDetails.getShujuName(); 
-		
-		System.out.println("==================123============"+name);
 		Message   message = new   Message();
 		//拆分数据
 		String   nameOne[]=name.split("#");
@@ -133,12 +125,9 @@ public class MrpDetailsController {
 		if (Percentage>0.1) {
 			mrpService.Modifyprogress(mrp);
 		} 
-		
 		Double  stt= 100.0;
 		Double ii = Double.valueOf(progress);
-		System.out.println("进来"+stt+"=========1234========"+ii);
 		if(ii==stt) {
-			System.out.println("进来"+stt+"=========123466========"+ii);
 			mrp.setMrpId(mrpDetails.getMrpId());
 			mrp.setMrpState(1);
 			mrp.setMrpIdea(1);
@@ -151,8 +140,6 @@ public class MrpDetailsController {
 		}
 		return message;
 	}
-
-
 	@RequestMapping("Preservation")
 	@ResponseBody
 	public  Message    Preservation(MrpDetails  mrpDetails) {
@@ -172,7 +159,6 @@ public class MrpDetailsController {
 			qcDetali.setQdetFkId(drugId);
 			//主键ID
 			String  qcdID= nametow[1];
-
 			qcDetali.setQdetId(qcdID);
 			//质检总数量
 			String   drugnum= nametow[2];
@@ -183,23 +169,16 @@ public class MrpDetailsController {
 			qcDetali.setQcId(qcid);
 			//通过率
 			String   qdetrate= nametow[4];
-			 
 			qcDetali.setQdetRate(qdetrate);
-
 			//未通过数
 			String   qdetfail= nametow[5]; 
 			qcDetali.setQdetFail(Integer.valueOf(qdetfail));
 			int number =  Integer.valueOf(qdetfail);
-			System.out.println("=========11============"+number);
-			jj = jj+number;
-
-
+			jj = jj+number; 
 			rows = qcDetailService.updateByPrimaryKeySelective(qcDetali);
-
 		}
 		NumberFormat numberFormat = NumberFormat.getInstance();
 		numberFormat.setMaximumFractionDigits(2); 
-
 		Qc   qc  = new  Qc();
 		qc.setQcFail(jj);
 		String   progress  =   numberFormat.format((float) jj  /   (float)kk *100);
@@ -208,15 +187,11 @@ public class MrpDetailsController {
 		qc.setQcOptime(date);
 		qc.setQcId(qcid);
 		rows= qcService.updateByPrimaryKeySelective(qc);
-
-
 		if (rows>0) {
 			message.setStatus(1);
 		}else {
 			message.setStatus(0);
 		}
-
-
 		return   message;  
 	}
 
