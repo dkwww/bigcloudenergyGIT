@@ -2,6 +2,8 @@ package com.yidu.domain;
 
 import java.util.Date;
 
+import javax.ws.rs.NameBinding;
+
 public class PmcDetails {
     private String pdId;
 
@@ -42,6 +44,8 @@ public class PmcDetails {
     private String miAmount;
     
     private String mlAmount;
+    
+   
 
 	public String getPdId() {
         return pdId;

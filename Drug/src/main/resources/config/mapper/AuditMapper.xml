@@ -17,6 +17,7 @@
     <result column="sort" jdbcType="VARCHAR" property="sort" />
     <result column="whol_amount" jdbcType="INTEGER" property="wholAmount" />
     <result column="whol_price" jdbcType="NUMERIC" property="wholPrice" />
+    <result column="buy_money" jdbcType="DECIMAL" property="buyMoney" />
   </resultMap>
   <sql id="Base_Column_List">
     aud_id, aud_fk_id, aud_comtype, qc_fk_id, aud_time, aud_state, aud_idea, aud_name, 
@@ -35,6 +36,9 @@
   	
   </select>
   
+  <select id="findById" parameterType="string" resultMap="BaseResultMap">
+  	SELECT * FROM  drug_buy a,drug_audit b WHERE a.buy_id=b.aud_fk_id AND a.buy_id=#{aud_fk_id}
+  </select>
   
   <select id="showBuy" parameterType="java.util.Map" resultMap="BaseResultMap" >
   	SELECT * FROM drug_audit a ,drug_buy b WHERE b.buy_type = 1 AND a.aud_fk_id = b.buy_id 

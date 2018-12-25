@@ -30,5 +30,7 @@ public interface PmcService  {
 	List<Pmc> showAudit(Pmc record, PageUtil pageUtil);
 
 	int findAuditCount(Pmc record);
+	
+	int  addPmc(Pmc record);
 
 }

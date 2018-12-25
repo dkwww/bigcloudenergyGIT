@@ -32,5 +32,13 @@ public interface CompanyMapper {
     int checkselectCount(Company company);
     int companyDeleteByPrimaryKeySelective(List<String> ids);
     int checkcompanyDeleteByPrimaryKeySelective(List<String> ids);
+
+    
+    /**
+     * 根据审核id查询分公司
+     * @param qcFkId
+     * @return
+     */
+	List<Company> findDeId(String qcFkId);
     
 }

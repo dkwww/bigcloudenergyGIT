@@ -42,11 +42,13 @@ import com.yidu.util.Tools;
 @RequestMapping("/audit")
 public class AuditController {
 	
+	//审核service
 	@Resource
 	AuditService service;
 	
 	@Resource
 	WholesaleDetailService detaiservice;
+	
 	
 	@Resource
 	DrugInvService druginvservice;
@@ -60,6 +62,7 @@ public class AuditController {
 	@Resource
 	BuyService buyService;
 	
+	//质检service
 	@Resource
 	QcService qcService;
 	
@@ -281,10 +284,10 @@ public class AuditController {
 	@ResponseBody
 	public Message auditById(@RequestBody Audit audits) {
 
-		System.err.println("   aaaaaaaaaaaaa     "+audits.getAudFkId());
-		System.err.println("   bbbbbbbbbbbbb     "+audits.getAudId());
-		System.err.println("   ccccccccccccc     "+audits.getAudState());
-		System.err.println("   ddddddddddddd     "+audits.getAudMes());
+		System.out.println("   aaaaaaaaaaaaa     "+audits.getAudFkId());
+		System.out.println("   bbbbbbbbbbbbb     "+audits.getAudId());
+		System.out.println("   ccccccccccccc     "+audits.getAudState());
+		System.out.println("   ddddddddddddd     "+audits.getAudMes());
 		
 		//用于页面上的判断
 		Message message = new Message();
@@ -354,7 +357,7 @@ public class AuditController {
 				qc.setQcType(1);//质检类型为药品
 				qc.setIsva("1");
 				//质检
-				qcService.insertSelective(qc);
+				//qcService.insertSelective(qc);
 				//审核
 				int rows=service.updateByPrimaryKeySelective(audit);
 				

@@ -371,16 +371,9 @@
 				                    citys: staticData.citys,
 				                    classifies: staticData.classifies
 				                };
-		                	
 		                	var  qcId=d.user.qcId;
 		                		alert(qcId);
-		                	update("../../qc/addAll.action?pmcId="+qcId,null);
-		                    layer.close(index);
-		                    //向服务端发送删除指令
-		                	
-		                	
-		                	
-		                   
+		                	update("../../drugInvDetail/addAll.action?qcId="+qcId,null); 
 		                    layer.close(index);
 		                    //向服务端发送删除指令
 		                });

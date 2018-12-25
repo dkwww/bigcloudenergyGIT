@@ -2,6 +2,7 @@ package com.yidu.service;
 
 import java.util.List;
 
+import com.yidu.domain.Audit;
 import com.yidu.domain.Buy;
 import com.yidu.util.PageUtil;
 
@@ -63,6 +64,8 @@ public interface BuyHeService   {
 	 * @return
 	 */
 	int update(Buy buy);
+
+	
 	
 	
 	

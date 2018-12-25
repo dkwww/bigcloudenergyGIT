@@ -10,6 +10,7 @@ import com.yidu.util.PageUtil;
 import com.yidu.util.TimeUtil;
 import com.yidu.util.Tools;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -129,5 +130,17 @@ public class DebtyServiceImpl   implements DebtyService {
 	@Override
 	public Debty findByComId(String id) {
 		return debtyMapper.findByComId(id);
+	}
+	
+	
+	@Override
+	public List<Debty> findcomIds(String comId) {
+		
+		return debtyMapper.findcomIds(comId);
+	}
+	
+	@Override
+	public int addbty(BigDecimal money,String debtyId) {
+		return debtyMapper.updateMoney(money, debtyId);
 	}
 }

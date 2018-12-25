@@ -21,7 +21,7 @@
     <result column="sort" jdbcType="VARCHAR" property="sort" />
     <result column="aud_idea" jdbcType="VARCHAR" property="audIdea" />
     <result column="buy_submission" jdbcType="VARCHAR" property="buySubmission" />
-    
+    <result column="com_name" jdbcType="VARCHAR" property="comName" />
     
   </resultMap>
   
@@ -61,7 +61,9 @@
   
   
   <select id="AuditshowList" parameterType="map" resultMap="BaseResultMap">
-  	SELECT * FROM drug_buy a,drug_provider b,drug_audit c WHERE a.buy_company=b.prov_id AND a.buy_id=c.aud_fk_id AND a.buy_type = 0
+  	SELECT * FROM drug_buy a,drug_provider b,drug_audit c,drug_company d 
+	WHERE a.buy_company=b.prov_id AND a.buy_id=c.aud_fk_id AND c.qc_fk_id=d.com_id 
+	AND a.buy_type = 0
   	<if test="buy.buyCompany!=null and buy.buyCompany!='' ">
   		and buy_company like concat("%",#{buy.buyCompany},"%")
   	</if>
@@ -70,11 +72,15 @@
   
   
   <select id="AuditselectCount" parameterType="com.yidu.domain.Buy" resultType="int">
-  	SELECT count(*) FROM drug_buy a,drug_provider b,drug_audit c WHERE a.buy_company=b.prov_id AND a.buy_id=c.aud_fk_id AND a.buy_type = 0
+  	SELECT count(*) FROM drug_buy a,drug_provider b,drug_audit c,drug_company d 
+	WHERE a.buy_company=b.prov_id AND a.buy_id=c.aud_fk_id AND c.qc_fk_id=d.com_id 
+	AND a.buy_type = 0
   	<if test="buyCompany!=null and buyCompany!='' ">
   		and buy_company like concat("%",#{buyCompany},"%")
   	</if>
   </select>
+  
+  
   
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 

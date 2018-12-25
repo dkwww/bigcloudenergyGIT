@@ -110,6 +110,7 @@
     delete from drug_pmc_details
     where pd_id = #{pdId,jdbcType=VARCHAR}
   </delete>
+    
   <insert id="insert" parameterType="com.yidu.domain.PmcDetails">
   	<selectKey keyProperty="pdId" resultType="string" order="BEFORE">
 	    SELECT REPLACE(UUID(),'-','') AS id;

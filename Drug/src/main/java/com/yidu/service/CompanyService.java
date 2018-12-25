@@ -72,5 +72,13 @@ public interface CompanyService   {
      * @return
      */
     int updateByPrimaryKeySelective(Company record);
+
+    /**
+     * 根据审核id查询分公司id
+     * @param qcFkId
+     * @author 邓康威
+     * @return
+     */
+	List<Company> findDeId(String qcFkId);
     
 }

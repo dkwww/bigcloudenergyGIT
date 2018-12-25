@@ -1,37 +1,33 @@
 package com.yidu.controller;
 
 
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yidu.domain.Audit;
 import com.yidu.domain.Buy;
 import com.yidu.domain.BuyDetail;
-import com.yidu.domain.Qc;
-import com.yidu.domain.QcDetail;
+import com.yidu.domain.Company;
+import com.yidu.domain.Debty;
 import com.yidu.service.AuditService;
 import com.yidu.service.BuyHeDetailService;
 import com.yidu.service.BuyHeService;
+import com.yidu.service.CompanyService;
+import com.yidu.service.DebtyService;
 import com.yidu.service.QcService;
 import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
 import com.yidu.util.Tools;
-
-import antlr.build.Tool;
-
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Controller;
 
 /**
  * <p>
@@ -45,25 +41,37 @@ import org.springframework.stereotype.Controller;
 @RequestMapping("/buyht")
 public class BuyHeController {
 	
+	//采购订单service
 	@Resource
 	private BuyHeService service;
 	
+	//采购明细service
 	@Resource
 	private BuyHeDetailService detaservice;
 	
+	//审核service
 	@Resource
 	private AuditService audservice;
 	
+	//质检service
 	@Resource
 	private QcService qcservice;
 	
 	
+	//店铺service
+	@Resource
+	private CompanyService comservice;
+	
+	//财务service
+	@Resource
+	private DebtyService debtyservice;
 	
 	/**
 	 * 显示列表
 	 * @param buy
 	 * @param page
 	 * @param limit
+	 * @author 邓康威
 	 * @return
 	 */
 	@RequestMapping("/showList")
@@ -119,6 +127,7 @@ public class BuyHeController {
 	 * @param sumNumber 总数量
 	 * @param sumPrice	总价格
 	 * @param Supplier	供应商
+	 * @author 邓康威
 	 * @return
 	 */
 	@RequestMapping("add")
@@ -169,6 +178,8 @@ public class BuyHeController {
 		audit.setAudFkId(buy.getBuyId());
 		//默认审核状态为0
 		audit.setAudState("0");
+		//默认个公司id
+		audit.setQcFkId("666");
 		//存进审核
 		audservice.add(audit);
 		
@@ -219,6 +230,7 @@ public class BuyHeController {
 	 * @param buy
 	 * @param page
 	 * @param limit
+	 * @author 邓康威
 	 * @return
 	 */
 	@RequestMapping("AuditshowList")
@@ -259,17 +271,41 @@ public class BuyHeController {
 	/**
 	 * 审核
 	 * @param buy
+	 * @author 邓康威
 	 * @return
 	 */
 	@RequestMapping("update")
 	@ResponseBody
 	public Message update(@RequestBody Buy buy) {
 		
+		//根据采购id查询审核
+		List<Audit> list=audservice.findByIdsh(buy.getBuyId());
+		for (Audit audit : list) {
+			//根据审核外键id查询分店
+			List<Company> lists=comservice.findDeId(audit.getQcFkId());
+			for (Company company : lists) {
+				//根据店铺id查询财务
+				List<Debty> listss=debtyservice.findcomIds(company.getComId());
+				for (Debty debty : listss) {
+					System.err.println("-----------价格:"+audit.getBuyMoney());
+					System.err.println("-------------财务ID:"+debty.getDebId());
+					debtyservice.addbty(audit.getBuyMoney(),debty.getDebId());
+				}
+				
+			}
+			
+		}
+		
+		
 		//获取审核表的对象
 		Audit audit=new Audit();
+		//获取采购订单id
 		audit.setQcFkId(buy.getBuyId());
+		//审核意见
 		audit.setAudIdea(buy.getAudIdea());
+		//审核状态
 		audit.setAudState(buy.getBuyAudit());
+		//审核的当前时间
 		Date date=new Date();
 		audit.setAudTime(date);
 		audservice.add(audit);
@@ -285,6 +321,7 @@ public class BuyHeController {
 	/**
 	 * 采购状态修改
 	 * @param buy
+	 * @author 邓康威
 	 * @return
 	 */
 	@RequestMapping("cgUpdate")
@@ -302,6 +339,7 @@ public class BuyHeController {
 	/**
 	 * 采购订单提交到质检
 	 * @param buy
+	 * @author 邓康威
 	 * @return
 	 */
 	@RequestMapping("addQc")

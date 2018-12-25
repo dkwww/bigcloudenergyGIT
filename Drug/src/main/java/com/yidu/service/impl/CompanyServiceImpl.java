@@ -161,6 +161,11 @@ public class CompanyServiceImpl  implements CompanyService {
 		
 		return companyMapper.checkselectCount(company);
 	}
+	@Override
+	public List<Company> findDeId(String qcFkId) {
+		
+		return companyMapper.findDeId(qcFkId);
+	}
 	
 
 	

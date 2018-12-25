@@ -58,12 +58,22 @@ public class Buy {
     private String buySubmissions;			//提交状态
     
     
+    private String comName;					//分公司名字
     
     
     
     
     
     
+    
+
+	public String getComName() {
+		return comName;
+	}
+
+	public void setComName(String comName) {
+		this.comName = comName;
+	}
 
 	public String getBuySubmissions() {
 		return buySubmissions;

@@ -80,10 +80,11 @@ public class QcDetailServiceImpl   implements QcDetailService {
 		return dao.updateByPrimaryKeySelective(record);
 	}
 
+	 
 	@Override
-	public List<QcDetail> selectqctype(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<QcDetail> selectQcId(String id) {
+	 
+		return dao.selectQcId(id);
 	}
 	
 

@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.dao.support.DaoSupport;
 import org.springframework.stereotype.Service;
 
 import com.yidu.dao.PmcMapper;
@@ -125,6 +126,12 @@ public class PmcServiceImpl  implements PmcService {
 	@Override
 	public int findAuditCount(Pmc record) {
 		return pmcMapper.selectAuditCount(record);
+	}
+
+	@Override
+	public int addPmc(Pmc record) {
+
+		return pmcMapper.addpmc(record);
 	}
 
 }

@@ -27,4 +27,6 @@ public interface QcDetailMapper {
     
     
      int    selectbycount  (QcDetail  qcDetail);
+     
+    List<QcDetail> selectQcId (String  id);
 }

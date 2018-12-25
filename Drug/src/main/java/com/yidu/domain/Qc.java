@@ -13,12 +13,12 @@ public class Qc {
     private Integer qcFail;				//未通过数
 
     private String qcRate;				//总通过率
-    
-    private String qcRateName;   //用于显示百分比
 
     private Date qcOptime;
 
-    private String qcConpany;
+    private String qcConpany;			//分店id
+    
+    private String comName;				//分店名字
 
     private Integer qcType;
 
@@ -31,28 +31,18 @@ public class Qc {
     private String sort;
     
     private String buyAmount;
-      
-    
-    private String   qcOptiemName;
     
     
     
     
 
-    public String getQcOptiemName() {
-		return qcOptiemName;
+
+	public String getComName() {
+		return comName;
 	}
 
-	public void setQcOptiemName(String qcOptiemName) {
-		this.qcOptiemName = qcOptiemName;
-	}
-
-	public String getQcRateName() {
-		return qcRateName;
-	}
-
-	public void setQcRateName(String qcRateName) {
-		this.qcRateName = qcRateName;
+	public void setComName(String comName) {
+		this.comName = comName;
 	}
 
 	public String getBuyAmount() {

@@ -1,5 +1,6 @@
 package com.yidu.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.yidu.domain.Debty;
@@ -71,4 +72,20 @@ public interface DebtyService   {
      * @return
      */
     Debty findByComId(String drugId);
+
+    /**
+     * 根据店铺id查询财务
+     * @param comId
+     * 邓康威
+     * @return
+     */
+	List<Debty> findcomIds(String comId);
+	
+	/**
+	 * 减财务数据
+	 * @param debty
+	 * @author 邓康威
+	 * @return
+	 */
+	int addbty(BigDecimal money,String debtyId);
 }

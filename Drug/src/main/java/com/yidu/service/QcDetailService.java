@@ -32,11 +32,13 @@ public interface QcDetailService   {
 	int  insert  (QcDetail  qcDetail);
 	
 	List<QcDetail>  selectbyId(QcDetail record ,PageUtil   pageUtil);
-	  List<QcDetail>  selectqctype(Map<String , Object> map);
+	  
 	 int  selectbycount(QcDetail record); 
 	 
 	 
 	  int updateByPrimaryKeySelective(QcDetail record);
+	  
+	  List<QcDetail> selectQcId (String  id);
 	  
 	  
 	
