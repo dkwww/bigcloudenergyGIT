@@ -33,7 +33,7 @@ public class Mrp {
     private   String   mrpEndtimeName;
     private String   stateName;
     
-    private   String  comName;
+    private   String  comName;  
      
     
      
@@ -76,15 +76,13 @@ public class Mrp {
     
     private  String  pdId;   //这也是外键
     
-    private  Integer  mrpNum;  //这是生产数量
-    
-    
-    private   Date   pmcStart;  
+    private  Integer  mrpNum;  //这是生产数量 
     
     private   String    pmcStartName;
     
-    	private   Date   pmcEnd;
-    	private  String  pmcEndName;
+    private   Date   pmcEnd;
+    
+    private  String  pmcEndName;
     
     	
     	
@@ -109,14 +107,7 @@ public class Mrp {
 			this.mrpEndtimeName = mrpEndtimeName;
 		}
 
-	public Date getPmcStart() {
-			return pmcStart;
-		}
-
-		public void setPmcStart(Date pmcStart) {
-			this.pmcStart = pmcStart;
-		}
-
+	 
 		public String getPmcStartName() {
 			return pmcStartName;
 		}

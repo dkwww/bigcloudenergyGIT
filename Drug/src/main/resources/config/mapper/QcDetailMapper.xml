@@ -30,6 +30,13 @@
     
   </select>
   
+  <select id="selectQcId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *    from  drug_qc_detail    where qc_id = #{qcId,jdbcType=VARCHAR}
+  </select>
+  
+  
+  
+  
   
   <select id="selectbycount" parameterType="com.yidu.domain.QcDetail" resultType="int">
       SELECT  count(*) FROM   drug_qc_detail   a, drug_drug  b   WHERE    a.qdet_fk_id=b.drug_id   AND  a.qc_id=#{qcId,jdbcType=VARCHAR}
