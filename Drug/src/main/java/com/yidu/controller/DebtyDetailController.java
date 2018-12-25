@@ -68,7 +68,7 @@ public class DebtyDetailController {
 			//将结果添加到lis
 			lis.add(list2);
 		}
-		
+	
 		//查询总共多少条数据
 		int rows=debtyDetailService.selectCount(Debty);
 		//map

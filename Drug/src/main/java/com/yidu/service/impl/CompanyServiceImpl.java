@@ -27,7 +27,7 @@ import org.springframework.stereotype.Service;
  * 店铺（分店、总店） 服务实现类
  * </p>
  *
- * @author Pngjiangping
+ * @author liuwenxuan
  * @since 2018-11-26
  */
 @Service

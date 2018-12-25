@@ -11,7 +11,7 @@ import com.yidu.util.PageUtil;
  * 财物明细 服务类
  * </p>
  *
- * @author Pngjiangping
+ * @author liuwenxuan
  * @since 2018-11-26
  */
 public interface DebtyDetailService  {

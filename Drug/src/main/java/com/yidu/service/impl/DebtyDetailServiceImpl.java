@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
  * 财物明细 服务实现类
  * </p>
  *
- * @author Pngjiangping
+ * @author liuwenxuan
  * @since 2018-11-26
  */
 @Service
