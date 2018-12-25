@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.yidu.domain.SaleDetail">
     <id column="sd_id" jdbcType="VARCHAR" property="sdId" />
     <result column="drug_id" jdbcType="VARCHAR" property="drugId" />
+    <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
     <result column="sale_id" jdbcType="VARCHAR" property="saleId" />
     <result column="sd_amount" jdbcType="INTEGER" property="sdAmount" />
     <result column="sd_price" jdbcType="DECIMAL" property="sdPrice" />
@@ -18,9 +19,16 @@
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
-    <include refid="Base_Column_List" />
+    *
     from drug_sale_detail
     where sd_id = #{sdId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="findById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    *
+    from drug_sale_detail a, drug_drug b 
+    where a.drug_id=b.drug_id and sale_id = #{saleId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_sale_detail

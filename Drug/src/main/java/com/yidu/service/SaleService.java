@@ -53,4 +53,6 @@ public interface SaleService    {
 	 * @return
 	 */
 	public int insertSelective(Sale sale);
+	
+	
 }

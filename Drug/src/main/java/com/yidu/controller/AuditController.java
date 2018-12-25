@@ -281,10 +281,10 @@ public class AuditController {
 	@ResponseBody
 	public Message auditById(@RequestBody Audit audits) {
 
-		System.out.println("   aaaaaaaaaaaaa     "+audits.getAudFkId());
-		System.out.println("   bbbbbbbbbbbbb     "+audits.getAudId());
-		System.out.println("   ccccccccccccc     "+audits.getAudState());
-		System.out.println("   ddddddddddddd     "+audits.getAudMes());
+		System.err.println("   aaaaaaaaaaaaa     "+audits.getAudFkId());
+		System.err.println("   bbbbbbbbbbbbb     "+audits.getAudId());
+		System.err.println("   ccccccccccccc     "+audits.getAudState());
+		System.err.println("   ddddddddddddd     "+audits.getAudMes());
 		
 		//用于页面上的判断
 		Message message = new Message();

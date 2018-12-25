@@ -1,18 +1,16 @@
 package com.yidu.controller;
 
 
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.yidu.domain.Buy;
-import com.yidu.domain.BuyDetail;
-import com.yidu.util.Message;
-
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.UUID;
-
-import org.springframework.stereotype.Controller;
+import com.yidu.domain.SaleDetail;
+import com.yidu.service.SaleDetailService;
 
 /**
  * <p>
@@ -26,6 +24,14 @@ import org.springframework.stereotype.Controller;
 @RequestMapping("/saleDetail")
 public class SaleDetailController {
 	
+	@Resource
+	SaleDetailService service;
 	
+	
+	@RequestMapping("/findById")
+	@ResponseBody
+	public List<SaleDetail> findById(String id) {
+		return service.findById(id);
+	}
 }
 

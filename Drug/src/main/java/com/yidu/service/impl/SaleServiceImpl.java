@@ -80,7 +80,8 @@ public class SaleServiceImpl implements SaleService {
 	public int findCount(Sale sale) {
 		return mapper.findCount(sale);
 	}
-	
+
+
 	
 	
 }

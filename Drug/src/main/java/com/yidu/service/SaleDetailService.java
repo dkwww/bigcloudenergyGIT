@@ -1,5 +1,7 @@
 package com.yidu.service;
 
+import java.util.List;
+
 import com.yidu.domain.SaleDetail;
 
 /**
@@ -33,4 +35,10 @@ public interface SaleDetailService {
 	 * @return
 	 */
 	public int insertSelective(SaleDetail detail);
+	
+	/**
+	 * 根据id查询
+	 * @return
+	 */
+	public List<SaleDetail> findById(String id);
 }
