@@ -37,7 +37,7 @@ public class MyFilter implements Filter{
         if (servletPath.equals("/login.html")  ) {
             chain.doFilter(req, res);
             return;
-		}else {
+		} else {
 			String contextPath=request.getContextPath();
  	        response.setCharacterEncoding("utf-8");
 		    request.setCharacterEncoding("utf-8");
