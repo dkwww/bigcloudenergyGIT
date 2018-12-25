@@ -3,9 +3,9 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
-		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
-		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
+		<link rel="stylesheet" href="../../../res/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../../res/css/common/font-awesome.min.css" media="all">
+		<link rel="stylesheet" href="../../../res/layui-config/css/app.css" media="all">
 		<title>总店财务审核</title>
 	</head>
 	<body>
@@ -103,7 +103,7 @@
 		</script>
 		
 		<!-- 显示表格 -->
-		<script src="../../res/layui/layui.js"></script>
+		<script src="../../../res/layui/layui.js"></script>
 		<script>
 		    layui.use(['table'], function() {
 		        var table = layui.table,
@@ -114,7 +114,7 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: 'full', //容器高度
-		            url: '../../audit/findSale.action',
+		            url: '../../../audit/findSale.action',
 		            page: true,
 		            id: 'demo',
 		            cols: [
@@ -173,7 +173,7 @@
 		            	,success:function(layero, index){
 		            		var body = layer.getChildFrame('body', index);
 		        	    	 var iframe = window[layero.find('iframe')[0]['name']]; 
-		        	    	 var url="../../audit/findById.action";
+		        	    	 var url="../../../audit/findById.action";
 		        	    	 var data={"audId":data.audId};
 		        	    	 $.ajax({
 		        	    		 async:false,
@@ -192,7 +192,7 @@
 		            		location.reload();
 		            	}
 		            	});
-		            	/*var url = "../../audit/auditByaudId.action";  
+		            	/*var url = "../../../audit/auditByaudId.action";  
 		            	var data = {"id":data.audId,"state":14,"buyId":data.audFkId};	
 		            	$.post(url,data,function(mes){
 		            		if(mes.status==1){
@@ -204,7 +204,7 @@
 		            	},"json");
 		            	console.log(table.checkStatus('demo'));*/
 		            } else if (layEvent === 'del') { //不审核
-		                	var url = "../../audit/auditByaudId.action";  
+		                	var url = "../../../audit/auditByaudId.action";  
 			            	var data = {"id":data.audId,"state":13,"buyId":data.audFkId};	
 			            	$.post(url,data,function(mes){
 			            		if(mes.status==1){
