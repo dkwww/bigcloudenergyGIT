@@ -23,11 +23,11 @@ public interface DrugInveMapper {
      * @return
      */
     List<DrugInve> qureyAll(Map<String, Object> map);
-    	/**
-    	 * 查询行数
-    	 * @param record
-    	 * @return
-    	 */
+    /**
+     * 查询行数
+     * @param record
+     * @return
+     */
     	
     int  selectCountBySelective(DrugInve  record);
     
@@ -41,4 +41,11 @@ public interface DrugInveMapper {
     public int amountupdate(DrugInve drugInve);
     
     DrugInve findDrug(String id);
+    /**
+     * 根据商品id查询库存
+     * @param drugId
+     * @return 库存model
+     * @author ly
+     */
+    public DrugInve findDrugId(String drugId);
 }

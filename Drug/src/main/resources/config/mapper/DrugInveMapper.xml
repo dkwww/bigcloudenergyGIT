@@ -181,4 +181,7 @@
       sort = #{sort,jdbcType=VARCHAR}
     where di_id = #{diId,jdbcType=VARCHAR}
   </update>
+  <select id="findDrugId" parameterType="string" resultMap="BaseResultMap">
+  	select * from drug_drug_inv where drug_id=#{drugId}
+  </select>
 </mapper>

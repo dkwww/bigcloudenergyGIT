@@ -3,15 +3,24 @@ package com.yidu.service.impl;
  
 import com.yidu.dao.BranchSaleDetailMapper;
 import com.yidu.dao.BranchSaleMapper;
+import com.yidu.dao.DebtyDetailMapper;
+import com.yidu.dao.DebtyMapper;
+import com.yidu.dao.DrugInvDetailMapper;
+import com.yidu.dao.DrugInveMapper;
 import com.yidu.dao.DrugMapper;
 import com.yidu.domain.BranchSale;
 import com.yidu.domain.BranchSaleDetail;
+import com.yidu.domain.Debty;
+import com.yidu.domain.DebtyDetail;
 import com.yidu.domain.Drug;
+import com.yidu.domain.DrugInvDetail;
+import com.yidu.domain.DrugInve;
 import com.yidu.service.BranchSaleService;
 import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
 import com.yidu.util.Tools;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -40,7 +49,18 @@ public class BranchSaleServiceImpl implements BranchSaleService {
 	BranchSaleDetailMapper branchSaleDetailMapper;
 	@Resource
 	DrugMapper drugMapper;
+	
+	@Resource
+	DebtyMapper debtymapper;
+	
+	@Resource
+	DebtyDetailMapper debtyDetailMapper;
+	
+	@Resource
+	DrugInvDetailMapper invDetailMapper;
 
+	@Resource
+	DrugInveMapper inveMapper;
 	@Override
 	public List<BranchSale> query(PageUtil util, BranchSale branchSale) {
 		//new一个Map集合
@@ -91,6 +111,17 @@ public class BranchSaleServiceImpl implements BranchSaleService {
 		branchSale.setSort(Tools.getTimeStamp());
 		row=mapper.insertSelective(branchSale);
 		
+		Debty debty=debtymapper.selectByPrimaryKey(comId);
+		debty.setDebMoney(new BigDecimal(debty.getDebMoney().intValue()+money));
+		debtymapper.updateByPrimaryKeySelective(debty);
+		
+		DebtyDetail debtyDetail=new DebtyDetail();
+		debtyDetail.setDdetId(Tools.getDateOrderNo());
+		debtyDetail.setDebId(debty.getDebId());
+		debtyDetail.setDdetChange(new BigDecimal(money));
+		debtyDetail.setIsva("1");
+		debtyDetail.setOptime(new Date());
+		debtyDetailMapper.insertSelective(debtyDetail);
 		for (String string : su) {
 			String [] arr=string.split(",");
 			
@@ -106,7 +137,23 @@ public class BranchSaleServiceImpl implements BranchSaleService {
 			branchSaleDetail.setOptime(new Date());
 			branchSaleDetail.setSort(Tools.getTimeStamp());
 			rows=branchSaleDetailMapper.insertSelective(branchSaleDetail);
+			
+			DrugInve drugInve=inveMapper.findDrugId(arr[0]);
+			drugInve.setDiAmount(drugInve.getDiAmount()-Double.valueOf(branchSaleDetail.getBsdTotal()).intValue());
+			inveMapper.updateByPrimaryKeySelective(drugInve);
+			
+			
+			DrugInvDetail drugInvDetail=new DrugInvDetail();
+			drugInvDetail.setDidId(Tools.getDateOrderNo());
+			drugInvDetail.setDiId(drugInve.getDiId());
+			drugInvDetail.setDiAmount(Double.valueOf(branchSaleDetail.getBsdTotal()).intValue());
+			drugInvDetail.setOptime(new Date());
+			drugInvDetail.setRemarks(0);
+			invDetailMapper.insertSelective(drugInvDetail);
+			
 		}
+		
+		
 		if(row==1 && rows==1) {
 			message.setStatus(1);
 			return message;
