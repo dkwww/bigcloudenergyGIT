@@ -48,6 +48,10 @@ public class MrpController {
 		 
 		//查询并按照大小分页
 		List<Mrp> list = mrpService.qureyAll(mrp,pageUtil);
+		
+		for (Mrp mrp2 : list) {
+			mrp2.setMrpRateName(mrp2.getMrpRate()+"%");
+		}
 		 
 		//查询行数
 		int rows = mrpService.selectCountBySelectiv(mrp);

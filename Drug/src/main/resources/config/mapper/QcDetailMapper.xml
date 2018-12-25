@@ -5,6 +5,7 @@
     <id column="qdet_id" jdbcType="VARCHAR" property="qdetId" />
     <result column="qc_id" jdbcType="VARCHAR" property="qcId" />
     <result column="qdet_fk_id" jdbcType="VARCHAR" property="qdetFkId" />
+     <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
     <result column="qdet_amount" jdbcType="INTEGER" property="qdetAmount" />
     <result column="qdet_fail" jdbcType="INTEGER" property="qdetFail" />
     <result column="qdet_rate" jdbcType="VARCHAR" property="qdetRate" />
@@ -18,6 +19,27 @@
     
     
   </resultMap>
+  
+    <select id="selectbyId" parameterType="java.util.Map" resultMap="BaseResultMap">
+      SELECT  * FROM   drug_qc_detail   a, drug_drug  b   WHERE    a.qdet_fk_id=b.drug_id   AND  a.qc_id=#{qcDetail.qcId,jdbcType=VARCHAR}
+     <if test="qcDetail.drugName != null and qcDetail.drugName != ''">
+   		and b.drug_name like CONCAT(CONCAT('%',#{qcDetail.drugName,jdbcType=VARCHAR},'%'))
+   	</if>
+     order by (a.sort+0) desc 
+   	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
+    
+  </select>
+  
+  
+  <select id="selectbycount" parameterType="com.yidu.domain.QcDetail" resultType="int">
+      SELECT  count(*) FROM   drug_qc_detail   a, drug_drug  b   WHERE    a.qdet_fk_id=b.drug_id   AND  a.qc_id=#{qcId,jdbcType=VARCHAR}
+     <if test="drugName != null and drugName != ''">
+   		and b.drug_name like CONCAT(CONCAT('%',#{drugName,jdbcType=VARCHAR},'%'))
+   	</if> 
+  </select> 
+  
+  
+  
   <sql id="Base_Column_List">
     qdet_id, qc_id, qdet_fk_id, qdet_amount, qdet_fail, qdet_rate, qdet_optime, isva, 
     optime, oper, sort

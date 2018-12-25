@@ -55,7 +55,8 @@ public interface QcService  {
 	int update(Buy buy);
 	
 	List<Qc> findById(String qcId);
-
+	int  add(Qc  qc);
+	  int updateByPrimaryKeySelective(Qc record);
 
 	void insertSelective(Qc qc);
 

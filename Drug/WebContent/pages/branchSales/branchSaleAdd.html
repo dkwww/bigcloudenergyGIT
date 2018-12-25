@@ -370,7 +370,7 @@
 		    		sum+=$(item).children().html()+","+$(item).children().next().next().children().val()+"@";
 		    	});
 		    	
-		    	var url="../../branchSale/addSale.action";
+		    	var url="../../branchSale/addSale.action";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 .action";
 		    	var data={"sum":sum,"menId":$("#memSelect").val()};
 		    	$.post(url,data,function(mes){
 		    		if(mes.status==1){

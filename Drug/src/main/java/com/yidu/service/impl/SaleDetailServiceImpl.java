@@ -1,6 +1,7 @@
 package com.yidu.service.impl;
 
  
+import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -53,4 +54,11 @@ public class SaleDetailServiceImpl  implements SaleDetailService {
 		return mapper.insertSelective(detail);
 	}
 
+	
+
+	@Override
+	public List<SaleDetail> findById(String id) {
+		return mapper.findById(id);
+	}
+	
 }

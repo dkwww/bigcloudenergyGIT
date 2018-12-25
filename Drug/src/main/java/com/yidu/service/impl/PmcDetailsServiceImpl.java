@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.dao.support.DaoSupport;
 import org.springframework.stereotype.Service;
 
 import com.yidu.dao.MrpDetailsMapper;
@@ -94,6 +95,12 @@ public class PmcDetailsServiceImpl  implements PmcDetailsService {
 			}
 		}*/
 		return bln;
+	}
+
+	@Override
+	public List<PmcDetails> selectPmcId(String id) {
+	 
+		return pmcDetailsMapper.selectPmcId(id);
 	}
 
 }

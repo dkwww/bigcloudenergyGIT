@@ -29,11 +29,41 @@ public class QcDetail {
     
     private String matId;
     
+    private String  drugName;
+    
+    private  String   qdetRateName; 
+    
+    private   String   qdetOptimeName;
+    
     
     
     
 
-    public String getMatId() {
+    public String getQdetRateName() {
+		return qdetRateName;
+	}
+
+	public void setQdetRateName(String qdetRateName) {
+		this.qdetRateName = qdetRateName;
+	}
+
+	public String getQdetOptimeName() {
+		return qdetOptimeName;
+	}
+
+	public void setQdetOptimeName(String qdetOptimeName) {
+		this.qdetOptimeName = qdetOptimeName;
+	}
+
+	public String getDrugName() {
+		return drugName;
+	}
+
+	public void setDrugName(String drugName) {
+		this.drugName = drugName;
+	}
+
+	public String getMatId() {
 		return matId;
 	}
 

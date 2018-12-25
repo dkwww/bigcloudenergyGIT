@@ -1,8 +1,10 @@
 package com.yidu.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.yidu.domain.QcDetail;
+import com.yidu.util.PageUtil;
 
 /**
  * <p>
@@ -27,6 +29,15 @@ public interface QcDetailService   {
 	
 	List<QcDetail> findByIds(String qcId);
 	
+	int  insert  (QcDetail  qcDetail);
 	
+	List<QcDetail>  selectbyId(QcDetail record ,PageUtil   pageUtil);
+	  List<QcDetail>  selectqctype(Map<String , Object> map);
+	 int  selectbycount(QcDetail record); 
+	 
+	 
+	  int updateByPrimaryKeySelective(QcDetail record);
+	  
+	  
 	
 }

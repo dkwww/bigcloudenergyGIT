@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.yidu.domain.Buy;
 import com.yidu.domain.Sale;
+import com.yidu.domain.SaleDetail;
 
 public interface SaleMapper {
     int deleteByPrimaryKey(String saleId);
@@ -31,4 +32,5 @@ public interface SaleMapper {
      * @return
      */
 	public int findCount(Sale sale);
+	
 }

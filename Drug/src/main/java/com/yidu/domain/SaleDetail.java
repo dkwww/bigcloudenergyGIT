@@ -7,6 +7,8 @@ public class SaleDetail {
     private String sdId;
     
     private String drugId;
+    
+    private String drugName;
 
     private String saleId;
 
@@ -26,7 +28,15 @@ public class SaleDetail {
 
     
     
-    public String getDrugId() {
+    public String getDrugName() {
+		return drugName;
+	}
+
+	public void setDrugName(String drugName) {
+		this.drugName = drugName;
+	}
+
+	public String getDrugId() {
 		return drugId;
 	}
 

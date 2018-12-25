@@ -6,14 +6,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yidu.domain.MatInv;
+import com.yidu.domain.Pmc;
+import com.yidu.domain.PmcDetails;
 import com.yidu.domain.Qc;
 import com.yidu.domain.QcDetail;
 import com.yidu.service.MatInvService;
+import com.yidu.service.PmcDetailsService;
+import com.yidu.service.PmcService;
 import com.yidu.service.QcDetailService;
 import com.yidu.service.QcService;
 import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
+import com.yidu.util.TimeUtil;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -35,12 +42,14 @@ import org.springframework.stereotype.Controller;
 @Controller
 @RequestMapping("/qc")
 public class QcController {
-	 @Resource
-	 private   QcService   qcService;
-	 
-	 @Resource
-	 private QcDetailService QcDetailService;
-	 
+	@Resource
+	private   QcService   qcService;
+	@Resource
+	private PmcService pmcService;
+	@Resource
+	private PmcDetailsService pmcDetailsService;
+	@Resource
+	private QcDetailService   qcDetailService;
 	 @Resource
 	 private MatInvService invservice;
 	 
@@ -49,12 +58,19 @@ public class QcController {
 	@ResponseBody
 	 public   Map<String , Object>  qureyAll(Qc  qc  , Integer  page , Integer  limit){
 		//分页
+		
+		System.out.println("=============123==============="+qc.getQcId());
 		PageUtil pageUtil = new PageUtil();
 		//前台取过来的分页值
 		pageUtil.setCurPage(page);
 		pageUtil.setRows(limit);
 		
 		List<Qc> list = qcService.selectqctype(qc, pageUtil);
+		
+		for (Qc qc2 : list) {
+			qc2.setQcOptiemName(TimeUtil.dateToString(qc2.getQcOptime(), "yyyy-mm-dd"));
+			qc2.setQcRateName(qc2.getQcRate()+"%");
+		}
 		 int rows = qcService.selectCountBySelective(qc);
 		 Map<String , Object>  map  =new  HashMap<>();
 			map.put("code", 0);
@@ -66,23 +82,49 @@ public class QcController {
 	@RequestMapping("/add")
 	@ResponseBody
 	public   Message    add(Qc  qc) {
-		Message message  =new   Message();
-		String    string= UUID.randomUUID().toString().replaceAll("-", "");
-		qc.setQcId(string);
-		String   pmcId="d6484a14498b47f78cccc1242f5eab6ewerdfc2d23e78fc9446cf96af250812f923a992";
-		qc.setPmcId(pmcId);
-		qc.setQcAmount(600);
-		qc.setQcRate("50");
 		
-		int  rows = 1;
+		
+		String    string= UUID.randomUUID().toString().replaceAll("-", "");
+		System.out.println(string);
+		//分页
+		Date   date =new Date();
+		Message message  =new   Message();
+		Pmc pmc = pmcService.selectById(qc.getPmcId());
+		PmcDetails  pmcDetails=new   PmcDetails();
+		pmcDetails.setPmcId(qc.getPmcId());
+		 List<PmcDetails>  list  = pmcDetailsService.selectPmcId(qc.getPmcId());
+		for (PmcDetails pmcDetails2 : list) {
+			String    strings= UUID.randomUUID().toString().replaceAll("-", "");
+			QcDetail  qcDetail=  new   QcDetail();
+			qcDetail.setQcId(string);
+			qcDetail.setQdetFkId(pmcDetails2.getDrugId());
+			qcDetail.setQdetId(strings);
+			qcDetail.setQdetAmount(pmcDetails2.getPdAmount());
+			qcDetail.setQdetFail(0);
+			qcDetail.setQdetRate("0%");
+			qcDetail.setQdetOptime(date);
+			qcDetailService.insert(qcDetail);
+			System.out.println("增加完成");
+		} 
+		qc.setQcId(string);
+		qc.setPmcId(pmc.getPmcId());
+		qc.setQcAmount(pmc.getPmcAmount());
+		qc.setQcRate("0");
+		qc.setQcFail(0);
+		qc.setQcConpany("目前不知道是啥工厂");
+		qc.setQcType(0); 
+		
+		qc.setOptime(date);
+		int rows= qcService.add(qc); 
 		if (rows>0) {
 			message.setStatus(1);
 		}else {
 			message.setStatus(0);
 		}
-		
+
 		return  message;
-	}
+	} 
+
 	
 	
 	/**
@@ -150,7 +192,7 @@ public class QcController {
 			qcdetail.setQdetId(qdetId);
 			qcdetail.setQdetFail(Integer.valueOf(qdetFail));
 			qcdetail.setQdetRate(qdetRate);
-			QcDetailService.add(qcdetail);
+			qcDetailService.add(qcdetail);
 			
 		}
 		
@@ -172,7 +214,7 @@ public class QcController {
 	@ResponseBody
 	public Message addkc(@RequestBody Qc qc) {
 		
-		List<QcDetail> list=QcDetailService.findByIds(qc.getQcId());
+		List<QcDetail> list=qcDetailService.findByIds(qc.getQcId());
 		
 		for (QcDetail qcDetail : list) {
 			List<MatInv> invlist=invservice.findQcId(qcDetail.getQdetFkId());

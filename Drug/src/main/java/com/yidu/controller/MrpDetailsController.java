@@ -6,8 +6,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yidu.domain.Mrp;
 import com.yidu.domain.MrpDetails;
+import com.yidu.domain.Qc;
+import com.yidu.domain.QcDetail;
 import com.yidu.service.MrpDetailsService;
 import com.yidu.service.MrpService;
+import com.yidu.service.QcDetailService;
+import com.yidu.service.QcService;
 import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
 
@@ -19,6 +23,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.swing.JInternalFrame;
 
 import org.springframework.dao.support.DaoSupport;
 import org.springframework.stereotype.Controller;
@@ -39,6 +44,10 @@ public class MrpDetailsController {
 	private  MrpDetailsService  mrpDetailService; 
 	@Resource   
 	private  MrpService  mrpService; 
+	@Resource
+	private QcDetailService   qcDetailService;
+	@Resource
+	private   QcService   qcService;
 
 
 	@RequestMapping("findById")
@@ -65,6 +74,8 @@ public class MrpDetailsController {
 	public   Message   update(MrpDetails  mrpDetails) {
 		//传过来的数据
 		String   name = mrpDetails.getShujuName(); 
+		
+		System.out.println("==================123============"+name);
 		Message   message = new   Message();
 		//拆分数据
 		String   nameOne[]=name.split("#");
@@ -112,18 +123,22 @@ public class MrpDetailsController {
 		} 
 		Mrp  mrp  = new   Mrp();
 		NumberFormat numberFormat = NumberFormat.getInstance();
-		numberFormat.setMaximumFractionDigits(2); 
+		numberFormat.setMaximumFractionDigits(1); 
 		int   Percentage =  mrpDetailService.findPercentage(mrpDetails);
 		int     sum =  mrpDetailService.findmax(mrpDetails);
 		String   progress  =   numberFormat.format((float) Percentage  /   (float)sum *100);
-		String     pro =  progress+"%";
+
 		mrp.setMrpId(mrpDetails.getMrpId());
-		mrp.setMrpRate(pro);
+		mrp.setMrpRate(progress);
 		if (Percentage>0.1) {
-			 mrpService.Modifyprogress(mrp);
+			mrpService.Modifyprogress(mrp);
 		} 
-		Integer   stt= Integer.valueOf((int) 100.00);
-		if(Integer.valueOf(progress)==stt) {
+		
+		Double  stt= 100.0;
+		Double ii = Double.valueOf(progress);
+		System.out.println("进来"+stt+"=========1234========"+ii);
+		if(ii==stt) {
+			System.out.println("进来"+stt+"=========123466========"+ii);
 			mrp.setMrpId(mrpDetails.getMrpId());
 			mrp.setMrpState(1);
 			mrp.setMrpIdea(1);
@@ -135,6 +150,77 @@ public class MrpDetailsController {
 			message.setStatus(0);
 		}
 		return message;
-	} 
+	}
+
+
+	@RequestMapping("Preservation")
+	@ResponseBody
+	public  Message    Preservation(MrpDetails  mrpDetails) {
+		Message   message  =new   Message();
+		String   name = mrpDetails.getShujuName(); 
+		String   nameOne[]=name.split("#");
+		int  rows= 1;
+		int   jj =0;
+		int  kk=0;
+		String  qcid=null;
+		for (int i = 0; i < nameOne.length; i++) {
+			QcDetail    qcDetali=new QcDetail();
+			//拆分成一个字段
+			String   nametow[] = nameOne[i].split(",");
+			//药品ID
+			String   drugId= nametow[0];
+			qcDetali.setQdetFkId(drugId);
+			//主键ID
+			String  qcdID= nametow[1];
+
+			qcDetali.setQdetId(qcdID);
+			//质检总数量
+			String   drugnum= nametow[2];
+			kk=kk+Integer.valueOf(drugnum);
+			qcDetali.setQdetAmount(Integer.valueOf(drugnum));
+			//质检ID
+			qcid = nametow[3];
+			qcDetali.setQcId(qcid);
+			//通过率
+			String   qdetrate= nametow[4];
+			 
+			qcDetali.setQdetRate(qdetrate);
+
+			//未通过数
+			String   qdetfail= nametow[5]; 
+			qcDetali.setQdetFail(Integer.valueOf(qdetfail));
+			int number =  Integer.valueOf(qdetfail);
+			System.out.println("=========11============"+number);
+			jj = jj+number;
+
+
+			rows = qcDetailService.updateByPrimaryKeySelective(qcDetali);
+
+		}
+		NumberFormat numberFormat = NumberFormat.getInstance();
+		numberFormat.setMaximumFractionDigits(2); 
+
+		Qc   qc  = new  Qc();
+		qc.setQcFail(jj);
+		String   progress  =   numberFormat.format((float) jj  /   (float)kk *100);
+		qc.setQcRate(progress);
+		Date  date   =new   Date();
+		qc.setQcOptime(date);
+		qc.setQcId(qcid);
+		rows= qcService.updateByPrimaryKeySelective(qc);
+
+
+		if (rows>0) {
+			message.setStatus(1);
+		}else {
+			message.setStatus(0);
+		}
+
+
+		return   message;  
+	}
+
+
+
 }
 

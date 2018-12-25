@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yidu.dao.DrugInveMapper;
 import com.yidu.domain.Drug;
 import com.yidu.domain.DrugInve;
+import com.yidu.domain.Qc;
 import com.yidu.service.DrugInvService;
+import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
 
 import java.util.HashMap;
@@ -44,11 +46,7 @@ public class DrugInvController {
 	pageUtil.setRows(limit);
 		
 	List<DrugInve> list = drugInvService.qureyAll(drugInve,pageUtil);
-	  int   rows  =drugInvService.selectCountBySelective(drugInve);
-	for (DrugInve drugInves : list) {
-		System.out.println("----------------------"+drugInves.getComName());
-	}
-		
+	  int   rows  =drugInvService.selectCountBySelective(drugInve); 
 		Map<String, Object>  map  =new HashMap<>();
 		map.put("code", 0);
 		map.put("msg", "");
@@ -56,6 +54,16 @@ public class DrugInvController {
 		map.put("data", list);
 		return  map;
 	}
+	
+	@RequestMapping("addAll")
+	@ResponseBody
+	public   Message   addAll(Qc  qc ) {
+		Message   message  =new  Message();
+		System.out.println("=============qcId=============="+qc.getQcId());
+		
+		return  message;
+	}
+	
 
 }
 

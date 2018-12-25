@@ -19,10 +19,6 @@
  
  #tijiao{
     margin-left: 30px;
-    
-  	
-     
- 
  }
 
 
@@ -44,14 +40,12 @@
 	 $("#tijiao").click(function (){ 
 		 alert("123321");
 		var   shu= $("#shuju").val(); 
-		var  mrp  =$("#mrpId").val();
-		
-			alert(mrp);
-			alert(shu);
 		 var url ="../../mrpDetails/update.action";
-		 var  data={"shujuName" : shu ,"mrpId":mrp};
+		 var  data={"shujuName" : shu , "mrpId"  : mrpId};
 		 $.post(url,data,function(mes){
 			 if(mes.status==1){
+				
+				 closeLayer();
 				 layer.msg("保存成功"); 
 				 
 			 }else{
@@ -68,7 +62,8 @@
 	function closeLayer(){
 	    //当你在iframe页面关闭自身时
 		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-		parent.layer.close(index); //再执行关闭   
+		parent.layer.close(index); //再执行关闭 
+		window.parent.location.reload();
 	}
 	</script>
 	
@@ -77,7 +72,7 @@
 <body>
 
 
-	<input type="hidden" id="shuju"   >
+	<input type="text" id="shuju"    style="width: 100%;"  >
 	<input type="hidden" id="mrpId"  >
 	<div class="kit-table">
 		<form class="layui-form" lay-filter="kit-search-form">

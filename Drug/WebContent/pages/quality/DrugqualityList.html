@@ -7,7 +7,46 @@
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
 		<script src="../../res/layui/layui.js"></script>
+		<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
 		<title>药品质检管理</title>
+		<script type="text/javascript">
+		$(function(){ 
+			 $("#tijiao").click(function (){ 
+			 alert("123321");
+			var   shu= $("#shuju").val();
+		 var url ="../../mrpDetails/Preservation.action";
+		 var  data={"shujuName" : shu};
+		 $.post(url,data,function(mes){
+			 if(mes.status==1){
+				 closeLayer();
+				 layer.msg("保存成功"); 
+				 closeLayer();
+				 window.parent.location.reload();
+			 }else{
+				 layer.msg("保存失败"); 
+			 }
+			 
+			
+			
+		},"json");
+		 
+	 });
+			 
+			 function closeLayer(){
+				    //当你在iframe页面关闭自身时
+					var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+					parent.layer.close(index); //再执行关闭 
+					window.parent.location.reload();
+				}
+	});
+		
+	function closeLayer(){
+	    //当你在iframe页面关闭自身时
+		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+		parent.layer.close(index); //再执行关闭 
+		window.parent.location.reload();
+	}
+	</script>
 		
 	</head>
 	 	<script>
@@ -53,8 +92,10 @@
 	</script>
 	
 	
+	
 	<body>
-	 
+	 	<input type="text" id="shuju"  style="width: 100%;"  >
+		  
 		<div class="kit-table">
 		    <form class="layui-form" lay-filter="kit-search-form">
 						<!-- 左上角的两个按钮 -->
@@ -241,15 +282,15 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: 'full', //容器高度
-		            url: '../../qcDetail/qureyById.action?qcId='+qcId,
+		            url: '../../qcDetail/findById.action?qcId='+qcId,
 		            page: true,
 		            id: 'demo',
 		            cols: [
 		                [{
-		                    field: 'qcId',
+		                    field: 'qdetId',
 		                    title: '质检ID',
 		                    width: 190
-		                }, {
+		                } , {
 		                    field: 'drugName',
 		                    title: '药品名称',
 		                    width: 150
@@ -263,7 +304,7 @@
 		                    templet:'#input' ,
 		                    width: 150
 		                }, { 
-		                    field: 'qcRate',
+		                    field: 'qdetRate',
 		                    title: '通过率',
 		                    width: 160
 		                }, { 
@@ -273,6 +314,13 @@
 		                }]
 		            ],
 		            done: function(res, curr, count) {
+		            	//获取表单数据
+		            	var tables=table.cache.demo;
+		            	
+ 						$.each(tables,function(i,item){
+		            		 alert(item.qdetRate);
+		            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+item.qdetAmount+","+item.qcId+","+item.qdetRate+","+$("#number"+item.qdetId).val()+"#");
+		            	 })
 		            	 
 		            	
 		                //如果是异步请求数据方式，res即为你接口返回的信息。
@@ -325,6 +373,14 @@
 		            });
 		            return false;
 		        });
+		        
+		        
+		       
+		        
+		        
+		        
+		        
+		        
 		        //监听工具条
 		        table.on('tool(demo)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
 		            var data = obj.data; //获得当前行数据
@@ -440,6 +496,70 @@
 		        });
 		    });
 		   
+		</script>
+		<script type="text/javascript">
+		 function  Pressdown(obj){ 
+			 
+	 
+	        var a=obj.value;   // 未通过数  10
+         	var b=$(obj).parent().parent().parent().prev().children().text();   //总质检数  100
+         	var  c=0;
+         	
+         	if(parseInt(a)<=parseInt(b)){
+        		 
+             	var  e = parseInt(b)-parseInt(a);
+             	//console.info(e)
+             	if(e==0){
+             		 c=0;
+             		 console.info("dddd")
+             		var d=$(obj).parent().parent().parent().next().children().text(0+"%"); 
+             	}else{
+             		var  c=parseInt(e)/parseInt(b);
+             		var f=c.toFixed(4);
+
+             		var d=$(obj).parent().parent().parent().next().children().text(f*100+"%"); 
+             	}
+           		 
+           	 
+          	 	
+             
+             	}
+         	
+         	if(parseInt(a)>parseInt(b)){
+         		a=parseInt(b);
+         		
+         		$(obj).val(parseInt(b));
+       			 layer.msg("不能大于质检总数"); 
+       			 $("#shuju").val("")
+        		 layui.use(['table'], function() {
+        			 var table=layui.table;
+        			 var tables=table.cache.demo;      
+	            	 $.each(tables,function(i,item){
+	            			var d=$(obj).parent().parent().parent().next().children().text(); 
+	            		 
+	            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+item.qdetAmount+","+item.qcId+","+d+","+$("#number"+item.qdetId).val()+"#");
+	            			
+	            	 })
+        		 });
+         		
+         	}else{
+         		 $("#shuju").val("")
+        		 layui.use(['table'], function() {
+        			 var table=layui.table;
+        			 var tables=table.cache.demo;      
+	            	 $.each(tables,function(i,item){
+	            		 console.info(item)
+	            		 var d=$(obj).parent().parent().parent().next().children().text(); 
+	            		 
+	            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+item.qdetAmount+","+item.qcId+","+d+","+$("#number"+item.qdetId).val()+"#");
+	            			
+	            	 })
+        		 });
+         	}
+         	
+         	
+		    }
+		
 		</script>
 	</body>
 </html>
