@@ -92,6 +92,12 @@ public class MrpDetailsServiceImpl  implements MrpDetailsService {
 		return dao.findPercentage(mrpDetails);
 	}
 
+	@Override
+	public int updateByPrimaryKeySelective(MrpDetails mrpDetails) {
+	 
+		return dao.updateByPrimaryKeySelective(mrpDetails);
+	}
+
 	 
 	 
 	 

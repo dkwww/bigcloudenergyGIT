@@ -72,5 +72,10 @@ public interface QcService  {
 	 * @return
 	 */
 	List<Qc> findById(String qcId);
+	
+	
+	  int  updateByPrimaryKeySelective(Qc  qc);
+
+	int add(Qc qc);
 
 }

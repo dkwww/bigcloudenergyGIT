@@ -146,4 +146,16 @@ public class QcServiceImpl   implements QcService {
 		return dao.findById(qcId);
 	}
 
+	@Override
+	public int updateByPrimaryKeySelective(Qc qc) {
+		 
+		return  dao.updateByPrimaryKeySelective(qc);
+	}
+
+	@Override
+	public int add(Qc qc) {
+	     
+		return dao.insert(qc);
+	}
+
 }

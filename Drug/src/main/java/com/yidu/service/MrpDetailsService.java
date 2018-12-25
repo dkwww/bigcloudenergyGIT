@@ -32,7 +32,7 @@ public interface MrpDetailsService   {
    
    int   findPercentage(MrpDetails  mrpDetails);  
    
-   
+    int  updateByPrimaryKeySelective(MrpDetails  mrpDetails);
 	  
  
 }
