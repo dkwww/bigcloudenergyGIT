@@ -33,4 +33,6 @@ public interface PmcMapper {
 	List<Pmc> selectByAudit(Map<String, Object> map);
 
 	int selectAuditCount(Pmc record);
+	
+	int  addpmc (Pmc record);
 }
