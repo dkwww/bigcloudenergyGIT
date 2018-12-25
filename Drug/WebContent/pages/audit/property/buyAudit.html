@@ -3,15 +3,15 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
-		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
-		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
+		<link rel="stylesheet" href="../../../res/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../../res/css/common/font-awesome.min.css" media="all">
+		<link rel="stylesheet" href="../../../res/layui-config/css/app.css" media="all">
 		<title>采购审核</title>
 		<script>
 			$(function(){
 				
 				$("#audit").click(function(){
-					var url = "../../audit/auditByaudId.action";  
+					var url = "../../../audit/auditByaudId.action";  
 	            	var data = {"id":data.audId,"state":2,"buyId":data.audFkId};	
 	            	$.post(url,data,function(mes){
 	            		if(mes.status==1){
@@ -47,7 +47,7 @@
 		<!-- 修改页面 -->
 		<script type="text/html" id="edit-tpl">
 		    <div style="margin:10px">
-		        <form class="layui-form" action="../../audit/auditByaudId.action" lay-filter="form-edit">
+		        <form class="layui-form" action="" lay-filter="form-edit">
 		           <input type="text" value="{{d.rowdata.audId}}" name="audId"/>
 					<div class="layui-form-item">
 						<label class="layui-form-label">审核部门</label>
@@ -78,7 +78,7 @@
 				</div>
 				<div class="layui-form-item">
 					<div class="layui-input-block">
-						<input class="layui-btn" type="submit" id="audit" value="立即提交" lay-filter="formEdit"/>
+						<input class="layui-btn" type="button" id="audit" value="立即提交" lay-filter="formEdit"/>
 						<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 					</div>
 				</div>
@@ -87,7 +87,7 @@
 		</script>
 		
 		<!-- 显示表格 -->
-		<script src="../../res/layui/layui.js"></script>
+		<script src="../../../res/layui/layui.js"></script>
 		<script>
 		    layui.use(['table'], function() {
 		        var table = layui.table,
@@ -98,7 +98,7 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: 'full', //容器高度
-		            url: '../../audit/showBuy.action',
+		            url: '../../../audit/showBuy.action',
 		            page: true,
 		            id: 'demo',
 		            cols: [
@@ -186,7 +186,7 @@
 		            	},"json");*/
 		            	
 		            } else if (layEvent === 'del') { //不审核
-		            	var url = "../../audit/auditByaudId.action";  
+		            	var url = "../../../audit/auditByaudId.action";  
 		            	var data = {"id":data.audId,"state":0,"buyId":data.audFkId};	
 		            	$.post(url,data,function(mes){
 		            		if(mes.status==1){
