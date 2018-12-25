@@ -56,4 +56,7 @@ public interface QcService  {
 	
 	List<Qc> findById(String qcId);
 
+
+	void insertSelective(Qc qc);
+
 }
