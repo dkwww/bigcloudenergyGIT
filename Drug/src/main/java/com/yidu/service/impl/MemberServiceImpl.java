@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
  * 会员 服务实现类
  * </p>
  *
- * @author Pngjiangping
+ * @author Liuyi
  * @since 2018-11-26
  */
 @Service

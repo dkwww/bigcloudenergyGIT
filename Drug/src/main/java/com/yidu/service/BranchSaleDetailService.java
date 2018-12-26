@@ -10,7 +10,7 @@ import com.yidu.util.PageUtil;
  * 分店销售明细 服务类
  * </p>
  *
- * @author Pngjiangping
+ * @authorliuyi
  * @since 2018-11-26
  */
 public interface BranchSaleDetailService  {

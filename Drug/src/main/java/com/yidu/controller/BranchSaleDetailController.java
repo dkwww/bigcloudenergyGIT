@@ -24,7 +24,7 @@ import org.springframework.stereotype.Controller;
  * 分店销售明细 前端控制器
  * </p>
  *
- * @author Pngjiangping
+ * @author liuyi
  * @since 2018-11-26
  */
 @Controller
