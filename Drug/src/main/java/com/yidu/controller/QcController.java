@@ -17,6 +17,7 @@ import com.yidu.service.QcDetailService;
 import com.yidu.service.QcService;
 import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
+import com.yidu.util.TimeUtil;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -62,6 +63,14 @@ public class QcController {
 		pageUtil.setRows(limit);
 		
 		List<Qc> list = qcService.selectqctype(qc, pageUtil);
+		for (Qc qc2 : list) {
+			qc2.setQcOptiemName(TimeUtil.dateToString(qc2.getQcOptime(), "yyyy-mm-dd"));
+			System.out.println("============123321=========="+qc2.getQcOptiemName());
+			qc2.setQcRateName(qc2.getQcRate()+"%");
+			System.out.println("=======计算百分比123============"+qc2.getQcRateName());
+		}
+		
+		
 		 int rows = qcService.selectCountBySelective(qc);
 		 Map<String , Object>  map  =new  HashMap<>();
 			map.put("code", 0);
@@ -73,8 +82,6 @@ public class QcController {
 	@RequestMapping("/add")
 	@ResponseBody
 	public   Message    add(Qc  qc) {
-		
-		
 		String    string= UUID.randomUUID().toString().replaceAll("-", "");
 		System.out.println(string);
 		//分页
@@ -106,6 +113,7 @@ public class QcController {
 		qc.setQcType(0); 
 		
 		qc.setOptime(date);
+		qc.setQcOptime(date); 
 		int rows= qcService.add(qc); 
 		if (rows>0) {
 			message.setStatus(1);
