@@ -97,7 +97,7 @@
 		    <div class="kit-table-body">
 		        <table id="demo" lay-filter="demo"></table>
 		        <script type="text/html" id="barDemo">
-		            <a class="layui-btn layui-btn-xs" lay-event="detail">添加到清单</a>
+		            <button class="layui-btn layui-btn-xs" lay-event="detail">添加到清单</button>
 		        </script>
 		    </div>
 		</div>
@@ -143,12 +143,11 @@
 		            page: true,
 		            id: 'demo',
 		            cols: [
-		                [{type: 'checkbox',fixed: true},
-		                {field: 'drugId',title: '药名ID',width: 175},
-		                {field: 'drugName',title: '药名',width: 175},
-		                {field: 'drugProp',title: '类型',width: 80},
+		                [{field: 'drugName',title: '药名',width: 175},
+		                {field: 'dtName',title: '类型',width: 80},
 		                {field: 'drugPictrue',title: '图片',width: 60,templet:'<div><img style="height:100%;height:30px;" src="../../{{ d.drugPictrue}}"></div>'},
 		                {field: 'drugPrice',title: '价格（元）',width: 150,sort: true},
+		                {field: 'diAmount',title: '库存',width: 150,sort: true},
 		                {fixed: 'right',title: '操作',width: 180,align: 'center',toolbar: '#barDemo'}]
 		            ],
 		            done: function(res, curr, count) {
@@ -237,10 +236,7 @@
 		        		$("#zongshu").val(zongnum);
 						$("#zongjin").val(zongmoney);
 		        	});
-		        
-		        $(document).on("click",".layui-table-body table.layui-table tbody tr", function () { var index = $(this).attr('data-index'); var tableBox = $(this).parents('.layui-table-box'); //存在固定列
-			    if (tableBox.find(".layui-table-fixed.layui-table-fixed-l").length>0) { tableDiv = tableBox.find(".layui-table-fixed.layui-table-fixed-l"); } else { tableDiv = tableBox.find(".layui-table-body.layui-table-main"); } var checkCell = tableDiv.find("tr[data-index=" + index + "]").find("td div.laytable-cell-checkbox div.layui-form-checkbox I"); if (checkCell.length>0) { checkCell.click(); } }); $(document).on("click", "td div.laytable-cell-checkbox div.layui-form-checkbox", function (e) { e.stopPropagation(); });
-		        //监听搜索表单提交
+		      	 //监听搜索表单提交
 		        form.on('submit(search)', function(data) {
 		            //带条件查询
 		            tableIns.reload({
@@ -282,8 +278,45 @@
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 
 		            if (layEvent === 'detail') { //查看
-		            	
-		            }
+		            	var bln = true;
+		            	$("#add tr").not(":first").each(function(index){
+							if($(this).find('td:eq(1)').text()==data.drugName){
+								layer.alert('该药品已在购物清单');
+								bln = false;
+								tableElem.find("tr[data-index="+index+"]").find("button").addClass('layui-btn-disabled').attr('disabled',false);
+							}
+							
+						});
+		            	if (bln) {
+		            		var mony = data.drugPrice;
+			            	$("#add").append("<tr><td style='display:none'>"+data.drugId+"</td><td>"+data.drugName+"</td><td>"+data.dtName+"</td><td id='pic_"+data.drugId+"'>"+data.drugPrice+"</td><td><input type='text' id='up_"+data.drugId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' value='1' /></td><td id='zong_"+data.drugId+"'></td><td id='pi_"+data.drugId+"'></td><td><button onclick=\"changeState(this,\'"+data.drugId+"\')\">删除</button></td><td style='display:none'>"+data.diAmount+"</td></tr>");
+			            	//数量
+				        	var num=$(".numbers").val();
+				        	//赋值总价
+				        	$("#zong_"+data.drugId+"").text(parseFloat(mony*num).toFixed(2));
+				        	
+				        	var pi=parseFloat((mony*num)*0.8).toFixed(2);
+				        	$("#pi_"+data.drugId+"").text(pi);
+				        	zongj+=parseFloat(pi);
+				        	
+				        	var shu=$("#up_"+data.drugId+"").val();
+				        	zongshu+=parseFloat(shu);
+				        	
+				        	$("#zongjin").val(zongj.toFixed(2));
+			        		$("#zongshu").val(zongshu);
+			        		
+			        		
+			        		var zongmoney=0.00;
+							var zongnum=0;
+			        		$("#add tr").not(":first").each(function(){
+								zongnum+=parseInt($(this).find('td:eq(4) input').val());
+								zongmoney+=parseFloat($(this).find('td:eq(6)').text());
+							});
+			        		$("#zongshu").val(zongnum);
+							$("#zongjin").val(zongmoney);
+		            	}
+		            
+		        	}
 		        });
 		        //表单渲染
 		        form.render(null, 'kit-search-form');
@@ -302,13 +335,6 @@
 		  	
 		  	 function changeState(obj,rwowId) {
 		  			$(obj).closest('tr').remove();
-		 			var objStr = tableElem.find("td[data-field='drugId']");
-		 			for (var i = 0; i < objStr.length; i++) {
-		 				if (objStr[i].innerText == rwowId) {
-		 					tableElem.children().find('.layui-table-fixed input[type="checkbox"]').eq(i+1).next().click();
-		 					tableElem.find('.layui-table-fixed input[type="checkbox"]').eq(i+1).next().removeClass('layui-form-checked');
-		 				}
-		 			}
 		 			
 		 			var zongmoney=0.00;
 					var zongnum=0;
@@ -344,25 +370,60 @@
 			$("#zongjin").val("");
 			var id = obj.id;
 			var a = obj.value;
-			if(a!=""&&a!=0){
-				var b=$(obj).parent().prev().text();
-				var c =parseFloat(a).toFixed(2)*parseFloat(b).toFixed(2);
-				var d=c*0.8;
-				$(obj).parent().parent().children().eq(5).text(c);
-				$(obj).parent().parent().children().eq(6).text(parseFloat(d).toFixed(2));
-				
-				var zongmoney=0.0;
-				var zongnum=0;
-				$("#add tr").not(":first").each(function(){
-					zongmoney+=parseFloat($(this).find('td:eq(4) input').val());
-					zongnum+=parseInt($(this).find('td:eq(6)').text());
-				});
-				
-				$("#zongshu").val(zongmoney);
-				$("#zongjin").val(zongnum.toFixed(2));
+			var kucun=$(obj).parent().next().next().next().next().text();
+			
+			var reg= /^[0-9]*$/;
+			
+			if (reg.test(a)) {
+				if(a<=parseInt(kucun)){
+					if(a!=""&&a!=0){
+						var b=$(obj).parent().prev().text();
+						var c =parseFloat(a).toFixed(2)*parseFloat(b).toFixed(2);
+						var d=c*0.8;
+						$(obj).parent().parent().children().eq(5).text(c);
+						$(obj).parent().parent().children().eq(6).text(parseFloat(d).toFixed(2));
+						
+						var zongmoney=0.0;
+						var zongnum=0;
+						$("#add tr").not(":first").each(function(){
+							zongmoney+=parseFloat($(this).find('td:eq(4) input').val());
+							zongnum+=parseInt($(this).find('td:eq(6)').text());
+						});
+						
+						$("#zongshu").val(zongmoney);
+						$("#zongjin").val(zongnum.toFixed(2));
+					}else{
+						resultshu(obj);
+					}
+				}else{
+					layer.alert('库存不足');
+					resultshu(obj);
+				}
 			}else{
-				obj.value="1";
+				layer.alert('只能输入数字');
+				resultshu(obj);
 			}
+		}
+		
+		function resultshu(obj){
+			obj.value="1";
+			
+			var cm=obj.value;
+			var b=$(obj).parent().prev().text();
+			var c =parseFloat(cm).toFixed(2)*parseFloat(b).toFixed(2);
+			var d=c*0.8;
+			
+			$(obj).parent().parent().children().eq(5).text(c);
+			$(obj).parent().parent().children().eq(6).text(parseFloat(d).toFixed(2));
+			
+			var zongmoney=0.0;
+			var zongnum=0;
+			$("#add tr").not(":first").each(function(){
+				zongmoney+=parseFloat($(this).find('td:eq(4) input').val());
+				zongnum+=parseInt($(this).find('td:eq(6)').text());
+			});
+			$("#zongshu").val(zongmoney);
+			$("#zongjin").val(zongnum.toFixed(2));
 		}
 		
 		function okpi(){
