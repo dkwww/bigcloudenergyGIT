@@ -12,7 +12,7 @@
 		<script type="text/javascript">
 		$(function(){ 
 			 $("#tijiao").click(function (){ 
-			 alert("123321");
+			 
 			var   shu= $("#shuju").val();
 		 var url ="../../mrpDetails/Preservation.action";
 		 var  data={"shujuName" : shu};
@@ -318,7 +318,7 @@
 		            	var tables=table.cache.demo;
 		            	
  						$.each(tables,function(i,item){
-		            		 alert(item.qdetRate);
+		            		
 		            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+item.qdetAmount+","+item.qcId+","+item.qdetRate+","+$("#number"+item.qdetId).val()+"#");
 		            	 })
 		            	 
@@ -403,7 +403,6 @@
 		                };
 		                laytpl($('#edit-tpl').html()).render(d, function(html) {
 		                	var  qcId=d.user.qcId;
-		                	alert(qcId);
 		                	var index = layer.open({
 		          				  type: 2,
 		          				  title: '制作药品',

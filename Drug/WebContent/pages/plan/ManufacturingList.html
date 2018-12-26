@@ -38,7 +38,6 @@
 		$("#mrpId").val(mrpId);
 		
 	 $("#tijiao").click(function (){ 
-		 alert("123321");
 		var   shu= $("#shuju").val(); 
 		 var url ="../../mrpDetails/update.action";
 		 var  data={"shujuName" : shu , "mrpId"  : mrpId};
@@ -533,7 +532,6 @@
 		                    break;
 		                case 'del-bulk':
 		                    var data = table.cache['demo'];
-		                    alert(data);
 		                    layui.each(data, function(index, item) {
 		                    	update("../../pmcDetails/update.action",data);
 		                    });

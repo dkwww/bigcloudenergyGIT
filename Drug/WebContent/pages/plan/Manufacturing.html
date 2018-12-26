@@ -347,7 +347,7 @@
 	                    success:function(mes){//res为相应体,function为回调函数
 	                    	$(".layui-laypage-btn")[0].click();//当前表格刷新
 	                        if(mes.status==1){ 
-	                        	alert("提交成功");
+	                        	 layer.msg("提交成功");
 	                        	cls = true;//有弹出层时是关闭弹出层 false不关闭
 		                        $("#res").click();//调用重置按钮将表单数据清空
 	                        }
@@ -380,7 +380,6 @@
 				                };
 		                	
 		                	var  pmcId=d.user.pmcId;
-		                	alert(pmcId);
 		                	update("../../qc/add.action?pmcId="+pmcId,null);
 		                    layer.close(index);
 		                    //向服务端发送删除指令
@@ -394,7 +393,6 @@
 		                laytpl($('#edit-tpl').html()).render(d, function(html) {
 		                	var  pmcId=d.user.pmcId;
 		                	var  mrpId=d.user.mrpId;
-		                	alert(mrpId);
 		                	var index = layer.open({
 		          				  type: 2,
 		          				  title: '制作药品',
