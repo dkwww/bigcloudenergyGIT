@@ -34,10 +34,10 @@
   </delete>
   <insert id="insert" parameterType="com.yidu.domain.DrugInvDetail">
     insert into drug_drug_inv_detail (did_id, di_id, di_amount, 
-      isva, optime, oper, 
+      isva, optime, oper, Remarks,
       sort)
     values (#{didId,jdbcType=VARCHAR}, #{diId,jdbcType=VARCHAR}, #{diAmount,jdbcType=INTEGER}, 
-      #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR},
+      #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{Remarks,jdbcType=INTEGER},
       #{sort,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yidu.domain.DrugInvDetail">
@@ -51,6 +51,9 @@
       </if>
       <if test="diAmount != null">
         di_amount,
+      </if>
+       <if test="Remarks != null">
+        Remarks,
       </if>
       <if test="isva != null">
         isva,
@@ -71,6 +74,9 @@
       </if>
       <if test="diId != null">
         #{diId,jdbcType=VARCHAR},
+      </if>
+      <if test="Remarks != null">
+        #{Remarks,jdbcType=INTEGER},
       </if>
       <if test="diAmount != null">
         #{diAmount,jdbcType=INTEGER},

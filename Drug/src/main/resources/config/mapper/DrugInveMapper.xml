@@ -24,6 +24,16 @@
 	AND dc.com_id=#{comId,jdbcType=VARCHAR} AND dd.drug_id=#{drugId,jdbcType=VARCHAR}
   </select>
   
+  
+   <select id="selectDrugId" parameterType="java.lang.String"  resultMap="BaseResultMap" >
+  	select 
+    *
+    from drug_drug_inv
+    where drug_id = #{drugId,jdbcType=VARCHAR}
+  </select>
+  
+  
+  
   <select id="findDrug" parameterType="java.lang.String" resultMap="BaseResultMap">
   	select 
     *
@@ -78,6 +88,10 @@
       #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}
       )
   </insert>
+  
+  
+  
+  
   <insert id="insertSelective" parameterType="com.yidu.domain.DrugInve">
     insert into drug_drug_inv
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -139,6 +153,15 @@
       </if>
     </trim>
   </insert>
+   <update id="updateamount" parameterType="com.yidu.domain.DrugInve">
+    UPDATE drug_drug_inv SET di_amount = di_amount + #{diAmount,jdbcType=INTEGER} WHERE drug_id = #{drugId,jdbcType=VARCHAR}
+  </update>
+  
+  
+  
+  
+  
+  
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.DrugInve">
     update drug_drug_inv
     <set>
