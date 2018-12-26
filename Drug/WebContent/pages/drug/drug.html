@@ -322,7 +322,7 @@
 		                {field: 'drugProp',title: '属性',width: 90},
 		                {field: 'drugPictrue',title: '图片',width: 60,templet:'#img'},
 		                {field: 'drugPrice',title: '价格（元）',width: 120,sort: true},
-		                {field: 'audState',title: '审核状态',width: 120},
+		                {field: 'audState',title: '审核状态',width: 140},
 		                {fixed: 'right',title: '查看',width: 228,align: 'center',toolbar: '#views'},
 		                {fixed: 'right',title: '操作',width: 210,align: 'center',toolbar: '#tools'}]
 		            ],
@@ -352,7 +352,7 @@
 		                	var id = $(this).parents('tr').find('td[data-field="drugId"]').text();
 		                	var o = $(this);
 	            			if (o.text() == '10001') {
-	            				o.html('<font style="color: #0000F0">等待审核</font>');
+	            				o.html('<font style="color: #0000F0">等待经理审核</font>');
 	            				tableElem.find('tr[data-index="' + index + '"]').find('button').addClass('layui-btn-disabled').attr('disabled',true);
 	            			} else if (o.text() == '10010') {
 	            				o.html('<font style="color: #F00000">不通过</font>');
