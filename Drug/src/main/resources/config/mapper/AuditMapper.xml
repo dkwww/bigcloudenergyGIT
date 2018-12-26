@@ -117,6 +117,22 @@
     from drug_audit
     where aud_id = #{audId,jdbcType=VARCHAR}
   </select>
+  
+  <select id="findByFk" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_audit
+    where aud_fk_id = #{audFkId,jdbcType=VARCHAR}
+    <if test="type == 0">
+    	and aud_state in ('10110','10111')
+    </if>
+    <if test="type == 1">
+    	and aud_state in ('10010','10011')
+    </if>
+    order by optime desc limit 1
+  </select>
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_audit
     where aud_id = #{audId,jdbcType=VARCHAR}

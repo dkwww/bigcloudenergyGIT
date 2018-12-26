@@ -230,7 +230,7 @@
 						    	tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=aduitDetail]').addClass('layui-btn-disabled').attr('disabled',true);
 						    } else if ($(this).text() == '10110' || $(this).text() == '10111') {
 						    	$(this).text("审核完成");
-						    	tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=audit]').addClass('layui-btn-disabled').attr('disabled',true);
+						    	tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=pmcDetail],button[lay-event=audit]').addClass('layui-btn-disabled').attr('disabled',true);
 						    }
 					  	});
 		            }

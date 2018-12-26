@@ -231,5 +231,28 @@ public class DrugController {
 		map.put("data", list);
 		return map;
 	}
+	
+	/**
+	 * 查询所有
+	 * @return List<Drug> 药品集合
+	 */
+	@RequestMapping("/showChecked")
+	@ResponseBody
+	public Map<String,Object> showChecked(Drug record,Integer page,Integer limit) {
+		PageUtil pageUtil = new PageUtil();
+		pageUtil.setCurPage(page);
+		pageUtil.setRows(limit);
+		
+		List<Drug> list = drugService.findChecked(record,pageUtil);
+		int rows = drugService.findCheckedCount(record);
+		
+		@SuppressWarnings("unchecked")
+		Map<String,Object> map = new HashedMap();
+		map.put("code", 0);
+		map.put("msg", "");
+		map.put("count", rows);
+		map.put("data", list);
+		return map;
+	}
 }
 

@@ -10,7 +10,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.yidu.dao.AuditMapper;
 import com.yidu.dao.DrugMapper;
+import com.yidu.domain.Audit;
 import com.yidu.domain.Drug;
 import com.yidu.service.DrugService;
 import com.yidu.util.PageUtil;
@@ -29,6 +31,8 @@ public class DrugServiceImpl implements DrugService {
 	
 	@Resource
 	private DrugMapper drugMapper;
+	@Resource
+	private AuditMapper auditMapper;
 
 	@Override
 	public List<Drug> findAll(Drug record, PageUtil pageUtil) {
@@ -38,9 +42,10 @@ public class DrugServiceImpl implements DrugService {
 		List<Drug> list = drugMapper.selectBySelective(map);
 		List<Drug> lists = new ArrayList<Drug>();
 		for (Drug drug : list) {
-			String str = drugMapper.isCheck(drug.getDrugId());
-			if (str!=null && !"".equals(str)) {
-				drug.setAudState(str);
+			Drug drugs = drugMapper.isCheck(drug.getDrugId());
+			if (drugs!=null) {
+				drug.setAudState(drugs.getAudState());
+				drug.setAudId(drugs.getAudId());
 			} else {
 				drug.setAudState("-1");
 			}
@@ -52,7 +57,25 @@ public class DrugServiceImpl implements DrugService {
 	@Override
 	public int addOrUpdate(Drug record) {
 		if (record.getDrugId()!=null&&!"".equals(record.getDrugId())) {
-			return drugMapper.updateByPrimaryKeySelective(record);
+			int rows = 1;
+			if (!"-1".equals(record.getAudState()) && !"10012".equals(record.getAudState()) && !"10013".equals(record.getAudState()) && record.getAudState()!=null && !"".equals(record.getAudState())) {
+				Audit audit = new Audit();
+				audit.setAudId(record.getAudId());
+				if ("10010".equals(record.getAudState())) {
+					audit.setAudState("10012");
+				} else if ("10011".equals(record.getAudState())) {
+					audit.setAudState("10013");
+				} else {
+					audit.setAudState(record.getAudState());
+				}
+				rows = auditMapper.updateByPrimaryKeySelective(audit);
+			}
+			
+			if (rows>0) {
+				return drugMapper.updateByPrimaryKeySelective(record);
+			} else {
+				return 0;
+			}
 		} else {
 			record.setIsva("1");
 			record.setSort(TimeUtil.getStrDate());
@@ -94,5 +117,18 @@ public class DrugServiceImpl implements DrugService {
 	@Override
 	public int findAuditCount(Drug record) {
 		return drugMapper.selectAuditCount(record);
+	}
+
+	@Override
+	public List<Drug> findChecked(Drug record, PageUtil pageUtil) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("record", record);
+		map.put("pageUtil", pageUtil);
+		return drugMapper.findChecked(map);
+	}
+
+	@Override
+	public int findCheckedCount(Drug record) {
+		return drugMapper.findCheckedCount(record);
 	}
 }

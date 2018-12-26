@@ -349,6 +349,17 @@ public class AuditServiceImpl   implements AuditService {
 		
 		return mapper.findById(buyId);
 	}
+
+
+	@Override
+	public Audit findByFk(String audFkId, String type) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("audFkId", audFkId);
+		map.put("type", type);
+		Audit record = mapper.findByFk(map);
+		record.setAudTimes(TimeUtil.dateToString(record.getAudTime(), "yyyy-MM-dd HH:mm:ss"));
+		return record;
+	}
 	
 	
 }

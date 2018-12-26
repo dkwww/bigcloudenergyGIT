@@ -98,4 +98,12 @@ public interface AuditMapper {
      * @return
      */
 	List<Audit> findById(String buyId);
+	
+	/**
+	 * 根据业务编号查询财物或经理审核
+	 * @param audFkId
+	 * @param type
+	 * @return
+	 */
+	Audit findByFk(Map<String, Object> map);
 }

@@ -9,7 +9,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.yidu.dao.AuditMapper;
 import com.yidu.dao.MaterialListMapper;
+import com.yidu.domain.Audit;
 import com.yidu.domain.MaterialList;
 import com.yidu.service.MaterialListService;
 import com.yidu.util.PageUtil;
@@ -27,6 +29,8 @@ public class MaterialListServiceImpl  implements MaterialListService {
 	
 	@Resource
 	private MaterialListMapper materialListMapper;
+	@Resource
+	private AuditMapper auditMapper;
 
 	@Override
 	public List<MaterialList> findAll(MaterialList record,PageUtil pageUtil) {
@@ -44,7 +48,23 @@ public class MaterialListServiceImpl  implements MaterialListService {
 	@Override
 	public int addOrUpdate(MaterialList record) {
 		if (record.getMlId()!=null&&!"".equals(record.getMlId())) {
-			return materialListMapper.updateByPrimaryKeySelective(record);
+			int rows = 1;
+			if (!"-1".equals(record.getAudState()) && !"10012".equals(record.getAudState()) && !"10013".equals(record.getAudState()) && record.getAudState()!=null && !"".equals(record.getAudState())) {
+				Audit audit = new Audit();
+				audit.setAudId(record.getAudId());
+				if ("10010".equals(record.getAudState())) {
+					audit.setAudState("10012");
+				} else if ("10011".equals(record.getAudState())) {
+					audit.setAudState("10013");
+				}
+				rows = auditMapper.updateByPrimaryKeySelective(audit);
+			}
+			
+			if (rows>0) {
+				return materialListMapper.updateByPrimaryKeySelective(record);
+			} else {
+				return 0;
+			}
 		} else {
 			return materialListMapper.insertSelective(record);
 		}

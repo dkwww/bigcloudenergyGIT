@@ -326,12 +326,10 @@
 				//定义事件集合
 				var active = {
 					save: function() {
-	                    /* layui.each(newData, function(index, item) {
-	                    	//addOrUpdate(item);
-	                    	console.log(item);
-	                    	
-	                    }); */
-	                    $.ajax({ 
+	                    layui.each(newData, function(index, item) {
+	                    	addOrUpdate(item);
+	                    });
+	                    /* $.ajax({ 
 	    		        	url: '../../../../pmcDetails/checkInv.action',
 	    		        	data: JSON.stringify(newData),
 	    		        	cache: false,//同步
@@ -341,8 +339,8 @@
 	                        success:function(mes){
 	                        	
 	                        }
-	                    });
-	                    //save({"pmcId": pmcId,"pmcAmount": $("#allAmount").text()});
+	                    }); */
+	                    save({"pmcId": pmcId,"pmcAmount": $("#allAmount").text()});
 					},
 					confirm: function() {
 						newData = [];
@@ -423,7 +421,7 @@
 					elem: '#dataTable2',
 					id: layTableId2,
 					height: h2+20,
-					url: "../../../../drug/showList.action",
+					url: "../../../../drug/showChecked.action",
 					page: true,
 					cols: [
 						[
@@ -597,6 +595,7 @@
                         	if (mes.status==1) {
                         		setTimeout(function () {
                         			closeLayer();
+                        			alert("ddd")
                             		window.parent.location.reload();
                             	},1000);
                         	}

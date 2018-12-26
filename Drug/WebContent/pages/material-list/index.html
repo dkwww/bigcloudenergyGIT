@@ -319,9 +319,14 @@
 				var active = {
 					save: function() {
 	                    layui.each(newData, function(index, item) {
+	                    	if (index==newData.length-1) {
+	                    		item["audId"]=getParameter("id2");
+	                    		item["audState"]=getParameter("state");
+	                    	}
 	                    	addOrUpdate(JSON.stringify(item));
 	                    });
 	                    closeLayer();
+	                    window.parent.location.reload();
 					},
 					confirm: function() {
 						newData = [];
@@ -548,7 +553,7 @@
 					$.ajax({ 
     		        	url: '../../materialList/addOrUpdate.action',
     		        	data: data,
-    		        	cache: false,//同步
+    		        	async: false,//同步
                         type: 'post',//method请求方式，get或者post
                         contentType: "application/json; charset=utf-8",
                         dataType: 'json'
@@ -558,7 +563,7 @@
 		        $.ajax({ 
 		        	url:'../../matType/showList.action',
                     type:'post',//method请求方式，get或者post
-                    cache: false,//同步
+                    async:false,//同步
                     dataType:'json',//预期服务器返回的数据类型
                     success:function(mes){//res为相应体,function为回调函数
                     	//循环添加类型搜索框内的数据

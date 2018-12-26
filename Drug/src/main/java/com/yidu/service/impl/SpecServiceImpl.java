@@ -1,7 +1,9 @@
 package com.yidu.service.impl;
  
+import com.yidu.dao.AuditMapper;
 import com.yidu.dao.MaterialListMapper;
 import com.yidu.dao.SpecMapper;
+import com.yidu.domain.Audit;
 import com.yidu.domain.MaterialList;
 import com.yidu.domain.Spec;
 import com.yidu.service.SpecService;
@@ -26,6 +28,8 @@ public class SpecServiceImpl   implements SpecService {
 	
 	@Resource
 	private SpecMapper specMapper;
+	@Resource
+	private AuditMapper auditMapper;
 	
 	@Resource
 	private MaterialListMapper materialListMapper;
@@ -51,7 +55,23 @@ public class SpecServiceImpl   implements SpecService {
 	@Override
 	public int addOrUpdate(Spec record) {
 		if (record.getSpecId()!=null&&!"".equals(record.getSpecId())) {
-			return specMapper.updateByPrimaryKeySelective(record);
+			int rows = 1;
+			if (!"-1".equals(record.getAudState()) && !"10012".equals(record.getAudState()) && !"10013".equals(record.getAudState()) && record.getAudState()!=null && !"".equals(record.getAudState())) {
+				Audit audit = new Audit();
+				audit.setAudId(record.getAudId());
+				if ("10010".equals(record.getAudState())) {
+					audit.setAudState("10012");
+				} else if ("10011".equals(record.getAudState())) {
+					audit.setAudState("10013");
+				}
+				rows = auditMapper.updateByPrimaryKeySelective(audit);
+			}
+			
+			if (rows>0) {
+				return specMapper.updateByPrimaryKeySelective(record);
+			} else {
+				return 0;
+			}
 		} else {
 			record.setIsva("1");
 			record.setOptime(new Date());

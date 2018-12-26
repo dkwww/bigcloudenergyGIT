@@ -167,7 +167,7 @@ public class Drug {
 	public void setPriceMax(Double priceMax) {
 		this.priceMax = priceMax;
 	}
-	
+
 	public String getAudId() {
 		return audId;
 	}

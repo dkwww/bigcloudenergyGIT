@@ -26,11 +26,15 @@ public interface DrugMapper {
 
 	int check(String drugId);
 
-	String isCheck(String drugId);
+	Drug isCheck(String drugId);
 	
 	List<Drug> selectBySelectives(Map<String, Object> map);
 
 	List<Drug> selectByAudit(Map<String, Object> map);
 
 	int selectAuditCount(Drug record);
+
+	List<Drug> findChecked(Map<String, Object> map);
+
+	int findCheckedCount(Drug record);
 }

@@ -62,44 +62,71 @@
 			<script type="text/html" id="aduit-detail-tpl">
 		    <div style="margin:10px">
 		        <form class="layui-form" action="" lay-filter="form-edit">
-		            <input type="hidden" name="drugId" value="{{d.rowdata.drugId}}" />
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">审核时间：</label>
+					<div class="layui-form-item" style="padding: 8px 0px 0px 8px;color: #FF5722;">
+		                <h3>总经理审核</h3>
+		            </div>
+		            <input type="hidden" name="audId" value="{{d.rowdata.audId}}" />
+					<div class="layui-form-item">
+		                <label class="layui-form-label">审核人：</label>
 		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
-		                   <div>2018-02-02 00:23:44</div>
+						{{# if(d.rowdata.bln == true){}}
+							<input type="text" name="audName" required lay-verify="required" placeholder="你的名字" autocomplete="off" class="layui-input">
+						{{#}else{}}
+							<div>{{d.rowdata.audName}}</div>
+		                {{#};}}
 		                </div>
 		            </div>
 					<div class="layui-form-item">
 		                <label class="layui-form-label">审核状态：</label>
 		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
-		                   <div>已通过</div>
-		                </div>
-		            </div>
-					<div class="layui-form-item">
-		                <label class="layui-form-label">审核人：</label>
-		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
-		                   <div>凯子</div>
+						{{# if(d.rowdata.bln == false && d.rowdata.audState == '10010' || d.rowdata.audState == '10012'){}}
+							<div>不通过</div>
+		                {{#}else if(d.rowdata.bln == false && d.rowdata.audState == '10011' || d.rowdata.audState == '10013'){}}
+							<div>通过</div>
+						{{#}else{}}
+							<input type="radio" name="audState" value="10011" title="通过" />
+		                    <input type="radio" name="audState" value="10010" title="不通过" checked/>
+		                {{#};}}
 		                </div>
 		            </div>
 					<div class="layui-form-item">
 		                <label class="layui-form-label">审核意见：</label>
 		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
-		                   <div>质量没什么大问题。</div>
+						{{# if(d.rowdata.bln == true){}}
+							<textarea name="audIdea" required lay-verify="required" placeholder="意见" autocomplete="off" class="layui-textarea"></textarea>
+						{{#}else{}}
+							<div>{{d.rowdata.audIdea}}</div>
+		                {{#};}}
 		                </div>
 		            </div>
+					{{# if(d.rowdata.bln == false){}}
+						<div class="layui-form-item">
+		                	<label class="layui-form-label">审核时间：</label>
+		                	<div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
+								<div>{{d.rowdata.audTimes}}</div>
+		                	</div>
+		            	</div>
+					{{#}else{}}
+						<div class="layui-form-item">
+		                	<div class="layui-input-block" style="padding-left: 8px;">
+		                    	<input type="button" class="layui-btn layui-btn-sm" lay-submit lay-filter="formEdit" style="padding: 0px 20px" value='提交'>
+								<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">重置</button>
+		                	</div>
+		            	</div>
+		            {{#};}}
 		        </form>
 		    </div>
 			</script>
 			<!-- 操作按钮 -->
 		    <div class="kit-table-body">
 		        <table id="demo" lay-filter="demo"></table>
-		        <script type="text/html" id="checks">
+		        <script type="text/html" id="views">
+					<button class="layui-btn layui-btn-xs" lay-event="specification">说明书</button>
+					<button class="layui-btn layui-btn-xs" lay-event="matDetail">物料明细</button>
 					<button class="layui-btn layui-btn-xs" lay-event="aduitDetail">审核明细</button>
-					<button class="layui-btn layui-btn-xs" lay-event="audit">审核</button>
 		        </script>
 		        <script type="text/html" id="tools">
-					<button class="layui-btn layui-btn-xs" lay-event="specification">说明书</button>
-		            <button class="layui-btn layui-btn-xs" lay-event="matDetail">物料明细</button>
+					<button class="layui-btn layui-btn-xs" lay-event="audit">审核</button>
 		        </script>
 		    </div>
 		</div>
@@ -151,29 +178,23 @@
 		                {field: 'drugProp',title: '属性',width: 90},
 		                {field: 'drugPictrue',title: '图片',width: 60,templet:'#img'},
 		                {field: 'drugPrice',title: '价格（元）',width: 120,sort: true},
-		                {fixed: 'right',title: '查看',width: 150,align: 'center',toolbar: '#tools'},
-		                {fixed: 'right',title: '审核',width: 180,align: 'center',toolbar: '#checks'}]
+		                {field: 'audState',title: '审核状态',width: 120},
+		                {fixed: 'right',title: '查看',width: 240,align: 'center',toolbar: '#views'},
+		                {fixed: 'right',title: '操作',width: 100,align: 'center',toolbar: '#tools'}]
 		            ],
 		            done: function(res, curr, count) {
 		            	var tableElem = this.elem.next('.layui-table-view');
-		            	$("[data-field = 'drugId']").children().not(":first").each(function(index){
-		            		$.post("../../../drug/checked.action",{"drugId":$(this).text()},function(mes){
-		            			if (mes>0) {
-		            				tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=check]').addClass('layui-btn-disabled').attr('disabled',true);
-		                    	}
-		            		},"json");
-					  	});
-		                $("[data-field = 'drugProp']").children().each(function(){
+		                $("[data-field = 'drugProp']").children().not(":first").each(function(){
 						    if($(this).text() == '1'){
 						    	$(this).text("处方药");
 						    } else if ($(this).text() == '0') {
 						    	$(this).text("非处方药");
 						    }
 					  	});
-		                $("[data-field = 'drugPictrue']").children().each(function(){
+		                $("[data-field = 'drugPictrue']").children().not(":first").each(function(){
 		                	var obj = $(this);
 		                	obj.find('img').on("error", function () {
-		                		obj.text('');
+		                		obj.text('无');
 		                	});
 		                	obj.find('img').on("load", function () {
 		                		obj.find('img').mouseover(function() {
@@ -182,6 +203,15 @@
 		                          	});
 		                      	});
 		                	});
+					  	});
+		                $("[data-field = 'audState']").children().not(":first").each(function(index){
+						    if($(this).text() == '10001'){
+						    	$(this).text("未审核");
+						    	tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=aduitDetail]').addClass('layui-btn-disabled').attr('disabled',true);
+						    } else {
+						    	$(this).text("审核完成");
+						    	tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=specification],button[lay-event=matDetail],button[lay-event=audit]').addClass('layui-btn-disabled').attr('disabled',true);
+						    }
 					  	});
 		            }
 		        });
@@ -225,23 +255,21 @@
 		            	layer1(data.drugId,data.drugName);
 		            } else if (layEvent === 'specification') { //说明书
 		            	layer2(data.drugId,data.drugName);
-		            } else if (layEvent === 'check') { //审核
-		            	$.ajax({ 
-		            		url:"../../../drug/isCheck.action",
-		            		data:{"drugId":data.drugId},
-		                    type:'post',//method请求方式，get或者post
-		                    async:false,//同步
-		                    dataType:'json',//预期服务器返回的数据类型
-		                    success:function(mes){//res为相应体,function为回调函数
-		                    	layer.msg(mes.msg);
-		                    	if (mes.status==1) tableIns.reload();
-		                    }
-		                 });
-		            } else if (layEvent === 'aduitDetail') {
+		            } else if (layEvent === 'audit') { //审核
 		            	var d = {
-		                	rowdata: data
+		                	rowdata: {
+		                		audId: data.audId,bln: true
+	                        }
 		                };
-		            	editLayer1(d);
+			            editLayer1(d);
+		            } else if (layEvent === 'aduitDetail') {
+		            	$.post("../../../audit/findById.action",{"audId":data.audId},function(mes){
+		            		mes["bln"] = false;
+		                	 var d = {
+		 		                rowdata: mes
+		 		             };
+		                	 editLayer1(d);
+		                 },"json");
 		            }
 		        });
 		        
@@ -252,9 +280,15 @@
 		            $('.kit-search-mored').toggle();
 		        });
 		        
+		      	//审核弹出层   提交按钮点击事件
+		        form.on('submit(formEdit)', function(data) {
+		        	update(data.field);
+                	return false;
+		        });
+		        
 		    });
 			
-		  	//渲染 药品修改和增加弹出层
+		 	//渲染 生产计划审核和审核明细弹出层
 		    function editLayer1(d){
 	    		layui.laytpl($('#aduit-detail-tpl').html()).render(d,function(html) {
 	    			editIndex1 = layer.open({
@@ -262,8 +296,7 @@
                         title: '经理审核明细',
                         content: html,
                         maxmin: true,
-                        area: ['500px', '330px'],
-                        btn: ['关闭'],
+                        area: ['600px', '380px'],
                         success: function() {
                             layui.form.render(null, 'form-edit');
                         }
@@ -280,19 +313,18 @@
 				  content: '../../material-list/index.html?id='+id+'&name='+name,
 				  area: ['100%', '100%'],
 				  maxmin: false,
-				  success: function (layero, index)
-                  {
-                      var body = layer.getChildFrame('body', index);
-                      var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
-                      body.find('.remove,th[data-field="tempId"],td[data-field="tempId"]').remove();
+				  success: function (layero, index){
+					  var body = layer.getChildFrame('body', index);
+					  var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+					  body.find('.remove,th[data-field="tempId"],td[data-field="tempId"]').remove();
                       body.find('.layui-table-edit').remove();
                       body.find("[data-field = 'mlAmount']").not(":first").each(function(){
-							$(this).css({
-								"color": "#666666"
-							}).on('focus', '.layui-table-edit', function(){
-								$(this).remove()
-							});
-					  	});
+						  $(this).css({
+						  	"color": "#666666"
+						  }).on('focus', '.layui-table-edit', function(){
+						  	$(this).remove()
+						  });
+					  });
                   }
 				});
 				layer.full(layerIndex1);
@@ -314,6 +346,27 @@
                   }
 				});
 		  	}
+		  	
+			//进行审核
+		    function update(data){
+		    	$.ajax({
+		    		url: "../../../audit/addOrUpdate.action",
+                    type:'post',//method请求方式，get或者post
+                    async:false,//同步
+                    dataType:'json',//预期服务器返回的数据类型
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(data),//表格数据序列化
+                    success:function(mes){//res为相应体,function为回调函数
+                    	if(mes.status==1){ 
+                        	editIndex1 && layer.close(editIndex1); //关闭弹出层
+	                        $("#res").click();//调用重置按钮将表单数据清空 
+	                        $(".layui-laypage-btn")[0].click();//当前表格刷新
+                        }
+                        layer.msg(mes.msg);
+                    },
+                   	error:function(){layer.alert('数据异常，请稍后重试！！！',{icon:5});}
+                 });
+		    }
 		  	
 		    //刷新弹出层
 		    function layerIFrameReload(layerIndex) {

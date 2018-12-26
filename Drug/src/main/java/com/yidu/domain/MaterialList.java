@@ -42,6 +42,10 @@ public class MaterialList {
     private Double priceMin;
     
     private Double priceMax;
+    
+    private String audId;
+    
+    private String audState;
 
     public String getMlId() {
         return mlId;
@@ -202,4 +206,20 @@ public class MaterialList {
 	public void setPriceMax(Double priceMax) {
 		this.priceMax = priceMax;
 	}
+	
+	public String getAudId() {
+        return audId;
+    }
+
+    public void setAudId(String audId) {
+        this.audId = audId == null ? null : audId.trim();
+    }
+    
+    public String getAudState() {
+        return audState;
+    }
+
+    public void setAudState(String audState) {
+        this.audState = audState == null ? null : audState.trim();
+    }
 }

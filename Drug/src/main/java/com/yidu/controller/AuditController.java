@@ -500,5 +500,16 @@ public class AuditController {
 		}
 		return mes;
 	}
+	
+	/**
+	 * 根据业务编号查询
+	 * @param audit
+	 * @return
+	 */
+	@RequestMapping("/findByFk")
+	@ResponseBody
+	public Audit findByFk(String audFkId,String type) {
+		return service.findByFk(audFkId,type);
+	}
 }
 

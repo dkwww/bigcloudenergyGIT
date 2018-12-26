@@ -83,7 +83,42 @@
 		            </div>
 		        </div>
 		    </form>
-		    <script type="text/html" id="pmc-edit-tpl">
+		    <!-- <script type="text/html" id="pmc-audit-tpl">
+				<div style="margin:10px">
+					<div class="layui-form-item" style="padding: 8px 0px 0px 8px;color: #FF5722;">
+		                <h3>财物审核</h3>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">审核人：</label>
+		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
+							<div>{{d.rowdata.audName}}</div>
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">审核状态：</label>
+		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
+						{{# if(d.rowdata.bln == false && d.rowdata.audState == '10010'){}}
+							<div>不通过</div>
+		                {{#}else if(d.rowdata.bln == false && d.rowdata.audState == '10011'){}}
+							<div>通过</div>
+		                {{#};}}
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">审核意见：</label>
+		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
+							<div>{{d.rowdata.audIdea}}</div>
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">审核时间：</label>
+		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
+							<div>{{d.rowdata.audTimes}}</div>
+		                </div>
+		            </div>
+				</div>
+			</script> -->
+			<script type="text/html" id="pmc-edit-tpl">
 				<div style="height: 145px;margin:auto;position: absolute;top: 0px;bottom: 0px;left: 0px;right: 0px">
 					<form class="layui-form" action="" lay-filter="form-edit">
 						<input type="hidden" name="pmcId" value="{{d.rowdata.pmcId}}" />
@@ -125,12 +160,13 @@
 		        <table id="demo" lay-filter="demo"></table>
 		        <script type="text/html" id="tools">
 		            <button class="layui-btn layui-btn-xs" lay-event="config">配置药品</button>
-					<button class="layui-btn layui-btn-xs" lay-event="check">提交审核</button>
+					<button class="layui-btn layui-btn-xs" lay-event="audit">提交审核</button>
 		            <button class="layui-btn layui-btn-xs" lay-event="edit">编辑</button>
 		            <button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button>
 		        </script>
-		        <script type="text/html" id="see">
+		        <script type="text/html" id="viwes">
 					<button class="layui-btn layui-btn-xs" lay-event="detail">生产明细</button>
+					<button class="layui-btn layui-btn-xs" lay-event="auditDetail">审核明细</button>
 		        </script>
 		    </div>
 		</div>
@@ -182,7 +218,7 @@
 		                {field: 'strEndTime',title: '生产期限',sort: true},
 		                {field: 'pmcState',title: '状态'},
 		                {field: 'audState',title: '审核状态',width: 140},
-		                {fixed: 'right',title: '查看',width: 100,align: 'center',toolbar: '#see'},
+		                {field: 'viwes',fixed: 'right',title: '查看',width: 165,align: 'center',toolbar: '#viwes'},
 		                {field: 'tools',fixed: 'right',title: '操作',width: 280,align: 'center',toolbar: '#tools'}]
 		            ],
 		            done: function(res, curr, count) {
@@ -201,7 +237,7 @@
 		                	var o = $(this);
 	            			if (o.text() == '10001') {
 	            				o.html('<font style="color: #0000F0">等待财物审核</font>');
-	            				tableElem.find('tr[data-index="' + index + '"]').find('td[data-field="tools"] button').addClass('layui-btn-disabled').attr('disabled',true);
+	            				tableElem.find('tr[data-index="' + index + '"]').find('td[data-field="viwes"] button[lay-event="auditDetail"],td[data-field="tools"] button').addClass('layui-btn-disabled').attr('disabled',true);
 	            			} else if (o.text() == '10101' || o.text() == '10011') {
 	            				o.html('<font style="color: #0000F0">等待总经理审核</font>');
 	            				tableElem.find('tr[data-index="' + index + '"]').find('td[data-field="tools"] button').addClass('layui-btn-disabled').attr('disabled',true);
@@ -214,6 +250,7 @@
 	            				tableElem.find('tr[data-index="' + index + '"]').find('td[data-field="tools"] button').addClass('layui-btn-disabled').attr('disabled',true);
 	            			} else if (o.text() == '-1') {
 	            				o.text("未审核");
+	            				tableElem.find('tr[data-index="' + index + '"]').find('td[data-field="viwes"] button[lay-event="auditDetail"]').addClass('layui-btn-disabled').attr('disabled',true);
 	            			}
 					  	});
 		            }
@@ -239,11 +276,13 @@
 		            var layEvent = obj.event; //获得 lay-event 对应的值
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		
-		            if (layEvent === 'detail') { //物料清单
+		            if (layEvent === 'detail') { //生产明细
 		            	layer1(data.pmcId,data.pmcName);
 		            } else if (layEvent === 'config') { //配置药品
 		            	layer2(data.pmcId,data.pmcName);
-		            } else if (layEvent === 'check') { //提交审核
+		            } else if (layEvent === 'auditDetail') { //审核详情
+		            	layer3(data.pmcId,data.audState);
+		            } else if (layEvent === 'audit') { //提交审核
 		            	$.ajax({ 
 		            		url:"../../../pmc/check.action",
 		            		data:{"pmcId":data.pmcId},
@@ -339,6 +378,16 @@
 				  area: ['100%', '100%']
 				});
 				layer.full(layerIndex2);
+			}
+		  	
+			//审核详情弹窗
+			function layer3(id,state){
+				var layerIndex3 = layer.open({
+				  type: 2,
+				  title: '审核详情',
+				  content: '../../plan/pmc/details/index3.html?id='+id+'&state='+state,
+				  area: ['800px', '430px']
+				});
 			}
 		  	
 			//渲染 药品修改和增加弹出层

@@ -40,6 +40,10 @@ public class Spec {
     private String sort;
     
     private String specComponent;
+    
+    private String audId;
+    
+    private String audState;
 
     public String getSpecId() {
         return specId;
@@ -192,4 +196,20 @@ public class Spec {
 	public void setSpecComponent(String specComponent) {
 		this.specComponent = specComponent == null ? null : specComponent.trim();
 	}
+	
+	public String getAudId() {
+        return audId;
+    }
+
+    public void setAudId(String audId) {
+        this.audId = audId == null ? null : audId.trim();
+    }
+    
+    public String getAudState() {
+        return audState;
+    }
+
+    public void setAudState(String audState) {
+        this.audState = audState == null ? null : audState.trim();
+    }
 }

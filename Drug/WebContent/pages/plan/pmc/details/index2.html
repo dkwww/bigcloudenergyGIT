@@ -77,10 +77,7 @@
 					<div class="layui-card-body">
 						<div id="toolbar">
 							<div class="layui-inline">
-								<button type="button" class="layui-btn layui-btn-sm add" title="筛选原材料">
-									<i class="layui-icon">&#xe608;</i> 添加原材料
-								</button>
-								<div class="layui-inline" style="margin-left: 20px;">总数量：<span style="color: #0000A0" id="allAmount">0</span></div>
+								<div class="layui-inline" style="margin-left: 5px;">总数量：<span style="color: #0000A0" id="allAmount">0</span></div>
 						  	</div>
 						</div>
 						<div id="tableRes" class="table-overlay">
@@ -157,7 +154,7 @@
 		                where: data.field,
 		                page: { curr: 1}
 		            });
-		            $('.kit-search-mored-one').hide();//关闭搜索层
+		            $('#kit-search-mored-one').hide();//关闭搜索层
 		            return false;
 		        });
 				

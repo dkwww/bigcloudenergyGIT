@@ -2,7 +2,6 @@ package com.yidu.service;
 
 
 import java.util.List;
-import java.util.Map;
 
 import com.yidu.domain.Audit;
 import com.yidu.util.PageUtil;
@@ -158,4 +157,12 @@ public interface AuditService   {
 	 * @return
 	 */
 	List<Audit> findByIdsh(String buyId);
+	
+	/**
+	 * 根据业务编号查询财物或经理审核
+	 * @param audFkId
+	 * @param type
+	 * @return
+	 */
+	public Audit findByFk(String audFkId, String type);
 }

@@ -31,8 +31,9 @@ public class LoginFilter implements Filter{
 
 		HttpServletRequest req = (HttpServletRequest)request; 
 		HttpServletResponse res = (HttpServletResponse)response; 
-		HttpSession session = req.getSession(); 
-		Admin admin = (Admin) session.getAttribute("user"); 
+		HttpSession session = req.getSession();
+		Admin admin = new Admin(); 
+		//Admin admin = (Admin) session.getAttribute("user"); 
 		String spath = req.getServletPath(); 
 		logger.info("访问地址："+spath);
 

@@ -35,4 +35,6 @@ public interface PmcMapper {
 	int selectAuditCount(Pmc record);
 	
 	int  addpmc (Pmc record);
+
+	Pmc selectByPpt(String pmcId);
 }
