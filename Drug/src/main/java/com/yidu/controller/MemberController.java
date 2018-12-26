@@ -32,7 +32,7 @@ import org.springframework.stereotype.Controller;
  * 会员 前端控制器
  * </p>
  *
- * @author Pngjiangping
+ * @author Liuyi
  * @since 2018-11-26
  */
 @Controller

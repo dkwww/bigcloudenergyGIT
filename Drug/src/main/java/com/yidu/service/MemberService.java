@@ -12,7 +12,7 @@ import com.yidu.util.PageUtil;
  * 会员 服务类
  * </p>
  *
- * @author Pngjiangping
+ * @author Liuyi
  * @since 2018-11-26
  */
 public interface MemberService   {

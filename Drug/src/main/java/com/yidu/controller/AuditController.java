@@ -278,16 +278,12 @@ public class AuditController {
 	 * 审核的方法
 	 * @param id
 	 * @param state
+	 * @author zhengyouhong
 	 * @return
 	 */
 	@RequestMapping("/auditByaudId")
 	@ResponseBody
 	public Message auditById(@RequestBody Audit audits) {
-
-		System.out.println("   aaaaaaaaaaaaa     "+audits.getAudFkId());
-		System.out.println("   bbbbbbbbbbbbb     "+audits.getAudId());
-		System.out.println("   ccccccccccccc     "+audits.getAudState());
-		System.out.println("   ddddddddddddd     "+audits.getAudMes());
 		
 		//用于页面上的判断
 		Message message = new Message();
@@ -340,8 +336,7 @@ public class AuditController {
 			Buy buy = buyService.findById(audits.getAudFkId());
 			//根据订单中的店铺id查找这个店铺的总余额
 			Debty debty1 = debtyService.findByComId(buy.getComId());
-			System.out.println(" 财务余额："+debty1.getDebMoney());
-			System.out.println(" 订单总金额"+buy.getBuyMoney());
+			System.out.println(" 财务余额："+debty1.getDebMoney()+" 订单总金额"+buy.getBuyMoney());
 			//将两个金额相加
 			money =debty1.getDebMoney().add(buy.getBuyMoney());
 			Debty debty2 = new Debty();//定义一个新的财务对象

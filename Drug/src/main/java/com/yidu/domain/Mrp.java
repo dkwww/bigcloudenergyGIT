@@ -226,11 +226,7 @@ public class Mrp {
 
     public void setMrpPlan(Integer mrpPlan) {
         this.mrpPlan = mrpPlan;
-    }
-
-    
-
-    
+    }  
     
     public String getMrpRate() {
 		return mrpRate;

@@ -17,10 +17,11 @@ import com.yidu.service.QcDetailService;
 import com.yidu.service.QcService;
 import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
+import com.yidu.util.TimeUtil;
 
 import java.util.Date;
 import java.util.HashMap;
- 
+
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -48,33 +49,35 @@ public class QcController {
 	private PmcDetailsService pmcDetailsService;
 	@Resource
 	private QcDetailService   qcDetailService;
-	 @Resource
-	 private MatInvService invservice;
-	 
+	@Resource
+	private MatInvService invservice;
+
 	//查询 药品质检
 	@RequestMapping("/qureyAll")
 	@ResponseBody
-	 public   Map<String , Object>  qureyAll(Qc  qc  , Integer  page , Integer  limit){
+	public   Map<String , Object>  qureyAll(Qc  qc  , Integer  page , Integer  limit){
 		//分页
 		PageUtil pageUtil = new PageUtil();
 		//前台取过来的分页值
 		pageUtil.setCurPage(page);
 		pageUtil.setRows(limit);
-		
+
 		List<Qc> list = qcService.selectqctype(qc, pageUtil);
-		 int rows = qcService.selectCountBySelective(qc);
-		 Map<String , Object>  map  =new  HashMap<>();
-			map.put("code", 0);
-			map.put("msg", "");
-			map.put("count", rows);
-			map.put("data", list);
-			return  map;
+		for (Qc qc2 : list) {
+			qc2.setQcOptiemName(TimeUtil.dateToString(qc2.getQcOptime(), "yyyy-mm-dd"));
+			qc2.setQcRateName(qc2.getQcRate()+"%");
+		}
+		int rows = qcService.selectCountBySelective(qc);
+		Map<String , Object>  map  =new  HashMap<>();
+		map.put("code", 0);
+		map.put("msg", "");
+		map.put("count", rows);
+		map.put("data", list);
+		return  map;
 	} 
 	@RequestMapping("/add")
 	@ResponseBody
 	public   Message    add(Qc  qc) {
-		
-		
 		String    string= UUID.randomUUID().toString().replaceAll("-", "");
 		System.out.println(string);
 		//分页
@@ -83,7 +86,7 @@ public class QcController {
 		Pmc pmc = pmcService.selectById(qc.getPmcId());
 		PmcDetails  pmcDetails=new   PmcDetails();
 		pmcDetails.setPmcId(qc.getPmcId());
-		 List<PmcDetails>  list  = pmcDetailsService.selectPmcId(qc.getPmcId());
+		List<PmcDetails>  list  = pmcDetailsService.selectPmcId(qc.getPmcId());
 		for (PmcDetails pmcDetails2 : list) {
 			String    strings= UUID.randomUUID().toString().replaceAll("-", "");
 			QcDetail  qcDetail=  new   QcDetail();
@@ -95,7 +98,7 @@ public class QcController {
 			qcDetail.setQdetRate("0%");
 			qcDetail.setQdetOptime(date);
 			qcDetailService.insert(qcDetail);
-			System.out.println("增加完成");
+
 		} 
 		qc.setQcId(string);
 		qc.setPmcId(pmc.getPmcId());
@@ -104,8 +107,9 @@ public class QcController {
 		qc.setQcFail(0);
 		qc.setQcConpany("目前不知道是啥工厂");
 		qc.setQcType(0); 
-		
+
 		qc.setOptime(date);
+		qc.setQcOptime(date); 
 		int rows= qcService.add(qc); 
 		if (rows>0) {
 			message.setStatus(1);
@@ -115,8 +119,8 @@ public class QcController {
 
 		return  message;
 	} 
-	
-	
+
+
 	/**
 	 * 材料质检显示列表
 	 * @param qc
@@ -126,17 +130,17 @@ public class QcController {
 	@RequestMapping("QcbuyshowList")
 	@ResponseBody
 	public Map<String, Object> QcbuyshowList(Qc qc,Integer page,Integer limit){
-		
+
 		PageUtil PageUtil=new PageUtil();
 		if(page!=null && limit!=null) {
 			PageUtil.setCurPage(page);
 			PageUtil.setRows(limit);
 		}
-		
+
 		List<Qc> list=qcService.showList(qc, PageUtil);
-		
+
 		int rows=qcService.selectCount(qc);
-		
+
 		Map<String, Object> map=new HashMap<>();
 		map.put("code", 0);
 		map.put("msg", "");
@@ -144,8 +148,8 @@ public class QcController {
 		map.put("data", list);
 		return map;
 	}
-	
-	
+
+
 	/**
 	 * 材料质检增加
 	 * @param shuju
@@ -158,16 +162,16 @@ public class QcController {
 	@ResponseBody
 	public Message Qcadd(String id,String shuju,String sumAmout,String sumRate) {
 		Qc qc=new Qc();
-		
+
 		QcDetail qcdetail=new QcDetail();
 		qc.setQcId(id);
 		qc.setQcFail(Integer.valueOf(sumAmout));
 		qc.setQcRate(sumRate);
 		qcService.buyQcadd(qc);
-		
+
 		//根据前台传来的数据用"#"分割
 		String [] data=shuju.split("#");
-		
+
 		for (int i = 0; i < data.length; i++) {
 			String [] datas=data[i].split(",");
 			String qdetId=datas[0];
@@ -178,22 +182,22 @@ public class QcController {
 			System.out.println("数量:"+qdetAmount);
 			String qdetRate=datas[4];
 			System.out.println("质检率:"+qdetRate);
-			
+
 			qcdetail.setQdetId(qdetId);
 			qcdetail.setQdetFail(Integer.valueOf(qdetFail));
 			qcdetail.setQdetRate(qdetRate);
 			qcDetailService.add(qcdetail);
-			
+
 		}
-		
+
 		Message me=new Message();
 		me.setStatus(1);
 		me.setMsg("操作成功");
-		
+
 		return me;
 	}
-	
-	
+
+
 	/**
 	 * 材料质检入库
 	 * @author 邓康威
@@ -203,9 +207,9 @@ public class QcController {
 	@RequestMapping("addkc")
 	@ResponseBody
 	public Message addkc(@RequestBody Qc qc) {
-		
+
 		List<QcDetail> list=qcDetailService.findByIds(qc.getQcId());
-		
+
 		for (QcDetail qcDetail : list) {
 			List<MatInv> invlist=invservice.findQcId(qcDetail.getQdetFkId());
 			for (MatInv matInv : invlist) {
@@ -217,7 +221,7 @@ public class QcController {
 		Message me=new Message();
 		me.setStatus(1);
 		me.setMsg("操作成功");
-		
+
 		return me;
 	}
 }

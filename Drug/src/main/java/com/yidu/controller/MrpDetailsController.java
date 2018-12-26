@@ -3,6 +3,37 @@ package com.yidu.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 import com.yidu.domain.Mrp;
 import com.yidu.domain.MrpDetails;
@@ -108,7 +139,6 @@ public class MrpDetailsController {
 			}
 			Date   date  = new  Date();
 			mrpDetails2.setMdTime(date);
-
 			if (Integer.valueOf(addnum)>0.1) {
 				rows= mrpDetailService.add(mrpDetails2);
 			} 
@@ -119,7 +149,6 @@ public class MrpDetailsController {
 		int   Percentage =  mrpDetailService.findPercentage(mrpDetails);
 		int     sum =  mrpDetailService.findmax(mrpDetails);
 		String   progress  =   numberFormat.format((float) Percentage  /   (float)sum *100);
-
 		mrp.setMrpId(mrpDetails.getMrpId());
 		mrp.setMrpRate(progress);
 		if (Percentage>0.1) {
@@ -193,9 +222,6 @@ public class MrpDetailsController {
 			message.setStatus(0);
 		}
 		return   message;  
-	}
-
-
-
+	} 
 }
 

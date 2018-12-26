@@ -35,19 +35,18 @@ import org.springframework.stereotype.Controller;
 public class DrugInvDetailController {
 
 	@Resource
-	 DrugInvService   drugInvService;
+	DrugInvService   drugInvService;
 	@Resource
 	private   DrugInvDetailService   drugInvDetailService;
-	 
+
 	@Resource
 	private QcDetailService qcdetaService;
-	
-	
-	
+
+
+
 	@RequestMapping("findById")
 	@ResponseBody
 	public   Map<String , Object>  findById(DrugInvDetail drugInvDetail){
-		
 		List<DrugInvDetail> list = drugInvDetailService.findById(drugInvDetail.getDiId());
 		int    rows=drugInvDetailService.selectcount(drugInvDetail.getDiId());
 		Map<String, Object>  map  =new HashMap<>();
@@ -57,7 +56,7 @@ public class DrugInvDetailController {
 		map.put("data", list);
 		return  map;
 	}
-	
+
 	@RequestMapping("addAll")
 	@ResponseBody
 	public   Message   addAll(Qc  qc) {
@@ -69,24 +68,21 @@ public class DrugInvDetailController {
 			DrugInvDetail  drugInvDetail  = new  DrugInvDetail();
 			String    string= UUID.randomUUID().toString().replaceAll("-", "");
 			String     str= UUID.randomUUID().toString().replaceAll("-", "");
-			  List<DrugInve> drugList = drugInvService.selectDrugId(qcDetail.getQdetFkId());
-			 
+			List<DrugInve> drugList = drugInvService.selectDrugId(qcDetail.getQdetFkId());
 			if (!drugList.isEmpty()) {
-					drugInve.setDrugId(qcDetail.getQdetFkId());
-					int  sum=qcDetail.getQdetAmount()-qcDetail.getQdetFail();
-					drugInve.setDiAmount(sum);
-				  drugInvService.updateamount(drugInve);
+				drugInve.setDrugId(qcDetail.getQdetFkId());
+				int  sum=qcDetail.getQdetAmount()-qcDetail.getQdetFail();
+				drugInve.setDiAmount(sum);
+				drugInvService.updateamount(drugInve);
 				//==============================分界线=======================
-					drugInvDetail.setDidId(str);
-					for (DrugInve drugInve2 : drugList) {
-						drugInvDetail.setDiId(drugInve2.getDiId());
-			 
-					}
-					
-					int  sums=qcDetail.getQdetAmount()-qcDetail.getQdetFail();
-					drugInvDetail.setDiAmount(sums);
-					drugInvDetail.setRemarks(0);
-				 drugInvDetailService.insert(drugInvDetail);
+				drugInvDetail.setDidId(str);
+				for (DrugInve drugInve2 : drugList) {
+					drugInvDetail.setDiId(drugInve2.getDiId());
+				}
+				int  sums=qcDetail.getQdetAmount()-qcDetail.getQdetFail();
+				drugInvDetail.setDiAmount(sums);
+				drugInvDetail.setRemarks(0);
+				drugInvDetailService.insert(drugInvDetail);
 			} else { 
 				drugInve.setDiId(string);
 				drugInve.setComId("0");
@@ -94,15 +90,14 @@ public class DrugInvDetailController {
 				int  sum=qcDetail.getQdetAmount()-qcDetail.getQdetFail();
 				drugInve.setDiAmount(sum);
 				drugInve.setDiComtype("0");
-			  rows = drugInvService.insert(drugInve);
-			//==============================分界线=======================
+				rows = drugInvService.insert(drugInve);
+				//==============================分界线=======================
 				drugInvDetail.setDidId(str);
 				drugInvDetail.setDiId(string);
 				int  sums=qcDetail.getQdetAmount()-qcDetail.getQdetFail();
 				drugInvDetail.setDiAmount(sums);
 				drugInvDetail.setRemarks(0);
-			 drugInvDetailService.insert(drugInvDetail);
-				
+				drugInvDetailService.insert(drugInvDetail);
 			} 
 		}
 		if (rows>0) {
@@ -111,11 +106,8 @@ public class DrugInvDetailController {
 		}else {
 			message.setStatus(0);
 			message.setMsg("保存失败");
-		}
-		
-	 
+		} 
 		return  message;
 	}
-	
-}
 
+} 

@@ -31,10 +31,33 @@ public class Qc {
     
     private String buyAmount;
     
+    private   String   qcRateName;   //通过率  
+    
+    
+    private  String   qcOptiemName;
+    
+    
+    
     
     
     
 
+
+	public String getQcOptiemName() {
+		return qcOptiemName;
+	}
+
+	public void setQcOptiemName(String qcOptiemName) {
+		this.qcOptiemName = qcOptiemName;
+	}
+
+	public String getQcRateName() {
+		return qcRateName;
+	}
+
+	public void setQcRateName(String qcRateName) {
+		this.qcRateName = qcRateName;
+	}
 
 	public String getComName() {
 		return comName;
