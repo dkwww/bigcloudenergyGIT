@@ -8,6 +8,7 @@ import com.yidu.dao.DebtyMapper;
 import com.yidu.dao.DrugInvDetailMapper;
 import com.yidu.dao.DrugInveMapper;
 import com.yidu.dao.DrugMapper;
+import com.yidu.dao.MemberMapper;
 import com.yidu.domain.BranchSale;
 import com.yidu.domain.BranchSaleDetail;
 import com.yidu.domain.Debty;
@@ -15,6 +16,7 @@ import com.yidu.domain.DebtyDetail;
 import com.yidu.domain.Drug;
 import com.yidu.domain.DrugInvDetail;
 import com.yidu.domain.DrugInve;
+import com.yidu.domain.Member;
 import com.yidu.service.BranchSaleService;
 import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
@@ -60,6 +62,8 @@ public class BranchSaleServiceImpl implements BranchSaleService {
 	DrugInvDetailMapper invDetailMapper;
 
 	@Resource
+	MemberMapper menberMapper;
+	@Resource
 	DrugInveMapper inveMapper;
 	@Override
 	public List<BranchSale> query(PageUtil util, BranchSale branchSale) {
@@ -86,6 +90,16 @@ public class BranchSaleServiceImpl implements BranchSaleService {
 	 */
 	@Override
 	public Message addSale(String sum, String menId, String comId) {
+		Member member=menberMapper.selectByPrimaryKey(menId);
+		Double zk=null;
+		if("普通会员".equals(member.getOper())) {
+			zk=0.9;
+		}else if("高级会员".equals(member.getOper())) {
+			zk=0.85;
+		}else if("顶级会员".equals(member.getOper())) {
+			zk=0.8;
+		}
+		System.err.println("--------------------------------"+zk);
 		Message message=new Message();
 		Integer row=0;
 		Integer rows=0;
@@ -96,7 +110,9 @@ public class BranchSaleServiceImpl implements BranchSaleService {
 			String [] arr=string.split(",");
 			count+=Integer.valueOf(arr[1]);
 			Drug drug=drugMapper.selectByPrimaryKey(arr[0]);
-			money+=drug.getDrugPrice().doubleValue()*Integer.valueOf(arr[1]);
+			
+			
+			money+=(drug.getDrugPrice().doubleValue()*zk)*Integer.valueOf(arr[1]);
 		}
 		message.setMsg("总金额: "+money+"  总数量: "+count);
 		
@@ -139,7 +155,8 @@ public class BranchSaleServiceImpl implements BranchSaleService {
 			rows=branchSaleDetailMapper.insertSelective(branchSaleDetail);
 			
 			DrugInve drugInve=inveMapper.findDrugId(arr[0]);
-			drugInve.setDiAmount(drugInve.getDiAmount()-Double.valueOf(branchSaleDetail.getBsdTotal()).intValue());
+			System.err.println("--------------"+branchSaleDetail.getBsdAmount());
+			drugInve.setDiAmount(drugInve.getDiAmount()-Double.valueOf(branchSaleDetail.getBsdAmount()).intValue());
 			inveMapper.updateByPrimaryKeySelective(drugInve);
 			
 			

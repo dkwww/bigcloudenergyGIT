@@ -369,10 +369,10 @@
 		    	$.each($(".tabletr"),function(index,item){
 		    		sum+=$(item).children().html()+","+$(item).children().next().next().children().val()+"@";
 		    	});
-		    	
-		    	var url="../../branchSale/addSale.action";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 .action";
-		    	var data={"sum":sum,"menId":$("#memSelect").val()};
-		    	$.post(url,data,function(mes){
+				
+		    	var url="../../branchSale/addSale.action";
+		    	var datas={"sum":sum,"menId":$("#memSelect").val()};
+		    	$.post(url,datas,function(mes){
 		    		if(mes.status==1){
 		    			parent.layer.msg(mes.msg);
 		    			var index=parent.layer.getFrameIndex(window.name);
@@ -380,8 +380,8 @@
 		    		}else{
 		    			parent.layer.msg("保存失败");
 		    		}
-		    		
 		    	},"json");
+		    	
 		    }
 		</script>
 </body>
