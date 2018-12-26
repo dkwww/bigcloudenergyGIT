@@ -59,7 +59,7 @@ public class DrugInvController {
 	@ResponseBody
 	public   Message   addAll(Qc  qc ) {
 		Message   message  =new  Message();
-		System.out.println("=============qcId=============="+qc.getQcId());
+	 
 		
 		return  message;
 	}

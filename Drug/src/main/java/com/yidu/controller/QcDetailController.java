@@ -61,7 +61,7 @@ public class QcDetailController {
 	 * @return
 	 */
 	@RequestMapping("findBuyId")
-	@Resource
+	@ResponseBody
 	public Map<String, Object> findBuyId(QcDetail qcdetail){
 		System.err.println("========="+qcdetail);
 		List <QcDetail> list=qcdetaService.findById(qcdetail);

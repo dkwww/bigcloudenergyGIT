@@ -219,7 +219,6 @@
 				$("#mes").val(str);
 			}
 			function remove(obj){
-				alert(1);
 				$(obj).closest("tr").remove();
 				from.radom
 			}
@@ -310,7 +309,6 @@
 		      	* 采购表移除药品
 		      	*/
 		      	$('body').on('click','dels',function(){
-		      		alert(1);
 		      		$(this).closest('tr').remove();
 		      	})
 		      	
@@ -343,10 +341,10 @@
 					var url="../../buyDetail/add.action";
 					var data={"mes":$("#mes").val()};
 					$.post(url,data,function(mes){
-						if(mes.state==1){
-							alert("菜");
+						if(mes.status==1){
+							layer.msg("采购成功");
 						}else{
-							alert("牛逼");
+							layer.msg("采购失败");
 						}
 						
 					},"json");

@@ -152,17 +152,7 @@
 		            		showlayer(d);
 		            	
 		            } else if (layEvent === 'del') { //不审核
-		            	var url = "../../../audit/auditByaudId.action";  
-		            	var data = {"id":data.audId,"state":0,"buyId":data.audFkId};	
-		            	$.post(url,data,function(mes){
-		            		if(mes.status==1){
-		            			alert("操作成功");
-								location.reload();
-		            		}else{
-		            			alert("操作失败");
-		            		}
-		            		
-		            	},"json");
+		            	
 		            } else if (layEvent === 'edit') { //查看详情
 		                var d = {
 		                    user: data,

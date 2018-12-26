@@ -134,16 +134,6 @@
 			                };
 	            		showlayer(d);
 		            } else if (layEvent === 'del') { //不审核
-		                	var url = "../../../audit/auditByaudId.action";  
-			            	var data = {"id":data.audId,"state":13,"buyId":data.audFkId};	
-			            	$.post(url,data,function(mes){
-			            		if(mes.status==1){
-			            			console.log("操作成功");
-			            		}else{
-			            			console.log("操作失败");
-			            		}
-			            		
-			            	},"json");
 		                    //向服务端发送删除指令
 		            } else if (layEvent === 'edit') { //查看详情
 		                var d = {

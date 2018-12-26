@@ -39,6 +39,27 @@ public interface DrugInveMapper {
      * @return
      */
     public int amountupdate(DrugInve drugInve);
+    /**
+     * 查询是否有该药品
+     * @param id
+     * @return
+     */
+    
+    List<DrugInve> selectDrugId(String   id);
+    
+    /**
+     * 根据药品ID修改库存数量
+     * @param drugInve
+     * @return
+     */
+    int   updateamount(DrugInve drugInve);
+    
+    
+    /**
+     * 
+     * @param id
+     * @return
+     */
     
     DrugInve findDrug(String id);
     /**
