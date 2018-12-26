@@ -25,6 +25,12 @@ public interface DrugInvDetailService  {
 	 * @return
 	 */
 	int   selectcount(String  id);
+	/**
+	 * 增加一条数据
+	 * @param record
+	 * @return
+	 */
+	  int insert(DrugInvDetail record);
 	
 	
 }

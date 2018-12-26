@@ -36,10 +36,31 @@ public interface DrugInvService  {
 	 int amountupdate(DrugInve drugInve);
 	 
 	 /**
+	  * 查找是否有该药品
+	  * @param id
+	  * @return
+	  */
+	   List<DrugInve>  selectDrugId(String   id);
+	 
+	 /**
 	   * 根据药品id查询库存
 	   * @param id
 	   * @return
 	   */
 	  public DrugInve findDrug(String id);
+	  
+	  /**
+	   * 质检完增加库存
+	   * @param drugInve
+	   * @return
+	   */
+	 int  updateamount (DrugInve drugInve);
+	 
+	 /**
+	  *  库存没有就+一行数据
+	  * @param record
+	  * @return
+	  */
+	 int insert(DrugInve record);
 
 }

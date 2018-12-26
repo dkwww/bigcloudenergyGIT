@@ -43,5 +43,11 @@ public class DrugInvDetailServiceImpl   implements DrugInvDetailService {
  
 		return dao.selectcount(id);
 	}
+	@Override
+	public int insert(DrugInvDetail record) {
+     int rows = dao.insert(record);
+     System.out.println("===========rows=========="+rows);
+		return rows;
+	}
 
 }

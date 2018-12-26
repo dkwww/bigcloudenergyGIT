@@ -69,4 +69,22 @@ public class DrugInvServiceImpl    implements DrugInvService {
 		return dao.findDrug(id);
 	}
 
+	@Override
+	public List<DrugInve> selectDrugId(String id) {
+		return dao.selectDrugId(id);
+	}
+	/**
+	 * 入库
+	 */
+	@Override
+	public int updateamount(DrugInve drugInve) {
+		return   dao.updateamount(drugInve);
+	}
+
+	@Override
+	public int insert(DrugInve record) {
+		 
+		return dao.insert(record);
+	}
+
 }
