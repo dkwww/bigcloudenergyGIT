@@ -6,43 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import com.yidu.domain.Admin;
 import com.yidu.domain.Company;
 import com.yidu.service.CompanyService;
 import com.yidu.util.Message;
@@ -53,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 
@@ -176,10 +142,17 @@ public class CompanyController {
 	 */
 	@RequestMapping("/add")
 	@ResponseBody
-	public Message insertUpdate(@RequestBody Company com) {
+	public Message insertUpdate(HttpServletRequest request,@RequestBody Company com) {
 		//Message工具类
 		Message mes=new Message();
+		//session
+		HttpSession session=request.getSession();
 		System.err.println("进入了增加修改的方法");
+		Admin user=(Admin) session.getAttribute("user");
+		if(user!=null&&!"".equals(user)) {
+			//给操作人赋予当前登陆用户的名称
+			com.setOper(user.getAdminName());
+		}
 		//调用增加修改的方法
 		int rows = companyService.addOrUpdate(com);
 		//大于0成功否则失败
