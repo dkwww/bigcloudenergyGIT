@@ -147,7 +147,7 @@ public class CompanyController {
 		Message mes=new Message();
 		//session
 		HttpSession session=request.getSession();
-		System.err.println("进入了增加修改的方法");
+		//获取登录session
 		Admin user=(Admin) session.getAttribute("user");
 		if(user!=null&&!"".equals(user)) {
 			//给操作人赋予当前登陆用户的名称

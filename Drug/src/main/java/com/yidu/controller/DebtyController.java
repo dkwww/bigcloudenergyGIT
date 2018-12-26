@@ -94,10 +94,8 @@ public class DebtyController {
 	public Message insertUpdate(@RequestBody Debty deb) {
 		//Message工具类
 		Message mes=new Message();
-		System.err.println("进入了增加修改的方法");
 		//调用增加修改的方法
 		int rows = debtyService.addOrUpdate(deb);
-		System.err.println(deb.getDebMoney());
 		//大于0成否则失败
 		if(rows>0) {
 			mes.setStatus(1);
