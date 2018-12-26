@@ -48,6 +48,7 @@
   	<if test="buy.buyCompany!=null and buy.buyCompany!='' ">
   		and buy_company like concat("%",#{buy.buyCompany},"%")
   	</if>
+  	ORDER BY a.buy_time desc
   	limit #{page.startRows},#{page.rows}
   </select>
   
@@ -57,6 +58,7 @@
   	<if test="buyCompany!=null and buyCompany!='' ">
   		and buy_company like concat("%",#{buyCompany},"%")
   	</if>
+  	ORDER BY a.buy_time desc
   </select>
   
   
@@ -67,6 +69,7 @@
   	<if test="buy.buyCompany!=null and buy.buyCompany!='' ">
   		and buy_company like concat("%",#{buy.buyCompany},"%")
   	</if>
+  	ORDER BY a.buy_time desc
   	limit #{page.startRows},#{page.rows}
   </select>
   
@@ -78,6 +81,7 @@
   	<if test="buyCompany!=null and buyCompany!='' ">
   		and buy_company like concat("%",#{buyCompany},"%")
   	</if>
+  	ORDER BY a.buy_time desc
   </select>
   
   

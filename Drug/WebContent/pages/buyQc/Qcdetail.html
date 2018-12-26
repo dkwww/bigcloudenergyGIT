@@ -93,6 +93,7 @@
 			//显示表格数据
 		    layui.use(['table','upload'], function() {
 		    	var qcId = getParameter("id");
+		    	
 		        var table = layui.table,
 		            $ = layui.jquery,
 		            layer = layui.layer,
@@ -101,7 +102,7 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '449px', //容器高度
-		            url: '../../qcDetail/findById.action?qcId='+qcId,
+		            url: '../../qcDetail/findBuyId.action?qcId='+qcId,
 		            page: true,
 		            id: 'demo',
 		            cols: [

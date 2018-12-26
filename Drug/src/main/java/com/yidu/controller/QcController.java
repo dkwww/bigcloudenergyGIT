@@ -133,8 +133,6 @@ public class QcController {
 			PageUtil.setRows(limit);
 		}
 		
-		
-		
 		List<Qc> list=qcService.showList(qc, PageUtil);
 		
 		int rows=qcService.selectCount(qc);
@@ -161,7 +159,6 @@ public class QcController {
 	public Message Qcadd(String id,String shuju,String sumAmout,String sumRate) {
 		Qc qc=new Qc();
 		
-		System.err.println("------------"+id);
 		QcDetail qcdetail=new QcDetail();
 		qc.setQcId(id);
 		qc.setQcFail(Integer.valueOf(sumAmout));

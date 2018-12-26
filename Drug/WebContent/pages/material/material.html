@@ -33,7 +33,7 @@
 		                <div class="layui-form-item">
 		                    <label class="layui-form-label">药品名称</label>
 		                    <div class="layui-input-block">
-		                        <input type="text" name="matName" id="serach-two" placeholder="搜索关键字.." autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
+		                        <input type="text" name="matName" maxlength="10" id="serach-two"  placeholder="搜索关键字.." autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
 		                    </div>
 		                </div>
 		                <div class="layui-form-item">
@@ -44,20 +44,7 @@
 			                    </select>
 			                </div>
 		                </div>
-		                <div class="layui-form-item">
-		                    <div class="layui-inline">
-		                        <label class="layui-form-label">范围</label>
-		                        <div class="layui-input-block">
-			                        <div class="layui-input-inline" style="width: 100px;">
-			                            <input type="text" name="priceMin" placeholder="￥" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
-			                        </div>
-			                        <div class="layui-form-mid">-</div>
-			                        <div class="layui-input-inline" style="width: 100px;">
-			                            <input type="text" name="priceMax" placeholder="￥" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
-			                        </div>
-		                        </div>
-		                    </div>
-		                </div>
+		                
 		            </div>
 		            <div class="kit-search-footer">
 		                <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary kit-btn reset-btn">重置</button>
@@ -70,7 +57,6 @@
 		    <div class="kit-table-body">
 		        <table id="demo" lay-filter="demo"></table>
 		        <script type="text/html" id="barDemo">
-		            <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
 		            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
 		            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 		        </script>
@@ -100,28 +86,28 @@
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">药材名称</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="matName" required lay-verify="required" value="{{d.rowdata.matName}}" placeholder="请输入药材名称" autocomplete="off" class="layui-input">
+		                    <input type="text" name="matName" maxlength="10" required lay-verify="required" value="{{d.rowdata.matName}}" placeholder="请输入药材名称" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 						
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">单价</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="matPrice" required lay-verify="required" maxlength="6" value="{{d.rowdata.matPrice}}" placeholder="请输入认购数额（整数）" autocomplete="off" class="layui-input activity_card_money">
+		                    <input type="text" name="matPrice" maxlength="10" required lay-verify="required" maxlength="6" value="{{d.rowdata.matPrice}}" placeholder="请输入认购数额（整数）" autocomplete="off" class="layui-input activity_card_money">
 		                </div>
 		            </div>
 					
 					<div class="layui-form-item">
 		                <label class="layui-form-label">药品单位（个、粒、克）</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="matUnit" required lay-verify="required" maxlength="6" value="{{d.rowdata.matUnit}}" placeholder="请输入认购数额（整数）" autocomplete="off" class="layui-input activity_card_money">
+		                    <input type="text" name="matUnit" maxlength="10" required lay-verify="required" maxlength="6" value="{{d.rowdata.matUnit}}" placeholder="请输入认购数额（整数）" autocomplete="off" class="layui-input activity_card_money">
 		                </div>
 		            </div>
 
 					<div class="layui-form-item">
 		                <label class="layui-form-label">功效</label>
 		                <div class="layui-input-block">
-							<input type="text" name="matEffect" required lay-verify="required" value="{{d.rowdata.matEffect}}" placeholder="请输入功效" autocomplete="off" class="layui-input">
+							<input type="text" name="matEffect" maxlength="10" required lay-verify="required" value="{{d.rowdata.matEffect}}" placeholder="请输入功效" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 
@@ -173,10 +159,8 @@
 		            id: 'demo',
 		            cols: [
 		                [{checkbox: true,fixed: true},
-		                {field: 'matId',title: '原材料编号', width: 145},
 		                {field: 'mtName',title: '类型',width: 175},
 		                {field: 'matName',title: '药材名称',width: 150},
-		                {field: 'matAmount',title: '数量',width: 80},
 		                {field: 'matPrice',title: '单价',width: 90},
 		                {field: 'matUnit',title: '药品单位(个,颗,粒)',width: 150,sort: true},
 		                {field: 'matEffect',title: '功效',width: 150},

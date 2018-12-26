@@ -119,6 +119,13 @@
 		            		}
 					  	});
 		            	
+		            	$("[data-field = 'auName']").children().not(":first").each(function(index){
+		            		if($(this).text()=="未审核"){
+		            			//禁用
+		            			tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=confirms]').addClass('layui-btn-disabled').attr('disabled',true);
+		            		}
+					  	});
+		            	
 		            	$("[data-field = 'buyStates']").children().not(":first").each(function(index){
 		            		if($(this).text()=="已采购"){
 		            			//禁用
@@ -126,6 +133,12 @@
 		            		}
 					  	});
 		            	
+		            	$("[data-field = 'buyStates']").children().not(":first").each(function(index){
+		            		if($(this).text()=="未采购"){
+		            			//禁用
+		            			tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=submission]').addClass('layui-btn-disabled').attr('disabled',true);
+		            		}
+					  	});
 		            	
 		            	$("[data-field = 'buySubmissions']").children().not(":first").each(function(index){
 		            		if($(this).text()=="已提交"){
@@ -133,8 +146,6 @@
 		            			tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=submission]').addClass('layui-btn-disabled').attr('disabled',true);
 		            		}
 					  	});
-		            	
-		            	
 		            },
 		            loading: true
 		        });

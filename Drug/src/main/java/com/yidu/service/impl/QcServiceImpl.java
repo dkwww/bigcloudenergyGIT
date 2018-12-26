@@ -93,13 +93,12 @@ public class QcServiceImpl   implements QcService {
 	public int addQc(Buy buy) {
 		int rows=0;
 		Integer count=0;
+		//根据采购订单id查询采购明细
 		List<BuyDetail> list=detaMapper.findBuyId(buy.getBuyId());
 		for (BuyDetail buyDetail : list) {
 			
 			count+=buyDetail.getBdetAmount();
 		}
-		
-		
 		//得到材料质检
 		Qc qc=new Qc();
 		

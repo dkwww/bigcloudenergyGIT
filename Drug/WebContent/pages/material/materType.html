@@ -85,7 +85,6 @@
 		    <div class="kit-table-body">
 		        <table id="demo" lay-filter="demo"></table>
 		        <script type="text/html" id="barDemo">
-		            <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
 		            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
 		            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 		        </script>
@@ -100,7 +99,7 @@
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">类型名称</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="mtName" required lay-verify="required" value="{{d.rowsdata.mtName}}" placeholder="请输入类型名称" autocomplete="off" class="layui-input">
+		                    <input type="text" name="mtName" maxlength="10" required lay-verify="required" value="{{d.rowsdata.mtName}}" placeholder="请输入类型名称" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 		            
@@ -115,19 +114,7 @@
 		            
 					
 					
-					<div class="layui-form-item">
-		                <label class="layui-form-label">操作人</label>
-		                <div class="layui-input-block">
-		                    <input type="text" name="oper" required lay-verify="required" value="{{d.rowsdata.oper}}" placeholder="请输入操作人" autocomplete="off" class="layui-input">
-		                </div>
-		            </div>
-
-					<div class="layui-form-item">
-		                <label class="layui-form-label">排序</label>
-		                <div class="layui-input-block">
-		                    <input type="text" name="sort" required lay-verify="required" value="{{d.rowsdata.sort}}" placeholder="请输入排序" autocomplete="off" class="layui-input">
-		                </div>
-		            </div>
+					
 					<div class="layui-form-item" style="display:none;">
 		                <div class="layui-input-block">
 		                    <button class="layui-btn" lay-submit lay-filter="formEdit">立即提交</button>
@@ -163,10 +150,6 @@
 		                [{
 		                    checkbox: true,
 		                    fixed: true
-		                }, {
-		                    field: 'mtId',
-		                    title: '类型ID',
-		                    width: 80
 		                }, {
 		                    field: 'mtName',
 		                    title: '类型名',

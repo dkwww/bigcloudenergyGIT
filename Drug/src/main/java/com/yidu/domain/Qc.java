@@ -1,6 +1,5 @@
 package com.yidu.domain;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class Qc {
@@ -14,7 +13,7 @@ public class Qc {
 
     private String qcRate;				//总通过率
 
-    private Date qcOptime;
+    private Date qcOptime;				//质检时间
 
     private String qcConpany;			//分店id
     

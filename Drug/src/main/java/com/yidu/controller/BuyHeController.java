@@ -296,7 +296,6 @@ public class BuyHeController {
 			
 		}
 		
-		
 		//获取审核表的对象
 		Audit audit=new Audit();
 		//获取采购订单id

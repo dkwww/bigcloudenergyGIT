@@ -51,7 +51,27 @@ public class QcDetailController {
 		map.put("count", rows);
 		map.put("data", list); 
 		return map;
+	}
+	
+	
+	/**
+	 * 根据质检id查看质检明细
+	 * @param qcdetail
+	 * @author 邓康威
+	 * @return
+	 */
+	@RequestMapping("findBuyId")
+	@Resource
+	public Map<String, Object> findBuyId(QcDetail qcdetail){
+		System.err.println("========="+qcdetail);
+		List <QcDetail> list=qcdetaService.findById(qcdetail);
+		Map<String, Object> map=new HashMap<>();
+		map.put("code", 0);
+		map.put("msg", "");
+		map.put("count", 0);
+		map.put("data", list);
 		
+		return map;
 	}
 }
 

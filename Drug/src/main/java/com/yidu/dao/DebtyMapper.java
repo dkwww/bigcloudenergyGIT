@@ -57,9 +57,10 @@ public interface DebtyMapper {
 	List<Debty> findcomIds(String comId);
 	
 	/**
-	 * 
+	 * 减财务
 	 * @param money
 	 * @param debtyId
+	 * @author 邓康威
 	 * @return
 	 */
 	@Update("UPDATE drug_debty SET deb_money = deb_money - #{money} WHERE deb_id = #{debtyId}")

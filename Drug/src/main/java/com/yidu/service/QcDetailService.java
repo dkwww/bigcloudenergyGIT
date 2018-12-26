@@ -27,6 +27,12 @@ public interface QcDetailService   {
 
 	List<QcDetail> findById(QcDetail qcdetail);
 	
+	/**
+	 * 根据质检id查看质检明细
+	 * @param qcId
+	 * @author 邓康威
+	 * @return
+	 */
 	List<QcDetail> findByIds(String qcId);
 	
 	int  insert  (QcDetail  qcDetail);
