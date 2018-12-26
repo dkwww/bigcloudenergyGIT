@@ -51,9 +51,7 @@ public class QcDetailController {
 		map.put("count", rows);
 		map.put("data", list); 
 		return map;
-	}
-	
-	
+	} 
 	/**
 	 * 根据质检id查看质检明细
 	 * @param qcdetail

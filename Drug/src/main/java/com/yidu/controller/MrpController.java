@@ -29,9 +29,9 @@ import org.springframework.stereotype.Controller;
 public class MrpController {
 	@Resource
 	private  MrpService   mrpService ;
-	
-	
-	
+
+
+
 	/**
 	 * 查询所有的方法
 	 * @param mrp
@@ -45,19 +45,13 @@ public class MrpController {
 		//前台取过来的分页值
 		pageUtil.setCurPage(page);
 		pageUtil.setRows(limit);
-		 
 		//查询并按照大小分页
 		List<Mrp> list = mrpService.qureyAll(mrp,pageUtil);
-		
 		for (Mrp mrp2 : list) {
 			mrp2.setMrpRateName(mrp2.getMrpRate()+"%");
 		}
-		 
 		//查询行数
-		int rows = mrpService.selectCountBySelectiv(mrp);
-		
-		
-		
+		int rows = mrpService.selectCountBySelectiv(mrp); 
 		//layui前台格式
 		Map<String, Object>  map  = new  HashMap<>();
 		map.put("code", 0);

@@ -4,8 +4,6 @@ package com.yidu.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.yidu.dao.DrugInveMapper;
-import com.yidu.domain.Drug;
 import com.yidu.domain.DrugInve;
 import com.yidu.domain.Qc;
 import com.yidu.service.DrugInvService;
@@ -31,39 +29,28 @@ import org.springframework.stereotype.Controller;
 @Controller
 @RequestMapping("/drugInv")
 public class DrugInvController {
-	
-	
+
+
 	@Resource 
-	
+
 	private   DrugInvService   drugInvService;
 	@RequestMapping("qureyAll")
 	@ResponseBody
 	public   Map<String, Object>  qureyAll(DrugInve  drugInve,Integer page,Integer limit){
-	//分页
-	PageUtil pageUtil = new PageUtil();
-	//前台取过来的分页值
-	pageUtil.setCurPage(page);
-	pageUtil.setRows(limit);
-		
-	List<DrugInve> list = drugInvService.qureyAll(drugInve,pageUtil);
-	  int   rows  =drugInvService.selectCountBySelective(drugInve); 
+		//分页
+		PageUtil pageUtil = new PageUtil();
+		//前台取过来的分页值
+		pageUtil.setCurPage(page);
+		pageUtil.setRows(limit);
+
+		List<DrugInve> list = drugInvService.qureyAll(drugInve,pageUtil);
+		int   rows  =drugInvService.selectCountBySelective(drugInve); 
 		Map<String, Object>  map  =new HashMap<>();
 		map.put("code", 0);
 		map.put("msg", "");
 		map.put("count", rows);
 		map.put("data", list);
 		return  map;
-	}
-	
-	@RequestMapping("addAll")
-	@ResponseBody
-	public   Message   addAll(Qc  qc ) {
-		Message   message  =new  Message();
-	 
-		
-		return  message;
-	}
-	
-
+	}  
 }
 
