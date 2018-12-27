@@ -427,29 +427,35 @@
 		}
 		
 		function okpi(){
-			 var html="";
-			$("#add tr").not(":first").each(function(){
-				$(this).find("td").each(function(j){
-					html+=$(this).text()+",";
-				});
-					html+=$(this).find('td:eq(4) input').val()+"#";
+			$("#add tr").not(":first").each(function(index){
+				if(index!=null){
+					var html="";
+					$("#add tr").not(":first").each(function(){
+						$(this).find("td").each(function(j){
+							html+=$(this).text()+",";
+						});
+							html+=$(this).find('td:eq(4) input').val()+"#";
+					});
+					$.ajax({ url:"../../wholesale/Wholesalemanagement.action",
+		                type:'post',//method请求方式，get或者post
+		                cache: false,//同步
+		                dataType:'json',//预期服务器返回的数据类型
+		                data:{"htmlstr":html,"zongshu":$("#zongshu").val(),"zongjin":$("#zongjin").val(),"comIdname":$("#mat-type").val()},//传表格数据
+		                success:function(mes){//res为相应体,function为回调函数
+		                	 if(mes.msg>=1){
+		                		 layer.msg('添加成功'); 
+		                		 location.reload();
+		                		$("#zongshu").val("");
+		         				$("#zongjin").val("");
+		                	 }else{
+		                		 layer.msg('添加失败'); 
+		                	 }
+		                }
+		             });
+				}else{
+					layer.msg('请添加物品');
+				}
 			});
-			$.ajax({ url:"../../wholesale/Wholesalemanagement.action",
-                type:'post',//method请求方式，get或者post
-                cache: false,//同步
-                dataType:'json',//预期服务器返回的数据类型
-                data:{"htmlstr":html,"zongshu":$("#zongshu").val(),"zongjin":$("#zongjin").val(),"comIdname":$("#mat-type").val()},//传表格数据
-                success:function(mes){//res为相应体,function为回调函数
-                	 if(mes.msg>=1){
-                		 layer.msg('添加成功'); 
-                		 location.reload();
-                		$("#zongshu").val("");
-         				$("#zongjin").val("");
-                	 }else{
-                		 layer.msg('添加失败'); 
-                	 }
-                }
-             });
 		}
 		</script>
 	</body>
