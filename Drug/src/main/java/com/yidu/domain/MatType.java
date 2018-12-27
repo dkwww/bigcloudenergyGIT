@@ -10,12 +10,24 @@ public class MatType {
     private String isva;
 
     private Date optime;
+    
+    private String optimes;
 
     private String oper;
 
     private String sort;
 
-    public String getMtId() {
+    
+    
+    public String getOptimes() {
+		return optimes;
+	}
+
+	public void setOptimes(String optimes) {
+		this.optimes = optimes;
+	}
+
+	public String getMtId() {
         return mtId;
     }
 

@@ -36,10 +36,8 @@ public class QcDetail {
     private   String   qdetOptimeName;
     
     
-    
-    
 
-    public String getQdetRateName() {
+	public String getQdetRateName() {
 		return qdetRateName;
 	}
 

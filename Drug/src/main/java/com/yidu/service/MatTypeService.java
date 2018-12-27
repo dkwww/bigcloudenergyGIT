@@ -38,6 +38,11 @@ public interface MatTypeService  {
 	
 	MatType showUpdate(String mtId);
 	
-	
+	/**
+	 * 材料类型批量修改
+	 * @param ids
+	 * @return
+	 */
+	int TypeupdateByPrimaryKeySelective (List<String> ids);
 	
 }

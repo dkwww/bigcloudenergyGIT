@@ -103,18 +103,7 @@
 		                </div>
 		            </div>
 		            
-		            <div class="layui-form-item">
-		                <label class="layui-form-label">是否有效</label>
-		                <div class="layui-input-block">
-		                    {{# var woman = d.rowsdata.isva === 0?'checked':'';}} {{# var man = d.rowsdata.isva === 1?'checked':'';}}
-		                    <input type="radio" name="isva" value="1" title="是" {{man}} />
-		                    <input type="radio" name="isva" value="0" title="否" {{woman}} />
-		                </div>
-		            </div>
-		            
-					
-					
-					
+		           
 					<div class="layui-form-item" style="display:none;">
 		                <div class="layui-input-block">
 		                    <button class="layui-btn" lay-submit lay-filter="formEdit">立即提交</button>
@@ -154,24 +143,12 @@
 		                    field: 'mtName',
 		                    title: '类型名',
 		                    width: 125
-		                }, {
-		                    field: 'isva',
-		                    title: '是否有效',
-		                    width: 100
-		                }, {
-		                    field: 'optime',
+		                },{
+		                    field: 'optimes',
 		                    title: '操作时间',
 		                    width: 150,
 		                    templet: '#cztime'
 		                }, {
-		                    field: 'oper',
-		                    title: '操作人',
-		                    width: 150
-		                }, {
-		                    field: 'sort',
-		                    title: '排序',
-		                    width: 80
-		                },{
 		                	fixed: 'right',
 		                    title: '操作',
 		                    width: 200,

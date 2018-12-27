@@ -20,7 +20,7 @@
 	<if test="type.mtName!=null and type.mtName!='' ">
 		and mt_name like concat('%', #{type.mtName} ,'%')
 	</if>
-	order by (sort+0) desc
+	order by optime desc
 	limit #{pageUtil.startRows},#{pageUtil.rows}
   </select>
   
@@ -30,6 +30,15 @@
 		and mt_name like concat('%', #{mtName} ,'%')
 	</if>
   </select>
+  
+  <!-- 材料类型批量修改为0 -->
+  <update id="TypeupdateByPrimaryKeySelective">
+    update drug_mat_type set isva = '0'
+    where mt_id in 
+    <foreach collection="list" item="ids" open="(" separator="," close=")">
+      #{ids} 
+    </foreach> 
+  </update>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 

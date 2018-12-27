@@ -165,7 +165,12 @@ public class BuyHeController {
 		buy.setBuyAudit("0");
 		//默认采购状态为0
 		buy.setBuyState("0");
+		//提交状态为0
 		buy.setBuySubmission("0");
+		//默认质检状态为0
+		buy.setBuyQc("0");
+		//默认入库状态为0
+		buy.setBuyPut("0");
 		
 		//new获取当前时间
 		Date date=new Date();

@@ -1,7 +1,12 @@
 package com.yidu.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import org.springframework.web.bind.annotation.InitBinder;
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -10,18 +15,7 @@ import com.yidu.domain.MatType;
 import com.yidu.service.MatTypeService;
 import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
-import com.yidu.util.TimeUtil;
 import com.yidu.util.Tools;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Controller;
 
 /**
  * <p>
@@ -52,6 +46,9 @@ public class MatTypeController {
 		}
 		
 		List<MatType> list=matTypeService.showList(type,pageUtil);
+		for (MatType matType : list) {
+			matType.setOptimes(Tools.getDateStr(matType.getOptime()));
+		}
 		int rows=matTypeService.selectCount(type);
 		
 		Map<String, Object> map=new HashMap<>();
@@ -107,6 +104,24 @@ public class MatTypeController {
 		me.setStatus(1);
 		me.setMsg("删除成功");
 		
+		return me;
+	}
+	
+	
+	/**
+	 *  批量删除
+	 * @param ids 传入一个ids
+	 * @return 返回mes
+	 */
+	@RequestMapping("/TypeUpdate")
+	@ResponseBody
+	public Message TypeUpdate(@RequestBody List<String> ids) {
+		//调用批量修改的方法
+		matTypeService.TypeupdateByPrimaryKeySelective(ids);
+		//创建message
+		Message me=new Message();
+		me.setStatus(1);
+		me.setMsg("删除成功");
 		return me;
 	}
 	

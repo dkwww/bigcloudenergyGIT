@@ -105,6 +105,9 @@ public class QcServiceImpl   implements QcService {
 		qc.setPmcId(buy.getBuyId());
 		qc.setQcFail(0);
 		qc.setQcRate("0");
+		//默认质检状态为0
+		qc.setQcState("0");
+		qc.setQcPut("0");
 		qc.setQcAmount(count);
 		qc.setQcConpany("666");
 		qc.setOptime(new Date());

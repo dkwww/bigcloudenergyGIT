@@ -7,6 +7,7 @@ import com.yidu.service.MatTypeService;
 import com.yidu.util.PageUtil;
 import com.yidu.util.TimeUtil;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -49,6 +50,8 @@ public class MatTypeServiceImpl  implements MatTypeService {
 		}else {
 			String uuid=UUID.randomUUID().toString().replaceAll("-", "");
 			type.setMtId(uuid);
+			type.setIsva("1");
+			type.setOptime(new Date());
 			rows=dao.insert(type);
 		}
 		return rows;
@@ -73,6 +76,13 @@ public class MatTypeServiceImpl  implements MatTypeService {
 	public int selectCount(MatType type) {
 		
 		return dao.selectCount(type);
+	}
+
+
+	@Override
+	public int TypeupdateByPrimaryKeySelective(List<String> ids) {
+		
+		return dao.TypeupdateByPrimaryKeySelective(ids);
 	}
 
 
