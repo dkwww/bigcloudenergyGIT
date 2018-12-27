@@ -144,5 +144,9 @@ public class PmcController {
 		map.put("data", list);
 		return map;
 	}
+	
+	public void josnMade() {
+		
+	}
 }
 

@@ -358,13 +358,37 @@
                         if(mes.status==1){ 
                         	var close = true;//有弹出层时是关闭弹出层 false不关闭
 	                        $("#res").click();//调用重置按钮将表单数据清空
-                        }
+                        } 
                         layer.msg(mes.msg);
                     },
                    	error:function(){layer.alert('数据异常，请稍后重试！！！',{icon:5});}
                  });
 		    }
+		    var comId="";
+		    $(function(){
+		    	getSession();
+		    })
 		    
+		    function getSession(){
+				var admin = null;
+				$.ajax({ 
+		        	url:"../../admin/getSession.action",
+	                type:'post',
+	                async:false,
+	                dataType:'json',
+	                success:function(mes){
+	                	if (mes!=null && mes!="") {
+	                		comId = mes.comId;
+						} else {
+							location.href = "../admin/login.html";
+						}
+	                },
+	                error: function(){
+	                	location.href = "../admin/login.html";
+	                }
+	        	});
+				return admin;
+			}
 		</script>
 	</body>
 </html>

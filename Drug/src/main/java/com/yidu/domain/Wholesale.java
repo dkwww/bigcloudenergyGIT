@@ -19,8 +19,18 @@ public class Wholesale {
     private String oper;
 
     private String sort;
+    
+    private String comName;
 
-    public String getWholId() {
+    public String getComName() {
+		return comName;
+	}
+
+	public void setComName(String comName) {
+		this.comName = comName;
+	}
+
+	public String getWholId() {
         return wholId;
     }
 

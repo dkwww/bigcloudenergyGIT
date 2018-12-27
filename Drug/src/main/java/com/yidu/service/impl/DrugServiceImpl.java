@@ -5,15 +5,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
 import com.yidu.dao.AuditMapper;
+import com.yidu.dao.DrugInveMapper;
 import com.yidu.dao.DrugMapper;
 import com.yidu.domain.Audit;
 import com.yidu.domain.Drug;
+import com.yidu.domain.DrugInve;
 import com.yidu.service.DrugService;
 import com.yidu.util.PageUtil;
 import com.yidu.util.TimeUtil;
@@ -33,6 +36,8 @@ public class DrugServiceImpl implements DrugService {
 	private DrugMapper drugMapper;
 	@Resource
 	private AuditMapper auditMapper;
+	@Resource
+	private DrugInveMapper drugInveMapper;
 
 	@Override
 	public List<Drug> findAll(Drug record, PageUtil pageUtil) {
@@ -79,6 +84,12 @@ public class DrugServiceImpl implements DrugService {
 		} else {
 			record.setIsva("1");
 			record.setSort(TimeUtil.getStrDate());
+			DrugInve drugInve = new DrugInve();
+			drugInve.setDiId(UUID.randomUUID().toString().replace("-", ""));
+			drugInve.setComId(record.getComId());
+			drugInve.setDiAmount(0);
+			drugInve.setIsva("1");
+			drugInveMapper.insertSelective(drugInve);
 			return drugMapper.insertSelective(record);
 		}
 	}
@@ -103,7 +114,7 @@ public class DrugServiceImpl implements DrugService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("record", record);
 		map.put("pageUtil", pageUtil);
-		return drugMapper.selectBySelectives(map);
+		return drugMapper.selectBySelective(map);
 	}
 
 	@Override

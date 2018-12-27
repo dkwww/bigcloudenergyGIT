@@ -10,16 +10,16 @@
     <result column="isva" jdbcType="VARCHAR" property="isva" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
+    <result column="com_name" jdbcType="VARCHAR" property="comName"/>
   </resultMap>
   <sql id="Base_Column_List">
     whol_id, com_id, whol_amount, whol_price, optime, isva, oper, sort
   </sql>
   
   <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
-  	SELECT * FROM drug_wholesale
-  	where 1=1
+  	SELECT dw.*,dc.com_name FROM drug_wholesale dw,drug_company dc WHERE dw.com_id=dc.com_id
     <if test="title != null and title != '' ">
-    		and whol_id = #{title}
+    		and dw.whol_id = #{title}
     </if>
 	 <if test="kshs !=null and jshs !=null">
    		limit #{kshs},#{jshs}   <!-- 开始行数到每页多少行 -->
