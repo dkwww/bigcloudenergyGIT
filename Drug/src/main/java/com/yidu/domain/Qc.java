@@ -37,11 +37,50 @@ public class Qc {
     private  String   qcOptiemName;
     
     
+    private String qcState;		//质检状态
+    
+    private String qcStates;	//质检
+    
+    private String qcPut;		//入库状态
+    
+    private String qcPuts; 		//入库
     
     
     
     
 
+
+	public String getQcState() {
+		return qcState;
+	}
+
+	public void setQcState(String qcState) {
+		this.qcState = qcState;
+	}
+
+	public String getQcStates() {
+		return qcStates;
+	}
+
+	public void setQcStates(String qcStates) {
+		this.qcStates = qcStates;
+	}
+
+	public String getQcPut() {
+		return qcPut;
+	}
+
+	public void setQcPut(String qcPut) {
+		this.qcPut = qcPut;
+	}
+
+	public String getQcPuts() {
+		return qcPuts;
+	}
+
+	public void setQcPuts(String qcPuts) {
+		this.qcPuts = qcPuts;
+	}
 
 	public String getQcOptiemName() {
 		return qcOptiemName;

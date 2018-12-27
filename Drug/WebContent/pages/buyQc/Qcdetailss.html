@@ -12,46 +12,15 @@
 	
 	
 	
-	<script type="text/html" id="input">
-	<div class="layui-inline">
-		<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="qcFail" value="0"  autocomplete="off" id="number{{d.qdetId}}" onkeyup="Pressdown(this)">
-	</div>
-	</script>
 	
-	<script type="text/html" id="inputss">
-	<div class="layui-inline">
-		<input class="layui-input layui-disabled"  readonly="readonly" name="qdetRate" value="0"  maxlength="6" style="border:none;padding-bottom:8px;" id="price{{d.qdetId}}" autocomplete="off">
-	</div>
-	</script>
 	
 	<body>
 		<div>
-			<input type="text" id="shuju" style="width: 100%">
+			<input type="hidden" id="shuju" style="width: 100%">
 		</div>
 		<div class="kit-table">
-			<!-- 左上角的两个按钮 -->
-		        <!-- 左上角的两个按钮 -->
-		        <div class="kit-table-header">
+			
 		        
-					<div class="layui-form-item">
-					   <label class="layui-form-label">质检未通数</label>
-					   <div class="layui-input-inline">
-					     <input type="text" name="qcFail" value="0" id="qcFail" autocomplete="off" class="layui-input layui-disabled" readonly="readonly">
-					   </div>
-					   <label class="layui-form-label">质检总概率</label>
-					   <div class="layui-input-inline">
-					     <input type="text" name="qcRate" value="0" id="qcRate" autocomplete="off" class="layui-input layui-disabled" readonly="readonly">
-					   </div>
-					</div>
-					
-				
-		            <div class="kit-search-btns" style="width: 100px;margin-left: 630px;margin-top: -60px;">
-		             <a class="layui-btn layui-btn-sm" id="add"><i class="layui-icon"></i> 提交</a>
-		        	</div>
-		        	<div class="kit-search-btns" style="width: 100px;margin-left: 720px;margin-top: -60px;">
-		             <a class="layui-btn layui-btn-sm" id="fh"><i class="layui-icon"></i> 返回</a>
-		        	</div>
-		        </div>
 			
 			<!-- 操作按钮 -->
 		    <div class="kit-table-body">
@@ -185,7 +154,7 @@
 		        
 		        $("#add").click(function(){
    	        		var url="../../qc/Qcadd.action";
-   					var data={"id":qcId,"shuju":$("#shuju").val(),"sumAmout":$("#qcFail").val(),"sumRate":$("#qcRate").val(),"qcState":1}
+   					var data={"id":qcId,"shuju":$("#shuju").val(),"sumAmout":$("#qcFail").val(),"sumRate":$("#qcRate").val()}
    					
 					$.post(url,data,function(mes){
 						if(mes.status==1){

@@ -24,8 +24,19 @@ public interface MatTypeMapper {
      */
     List<MatType> showList(Map<String, Object> map);
     
-    
+    /**
+     * 查询总行数
+     * @param type
+     * @return
+     */
     int selectCount(MatType type);
+    
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    int TypeupdateByPrimaryKeySelective(List<String> ids);
     
     
 }

@@ -16,11 +16,13 @@
     <result column="sort" jdbcType="VARCHAR" property="sort" />
     <result column="buy_amount" jdbcType="VARCHAR" property="buyAmount" />
     <result column="com_name" jdbcType="VARCHAR" property="comName" />
+    <result column="qc_state" jdbcType="VARCHAR" property="qcState" />
+    <result column="qc_put" jdbcType="VARCHAR" property="qcPut" />
     
   </resultMap>
   <sql id="Base_Column_List">
     qc_id, mrp_id, qc_amount, qc_fail, qc_rate, qc_optime, qc_conpany, qc_type, isva, 
-    optime, oper, sort
+    optime, oper, sort,qc_state
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -70,12 +72,13 @@
     insert into drug_qc (qc_id, pmc_id, qc_amount, 
       qc_fail, qc_rate, qc_optime, 
       qc_conpany, qc_type, isva, 
-      optime, oper, sort
+      optime, oper, sort,qc_state,qc_put
       )
     values (#{qcId,jdbcType=VARCHAR}, #{pmcId,jdbcType=VARCHAR}, #{qcAmount,jdbcType=INTEGER}, 
       #{qcFail,jdbcType=INTEGER}, #{qcRate,jdbcType=DECIMAL}, #{qcOptime,jdbcType=TIMESTAMP}, 
       #{qcConpany,jdbcType=VARCHAR}, #{qcType,jdbcType=VARCHAR}, #{isva,jdbcType=VARCHAR}, 
-      #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}
+      #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}, #{qcState,jdbcType=VARCHAR},
+      #{qcPut,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.yidu.domain.Qc">
@@ -117,6 +120,12 @@
       <if test="sort != null">
         sort,
       </if>
+      <if test="qcState != null">
+        qc_state,
+      </if>
+      <if test="qcPut != null">
+        qc_put,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="qcId != null">
@@ -154,6 +163,12 @@
       </if>
       <if test="sort != null">
         #{sort,jdbcType=VARCHAR},
+      </if>
+      <if test="qcState != null">
+        #{qcState,jdbcType=VARCHAR},
+      </if>
+      <if test="qcPut != null">
+        #{qcPut,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -193,6 +208,12 @@
       <if test="sort != null">
         sort = #{sort,jdbcType=VARCHAR},
       </if>
+      <if test="qcState != null">
+        qc_state = #{qcState,jdbcType=VARCHAR},
+      </if>
+      <if test="qcPut != null">
+        qc_put = #{qcPut,jdbcType=VARCHAR},
+      </if>
     </set>
     where qc_id = #{qcId,jdbcType=VARCHAR}
   </update>
@@ -208,7 +229,9 @@
       isva = #{isva,jdbcType=VARCHAR},
       optime = #{optime,jdbcType=TIMESTAMP},
       oper = #{oper,jdbcType=VARCHAR},
-      sort = #{sort,jdbcType=VARCHAR}
+      sort = #{sort,jdbcType=VARCHAR},
+      qc_state = #{qcState,jdbcType=VARCHAR},
+      qc_put = #{qcPut,jdbcType=VARCHAR}
     where qc_id = #{qcId,jdbcType=VARCHAR}
   </update>
 </mapper>

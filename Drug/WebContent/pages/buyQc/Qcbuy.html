@@ -85,6 +85,8 @@
 		                {field: 'buyAmount',title: '质检总数',width: 120},
 		                {field: 'qcRate',title: '总通过率',width: 120},
 		                {field: 'qcOptime',title: '质检时间',width: 120},
+		                {field: 'qcStates',title: '质检状态',width: 120},
+		                {field: 'qcPuts',title: '入库状态',width: 120},
 		                {field: 'comName',title: '分公司名称',width: 150},
 		                {fixed: 'right',title: '操作',width: 350,align: 'center',toolbar: '#barDemo'}]
 		            ],
@@ -92,10 +94,10 @@
 		            	windata=res.data;
 		            	var tableElem = this.elem.next('.layui-table-view');
 		            	
-		            	$("[data-field = 'auName']").children().not(":first").each(function(index){
-		            		if($(this).text()=="已审核"){
+		            	$("[data-field = 'qcStates']").children().not(":first").each(function(index){
+		            		if($(this).text()=="已质检"){
 		            			//禁用
-		            			tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=edit],button[lay-event=del]').addClass('layui-btn-disabled').attr('disabled',true);
+		            			tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=detail]').addClass('layui-btn-disabled').attr('disabled',true);
 		            		}
 					  	});
 		            	
@@ -112,7 +114,7 @@
 		            var layEvent = obj.event; //获得 lay-event 对应的值
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 					
-		            if (layEvent === 'detail') { //质检明细
+		            if (layEvent === 'detail') { //立即质检
 			            var  qcId=data.qcId;
 	                	var index = layer.open({
 	          				  type: 2,
@@ -127,8 +129,8 @@
 		            	var  qcId=data.qcId;
 	                	var index = layer.open({
 	          				  type: 2,
-	          				  title: '质检明细',
-	          				  content: '../buyQc/Qcdetail.html?id='+qcId,
+	          				  title: '质检详情',
+	          				  content: '../buyQc/Qcdetailss.html?id='+qcId,
 	          				  area: ['800px', '30px']
 	          				  //maxmin: true
 	          				});
@@ -140,7 +142,7 @@
 		                	var d = {
 				                	rowdata: data
 				                };
-		                	update("../../qc/addkc.action",{"qcId":data.qcId});
+		                	update("../../qc/addkc.action",{"qcId":data.qcId,"qcPut":1});
 		                });
 		            }
 		        });
