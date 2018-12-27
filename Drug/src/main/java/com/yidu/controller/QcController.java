@@ -6,11 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yidu.domain.MatInv;
+import com.yidu.domain.Mrp;
 import com.yidu.domain.Pmc;
 import com.yidu.domain.PmcDetails;
 import com.yidu.domain.Qc;
 import com.yidu.domain.QcDetail;
 import com.yidu.service.MatInvService;
+import com.yidu.service.MrpService;
 import com.yidu.service.PmcDetailsService;
 import com.yidu.service.PmcService;
 import com.yidu.service.QcDetailService;
@@ -51,6 +53,8 @@ public class QcController {
 	private QcDetailService   qcDetailService;
 	@Resource
 	private MatInvService invservice;
+	@Resource
+	private MrpService mrpService;
 
 	//查询 药品质检
 	@RequestMapping("/qureyAll")
@@ -77,9 +81,9 @@ public class QcController {
 	} 
 	@RequestMapping("/add")
 	@ResponseBody
-	public   Message    add(Qc  qc) {
+	public   Message    add(Qc  qc ) {
+		
 		String    string= UUID.randomUUID().toString().replaceAll("-", "");
-		System.out.println(string);
 		//分页
 		Date   date =new Date();
 		Message message  =new   Message();
@@ -107,10 +111,14 @@ public class QcController {
 		qc.setQcFail(0);
 		qc.setQcConpany("目前不知道是啥工厂");
 		qc.setQcType(0); 
+		qc.setQcState("0");
+		qc.setQcPut("0");
 
 		qc.setOptime(date);
 		qc.setQcOptime(date); 
 		int rows= qcService.add(qc); 
+		 
+		
 		if (rows>0) {
 			message.setStatus(1);
 		}else {

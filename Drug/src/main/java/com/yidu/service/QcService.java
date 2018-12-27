@@ -16,10 +16,19 @@ import com.yidu.util.PageUtil;
  */
 public interface QcService  {
 	
-	
+	/**
+	 * 查看所有的药品质检
+	 * @param qc
+	 * @param pageUtil
+	 * @return
+	 */
 	List<Qc>  selectqctype(Qc  qc,PageUtil pageUtil);
 	
-	
+	/**
+	 * 查询行数
+	 * @param qc
+	 * @return
+	 */
 	int selectCountBySelective(Qc  qc);
 	
 	

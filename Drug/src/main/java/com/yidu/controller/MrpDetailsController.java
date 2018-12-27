@@ -169,6 +169,9 @@ public class MrpDetailsController {
 		}
 		return message;
 	}
+	
+	
+	
 	@RequestMapping("Preservation")
 	@ResponseBody
 	public  Message    Preservation(MrpDetails  mrpDetails) {
@@ -215,6 +218,8 @@ public class MrpDetailsController {
 		Date  date   =new   Date();
 		qc.setQcOptime(date);
 		qc.setQcId(qcid);
+		qc.setQcState("1");
+		qc.setQcPut("0");
 		rows= qcService.updateByPrimaryKeySelective(qc);
 		if (rows>0) {
 			message.setStatus(1);

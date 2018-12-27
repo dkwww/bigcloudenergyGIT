@@ -22,6 +22,7 @@
       <result column="mrp_id" jdbcType="VARCHAR" property="mrpId" />
     <result column="mrp_num" jdbcType="INTEGER" property="mrpNum" />
      <result column="mrp_endtime" jdbcType="TIMESTAMP" property="pmcEnd" />
+     <result column="mrp_pud" jdbcType="INTEGER" property="mrpPud" />
     
     
   </resultMap>
@@ -72,7 +73,7 @@
       #{mrpIdea,jdbcType=VARCHAR}, #{mrpAmount,jdbcType=INTEGER}, #{isva,jdbcType=VARCHAR}, 
       #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR},
        #{pdId,jdbcType=TIMESTAMP} , #{mrpNum,jdbcType=INTEGER}, #{pmcEnd,jdbcType=TIMESTAMP},
-       #{comName,jdbcType=VARCHAR}
+       #{comName,jdbcType=VARCHAR}, #{mrpPud,jdbcType=INTEGER}
       )
   </insert>
   
@@ -85,15 +86,16 @@
     where mrp_id = #{mrpId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.yidu.domain.Mrp">
-    insert into drug_mrp (mrp_id, drug_id, mrp_optime, 
+    insert into drug_mrp (mrp_id, mrp_optime, 
       mrp_plan, mrp_rate, mrp_state, 
       mrp_idea, mrp_amount, isva, 
-      optime, oper, sort
+      optime, oper, sort , mrp_pud,com_name,mrp_endtime,pmc_id
       )
-    values (#{mrpId,jdbcType=VARCHAR}, #{drugId,jdbcType=VARCHAR}, #{mrpOptime,jdbcType=TIMESTAMP}, 
+    values (#{mrpId,jdbcType=VARCHAR} , #{mrpOptime,jdbcType=TIMESTAMP}, 
       #{mrpPlan,jdbcType=INTEGER}, #{mrpRate,jdbcType=DECIMAL}, #{mrpState,jdbcType=INTEGER}, 
       #{mrpIdea,jdbcType=VARCHAR}, #{mrpAmount,jdbcType=INTEGER}, #{isva,jdbcType=VARCHAR}, 
-      #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}
+      #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}, #{mrpPud,jdbcType=INTEGER}, #{comName,jdbcType=VARCHAR},
+      #{pmcEnd,jdbcType=TIMESTAMP}, #{pmcId,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.yidu.domain.Mrp">
@@ -175,6 +177,12 @@
       </if>
     </trim>
   </insert>
+  
+  <update  id="updatepud" parameterType="com.yidu.domain.Mrp">
+    
+  update   drug_mrp  set  mrp_pud= #{mrpPud,jdbcType=INTEGER}  where   mrp_id = #{mrpId,jdbcType=VARCHAR}
+  
+  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Mrp">
     update drug_mrp
     <set>
@@ -226,7 +234,8 @@
       isva = #{isva,jdbcType=VARCHAR},
       optime = #{optime,jdbcType=TIMESTAMP},
       oper = #{oper,jdbcType=VARCHAR},
-      sort = #{sort,jdbcType=VARCHAR}
+      sort = #{sort,jdbcType=VARCHAR},
+      mrp_pud = #{mrpPud,jdbcType=INTEGER}
     where mrp_id = #{mrpId,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -36,6 +36,13 @@ public class AdminController {
 	@Resource
 	private AdminService service;
 	
+	/**
+	 * 查询所有，分页
+	 * @param admin 用户对象
+	 * @param page 分页
+	 * @param limit 分页
+	 * @return 返回map集合
+	 */
 	@RequestMapping("/findAll")
 	@ResponseBody
 	public Map<String,Object> findAll(Admin admin,Integer page,Integer limit){
@@ -55,6 +62,11 @@ public class AdminController {
 		map.put("data", list);
 		return map;
 	}
+	/**
+	 * 增加和修改的方法
+	 * @param admin 用户对象
+	 * @return 返回提示信息
+	 */
 	@RequestMapping("/addAdmin")
 	@ResponseBody
 	public Message addAdmin(@RequestBody Admin admin) {
@@ -69,6 +81,11 @@ public class AdminController {
 		}
 		return mes;
 	}
+	/**
+	 * 删除的方法
+	 * @param admin 用户
+	 * @return 返回提示信息
+	 */
 	@RequestMapping("/delete")
 	@ResponseBody
 	public Message delete(@RequestBody Admin admin) {
@@ -83,6 +100,12 @@ public class AdminController {
 		}
 		return mes;
 	}
+	/**
+	 * 图片的方法 
+	 * @param req 请求
+	 * @return 返回提示信息
+	 * @throws Exception 异常
+	 */
 	@RequestMapping("/upload")
 	@ResponseBody
 	public Message upload(HttpServletRequest req) throws Exception {
@@ -100,7 +123,7 @@ public class AdminController {
 	}
 	/**
 	 * 批量删除
-	 * @return
+	 * @return 返回提示信息
 	 */
 	@RequestMapping("/bulkUpdate")
 	@ResponseBody
@@ -118,8 +141,8 @@ public class AdminController {
 	}
 	/**
 	 * 查询登录的用户名密码是否存在
-	 * @param admin
-	 * @return
+	 * @param admin 用户对象
+	 * @return 返回提示信息
 	 */
 	@RequestMapping("/queryNameOrPwd")
 	@ResponseBody
@@ -138,36 +161,9 @@ public class AdminController {
 	}
 	
 	/**
-	 * 获取Seesion
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping("/getSessions")
-	@ResponseBody
-	public Admin getSessions(HttpServletRequest request) {
-		HttpSession session=request.getSession();
-		Admin admin=(Admin) session.getAttribute("admin");
-		if(admin != null) {
-			return admin;
-		}else {
-			return admin = new Admin();
-		}
-	}
-	/**
-	 * 取session
-	 */
-	@RequestMapping("/sessionuser")
-	@ResponseBody
-	public Admin sessionuser(HttpServletRequest request) {
-		HttpSession session=request.getSession();
-		Admin admin=(Admin) session.getAttribute("admin");
-			return admin;
-	}
-	
-	/**
 	 * 根据用户ID查询角色
-	 * @param adminId
-	 * @return
+	 * @param adminId角色id
+	 * @return 返回查询的角色
 	 */
 	@RequestMapping("/findByRole")
 	@ResponseBody
@@ -179,7 +175,7 @@ public class AdminController {
 	 * 方法说明：取session
 	 * @param session 对象
 	 * @return Admin 用户对象
-	 * @author ZhouJun
+	 * @author LiuLongRong
 	 * @date：2018年12月27日
 	 */
 	@RequestMapping("/getSession")

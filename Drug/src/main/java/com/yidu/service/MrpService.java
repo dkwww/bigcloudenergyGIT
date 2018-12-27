@@ -37,6 +37,8 @@ public interface MrpService   {
 	   
 	   
 	   int   Modifyprogresss(Mrp  record);
+	   
+	   int updatepud (Mrp  record);
 
 }
   

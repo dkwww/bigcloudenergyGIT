@@ -31,7 +31,7 @@ import org.springframework.stereotype.Controller;
  * 模块管理 前端控制器
  * </p>
  *
- * @author Pngjiangping
+ * @author wuxiaoling
  * @since 2018-11-26
  */
 @Controller
@@ -87,15 +87,49 @@ public class ModuleController {
 		List<Module> list=moduService.queryId();
 		return list;
 	}
+	/**
+	 * @author liulongrong
+	 * @param adminId模块id
+	 * @return 返回查询模块的id
+	 */
 	@RequestMapping("findByModule")
 	@ResponseBody
 	public List<Module> findByModule(String adminId){
-		return moduService.findByModule(adminId);
+		List<Module> list = moduService.findByModule(adminId);
+		//for循环第一次
+		for (int i = 0; i < list.size() - 1; i++) {
+			//for循环第二次
+            for (int j = list.size() - 1; j > i; j--) {
+            	//判断如果第一次集合的MoId等于第二次集合的MoId
+                if (list.get(j).getModeId().equals(list.get(i).getModeId())) {
+                	//移除j
+                    list.remove(j);
+                }
+            }
+		}
+		return list;
 	}
+	/**
+	 * @author liulongrong
+	 * @param adminId子模块id
+	 * @return 返回查询子模块的id
+	 */
 	@RequestMapping("findByZiModule")
 	@ResponseBody
 	public List<Module> findByZiModule(String modeId){
-		return moduService.findByZiModule(modeId);
+		List<Module> list = moduService.findByZiModule(modeId);
+		//for循环第一次
+		for (int i = 0; i < list.size() - 1; i++) {
+			//for循环第二次
+            for (int j = list.size() - 1; j > i; j--) {
+            	//判断如果第一次集合的MoId等于第二次集合的MoId
+                if (list.get(j).getModeId().equals(list.get(i).getModeId())) {
+                	//移除j
+                    list.remove(j);
+                }
+            }
+		}
+		return list;
 	}
 }
 

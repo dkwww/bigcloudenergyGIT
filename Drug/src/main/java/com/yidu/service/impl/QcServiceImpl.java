@@ -51,10 +51,22 @@ public class QcServiceImpl   implements QcService {
 	@Override
 	public List<Qc> selectqctype(Qc qc, PageUtil pageUtil) {
 		 Map<String , Object>  map  =new  HashMap<>();
-		 
 		 map.put("qc", qc);
 		 map.put("pageUtil", pageUtil);
 		 List<Qc> list = dao.selectqctype(map);
+		 for (Qc qc2 : list) {
+			if (qc2.getQcState().equals("1")) {
+				qc2.setQcStates("已质检");
+			}else {
+				qc2.setQcStates("未质检");
+			}
+			if (qc2.getQcPut().equals("1")) {
+				qc2.setQcPuts("已入库");
+			}else {
+				qc2.setQcPuts("未入库");
+			}
+			
+		}
 		 
 		return list;
 	}
@@ -70,6 +82,7 @@ public class QcServiceImpl   implements QcService {
 		int rows=0;
 		if(qc.getQcId()!=null &&!"".equals(qc.getQcId())) {
 			rows=dao.updateByPrimaryKeySelective(qc);
+			
 		}
 		
 		return rows;
@@ -150,8 +163,9 @@ public class QcServiceImpl   implements QcService {
 
 	@Override
 	public int updateByPrimaryKeySelective(Qc qc) {
-		 
-		return  dao.updateByPrimaryKeySelective(qc);
+		 int rows = dao.updateByPrimaryKeySelective(qc);
+	
+		return rows;
 	}
 
 	@Override

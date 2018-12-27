@@ -251,10 +251,6 @@
 		                    field: 'mdTimeName',
 		                    title: '制造时间',
 		                    width: 160
-		                }, { 
-		                    field: 'mrpAmount',
-		                    title: '制造次数',
-		                    width: 160
 		                }]
 		            ],
 		            done: function(res, curr, count) {
@@ -550,6 +546,15 @@
             	if(a>d){
             	
             		$(obj).val(d);
+            		 $("#shuju").val("")
+            		 layui.use(['table'], function() {
+            			 var table=layui.table;
+            			 var tables=table.cache.demo;      
+		            	 $.each(tables,function(i,item){
+		            		 $("#shuju").val($("#shuju").val()+item.drugId+","+item.pdAmount+","+item.finisded+","+$("#number"+item.pdId).val()+"#");
+		            			
+		            	 })
+            		 });
             		 layer.msg("不能大于未完成的数量"); 
             		
             	}else{

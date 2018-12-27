@@ -25,4 +25,6 @@ public interface MrpMapper {
     int  Modifyprogress(Mrp  record);
     
     int   Modifyprogresss(Mrp  record);
+    
+    int updatepud (Mrp  record);
 }

@@ -48,6 +48,12 @@ public class MrpController {
 		//查询并按照大小分页
 		List<Mrp> list = mrpService.qureyAll(mrp,pageUtil);
 		for (Mrp mrp2 : list) {
+			if (mrp2.getMrpPud()==0) {
+				mrp2.setMrpPudName("未提交质检");
+			}else {
+				mrp2.setMrpPudName("已提交质检");
+				
+			}
 			mrp2.setMrpRateName(mrp2.getMrpRate()+"%");
 		}
 		//查询行数
