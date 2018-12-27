@@ -37,4 +37,15 @@ public interface MatInvService  {
 	
 	List<MatInv> findQcId(String qcFkId);
 	
+	/**
+	 * 
+	 * 方法说明：加库存数量
+	 * @param miAmount
+	 * @param miId
+	 * @return
+	 * @author dengknagwei
+	 * @date：2018年12月27日
+	 */
+	int updateAmount(Integer miAmount,String miId);
+	
 }

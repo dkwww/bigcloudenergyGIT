@@ -104,8 +104,6 @@
 		                {field:	'auName',title: '审核状态',width: 150},
 		                {field:	'buyStates',title: '采购状态',width: 150},
 		                {field:	'buySubmissions',title: '提交状态',width: 150},
-		                {field:	'buyQc',title: '质检状态',width: 150},
-		                {field:	'buyPut',title: '入库状态',width: 150},
 		                {fixed: 'right',title: '操作',width: 350,align: 'center',toolbar: '#barDemo'}]
 		            ],
 		            done: function(res, curr, count) {
@@ -185,7 +183,6 @@
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		
 		            if (layEvent === 'detail') { //采购明细
-		                console.log(table.checkStatus('demo'));
 			            var  buyId=data.buyId;
 	                	var index = layer.open({
 	          				  type: 2,

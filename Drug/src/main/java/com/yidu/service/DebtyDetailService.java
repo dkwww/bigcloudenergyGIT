@@ -28,4 +28,14 @@ public interface DebtyDetailService  {
 	 * @return
 	 */
 	int selectCount(DebtyDetail debty);
+	
+	/**
+	 * 
+	 * 方法说明：增加
+	 * @param debty
+	 * @return
+	 * @author dengknagwei
+	 * @date：2018年12月27日
+	 */
+	int addmx(DebtyDetail debty);
 }

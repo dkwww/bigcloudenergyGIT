@@ -20,6 +20,7 @@ import com.yidu.service.QcService;
 import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
 import com.yidu.util.TimeUtil;
+import com.yidu.util.Tools;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -130,10 +131,14 @@ public class QcController {
 
 
 	/**
-	 * 材料质检显示列表
+	 * 
+	 * 方法说明：材料质检显示列表
 	 * @param qc
-	 * @author 邓康威
+	 * @param page
+	 * @param limit
 	 * @return
+	 * @author dengknagwei
+	 * @date：2018年12月27日
 	 */
 	@RequestMapping("QcbuyshowList")
 	@ResponseBody
@@ -158,6 +163,9 @@ public class QcController {
 			}else if(qc2.getQcPut().equals("1")) {
 				qc2.setQcPuts("已入库");
 			}
+			
+			//转为时间格式
+			qc2.setOptimes(Tools.getDateStr(qc2.getOptime()));
 		}
 		
 		int rows=qcService.selectCount(qc);
@@ -224,7 +232,7 @@ public class QcController {
 
 
 	/**
-	 * 材料质检入库
+	 * 材料质检完后入库
 	 * @author 邓康威
 	 * @param qc
 	 * @return
@@ -236,16 +244,26 @@ public class QcController {
 		//改库存状态
 		qcService.buyQcadd(qc);
 		
+		//根据质检id查询质检明细
 		List<QcDetail> list=qcDetailService.findByIds(qc.getQcId());
-
+		//循环质检明细的内容
 		for (QcDetail qcDetail : list) {
+			//在根据质检明细的id查找库存的所有
 			List<MatInv> invlist=invservice.findQcId(qcDetail.getQdetFkId());
+			//循环库存所有
 			for (MatInv matInv : invlist) {
+				System.err.println("----------库存当前数量"+matInv.getMiAmount());
+				System.err.println("----------质检明细的数量:"+qcDetail.getQdetAmount());
+				System.err.println("----------库存id:"+matInv.getMiId());
 				matInv.setMiId(matInv.getMiId());
 				matInv.setMiAmount(qcDetail.getQdetAmount());
 				invservice.add(matInv);
+				
+				
+//				invservice.updateAmount(qcDetail.getQdetAmount(), matInv.getMiId());
 			}
 		}
+		
 		Message me=new Message();
 		me.setStatus(1);
 		me.setMsg("操作成功");

@@ -52,15 +52,12 @@ public class MatInvServiceImpl  implements MatInvService {
 	public int add(MatInv matinv) {
 		int rows=0;
 		if(matinv.getMiId()!=null && !"".equals(matinv.getMiId())) {
-			System.err.println("进入修改");
 			rows=matinvmapper.updateByPrimaryKeySelective(matinv);
 		}else {
 			matinv.setMiId(Tools.getDateOrderNo());
 			matinv.setMiAmount(0);
 			rows=matinvmapper.insert(matinv);
-			System.out.println("进入增加");
 		}
-		
 		return rows;
 	}
 
@@ -72,6 +69,13 @@ public class MatInvServiceImpl  implements MatInvService {
 	public List<MatInv> findQcId(String qcFkId) {
 		
 		return matinvmapper.findQcId(qcFkId);
+	}
+
+
+	@Override
+	public int updateAmount(Integer miAmount, String miId) {
+		
+		return matinvmapper.updateAmount(miAmount, miId);
 	}
 
 

@@ -84,7 +84,7 @@
 		                {field: 'qcFail',title: '未通过数',width: 120},
 		                {field: 'buyAmount',title: '质检总数',width: 120},
 		                {field: 'qcRate',title: '总通过率',width: 120},
-		                {field: 'qcOptime',title: '质检时间',width: 120},
+		                {field: 'optimes',title: '质检时间',width: 120},
 		                {field: 'qcStates',title: '质检状态',width: 120},
 		                {field: 'qcPuts',title: '入库状态',width: 120},
 		                {field: 'comName',title: '分公司名称',width: 150},
@@ -98,6 +98,13 @@
 		            		if($(this).text()=="已质检"){
 		            			//禁用
 		            			tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=detail]').addClass('layui-btn-disabled').attr('disabled',true);
+		            		}
+					  	});
+		            	
+		            	$("[data-field = 'qcPuts']").children().not(":first").each(function(index){
+		            		if($(this).text()=="已入库"){
+		            			//禁用
+		            			tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=Warehousing]').addClass('layui-btn-disabled').attr('disabled',true);
 		            		}
 					  	});
 		            	

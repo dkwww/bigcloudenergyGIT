@@ -23,7 +23,9 @@ public class Qc {
 
     private String isva;
 
-    private Date optime;
+    private Date optime;				//时间
+	
+    private String optimes;				//显示时间
 
     private String oper;
 
@@ -52,6 +54,14 @@ public class Qc {
     
     
 
+
+	public String getOptimes() {
+		return optimes;
+	}
+
+	public void setOptimes(String optimes) {
+		this.optimes = optimes;
+	}
 
 	public String getMrpId() {
 		return mrpId;
