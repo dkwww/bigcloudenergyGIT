@@ -10,7 +10,7 @@ function getSession(){
 		async:false,
 	})
 	//得到Session
-	var url = "admin/getSessions.action";
+	var url = "admin/getSession.action";
 	var data = null;
 	var ids=null;
 	$.post(url,data,function(mes){

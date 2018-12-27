@@ -31,7 +31,7 @@ import org.springframework.stereotype.Controller;
  * 模块管理 前端控制器
  * </p>
  *
- * @author Pngjiangping
+ * @author wuxiaoling
  * @since 2018-11-26
  */
 @Controller
@@ -87,11 +87,21 @@ public class ModuleController {
 		List<Module> list=moduService.queryId();
 		return list;
 	}
+	/**
+	 * @author liulongrong
+	 * @param adminId模块id
+	 * @return 返回查询模块的id
+	 */
 	@RequestMapping("findByModule")
 	@ResponseBody
 	public List<Module> findByModule(String adminId){
 		return moduService.findByModule(adminId);
 	}
+	/**
+	 * @author liulongrong
+	 * @param adminId子模块id
+	 * @return 返回查询子模块的id
+	 */
 	@RequestMapping("findByZiModule")
 	@ResponseBody
 	public List<Module> findByZiModule(String modeId){
