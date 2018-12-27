@@ -83,7 +83,6 @@ public class QcController {
 	@ResponseBody
 	public   Message    add(Qc  qc ) {
 		
-		System.out.println("这个没有就凉了==============="+qc.getMrpId());
 		String    string= UUID.randomUUID().toString().replaceAll("-", "");
 		//分页
 		Date   date =new Date();
@@ -118,15 +117,7 @@ public class QcController {
 		qc.setOptime(date);
 		qc.setQcOptime(date); 
 		int rows= qcService.add(qc); 
-		
-		
-		Mrp  mrp  =new  Mrp();
-		mrp.setMrpId(mrpId);
-		mrp.setMrpPud(1);
-		
-		int rowsssss = mrpService.updatepud(mrp);
-		
-		System.out.println("==========++++不成功便成仁+++++=========="+rowsssss);
+		 
 		
 		if (rows>0) {
 			message.setStatus(1);
