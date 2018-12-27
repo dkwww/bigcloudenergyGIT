@@ -285,7 +285,6 @@
 								bln = false;
 								tableElem.find("tr[data-index="+index+"]").find("button").addClass('layui-btn-disabled').attr('disabled',false);
 							}
-							
 						});
 		            	if (bln) {
 		            		var mony = data.drugPrice;
@@ -334,16 +333,16 @@
 	  		}
 		  	
 		  	 function changeState(obj,rwowId) {
-		  			$(obj).closest('tr').remove();
-		 			
 		 			var zongmoney=0.00;
 					var zongnum=0;
-	        		$("#add tr").not(":first").each(function(){
-						zongnum+=parseInt($(this).find('td:eq(4) input').val());
+	        		$("#add tr").not(":first").each(function(index){
+	        			zongnum+=parseInt($(this).find('td:eq(4) input').val());
 						zongmoney+=parseFloat($(this).find('td:eq(6)').text());
 					});
 	        		$("#zongshu").val(zongnum);
-					$("#zongjin").val(zongmoney); 
+					$("#zongjin").val(zongmoney);
+					
+					$(obj).closest('tr').remove();
 		 	}
 		    //ajax加载动画
 		    $(function () {
@@ -427,35 +426,38 @@
 		}
 		
 		function okpi(){
+			var s=0;
 			$("#add tr").not(":first").each(function(index){
-				if(index!=null){
-					var html="";
-					$("#add tr").not(":first").each(function(){
-						$(this).find("td").each(function(j){
-							html+=$(this).text()+",";
-						});
-							html+=$(this).find('td:eq(4) input').val()+"#";
-					});
-					$.ajax({ url:"../../wholesale/Wholesalemanagement.action",
-		                type:'post',//method请求方式，get或者post
-		                cache: false,//同步
-		                dataType:'json',//预期服务器返回的数据类型
-		                data:{"htmlstr":html,"zongshu":$("#zongshu").val(),"zongjin":$("#zongjin").val(),"comIdname":$("#mat-type").val()},//传表格数据
-		                success:function(mes){//res为相应体,function为回调函数
-		                	 if(mes.msg>=1){
-		                		 layer.msg('添加成功'); 
-		                		 location.reload();
-		                		$("#zongshu").val("");
-		         				$("#zongjin").val("");
-		                	 }else{
-		                		 layer.msg('添加失败'); 
-		                	 }
-		                }
-		             });
-				}else{
-					layer.msg('请添加物品');
-				}
+				s++;
 			});
+			
+			if(s!=0){
+				var html="";
+				$("#add tr").not(":first").each(function(){
+					$(this).find("td").each(function(j){
+						html+=$(this).text()+",";
+					});
+						html+=$(this).find('td:eq(4) input').val()+"#";
+				});
+				$.ajax({ url:"../../wholesale/Wholesalemanagement.action",
+	                type:'post',//method请求方式，get或者post
+	                cache: false,//同步
+	                dataType:'json',//预期服务器返回的数据类型
+	                data:{"htmlstr":html,"zongshu":$("#zongshu").val(),"zongjin":$("#zongjin").val(),"comIdname":$("#mat-type").val()},//传表格数据
+	                success:function(mes){//res为相应体,function为回调函数
+	                	 if(mes.msg>=1){
+	                		 layer.msg('添加成功'); 
+	                		 location.reload();
+	                		$("#zongshu").val("");
+	         				$("#zongjin").val("");
+	                	 }else{
+	                		 layer.msg('添加失败'); 
+	                	 }
+	                }
+	             });
+			}else{
+				layer.msg('请添加物品');
+			}
 		}
 		</script>
 	</body>
