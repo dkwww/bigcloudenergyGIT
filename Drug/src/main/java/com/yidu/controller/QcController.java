@@ -6,11 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yidu.domain.MatInv;
+import com.yidu.domain.Mrp;
 import com.yidu.domain.Pmc;
 import com.yidu.domain.PmcDetails;
 import com.yidu.domain.Qc;
 import com.yidu.domain.QcDetail;
 import com.yidu.service.MatInvService;
+import com.yidu.service.MrpService;
 import com.yidu.service.PmcDetailsService;
 import com.yidu.service.PmcService;
 import com.yidu.service.QcDetailService;
@@ -51,6 +53,8 @@ public class QcController {
 	private QcDetailService   qcDetailService;
 	@Resource
 	private MatInvService invservice;
+	@Resource
+	private MrpService mrpService;
 
 	//查询 药品质检
 	@RequestMapping("/qureyAll")
@@ -77,7 +81,9 @@ public class QcController {
 	} 
 	@RequestMapping("/add")
 	@ResponseBody
-	public   Message    add(Qc  qc) {
+	public   Message    add(Qc  qc ) {
+		
+		System.out.println("这个没有就凉了==============="+qc.getMrpId());
 		String    string= UUID.randomUUID().toString().replaceAll("-", "");
 		//分页
 		Date   date =new Date();
@@ -114,6 +120,13 @@ public class QcController {
 		int rows= qcService.add(qc); 
 		
 		
+		Mrp  mrp  =new  Mrp();
+		mrp.setMrpId(mrpId);
+		mrp.setMrpPud(1);
+		
+		int rowsssss = mrpService.updatepud(mrp);
+		
+		System.out.println("==========++++不成功便成仁+++++=========="+rowsssss);
 		
 		if (rows>0) {
 			message.setStatus(1);

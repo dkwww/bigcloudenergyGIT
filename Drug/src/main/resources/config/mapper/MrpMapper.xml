@@ -86,15 +86,16 @@
     where mrp_id = #{mrpId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.yidu.domain.Mrp">
-    insert into drug_mrp (mrp_id, drug_id, mrp_optime, 
+    insert into drug_mrp (mrp_id, mrp_optime, 
       mrp_plan, mrp_rate, mrp_state, 
       mrp_idea, mrp_amount, isva, 
-      optime, oper, sort , mrp_pud
+      optime, oper, sort , mrp_pud,com_name,mrp_endtime,pmc_id
       )
-    values (#{mrpId,jdbcType=VARCHAR}, #{drugId,jdbcType=VARCHAR}, #{mrpOptime,jdbcType=TIMESTAMP}, 
+    values (#{mrpId,jdbcType=VARCHAR} , #{mrpOptime,jdbcType=TIMESTAMP}, 
       #{mrpPlan,jdbcType=INTEGER}, #{mrpRate,jdbcType=DECIMAL}, #{mrpState,jdbcType=INTEGER}, 
       #{mrpIdea,jdbcType=VARCHAR}, #{mrpAmount,jdbcType=INTEGER}, #{isva,jdbcType=VARCHAR}, 
-      #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}, #{mrpPud,jdbcType=INTEGER}
+      #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}, #{mrpPud,jdbcType=INTEGER}, #{comName,jdbcType=VARCHAR},
+      #{pmcEnd,jdbcType=TIMESTAMP}, #{pmcId,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.yidu.domain.Mrp">
@@ -176,6 +177,12 @@
       </if>
     </trim>
   </insert>
+  
+  <update  id="updatepud" parameterType="com.yidu.domain.Mrp">
+    
+  update   drug_mrp  set  mrp_pud= #{mrpPud,jdbcType=INTEGER}  where   mrp_id = #{mrpId,jdbcType=VARCHAR}
+  
+  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Mrp">
     update drug_mrp
     <set>

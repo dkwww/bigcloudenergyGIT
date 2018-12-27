@@ -46,9 +46,20 @@ public class Qc {
     private String qcPuts; 		//入库
     
     
+    private String  mrpId;		  //这个	 属性对我很重要 请不要删除
+    
+    
     
     
 
+
+	public String getMrpId() {
+		return mrpId;
+	}
+
+	public void setMrpId(String mrpId) {
+		this.mrpId = mrpId;
+	}
 
 	public String getQcState() {
 		return qcState;

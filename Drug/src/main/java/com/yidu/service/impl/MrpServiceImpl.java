@@ -70,4 +70,9 @@ public class MrpServiceImpl implements MrpService {
 		 
 		return dao.Modifyprogresss(record);
 	}
+	@Override
+	public int updatepud(Mrp record) {
+		 
+		return dao.updatepud(record);
+	}
 }
