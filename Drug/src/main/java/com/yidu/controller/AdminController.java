@@ -132,7 +132,7 @@ public class AdminController {
 		}else {
 			msg.setStatus(1);
 			msg.setMsg("登录成功");
-			session.setAttribute("user", admin2);
+			session.setAttribute("admin", admin2);
 		}
 		return msg;
 	}
@@ -146,7 +146,7 @@ public class AdminController {
 	@ResponseBody
 	public Admin getSessions(HttpServletRequest request) {
 		HttpSession session=request.getSession();
-		Admin admin=(Admin) session.getAttribute("user");
+		Admin admin=(Admin) session.getAttribute("admin");
 		if(admin != null) {
 			return admin;
 		}else {
@@ -160,7 +160,7 @@ public class AdminController {
 	@ResponseBody
 	public Admin sessionuser(HttpServletRequest request) {
 		HttpSession session=request.getSession();
-		Admin admin=(Admin) session.getAttribute("user");
+		Admin admin=(Admin) session.getAttribute("admin");
 			return admin;
 	}
 	
@@ -173,6 +173,19 @@ public class AdminController {
 	@ResponseBody
 	public List<AdminRole> findByRole(String adminId) {
 		return service.findByRole(adminId);
+	}
+	
+	/**
+	 * 方法说明：取session
+	 * @param session 对象
+	 * @return Admin 用户对象
+	 * @author ZhouJun
+	 * @date：2018年12月27日
+	 */
+	@RequestMapping("/getSession")
+	@ResponseBody
+	public Admin getSession(HttpSession session) {
+		return (Admin) session.getAttribute("admin");
 	}
 }
 
