@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yidu.domain.Mrp;
 import com.yidu.service.MrpService;
+import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
 
 import java.util.HashMap;
@@ -66,6 +67,26 @@ public class MrpController {
 		map.put("data", list);
 		return  map;
 	}
+	@RequestMapping("add")
+	@ResponseBody
+	public   Message   add(Mrp  mrp) {
+		Message  message =new Message();
+		
+		
+		int rows = mrpService.insert(mrp);
+		if (rows>0) {
+			message.setStatus(1);
+			message.setMsg("增加成功");
+		}else {
+			message.setStatus(0);
+			message.setMsg("增加失败");
+			
+		}
+		
+		return  message;
+	}
+	
+	
 
 }
 

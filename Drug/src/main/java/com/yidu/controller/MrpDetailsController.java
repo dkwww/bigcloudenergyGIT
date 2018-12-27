@@ -145,7 +145,7 @@ public class MrpDetailsController {
 		} 
 		Mrp  mrp  = new   Mrp();
 		NumberFormat numberFormat = NumberFormat.getInstance();
-		numberFormat.setMaximumFractionDigits(1); 
+		numberFormat.setMaximumFractionDigits(0); 
 		int   Percentage =  mrpDetailService.findPercentage(mrpDetails);
 		int     sum =  mrpDetailService.findmax(mrpDetails);
 		String   progress  =   numberFormat.format((float) Percentage  /   (float)sum *100);
@@ -154,13 +154,14 @@ public class MrpDetailsController {
 		if (Percentage>0.1) {
 			mrpService.Modifyprogress(mrp);
 		} 
-		Double  stt= 100.0;
-		Double ii = Double.valueOf(progress);
-		if(ii==stt) {
+		 
+		Integer ii = Integer.valueOf(progress);
+		if(ii==100) { 
 			mrp.setMrpId(mrpDetails.getMrpId());
-			mrp.setMrpState(1);
-			mrp.setMrpIdea(1);
-			mrpService.Modifyprogresss(mrp);
+			mrp.setMrpState(0);
+			mrp.setMrpIdea(0);
+		  mrpService.Modifyprogresss(mrp);
+		 
 		} 
 		if (rows>0) {
 			message.setStatus(1);

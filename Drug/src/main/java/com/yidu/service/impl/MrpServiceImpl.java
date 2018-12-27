@@ -75,4 +75,9 @@ public class MrpServiceImpl implements MrpService {
 		 
 		return dao.updatepud(record);
 	}
+	@Override
+	public int insert(Mrp record) {
+	 
+		return dao.insert(record);
+	}
 }
