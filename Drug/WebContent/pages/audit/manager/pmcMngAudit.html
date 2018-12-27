@@ -284,6 +284,9 @@
 		        //审核弹出层   提交按钮点击事件
 		        form.on('submit(formEdit)', function(data) {
 		        	update(data.field);
+		        	if (data.field.audState=="10111") {
+		        		
+		        	}
                 	return false;
 		        });
 		        

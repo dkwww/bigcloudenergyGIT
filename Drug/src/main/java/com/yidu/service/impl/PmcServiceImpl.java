@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.yidu.dao.MrpMapper;
 import com.yidu.dao.PmcMapper;
 import com.yidu.domain.Pmc;
 import com.yidu.service.PmcService;
@@ -31,6 +32,8 @@ public class PmcServiceImpl  implements PmcService {
 
 	@Resource
 	private PmcMapper pmcMapper;
+	@Resource
+	private MrpMapper mrpMapper;
 
 	@Override
 	public List<Pmc> findAll(Pmc record, PageUtil pageUtil) {
