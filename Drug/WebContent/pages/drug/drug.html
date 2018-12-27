@@ -338,16 +338,16 @@
 		            id: 'demo',
 		            cols: [
 		                [{checkbox: true,fixed: true},
-		                {field: 'drugId',title: 'ID',width: 150},
+		                {field: 'drugId',title: 'ID',width: 120},
 		                {field: 'drugName',title: '药名',minWidth: 120},
-		                {field: 'drugUnit',title: '单位',width: 80},
+		                {field: 'drugUnit',title: '单位',width: 60},
 		                {field: 'dtName',title: '类型',width: 90},
 		                {field: 'drugProp',title: '属性',width: 90},
 		                {field: 'drugPictrue',title: '图片',width: 60,templet:'#img'},
 		                {field: 'drugPrice',title: '价格（元）',width: 120,sort: true},
 		                {field: 'audState',title: '审核状态',width: 140},
 		                {fixed: 'right',title: '查看',width: 228,align: 'center',toolbar: '#views'},
-		                {fixed: 'right',title: '操作',width: 210,align: 'center',toolbar: '#tools'}]
+		                {fixed: 'right',title: '操作',width: 200,align: 'center',toolbar: '#tools'}]
 		            ],
 		            done: function(res, curr, count) {
 		            	var tableElem = this.elem.next('.layui-table-view');

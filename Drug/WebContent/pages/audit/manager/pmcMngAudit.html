@@ -236,6 +236,9 @@
 		            }
 		        });
 		        
+		        renderDate('#startDate');
+		        renderDate('#endDate');
+		        
 		        //监听搜索表单提交
 		        form.on('submit(search)', function(data) {  
 		            //带条件查询
@@ -283,13 +286,18 @@
 		        
 		        //审核弹出层   提交按钮点击事件
 		        form.on('submit(formEdit)', function(data) {
-		        	update(data.field);
-		        	if (data.field.audState=="10111") {
-		        		
+		        	var bln = update("../../../audit/addOrUpdate.action",data.field);
+		        	if (data.field.audState=="10111" && bln) {
+		        		$.post("../../../pmc/joinMade.action",{"audId":data.field.audId},function(mes){
+		        			if (mes>0) {
+		        				editIndex && layer.close(editIndex); //关闭弹出层
+		                        $("#res").click();//调用重置按钮将表单数据清空 
+		                        $(".layui-laypage-btn")[0].click();//当前表格刷新
+		        			}
+		        		},"json");
 		        	}
                 	return false;
 		        });
-		        
 		    });
 			
 		  	//全屏弹窗
@@ -319,11 +327,23 @@
                 });
 	    		return 
 		    }
+		  	
+		  	//日期下拉框渲染
+		 	function renderDate(dateId){
+		 		layui.laydate.render({
+	        	  elem: dateId
+	        	  ,type: 'datetime'
+	        	  ,calendar: true
+        	      ,range: '到'
+        	      ,format: 'yyyy-M-d H:m:s'
+	        	});
+		 	}
 		    
 		  	//进行审核
-		    function update(data){
+		    function update(url,data){
+		  		var bln = false;
 		    	$.ajax({
-		    		url: "../../../audit/addOrUpdate.action",
+		    		url: url,
                     type:'post',//method请求方式，get或者post
                     async:false,//同步
                     dataType:'json',//预期服务器返回的数据类型
@@ -331,14 +351,13 @@
                     data: JSON.stringify(data),//表格数据序列化
                     success:function(mes){//res为相应体,function为回调函数
                     	if(mes.status==1){ 
-                        	editIndex && layer.close(editIndex); //关闭弹出层
-	                        $("#res").click();//调用重置按钮将表单数据清空 
-	                        $(".layui-laypage-btn")[0].click();//当前表格刷新
+	                        bln = true;
                         }
                         layer.msg(mes.msg);
                     },
                    	error:function(){layer.alert('数据异常，请稍后重试！！！',{icon:5});}
                  });
+		    	return bln;
 		    }
 		    
 		  	//重新渲染表单

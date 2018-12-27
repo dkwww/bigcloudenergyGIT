@@ -21,7 +21,7 @@
     <result column="pd_id" jdbcType="VARCHAR" property="pdId" />
       <result column="mrp_id" jdbcType="VARCHAR" property="mrpId" />
     <result column="mrp_num" jdbcType="INTEGER" property="mrpNum" />
-     <result column="mrp_endtime" jdbcType="TIMESTAMP" property="pmcEnd" />
+     <result column="mrp_endtime" jdbcType="TIMESTAMP" property="mrpEndtime" />
      <result column="mrp_pud" jdbcType="INTEGER" property="mrpPud" />
     
     
@@ -48,7 +48,7 @@
     
    
     <select id="selectCountBySelective" parameterType="com.yidu.domain.Mrp" resultType="int">
-    SELECT  count(*)  FROM   drug_mrp      where 1=1
+     SELECT  count(*)  FROM   drug_mrp      where 1=1
    	 <if test="mrpPlan != null and mrpPlan != ''">
    		and mrp_plan like CONCAT(CONCAT('%',#{mrpPlan,jdbcType=VARCHAR},'%'))
    	</if>
@@ -95,7 +95,7 @@
       #{mrpPlan,jdbcType=INTEGER}, #{mrpRate,jdbcType=DECIMAL}, #{mrpState,jdbcType=INTEGER}, 
       #{mrpIdea,jdbcType=VARCHAR}, #{mrpAmount,jdbcType=INTEGER}, #{isva,jdbcType=VARCHAR}, 
       #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}, #{mrpPud,jdbcType=INTEGER}, #{comName,jdbcType=VARCHAR},
-      #{pmcEnd,jdbcType=TIMESTAMP}, #{pmcId,jdbcType=VARCHAR}
+      #{mrpEndtime,jdbcType=TIMESTAMP}, #{pmcId,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.yidu.domain.Mrp">

@@ -239,6 +239,13 @@
    	</if>
   </select>
   
+  <select id="selectByAuditId" parameterType="java.lang.String" resultMap="BaseResultMapTwo">
+   	select 
+    <include refid="Base_Column_List_One" />
+    from drug_pmc dp, drug_audit da 
+    where dp.pmc_id = da.aud_fk_id and da.aud_id = #{audId,jdbcType=VARCHAR}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_pmc
     where pmc_id = #{pmcId,jdbcType=VARCHAR}

@@ -37,4 +37,6 @@ public interface PmcMapper {
 	int  addpmc (Pmc record);
 
 	Pmc selectByPpt(String pmcId);
+
+	Pmc selectByAuditId(String audId);
 }

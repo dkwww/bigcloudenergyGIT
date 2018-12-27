@@ -86,18 +86,10 @@ public class PmcDetailsController {
 		return  map;
 	}
 	
-	/**
-	 * 检查原料库存是否充足
-	 */
 	@RequestMapping("/checkInv")
 	@ResponseBody
-	public Message checkInv(@RequestBody List<PmcDetails> list) {
-		Message mes = new Message();
-		for (PmcDetails pmcDetails : list) {
-			System.out.println("=================="+pmcDetails.getDrugName()+"========================");
-		}
-		pmcDetailsService.checkInv(list);
-		return mes;
+	public List<PmcDetails> checkInv(String drugId) {
+		return pmcDetailsService.checkInv(drugId);
 	}
 }
 

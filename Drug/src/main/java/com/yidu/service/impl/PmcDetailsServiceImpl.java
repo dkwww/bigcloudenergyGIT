@@ -9,7 +9,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.springframework.dao.support.DaoSupport;
 import org.springframework.stereotype.Service;
 
 import com.yidu.dao.MrpDetailsMapper;
@@ -83,24 +82,15 @@ public class PmcDetailsServiceImpl  implements PmcDetailsService {
 	}
 
 	@Override
-	public boolean checkInv(List<PmcDetails> list) {
-		//List<PmcDetails> newList = pmcDetailsMapper.selectMatInv(record);
-		boolean bln = true;
-		/*for (PmcDetails pmcDetails : newList) {
-			int amount = Integer.valueOf(record.getPdAmount())*Integer.valueOf(pmcDetails.getMlAmount());
-			if (amount>Integer.valueOf(pmcDetails.getMiAmount())) {
-				System.out.println("=================="+pmcDetails.getMatName()+"===================="+pmcDetails.getMiAmount()+"===================="+pmcDetails.getMlAmount()+"===================="+amount+"====================");
-				bln = false;
-				break;
-			}
-		}*/
-		return bln;
-	}
-
-	@Override
 	public List<PmcDetails> selectPmcId(String id) {
 	 
 		return pmcDetailsMapper.selectPmcId(id);
+	}
+
+	@Override
+	public List<PmcDetails> checkInv(String drugId) {
+		List<PmcDetails> list = pmcDetailsMapper.selectMatInv(drugId);
+		return list;
 	}
 
 }

@@ -83,8 +83,17 @@
 								<div class="layui-inline" style="margin-left: 20px;">总数量：<span style="color: #0000A0" id="allAmount">0</span></div>
 						  	</div>
 						</div>
-						<div id="tableRes" class="table-overlay">
-							<table id="dataTable1" lay-filter="dataTable" class="layui-hide"></table>
+						<div id="tableRes" class="table-overlay" style="margin: 0px auto">
+							<div class="card-body-left">
+								<div class="scroll-wrap">
+									<ul class="down-ul">
+										<p class="li-title">药品所需原料清单（list）</p>
+									</ul>
+								</div>
+							</div>
+							<div id="tableRes" class="card-body-right">
+								<table id="dataTable1" lay-filter="dataTable" class="layui-hide"></table>
+							</div>
 						</div>
 						<div id="action" class="text-center">
 							<button type="button" name="btnSave" class="layui-btn layui-btn-sm" data-type="save"><i class="fa fa-floppy-o fa-lg"></i> 保存</button>
@@ -194,6 +203,26 @@
 			<img style="height:100%;height:30px;" onclick="getPathOver(this)" src="../../../../{{ d.drugPictrue}}">
 		</script>
 		<script type="text/javascript">
+			function getSession(){
+				var admin = null;
+				$.ajax({ 
+		        	url:"../../../../admin/getSession.action",
+	                type:'post',
+	                async:false,
+	                dataType:'json',
+	                success:function(mes){
+	                	if (mes!=null && mes!="") {
+	                		admin = mes;
+						} else {
+							location.href = "../../../../admin/login.html";
+						}
+	                },
+	                error: function(){
+	                	location.href = "../../../../admin/login.html";
+	                }
+	        	});
+				return admin;
+			}
 			//准备视图对象
 			var pmcId = getParameter("id");
 			$("#pmcName").text(getParameter("name"));
@@ -223,6 +252,7 @@
 				//数据表格实例化			
 				var layTableId1 = "layTableId1";
 				var h1 = autoHeight(layTableId1);
+				var tableElems;
 				var tableIns1 = table.render({
 					elem: '#dataTable1',
 					id: layTableId1,
@@ -232,6 +262,7 @@
 					cols: [
 						[
 							{title: '序号',type: 'numbers'},
+							{field: 'drugId',title: '药品ID'},
 							{field: 'drugName',title: '药品名称（name）'},
 							{field: 'pdAmount',title: '数量（amount）',width: 200,edit: 'text',sort: true},
 							{field: 'dtName',title: '类型',width: 90},
@@ -246,6 +277,7 @@
 						]
 					],
 					done: function(res, curr, count) {
+						tableElems = this.elem.next('.layui-table-view');
 						//计算数量
 						function count(o){
 							var amount = o.val() =='' ? 0 : parseInt(o.val());
@@ -265,6 +297,8 @@
 								var o = $(this);
 								if (o.val().length < 1) o.val(1);
 								count(o);
+							}).on('change', '.layui-table-edit', function() {
+								getAmount();
 							}).on('keyup', '.layui-table-edit', function() {
 								var o = $(this);
 								o.val(o.val().replace(/[^0-9]*$/, ""));//正整数
@@ -280,8 +314,36 @@
 						    	$(this).text("非处方药");
 						    }
 					  	});
+						getAmount();
 					}
 				});
+				function getAmount(){
+					tableElems.find("tr").find('td[data-field="pdAmount"]').each(function(index){
+						var o = $(this);
+						$(".amount").text("0");
+						var drugId = tableElems.find('tr[data-index="' + index + '"]').find('td[data-field="drugId"]').text();
+						$.post("../../../../pmcDetails/checkInv.action",{"drugId": drugId},function(mes){
+							$.each(mes,function(index,item){
+								var bln = false;
+								$(".mat").each(function(indexs,items){
+									if (items.id == item.miId) {
+										$(items).find(".amount").text(parseInt($(items).find(".amount").text())+parseInt(item.mlAmount)*parseInt(o.text()));
+										bln = true;
+										return
+									}
+								});
+								if (!bln) {
+									$("<li />", {
+										'id': item.miId,
+										'text': item.matName,
+										'class': "mat"
+									}).insertAfter($(".li-title").eq(0));
+									$("#"+item.miId).append("<span class='li-closes'><span class='amount'>"+parseInt(item.mlAmount)*parseInt(o.text())+"</span> / "+item.miAmount+"</span>");
+								}
+							});
+						},"json");
+					});
+				}
 				
 				//监听搜索表单提交
 		        form.on('submit(search1)', function(data) {
@@ -326,21 +388,20 @@
 				//定义事件集合
 				var active = {
 					save: function() {
-	                    layui.each(newData, function(index, item) {
-	                    	addOrUpdate(item);
-	                    });
-	                    /* $.ajax({ 
-	    		        	url: '../../../../pmcDetails/checkInv.action',
-	    		        	data: JSON.stringify(newData),
-	    		        	cache: false,//同步
-	                        type: 'post',//method请求方式，get或者post
-	                        contentType: "application/json; charset=utf-8",
-	                        dataType: 'json',
-	                        success:function(mes){
-	                        	
-	                        }
-	                    }); */
-	                    save({"pmcId": pmcId,"pmcAmount": $("#allAmount").text()});
+	                    var bln = true;
+	                    $.each($(".li-closes"),function(index,item){
+	    					var o = $(this).text().split("/");
+	    					if (parseInt(o[0])>parseInt(o[1])) {
+	    						layer.msg("原材料库存不足！");
+	    						bln = false;
+	    					}
+	    				});
+	                    if (bln) {
+	                    	layui.each(newData, function(index, item) {
+	                    		addOrUpdate(item);
+	                    	});
+	                    	save({"pmcId": pmcId,"pmcAmount": $("#allAmount").text()});
+	                    }
 					},
 					confirm: function() {
 						newData = [];
@@ -417,10 +478,13 @@
 				var layTableId2 = "table2";
 				var h2 = autoHeight(layTableId2)+10;
 				var tableElem = "";
+				var admin = getSession();
+		    	if (admin==null) return;
 				var tableIns2 = table.render({
 					elem: '#dataTable2',
 					id: layTableId2,
 					height: h2+20,
+					where: {"comId": admin.comId},
 					url: "../../../../drug/showChecked.action",
 					page: true,
 					cols: [
@@ -496,7 +560,8 @@
 				});
 				
 				$(".layui-card").css({"height":h2+135});
-				$(".card-body-left").css({"height":h2+18});
+				$(".card-body-left").eq(0).css({"height":h2-12});
+				$(".card-body-left").eq(1).css({"height":h2+18});
 				
 				$.ajax({ 
 					url:"../../../../drugType/showList.action",
@@ -595,7 +660,6 @@
                         	if (mes.status==1) {
                         		setTimeout(function () {
                         			closeLayer();
-                        			alert("ddd")
                             		window.parent.location.reload();
                             	},1000);
                         	}
@@ -670,32 +734,32 @@
 						'id': data.drugId,
 						'text': data.drugName,
 						'class': "new-item "
-					}).insertAfter($(".li-title"));
+					}).insertAfter($(".li-title").eq(1));
 					addClose($("#" + data.drugId));
 				}
 				
 				function removeRow(id) {
-					var removePoint = $(".down-ul").find("#" + id);
+					var removePoint = $(".down-ul").eq(1).find("#" + id);
 					removePoint.removeClass("new-item").addClass("remove-item");
 					setTimeout(function() {
-						$(".remove-item").remove();
+						$(".down-ul").eq(1).find(".remove-item").remove();
 					}, 480);
 				}
 				
 				$(".add").on("click",function(){
 					$(".card-top,.card-down").addClass("css-showTrans").removeClass("css-closeTrans");
-					$(".old-item").remove();
+					$(".down-ul").eq(1).$(".old-item").remove();
 					for (var i = 0; i < newData.length; i++) {
 						$("<li />", {
 							'text': newData[newData.length-1-i].drugName,
 							'class': 'old-item'
-						}).insertAfter($(".li-title"));
+						}).insertAfter($(".li-title").eq(1));
 					}
 					tableIns2.reload();
 				});
 				$(".btnConfirm").on("click",function(){
 					$(".card-top,.card-down").removeClass("css-showTrans").addClass("css-closeTrans").removeClass("css-closeTrans");
-					$(".new-item").remove();
+					$(".down-ul").eq(1).find(".new-item").remove();
 				});
 				$("button[name=btnCancel]").on("click",function(){
 					$(".card-top,.card-down").removeClass("css-showTrans").addClass("css-closeTrans").removeClass("css-closeTrans");

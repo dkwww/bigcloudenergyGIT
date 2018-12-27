@@ -120,6 +120,13 @@ body {
 	color: transparent;
 }
 
+.li-closes{
+	position: absolute;
+	right: 0px;
+	padding-right: 15px;
+}
+
+
 .down-ul li:hover > .li-close{
 	cursor: pointer;
 	color: #000;

@@ -30,8 +30,10 @@
   </resultMap>
   <resultMap id="BaseResultMapTwo" type="com.yidu.domain.PmcDetails">
     <result column="mat_id" jdbcType="VARCHAR" property="matId" />
+    <result column="mi_id" jdbcType="VARCHAR" property="miId" />
     <result column="mat_name" jdbcType="VARCHAR" property="matName" />
     <result column="mi_amount" jdbcType="VARCHAR" property="miAmount" />
+    <result column="mi_Name" jdbcType="VARCHAR" property="miName" />
     <result column="ml_amount" jdbcType="VARCHAR" property="mlAmount" />
   </resultMap>
   
@@ -44,7 +46,7 @@
   </sql>
   
   <sql id="Base_Column_List_Two">
-    mat.mat_id, mat.mat_name, mi.mi_amount, ml.ml_amount
+    mat.mat_id, mi.mi_id, mat.mat_name, mi.mi_amount, ml.ml_amount
   </sql>
   
   <select id="selectBySelective" parameterType="java.util.Map" resultMap="BaseResultMapOne">
@@ -99,7 +101,7 @@
     where pmc_id = #{pmcId,jdbcType=VARCHAR}
   </select>
   
-  <select id="selectMatInv" parameterType="com.yidu.domain.PmcDetails" resultMap="BaseResultMapTwo">
+  <select id="selectMatInv" parameterType="String" resultMap="BaseResultMapTwo">
     select 
     <include refid="Base_Column_List_Two" />
     from drug_material_list ml,drug_material mat,drug_mat_inv mi 

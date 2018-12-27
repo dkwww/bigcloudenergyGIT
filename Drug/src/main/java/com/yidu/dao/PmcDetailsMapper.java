@@ -24,4 +24,6 @@ public interface PmcDetailsMapper {
     
     List<PmcDetails> selectPmcId(String id);
     
+    List<PmcDetails> selectMatInv(String drugId);
+    
 } 
