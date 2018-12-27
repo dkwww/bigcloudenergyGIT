@@ -33,14 +33,33 @@ public class Mrp {
     private   String   mrpEndtimeName;
     private String   stateName;
     
-    private   String  comName;  
+    private   String  comName;
+    
+    private   Integer   mrpPud;
+    private   String   mrpPudName;
      
     
      
     
     
     
-    public String getMrpRateName() {
+    public String getMrpPudName() {
+		return mrpPudName;
+	}
+
+	public void setMrpPudName(String mrpPudName) {
+		this.mrpPudName = mrpPudName;
+	}
+
+	public Integer getMrpPud() {
+		return mrpPud;
+	}
+
+	public void setMrpPud(Integer mrpPud) {
+		this.mrpPud = mrpPud;
+	}
+
+	public String getMrpRateName() {
 		return mrpRateName;
 	}
 

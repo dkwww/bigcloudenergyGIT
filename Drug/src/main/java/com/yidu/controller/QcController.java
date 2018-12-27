@@ -79,7 +79,6 @@ public class QcController {
 	@ResponseBody
 	public   Message    add(Qc  qc) {
 		String    string= UUID.randomUUID().toString().replaceAll("-", "");
-		System.out.println(string);
 		//分页
 		Date   date =new Date();
 		Message message  =new   Message();
@@ -107,10 +106,15 @@ public class QcController {
 		qc.setQcFail(0);
 		qc.setQcConpany("目前不知道是啥工厂");
 		qc.setQcType(0); 
+		qc.setQcState("0");
+		qc.setQcPut("0");
 
 		qc.setOptime(date);
 		qc.setQcOptime(date); 
 		int rows= qcService.add(qc); 
+		
+		
+		
 		if (rows>0) {
 			message.setStatus(1);
 		}else {

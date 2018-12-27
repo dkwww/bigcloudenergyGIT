@@ -11,6 +11,7 @@ import com.yidu.domain.QcDetail;
 import com.yidu.service.DrugInvDetailService;
 import com.yidu.service.DrugInvService;
 import com.yidu.service.QcDetailService;
+import com.yidu.service.QcService;
 import com.yidu.util.Message;
 
 import java.util.HashMap;
@@ -41,6 +42,8 @@ public class DrugInvDetailController {
 
 	@Resource
 	private QcDetailService qcdetaService;
+	@Resource
+	private    QcService  qcService;
 
 
 
@@ -84,7 +87,7 @@ public class DrugInvDetailController {
 				drugInvDetail.setRemarks(0);
 				drugInvDetailService.insert(drugInvDetail);
 			} else { 
-				drugInve.setDiId(string);
+				 
 				drugInve.setComId("0");
 				drugInve.setDrugId(qcDetail.getQdetFkId());
 				int  sum=qcDetail.getQdetAmount()-qcDetail.getQdetFail();
@@ -100,6 +103,15 @@ public class DrugInvDetailController {
 				drugInvDetailService.insert(drugInvDetail);
 			} 
 		}
+		
+		Qc  qc2  = new  Qc();
+		qc2.setQcId(qc.getQcId());
+		qc2.setQcPut("1");
+		 System.out.println("==============这是ID=============="+qc.getQcId());
+		 System.out.println("==============这是要修改的=============="+qc2.getQcPut());
+		qcService.updateByPrimaryKeySelective(qc2);
+		
+		
 		if (rows>0) {
 			message.setStatus(1);
 			message.setMsg("保存成功");
