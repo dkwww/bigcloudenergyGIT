@@ -89,13 +89,27 @@
 		                {field: 'audStates',title: '审核状态',width: 90},
 		                {field: 'audIdea',title: '审核意见',width: 150},
 		                {field: 'audName',title: '审核人',width: 90},
-		                {field: 'audMes',title: '备注',width: 90},
-		                {field: 'optimes',title: '操作时间',width: 170},
 		                {field: 'oper',title: '操作人',width: 95,sort: true}, 
 		                {fixed: 'right',title: '操作',width: 220,align: 'center', toolbar: '#barDemo' }]
 		            ],
 		            done: function(res, curr, count) {
-						
+		            	var tableElem = this.elem.next('.layui-table-view');
+		            	$("[data-field = 'audId']").children().not(":first").each(function(index){
+			            	var url = "../../../audit/findById.action";  
+			            	var data = {"audId":$(this).text()};	
+			            	$.post(url,data,function(mes){
+			            		if(mes.audState==15||mes.audState==16){
+			            			tableElem.find('tr[data-index="'+ index +'"]').find('button[lay-event=detail]').addClass('layui-btn-disabled').attr('disabled',true);
+					            	
+			            		}
+			            		
+		            		},"json");
+					  	});
+		            	$("[data-field = 'audStates']").children().not(":first").each(function(index){
+			            	if($(this).text()=="审核失败"){
+			            		$(this).html("<font style='color:red;'>审核未通过</font>");
+			            	}
+					  	});
 		            },
 		            loading: true,
 		            //method: 'post'
