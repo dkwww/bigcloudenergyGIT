@@ -108,6 +108,13 @@
 		            		}
 					  	});
 		            	
+		            	$("[data-field = 'qcStates']").children().not(":first").each(function(index){
+		            		if($(this).text()=="未质检"){
+		            			//禁用
+		            			tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=Warehousing]').addClass('layui-btn-disabled').attr('disabled',true);
+		            		}
+					  	});
+		            	
 		            	
 		            },
 		            loading: true

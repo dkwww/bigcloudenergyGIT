@@ -153,6 +153,6 @@
   </select>
   
   <select id="findcwId" parameterType="string" resultMap="BaseResultMap">
-  	SELECT * FROM drug_buy a,drug_debty b WHERE a.com_id=b.com_id AND a.com_id=#{comId}
+  	SELECT * FROM drug_debty b WHERE  b.com_id=#{comId}
   </select>
 </mapper>

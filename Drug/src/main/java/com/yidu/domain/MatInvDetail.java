@@ -16,8 +16,30 @@ public class MatInvDetail {
     private String oper;
 
     private String sort;
+    
+    private String mtName;		//类型名称
+    
+    private String matName;		//药材名称
+    
+    
 
-    public String getMidId() {
+    public String getMtName() {
+		return mtName;
+	}
+
+	public void setMtName(String mtName) {
+		this.mtName = mtName;
+	}
+
+	public String getMatName() {
+		return matName;
+	}
+
+	public void setMatName(String matName) {
+		this.matName = matName;
+	}
+
+	public String getMidId() {
         return midId;
     }
 

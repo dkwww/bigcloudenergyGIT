@@ -33,4 +33,14 @@ public interface MatInvDetailService  {
 	 * @date：2018年12月27日
 	 */
 	int selectCount(MatInvDetail matdetail);
+	
+	/**
+	 * 
+	 * 方法说明：增加库存记录
+	 * @param matdetail
+	 * @return
+	 * @author dengknagwei
+	 * @date：2018年12月27日
+	 */
+	int addkcdetail(MatInvDetail matdetail);
 }

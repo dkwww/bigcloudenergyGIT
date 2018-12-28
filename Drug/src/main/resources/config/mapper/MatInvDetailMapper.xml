@@ -9,6 +9,8 @@
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
+    <result column="mt_name" jdbcType="VARCHAR" property="mtName" />
+    <result column="mat_name" jdbcType="VARCHAR" property="matName" />
   </resultMap>
   <sql id="Base_Column_List">
     mid_id, mi_id, mid_amount, isva, optime, oper, sort
