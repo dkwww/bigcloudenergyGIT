@@ -183,5 +183,17 @@ public class AdminController {
 	public Admin getSession(HttpSession session) {
 		return (Admin) session.getAttribute("admin");
 	}
+	/**
+	 * 点击注销时清空session
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/clearSession")
+	@ResponseBody
+	public int clearSession(HttpSession session) {
+		System.out.println("清空了session................");
+		session.removeAttribute("admin");
+		return 1; 
+	}
 }
 

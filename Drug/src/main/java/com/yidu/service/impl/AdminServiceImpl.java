@@ -1,6 +1,7 @@
 package com.yidu.service.impl;
 
  
+import com.yidu.controller.AdminController;
 import com.yidu.dao.AdminMapper;
 import com.yidu.dao.AdminRoleMapper;
 import com.yidu.domain.Admin;
@@ -16,6 +17,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
