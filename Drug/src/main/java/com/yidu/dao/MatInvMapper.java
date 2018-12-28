@@ -44,7 +44,7 @@ public interface MatInvMapper {
      * @author dengknagwei
      * @date：2018年12月27日
      */
-	List<MatInv> findQcId(String qcFkId);
+	MatInv findQcId(String qcFkId);
 	
 	/**
      * 

@@ -255,21 +255,21 @@ public class QcController {
 		for (QcDetail qcDetail : list) {
 			System.out.println("-------------进入这里");
 			//在根据质检明细的id查找库存
-			List<MatInv> invlist=invservice.findQcId(qcDetail.getQdetFkId());
-			for (MatInv matInv : invlist) {
-				System.err.println("----------库存当前数量"+matInv.getMiAmount());
+			MatInv invlist=invservice.findQcId(qcDetail.getQdetFkId());
+			
+				System.err.println("----------库存当前数量"+invlist.getMiAmount());
 				System.err.println("----------质检明细的数量:"+qcDetail.getQdetAmount());
-				System.err.println("----------库存id:"+matInv.getMiId());
+				System.err.println("----------库存id:"+invlist.getMiId());
 				
-				invservice.updateAmount(qcDetail.getQdetAmount(), matInv.getMiId());
+				invservice.updateAmount(qcDetail.getQdetAmount(), invlist.getMiId());
 				
 				//库存明细
 				MatInvDetail invdetail=new MatInvDetail();
 				invdetail.setMidId(Tools.getDateOrderNo());
-				invdetail.setMiId(matInv.getMiId());
+				invdetail.setMiId(invlist.getMiId());
 				invdetail.setMidAmount(qcDetail.getQdetAmount());
 				invdetailservice.addkcdetail(invdetail);
-			}
+			
 			
 		}
 		

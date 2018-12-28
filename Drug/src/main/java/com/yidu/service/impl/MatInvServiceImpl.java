@@ -66,7 +66,7 @@ public class MatInvServiceImpl  implements MatInvService {
 
 
 	@Override
-	public List<MatInv> findQcId(String qcFkId) {
+	public MatInv findQcId(String qcFkId) {
 		
 		return matinvmapper.findQcId(qcFkId);
 	}

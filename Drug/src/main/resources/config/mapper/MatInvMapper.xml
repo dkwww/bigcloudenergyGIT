@@ -133,7 +133,7 @@
   </select>
   
   <select id="findQcId" parameterType="string" resultMap="BaseResultMap">
-	SELECT * FROM drug_qc_detail a,drug_mat_inv b WHERE a.qdet_fk_id=b.mat_id AND a.qdet_fk_id=#{qdetFkId}  
+	SELECT * FROM drug_mat_inv b WHERE b.mat_id=#{matId}
   </select>
   
   
