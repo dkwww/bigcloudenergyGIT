@@ -303,14 +303,12 @@ public class AuditController {
 			Debty debty1 = debtyService.findByComId(buy.getComId());
 			System.out.println(" 财务余额："+debty1.getDebMoney()+"     订单总金额"+buy.getBuyMoney());
 			int a =debty1.getDebMoney().compareTo(buy.getBuyMoney());
-			Debty debty2 = new Debty();//定义一个新的财务对象
-			debty2.setDebId(debty1.getDebId());
 			//如果店铺余额大于总金额,则
-			if(a==1||a==0) {
-				money = debty1.getDebMoney().subtract(debty1.getDebMoney());
+			if(a>0) {
+				//money = debty1.getDebMoney().subtract(debty1.getDebMoney());
 				//将需要修改的数据传入新对象中
-				debty2.setDebMoney(money);
-				int count = debtyService.updateByPrimaryKeySelective(debty2);
+				//debty1.setDebMoney(money);
+				int count = debtyService.addbty(buy.getBuyMoney(),debty1.getDebId());
 				if(count!=0) {
 					int rows=service.updateByPrimaryKeySelective(audit);
 					
@@ -326,7 +324,7 @@ public class AuditController {
 					message.setMsg("操作失败");
 				}
 				
-			}else if(a==-1) {
+			}else if(a<=1) {
 				message.setStatus(0);
 				message.setMsg("本店余额不足");
 			}
@@ -334,25 +332,17 @@ public class AuditController {
 		}else if("16".equals(audits.getAudState())) {
 			//如果总店总经理审核通过，则根据id查询出
 			Buy buy = buyService.findById(audits.getAudFkId());
-			//根据订单中的店铺id查找这个店铺的总余额
+			//根据订单中的店铺id查找这个店铺的总余额 
 			Debty debty1 = debtyService.findByComId(buy.getComId());
 			System.out.println(" 财务余额："+debty1.getDebMoney()+" 订单总金额"+buy.getBuyMoney());
 			//将两个金额相加
-			money =debty1.getDebMoney().add(buy.getBuyMoney());
-			Debty debty2 = new Debty();//定义一个新的财务对象
-			debty2.setDebId(debty1.getDebId());
-			debty2.setDebMoney(money);
+			//money =debty1.getDebMoney().add(buy.getBuyMoney());
+			//debty1.setDebMoney(money);
 			//修改总店总金额
-			int count = debtyService.updateByPrimaryKeySelective(debty2);
+			int count = debtyService.addMoney(buy.getBuyMoney(),"0");
 			if(count!=0) {
-				Qc qc = new Qc();
-				qc.setPmcId(buy.getBuyId());//业务id
-				qc.setQcAmount(buy.getBuyAmount());//质检总数
-				qc.setQcConpany(buy.getBuyCompany());//质检厂家
-				qc.setQcType(1);//质检类型为药品
-				qc.setIsva("1");
 				//质检
-				//qcService.insertSelective(qc);
+				//qcService.qualityAdd(buy);
 				//审核
 				int rows=service.updateByPrimaryKeySelective(audit);
 				

@@ -24,6 +24,13 @@ public interface QcMapper {
     int selectCountBySelective(Qc record);
     
     /**
+     * 分店质检查询所有
+     * @param map
+     * @return
+     */
+    List<Qc>  branchQuality(Map<String, Object> map);
+    
+    /**
      * 材料查询所有
      * @param map
      * @author 邓康威

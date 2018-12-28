@@ -56,7 +56,7 @@ public class BuyDetailController {
 		Admin admin = (Admin) session.getAttribute("user");
 		
 		Admin admin2 = new Admin();
-		admin2.setComId("0");
+		admin2.setComId("1");
 		admin2.setAdminName("管理员");
 		admin2.setAdminId("1");
 		
