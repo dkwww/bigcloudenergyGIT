@@ -89,8 +89,10 @@ public class DrugServiceImpl implements DrugService {
 			drugInve.setComId(record.getComId());
 			drugInve.setDiAmount(0);
 			drugInve.setIsva("1");
-			drugInveMapper.insertSelective(drugInve);
-			return drugMapper.insertSelective(record);
+			drugMapper.insertSelective(record);
+			drugInve.setDrugId(record.getDrugId());
+			int row = drugInveMapper.insert(drugInve);
+			return row;
 		}
 	}
 

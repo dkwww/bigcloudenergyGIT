@@ -11,7 +11,7 @@ public interface DrugMapper {
     int insert(Drug record);
 
     int insertSelective(Drug record);
-
+    
     Drug selectByPrimaryKey(String drugId);
 
     int updateByPrimaryKeySelective(Drug record);
