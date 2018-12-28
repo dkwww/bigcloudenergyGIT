@@ -254,6 +254,7 @@
 		</script>
 		<script src="../../res/layui/layui.all.js"></script>
 		<script>
+			var a = new Array();
 			//显示表格数据
 		    layui.use(['table','upload'], function() {
 		        var table = layui.table,
@@ -300,8 +301,27 @@
 		      	//监听表格复选框选择
 		        table.on('checkbox(demo)', function(obj){
 		        	var data = obj.data;
+		        	console.log(obj);
 		        	$("#tbo").append("<tr><td>"+data.drugName+"</td><td><input type='number' id='up_"+data.drugId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' value='1' /></td><td id='pic_"+data.drugId+"'>"+data.drugPrice+"</td><td>"+data.drugUnit+"</td><td><input type='text' id='mes_"+data.drugId+"' style='height:20px; border:0px; width:200px;' onKeyUp='pj()'/></td><td id='total'>"+data.drugPrice+"</td><td><a onclick='delrow(this);' class='dels'>删除</a></td><td style='display:none;'><input type='text' id='drugId' value='"+data.drugId+"' /></td></tr>")
 		        	
+		        	/* if(obj.type=='one'&&obj.checked==true){
+		        		var bln = false;
+		        		
+		        		for(var i=0;i<a.length-1;a++){
+		        			alert(data.drugId);
+		        			alert(a[i]);
+		        			if(a[i]==data.drugId){
+			        			bln=true;
+			        			layer.msg("您已添加了此商品！");
+			        			return;
+			        		}
+		        		}
+		        		if(!bln){
+		        			a.push(data.drugId);
+		        			$("#tbo").append("<tr><td>"+data.drugName+"</td><td><input type='number' id='up_"+data.drugId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' value='1' /></td><td id='pic_"+data.drugId+"'>"+data.drugPrice+"</td><td>"+data.drugUnit+"</td><td><input type='text' id='mes_"+data.drugId+"' style='height:20px; border:0px; width:200px;' onKeyUp='pj()'/></td><td id='total'>"+data.drugPrice+"</td><td><a onclick='delrow(this);' class='dels'>删除</a></td><td style='display:none;'><input type='text' id='drugId' value='"+data.drugId+"' /></td></tr>")
+				        	
+		        		}
+		        	} */
 		        	
 		        });
 		      	
@@ -343,6 +363,7 @@
 					$.post(url,data,function(mes){
 						if(mes.status==1){
 							layer.msg("采购成功");
+							editIndex && layer.close(editIndex);
 						}else{
 							layer.msg("采购失败");
 						}

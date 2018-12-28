@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
+		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
+		<script src="../../res/layui/layui.js"></script>
+		<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
+		<title>药品质检管理</title>
+		<script type="text/javascript">
+		$(function(){ 
+			 $("#tijiao").click(function (){ 
+			 
+			var   shu= $("#shuju").val();
+		 var url ="../../mrpDetails/Preservation.action";
+		 var  data={"shujuName" : shu};
+		 $.post(url,data,function(mes){
+			 if(mes.status==1){
+				 closeLayer();
+				 layer.msg("保存成功"); 
+				 closeLayer();
+				 window.parent.location.reload();
+			 }else{
+				 layer.msg("保存失败"); 
+			 }
+			 
+			
+			
+		},"json");
+		 
+	 });
+			 
+			 function closeLayer(){
+				    //当你在iframe页面关闭自身时
+					var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+					parent.layer.close(index); //再执行关闭 
+					window.parent.location.reload();
+				}
+	});
+		
+	function closeLayer(){
+	    //当你在iframe页面关闭自身时
+		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+		parent.layer.close(index); //再执行关闭 
+		window.parent.location.reload();
+	}
+	</script>
+		
+	</head>
+	 	<script>
+				layui.use('element', function(){
+				  var $ = layui.jquery
+				  ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+				  
+				  //触发事件
+				  var active = {
+				    setPercent: function(){
+				      //设置50%进度
+				      element.progress('demo', '50%')
+				    }
+				    ,loading: function(othis){
+				      var DISABLED = 'layui-btn-disabled';
+				      if(othis.hasClass(DISABLED)) return;
+				    
+				      //模拟loading
+				      var n = 0, timer = setInterval(function(){
+				        n = n + Math.random()*10|0;  
+				        if(n>100){
+				          n = 100;
+				          clearInterval(timer);
+				          othis.removeClass(DISABLED);
+				        }
+				        element.progress('demo', n+'%');
+				      }, 300+Math.random()*1000);
+				      
+				      othis.addClass(DISABLED);
+				    }
+				  };
+				  
+				  $('.site-demo-active').on('click', function(){
+				    var othis = $(this), type = $(this).data('type');
+				    active[type] ? active[type].call(this, othis) : '';
+				  });
+				});
+</script>
+<script type="text/html" id="input">
+	<div class="layui-inline">
+		<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="qdetAmount"   value="0"  autocomplete="off"    id="number{{d.qdetId}}" onkeyup="Pressdown(this);">
+	</div>
+	</script>
+	
+	
+	
+	<body>
+	 	<input type="text" id="shuju"  style="width: 100%;"  >
+		  
+		<div class="kit-table">
+		    <form class="layui-form" lay-filter="kit-search-form">
+						<!-- 左上角的两个按钮 -->
+	<input type="button" id="tijiao"   	class="layui-btn layui-btn-normal"     value="保存" >
+		        <div class="kit-table-header">
+		            <div class="kit-search-inputs">
+		                <div class="kit-search-keyword">
+		                    <input type="text" class="layui-input" name="drugName" placeholder="搜索关键字.." />
+		                    <button lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
+		                </div>
+		                <div class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>
+		            </div>
+		        </div>
+						<!-- 搜索扩展工具条 -->
+		        <div class="kit-search-mored layui-anim layui-anim-upbit">
+		            <div class="kit-search-body">
+		                <div class="layui-form-item">
+		                    <label class="layui-form-label">输入框</label>
+		                    <div class="layui-input-block">
+		                        <input type="text" name="title" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                    </div>
+		                </div>
+		                <div class="layui-form-item">
+		                    <div class="layui-inline">
+		                        <label class="layui-form-label">验证手机</label>
+		                        <div class="layui-input-inline">
+		                            <input type="tel" name="phone" autocomplete="off" class="layui-input">
+		                        </div>
+		                    </div>
+		                    <div class="layui-inline">
+		                        <label class="layui-form-label">验证邮箱</label>
+		                        <div class="layui-input-inline">
+		                            <input type="text" name="email" autocomplete="off" class="layui-input">
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="layui-form-item">
+		                    <div class="layui-inline">
+		                        <label class="layui-form-label">范围</label>
+		                        <div class="layui-input-inline" style="width: 100px;">
+		                            <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input">
+		                        </div>
+		                        <div class="layui-form-mid">-</div>
+		                        <div class="layui-input-inline" style="width: 100px;">
+		                            <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input">
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="layui-form-item">
+		                    <label class="layui-form-label">单行选择框</label>
+		                    <div class="layui-input-block">
+		                        <select name="interest" lay-filter="aihao">
+		                            <option value=""></option>
+		                            <option value="0">写作</option>
+		                            <option value="1" selected="">阅读</option>
+		                            <option value="2">游戏</option>
+		                            <option value="3">音乐</option>
+		                            <option value="4">旅行</option>
+		                          </select>
+		                    </div>
+		                </div>
+		            </div>
+		            <div class="kit-search-footer">
+		                <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary kit-btn">重置</button>
+		                <button lay-submit lay-filter="search" class="layui-btn layui-btn-sm kit-btn">确定</button>
+		            </div>
+		        </div>
+		    </form>
+				
+				<!-- 操作按钮 -->
+		    <div class="kit-table-body">
+		        <table id="demo" lay-filter="demo"></table>
+		      <script type="text/html" id="barDemo">
+					            <a class="layui-btn layui-btn-xs" lay-event="edit">立即质检</a>
+   					  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">入库</a>
+		        </script>
+		    </div>
+		</div>
+		
+		<!-- 修改页面 -->
+		<script type="text/html" id="edit-tpl">
+		    <div style="margin:10px">
+		        <form class="layui-form" action="" lay-filter="form-edit">
+		            <input type="hidden" name="id" value="{{d.user.id}}" />
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">用户名</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="username" required lay-verify="required" value="{{d.user.username}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">密码框</label>
+		                <div class="layui-input-inline">
+		                    <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+		                </div>
+		                <div class="layui-form-mid layui-word-aux">辅助文字</div>
+		            </div>
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">单选框</label>
+		                <div class="layui-input-block">
+		                    {{# var woman = d.user.sex === 0?'checked':'';}} {{# var man = d.user.sex === 1?'checked':'';}}
+		                    <input type="radio" name="sex" value="男" title="男" {{man}} />
+		                    <input type="radio" name="sex" value="女" title="女" {{woman}} />
+		                </div>
+		            </div>
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">城市</label>
+		                <div class="layui-input-block">
+		                    <select name="city" lay-verify="required">
+		                      <option value=""></option>
+		                      {{# layui.each(d.citys,function(index,item){ }}                      
+		                      {{# if(item.id===d.user.city){}}
+		                      <option value="{{item.id}}" selected>{{item.name}}</option>
+		                      {{#}else{}}
+		                      <option value="{{item.id}}">{{item.name}}</option>
+		                      {{#};}}
+		                      {{# }); }}
+		                    </select>
+		                </div>
+		            </div>
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">积分</label>
+		                <div class="layui-input-block">
+		                    <input type="number" name="experience" required lay-verify="required" value="{{d.user.experience}}" placeholder="请输入积分" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">评分</label>
+		                <div class="layui-input-block">
+		                    <input type="number" name="score" required lay-verify="required" value="{{d.user.score}}" placeholder="请输入评分" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">财富</label>
+		                <div class="layui-input-block">
+		                    <input type="number" name="wealth" required lay-verify="required" value="{{d.user.wealth}}" placeholder="请输入财富" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">职业</label>
+		                <div class="layui-input-block">
+		                    <select name="classify" lay-verify="required">
+		                        <option value=""></option>                        
+		                      {{# layui.each(d.classifies,function(index,item){ }}
+		                      {{# if(item.id===d.user.classify){}}
+		                      <option value="{{item.id}}" selected>{{item.name}}</option>
+		                      {{#}else{}}
+		                      <option value="{{item.id}}">{{item.name}}</option>
+		                      {{#};}}
+		                      {{# }); }}
+		                    </select>
+		                </div>
+		            </div>
+		            <div class="layui-form-item layui-form-text">
+		                <label class="layui-form-label">签名</label>
+		                <div class="layui-input-block">
+		                    <textarea name="sign" placeholder="请输入个性签名" class="layui-textarea">{{d.user.sign}}</textarea>
+		                </div>
+		            </div>
+		            <div class="layui-form-item" style="display:none;">
+		                <div class="layui-input-block">
+		                    <button class="layui-btn" lay-submit lay-filter="formEdit">立即提交</button>
+		                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		                </div>
+		            </div>
+		        </form>
+		    </div>
+		</script>
+		
+		<!-- 显示表格 -->
+		 
+		<script src="../../res/js/common/parameter.js"></script>
+		<script>
+		    layui.use(['table'], function() { 
+		    	
+		    	 
+		    	var   qcId=getParameter("qcId");
+		     
+		        var table = layui.table,
+		            $ = layui.jquery,
+		            layer = layui.layer,
+		            form = layui.form,
+		            laytpl = layui.laytpl;
+		        var tableIns = table.render({
+		            elem: '#demo',
+		            height: 'full', //容器高度
+		            url: '../../qcDetail/findById.action?qcId='+qcId,
+		            page: true,
+		            id: 'demo',
+		            cols: [
+		                [{
+		                    field: 'qdetId',
+		                    title: '质检ID',
+		                    width: 190
+		                } , {
+		                    field: 'drugName',
+		                    title: '药品名称',
+		                    width: 150
+		                },{
+		                    field: 'qdetAmount',
+		                    title: '质检数量',
+		                    width: 190
+		                },{
+		                    field: 'qcFail',
+		                    title: '未通过数',
+		                    templet:'#input' ,
+		                    width: 150
+		                }, { 
+		                    field: 'qdetRate',
+		                    title: '通过率',
+		                    width: 160
+		                }, { 
+		                    field: 'qdetOptime',
+		                    title: '质检时间',
+		                    width: 160
+		                }]
+		            ],
+		            done: function(res, curr, count) {
+		            	//获取表单数据
+		            	var tables=table.cache.demo;
+		            	
+ 						$.each(tables,function(i,item){
+		            		
+		            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+item.qdetAmount+","+item.qcId+","+item.qdetRate+","+$("#number"+item.qdetId).val()+"#");
+		            	 })
+		            	 
+		            	
+		                //如果是异步请求数据方式，res即为你接口返回的信息。
+		                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+		                // console.log(res);
+		                // //得到当前页码
+		                // console.log(curr);
+		                // //得到数据总量
+		                // console.log(count);
+		            },
+		            loading: true,
+		            //method: 'post'
+		        });
+						//城市及角色
+		        var staticData = {
+		            citys: [{
+		                id: 0,
+		                name: '北京'
+		            }, {
+		                id: 1,
+		                name: '广州'
+		            }, {
+		                id: 2,
+		                name: '深圳'
+		            }, {
+		                id: 3,
+		                name: '杭州'
+		            }],
+		            classifies: [{
+		                id: 0,
+		                name: '词人'
+		            }, {
+		                id: 1,
+		                name: '诗人'
+		            }, {
+		                id: 2,
+		                name: '作家'
+		            }, {
+		                id: 3,
+		                name: '酱油'
+		            }]
+		        };
+		        //监听搜索表单提交
+		        form.on('submit(search)', function(data) {
+		            console.log(data.field);
+		            layer.msg(JSON.stringify(data.field));
+		            //带条件查询
+		            tableIns.reload({
+		                where: data.field
+		            });
+		            return false;
+		        });
+		        
+		        
+		       
+		        
+		        
+		        
+		        
+		        
+		        //监听工具条
+		        table.on('tool(demo)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+		            var data = obj.data; //获得当前行数据
+		            var layEvent = obj.event; //获得 lay-event 对应的值
+		            var tr = obj.tr; //获得当前行 tr 的DOM对象
+		
+		            if (layEvent === 'detail') { //查看
+		                console.log(table.checkStatus('demo'));
+		            } else if (layEvent === 'del') { //删除
+		                layer.confirm('真的提交质检么', function(index) {
+		                    obj.del(); //删除对应行（tr）的DOM结构
+		                    layer.close(index);
+		                    //向服务端发送删除指令
+		                });
+		            } else if (layEvent === 'edit') { //编辑
+		                var d = {
+		                    user: data,
+		                    citys: staticData.citys,
+		                    classifies: staticData.classifies
+		                };
+		                laytpl($('#edit-tpl').html()).render(d, function(html) {
+		                	var  qcId=d.user.qcId;
+		                	var index = layer.open({
+		          				  type: 2,
+		          				  title: '制作药品',
+		          				  content: '../plan/ManufacturingList.html?id='+qcId,
+		          				  area: ['800px', '30px']
+		          				  //maxmin: true
+		          				});
+		          				layer.full(index);
+		                });
+		                //同步更新缓存对应的值
+		                // obj.update({
+		                //     username: '123',
+		                //     title: 'xxx'
+		                // });
+		            }
+		        });
+		        form.render(null, 'kit-search-form');
+		        $('#kit-search-more').on('click', function() {
+		            $('.kit-search-mored').toggle();
+		        });
+		        var editIndex;
+		        form.on('submit(formEdit)', function(data) {
+		            layer.msg('formEdit');
+		            editIndex && layer.close(editIndex); //关闭弹出层
+		            return false;
+		        });
+		        $('.kit-search-btns').children('a').off('click').on('click', function() {
+		            var $that = $(this),
+		                action = $that.data('action');
+		            switch (action) {
+		                case 'add':
+		                    var d = {
+		                        user: {
+		                            sign: '你哈',
+		                            city: '',
+		                            classify: '',
+		                            experience: '',
+		                            id: 0,
+		                            logins: '',
+		                            score: '',
+		                            sex: 1,
+		                            sign: '',
+		                            username: '',
+		                            wealth: ''
+		                        },
+		                        citys: staticData.citys,
+		                        classifies: staticData.classifies
+		                    };
+		                    //渲染
+		                    laytpl($('#edit-tpl').html()).render(d,
+		                        function(html) {
+		                            layer.open({
+		                                type: 1,
+		                                title: '表单',
+		                                content: html,
+		                                area: ['800px', '450px'],
+		                                btn: ['提交', '重置', '取消'],
+		                                yes: function(index, layero) {
+		                                    editIndex = index;
+		                                    $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
+		                                },
+		                                btn2: function(index, layero) {
+		                                    $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
+		                                    return false;
+		                                },
+		                                success: function() {
+		                                    form.render(null, 'form-edit');
+		                                }
+		                            });
+		                        });
+		                    break;
+		                case 'del-bulk':
+		                    var d = table.checkStatus('demo');
+		                    if (d.data.length === 0) {
+		                        layer.msg('请选择要删除的数据');
+		                        return;
+		                    }
+		                    var data = d.data,
+		                        names = [],
+		                        ids = [];
+		                    layui.each(data, function(index, item) {
+		                        console.log(item);
+		                        names.push(item.username);
+		                        ids.push(item.id);
+		                    });
+		                    layer.msg(names.join(','));
+		                    console.log(ids.join(','));
+		                    break;
+		            }
+		        });
+		    });
+		   
+		</script>
+		<script type="text/javascript">
+		 function  Pressdown(obj){ 
+			 
+	 
+	        var a=obj.value;   // 未通过数  10
+         	var b=$(obj).parent().parent().parent().prev().children().text();   //总质检数  100
+         	var  c=0;
+         	
+         	if(parseInt(a)<=parseInt(b)){
+        		 
+             	var  e = parseInt(b)-parseInt(a);
+             	//console.info(e)
+             	if(e==0){
+             		 c=0;
+             		 console.info("dddd")
+             		var d=$(obj).parent().parent().parent().next().children().text(0+"%"); 
+             	}else{
+             		var  c=parseInt(e)/parseInt(b);
+             		var f=c.toFixed(4);
+
+             		var d=$(obj).parent().parent().parent().next().children().text(f*100+"%"); 
+             	}
+           		 
+           	 
+          	 	
+             
+             	}
+         	
+         	if(parseInt(a)>parseInt(b)){
+         		a=parseInt(b);
+         		
+         		$(obj).val(parseInt(b));
+       			 layer.msg("不能大于质检总数"); 
+       			 $("#shuju").val("")
+        		 layui.use(['table'], function() {
+        			 var table=layui.table;
+        			 var tables=table.cache.demo;      
+	            	 $.each(tables,function(i,item){
+	            			var d=$(obj).parent().parent().parent().next().children().text(); 
+	            		 
+	            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+item.qdetAmount+","+item.qcId+","+d+","+$("#number"+item.qdetId).val()+"#");
+	            			
+	            	 })
+        		 });
+         		
+         	}else{
+         		 $("#shuju").val("")
+        		 layui.use(['table'], function() {
+        			 var table=layui.table;
+        			 var tables=table.cache.demo;      
+	            	 $.each(tables,function(i,item){
+	            		 console.info(item)
+	            		 var d=$(obj).parent().parent().parent().next().children().text(); 
+	            		 
+	            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+item.qdetAmount+","+item.qcId+","+d+","+$("#number"+item.qdetId).val()+"#");
+	            			
+	            	 })
+        		 });
+         	}
+         	
+         	
+		    }
+		
+		</script>
+	</body>
+</html>
