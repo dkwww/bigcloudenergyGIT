@@ -70,7 +70,7 @@ public class ModuleServiceImpl  implements ModuleService {
 	}
 
 	@Override
-	public List<Module> findByZiModule(String modeId) {
-		return modumapper.findByZiModule(modeId);
+	public List<Module> findByZiModule(Module record) {
+		return modumapper.findByZiModule(record);
 	}
 }

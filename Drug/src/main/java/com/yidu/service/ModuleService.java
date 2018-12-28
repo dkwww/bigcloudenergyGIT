@@ -20,5 +20,5 @@ public interface ModuleService   {
 	int insert(Module module);
 	List<Module> queryId();
 	List<Module> findByModule(String adminId);
-	List<Module> findByZiModule(String modeId);
+	List<Module> findByZiModule(Module record);
 }
