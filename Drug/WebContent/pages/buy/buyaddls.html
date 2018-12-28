@@ -180,7 +180,7 @@
 		        		 
 		        	 }	
 		        	 if(obj.checked==false){
-		        		 
+		        		 deleteAsu(data);
 		        		 $.each(tables,function(i,item){
 		        			 if(data.matId==item.matId){
 		        				 //获取总数量值
@@ -255,7 +255,18 @@
 		
 		
 		<script>
-			
+			function  deleteAsu(data){
+				var purchaseTexts = new Array();
+				 var purchaseTexts=$("#shuju").val().split("#");
+				 $("#shuju").val("")
+				 for (var i = 0; i < shuju.length-1; i++) {
+					if(purchaseTexts[i].indexOf(data.matId)!=0){
+						$("#shuju").val($("#shuju").val()+(shuju[i]+"#"))
+					} 
+				}
+			}
+		
+		
 			function Pressdown(obj){
 				obj.value = obj.value.replace(/[^\d]/g,"");//清除“数字”和“.”以外的字符  
 			    if(obj.value ==0){

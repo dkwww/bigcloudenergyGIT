@@ -128,7 +128,6 @@
 		        <table id="demo" lay-filter="demo"></table>
 		      <script type="text/html" id="barDemo">
 					<button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="edit">立即质检</button>
-				 
    					  <button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">入库</button>
 		        </script>
 		    </div>
@@ -406,7 +405,6 @@
 				                    classifies: staticData.classifies
 				                };
 		                	var  qcId=d.user.qcId;
-		                		
 		                	update("../../drugInvDetail/addAll.action?qcId="+qcId,null); 
 		                    layer.close(index);
 		                    //向服务端发送删除指令

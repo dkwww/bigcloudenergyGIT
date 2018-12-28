@@ -36,7 +36,15 @@ public interface MatInvMapper {
      */
     int selectCount(MatInv matinv);
     
-	List<MatInv> findQcId(String qcFkId);
+    /**
+     * 
+     * 方法说明：根据质检明细id查询库存
+     * @param qcFkId
+     * @return
+     * @author dengknagwei
+     * @date：2018年12月27日
+     */
+	MatInv findQcId(String qcFkId);
 	
 	/**
      * 

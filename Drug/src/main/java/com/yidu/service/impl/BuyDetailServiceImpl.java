@@ -137,22 +137,22 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 			if(drugInv.getDiId()!=null&&!"".equals(drugInv.getDiId())) {
 				System.out.println("找到了药品");
 				
-				buy.setBuyId(uuidOne);
-				buy.setComId(admin.getComId());
-				buy.setBuyAmount(Integer.valueOf(amount));
-				buy.setBuyMoney(money);
-				buy.setBuyTime(new Date());
-				buy.setBuyCompany("总店");
-				buy.setBuyType("1");
-				buy.setBuyAudit("1");
+				buy.setBuyId(uuidOne);//订单id
+				buy.setComId(admin.getComId());//店铺id
+				buy.setBuyAmount(Integer.valueOf(amount));//总购买数量
+				buy.setBuyMoney(money);//订单总价
+				buy.setBuyTime(new Date());//采购时间
+				buy.setBuyCompany("总店");//店铺
+				buy.setBuyType("1");//采购类型   1为药品   0为药材
+				buy.setBuyAudit("1");//采购类型   1为采购中
 				buy.setBuyQc("0");
 				buy.setBuyState("1");
 				buy.setBuyPut("0");
 				buy.setBuyMes(mess);
 				buy.setIsva("有效");
-				buy.setOptime(new Date());
-				buy.setOper(admin.getAdminName());
-				buy.setSort(TimeUtil.getStrDate());;
+				buy.setOptime(new Date());//操作时间
+				buy.setOper(admin.getAdminName());//操作人
+				buy.setSort(TimeUtil.getStrDate());//排序
 				
 				if(i==0) {
 					//采购订单增加的方法
@@ -184,7 +184,7 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 				bDetail.setOper(admin.getAdminName());
 				bDetail.setOptime(new Date());
 				
-				
+				//采购详情的增加
 				buyRows =addOrUpdate(bDetail);
 				
 				if(i==0) {

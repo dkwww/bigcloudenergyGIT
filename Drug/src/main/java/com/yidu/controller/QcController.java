@@ -6,11 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yidu.domain.MatInv;
+import com.yidu.domain.MatInvDetail;
 import com.yidu.domain.Mrp;
 import com.yidu.domain.Pmc;
 import com.yidu.domain.PmcDetails;
 import com.yidu.domain.Qc;
 import com.yidu.domain.QcDetail;
+import com.yidu.service.MatInvDetailService;
 import com.yidu.service.MatInvService;
 import com.yidu.service.MrpService;
 import com.yidu.service.PmcDetailsService;
@@ -56,6 +58,9 @@ public class QcController {
 	private MatInvService invservice;
 	@Resource
 	private MrpService mrpService;
+	
+	@Resource
+	private MatInvDetailService invdetailservice;
 
 	//查询 药品质检
 	@RequestMapping("/qureyAll")
@@ -118,6 +123,11 @@ public class QcController {
 		qc.setOptime(date);
 		qc.setQcOptime(date); 
 		int rows= qcService.add(qc); 
+		
+		 Mrp  mrp  =new  Mrp();
+		 mrp.setMrpId(qc.getMrpId());
+		 mrp.setMrpPud(1);
+		  mrpService.updatepud(mrp);
 		 
 		
 		if (rows>0) {
@@ -248,21 +258,27 @@ public class QcController {
 		List<QcDetail> list=qcDetailService.findByIds(qc.getQcId());
 		//循环质检明细的内容
 		for (QcDetail qcDetail : list) {
-			//在根据质检明细的id查找库存的所有
-			List<MatInv> invlist=invservice.findQcId(qcDetail.getQdetFkId());
-			//循环库存所有
-			for (MatInv matInv : invlist) {
-				System.err.println("----------库存当前数量"+matInv.getMiAmount());
+			System.out.println("-------------进入这里");
+			//在根据质检明细的id查找库存
+			MatInv invlist=invservice.findQcId(qcDetail.getQdetFkId());
+			
+				System.err.println("----------库存当前数量"+invlist.getMiAmount());
 				System.err.println("----------质检明细的数量:"+qcDetail.getQdetAmount());
-				System.err.println("----------库存id:"+matInv.getMiId());
-				matInv.setMiId(matInv.getMiId());
-				matInv.setMiAmount(qcDetail.getQdetAmount());
-				invservice.add(matInv);
+				System.err.println("----------库存id:"+invlist.getMiId());
 				
+				invservice.updateAmount(qcDetail.getQdetAmount(), invlist.getMiId());
 				
-//				invservice.updateAmount(qcDetail.getQdetAmount(), matInv.getMiId());
-			}
+				//库存明细
+				MatInvDetail invdetail=new MatInvDetail();
+				invdetail.setMidId(Tools.getDateOrderNo());
+				invdetail.setMiId(invlist.getMiId());
+				invdetail.setMidAmount(qcDetail.getQdetAmount());
+				invdetailservice.addkcdetail(invdetail);
+			
+			
 		}
+		
+		
 		
 		Message me=new Message();
 		me.setStatus(1);

@@ -148,4 +148,8 @@ public class DebtyServiceImpl   implements DebtyService {
 		
 		return debtyMapper.findcwId(comId);
 	}
+	@Override
+	public int addMoney(BigDecimal money, String debtyId) {
+		return debtyMapper.addMoney(money, debtyId);
+	}
 }

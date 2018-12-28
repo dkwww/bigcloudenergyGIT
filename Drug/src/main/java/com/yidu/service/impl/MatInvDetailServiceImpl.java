@@ -41,4 +41,10 @@ public class MatInvDetailServiceImpl implements MatInvDetailService {
 		return dao.selectCount(matdetail);
 	}
 
+	@Override
+	public int addkcdetail(MatInvDetail matdetail) {
+		
+		return dao.insert(matdetail);
+	}
+
 }

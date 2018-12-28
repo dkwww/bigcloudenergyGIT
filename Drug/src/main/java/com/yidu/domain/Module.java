@@ -22,6 +22,8 @@ public class Module {
     private String oper;
 
     private String sort;
+    
+    private String adminId;
 
     public String getModeId() {
         return modeId;
@@ -102,4 +104,12 @@ public class Module {
     public void setSort(String sort) {
         this.sort = sort == null ? null : sort.trim();
     }
+
+	public String getAdminId() {
+		return adminId;
+	}
+
+	public void setAdminId(String adminId) {
+		this.adminId = adminId;
+	}
 }

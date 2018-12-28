@@ -99,4 +99,12 @@ public interface DebtyService   {
 	 * @return
 	 */
 	int addbty(BigDecimal money,String debtyId);
+	
+	/**
+	 * 加财务数据
+	 * @param debty
+	 * @author 邓康威
+	 * @return
+	 */
+	int addMoney(BigDecimal money,String debtyId);
 }

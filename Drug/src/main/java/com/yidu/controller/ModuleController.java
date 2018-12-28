@@ -116,8 +116,8 @@ public class ModuleController {
 	 */
 	@RequestMapping("findByZiModule")
 	@ResponseBody
-	public List<Module> findByZiModule(String modeId){
-		List<Module> list = moduService.findByZiModule(modeId);
+	public List<Module> findByZiModule(Module record){
+		List<Module> list = moduService.findByZiModule(record);
 		//for循环第一次
 		for (int i = 0; i < list.size() - 1; i++) {
 			//for循环第二次

@@ -76,5 +76,16 @@ public interface DebtyMapper {
 	 */
 	@Update("UPDATE drug_debty SET deb_money = deb_money - #{buyMoney} WHERE deb_id = #{debtyId}")
 	int updateMoney(@Param("buyMoney")BigDecimal buyMoney,@Param("debtyId")String debtyId);
+	
+	
+	/**
+	 * 加财务
+	 * @param money
+	 * @param debtyId
+	 * @author 郑有宏
+	 * @return
+	 */
+	@Update("UPDATE drug_debty SET deb_money = deb_money + #{buyMoney} WHERE deb_id = #{debtyId}")
+	int addMoney(@Param("buyMoney")BigDecimal buyMoney,@Param("debtyId")String debtyId);
 }
    

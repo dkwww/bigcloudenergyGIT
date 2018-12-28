@@ -291,6 +291,7 @@ public class BuyHeController {
 	public Message update(@RequestBody Buy buy) {
 		//根据订单的分店id查询财务
 		Debty deb=debtyservice.findcwId(buy.getComId());
+		
 		System.err.println("------------财务总金额"+deb.getDebMoney());
 		System.err.println("------------材料总价格"+buy.getBuyMoney());
 		System.err.println("=============财务id"+deb.getDebId());
@@ -312,6 +313,7 @@ public class BuyHeController {
 		debmx.setOptime(new Date());
 		//放入数据库
 		debtydetailservice.addmx(debmx);
+		
 		
 		//获取审核表的对象
 		Audit audit=new Audit();

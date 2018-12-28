@@ -56,7 +56,7 @@
 		        <form class="layui-form" action="" lay-filter="form-edit">
 		            <input type="hidden" name="buyId" value="{{d.rowdata.buyId}}" />
 					<input type="hidden" name="comId" value="{{d.rowdata.comId}}" />
-					<input type="text" name="buyMoney" value="{{d.rowdata.buyMoney}}" />
+					<input type="hidden" name="buyMoney" value="{{d.rowdata.buyMoney}}" />
 					<div class="layui-form-item">
 		                <label class="layui-form-label">审核部门</label>
 		                <div class="layui-input-block">
@@ -256,7 +256,6 @@
 				
 		      //审核提交
 		        form.on('submit(formEdit)', function(data) {
-		        	alert(data.field.comId)
 		        	var cls = update("../../buyht/update.action",data.field);
 		        	editIndex && layer.close(editIndex); //关闭弹出层
                 	return false;

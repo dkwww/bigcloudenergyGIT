@@ -31,6 +31,14 @@ public interface QcService  {
 	 */
 	int selectCountBySelective(Qc  qc);
 	
+	/**
+	 * 分店质检查询所有
+	 * @param qc
+	 * @param pageUtil
+	 * @author zhengyouhong
+	 * @return
+	 */
+	List<Qc> branchQuality(Qc  qc,PageUtil pageUtil);
 	
 	/**
 	 * 增加
@@ -86,5 +94,12 @@ public interface QcService  {
 	  int  updateByPrimaryKeySelective(Qc  qc);
 
 	int add(Qc qc);
+
+	/**
+	 * 分店质检增加
+	 * @param buy
+	 * @return
+	 */
+	int qualityAdd(Buy buy);
 
 }
