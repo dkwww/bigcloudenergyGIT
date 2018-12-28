@@ -123,6 +123,11 @@ public class QcController {
 		qc.setOptime(date);
 		qc.setQcOptime(date); 
 		int rows= qcService.add(qc); 
+		
+		 Mrp  mrp  =new  Mrp();
+		 mrp.setMrpId(qc.getMrpId());
+		 mrp.setMrpPud(1);
+		  mrpService.updatepud(mrp);
 		 
 		
 		if (rows>0) {

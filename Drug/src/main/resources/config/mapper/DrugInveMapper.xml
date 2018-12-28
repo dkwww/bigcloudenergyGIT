@@ -79,14 +79,10 @@
     where di_id = #{diId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.yidu.domain.DrugInve">
-    insert into drug_drug_inv (di_id, com_id, drug_id, 
-      di_amount, di_comtype, isva, 
-      optime, oper, sort
-      )
+    insert into drug_drug_inv (di_id, com_id, drug_id, di_amount, di_comtype, isva, optime, oper, sort )
     values (#{diId,jdbcType=VARCHAR}, #{comId,jdbcType=VARCHAR}, #{drugId,jdbcType=VARCHAR}, 
       #{diAmount,jdbcType=INTEGER}, #{diComtype,jdbcType=VARCHAR}, #{isva,jdbcType=VARCHAR}, 
-      #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}
-      )
+      #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}  )
   </insert>
   
   

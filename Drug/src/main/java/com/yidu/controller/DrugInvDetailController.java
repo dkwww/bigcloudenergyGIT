@@ -62,7 +62,8 @@ public class DrugInvDetailController {
 
 	@RequestMapping("addAll")
 	@ResponseBody
-	public   Message   addAll(Qc  qc) {
+	public   Message   addAll(Qc  qc ) { 
+	 
 		Message  message  =new  Message() ;
 		List<QcDetail> list = qcdetaService.selectQcId(qc.getQcId());
 		int  rows =0;
@@ -77,10 +78,13 @@ public class DrugInvDetailController {
 				int  sum=qcDetail.getQdetAmount()-qcDetail.getQdetFail();
 				drugInve.setDiAmount(sum);
 				drugInvService.updateamount(drugInve);
-				//==============================分界线=======================
+				
+				
 				drugInvDetail.setDidId(str);
 				for (DrugInve drugInve2 : drugList) {
+					
 					drugInvDetail.setDiId(drugInve2.getDiId());
+				
 				}
 				int  sums=qcDetail.getQdetAmount()-qcDetail.getQdetFail();
 				drugInvDetail.setDiAmount(sums);
@@ -93,7 +97,10 @@ public class DrugInvDetailController {
 				int  sum=qcDetail.getQdetAmount()-qcDetail.getQdetFail();
 				drugInve.setDiAmount(sum);
 				drugInve.setDiComtype("0");
+				drugInve.setDiId(string);
+				System.out.println("123321321321============="+drugInve.getDiId());
 				rows = drugInvService.insert(drugInve);
+				
 				//==============================分界线=======================
 				drugInvDetail.setDidId(str);
 				drugInvDetail.setDiId(string);
@@ -107,8 +114,6 @@ public class DrugInvDetailController {
 		Qc  qc2  = new  Qc();
 		qc2.setQcId(qc.getQcId());
 		qc2.setQcPut("1");
-		 System.out.println("==============这是ID=============="+qc.getQcId());
-		 System.out.println("==============这是要修改的=============="+qc2.getQcPut());
 		qcService.updateByPrimaryKeySelective(qc2);
 		
 		
