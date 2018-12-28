@@ -127,7 +127,6 @@
 		      <script type="text/html" id="barDemo">
 					<button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="edit">制作成品</button>
    					<button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">提交质检</button>
-					<button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">查看详细</button>
 		        </script>
 		    </div>
 		</div>
@@ -410,8 +409,8 @@
 				                };
 		                	
 		                	var  pmcId=d.user.pmcId;
-		                   	var  mrpId=d.user.pmcId;
-		                	update("../../qc/add.action?pmcId="+pmcId,null);
+		                   	var  mrpId=d.user.mrpId;
+		                	update("../../qc/add.action?pmcId="+pmcId+'&mrpId='+mrpId,null);
 		                    layer.close(index);
 		                    //向服务端发送删除指令
 		                });
