@@ -65,6 +65,11 @@ public class DebtyDetailServiceImpl  implements DebtyDetailService {
 		
 		return debtyDetailMapper.selectCount(debty);
 	}
+	@Override
+	public int addmx(DebtyDetail debty) {
+		System.err.println("============进入增加方法");
+		return debtyDetailMapper.insert(debty);
+	}
 
 	
 

@@ -145,8 +145,10 @@ public class PmcController {
 		return map;
 	}
 	
-	public void josnMade() {
-		
+	@RequestMapping("/joinMade")
+	@ResponseBody
+	public int joinMade(Pmc record) {
+		return pmcService.joinMade(record);
 	}
 }
 

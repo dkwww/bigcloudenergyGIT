@@ -81,6 +81,17 @@ public interface DebtyService   {
      */
 	List<Debty> findcomIds(String comId);
 	
+	
+	/**
+	 * 
+	 * 方法说明：根据采购订单查询财务
+	 * @param comId
+	 * @return
+	 * @author dengknagwei
+	 * @date：2018年12月27日
+	 */
+	Debty findcwId(String comId);
+	
 	/**
 	 * 减财务数据
 	 * @param debty

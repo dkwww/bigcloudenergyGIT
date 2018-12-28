@@ -114,4 +114,12 @@
       sort = #{sort,jdbcType=VARCHAR}
     where mid_id = #{midId,jdbcType=VARCHAR}
   </update>
+  
+  <select id="findById" parameterType="map" resultMap="BaseResultMap">
+  	SELECT * FROM drug_mat_inv a,drug_mat_inv_detail b WHERE a.mi_id=b.mi_id AND a.mi_id=#{matdetail.miId}
+  </select>
+  
+  <select id="selectCount" parameterType="com.yidu.domain.MatInvDetail" resultMap="BaseResultMap">
+  	SELECT count(*) FROM drug_mat_inv a,drug_mat_inv_detail b WHERE a.mi_id=b.mi_id AND a.mi_id=#{miId}
+  </select>
 </mapper>

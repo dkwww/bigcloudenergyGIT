@@ -33,4 +33,6 @@ public interface PmcService  {
 	
 	int  addPmc(Pmc record);
 
+	int joinMade(Pmc record);
+
 }

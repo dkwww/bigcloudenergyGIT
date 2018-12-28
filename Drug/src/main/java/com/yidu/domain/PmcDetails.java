@@ -2,8 +2,6 @@ package com.yidu.domain;
 
 import java.util.Date;
 
-import javax.ws.rs.NameBinding;
-
 public class PmcDetails {
     private String pdId;
 
@@ -45,8 +43,10 @@ public class PmcDetails {
     
     private String mlAmount;
     
-   
-
+    private String miId;
+    
+    private String miName;
+    
 	public String getPdId() {
         return pdId;
     }
@@ -205,5 +205,21 @@ public class PmcDetails {
 
 	public void setMlAmount(String mlAmount) {
 		this.mlAmount = mlAmount;
+	}
+
+	public String getMiId() {
+		return miId;
+	}
+
+	public void setMiId(String miId) {
+		this.miId = miId;
+	}
+
+	public String getMiName() {
+		return miName;
+	}
+
+	public void setMiName(String miName) {
+		this.miName = miName;
 	}
 }

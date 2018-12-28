@@ -44,10 +44,22 @@ public class Audit {
     
     private BigDecimal buyMoney;
     
+    private String comId;		//分店id
     
     
     
-    public BigDecimal getBuyMoney() {
+    
+    
+    
+    public String getComId() {
+		return comId;
+	}
+
+	public void setComId(String comId) {
+		this.comId = comId;
+	}
+
+	public BigDecimal getBuyMoney() {
 		return buyMoney;
 	}
 

@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.yidu.dao.MrpMapper;
 import com.yidu.dao.PmcMapper;
+import com.yidu.domain.Mrp;
 import com.yidu.domain.Pmc;
 import com.yidu.service.PmcService;
 import com.yidu.util.PageUtil;
@@ -112,6 +114,18 @@ public class PmcServiceImpl  implements PmcService {
 
 	@Override
 	public List<Pmc> showAudit(Pmc record, PageUtil pageUtil) {
+		try {
+			if (record.getStrStartTime()!=null&&!"".equals(record.getStrStartTime())) {
+				record.setStartTime(TimeUtil.stringToDate(record.getStrStartTime().split("到")[0],  "yyyy-MM-dd HH:mm:ss"));
+				record.setEndTime(TimeUtil.stringToDate(record.getStrStartTime().split("到")[1],  "yyyy-MM-dd HH:mm:ss"));
+			}
+			if (record.getStrEndTime()!=null&&!"".equals(record.getStrEndTime())) {
+				record.setStartTimes(TimeUtil.stringToDate(record.getStrEndTime().split("到")[0],  "yyyy-MM-dd HH:mm:ss"));
+				record.setEndTimes(TimeUtil.stringToDate(record.getStrEndTime().split("到")[1],  "yyyy-MM-dd HH:mm:ss"));
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("record", record);
 		map.put("pageUtil", pageUtil);
@@ -133,6 +147,25 @@ public class PmcServiceImpl  implements PmcService {
 	@Override
 	public int addPmc(Pmc record) {
 		return pmcMapper.addpmc(record);
+	}
+
+	@Override
+	public int joinMade(Pmc record) {
+		Pmc pmc = pmcMapper.selectByAuditId(record.getAudId());
+		Mrp mrp = new Mrp();
+		mrp.setMrpId(UUID.randomUUID().toString().replace("-", ""));
+		mrp.setPmcId(pmc.getPmcId());
+		mrp.setComName(pmc.getComName());
+		mrp.setMrpOptime(pmc.getPmcStart());
+		mrp.setMrpEndtime(pmc.getPmcEnd());
+		mrp.setMrpPlan(pmc.getPmcAmount());
+		mrp.setMrpIdea(0);
+		mrp.setMrpRate("0");
+		mrp.setMrpState(0);
+		mrp.setMrpPud(0);
+		mrp.setIsva("1");
+		mrp.setOptime(new Date());
+		return mrpMapper.insert(mrp);
 	}
 
 }

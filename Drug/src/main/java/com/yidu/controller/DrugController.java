@@ -77,13 +77,11 @@ public class DrugController {
 	@ResponseBody
 	public Map<String,Object> showList(Drug record,Integer page,Integer limit) {
 		
-		System.err.println("--------------------------"+record.getComId());
-		
 		PageUtil pageUtil = new PageUtil();
 		pageUtil.setCurPage(page);
 		pageUtil.setRows(limit);
 		
-		List<Drug> list = drugService.selectBySelectives(record, pageUtil);
+		List<Drug> list = drugService.findAll(record, pageUtil);
 		int rows = drugService.findCount(record);
 		
 		@SuppressWarnings("unchecked")

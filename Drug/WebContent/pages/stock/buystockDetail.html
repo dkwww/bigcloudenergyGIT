@@ -6,7 +6,7 @@
 		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
-		<title>材料库存管理</title>
+		<title>库存详情</title>
     </script>
 	</head>
 	<body>
@@ -93,9 +93,12 @@
 			}
 		</script>
 		<script src="../../res/layui/layui.all.js"></script>
+		<script src="../../res/js/common/parameter.js"></script>
 		<script>
 			//显示表格数据
 		    layui.use(['table','upload'], function() {
+		    	var miId = getParameter("id");
+		    	
 		        var table = layui.table,
 		            $ = layui.jquery,
 		            layer = layui.layer,
@@ -104,7 +107,7 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '449px', //容器高度
-		            url: '../../matInv/showList.action',
+		            url: '../../matInvDetail/findById.action?miId='+miId,
 		            page: true,
 		            id: 'demo',
 		            cols: [
@@ -112,8 +115,7 @@
 		                {field: 'miId',title: '库存编号', width: 145},
 		                {field: 'mtName',title: '类型',width: 175},
 		                {field: 'matName',title: '药材名称',width: 150},
-		                {field: 'miAmount',title: '数量',width: 80},
-		                {fixed: 'right',title: '操作',width: 180,align: 'center',toolbar: '#barDemo'}]
+		                {field: 'miAmount',title: '数量',width: 80}]
 		            ],
 		            done: function(res, curr, count) {
 		                $("[data-field = 'drugProp']").children().each(function(){
@@ -184,25 +186,6 @@
 	                    
 	                });
 			    }
-		        
-		        //监听工具条按钮点击
-		        table.on('tool(demo)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-		            var data = obj.data; //获得当前行数据
-		            var layEvent = obj.event; //获得 lay-event 对应的值
-		            var tr = obj.tr; //获得当前行 tr 的DOM对象
-		
-		            if (layEvent === 'detail') { //查看库存详情
-		                var miId=data.miId;
-		                var index = layer.open({
-	          				  type: 2,
-	          				  title: '库存详情',
-	          				  content: '../stock/buystockDetail.html?id='+miId,
-	          				  area: ['800px', '30px']
-	          				  //maxmin: true
-	          				});
-	          			layer.full(index);
-		            }
-		        });
 		        
 		        //表单渲染
 		        form.render(null, 'kit-search-form');

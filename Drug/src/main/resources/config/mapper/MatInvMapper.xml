@@ -16,7 +16,7 @@
     
   </resultMap>
   <sql id="Base_Column_List">
-    mi_id, mi_amount, mat_id, isva, optime, oper, sort
+    mi_id, mi_amount, mat_id, isva, optime, oper, sort,mat_name,mt_id,mt_name
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -122,7 +122,9 @@
   
   
   <select id="showList" parameterType="map" resultMap="BaseResultMap">
-  	SELECT * FROM drug_material a,drug_mat_type b,drug_mat_inv c WHERE a.mt_id=b.mt_id AND a.mat_id=c.mat_id
+  	SELECT 
+  	a.mat_name,b.mt_name,c.*
+  	FROM drug_material a,drug_mat_type b,drug_mat_inv c WHERE a.mt_id=b.mt_id AND a.mat_id=c.mat_id
   </select>
   
   

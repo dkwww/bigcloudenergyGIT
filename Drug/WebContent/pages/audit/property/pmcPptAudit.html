@@ -179,7 +179,8 @@
 		            $ = layui.jquery,
 		            layer = layui.layer,
 		            form = layui.form,
-		            laytpl = layui.laytpl;
+		            laytpl = layui.laytpl,
+		            laydate = layui.laydate;
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '449px', //容器高度
@@ -235,6 +236,9 @@
 					  	});
 		            }
 		        });
+		        
+		        renderDate('#startDate');
+		        renderDate('#endDate');
 		        
 		        //监听搜索表单提交
 		        form.on('submit(search)', function(data) {  
@@ -300,9 +304,8 @@
 				  type: 2,
 				  title: '药品配置',
 				  content: '../../../pages/plan/pmc/details/index2.html?id='+id+"&name="+name,
-				  area: ['800px', '430px']
+				  area: ['100%', '100%']
 				});
-				layer.full(layerIndex1);
 			}
 		  	
 		  	//渲染 生产计划审核和审核明细弹出层
@@ -321,6 +324,17 @@
                 });
 	    		return 
 		    }
+		  	
+		  	//日期下拉框渲染
+		 	function renderDate(dateId){
+		 		layui.laydate.render({
+	        	  elem: dateId
+	        	  ,type: 'datetime'
+	        	  ,calendar: true
+        	      ,range: '到'
+        	      ,format: 'yyyy-M-d H:m:s'
+	        	});
+		 	}
 		    
 		  	//进行审核
 		    function update(data){

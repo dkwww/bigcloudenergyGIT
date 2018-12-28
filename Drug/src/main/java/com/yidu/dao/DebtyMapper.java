@@ -57,13 +57,24 @@ public interface DebtyMapper {
 	List<Debty> findcomIds(String comId);
 	
 	/**
+	 * 
+	 * 方法说明：根据采购订单查询财务
+	 * @param comId
+	 * @return
+	 * @author dengknagwei
+	 * @date：2018年12月27日
+	 */
+	Debty findcwId(String comId);
+	
+	
+	/**
 	 * 减财务
 	 * @param money
 	 * @param debtyId
 	 * @author 邓康威
 	 * @return
 	 */
-	@Update("UPDATE drug_debty SET deb_money = deb_money - #{money} WHERE deb_id = #{debtyId}")
-	int updateMoney(@Param("money")BigDecimal money,@Param("debtyId")String debtyId);
+	@Update("UPDATE drug_debty SET deb_money = deb_money - #{buyMoney} WHERE deb_id = #{debtyId}")
+	int updateMoney(@Param("buyMoney")BigDecimal buyMoney,@Param("debtyId")String debtyId);
 }
    

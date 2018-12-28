@@ -19,10 +19,12 @@ import com.yidu.domain.Buy;
 import com.yidu.domain.BuyDetail;
 import com.yidu.domain.Company;
 import com.yidu.domain.Debty;
+import com.yidu.domain.DebtyDetail;
 import com.yidu.service.AuditService;
 import com.yidu.service.BuyHeDetailService;
 import com.yidu.service.BuyHeService;
 import com.yidu.service.CompanyService;
+import com.yidu.service.DebtyDetailService;
 import com.yidu.service.DebtyService;
 import com.yidu.service.QcService;
 import com.yidu.util.Message;
@@ -65,6 +67,10 @@ public class BuyHeController {
 	//财务service
 	@Resource
 	private DebtyService debtyservice;
+	
+	//财务明细service
+	@Resource
+	private DebtyDetailService debtydetailservice;
 	
 	/**
 	 * 显示列表
@@ -171,6 +177,7 @@ public class BuyHeController {
 		buy.setBuyQc("0");
 		//默认入库状态为0
 		buy.setBuyPut("0");
+		buy.setComId("666");
 		
 		//new获取当前时间
 		Date date=new Date();
@@ -282,24 +289,29 @@ public class BuyHeController {
 	@RequestMapping("update")
 	@ResponseBody
 	public Message update(@RequestBody Buy buy) {
+		//根据订单的分店id查询财务
+		Debty deb=debtyservice.findcwId(buy.getComId());
+		System.err.println("------------财务总金额"+deb.getDebMoney());
+		System.err.println("------------材料总价格"+buy.getBuyMoney());
+		System.err.println("=============财务id"+deb.getDebId());
+		//修改金额
+		debtyservice.addbty(buy.getBuyMoney(),deb.getDebId());
 		
-		//根据采购id查询审核
-		List<Audit> list=audservice.findByIdsh(buy.getBuyId());
-		for (Audit audit : list) {
-			//根据审核外键id查询分店
-			List<Company> lists=comservice.findDeId(audit.getQcFkId());
-			for (Company company : lists) {
-				//根据店铺id查询财务
-				List<Debty> listss=debtyservice.findcomIds(company.getComId());
-				for (Debty debty : listss) {
-					System.err.println("-----------价格:"+audit.getBuyMoney());
-					System.err.println("-------------财务ID:"+debty.getDebId());
-					debtyservice.addbty(audit.getBuyMoney(),debty.getDebId());
-				}
-				
-			}
-			
-		}
+		//得到财务明细对象
+		DebtyDetail debmx=new DebtyDetail();
+		//赋值一个id
+		debmx.setDdetId(Tools.getDateOrderNo());
+		//赋值财务的id
+		debmx.setDebId(deb.getDebId());
+		//赋值订单的金额
+		debmx.setDdetChange(buy.getBuyMoney());
+		debmx.setIsva("1");
+		//赋值0为支出状态
+		debmx.setDdettFkId("0");
+		//当前的时间
+		debmx.setOptime(new Date());
+		//放入数据库
+		debtydetailservice.addmx(debmx);
 		
 		//获取审核表的对象
 		Audit audit=new Audit();

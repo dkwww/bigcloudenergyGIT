@@ -3,6 +3,9 @@ package com.yidu.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
+
 import com.yidu.domain.MatInv;
 
 public interface MatInvMapper {
@@ -35,5 +38,15 @@ public interface MatInvMapper {
     
 	List<MatInv> findQcId(String qcFkId);
 	
-	
+	/**
+     * 
+     * 方法说明：加库存数量
+     * @param miAmount
+     * @param miId
+     * @return
+     * @author dengknagwei
+     * @date：2018年12月27日
+     */
+    @Update("UPDATE drug_mat_inv SET mi_amount = mi_amount + #{miAmount} WHERE mi_id = #{miId}")
+	int updateAmount(@Param("miAmount")Integer miAmount,@Param("miId")String miId);
 }
