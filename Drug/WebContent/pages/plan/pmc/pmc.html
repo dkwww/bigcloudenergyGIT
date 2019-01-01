@@ -83,41 +83,6 @@
 		            </div>
 		        </div>
 		    </form>
-		    <!-- <script type="text/html" id="pmc-audit-tpl">
-				<div style="margin:10px">
-					<div class="layui-form-item" style="padding: 8px 0px 0px 8px;color: #FF5722;">
-		                <h3>财物审核</h3>
-		            </div>
-					<div class="layui-form-item">
-		                <label class="layui-form-label">审核人：</label>
-		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
-							<div>{{d.rowdata.audName}}</div>
-		                </div>
-		            </div>
-					<div class="layui-form-item">
-		                <label class="layui-form-label">审核状态：</label>
-		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
-						{{# if(d.rowdata.bln == false && d.rowdata.audState == '10010'){}}
-							<div>不通过</div>
-		                {{#}else if(d.rowdata.bln == false && d.rowdata.audState == '10011'){}}
-							<div>通过</div>
-		                {{#};}}
-		                </div>
-		            </div>
-					<div class="layui-form-item">
-		                <label class="layui-form-label">审核意见：</label>
-		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
-							<div>{{d.rowdata.audIdea}}</div>
-		                </div>
-		            </div>
-					<div class="layui-form-item">
-		                <label class="layui-form-label">审核时间：</label>
-		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
-							<div>{{d.rowdata.audTimes}}</div>
-		                </div>
-		            </div>
-				</div>
-			</script> -->
 			<script type="text/html" id="pmc-edit-tpl">
 				<div style="height: 145px;margin:auto;position: absolute;top: 0px;bottom: 0px;left: 0px;right: 0px">
 					<form class="layui-form" action="" lay-filter="form-edit">
@@ -202,6 +167,8 @@
 		            form = layui.form,
 		            laytpl = layui.laytpl
 		            laydate = layui.laydate;
+		        var admin = getSession();
+				var comId = admin==null ? null : admin.comId;
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '449px', //容器高度
@@ -285,7 +252,7 @@
 		            } else if (layEvent === 'audit') { //提交审核
 		            	$.ajax({ 
 		            		url:"../../../pmc/check.action",
-		            		data:{"pmcId":data.pmcId},
+		            		data:{"comId":comId,"pmcId":data.pmcId},
 		                    type:'post',//method请求方式，get或者post
 		                    async:false,//同步
 		                    dataType:'json',//预期服务器返回的数据类型
@@ -385,8 +352,9 @@
 				var layerIndex3 = layer.open({
 				  type: 2,
 				  title: '审核详情',
-				  content: '../../plan/pmc/details/index3.html?id='+id+'&state='+state,
-				  area: ['800px', '430px']
+				  content: '../../audit/detail/pmcDetail.html?id='+id,
+				  area: ['800px', '430px'],
+				  maxmin: true,
 				});
 			}
 		  	
@@ -507,6 +475,22 @@
 		  			form.render(); 
 	  			}); 
 	  		}
+		  	
+		  	function getSession(){
+				var admin = null;
+				$.ajax({ 
+		        	url:"../../../admin/getSession.action",
+	                type:'post',
+	                async:false,
+	                dataType:'json',
+	                success:function(mes){
+	                	if (mes!=null && mes!="") {
+	                		admin = mes;
+						}
+	                }
+	        	});
+				return admin;
+			}
 		  	
 		    //ajax加载动画
 		    $(function () {

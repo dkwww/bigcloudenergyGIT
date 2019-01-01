@@ -227,7 +227,6 @@
 		                $("[data-field = 'audState']").children().not(":first").each(function(index){
 						    if($(this).text() == '10101'){
 						    	$(this).text("未审核");
-						    	tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=aduitDetail]').addClass('layui-btn-disabled').attr('disabled',true);
 						    } else if ($(this).text() == '10110' || $(this).text() == '10111') {
 						    	$(this).text("审核完成");
 						    	tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=pmcDetail],button[lay-event=audit]').addClass('layui-btn-disabled').attr('disabled',true);
@@ -257,7 +256,7 @@
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		
 		            if (layEvent === 'pmcDetail') { //生产明细
-		            	maxlayer(data.pmcId,data.pmcName);
+		            	layer1(data.pmcId,data.pmcName);
 		            } else if (layEvent === 'audit') { //审核
 	            		var d = {
 		                	rowdata: {
@@ -266,13 +265,7 @@
 		                };
 		            	editLayer(d);
 		            } else if (layEvent === 'aduitDetail') {//审核明细
-		            	$.post("../../../audit/findById.action",{"audId":data.audId},function(mes){
-		            		mes["bln"] = false;
-		                	 var d = {
-		 		                rowdata: mes
-		 		             };
-		                	 editLayer(d);
-		                 },"json");
+		            	layer2(data.pmcId,"0","总经理审核");
 		            }
 		        });
 		        
@@ -287,21 +280,20 @@
 		        //审核弹出层   提交按钮点击事件
 		        form.on('submit(formEdit)', function(data) {
 		        	var bln = update("../../../audit/addOrUpdate.action",data.field);
-		        	if (data.field.audState=="10111" && bln) {
-		        		$.post("../../../pmc/joinMade.action",{"audId":data.field.audId},function(mes){
-		        			if (mes>0) {
-		        				editIndex && layer.close(editIndex); //关闭弹出层
-		                        $("#res").click();//调用重置按钮将表单数据清空 
-		                        $(".layui-laypage-btn")[0].click();//当前表格刷新
-		        			}
-		        		},"json");
+		        	if (bln) {
+		        		if (data.field.audState=="10111") {
+	                        $.post("../../../pmc/joinMade.action",{"audId":data.field.audId});
+		        		}
+		        		editIndex && layer.close(editIndex); //关闭弹出层
+                        $("#res").click();//调用重置按钮将表单数据清空 
+                        $(".layui-laypage-btn")[0].click();//当前表格刷新
 		        	}
                 	return false;
 		        });
 		    });
 			
 		  	//全屏弹窗
-			function maxlayer(id,name){
+			function layer1(id,name){
 				layerIndex1 = layer.open({
 				  type: 2,
 				  title: '药品配置',
@@ -338,6 +330,17 @@
         	      ,format: 'yyyy-M-d H:m:s'
 	        	});
 		 	}
+		  	
+		 	//显示 审核明细
+			function layer2(id,type,name){
+				layerIndex2 = layer.open({
+				  type: 2,
+				  title: '审核明细',
+				  content: '../detail/drugDetail.html?id='+id+'&type='+type+'&name='+name,
+				  area: ['800px', '430px'],
+				  maxmin: true
+				});
+		  	}
 		    
 		  	//进行审核
 		    function update(url,data){

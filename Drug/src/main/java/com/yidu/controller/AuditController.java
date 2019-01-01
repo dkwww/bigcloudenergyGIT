@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yidu.domain.Audit;
 import com.yidu.domain.Buy;
 import com.yidu.domain.Debty;
+import com.yidu.domain.Drug;
 import com.yidu.domain.DrugInve;
 import com.yidu.domain.Qc;
 import com.yidu.domain.WholesaleDetail;
@@ -496,6 +498,35 @@ public class AuditController {
 	@ResponseBody
 	public Audit findByFk(String audFkId,String type) {
 		return service.findByFk(audFkId,type);
+	}
+	
+	/**
+	 * 方法说明：显示明细
+	 * @param audFkId
+	 * @param type
+	 * @param page
+	 * @param limit
+	 * @return
+	 * @author ZhouJun
+	 * @date：2019年1月1日
+	 */
+	@RequestMapping("/showDetail")
+	@ResponseBody
+	public Map<String,Object> showDetail(String comId,String audFkId,String type,Integer page,Integer limit) {
+		PageUtil pageUtil = new PageUtil();
+		pageUtil.setCurPage(page);
+		pageUtil.setRows(limit);
+		
+		List<Audit> list = service.findDetail(comId,audFkId, type, pageUtil);
+		int rows = service.findDetailCount(comId,audFkId, type);
+		
+		@SuppressWarnings("unchecked")
+		Map<String,Object> map = new HashedMap();
+		map.put("code", 0);
+		map.put("msg", "");
+		map.put("count", rows);
+		map.put("data", list);
+		return map;
 	}
 }
 

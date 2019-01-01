@@ -340,6 +340,9 @@ button {
 .layui-input-block {
     margin: 0px 115px
 }
+.layui-tab{
+	margin: 0px;
+}
 
 .layer{
 	margin:0;

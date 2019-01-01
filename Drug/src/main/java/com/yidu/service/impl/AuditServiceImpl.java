@@ -360,6 +360,31 @@ public class AuditServiceImpl   implements AuditService {
 		record.setAudTimes(TimeUtil.dateToString(record.getAudTime(), "yyyy-MM-dd HH:mm:ss"));
 		return record;
 	}
+
+
+	@Override
+	public List<Audit> findDetail(String comId,String audFkId, String type, PageUtil pageUtil) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("comId", comId);
+		map.put("audFkId", audFkId);
+		map.put("pageUtil", pageUtil);
+		map.put("type", type);
+		List<Audit> list = mapper.findDetail(map);
+		for (Audit audit : list) {
+			audit.setAudTimes(TimeUtil.dateToString(audit.getAudTime(), "yyyy-MM-dd HH:mm:ss"));
+		}
+		return list;
+	}
+
+
+	@Override
+	public int findDetailCount(String comId,String audFkId, String type) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("comId", comId);
+		map.put("audFkId", audFkId);
+		map.put("type", type);
+		return mapper.findDetailCount(map);
+	}
 	
 	
 }

@@ -130,13 +130,18 @@ public class PmcServiceImpl  implements PmcService {
 		map.put("record", record);
 		map.put("pageUtil", pageUtil);
 		List<Pmc> list = pmcMapper.selectByAudit(map);
-		List<Pmc> newList = new ArrayList<Pmc>();
 		for (Pmc pmc : list) {
 			pmc.setStrStartTime(TimeUtil.dateToString(pmc.getPmcStart(), "yyyy-MM-dd HH:mm:ss"));
 			pmc.setStrEndTime(TimeUtil.dateToString(pmc.getPmcEnd(), "yyyy-MM-dd HH:mm:ss"));
-			newList.add(pmc);
 		}
-		return newList;
+		for (int i = 0; i < list.size() - 1; i++) {
+            for (int j = list.size() - 1; j > i; j--) {
+                if (list.get(j).getPmcId().equals(list.get(i).getPmcId())) {
+                    list.remove(j);
+                }
+            }
+        }
+		return list;
 	}
 
 	@Override

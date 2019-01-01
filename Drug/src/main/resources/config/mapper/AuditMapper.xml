@@ -132,6 +132,34 @@
     order by optime desc limit 1
   </select>
   
+  <select id="findDetail" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from drug_audit
+    where qc_fk_id = #{comId,jdbcType=VARCHAR} and aud_fk_id = #{audFkId,jdbcType=VARCHAR}
+    <if test="type == 0">
+    	and aud_state in ('10110','10111','10112','10113')
+    </if>
+    <if test="type == 1">
+    	and aud_state in ('10010','10011','10012','10013')
+    </if>
+    order by (sort+0) desc 
+   	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
+  </select>
+  
+  <select id="findDetailCount" parameterType="java.util.Map" resultType="int">
+    select 
+    count(aud_id)
+    from drug_audit
+    where qc_fk_id = #{comId,jdbcType=VARCHAR} and aud_fk_id = #{audFkId,jdbcType=VARCHAR}
+    <if test="type == 0">
+    	and aud_state in ('10110','10111','10112','10113')
+    </if>
+    <if test="type == 1">
+    	and aud_state in ('10010','10011','10012','10013')
+    </if>
+  </select>
+  
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_audit
