@@ -377,7 +377,7 @@ public class AuditController {
 			pageUtil.setCurPage(page);
 			pageUtil.setRows(limit);
 		}
-		Admin admin = (Admin) session.getAttribute("user");
+		Admin admin = (Admin) session.getAttribute("admin");
 		
 		List<Audit> list = service.showBuy(audit,pageUtil,admin);
 		int rows=service.findCount(audit);
@@ -399,7 +399,7 @@ public class AuditController {
 			pageUtil.setCurPage(page);
 			pageUtil.setRows(limit);
 		}
-		Admin admin = (Admin) session.getAttribute("user");
+		Admin admin = (Admin) session.getAttribute("admin");
 		
 		List<Audit> list = service.showCEO(audit,pageUtil,admin);
 		int rows=service.findCount(audit);
@@ -421,7 +421,7 @@ public class AuditController {
 			pageUtil.setCurPage(page);
 			pageUtil.setRows(limit);
 		}
-		Admin admin = (Admin) session.getAttribute("user");
+		Admin admin = (Admin) session.getAttribute("admin");
 		
 		List<Audit> list = service.findSale(audit,pageUtil,admin);
 		int rows=service.findCount(audit);
@@ -443,7 +443,7 @@ public class AuditController {
 			pageUtil.setCurPage(page);
 			pageUtil.setRows(limit);
 		}
-		Admin admin = (Admin) session.getAttribute("user");
+		Admin admin = (Admin) session.getAttribute("admin");
 		
 		List<Audit> list = service.findCEO(audit,pageUtil,admin);
 		int rows=service.findCount(audit);
