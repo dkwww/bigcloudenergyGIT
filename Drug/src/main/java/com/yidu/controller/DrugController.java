@@ -162,13 +162,14 @@ public class DrugController {
 	 */
 	@RequestMapping("/check")
 	@ResponseBody
-	public Message check(String drugId) {
+	public Message check(String comId,String drugId) {
 		Message mes = new Message();
 		int rows = drugService.check(drugId);
 		if (rows>0) {
 			Audit audit = new Audit();
+			audit.setQcFkId(comId);
 			audit.setAudFkId(drugId);
-			audit.setAudState("10001");
+			audit.setAudState("10101");
 			int count = auditService.addOrUpdate(audit);
 			if (count>0) {
 				mes.setStatus(1);

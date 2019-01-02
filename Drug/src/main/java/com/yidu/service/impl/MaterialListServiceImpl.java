@@ -49,13 +49,13 @@ public class MaterialListServiceImpl  implements MaterialListService {
 	public int addOrUpdate(MaterialList record) {
 		if (record.getMlId()!=null&&!"".equals(record.getMlId())) {
 			int rows = 1;
-			if (!"-1".equals(record.getAudState()) && !"10012".equals(record.getAudState()) && !"10013".equals(record.getAudState()) && record.getAudState()!=null && !"".equals(record.getAudState())) {
+			if (!"-1".equals(record.getAudState()) && !"10112".equals(record.getAudState()) && !"10113".equals(record.getAudState()) && record.getAudState()!=null && !"".equals(record.getAudState())) {
 				Audit audit = new Audit();
 				audit.setAudId(record.getAudId());
-				if ("10010".equals(record.getAudState())) {
-					audit.setAudState("10012");
-				} else if ("10011".equals(record.getAudState())) {
-					audit.setAudState("10013");
+				if ("10110".equals(record.getAudState())) {
+					audit.setAudState("10112");
+				} else if ("10111".equals(record.getAudState())) {
+					audit.setAudState("10113");
 				}
 				rows = auditMapper.updateByPrimaryKeySelective(audit);
 			}

@@ -120,59 +120,33 @@
 		            </div>
 		            <input type="hidden" name="audId" value="{{d.rowdata.audId}}" />
 					<div class="layui-form-item">
-		                <label class="layui-form-label">审核人：</label>
-		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
-						{{# if(d.rowdata.bln == true){}}
-							<input type="text" name="audName" required lay-verify="required" placeholder="你的名字" autocomplete="off" class="layui-input">
-						{{#}else{}}
-							<div>{{d.rowdata.audName}}</div>
-		                {{#};}}
-		                </div>
-		            </div>
-					<div class="layui-form-item">
 		                <label class="layui-form-label">审核状态：</label>
 		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
-						{{# if(d.rowdata.bln == false && d.rowdata.audState == '10010'){}}
-							<div>不通过</div>
-		                {{#}else if(d.rowdata.bln == false && d.rowdata.audState == '10011'){}}
-							<div>通过</div>
-						{{#}else{}}
 							<input type="radio" name="audState" value="10011" title="通过" />
 		                    <input type="radio" name="audState" value="10010" title="不通过" checked/>
-		                {{#};}}
 		                </div>
 		            </div>
 					<div class="layui-form-item">
 		                <label class="layui-form-label">审核意见：</label>
 		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
-						{{# if(d.rowdata.bln == true){}}
 							<textarea name="audIdea" required lay-verify="required" placeholder="意见" autocomplete="off" class="layui-textarea"></textarea>
-						{{#}else{}}
-							<div>{{d.rowdata.audIdea}}</div>
-		                {{#};}}
 		                </div>
 		            </div>
-					{{# if(d.rowdata.bln == false){}}
-						<div class="layui-form-item">
-		                	<label class="layui-form-label">审核时间：</label>
-		                	<div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
-								<div>{{d.rowdata.audTimes}}</div>
-		                	</div>
-		            	</div>
-					{{#}else{}}
-						<div class="layui-form-item">
-		                	<div class="layui-input-block" style="padding-left: 8px;">
-		                    	<input type="button" class="layui-btn layui-btn-sm" lay-submit lay-filter="formEdit" style="padding: 0px 20px" value='提交'>
-								<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">重置</button>
-		                	</div>
-		            	</div>
-		            {{#};}}
+					<div class="layui-form-item">
+		                <div class="layui-input-block" style="padding-left: 8px;">
+		                    <input type="button" class="layui-btn layui-btn-sm" lay-submit lay-filter="formEdit" style="padding: 0px 20px" value='提交'>
+							<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">重置</button>
+		                </div>
+		            </div>
 		        </form>
 		    </div>
 		</script>
 		<script>
 			//弹出层下标
 			var layerIndex1,layerIndex2,editIndex;
+			var admin = getSession();
+			var adminName = admin==null ? null : admin.adminName;
+			
 			//显示表格数据
 		    layui.use(['table','laydate'], function() {
 		        var table = layui.table,
@@ -228,7 +202,6 @@
 		                $("[data-field = 'audState']").children().not(":first").each(function(index){
 						    if($(this).text() == '10001'){
 						    	$(this).text("未审核");
-						    	tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=aduitDetail]').addClass('layui-btn-disabled').attr('disabled',true);
 						    } else {
 						    	$(this).text("审核完成");
 						    	tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=pmcDetail],button[lay-event=audit]').addClass('layui-btn-disabled').attr('disabled',true);
@@ -258,7 +231,7 @@
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		
 		            if (layEvent === 'pmcDetail') { //生产明细
-		            	maxlayer(data.pmcId,data.pmcName);
+		            	layer1(data.pmcId,data.pmcName);
 		            } else if (layEvent === 'audit') { //审核
 	            		var d = {
 		                	rowdata: {
@@ -267,13 +240,7 @@
 		                };
 		            	editLayer(d);
 		            } else if (layEvent === 'aduitDetail') {//审核明细
-		            	$.post("../../../audit/findById.action",{"audId":data.audId},function(mes){
-		            		mes["bln"] = false;
-		                	var d = {
-		 		               rowdata: mes
-		 		            };
-		                	editLayer(d);
-		                },"json");
+		            	layer2(data.pmcId,"1","财物审核");
 		            }
 		        });
 		        
@@ -287,10 +254,11 @@
 		        
 		        //审核弹出层   提交按钮点击事件
 		        form.on('submit(formEdit)', function(data) {
+		        	data.field["audName"]=adminName;
 		        	update(data.field);
 		        	if (data.field.audState == "10011") {
 		        		$.post("../../../audit/findById.action",{"audId": data.field.audId},function (mes){
-			        		update({"audFkId": mes.audFkId,"audState": "10101"});
+			        		update({"qcFkId": mes.qcFkId,"audFkId": mes.audFkId,"audState": "10101"});
 			        	},"json");
 		        	}
                 	return false;
@@ -299,7 +267,7 @@
 		    });
 			
 		  	//全屏弹窗
-			function maxlayer(id,name){
+			function layer1(id,name){
 				layerIndex1 = layer.open({
 				  type: 2,
 				  title: '药品配置',
@@ -335,6 +303,17 @@
         	      ,format: 'yyyy-M-d H:m:s'
 	        	});
 		 	}
+		  	
+		 	//显示 审核明细
+			function layer2(id,type,name){
+				layerIndex2 = layer.open({
+				  type: 2,
+				  title: '审核明细',
+				  content: '../detail/drugDetail.html?id='+id+'&type='+type+'&name='+name,
+				  area: ['800px', '430px'],
+				  maxmin: true
+				});
+		  	}
 		    
 		  	//进行审核
 		    function update(data){
@@ -364,6 +343,25 @@
 		  			form.render(); 
 	  			}); 
 	  		}
+		  	
+		  	/**
+			*获取session
+			*/
+			function getSession(){
+				var admin = null;
+				$.ajax({ 
+		        	url:"../../../admin/getSession.action",
+	                type:'post',
+	                async:false,
+	                dataType:'json',
+	                success:function(mes){
+	                	if (mes!=null && mes!="") {
+	                		admin = mes;
+						}
+	                }
+	        	});
+				return admin;
+			}
 		  	
 		    //ajax加载动画
 		    $(function () {

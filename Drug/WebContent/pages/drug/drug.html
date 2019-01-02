@@ -235,44 +235,6 @@
 		        </form>
 		    </div>
 		</script>
-		<script type="text/html" id="aduit-detail-tpl">
-		    <div style="margin:10px">
-		        <form class="layui-form" action="" lay-filter="form-edit">
-					<div class="layui-form-item" style="padding: 8px 0px 0px 8px;color: #FF5722;">
-		                <h3>总经理审核</h3>
-		            </div>
-		            <input type="hidden" name="audId" value="{{d.rowdata.audId}}" />
-					<div class="layui-form-item">
-		                <label class="layui-form-label">审核人：</label>
-		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
-							<div>{{d.rowdata.audName}}</div>
-		                </div>
-		            </div>
-					<div class="layui-form-item">
-		                <label class="layui-form-label">审核状态：</label>
-		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
-						{{# if(d.rowdata.audState == '10010'){}}
-							<div>不通过</div>
-		                {{#}else if(d.rowdata.audState == '10011'){}}
-							<div>通过</div>
-		                {{#};}}
-		                </div>
-		            </div>
-					<div class="layui-form-item">
-		                <label class="layui-form-label">审核意见：</label>
-		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
-							<div>{{d.rowdata.audIdea}}</div>
-		                </div>
-		            </div>
-					<div class="layui-form-item">
-		                <label class="layui-form-label">审核时间：</label>
-		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
-							<div>{{d.rowdata.audTimes}}</div>
-		                </div>
-		            </div>
-		        </form>
-		    </div>
-		</script>
 		<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
 		<script>
 			//文本框只能输入金额
@@ -319,7 +281,7 @@
 				return admin;
 			}
 			//弹出层下标
-			var layerIndex1,layerIndex2,editIndex1,editIndex2,editIndex3;
+			var layerIndex1,layerIndex2,layerIndex3,editIndex1,editIndex2,editIndex3;
 			//显示表格数据
 		    layui.use(['table','upload'], function() {
 		    	var admin = getSession();
@@ -347,7 +309,7 @@
 		                {field: 'drugPrice',title: '价格（元）',width: 120,sort: true},
 		                {field: 'audState',title: '审核状态',width: 140},
 		                {fixed: 'right',title: '查看',width: 228,align: 'center',toolbar: '#views'},
-		                {fixed: 'right',title: '操作',width: 200,align: 'center',toolbar: '#tools'}]
+		                {fixed: 'right',title: '操作',width: 205,align: 'center',toolbar: '#tools'}]
 		            ],
 		            done: function(res, curr, count) {
 		            	var tableElem = this.elem.next('.layui-table-view');
@@ -374,15 +336,15 @@
 		                $("[data-field = 'audState']").children().not(":first").each(function(index){
 		                	var id = $(this).parents('tr').find('td[data-field="drugId"]').text();
 		                	var o = $(this);
-	            			if (o.text() == '10001') {
+	            			if (o.text() == '10101') {
 	            				o.html('<font style="color: #0000F0">等待经理审核</font>');
 	            				tableElem.find('tr[data-index="' + index + '"]').find('button').addClass('layui-btn-disabled').attr('disabled',true);
-	            			} else if (o.text() == '10010') {
+	            			} else if (o.text() == '10110') {
 	            				o.html('<font style="color: #F00000">不通过</font>');
-	            			} else if (o.text() == '10011') {
+	            			} else if (o.text() == '10111') {
 	            				o.html('<font style="color: #00F000">通过</font>');
 	            				tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event="check"]').addClass('layui-btn-disabled').attr('disabled',true);
-	            			} else if (o.text() == '-1' || o.text() == '10012' || o.text() == '10013') {
+	            			} else if (o.text() == '-1' || o.text() == '10112' || o.text() == '10113') {
 	            				o.text("未审核");
 	            				tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event="auditDetail"]').addClass('layui-btn-disabled').attr('disabled',true);
 	            			}
@@ -432,18 +394,11 @@
 		            } else if (layEvent === 'specification') { //说明书
 		            	layer2(data.drugId,data.audId,data.drugName,data.audState);
 		            } else if (layEvent === 'auditDetail') { //审核明细
-		            	console.log(data.audId);
-		            	$.post("../../audit/findById.action",{"audId":data.audId},function(mes){
-		            		mes["bln"] = false;
-		                	 var d = {
-		 		                rowdata: mes
-		 		             };
-		                	 layer3(d);
-		                 },"json");
+		            	layer3(data.drugId,"0","总经理审核");
 		            } else if (layEvent === 'check') { //提交审核
 		            	$.ajax({ 
 		            		url:"../../drug/check.action",
-		            		data:{"drugId":data.drugId},
+		            		data:{"comId": admin.comId,"drugId":data.drugId},
 		                    type:'post',//method请求方式，get或者post
 		                    async:false,//同步
 		                    dataType:'json',//预期服务器返回的数据类型
@@ -508,7 +463,7 @@
 		                    var d = {
 		                		//替换增加页面文本框内出现的undefine
 		                        rowdata: {
-		                        	drugId: '',drugName: '',drugProp: 1,drugUnit: '',drugPrice: '',drugPictrue: '',drugProp: '0'
+		                        	drugId: data.drugId,drugName: '',drugProp: 1,drugUnit: '',drugPrice: '',drugPictrue: '',drugProp: '0'
 		                        },
 		                        //类型下拉框数据
 		                        types: staticData.types
@@ -570,22 +525,16 @@
 				});
 		  	}
 		  	
-			//渲染 生产计划审核和审核明细弹出层
-		    function layer3(d){
-	    		layui.laytpl($('#aduit-detail-tpl').html()).render(d,function(html) {
-	    			editIndex3 = layer.open({
-                        type: 1,
-                        title: '经理审核明细',
-                        content: html,
-                        maxmin: true,
-                        area: ['600px', '380px'],
-                        success: function() {
-                            layui.form.render(null, 'form-edit');
-                        }
-                    });
-                });
-	    		return 
-		    }
+		  	//显示 审核明细
+			function layer3(id,type,name){
+				layerIndex3 = layer.open({
+				  type: 2,
+				  title: '审核明细',
+				  content: '../audit/detail/drugDetail.html?id='+id+'&type='+type+'&name='+name,
+				  area: ['800px', '430px'],
+				  maxmin: true
+				});
+		  	}
 		  	
 		  	//渲染 药品修改和增加弹出层
 		    function editLayer1(d){

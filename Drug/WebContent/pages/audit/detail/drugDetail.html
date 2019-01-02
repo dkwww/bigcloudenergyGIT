@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="renderer" content="webkit" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no" />
+		<title>审核明细</title>
+		<link rel="stylesheet" href="../../../res/layui/css/layui.css" />
+		<link rel="stylesheet" href="../../../res/css/common/font-awesome.min.css" media="all">
+		<link rel="stylesheet" href="../../../res/layui-config/css/app.css" media="all">
+		<link rel="stylesheet" type="text/css" href="../../../res/css/audit/detail/detail.css" />
+		<script src="../../../res/js/common/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../../res/js/common/parameter.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body class="childBody">
+		<section class="layui-col-md10">
+			<div class="layui-card">
+				<div class="layui-card-body kit-table">
+					<div style="color: #DC2D00;" id="title">审核</div>
+					<div class="table-overlay" id="tableRes">
+						<table id="dataTable1" lay-filter="dataTable" class="layui-hide"></table>
+					</div>
+				</div>
+			</div>
+		</section>
+		<script src="../../../res/layui/layui.all.js"></script>
+		<script type="text/javascript">
+			//layui 模块化引用
+			layui.use(['table', 'layer', 'element', 'jquery', 'form'], function(table, layer, element, $, form) {
+				// data模式
+				var $ = layui.$, table = layui.table, form = layui.form, layer = layui.layer;
+				//数据表格实例化
+				var admin = getSession();
+				var comId = admin==null ? null : admin.comId;
+				
+				$("#title").text(getParameter("name"));
+				var tableIns1 = table.render({
+					elem: '#dataTable1',
+					id: "layTableId1",
+					url: "../../../audit/showDetail.action",
+					where: {"comId": comId,"audFkId": getParameter("id"),"type": getParameter("type")},
+					height: autoHeight(),
+					page: true,
+					cols: [
+						[
+							{title: '序号',type: 'numbers'},
+							{field: 'audTimes',title: '审核时间（time）',width: 165,sort: true},
+							{field: 'audName',title: '审核人（name）',width: 140},
+							{field: 'audState',title: '状态（state）',width: 130},
+							{field: 'audIdea',title: '意见（idea）'}
+						]
+					],
+					done: function(res, curr, count) {
+						$("[data-field = 'audState']").children().not(":first").each(function(index){
+		                	var id = $(this).parents('tr').find('td[data-field="drugId"]').text();
+		                	var o = $(this);
+	            			if (o.text() == '10010'||o.text() == '10012'||o.text() == '10110'||o.text() == '10112') {
+	            				o.html('<font style="color: #F00000">不通过</font>');
+	            			} else if (o.text() == '10011'||o.text() == '10013'||o.text() == '10111'||o.text() == '10113') {
+	            				o.html('<font style="color: #00F000">通过</font>');
+	            			}
+					  	});
+					}
+				});
+				
+				//窗口自适应
+				function autoHeight() {
+					var h = document.body.clientHeight && document.documentElement.clientHeight - 80; //窗口高度
+					//监听改变窗口大小
+					window.onresize = function() {
+						h = document.body.clientHeight && document.documentElement.clientHeight - 80; //窗口高度
+						tableIns1.reload({
+							height: h
+						});
+					}
+					return h;
+				}
+				
+				function getSession(){
+					var admin = null;
+					$.ajax({ 
+			        	url:"../../../admin/getSession.action",
+		                type:'post',
+		                async:false,
+		                dataType:'json',
+		                success:function(mes){
+		                	if (mes!=null && mes!="") {
+		                		admin = mes;
+							}
+		                }
+		        	});
+					return admin;
+				}
+				
+			});
+		</script>
+	</body>
+</html>

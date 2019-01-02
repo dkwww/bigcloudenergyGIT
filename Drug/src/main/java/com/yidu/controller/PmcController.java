@@ -97,11 +97,12 @@ public class PmcController {
 	 */
 	@RequestMapping("/check")
 	@ResponseBody
-	public Message check(String pmcId) {
+	public Message check(String comId,String pmcId) {
 		Message mes = new Message();
 		int rows = pmcService.check(pmcId);
 		if (rows>0) {
 			Audit audit = new Audit();
+			audit.setQcFkId(comId);
 			audit.setAudFkId(pmcId);
 			audit.setAudState("10001");
 			int count = auditService.addOrUpdate(audit);

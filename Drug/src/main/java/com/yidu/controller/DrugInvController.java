@@ -32,8 +32,15 @@ public class DrugInvController {
 
 
 	@Resource 
-
 	private   DrugInvService   drugInvService;
+	
+	/**
+	 * 查询所有和模糊查询的方法
+	 * @param drugInve  对象 用于接受前台传过来的值
+	 * @param page   layui自带的分页
+	 * @param limit  layui自带的分页
+	 * @return
+	 */
 	@RequestMapping("qureyAll")
 	@ResponseBody
 	public   Map<String, Object>  qureyAll(DrugInve  drugInve,Integer page,Integer limit){
@@ -42,9 +49,11 @@ public class DrugInvController {
 		//前台取过来的分页值
 		pageUtil.setCurPage(page);
 		pageUtil.setRows(limit);
-
+		//调用查询所有的方法
 		List<DrugInve> list = drugInvService.qureyAll(drugInve,pageUtil);
+		//查询行数
 		int   rows  =drugInvService.selectCountBySelective(drugInve); 
+		//返回layui前台格式
 		Map<String, Object>  map  =new HashMap<>();
 		map.put("code", 0);
 		map.put("msg", "");

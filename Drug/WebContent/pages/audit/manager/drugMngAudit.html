@@ -67,53 +67,24 @@
 		            </div>
 		            <input type="hidden" name="audId" value="{{d.rowdata.audId}}" />
 					<div class="layui-form-item">
-		                <label class="layui-form-label">审核人：</label>
-		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
-						{{# if(d.rowdata.bln == true){}}
-							<input type="text" name="audName" required lay-verify="required" placeholder="你的名字" autocomplete="off" class="layui-input">
-						{{#}else{}}
-							<div>{{d.rowdata.audName}}</div>
-		                {{#};}}
-		                </div>
-		            </div>
-					<div class="layui-form-item">
 		                <label class="layui-form-label">审核状态：</label>
 		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
-						{{# if(d.rowdata.bln == false && d.rowdata.audState == '10010' || d.rowdata.audState == '10012'){}}
-							<div>不通过</div>
-		                {{#}else if(d.rowdata.bln == false && d.rowdata.audState == '10011' || d.rowdata.audState == '10013'){}}
-							<div>通过</div>
-						{{#}else{}}
-							<input type="radio" name="audState" value="10011" title="通过" />
-		                    <input type="radio" name="audState" value="10010" title="不通过" checked/>
-		                {{#};}}
+							<input type="radio" name="audState" value="10111" title="通过" />
+		                    <input type="radio" name="audState" value="10110" title="不通过" checked/>
 		                </div>
 		            </div>
 					<div class="layui-form-item">
 		                <label class="layui-form-label">审核意见：</label>
 		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
-						{{# if(d.rowdata.bln == true){}}
 							<textarea name="audIdea" required lay-verify="required" placeholder="意见" autocomplete="off" class="layui-textarea"></textarea>
-						{{#}else{}}
-							<div>{{d.rowdata.audIdea}}</div>
-		                {{#};}}
 		                </div>
 		            </div>
-					{{# if(d.rowdata.bln == false){}}
-						<div class="layui-form-item">
-		                	<label class="layui-form-label">审核时间：</label>
-		                	<div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
-								<div>{{d.rowdata.audTimes}}</div>
-		                	</div>
-		            	</div>
-					{{#}else{}}
-						<div class="layui-form-item">
-		                	<div class="layui-input-block" style="padding-left: 8px;">
-		                    	<input type="button" class="layui-btn layui-btn-sm" lay-submit lay-filter="formEdit" style="padding: 0px 20px" value='提交'>
-								<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">重置</button>
-		                	</div>
-		            	</div>
-		            {{#};}}
+					<div class="layui-form-item">
+		                <div class="layui-input-block" style="padding-left: 8px;">
+		                    <input type="button" class="layui-btn layui-btn-sm" lay-submit lay-filter="formEdit" style="padding: 0px 20px" value='提交'>
+							<button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">重置</button>
+		                </div>
+		            </div>
 		        </form>
 		    </div>
 			</script>
@@ -156,7 +127,10 @@
 		</script>
 		<script>
 			//弹出层下标
-			var layerIndex1,layerIndex2,editIndex1,editIndex2;
+			var layerIndex1,layerIndex2,layerIndex3,editIndex1,editIndex2;
+			var admin = getSession();
+			var adminName = admin==null ? null : admin.adminName;
+			
 			//显示表格数据
 		    layui.use(['table','upload'], function() {
 		        var table = layui.table,
@@ -205,12 +179,11 @@
 		                	});
 					  	});
 		                $("[data-field = 'audState']").children().not(":first").each(function(index){
-						    if($(this).text() == '10001'){
+						    if($(this).text() == '10101'){
 						    	$(this).text("未审核");
-						    	tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=aduitDetail]').addClass('layui-btn-disabled').attr('disabled',true);
 						    } else {
 						    	$(this).text("审核完成");
-						    	tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=specification],button[lay-event=matDetail],button[lay-event=audit]').addClass('layui-btn-disabled').attr('disabled',true);
+						    	tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event="specification"],button[lay-event="matDetail"],button[lay-event="audit"]').addClass('layui-btn-disabled').attr('disabled',true);
 						    }
 					  	});
 		            }
@@ -263,13 +236,7 @@
 		                };
 			            editLayer1(d);
 		            } else if (layEvent === 'aduitDetail') {
-		            	$.post("../../../audit/findById.action",{"audId":data.audId},function(mes){
-		            		mes["bln"] = false;
-		                	 var d = {
-		 		                rowdata: mes
-		 		             };
-		                	 editLayer1(d);
-		                 },"json");
+		            	layer3(data.drugId,"0","总经理审核");
 		            }
 		        });
 		        
@@ -282,6 +249,7 @@
 		        
 		      	//审核弹出层   提交按钮点击事件
 		        form.on('submit(formEdit)', function(data) {
+		        	data.field["audName"]=adminName;
 		        	update(data.field);
                 	return false;
 		        });
@@ -347,6 +315,17 @@
 				});
 		  	}
 		  	
+			//显示 审核明细
+			function layer3(id,type,name){
+				layerIndex3 = layer.open({
+				  type: 2,
+				  title: '审核明细',
+				  content: '../detail/drugDetail.html?id='+id+'&type='+type+'&name='+name,
+				  area: ['800px', '430px'],
+				  maxmin: true
+				});
+		  	}
+		  	
 			//进行审核
 		    function update(data){
 		    	$.ajax({
@@ -399,6 +378,25 @@
 			function getPathOut(){
 				$("#layer").fadeOut("slow");
 				$("#pic").fadeOut("slow");
+			}
+			
+			/**
+			*获取session
+			*/
+			function getSession(){
+				var admin = null;
+				$.ajax({ 
+		        	url:"../../../admin/getSession.action",
+	                type:'post',
+	                async:false,
+	                dataType:'json',
+	                success:function(mes){
+	                	if (mes!=null && mes!="") {
+	                		admin = mes;
+						}
+	                }
+	        	});
+				return admin;
 			}
 		  	
 		    //ajax加载动画

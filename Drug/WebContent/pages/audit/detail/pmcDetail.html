@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="renderer" content="webkit" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no" />
+		<title>审核明细</title>
+		<link rel="stylesheet" href="../../../res/layui/css/layui.css" />
+		<link rel="stylesheet" href="../../../res/css/common/font-awesome.min.css" media="all">
+		<link rel="stylesheet" href="../../../res/layui-config/css/app.css" media="all">
+		<script src="../../../res/js/common/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../../res/js/common/parameter.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../../res/layui/layui.all.js"></script>
+	</head>
+	<body class="childBody">
+		<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+		  <ul class="layui-tab-title">
+		    <li class="layui-this">财物审核</li>
+		    <li>总经理审核</li>
+		  </ul>
+		  <div class="layui-tab-content">
+		    <div class="layui-tab-item layui-show">
+		    	<iframe name="myF" frameborder="0" scrolling="no" width="100%" id="detail1" scroll="auto"></iframe>
+		    </div>
+		    <div class="layui-tab-item">
+		    	<iframe name="myF" frameborder="0" scrolling="no" width="100%" id="detail2" scroll="auto"></iframe>
+			</div>
+		  </div>
+		</div>
+		<script type="text/javascript">
+			$(function(){
+				var h = autoHeight();
+				$("#detail1,#detail2").height(h);
+				$("#detail1").attr("src","./drugDetail.html?id="+getParameter("id")+"&type=1&name=财务审核")
+				$("#detail2").attr("src","./drugDetail.html?id="+getParameter("id")+"&type=0&name=总经理审核")
+			});
+			//窗口自适应
+			function autoHeight() {
+				var h = document.body.clientHeight && document.documentElement.clientHeight - 85; //窗口高度
+				//监听改变窗口大小
+				window.onresize = function() {
+					h = document.body.clientHeight && document.documentElement.clientHeight - 85; //窗口高度
+					$("#detail1,#detail2").height(h);
+				}
+				return h;
+			}
+		</script>
+	</body>
+</html>

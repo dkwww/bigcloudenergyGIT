@@ -63,13 +63,13 @@ public class DrugServiceImpl implements DrugService {
 	public int addOrUpdate(Drug record) {
 		if (record.getDrugId()!=null&&!"".equals(record.getDrugId())) {
 			int rows = 1;
-			if (!"-1".equals(record.getAudState()) && !"10012".equals(record.getAudState()) && !"10013".equals(record.getAudState()) && record.getAudState()!=null && !"".equals(record.getAudState())) {
+			if (!"-1".equals(record.getAudState()) && !"10112".equals(record.getAudState()) && !"10113".equals(record.getAudState()) && record.getAudState()!=null && !"".equals(record.getAudState())) {
 				Audit audit = new Audit();
 				audit.setAudId(record.getAudId());
-				if ("10010".equals(record.getAudState())) {
-					audit.setAudState("10012");
-				} else if ("10011".equals(record.getAudState())) {
-					audit.setAudState("10013");
+				if ("10110".equals(record.getAudState())) {
+					audit.setAudState("10112");
+				} else if ("10111".equals(record.getAudState())) {
+					audit.setAudState("10113");
 				} else {
 					audit.setAudState(record.getAudState());
 				}
@@ -89,8 +89,10 @@ public class DrugServiceImpl implements DrugService {
 			drugInve.setComId(record.getComId());
 			drugInve.setDiAmount(0);
 			drugInve.setIsva("1");
-			drugInveMapper.insertSelective(drugInve);
-			return drugMapper.insertSelective(record);
+			drugMapper.insertSelective(record);
+			drugInve.setDrugId(record.getDrugId());
+			int row = drugInveMapper.insert(drugInve);
+			return row;
 		}
 	}
 
@@ -122,7 +124,15 @@ public class DrugServiceImpl implements DrugService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("record", record);
 		map.put("pageUtil", pageUtil);
-		return drugMapper.selectByAudit(map);
+		List<Drug> list = drugMapper.selectByAudit(map);
+		for (int i = 0; i < list.size() - 1; i++) {
+            for (int j = list.size() - 1; j > i; j--) {
+                if (list.get(j).getDrugId().equals(list.get(i).getDrugId())) {
+                    list.remove(j);
+                }
+            }
+        }
+		return list;
 	}
 
 	@Override

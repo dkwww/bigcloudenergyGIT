@@ -100,10 +100,23 @@ public interface AuditMapper {
 	List<Audit> findById(String buyId);
 	
 	/**
-	 * 根据业务编号查询财物或经理审核
+	 * 方法说明：根据业务编号查询
+	 * @param audFkId
+	 * @param type
+	 * @param pageUtil
+	 * @return
+	 * @author ZhouJun
+	 * @date：2019年1月1日
+	 */
+	List<Audit> findDetail(Map<String, Object> map);
+	
+	/**
+	 * 方法说明：根据业务编号查询总行数
 	 * @param audFkId
 	 * @param type
 	 * @return
+	 * @author ZhouJun
+	 * @date：2019年1月1日
 	 */
-	Audit findByFk(Map<String, Object> map);
+	int findDetailCount(Map<String, Object> map);
 }
