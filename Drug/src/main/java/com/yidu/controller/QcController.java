@@ -280,5 +280,53 @@ public class QcController {
 
 		return me;
 	}
+	
+	/**
+	 * 
+	 * 方法说明：分店药品质检显示列表
+	 * @param qc
+	 * @param page
+	 * @param limit
+	 * @return
+	 * @author zhengyouhong
+	 * @date：2018年12月27日
+	 */
+	@RequestMapping("branchQuality")
+	@ResponseBody
+	public Map<String, Object> branchQuality(Qc qc,Integer page,Integer limit){
+		
+		PageUtil PageUtil=new PageUtil();
+		if(page!=null && limit!=null) {
+			PageUtil.setCurPage(page);
+			PageUtil.setRows(limit);
+		}
+		
+		List<Qc> list=qcService.branchQuality(qc, PageUtil);
+		for (Qc qc2 : list) {
+			if(qc2.getQcState().equals("0")) {
+				qc2.setQcStates("未质检");
+			}else if(qc2.getQcState().equals("1")) {
+				qc2.setQcStates("已质检");
+			}
+			
+			if(qc2.getQcPut().equals("0")) {
+				qc2.setQcPuts("未入库");
+			}else if(qc2.getQcPut().equals("1")) {
+				qc2.setQcPuts("已入库");
+			}
+			
+			//转为时间格式
+			qc2.setOptimes(Tools.getDateStr(qc2.getOptime()));
+		}
+		
+		int rows=qcService.selectCount(qc);
+		
+		Map<String, Object> map=new HashMap<>();
+		map.put("code", 0);
+		map.put("msg", "");
+		map.put("count", rows);
+		map.put("data", list);
+		return map;
+	}
 }
 
