@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yidu.domain.Admin;
 import com.yidu.domain.Buy;
 import com.yidu.domain.BuyDetail;
 import com.yidu.domain.Drug;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 
@@ -26,7 +28,7 @@ import org.springframework.stereotype.Controller;
  * 采购订单 前端控制器
  * </p>
  *
- * @author 邓康威
+ * @author 郑有宏
  * @since 2018-11-26
  */
 @Controller
@@ -47,12 +49,13 @@ public class BuyController {
 	 */
 	@RequestMapping("/showList")
 	@ResponseBody
-	public Map<String,Object> showList(Buy buy,Integer page,Integer limit) {
+	public Map<String,Object> showList(Buy buy,Integer page,Integer limit,HttpSession session) {
 		PageUtil pageUtil = new PageUtil();
 		pageUtil.setCurPage(page);
 		pageUtil.setRows(limit);
+		Admin admin = (Admin) session.getAttribute("user");
 		
-		List<Buy> list = service.showList(buy,pageUtil);
+		List<Buy> list = service.showList(buy,pageUtil,admin);
 		int rows = service.findCount(buy);
 		
 		Map<String, Object> m = new HashMap<>();

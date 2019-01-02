@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.yidu.dao.AuditMapper;
+import com.yidu.domain.Admin;
 import com.yidu.domain.Audit;
 import com.yidu.service.AuditService;
 import com.yidu.util.PageUtil;
@@ -180,10 +181,11 @@ public class AuditServiceImpl   implements AuditService {
 
 
 	@Override
-	public List<Audit> showBuy(Audit audit, PageUtil pageUtil) {
+	public List<Audit> showBuy(Audit audit, PageUtil pageUtil,Admin admin) {
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("audit", audit);
 		map.put("pageUtil", pageUtil);
+		map.put("admin", admin);
 		List<Audit> list = mapper.showBuy(map);
 		for (Audit audit2 : list) {
 			if(audit2.getAudTime()!=null) {
@@ -228,10 +230,11 @@ public class AuditServiceImpl   implements AuditService {
 	}
 	
 	@Override
-	public List<Audit> showCEO(Audit audit, PageUtil pageUtil) {
+	public List<Audit> showCEO(Audit audit, PageUtil pageUtil,Admin admin) {
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("audit", audit);
 		map.put("pageUtil", pageUtil);
+		map.put("admin", admin);
 		List<Audit> list = mapper.showCEO(map);
 		for (Audit audit2 : list) {
 			if(audit2.getAudTime()!=null) {
@@ -271,10 +274,11 @@ public class AuditServiceImpl   implements AuditService {
 
 	
 	@Override
-	public List<Audit> findSale(Audit audit, PageUtil pageUtil) {
+	public List<Audit> findSale(Audit audit, PageUtil pageUtil,Admin admin) {
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("audit", audit);
 		map.put("pageUtil", pageUtil);
+		map.put("admin", admin);
 		List<Audit> list = mapper.findSale(map);
 		for (Audit audit2 : list) {
 			if(audit2.getAudTime()!=null) {
@@ -307,10 +311,11 @@ public class AuditServiceImpl   implements AuditService {
 	}
 	
 	@Override
-	public List<Audit> findCEO(Audit audit, PageUtil pageUtil) {
+	public List<Audit> findCEO(Audit audit, PageUtil pageUtil,Admin admin) {
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("audit", audit);
 		map.put("pageUtil", pageUtil);
+		map.put("admin", admin);
 		List<Audit> list = mapper.findCEO(map);
 		for (Audit audit2 : list) {
 			if(audit2.getAudTime()!=null) {

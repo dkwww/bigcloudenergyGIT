@@ -3,6 +3,7 @@ package com.yidu.service;
 
 import java.util.List;
 
+import com.yidu.domain.Admin;
 import com.yidu.domain.Audit;
 import com.yidu.domain.Drug;
 import com.yidu.util.PageUtil;
@@ -117,7 +118,7 @@ public interface AuditService   {
 	 * @param pageUtil
 	 * @return
 	 */
-	public List<Audit> findSale(Audit audit,PageUtil pageUtil);
+	public List<Audit> findSale(Audit audit,PageUtil pageUtil,Admin admin);
 	
 	/**
 	 * 显示总店总经理审核
@@ -125,7 +126,7 @@ public interface AuditService   {
 	 * @param pageUtil
 	 * @return
 	 */
-	public List<Audit> findCEO(Audit audit,PageUtil pageUtil);
+	public List<Audit> findCEO(Audit audit,PageUtil pageUtil,Admin admin);
 	
 	/**
 	 * 根据id查询
@@ -141,7 +142,7 @@ public interface AuditService   {
 	 * @param pageUtil
 	 * @return
 	 */
-	public List<Audit> showBuy(Audit audit,PageUtil pageUtil);
+	public List<Audit> showBuy(Audit audit,PageUtil pageUtil,Admin admin);
 	
 	/**
 	 * 显示分店总经理审核
@@ -149,7 +150,7 @@ public interface AuditService   {
 	 * @param pageUtil
 	 * @return
 	 */
-	public List<Audit> showCEO(Audit audit,PageUtil pageUtil);
+	public List<Audit> showCEO(Audit audit,PageUtil pageUtil,Admin admin);
 	
 	/**
 	 * 根据采购订单id查询审核内容
