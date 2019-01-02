@@ -67,12 +67,6 @@
 		            </div>
 		            <input type="hidden" name="audId" value="{{d.rowdata.audId}}" />
 					<div class="layui-form-item">
-		                <label class="layui-form-label">审核人：</label>
-		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
-							<input type="text" name="audName" required lay-verify="required" placeholder="你的名字" autocomplete="off" class="layui-input">
-		                </div>
-		            </div>
-					<div class="layui-form-item">
 		                <label class="layui-form-label">审核状态：</label>
 		                <div class="layui-input-block" style="line-height: 35px;padding-left: 8px;">
 							<input type="radio" name="audState" value="10111" title="通过" />
@@ -134,6 +128,9 @@
 		<script>
 			//弹出层下标
 			var layerIndex1,layerIndex2,layerIndex3,editIndex1,editIndex2;
+			var admin = getSession();
+			var adminName = admin==null ? null : admin.adminName;
+			
 			//显示表格数据
 		    layui.use(['table','upload'], function() {
 		        var table = layui.table,
@@ -252,6 +249,7 @@
 		        
 		      	//审核弹出层   提交按钮点击事件
 		        form.on('submit(formEdit)', function(data) {
+		        	data.field["audName"]=adminName;
 		        	update(data.field);
                 	return false;
 		        });
@@ -380,6 +378,25 @@
 			function getPathOut(){
 				$("#layer").fadeOut("slow");
 				$("#pic").fadeOut("slow");
+			}
+			
+			/**
+			*获取session
+			*/
+			function getSession(){
+				var admin = null;
+				$.ajax({ 
+		        	url:"../../../admin/getSession.action",
+	                type:'post',
+	                async:false,
+	                dataType:'json',
+	                success:function(mes){
+	                	if (mes!=null && mes!="") {
+	                		admin = mes;
+						}
+	                }
+	        	});
+				return admin;
 			}
 		  	
 		    //ajax加载动画

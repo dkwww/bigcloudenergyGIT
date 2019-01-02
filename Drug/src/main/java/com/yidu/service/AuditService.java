@@ -160,14 +160,6 @@ public interface AuditService   {
 	List<Audit> findByIdsh(String buyId);
 	
 	/**
-	 * 根据业务编号查询财物或经理审核
-	 * @param audFkId
-	 * @param type
-	 * @return
-	 */
-	public Audit findByFk(String audFkId, String type);
-	
-	/**
 	 * 方法说明：根据业务编号查询
 	 * @param audFkId
 	 * @param type

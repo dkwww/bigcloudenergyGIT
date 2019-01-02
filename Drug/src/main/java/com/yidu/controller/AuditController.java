@@ -490,17 +490,6 @@ public class AuditController {
 	}
 	
 	/**
-	 * 根据业务编号查询
-	 * @param audit
-	 * @return
-	 */
-	@RequestMapping("/findByFk")
-	@ResponseBody
-	public Audit findByFk(String audFkId,String type) {
-		return service.findByFk(audFkId,type);
-	}
-	
-	/**
 	 * 方法说明：显示明细
 	 * @param audFkId
 	 * @param type
