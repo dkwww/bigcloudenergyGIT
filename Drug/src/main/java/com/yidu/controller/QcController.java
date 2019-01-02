@@ -202,6 +202,7 @@ public class QcController {
 	@RequestMapping("Qcadd")
 	@ResponseBody
 	public Message Qcadd(String id,String shuju,String sumAmout,String sumRate,String qcState) {
+		//得到库存对象
 		Qc qc=new Qc();
 		qc.setQcId(id);
 		qc.setQcFail(Integer.valueOf(sumAmout));
@@ -210,7 +211,6 @@ public class QcController {
 		qcService.buyQcadd(qc);
 		
 		QcDetail qcdetail=new QcDetail();
-		
 		
 		//根据前台传来的数据用"#"分割
 		String [] data=shuju.split("#");
@@ -262,24 +262,18 @@ public class QcController {
 			//在根据质检明细的id查找库存
 			MatInv invlist=invservice.findQcId(qcDetail.getQdetFkId());
 			
-				System.err.println("----------库存当前数量"+invlist.getMiAmount());
-				System.err.println("----------质检明细的数量:"+qcDetail.getQdetAmount());
-				System.err.println("----------库存id:"+invlist.getMiId());
-				
-				invservice.updateAmount(qcDetail.getQdetAmount(), invlist.getMiId());
-				
-				//库存明细
-				MatInvDetail invdetail=new MatInvDetail();
-				invdetail.setMidId(Tools.getDateOrderNo());
-				invdetail.setMiId(invlist.getMiId());
-				invdetail.setMidAmount(qcDetail.getQdetAmount());
-				invdetailservice.addkcdetail(invdetail);
+			System.err.println("----------库存当前数量"+invlist.getMiAmount());
+			System.err.println("----------质检明细的数量:"+qcDetail.getQdetAmount());
+			System.err.println("----------库存id:"+invlist.getMiId());
+			invservice.updateAmount(qcDetail.getQdetAmount(), invlist.getMiId());
 			
-			
+			//库存明细
+			MatInvDetail invdetail=new MatInvDetail();
+			invdetail.setMidId(Tools.getDateOrderNo());
+			invdetail.setMiId(invlist.getMiId());
+			invdetail.setMidAmount(qcDetail.getQdetAmount());
+			invdetailservice.addkcdetail(invdetail);
 		}
-		
-		
-		
 		Message me=new Message();
 		me.setStatus(1);
 		me.setMsg("操作成功");

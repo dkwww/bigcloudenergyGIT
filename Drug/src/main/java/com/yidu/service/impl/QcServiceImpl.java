@@ -82,7 +82,6 @@ public class QcServiceImpl   implements QcService {
 		int rows=0;
 		if(qc.getQcId()!=null &&!"".equals(qc.getQcId())) {
 			rows=dao.updateByPrimaryKeySelective(qc);
-			
 		}
 		
 		return rows;
@@ -122,7 +121,7 @@ public class QcServiceImpl   implements QcService {
 		qc.setQcState("0");
 		qc.setQcPut("0");
 		qc.setQcAmount(count);
-		qc.setQcConpany("666");
+		qc.setQcConpany("0");
 		qc.setOptime(new Date());
 		String uuid=UUID.randomUUID().toString().replaceAll("-", "");
 		qc.setQcId(uuid);

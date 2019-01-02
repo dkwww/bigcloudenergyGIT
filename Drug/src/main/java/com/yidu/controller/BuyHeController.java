@@ -177,7 +177,7 @@ public class BuyHeController {
 		buy.setBuyQc("0");
 		//默认入库状态为0
 		buy.setBuyPut("0");
-		buy.setComId("666");
+		buy.setComId("0");
 		
 		//new获取当前时间
 		Date date=new Date();
@@ -191,7 +191,7 @@ public class BuyHeController {
 		//默认审核状态为0
 		audit.setAudState("0");
 		//默认个公司id
-		audit.setQcFkId("666");
+		audit.setQcFkId("0");
 		//存进审核
 		audservice.add(audit);
 		
