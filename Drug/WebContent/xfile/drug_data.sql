@@ -45,6 +45,10 @@ insert  into `drug_role`(`role_id`,`role_name`,`role_code`,`role_describe`,`isva
 
 insert  into `drug_debty`(`deb_id`,`com_id`,`deb_money`,`optime`,`isva`,`oper`,`sort`) values ('0','0','500000.00',NULL,'1',NULL,NULL),('1','1','50000.00',NULL,'1',NULL,NULL);
 
+/*Data for the table `drug_provider` */
+
+insert  into `drug_provider`(`prov_id`,`prov_name`,`isva`,`optime`,`oper`,`sort`) values ('1','阿里巴巴','1',NULL,NULL,NULL),('2','人民医院','1',NULL,NULL,NULL),('3','中医院','1',NULL,NULL,NULL);
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
