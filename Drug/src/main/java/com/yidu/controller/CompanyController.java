@@ -145,6 +145,7 @@ public class CompanyController {
 	public Message insertUpdate(HttpServletRequest request,@RequestBody Company com) {
 		//Message工具类
 		Message mes=new Message();
+		
 		//session
 		HttpSession session=request.getSession();
 		//获取登录session
@@ -153,6 +154,7 @@ public class CompanyController {
 			//给操作人赋予当前登陆用户的名称
 			com.setOper(user.getAdminName());
 		}
+		
 		//调用增加修改的方法
 		int rows = companyService.addOrUpdate(com);
 		//大于0成功否则失败
