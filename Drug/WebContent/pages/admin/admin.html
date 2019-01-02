@@ -109,14 +109,6 @@
                 		</div>
             		</div>
 					<div class="layui-form-item">
-		                <label class="layui-form-label">是否有效</label>
-		                <div class="layui-input-block">
-		                    {{# var otc = d.rowdata.isva === '0'?'checked':'';}} {{# var rx = d.rowdata.isva === '1'?'checked':'';}}
-		                    <input type="radio" name="isva" value="1" title="已审核" {{rx}} />
-		                    <input type="radio" name="isva" value="0" title="未审核" {{otc}} />
-		                </div>
-		            </div>
-					<div class="layui-form-item">
     					<label class="layui-form-label">角色</label>
     					<div class="layui-input-block" id="findJs"></div>
   					</div>
@@ -166,7 +158,6 @@
 			      ,{field:'adminPictrue', title: '头像', width: 130,align: 'center',templet:'#imgTpl'}
 			      ,{field:'isva', width:110, title: '审核状态', align: 'center'}
 			      ,{field:'optimestring', width:180, title: '操作时间',align: 'center'}
-			      ,{field:'oper', width:135, title: '操作人', align: 'center'}
 			      ,{field:'sort', width:135, title: '排序', align: 'center'}
 			      ,{fixed: 'right',title: '操作',width: 160,align: 'center',toolbar: '#barDemo'}
 			    ]],
