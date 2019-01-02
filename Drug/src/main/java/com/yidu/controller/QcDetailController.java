@@ -61,8 +61,25 @@ public class QcDetailController {
 	@RequestMapping("findBuyId")
 	@ResponseBody
 	public Map<String, Object> findBuyId(QcDetail qcdetail){
-		
 		List <QcDetail> list=qcdetaService.findByIds(qcdetail.getQcId());
+		Map<String, Object> map=new HashMap<>();
+		map.put("code", 0);
+		map.put("msg", "");
+		map.put("count", 0);
+		map.put("data", list);
+		
+		return map;
+	}
+	/**
+	 * 根据质检id查看质检明细
+	 * @param qcdetail
+	 * @author zhengyouhong
+	 * @return
+	 */
+	@RequestMapping("findBuyIds")
+	@ResponseBody
+	public Map<String, Object> findBuyIds(QcDetail qcdetail){
+		List <QcDetail> list=qcdetaService.findByIdss(qcdetail.getQcId());
 		Map<String, Object> map=new HashMap<>();
 		map.put("code", 0);
 		map.put("msg", "");

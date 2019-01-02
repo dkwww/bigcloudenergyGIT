@@ -272,7 +272,8 @@
 		    layui.use(['table'], function() { 
 		    	
 		    	 
-		    	var   qcId=getParameter("qcId");
+		    	var   qcId=getParameter("id");
+		    	alert(qcId);
 		     
 		        var table = layui.table,
 		            $ = layui.jquery,
@@ -282,7 +283,7 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: 'full', //容器高度
-		            url: '../../qcDetail/findById.action?qcId='+qcId,
+		            url: '../../qcDetail/findBuyIds.action?qcId='+qcId,
 		            page: true,
 		            id: 'demo',
 		            cols: [
