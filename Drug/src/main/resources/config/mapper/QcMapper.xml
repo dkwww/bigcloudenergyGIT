@@ -93,7 +93,7 @@
         qc_id,
       </if>
       <if test="pmcId != null">
-        mrp_id,
+        pmc_id,
       </if>
       <if test="qcAmount != null">
         qc_amount,
@@ -137,7 +137,7 @@
         #{qcId,jdbcType=VARCHAR},
       </if>
       <if test="pmcId != null">
-        #{mrpId,jdbcType=VARCHAR},
+        #{pmcId,jdbcType=VARCHAR},
       </if>
       <if test="qcAmount != null">
         #{qcAmount,jdbcType=INTEGER},

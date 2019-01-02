@@ -337,7 +337,7 @@ public class AuditController {
 			int count = debtyService.addMoney(buy.getBuyMoney(),"0");
 			if(count!=0) {
 				//质检
-				qcService.qualityAdd(buy);
+				qcService.branchQualityAdd(buy);
 				//审核
 				int rows=service.updateByPrimaryKeySelective(audit);
 				

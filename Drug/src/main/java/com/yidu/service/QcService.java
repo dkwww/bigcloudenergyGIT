@@ -102,4 +102,6 @@ public interface QcService  {
 	 */
 	int qualityAdd(Buy buy);
 
+	int branchQualityAdd(Buy buy);
+
 }
