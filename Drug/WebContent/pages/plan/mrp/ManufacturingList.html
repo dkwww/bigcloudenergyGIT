@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../../res/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="../../../res/css/common/font-awesome.min.css"
+	media="all">
+<link rel="stylesheet" href="../../../res/layui-config/css/app.css"
+	media="all">
+<script src="../../../res/js/common/jquery-1.11.2.min.js"></script>
+<title>制造计划管理</title>
+<style type="text/css">
+    #drugId{
+       width: 150px;
+       margin-left: 140px;
+    }
+ 
+ 
+ #tijiao{
+    margin-left: 30px;
+ }
+
+
+</style>
+
+</head>
+<script type="text/html" id="input">
+		<div class="layui-inline">
+				<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="hangName"  autocomplete="off"  value="0" id="number{{d.pdId}}" onkeyup="Pressdown(this);">
+		</div>
+	</script>
+
+<script type="text/javascript">
+	$(function(){
+		
+		var mrpId = getParameter("mrpId");
+		$("#mrpId").val(mrpId);
+		
+	 $("#tijiao").click(function (){ 
+		var   shu= $("#shuju").val(); 
+		 var url ="../../../mrpDetails/update.action";
+		 var  data={"shujuName" : shu , "mrpId"  : mrpId};
+		 $.post(url,data,function(mes){
+			 if(mes.status==1){
+				
+				 closeLayer();
+				 layer.msg("保存成功"); 
+				 
+			 }else{
+				 layer.msg("保存失败"); 
+			 }
+			 
+			 
+			 
+			 
+		},"json");
+		 
+	 });
+	});
+	function closeLayer(){
+	    //当你在iframe页面关闭自身时
+		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+		parent.layer.close(index); //再执行关闭 
+		window.parent.location.reload();
+	}
+	</script>
+	
+
+
+<body>
+
+
+	<input type="text" id="shuju"    style="width: 100%;"  >
+	<input type="hidden" id="mrpId"  >
+	<div class="kit-table">
+		<form class="layui-form" lay-filter="kit-search-form">
+			<!-- 左上角的两个按钮 -->
+			<div class="kit-table-header">
+				<div class="kit-search-btns">
+
+					<input type="button" id="tijiao"   	class="layui-btn layui-btn-normal"     value="保存" >
+				</div>
+				<div class="kit-search-inputs">
+					<div class="kit-search-keyword">
+						<input type="text" class="layui-input" name="drugName"   id="drugId" placeholder="搜索关键字.." />
+						<button lay-submit lay-filter="search">
+							<i class="layui-icon">&#xe615;</i>
+						</button>
+					</div>
+					 
+				</div>
+			</div>
+			 
+				 
+			  
+			</div>
+		</form>
+
+		<!-- 操作按钮 -->
+		<div class="kit-table-body">
+			<table id="demo" lay-filter="demo"></table>
+			<script type="text/html" id="barDemo">
+		            <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+		            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+		            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+		        </script>
+		</div>
+		<table id="demos" lay-filter="demos"></table>
+	</div>
+
+	<!-- 修改页面 -->
+	<script type="text/html" id="edit-tpl">
+		    <div style="margin:10px">
+		        <form class="layui-form" action="" lay-filter="form-edit">
+		            <input type="hidden" name="id" value="{{d.user.id}}" />
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">用户名</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="username" required lay-verify="required" value="{{d.user.username}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">密码框</label>
+		                <div class="layui-input-inline">
+		                    <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+		                </div>
+		                <div class="layui-form-mid layui-word-aux">辅助文字</div>
+		            </div>
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">单选框</label>
+		                <div class="layui-input-block">
+		                    {{# var woman = d.user.sex === 0?'checked':'';}} {{# var man = d.user.sex === 1?'checked':'';}}
+		                    <input type="radio" name="sex" value="男" title="男" {{man}} />
+		                    <input type="radio" name="sex" value="女" title="女" {{woman}} />
+		                </div>
+		            </div>
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">城市</label>
+		                <div class="layui-input-block">
+		                    <select name="city" lay-verify="required">
+		                      <option value=""></option>
+		                      {{# layui.each(d.citys,function(index,item){ }}                      
+		                      {{# if(item.id===d.user.city){}}
+		                      <option value="{{item.id}}" selected>{{item.name}}</option>
+		                      {{#}else{}}
+		                      <option value="{{item.id}}">{{item.name}}</option>
+		                      {{#};}}
+		                      {{# }); }}
+		                    </select>
+		                </div>
+		            </div>
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">积分</label>
+		                <div class="layui-input-block">
+		                    <input type="number" name="experience" required lay-verify="required" value="{{d.user.experience}}" placeholder="请输入积分" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">评分</label>
+		                <div class="layui-input-block">
+		                    <input type="number" name="score" required lay-verify="required" value="{{d.user.score}}" placeholder="请输入评分" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">财富</label>
+		                <div class="layui-input-block">
+		                    <input type="number" name="wealth" required lay-verify="required" value="{{d.user.wealth}}" placeholder="请输入财富" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">职业</label>
+		                <div class="layui-input-block">
+		                    <select name="classify" lay-verify="required">
+		                        <option value=""></option>                        
+		                      {{# layui.each(d.classifies,function(index,item){ }}
+		                      {{# if(item.id===d.user.classify){}}
+		                      <option value="{{item.id}}" selected>{{item.name}}</option>
+		                      {{#}else{}}
+		                      <option value="{{item.id}}">{{item.name}}</option>
+		                      {{#};}}
+		                      {{# }); }}
+		                    </select>
+		                </div>
+		            </div>
+		            <div class="layui-form-item layui-form-text">
+		                <label class="layui-form-label">签名</label>
+		                <div class="layui-input-block">
+		                    <textarea name="sign" placeholder="请输入个性签名" class="layui-textarea">{{d.user.sign}}</textarea>
+		                </div>
+		            </div>
+		            <div class="layui-form-item" style="display:none;">
+		                <div class="layui-input-block">
+		                    <button class="layui-btn" lay-submit lay-filter="formEdit">立即提交</button>
+		                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		                </div>
+		            </div>
+		        </form>
+		    </div>
+		</script>
+
+	<!-- 显示表格 -->
+	<script src="../../../res/layui/layui.js"></script>
+	<script src="../../../res/js/common/parameter.js"></script>
+	<script>
+	
+		
+		    layui.use(['table'], function() {
+		    	 
+		    	
+		    	var pmcId = getParameter("id");
+		    	var mrpId = getParameter("mrpId");
+		    	 
+		        var table = layui.table,
+		            $ = layui.jquery,
+		            layer = layui.layer,
+		            form = layui.form,
+		            laytpl = layui.laytpl;
+		        var tableIns = table.render({
+		            elem: '#demos',
+		            height: 'full', //容器高度
+		            url: '../../../mrpDetails/findById.action?mrpId='+mrpId,
+		            page: true,
+		            id: 'demos',
+		            cols: [
+		                [  { 
+		                    field: 'drugName',
+		                    title: '药品名称',
+		                    width: 160
+		                },{
+		                    field: 'mdPlan',
+		                    title: '任务计划',
+		                    width: 150
+		                },{
+		                    field: 'mdAmount',
+		                    title: '本次完成个数',
+		                    width: 150
+		                }, { 
+		                    field: 'mdStateName',
+		                    title: '状态',
+		                    width: 160
+		                }, { 
+		                    field: 'mdRough',
+		                    title: '未完成部分',
+		                    width: 160
+		                }, { 
+		                    field: 'mdViewName',
+		                    title: '处理意见',
+		                    width: 160
+		                }, { 
+		                    field: 'mdTimeName',
+		                    title: '制造时间',
+		                    width: 160
+		                }]
+		            ],
+		            done: function(res, curr, count) {
+		                //如果是异步请求数据方式，res即为你接口返回的信息。
+		                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+		                // console.log(res);
+		                // //得到当前页码
+		                // console.log(curr);
+		                // //得到数据总量
+		                // console.log(count);
+		            },
+		            loading: true,
+		            //method: 'post'
+		        });
+		        
+		        
+		        
+		        var tableIns = table.render({
+		            elem: '#demo',
+		            height: 'full', //容器高度
+		            url: '../../../pmcDetails/findByPmc.action?mrpId='+mrpId+'&pmcId='+pmcId,
+		            page: true,
+		            id: 'demo',
+		            cols: [
+		                [{
+		                    field: 'drugName',    
+		                    title: '药品名称',
+		                    width: 190
+		                }, { 
+		                    field: 'drugUnit',
+		                    title: '单位',
+		                    width: 160
+		                },{
+		                    field: 'pdAmount',
+		                    title: '制造数量',
+		                    width: 150
+		                }, { 
+		                    field: 'finisded',
+		                    title: '已完成数量',
+		                    width: 160
+		                }, { 
+		                    field: 'hangName',
+		                    title: '完成数量',
+		                    templet:'#input' ,
+		                    width: 160
+		                }]
+		            ],
+		            done: function(res, curr, count) {
+		            	var tables=table.cache.demo;
+		            	 $.each(tables,function(i,item){
+		            		 
+		            		 $("#shuju").val($("#shuju").val()+item.drugId+","+item.pdAmount+","+item.finisded+","+$("#number"+item.pdId).val()+"#");
+		            	 })
+		            	
+		            	
+
+		                //如果是异步请求数据方式，res即为你接口返回的信息。
+		                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+		                // console.log(res);
+		                // //得到当前页码
+		                // console.log(curr);
+		                // //得到数据总量
+		                // console.log(count);
+		            },
+		            loading: true,
+		            //method: 'post'
+		        });
+						//城市及角色
+		        var staticData = {
+		            citys: [{
+		                id: 0,
+		                name: '北京'
+		            }, {
+		                id: 1,
+		                name: '广州'
+		            }, {
+		                id: 2,
+		                name: '深圳'
+		            }, {
+		                id: 3,
+		                name: '杭州'
+		            }],
+		            classifies: [{
+		                id: 0,
+		                name: '词人'
+		            }, {
+		                id: 1,
+		                name: '诗人'
+		            }, {
+		                id: 2,
+		                name: '作家'
+		            }, {
+		                id: 3,
+		                name: '酱油'
+		            }]
+		        };
+		        //监听搜索表单提交
+		        form.on('submit(search)', function(data) {
+		            console.log(data.field);
+		            layer.msg(JSON.stringify(data.field));
+		            //带条件查询
+		            tableIns.reload({
+		                where: data.field
+		            });
+		            return false;
+		        });
+		        
+		        
+		        
+		        
+		      //选中、取消值
+	        	var data=null;
+		        table.on('checkbox(demo)', function(obj){
+		        	var tables=table.cache.demo;
+		        	data=obj.data;
+		        	
+		        	if(obj.checked==true){
+		        		 $("#shuju").val($("#shuju").val()+item.drugId+","+item.pdAmount+","+item.finisded+","+$("#number"+item.pdId).val()+"#");
+		        		 $.each(tables,function(i,item){
+		        			 if(data.pdId==item.pdId){
+		        				 //取输入数量值
+		        				 /*var a=$("#number"+data.pdId).val();
+		        				 //pdAmount
+		        				 var b=a.parent().parent().parent().prev().children().children().children().val();
+		        				 alert(b);*/
+		        			 }
+		        		 });
+		        		 
+		        	 }	
+		        	 if(obj.checked==false){
+		        		 $.each(tables,function(i,item){
+		        			 if(data.matId==item.matId){
+		        				 //获取总数量值
+		        				 var zAmount=$("#buyAmount").val();
+	        					 //用总数量值减去输入的值
+		        				 $("#buyAmount").val(parseInt(zAmount)-$("#number"+data.matId).val());
+	        					 
+		        				 //获取总金额值
+		        				 var zMoney=$("#buyMoney").val();
+	        					 //用总金额减去输入的小计值
+		        				 $("#buyMoney").val(parseInt(zMoney)-$("#price"+data.matId).val());
+		        			 }
+		        		 });
+		        	 }
+		        });
+		        
+		        
+		      //药品增加、修改、删除、批量删除 都是用的这一个方法
+			    function update(url,data){
+			    	var cls = false;
+			    	$.ajax({
+			    		url: url,
+	                    type:'post',//method请求方式，get或者post
+	                    async:false,//同步
+	                    dataType:'json',//预期服务器返回的数据类型
+	                    data: JSON.stringify(data),//表格数据序列化
+	                    contentType: "application/json; charset=utf-8",
+	                    success:function(mes){//res为相应体,function为回调函数
+	                    	$(".layui-laypage-btn")[0].click();//当前表格刷新
+	                        if(mes.status==1){ 
+	                        	cls = true;//有弹出层时是关闭弹出层 false不关闭
+		                        $("#res").click();//调用重置按钮将表单数据清空
+	                        }
+	                        layer.msg(mes.msg);
+	                    },
+	                   	error:function(){layer.alert('数据异常，请稍后重试！！！',{icon:5});}
+	                 });
+			    	return cls;
+			    }
+		        
+		        
+		        
+		        
+		        //监听工具条
+		        table.on('tool(demo)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+		            var data = obj.data; //获得当前行数据
+		            var layEvent = obj.event; //获得 lay-event 对应的值
+		            var tr = obj.tr; //获得当前行 tr 的DOM对象
+		
+		            if (layEvent === 'detail') { //查看
+		                console.log(table.checkStatus('demo'));
+		            } else if (layEvent === 'del') { //删除
+		                layer.confirm('真的删除行么', function(index) {
+		                	 obj.del(); //删除对应行（tr）的DOM结构
+		                    layer.close(index);
+		                    //向服务端发送删除指令
+		                });
+		            } else if (layEvent === 'edit') { //编辑
+		                var d = {
+		                    user: data,
+		                    citys: staticData.citys,
+		                    classifies: staticData.classifies
+		                };
+		                laytpl($('#edit-tpl').html()).render(d, function(html) {
+		                    layer.open({
+		                        type: 1,
+		                        title: '表单',
+		                        content: html,
+		                        area: ['800px', '450px'],
+		                        btn: ['提交', '重置', '取消'],
+		                        yes: function(index, layero) {
+		                            editIndex = index;
+		                            $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
+		                        },
+		                        btn2: function(index, layero) {
+		                            $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
+		                            return false;
+		                        },
+		                        success: function() {
+		                            form.render(null, 'form-edit');
+		                        }
+		                    });
+		                });
+		                //同步更新缓存对应的值
+		                // obj.update({
+		                //     username: '123',
+		                //     title: 'xxx'
+		                // });
+		            }
+		        });
+		        form.render(null, 'kit-search-form');
+		        $('#kit-search-more').on('click', function() {
+		            $('.kit-search-mored').toggle();
+		        });
+		        var editIndex;
+		        form.on('submit(formEdit)', function(data) {
+		            layer.msg('formEdit');
+		            editIndex && layer.close(editIndex); //关闭弹出层
+		            return false;
+		        });
+		        $('.kit-search-btns').children('a').off('click').on('click', function() {
+		            var $that = $(this),
+		                action = $that.data('action');
+		            switch (action) {
+		                case 'add':
+		                    var d = {
+		                        user: {
+		                            sign: '你哈',
+		                            city: '',
+		                            classify: '',
+		                            experience: '',
+		                            id: 0,
+		                            logins: '',
+		                            score: '',
+		                            sex: 1,
+		                            sign: '',
+		                            username: '',
+		                            wealth: ''
+		                        },
+		                        citys: staticData.citys,
+		                        classifies: staticData.classifies
+		                    };
+		                    //渲染
+		                    laytpl($('#edit-tpl').html()).render(d,
+		                        function(html) {
+		                            layer.open({
+		                                type: 1,
+		                                title: '表单',
+		                                content: html,
+		                                area: ['800px', '450px'],
+		                                btn: ['提交', '重置', '取消'],
+		                                yes: function(index, layero) {
+		                                    editIndex = index;
+		                                    $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
+		                                },
+		                                btn2: function(index, layero) {
+		                                    $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
+		                                    return false;
+		                                },
+		                                success: function() {
+		                                    form.render(null, 'form-edit');
+		                                }
+		                            });
+		                        });
+		                    break;
+		                case 'del-bulk':
+		                    var data = table.cache['demo'];
+		                    layui.each(data, function(index, item) {
+		                    	update("../../../pmcDetails/update.action",data);
+		                    });
+		                    break;
+		            }
+		        });
+		    });
+		   
+		    
+		    function  Pressdown(obj){
+            	var a=obj.value;   //  完成数量  
+            	var b=$(obj).parent().parent().parent().prev().children().text();   //已完成数量
+            	var c=$(obj).parent().parent().parent().prev().prev().children().text();   //计划数量
+            	 var  d=parseInt(c)-parseInt(b);
+             
+            	if(a>d){
+            	
+            		$(obj).val(d);
+            		 $("#shuju").val("")
+            		 layui.use(['table'], function() {
+            			 var table=layui.table;
+            			 var tables=table.cache.demo;      
+		            	 $.each(tables,function(i,item){
+		            		 $("#shuju").val($("#shuju").val()+item.drugId+","+item.pdAmount+","+item.finisded+","+$("#number"+item.pdId).val()+"#");
+		            			
+		            	 })
+            		 });
+            		 layer.msg("不能大于未完成的数量"); 
+            		
+            	}else{
+            		 $("#shuju").val("")
+            		 layui.use(['table'], function() {
+            			 var table=layui.table;
+            			 var tables=table.cache.demo;      
+		            	 $.each(tables,function(i,item){
+		            		 $("#shuju").val($("#shuju").val()+item.drugId+","+item.pdAmount+","+item.finisded+","+$("#number"+item.pdId).val()+"#");
+		            			
+		            	 })
+            		 });
+            	}
+		    }
+		    
+			 //增加、修改、删除、批量删除 都是用的这一个方法
+		    function update(url,data){
+		    	$.ajax({
+		    		url: url,
+	                type:'post',//method请求方式，get或者post
+	                cache: false,//同步
+	                dataType:'json',//预期服务器返回的数据类型
+	                data: JSON.stringify(data),//表格数据序列化
+	                contentType: "application/json; charset=utf-8",
+	                success:function(mes){//res为相应体,function为回调函数
+	                	 
+	                    if(mes.status==1){ 
+	                    	var close = true;//有弹出层时是关闭弹出层 false不关闭
+	                        $("#res").click();//调用重置按钮将表单数据清空
+	                    }
+	                    layer.msg(mes.msg);
+	                },
+	               	error:function(){layer.alert('数据异常，请稍后重试！！！',{icon:5});}
+	             });
+		    }
+		    
+		    
+		</script>
+</body>
+</html>
