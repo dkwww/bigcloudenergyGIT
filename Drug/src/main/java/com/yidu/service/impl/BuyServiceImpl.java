@@ -7,10 +7,12 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
 import com.yidu.dao.BuyMapper;
+import com.yidu.domain.Admin;
 import com.yidu.domain.Buy;
 import com.yidu.service.BuyService;
 import com.yidu.util.PageUtil;
@@ -31,11 +33,12 @@ public class BuyServiceImpl implements BuyService {
 	BuyMapper mapper;
 	
 	@Override
-	public List<Buy> showList(Buy buy,PageUtil pageUtil) {
+	public List<Buy> showList(Buy buy,PageUtil pageUtil,Admin admin) {
 		
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("buy", buy);
 		map.put("pageUtil", pageUtil);
+		map.put("admin", admin);
 		List<Buy> list = mapper.findAll(map);
 		for (Buy buy2 : list) {
 			if(buy2.getBuyTime()!=null) {

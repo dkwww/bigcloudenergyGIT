@@ -35,12 +35,11 @@
   </select>
   	
   <select id="findAll" parameterType="map" resultMap="BaseResultMap">
-  	SELECT * FROM drug_buy WHERE 1=1
+  	SELECT * FROM drug_buy WHERE com_id =#{admin.comId,jdbcType=INTEGER}
   	
    	order by sort desc 
   	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
   </select>
-  
   
   
   <select id="showList" parameterType="map" resultMap="BaseResultMap">

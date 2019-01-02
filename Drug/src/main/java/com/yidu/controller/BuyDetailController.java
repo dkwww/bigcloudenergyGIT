@@ -32,7 +32,7 @@ import com.yidu.util.Message;
  * 采购明细 前端控制器
  * </p>
  *
- * @author Pngjiangping
+ * @author 郑有宏
  * @since 2018-11-26
  */
 @Controller

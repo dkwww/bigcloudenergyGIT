@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yidu.domain.Admin;
 import com.yidu.domain.Audit;
 import com.yidu.domain.Buy;
 import com.yidu.domain.Debty;
@@ -378,14 +380,15 @@ public class AuditController {
 	
 	@RequestMapping("/showBuy")
 	@ResponseBody
-	public Map<String, Object> showBuy(Audit audit,Integer page,Integer limit){
+	public Map<String, Object> showBuy(Audit audit,Integer page,Integer limit,HttpSession session){
 		PageUtil pageUtil = new PageUtil();
 		if(page!=null && limit!=null) {
 			pageUtil.setCurPage(page);
 			pageUtil.setRows(limit);
 		}
+		Admin admin = (Admin) session.getAttribute("user");
 		
-		List<Audit> list = service.showBuy(audit,pageUtil);
+		List<Audit> list = service.showBuy(audit,pageUtil,admin);
 		int rows=service.findCount(audit);
 		
 		Map<String, Object> m = new HashMap<>();
@@ -399,14 +402,15 @@ public class AuditController {
 	
 	@RequestMapping("/showCEO")
 	@ResponseBody
-	public Map<String, Object> showCEO(Audit audit,Integer page,Integer limit){
+	public Map<String, Object> showCEO(Audit audit,Integer page,Integer limit,HttpSession session){
 		PageUtil pageUtil = new PageUtil();
 		if(page!=null && limit!=null) {
 			pageUtil.setCurPage(page);
 			pageUtil.setRows(limit);
 		}
+		Admin admin = (Admin) session.getAttribute("user");
 		
-		List<Audit> list = service.showCEO(audit,pageUtil);
+		List<Audit> list = service.showCEO(audit,pageUtil,admin);
 		int rows=service.findCount(audit);
 		
 		Map<String, Object> m = new HashMap<>();
@@ -420,14 +424,15 @@ public class AuditController {
 
 	@RequestMapping("/findSale")
 	@ResponseBody
-	public Map<String, Object> findSale(Audit audit,Integer page,Integer limit){
+	public Map<String, Object> findSale(Audit audit,Integer page,Integer limit,HttpSession session){
 		PageUtil pageUtil = new PageUtil();
 		if(page!=null && limit!=null) {
 			pageUtil.setCurPage(page);
 			pageUtil.setRows(limit);
 		}
+		Admin admin = (Admin) session.getAttribute("user");
 		
-		List<Audit> list = service.findSale(audit,pageUtil);
+		List<Audit> list = service.findSale(audit,pageUtil,admin);
 		int rows=service.findCount(audit);
 		
 		Map<String, Object> m = new HashMap<>();
@@ -441,14 +446,15 @@ public class AuditController {
 
 	@RequestMapping("/findCEO")
 	@ResponseBody
-	public Map<String, Object> findCEO(Audit audit,Integer page,Integer limit){
+	public Map<String, Object> findCEO(Audit audit,Integer page,Integer limit,HttpSession session){
 		PageUtil pageUtil = new PageUtil();
 		if(page!=null && limit!=null) {
 			pageUtil.setCurPage(page);
 			pageUtil.setRows(limit);
 		}
+		Admin admin = (Admin) session.getAttribute("user");
 		
-		List<Audit> list = service.findCEO(audit,pageUtil);
+		List<Audit> list = service.findCEO(audit,pageUtil,admin);
 		int rows=service.findCount(audit);
 		
 		Map<String, Object> m = new HashMap<>();

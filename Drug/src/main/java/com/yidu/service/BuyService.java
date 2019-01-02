@@ -2,8 +2,10 @@ package com.yidu.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import com.yidu.domain.Admin;
 import com.yidu.domain.Buy;
-import com.yidu.domain.Drug;
 import com.yidu.util.PageUtil;
 
 /**
@@ -22,7 +24,7 @@ public interface BuyService   {
 	 * @param pageUtil
 	 * @return
 	 */
-	public List<Buy> showList(Buy buy,PageUtil pageUtil);
+	public List<Buy> showList(Buy buy,PageUtil pageUtil,Admin admin);
 	
 	/**
 	 * 查找总行数
