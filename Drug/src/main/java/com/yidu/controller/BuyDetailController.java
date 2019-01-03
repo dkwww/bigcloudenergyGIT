@@ -53,14 +53,10 @@ public class BuyDetailController {
 	@ResponseBody
 	public Message add(String mes,HttpSession session) {
 		//得到session
-		Admin admin = (Admin) session.getAttribute("user");
+		Admin admin = (Admin) session.getAttribute("admin");
 		
-		Admin admin2 = new Admin();
-		admin2.setComId("1");
-		admin2.setAdminName("管理员");
-		admin2.setAdminId("1");
 		
-		int buyRows = service.purchase(mes,admin2);
+		int buyRows = service.purchase(mes,admin);
 		
 		
 		Message message = new Message();

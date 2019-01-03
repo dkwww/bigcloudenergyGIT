@@ -8,6 +8,20 @@
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
 		<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
 		<title>采购管理</title>
+		<script>
+			$(function(){
+				var   buyId=getParameter("id");
+				var url="../../buyDetail/findById.action";
+				var data={"id":buyId};
+				$.post(url,data,function(mes){
+					$.each(mes,function(i,item){
+						$("#tbo").append("<tr><td>"+item.drugName+"</td><td><input type='number' id='up_"+item.bdetFkId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' value='1' /></td><td id='pic_"+item.bdetFkId+"'>"+item.bdetPrice+"</td><td>"+item.drugUnit+"</td><td><input type='text' id='mes_"+item.bdetFkId+"' style='height:20px; border:0px; width:200px;' onKeyUp='pj()'/></td><td id='total'>"+item.bdetPrice+"</td><td><a onclick='delrow(this);' class='dels'>删除</a></td><td style='display:none;'><input type='text' id='drugId' value='"+item.bdetFkId+"' /></td></tr>")
+			        });
+					pj();
+				},"json");
+				
+			})
+		</script>
 		<style>
 			#kit-table{
 				margin-top:30px;
@@ -204,6 +218,7 @@
 			* 拼接的方法
 			*/
 			function pj(){
+				var   buyId=getParameter("id");//获取buyid
 				//赋值
 				var str = ""; 
 				//拼接
@@ -214,7 +229,7 @@
 					  str+=$(this).find("td:eq(1) input").val()+"#";
 					  str+=$(this).find("td:eq(4) input").val()+"#";
 					  str+=$(this).find("td:eq(7) input").val()+"#";
-					  str+=amount+"#"+money+"&";
+					  str+=amount+"#"+money+"#"+buyId+"&";
 				});
 				$("#mes").val(str);
 			}
@@ -235,6 +250,20 @@
 		            th.value = th.value.replace(reg, regStrs[i][1]);
 		        }
 		    }
+			
+		    function getParameter(param){
+	    		var query = window.location.search;
+	    		var iLen = param.length;
+	    		var iStart = query.indexOf(param);
+	    		if (iStart == -1)
+	    			return "";
+	    		iStart += iLen + 1;
+	    		var iEnd = query.indexOf("&", iStart);
+	    		if (iEnd == -1)
+	    			return query.substring(iStart);
+
+	    		return query.substring(iStart, iEnd);
+	    	}
 			/**
 			* 移除当前行
 			*/
@@ -374,6 +403,6 @@
 		   
 		</script>
 		
-   		<input type="hidden" name="mes" id="mes"/>
+   		<input type="text" name="mes" id="mes"/>
 	</body>
 </html>

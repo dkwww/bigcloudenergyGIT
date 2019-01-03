@@ -1,7 +1,11 @@
 ﻿package com.yidu.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 import com.yidu.domain.Audit;
 import com.yidu.domain.Buy;
@@ -64,10 +68,21 @@ public interface BuyMapper {
     /**
      * 审核查询总行数
      * @param buy
-     * @author 邓康威
+     * @author 郑有宏
      * @return
      */
     public int AuditselectCount(Buy buy);
+    
+    
+    /**
+	 * 修改订单状态
+	 * @param status
+	 * @param buyId
+	 * @author 郑有宏
+	 * @return
+	 */
+	@Update("UPDATE drug_buy SET buy_state = #{status} WHERE buy_id = #{buyId}")
+	int updateStates(@Param("status")String status,@Param("buyId")String buyId);
 
     
 }

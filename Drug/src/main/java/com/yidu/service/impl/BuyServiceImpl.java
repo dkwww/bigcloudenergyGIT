@@ -100,4 +100,10 @@ public class BuyServiceImpl implements BuyService {
 		return mapper.selectByPrimaryKey(id);
 	}
 
+
+	@Override
+	public int updateStatus(String status,String buyId) {
+		return mapper.updateStates(status, buyId);
+	}
+
 }

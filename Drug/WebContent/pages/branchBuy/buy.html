@@ -191,7 +191,6 @@
 		                {field: 'buyAmount',title: '商品数量',width: 100}, 
 		                {field: 'buyMoney',title: '总金额',width: 80}, 
 		                {field: 'buyTimes',title: '采购时间',width: 166}, 
-		                {field: 'buyCompany',title: '供应商',width: 100}, 
 		                {field: 'buyAudit',title: '审核状态',width: 100}, 
 		                {field: 'buyStates',title: '采购状态',width: 110,sort: true}, 
 		                {field: 'buyQc',title: '质检状态',width: 110,sort: true}, 
@@ -267,36 +266,25 @@
 		                    //向服务端发送删除指令
 		                });
 		            } else if (layEvent === 'edit') { //编辑
-		                var d = {
-		                    user: data,
-		                    citys: staticData.citys,
-		                    classifies: staticData.classifies
-		                };
-		                laytpl($('#edit-tpl').html()).render(d, function(html) {
-		                    layer.open({
-		                        type: 1,
-		                        title: '信息',
-		                        content: html,
-		                        area: ['800px', '450px'],
-		                        btn: ['提交', '重置', '取消'],
-		                        yes: function(index, layero) {
-		                            editIndex = index;
-		                            $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
-		                        },
-		                        btn2: function(index, layero) {
-		                            $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
-		                            return false;
-		                        },
-		                        success: function() {
-		                            form.render(null, 'form-edit');
-		                        }
-		                    });
-		                });
-		                //同步更新缓存对应的值
-		                // obj.update({
-		                //     username: '123',
-		                //     title: 'xxx'
-		                // });
+		            	layer.open({
+                            type: 2,
+                            title: '信息',
+                            content:['buyDetail.html?id='+data.buyId, 'no'],
+                            area: ['1200px', '800px'],
+                            yes: function(index, layero) {
+                                editIndex = index;
+                                $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
+                            },
+                            btn2: function(index, layero) {
+                                $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
+                                return false;
+                            },
+                            success: function() {
+                                form.render(null, 'form-edit');
+                            }
+                        });
+		                console.log(table.checkStatus('demo'));
+		            	
 		            }
 		        });
 		        form.render(null, 'kit-search-form');

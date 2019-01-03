@@ -66,4 +66,6 @@ public interface BuyDetailMapper {
      * @return
      */
 	List<BuyDetail> findBuyId(String buyId);
+
+	int updateByBuyId(BuyDetail detail);
 }

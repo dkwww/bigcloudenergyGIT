@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 
@@ -293,13 +294,14 @@ public class QcController {
 	 */
 	@RequestMapping("branchQuality")
 	@ResponseBody
-	public Map<String, Object> branchQuality(Qc qc,Integer page,Integer limit){
+	public Map<String, Object> branchQuality(Qc qc,Integer page,Integer limit,HttpSession session){
 		
 		PageUtil PageUtil=new PageUtil();
 		if(page!=null && limit!=null) {
 			PageUtil.setCurPage(page);
 			PageUtil.setRows(limit);
 		}
+		session.getAttribute("user");
 		
 		List<Qc> list=qcService.branchQuality(qc, PageUtil);
 		for (Qc qc2 : list) {

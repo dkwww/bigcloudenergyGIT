@@ -132,12 +132,20 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 			System.out.println("药品id:"+bdetFkId);
 			String amount = strOne[11];//订单总数量
 			BigDecimal money = new BigDecimal(strOne[12]);//订单总金额
+			String buyId = strOne[13];//订单总数量
+			System.err.println("采购订单id "+strOne[13]);
+			
+			
 			
 			DrugInve drugInv = invService.findDrug(bdetFkId);
 			if(drugInv.getDiId()!=null&&!"".equals(drugInv.getDiId())) {
 				System.out.println("找到了药品");
 				
-				buy.setBuyId(uuidOne);//订单id
+				if(buyId==null) {
+					buy.setBuyId(uuidOne);//订单id
+				}else {
+					buy.setBuyId(buyId);//订单id
+				}
 				buy.setComId(admin.getComId());//店铺id
 				buy.setBuyAmount(Integer.valueOf(amount));//总购买数量
 				buy.setBuyMoney(money);//订单总价
@@ -155,8 +163,14 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 				buy.setSort(TimeUtil.getStrDate());//排序
 				
 				if(i==0) {
-					//采购订单增加的方法
-					buyService.insertSelective(buy);
+					if(buyId==null||"".equals(buyId)) {
+						//采购订单增加的方法
+						buyService.insertSelective(buy);
+					}else {
+						mapper.deleteByPrimaryKeys(buyId);
+						buyService.updateByPrimaryKeySelective(buy);
+					}
+					
 					
 					audit.setAudFkId(uuidOne);
 					audit.setAudComtype("1");
@@ -172,12 +186,18 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 					audit.setSort(TimeUtil.getStrDate());
 					auditService.addOrUpdate(audit);//审核
 				}
+				BigDecimal bdetPrices = new BigDecimal(bdetPrice);//单价
+				BigDecimal bdetTotals = new BigDecimal(bdetTotal);//总价
 				
-				bDetail.setBuyId(uuidOne);
+				String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+				bDetail.setBdetId(uuid);
+				if(buyId==null) {
+					bDetail.setBuyId(uuidOne);
+				}else {
+					bDetail.setBuyId(buyId);
+				}
 				bDetail.setBdetAmount(Integer.valueOf(bdetAmount));
-				BigDecimal bdetPrices = new BigDecimal(bdetPrice);
 				bDetail.setBdetPrice(bdetPrices);
-				BigDecimal bdetTotals = new BigDecimal(bdetTotal);
 				bDetail.setBdetTotal(bdetTotals);
 				bDetail.setBdetFkId(bdetFkId);
 				bDetail.setIsva("有效");
@@ -185,7 +205,8 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 				bDetail.setOptime(new Date());
 				
 				//采购详情的增加
-				buyRows =addOrUpdate(bDetail);
+				buyRows =insertSelective(bDetail);
+				
 				
 				if(i==0) {
 					
@@ -234,6 +255,12 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 	public List<BuyDetail> findById(String id) {
 		List<BuyDetail> list = mapper.findById(id);
 		return list;
+	}
+
+
+	@Override
+	public int updateByBuyId(BuyDetail detail) {
+		return mapper.updateByBuyId(detail);
 	}
 
 }

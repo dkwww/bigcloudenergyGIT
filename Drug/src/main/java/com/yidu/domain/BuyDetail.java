@@ -10,6 +10,8 @@ public class BuyDetail {
 
     private Integer bdetAmount;					//数量
 
+    private String drugUnit;					//数量单位
+
     private BigDecimal bdetPrice;				//单价
 
     private BigDecimal bdetTotal;				//小计
@@ -46,7 +48,15 @@ public class BuyDetail {
     
     
     
-    public BigDecimal getBuyMoney() {
+    public String getDrugUnit() {
+		return drugUnit;
+	}
+
+	public void setDrugUnit(String drugUnit) {
+		this.drugUnit = drugUnit;
+	}
+
+	public BigDecimal getBuyMoney() {
 		return buyMoney;
 	}
 
