@@ -69,6 +69,7 @@
 				</script>
 		        <script type="text/html" id="barDemo">
 		            <a class="layui-btn layui-btn-xs" lay-event="detail">查看订单</a>
+					<a class="layui-btn layui-btn-xs" lay-event="details">查看订单情况</a>
 					<a class="layui-btn layui-btn-xs" lay-event="shenhe">审核</a>
 		        </script>
 		    </div>
@@ -111,7 +112,7 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '475px', //容器高度
-		            url: '../../audit/financeo.action',
+		            url: '../../audit/wholeceo.action',
 		            page: true,
 		            id: 'demo',
 		            cols: [
@@ -124,13 +125,13 @@
 		                {field: 'audMes',title: '备注',width: 150},
 		                {field: 'wholAmount',title: '总数量',width: 150},
 		                {field: 'wholPrice',title: '总价格',width: 150},
-		                {fixed: 'right',title: '操作',width: 180,align: 'center',toolbar: '#barDemo'}]
+		                {fixed: 'right',title: '操作',width: 260,align: 'center',toolbar: '#barDemo'}]
 		            ],
 		            done: function(res, curr, count) {
 		            	tableElem=this.elem.next('.layui-table-view');
 		            	$("[data-field = 'audState']").children().not(":first").each(function(){
 		            		$.each($(this).find('input'),function(index,item){
-		            			if($(this).val() == '31'){
+		            			if($(this).val() == '29'){
 		            				$(this).prop("checked",true);
 							    }
 		            		});
@@ -194,11 +195,11 @@
                             content: 'detailwhol.html?whoid='+data.audFkId+''
                         });
 		            } else if (layEvent === 'shenhe') {
-		            	$.ajax({ url:"../../audit/Finanexamine.action",
+		            	$.ajax({ url:"../../audit/examine.action",
 		                    type:'post',//method请求方式，get或者post
 		                    cache: false,//同步
 		                    dataType:'json',//预期服务器返回的数据类型
-		                    data:{"audId":data.audId,"audFkId":data.audFkId,"zongjia":data.wholPrice},//传表格数据
+		                    data:{"audId":data.audId},//传表格数据
 		                    success:function(mes){//res为相应体,function为回调函数
 		                    	if(mes.status == 1){
 		                    		layer.msg('修改成功', {
@@ -216,6 +217,15 @@
 		                    	}
 		                    }
 		                 });
+		            }else if (layEvent === 'details') {
+		            	layer.open({
+                            type: 2,
+                            title: '增加批发订单',
+                            shadeClose: true,
+                            shade: false,
+                            maxmin: true, //开启最大化最小化按钮
+                            area: ['900px', '450px'],
+                        });
 		            }
 		        });
 		        //表单渲染

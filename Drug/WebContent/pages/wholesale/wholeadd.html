@@ -32,8 +32,8 @@
 		</div>
 		<button onclick="okpi()" style="position:absolute;top:38px;left:780px;width:100px;" class="layui-btn layui-btn-sm kit-btn">确认批发</button>
 		<div style="position: relative;display: inline;" id="zong">
-			总金额:<input id="zongjin" style="width:120px;" class="layui-input" type="text" />
-			 总数量:<input id="zongshu" style="width:120px;" class="layui-input" type="text" />
+			总金额:<input id="zongjin" style="width:120px;" disabled class="layui-input" type="text" />
+			 总数量:<input id="zongshu" style="width:120px;" disabled class="layui-input" type="text" />
 		</div>
 		<div class="kit-table">
 		    <form class="layui-form" lay-filter="kit-search-form">
@@ -281,9 +281,12 @@
 		            	var bln = true;
 		            	$("#add tr").not(":first").each(function(index){
 							if($(this).find('td:eq(1)').text()==data.drugName){
-								layer.alert('该药品已在购物清单');
+								tableElem.find("tr").not(":first").each(function(index){
+									if(data.drugName==$(this).children().first().text()){
+										tableElem.find("tr[data-index="+index+"]").find("button").addClass('layui-btn-disabled').attr('disabled',false);
+									}
+								});
 								bln = false;
-								tableElem.find("tr[data-index="+index+"]").find("button").addClass('layui-btn-disabled').attr('disabled',false);
 							}
 						});
 		            	if (bln) {
@@ -314,7 +317,6 @@
 			        		$("#zongshu").val(zongnum);
 							$("#zongjin").val(zongmoney);
 		            	}
-		            
 		        	}
 		        });
 		        //表单渲染
@@ -341,8 +343,12 @@
 					});
 	        		$("#zongshu").val(zongnum);
 					$("#zongjin").val(zongmoney);
+					alert($(obj).parent().prev().text());
+					
 					
 					$(obj).closest('tr').remove();
+					
+					layer.alert('清单中已存在该物品');
 		 	}
 		    //ajax加载动画
 		    $(function () {
@@ -430,7 +436,6 @@
 			$("#add tr").not(":first").each(function(index){
 				s++;
 			});
-			
 			if(s!=0){
 				var html="";
 				$("#add tr").not(":first").each(function(){
@@ -439,6 +444,7 @@
 					});
 						html+=$(this).find('td:eq(4) input').val()+"#";
 				});
+				alert(html);
 				$.ajax({ url:"../../wholesale/Wholesalemanagement.action",
 	                type:'post',//method请求方式，get或者post
 	                cache: false,//同步

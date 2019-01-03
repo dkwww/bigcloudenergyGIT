@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
+		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
+		<title>财务审核记录</title>
+    </script>
+	</head>
+	
+	<script type="text/html" id="input">
+	<div class="layui-inline">
+		<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="matAmount"  autocomplete="off"  value="{{d.matAmount}}" id="number{{d.matId}}" onkeyup="Pressdown(this);">
+	</div>
+	</script>
+	
+	<script type="text/html" id="inputss">
+	<div class="layui-inline">
+		<input class="layui-input layui-disabled"  readonly="readonly"  value="0" maxlength="9" style="border:none;padding-bottom:8px;" name="bdetTotal" id="price{{d.matId}}" autocomplete="off"">
+	</div>
+	</script>
+	<body>
+		<div class="kit-table">
+			<!-- 操作按钮 -->
+		    <div class="kit-table-body">
+		        <table id="demo" lay-filter="demo"></table>
+		        <script type="text/html" id="barDemo">
+					<a class="layui-btn layui-btn-xs" lay-event="detail">订单详情</a>
+					<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="confirm">审核</a>
+					<a class="layui-btn layui-btn-xs" lay-event="record">审核记录</a>
+		        </script>
+		    </div>
+		</div>
+		
+		<!-- 修改页面 -->
+		<script type="text/html" id="edit-tpl">
+		    <div style="margin:10px">
+		        <form class="layui-form" action="" lay-filter="form-edit">
+		            <input type="text" name="buyId" value="{{d.rowdata.buyId}}" />
+					
+					<div class="layui-form-item">
+		                <label class="layui-form-label">审核部门</label>
+		                <div class="layui-input-block">
+		                    <input type="text"  required lay-verify="required" value="总经理审核" placeholder="请输入药材名称" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">订单名称</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="matAmount" required lay-verify="required" value="材料采购订单" placeholder="请输入数量" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+					
+					<div class="layui-form-item">
+		                <label class="layui-form-label">是否通过</label>
+		                <div class="layui-input-block">
+		                    {{# var woman = d.rowdata.buyAudit === 0?'checked':'';}} {{# var man = d.rowdata.buyAudit === 1?'checked':'';}}
+		                    <input type="radio" name="buyAudit" value="1" title="是" {{man}} />
+		                    <input type="radio" name="buyAudit" value="2" title="否" {{woman}} />
+		                </div>
+		            </div>
+
+					<div class="layui-form-item">
+		                <label class="layui-form-label">审核意见</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="audIdea" required lay-verify="required" value="{{d.rowdata.audIdea}}" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+		            
+		            <div class="layui-form-item" style="display:none;">
+		                <div class="layui-input-block">
+		                    <button class="layui-btn" lay-submit lay-filter="formEdit">立即提交</button>
+		                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		                </div>
+		            </div>
+		        </form>
+		    </div>
+		</script>
+		
+		<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
+		<script>
+			//文本框只能输入金额
+		    function amount(th){
+		        var regStrs = [
+		            ['^0(\\d+)$', '$1'], //禁止录入整数部分两位以上，但首位为0
+		            ['[^\\d\\.]+$', ''], //禁止录入任何非数字和点
+		            ['\\.(\\d?)\\.+', '.$1'], //禁止录入两个以上的点
+		            ['^(\\d+\\.\\d{2}).+', '$1'] //禁止录入小数点后两位以上
+		        ];
+		        for(i=0; i<regStrs.length; i++){
+		            var reg = new RegExp(regStrs[i][0]);
+		            th.value = th.value.replace(reg, regStrs[i][1]);
+		        }
+		    }
+			//搜索框同步输入
+			function lockInput(obj,id){
+				$("#"+id).val($(obj).val());
+			}
+			
+		
+		</script>
+		
+		<script src="../../res/layui/layui.all.js"></script>
+		<script src="../../res/js/common/parameter.js"></script>
+		<script>
+			window.windata=null;
+			//显示表格数据
+		    layui.use(['table','upload'], function() {
+		    	
+		    	var buyId = getParameter("id");
+		    	
+		        var table = layui.table,
+		            $ = layui.jquery,
+		            layer = layui.layer,
+		            form = layui.form,
+		            laytpl = layui.laytpl;
+		        var tableIns = table.render({
+		            elem: '#demo',
+		            height: '449px', //容器高度
+		            url: '../../audit/showList.action?qcFkId='+buyId,
+		            page: true,
+		            id: 'demo',
+		            cols: [
+		                [{field: 'audId',title: 'ID',width: 120},
+		                {field: 'auName',title: '审核状态',width: 120},
+		                {field: 'audIdea',title: '原因',width: 120},
+		                {field: 'audTimes',title: '审核时间',width: 120}]
+		            ],
+		            done: function(res, curr, count) {
+		            	windata=res.data;
+		            	var tables=table.cache.demo;
+		            },
+		            loading: true
+		        });
+		        
+				//查询供应商下拉框数据
+		        $.ajax({ url:"../../provider/showList.action",
+                    type:'post',//method请求方式，get或者post
+                    cache: false,//同步
+                    dataType:'json',//预期服务器返回的数据类型
+                    success:function(mes){//res为相应体,function为回调函数
+                    	//循环添加框内的数据
+                    	$.each(mes.data,function(index,item){
+                    		$("#biaodan").append("<option value="+item.provId+">"+item.provName+"</option>");
+                    	});
+                    	//渲染框内的下拉框
+                    	form.render();
+                    }
+                 });
+				
+		      	//监听搜索表单提交
+		        form.on('select(biaodan)', function(data){
+				  	//带条件查询
+		            tableIns.reload({
+		                where: {"buyCompany":data.value},
+		                page: { curr: 1 }
+		            });
+				})
+		        
+				//渲染 修改和增加弹出层
+			    function showlayer(d){
+			    	laytpl($('#edit-tpl').html()).render(d,function(html) {
+	                    layer.open({
+	                        type: 1,
+	                        title: '审核',
+	                        content: html,
+	                        area: ['800px', '430px'],
+	                        btn: ['提交', '重置', '取消'],
+	                        yes: function(index, layero) {
+	                            editIndex = index;
+	                            $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
+	                        },
+	                        btn2: function(index, layero) {
+	                            $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
+	                            return false;
+	                        },
+	                        success: function() {
+	                            form.render(null, 'form-edit');
+	                        }
+	                    });
+	                    
+	                });
+			    }
+		        
+		      
+				//监听工具条按钮点击
+		        table.on('tool(demo)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+		            var data = obj.data; //获得当前行数据
+		            var layEvent = obj.event; //获得 lay-event 对应的值
+		            var tr = obj.tr; //获得当前行 tr 的DOM对象
+		
+		            if (layEvent === 'detail') { //查看
+		                console.log(table.checkStatus('demo'));
+			            var  buyId=data.buyId;
+	                	var index = layer.open({
+	          				  type: 2,
+	          				  title: '采购明细',
+	          				  content: '../buy/detail.html?id='+buyId,
+	          				  area: ['800px', '30px']
+	          				  //maxmin: true
+	          				});
+	          			layer.full(index);
+		            } else if(layEvent==='confirm'){//审核
+		            	var d = {
+			                	rowdata: data
+			                };
+		            	showlayer(d);
+		            	
+		            }else if (layEvent === 'record') { //查看审核记录
+			            var  buyId=data.buyId;
+	                	var index = layer.open({
+	          				  type: 2,
+	          				  title: '审核记录',
+	          				  content: '../buy/buyaddls2.html?ids='+buyId,
+	          				  area: ['800px', '30px']
+	          				  //maxmin: true
+	          				});
+	          			layer.full(index);
+		            }
+		        });
+		        
+				
+		      //审核提交
+		        form.on('submit(formEdit)', function(data) {
+		        	var cls = update("../../buyht/update.action",data.field);
+		        	editIndex && layer.close(editIndex); //关闭弹出层
+                	return false;
+		        });
+	        	
+		        //表单渲染
+		        form.render(null, 'kit-search-form');
+		        //更多筛选点击事件
+		        $('#kit-search-more').on('click', function() {
+		            $('.kit-search-mored').toggle();
+		        });
+		        var editIndex;
+		    });
+			
+		  	//全屏弹窗
+			function maxlayer(){
+				var index = layer.open({
+				  type: 2,
+				  title: '药品配置',
+				  content: 'https://www.baidu.com',
+				  area: ['800px', '430px']
+				  //maxmin: true
+				});
+				layer.full(index);
+			}
+		  	
+			//增加、修改、删除、批量删除 都是用的这一个方法
+		    function update(url,data){
+		    	$.ajax({
+		    		url: url,
+                    type:'post',//method请求方式，get或者post
+                    cache: false,//同步
+                    dataType:'json',//预期服务器返回的数据类型
+                    data: JSON.stringify(data),//表格数据序列化
+                    contentType: "application/json; charset=utf-8",
+                    success:function(mes){//res为相应体,function为回调函数
+                    	$(".layui-laypage-btn")[0].click();//当前表格刷新
+                        if(mes.status==1){ 
+                        	var close = true;//有弹出层时是关闭弹出层 false不关闭
+	                        $("#res").click();//调用重置按钮将表单数据清空
+                        }
+                        layer.msg(mes.msg);
+                    },
+                   	error:function(){layer.alert('数据异常，请稍后重试！！！',{icon:5});}
+                 });
+		    }
+		  	
+		  	//重新渲染表单
+		  	function renderForm(){
+	  			layui.use('form', function(){ 
+		  			var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加() 
+		  			form.render(); 
+	  			}); 
+	  		}
+		    //ajax加载动画
+		    $(function () {
+	            $.ajaxSetup({
+	                layerIndex:-1,
+	                beforeSend: function () {
+	                    this.layerIndex = layer.load(1, { shade: [0.8, '#ffffff'] });
+	                },
+	                complete: function () {
+	                    layer.close(this.layerIndex);
+	                },
+	                error: function () {
+	                    layer.alert('部分数据加载失败，可能会导致页面显示异常，请刷新后重试', {
+	                        skin: 'layui-layer-molv'
+	                       , closeBtn: 0
+	                       , shift: 4 //动画类型
+	                    });
+	                }
+	            });
+	        });
+		</script>
+	</body>
+</html>

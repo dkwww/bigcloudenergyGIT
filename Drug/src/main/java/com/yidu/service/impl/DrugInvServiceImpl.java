@@ -57,6 +57,8 @@ public class DrugInvServiceImpl    implements DrugInvService {
 
 	@Override
 	public List<DrugInve> findselect(DrugInve drugInve) {
+		System.err.println("service="+drugInve.getComId());
+		System.err.println("service="+drugInve.getDrugId());
 		return dao.findselect(drugInve);
 	}
 

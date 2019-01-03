@@ -11,13 +11,15 @@
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
     <result column="com_name" jdbcType="VARCHAR" property="comName"/>
+    <result column="aud_state" jdbcType="VARCHAR" property="audState"/>
   </resultMap>
   <sql id="Base_Column_List">
     whol_id, com_id, whol_amount, whol_price, optime, isva, oper, sort
   </sql>
   
   <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
-  	SELECT dw.*,dc.com_name FROM drug_wholesale dw,drug_company dc WHERE dw.com_id=dc.com_id
+  	SELECT dw.*,dc.com_name,da.aud_state FROM drug_wholesale dw,drug_company dc,drug_audit da WHERE dw.com_id=dc.com_id
+  	and dw.whol_id=da.aud_fk_id
     <if test="title != null and title != '' ">
     		and dw.whol_id = #{title}
     </if>
