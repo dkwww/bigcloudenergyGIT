@@ -92,7 +92,7 @@ public class BuyHeController {
 		List<Buy> list = service.showList(buy,pageUtil);
 		
 		for (Buy buytwo : list) {
-			//转时间
+			//转成时间格式
 			buytwo.setBuyTimes(Tools.getDateStr(buytwo.getBuyTime()));
 			 //审核状态判断如果是0就是未审核
 			if (buytwo.getBuyAudit().equals("0")) {
@@ -110,12 +110,14 @@ public class BuyHeController {
 				buytwo.setBuyStates("已采购");
 			}
 			
+			
 			if(buytwo.getBuySubmission().equals("0")) {
 				buytwo.setBuySubmissions("未提交");
 			}else {
 				buytwo.setBuySubmissions("已提交");
 			}
 		}
+		//行数
 		int rows=service.selectCount(buy);
 		
 		Map<String, Object> map = new HashMap<>();

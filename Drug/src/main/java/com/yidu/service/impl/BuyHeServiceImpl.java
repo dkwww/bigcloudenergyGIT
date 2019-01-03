@@ -14,6 +14,7 @@ import com.yidu.dao.BuyMapper;
 import com.yidu.domain.Buy;
 import com.yidu.service.BuyHeService;
 import com.yidu.util.PageUtil;
+import com.yidu.util.TimeUtil;
 
 /**
  * <p>
@@ -31,6 +32,17 @@ public class BuyHeServiceImpl implements BuyHeService {
 	
 	@Override
 	public List<Buy> showList(Buy buy,PageUtil page) {
+		try {
+			if(buy.getBuyTimes()!=null &&!"".equals(buy.getBuyTimes())) {
+				//开始时间拆分第一个
+				buy.setKsTime(TimeUtil.stringToDate(buy.getBuyTimes().split("到")[0],  "yyyy-MM-dd"));
+				//结束时间拆分第二个
+				buy.setEndTime(TimeUtil.stringToDate(buy.getBuyTimes().split("到")[1],  "yyyy-MM-dd"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		Map<String, Object> map=new HashMap<>();
 		map.put("buy", buy);
 		map.put("page", page);
