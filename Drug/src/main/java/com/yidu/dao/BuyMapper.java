@@ -35,15 +35,21 @@ public interface BuyMapper {
 	public int selectCountBySelective(Buy buy);
 	
 	/**
-	 * 查询所有
+	 * 
+	 * 方法说明：查询所有
 	 * @param map
 	 * @return
+	 * @author dengknagwei
+	 * @date：2019年1月3日
 	 */
     public List<Buy> showList(Map<String, Object> map);
     /**
-     * 查找总行数
+     * 
+     * 方法说明：查找总行数
      * @param buy
      * @return
+     * @author dengknagwei
+     * @date：2019年1月3日
      */
     int selectCount(Buy buy);
     

@@ -35,9 +35,16 @@
 							<select>
 						</div>
 						<div class="kit-search-btns">
-		                <a class="layui-btn layui-btn-sm" id="add" style="margin-left: 300px;margin-top: -78px;"><i class="layui-icon"></i> 增加</a>
+						<a class="layui-btn layui-btn-sm" id="search" style="margin-left: 550px;margin-top: -78px;"><i class="layui-icon"></i> 搜索</a>
+		                <a class="layui-btn layui-btn-sm" id="add" style="margin-left: 10px;margin-top: -78px;"><i class="layui-icon"></i> 增加</a>
 		           		</div>
 					</div>
+				    <div class="layui-inline" style="margin-top: -195px;margin-left: 260px;">
+      				<label class="layui-form-label">日期范围</label>
+      					<div class="layui-input-inline">
+        				<input type="text" class="layui-input" id="buyTime" placeholder=" - ">
+      					</div>
+    				</div>
 				</form>
 			</div>
 		    
@@ -163,6 +170,10 @@
                     }
                  });
 				
+				
+		        renderDate('#buyTime');
+		        
+		        
 		      	//监听搜索表单提交
 		        form.on('select(biaodan)', function(data){
 				  	//带条件查询
@@ -172,7 +183,13 @@
 		            });
 				})
 		        
-		        
+		      
+				$("#search").on('click',function(){
+					tableIns.reload({
+						where:{buyTime:$("#buyTime").val()},
+						page: { curr: 1 }
+					});
+				})
 		        
 		        
 		      
@@ -231,6 +248,7 @@
 		            $('.kit-search-mored').toggle();
 		        });
 		        var editIndex;
+		        
 		    });
 			
 		  	//全屏弹窗
@@ -268,6 +286,19 @@
 		    }
 		  	
 		  	
+			
+		  //日期下拉框渲染
+		 	function renderDate(dateId){
+		 		layui.laydate.render({
+	        	  elem: dateId
+	        	  ,type: 'datetime'
+	        	  ,calendar: true
+        	      ,range: '到'
+        	      ,format: 'yyyy-M-d'
+	        	});
+		 	}
+			
+			
 		  	//重新渲染表单
 		  	function renderForm(){ 
 	  			layui.use('form', function(){ 
