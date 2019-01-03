@@ -292,9 +292,6 @@ public class AuditController {
 		//用于页面上的判断
 		Message message = new Message();
 		
-		//定义一个盒子
-		BigDecimal money = new BigDecimal(0);
-		
 		Audit audit = new Audit();
 		audit.setAudId(audits.getAudId());
 		audit.setAudState(audits.getAudState());
@@ -309,9 +306,6 @@ public class AuditController {
 			int a =debty1.getDebMoney().compareTo(buy.getBuyMoney());
 			//如果店铺余额大于总金额,则
 			if(a>0) {
-				//money = debty1.getDebMoney().subtract(debty1.getDebMoney());
-				//将需要修改的数据传入新对象中
-				//debty1.setDebMoney(money);
 				int count = debtyService.addbty(buy.getBuyMoney(),debty1.getDebId());
 				if(count!=0) {
 					int rows=service.updateByPrimaryKeySelective(audit);
@@ -339,14 +333,11 @@ public class AuditController {
 			//根据订单中的店铺id查找这个店铺的总余额 
 			Debty debty1 = debtyService.findByComId(buy.getComId());
 			System.out.println(" 财务余额："+debty1.getDebMoney()+" 订单总金额"+buy.getBuyMoney());
-			//将两个金额相加
-			//money =debty1.getDebMoney().add(buy.getBuyMoney());
-			//debty1.setDebMoney(money);
 			//修改总店总金额
 			int count = debtyService.addMoney(buy.getBuyMoney(),"0");
 			if(count!=0) {
 				//质检
-				//qcService.qualityAdd(buy);
+				qcService.branchQualityAdd(buy);
 				//审核
 				int rows=service.updateByPrimaryKeySelective(audit);
 				
@@ -386,7 +377,7 @@ public class AuditController {
 			pageUtil.setCurPage(page);
 			pageUtil.setRows(limit);
 		}
-		Admin admin = (Admin) session.getAttribute("user");
+		Admin admin = (Admin) session.getAttribute("admin");
 		
 		List<Audit> list = service.showBuy(audit,pageUtil,admin);
 		int rows=service.findCount(audit);
@@ -408,7 +399,7 @@ public class AuditController {
 			pageUtil.setCurPage(page);
 			pageUtil.setRows(limit);
 		}
-		Admin admin = (Admin) session.getAttribute("user");
+		Admin admin = (Admin) session.getAttribute("admin");
 		
 		List<Audit> list = service.showCEO(audit,pageUtil,admin);
 		int rows=service.findCount(audit);
@@ -430,7 +421,7 @@ public class AuditController {
 			pageUtil.setCurPage(page);
 			pageUtil.setRows(limit);
 		}
-		Admin admin = (Admin) session.getAttribute("user");
+		Admin admin = (Admin) session.getAttribute("admin");
 		
 		List<Audit> list = service.findSale(audit,pageUtil,admin);
 		int rows=service.findCount(audit);
@@ -452,7 +443,7 @@ public class AuditController {
 			pageUtil.setCurPage(page);
 			pageUtil.setRows(limit);
 		}
-		Admin admin = (Admin) session.getAttribute("user");
+		Admin admin = (Admin) session.getAttribute("admin");
 		
 		List<Audit> list = service.findCEO(audit,pageUtil,admin);
 		int rows=service.findCount(audit);

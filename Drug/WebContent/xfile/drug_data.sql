@@ -41,6 +41,14 @@ insert  into `drug_module_role`(`mr_id`,`mode_id`,`role_id`) values ('09yhmidv4f
 
 insert  into `drug_role`(`role_id`,`role_name`,`role_code`,`role_describe`,`isva`,`optime`,`oper`,`sort`) values ('1','权限管理员',NULL,'管理权限','是','2018-12-27 14:07:01','邓紫棋','1'),('ju65jzmd5p3cfnmoz56e065iquy708ceifme7icv','分公司管理员',NULL,'用于管理分公司的事务','是','2018-12-28 09:55:13',NULL,NULL),('ru7omep73t3zpb95c2qk5zkmhu22rmmesge05po2','总公司管理员',NULL,'用于管理总公司的','是','2018-12-28 09:53:32',NULL,NULL);
 
+/*Data for the table `drug_debty` */
+
+insert  into `drug_debty`(`deb_id`,`com_id`,`deb_money`,`optime`,`isva`,`oper`,`sort`) values ('0','0','500000.00',NULL,'1',NULL,NULL),('1','1','50000.00',NULL,'1',NULL,NULL);
+
+/*Data for the table `drug_provider` */
+
+insert  into `drug_provider`(`prov_id`,`prov_name`,`isva`,`optime`,`oper`,`sort`) values ('1','阿里巴巴','1',NULL,NULL,NULL),('2','人民医院','1',NULL,NULL,NULL),('3','中医院','1',NULL,NULL,NULL);
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

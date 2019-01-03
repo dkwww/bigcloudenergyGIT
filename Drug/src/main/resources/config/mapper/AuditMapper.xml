@@ -41,7 +41,8 @@
   </select>
   
   <select id="showBuy" parameterType="java.util.Map" resultMap="BaseResultMap" >
-  	SELECT * FROM drug_audit a ,drug_buy b WHERE b.buy_type = 1 AND a.aud_fk_id = b.buy_id 
+  	SELECT * FROM drug_audit a ,drug_buy b WHERE b.buy_type = 1 AND a.aud_fk_id = b.buy_id
+	and a.qc_fk_id = b.com_id  
 	AND a.aud_state IN (0,1,2) and qc_fk_id = #{admin.comId,jdbcType=INTEGER}
   	ORDER BY a.sort DESC 
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
@@ -50,7 +51,8 @@
   
   <select id="showCEO" parameterType="java.util.Map" resultMap="BaseResultMap" >
   	
-	SELECT * FROM drug_audit a ,drug_buy b where b.buy_type = 1 and a.aud_fk_id = b.buy_id 
+	SELECT * FROM drug_audit a ,drug_buy b where b.buy_type = 1 and a.aud_fk_id = b.buy_id
+	and a.qc_fk_id = b.com_id 
 	and a.aud_state IN (2,11,12) and qc_fk_id = #{admin.comId,jdbcType=INTEGER}
   	ORDER BY a.sort DESC 
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
@@ -58,8 +60,8 @@
   </select>
   
   <select id="findSale" parameterType="java.util.Map" resultMap="BaseResultMap" >
-  	SELECT * FROM drug_audit a ,drug_buy b where b.buy_type = 1 and a.aud_fk_id = b.buy_id 
-	and a.aud_state IN (12,13,14) and qc_fk_id = #{admin.comId,jdbcType=INTEGER}
+  	SELECT * FROM drug_audit a ,drug_buy b where b.buy_type = 1 and a.aud_fk_id = b.buy_id
+	and a.aud_state IN (12,13,14) 
   	ORDER BY a.sort DESC 
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
   
@@ -68,7 +70,7 @@
   <select id="findCEO" parameterType="java.util.Map" resultMap="BaseResultMap" >
   	
 	SELECT * FROM drug_audit a ,drug_buy b where b.buy_type = 1 and a.aud_fk_id = b.buy_id 
-	and  a.aud_state IN (14,15,16) and qc_fk_id = #{admin.comId,jdbcType=INTEGER}
+	and  a.aud_state IN (14,15,16) 
   	ORDER BY a.sort DESC  
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
   

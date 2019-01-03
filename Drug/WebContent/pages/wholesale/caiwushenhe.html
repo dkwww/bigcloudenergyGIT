@@ -6,7 +6,7 @@
 		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
-		<title>审核表</title>
+		<title>财务审核记录</title>
     </script>
 	</head>
 	
@@ -21,30 +21,14 @@
 		<input class="layui-input layui-disabled"  readonly="readonly"  value="0" maxlength="9" style="border:none;padding-bottom:8px;" name="bdetTotal" id="price{{d.matId}}" autocomplete="off"">
 	</div>
 	</script>
-	
 	<body>
-		
 		<div class="kit-table">
-			<div class="layui-card-header layui-form" style="padding: 8px 0px;">
-				<!-- 搜索扩展工具条 -->
-				<form class="layui-form" lay-filter="kit-search-form">
-					<div class="layui-form-item">
-						<div style="width: 244px;margin-left: 15px;">
-							<select name="provId" lay-filter="biaodan" id="biaodan">
-								<option value="">供应商</option>
-							<select>
-						</div>
-					</div>
-				</form>
-			</div>
-		    
-		    
 			<!-- 操作按钮 -->
 		    <div class="kit-table-body">
 		        <table id="demo" lay-filter="demo"></table>
 		        <script type="text/html" id="barDemo">
 					<a class="layui-btn layui-btn-xs" lay-event="detail">订单详情</a>
-					<button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="confirm">审核</button>
+					<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="confirm">审核</a>
 					<a class="layui-btn layui-btn-xs" lay-event="record">审核记录</a>
 		        </script>
 		    </div>
@@ -54,10 +38,8 @@
 		<script type="text/html" id="edit-tpl">
 		    <div style="margin:10px">
 		        <form class="layui-form" action="" lay-filter="form-edit">
-		            <input type="hidden" name="buyId" value="{{d.rowdata.buyId}}" />
-					<input type="hidden" name="comId" value="{{d.rowdata.comId}}" />
-					<input type="hidden" name="buyMoney" value="{{d.rowdata.buyMoney}}" />
-					<input type="hidden" name="matName" value="{{d.rowdata.matName}}" />
+		            <input type="text" name="buyId" value="{{d.rowdata.buyId}}" />
+					
 					<div class="layui-form-item">
 		                <label class="layui-form-label">审核部门</label>
 		                <div class="layui-input-block">
@@ -97,7 +79,6 @@
 		    </div>
 		</script>
 		
-		
 		<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
 		<script>
 			//文本框只能输入金额
@@ -122,10 +103,14 @@
 		</script>
 		
 		<script src="../../res/layui/layui.all.js"></script>
+		<script src="../../res/js/common/parameter.js"></script>
 		<script>
 			window.windata=null;
 			//显示表格数据
 		    layui.use(['table','upload'], function() {
+		    	
+		    	var buyId = getParameter("id");
+		    	
 		        var table = layui.table,
 		            $ = layui.jquery,
 		            layer = layui.layer,
@@ -134,34 +119,18 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '449px', //容器高度
-		            url: '../../buyht/AuditshowList.action',
+		            url: '../../audit/showList.action?qcFkId='+buyId,
 		            page: true,
 		            id: 'demo',
 		            cols: [
-		                [{checkbox: true,fixed: true},
-		                {field: 'buyId',title: 'ID',width: 120},
-		                {field: 'provName',title: '供应商',width: 120},
-		                {field: 'buyAmount',title: '采购总数量',width: 120},
-		                {field: 'buyMoney',title: '采购总价格',width: 120},
-		                {field: 'buyTimes',title: '采购时间',width: 120},
-		                {field:	'auName',title: '审核状态',width: 150},
-		                {field:	'comName',title: '分店名称',width: 150},
-		                {fixed: 'right',title: '操作',width: 250,align: 'center',toolbar: '#barDemo'}]
+		                [{field: 'audId',title: 'ID',width: 120},
+		                {field: 'auName',title: '审核状态',width: 120},
+		                {field: 'audIdea',title: '原因',width: 120},
+		                {field: 'audTimes',title: '审核时间',width: 120}]
 		            ],
 		            done: function(res, curr, count) {
 		            	windata=res.data;
-		            	
-		            	var tableElem = this.elem.next('.layui-table-view');
-		            	
-		            	
-		            	$("[data-field = 'auName']").children().not(":first").each(function(index){
-		            		if($(this).text()=="已审核"){
-		            			//禁用
-		            			tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=confirm]').addClass('layui-btn-disabled').attr('disabled',true);
-		            		}
-					  	});
-		            	
-		            	
+		            	var tables=table.cache.demo;
 		            },
 		            loading: true
 		        });
@@ -189,7 +158,6 @@
 		                page: { curr: 1 }
 		            });
 				})
-		        
 		        
 				//渲染 修改和增加弹出层
 			    function showlayer(d){
@@ -223,10 +191,9 @@
 		            var layEvent = obj.event; //获得 lay-event 对应的值
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		
-		            if (layEvent === 'detail') { //订单详情
+		            if (layEvent === 'detail') { //查看
 		                console.log(table.checkStatus('demo'));
 			            var  buyId=data.buyId;
-			            
 	                	var index = layer.open({
 	          				  type: 2,
 	          				  title: '采购明细',
@@ -246,7 +213,7 @@
 	                	var index = layer.open({
 	          				  type: 2,
 	          				  title: '审核记录',
-	          				  content: '../buy/examineRecord.html?ids'+buyId,
+	          				  content: '../buy/buyaddls2.html?ids='+buyId,
 	          				  area: ['800px', '30px']
 	          				  //maxmin: true
 	          				});
@@ -305,7 +272,7 @@
 		    }
 		  	
 		  	//重新渲染表单
-		  	function renderForm(){ 
+		  	function renderForm(){
 	  			layui.use('form', function(){ 
 		  			var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加() 
 		  			form.render(); 
@@ -331,9 +298,5 @@
 	            });
 	        });
 		</script>
-		
-		
-		
-		
 	</body>
 </html>

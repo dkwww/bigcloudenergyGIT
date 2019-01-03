@@ -35,4 +35,6 @@ public interface QcDetailMapper {
      int    selectbycount  (QcDetail  qcDetail);
      
     List<QcDetail> selectQcId (String  id);
+
+	List<QcDetail> findByIdss(String qcId);
 }

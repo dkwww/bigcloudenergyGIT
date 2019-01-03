@@ -19,6 +19,7 @@ import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
 import com.yidu.util.TimeUtil;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -155,7 +156,7 @@ public class WholesaleController {
 	 */
 	@RequestMapping("/Wholesalemanagement")
 	@ResponseBody
-	public Message Wholesalemanagement(String htmlstr,int zongshu,String zongjin) {
+	public Message Wholesalemanagement(String htmlstr,int zongshu,String zongjin,String comIdname) {
 		//创建订单对象
 		Wholesale wholesale=new Wholesale();
 		System.err.println("asdasdasdasd="+htmlstr);
@@ -183,7 +184,7 @@ public class WholesaleController {
 			System.err.println("药品价格:"+pistr[3]);
 			//拆分数组3为药品价格
 			String drugmoney=pistr[3];
-			System.err.println("药品数量:"+pistr[8]);
+			System.err.println("药品数量:"+pistr[9]);
 			//拆分数组8为药品数量
 			int amount=Integer.parseInt(pistr[8]);
 			System.err.println("药品小计:"+pistr[5]);
@@ -192,7 +193,6 @@ public class WholesaleController {
 			System.err.println("批发价:"+pistr[6]);
 			//拆分数组6为批发价
 			String drugpi=pistr[6];
-			
 			//创建一个随机数
 			String uuid=UUID.randomUUID().toString().replace("-","");
 			
@@ -201,7 +201,7 @@ public class WholesaleController {
 				//批发ID
 				wholesale.setWholId(uuid);
 				//店铺ID
-				wholesale.setComId("1");
+				wholesale.setComId(comIdname);
 				//总数量
 				wholesale.setWholAmount(zongshu);
 				//总价
@@ -212,7 +212,7 @@ public class WholesaleController {
 				wholesale.setIsva("1");
 				//操作人
 				wholesale.setOper("蛇皮");
-				
+			
 				//调用增加批发表的方法
 				int wholes=service.insertSelective(wholesale);
 				//判断是否成功

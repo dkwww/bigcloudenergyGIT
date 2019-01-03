@@ -186,8 +186,8 @@
 		                    title: '物品总价',
 		                    width: 120
 		                }, {
-		                    field: 'isva',
-		                    title: '是否有效',
+		                    field: 'audState',
+		                    title: '是否通过',
 		                    width: 120
 		                }, {
 		                    fixed: 'right',
@@ -205,12 +205,13 @@
 		                // console.log(curr);
 		                // //得到数据总量
 		                // console.log(count);
-		            	$("[data-field = 'isva']").children().each(function(){
-						    if($(this).text() == '1'){
-						    	$(this).text("有效");
-						    } else if ($(this).text() == '0') {
-						    	$(this).html("<span style='color:red;'>无效</span>");
-						    }
+		            	
+		            	$("[data-field = 'audState']").children().each(function(index){
+		            			if($(this).text() != '31'){
+							    	 $(this).text("未通过");
+							    }else if($(this).text() == '31'){
+							    	 $(this).text("已通过");
+							    }
 					  	});
 		            },
 		            loading: true,

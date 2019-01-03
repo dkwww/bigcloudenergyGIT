@@ -45,6 +45,9 @@ public interface QcDetailService   {
 	  int updateByPrimaryKeySelective(QcDetail record);
 	  
 	  List<QcDetail> selectQcId (String  id);
+
+
+	List<QcDetail> findByIdss(String qcId);
 	  
 	  
 	

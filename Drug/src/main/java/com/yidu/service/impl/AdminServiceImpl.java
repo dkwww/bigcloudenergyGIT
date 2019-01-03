@@ -11,6 +11,7 @@ import com.yidu.util.PageUtil;
 import com.yidu.util.TimeUtil;
 import com.yidu.util.Tools;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +84,8 @@ public class AdminServiceImpl  implements AdminService {
 			String UUid = UUID.randomUUID().toString().replaceAll("-", "");
 			admin.setAdminId(UUid);
 			admin.setIsva("1");
+			//默认增加当前时间
+			admin.setOptime(new Date());
 			admin.setSort(TimeUtil.getStrDate());
 			int row = mapper.insertSelective(admin);
 			String[] str = admin.getRoId().split("@");

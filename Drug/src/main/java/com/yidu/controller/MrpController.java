@@ -46,7 +46,7 @@ public class MrpController {
 		//前台取过来的分页值
 		pageUtil.setCurPage(page);
 		pageUtil.setRows(limit);
-		//查询并按照大小分页
+		//查询分页
 		List<Mrp> list = mrpService.qureyAll(mrp,pageUtil);
 		for (Mrp mrp2 : list) {
 			if (mrp2.getMrpPud()==0) {

@@ -86,6 +86,11 @@ public class QcDetailServiceImpl   implements QcDetailService {
 	 
 		return dao.selectQcId(id);
 	}
+
+	@Override
+	public List<QcDetail> findByIdss(String qcId) {
+		return dao.findByIdss(qcId);
+	}
 	
 
 }

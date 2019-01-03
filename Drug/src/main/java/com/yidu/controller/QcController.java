@@ -202,6 +202,7 @@ public class QcController {
 	@RequestMapping("Qcadd")
 	@ResponseBody
 	public Message Qcadd(String id,String shuju,String sumAmout,String sumRate,String qcState) {
+		//得到库存对象
 		Qc qc=new Qc();
 		qc.setQcId(id);
 		qc.setQcFail(Integer.valueOf(sumAmout));
@@ -210,7 +211,6 @@ public class QcController {
 		qcService.buyQcadd(qc);
 		
 		QcDetail qcdetail=new QcDetail();
-		
 		
 		//根据前台传来的数据用"#"分割
 		String [] data=shuju.split("#");
@@ -262,29 +262,71 @@ public class QcController {
 			//在根据质检明细的id查找库存
 			MatInv invlist=invservice.findQcId(qcDetail.getQdetFkId());
 			
-				System.err.println("----------库存当前数量"+invlist.getMiAmount());
-				System.err.println("----------质检明细的数量:"+qcDetail.getQdetAmount());
-				System.err.println("----------库存id:"+invlist.getMiId());
-				
-				invservice.updateAmount(qcDetail.getQdetAmount(), invlist.getMiId());
-				
-				//库存明细
-				MatInvDetail invdetail=new MatInvDetail();
-				invdetail.setMidId(Tools.getDateOrderNo());
-				invdetail.setMiId(invlist.getMiId());
-				invdetail.setMidAmount(qcDetail.getQdetAmount());
-				invdetailservice.addkcdetail(invdetail);
+			System.err.println("----------库存当前数量"+invlist.getMiAmount());
+			System.err.println("----------质检明细的数量:"+qcDetail.getQdetAmount());
+			System.err.println("----------库存id:"+invlist.getMiId());
+			invservice.updateAmount(qcDetail.getQdetAmount(), invlist.getMiId());
 			
-			
+			//库存明细
+			MatInvDetail invdetail=new MatInvDetail();
+			invdetail.setMidId(Tools.getDateOrderNo());
+			invdetail.setMiId(invlist.getMiId());
+			invdetail.setMidAmount(qcDetail.getQdetAmount());
+			invdetailservice.addkcdetail(invdetail);
 		}
-		
-		
-		
 		Message me=new Message();
 		me.setStatus(1);
 		me.setMsg("操作成功");
 
 		return me;
+	}
+	
+	/**
+	 * 
+	 * 方法说明：分店药品质检显示列表
+	 * @param qc
+	 * @param page
+	 * @param limit
+	 * @return
+	 * @author zhengyouhong
+	 * @date：2018年12月27日
+	 */
+	@RequestMapping("branchQuality")
+	@ResponseBody
+	public Map<String, Object> branchQuality(Qc qc,Integer page,Integer limit){
+		
+		PageUtil PageUtil=new PageUtil();
+		if(page!=null && limit!=null) {
+			PageUtil.setCurPage(page);
+			PageUtil.setRows(limit);
+		}
+		
+		List<Qc> list=qcService.branchQuality(qc, PageUtil);
+		for (Qc qc2 : list) {
+			if(qc2.getQcState().equals("0")) {
+				qc2.setQcStates("未质检");
+			}else if(qc2.getQcState().equals("1")) {
+				qc2.setQcStates("已质检");
+			}
+			
+			if(qc2.getQcPut().equals("0")) {
+				qc2.setQcPuts("未入库");
+			}else if(qc2.getQcPut().equals("1")) {
+				qc2.setQcPuts("已入库");
+			}
+			
+			//转为时间格式
+			qc2.setOptimes(Tools.getDateStr(qc2.getOptime()));
+		}
+		
+		int rows=qcService.selectCount(qc);
+		
+		Map<String, Object> map=new HashMap<>();
+		map.put("code", 0);
+		map.put("msg", "");
+		map.put("count", rows);
+		map.put("data", list);
+		return map;
 	}
 }
 

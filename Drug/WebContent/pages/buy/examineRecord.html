@@ -12,7 +12,7 @@
 	
 	<script type="text/html" id="input">
 	<div class="layui-inline">
-		<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="matAmount"  autocomplete="off"  value="{{d.matAmount}}" id="number{{d.matId}}" onkeyup="Pressdown(this);">
+		<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="matName"  autocomplete="off"  value="总经理审核" id="number{{d.matId}}">
 	</div>
 	</script>
 	
@@ -128,6 +128,7 @@
 		            id: 'demo',
 		            cols: [
 		                [{field: 'audId',title: 'ID',width: 120},
+		               	{field: 'matName',title: '审核部门',width: 120,templet:'#input'},
 		                {field: 'auName',title: '审核状态',width: 120},
 		                {field: 'audIdea',title: '原因',width: 120},
 		                {field: 'audTimes',title: '审核时间',width: 120}]

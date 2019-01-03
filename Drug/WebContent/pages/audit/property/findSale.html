@@ -31,7 +31,7 @@
 					<div class="layui-form-item">
 						<label class="layui-form-label">审核部门</label>
 						<div class="layui-input-block">
-							<input type="text" name="user" id="user" lay-verify="title" disabled="disabled" autocomplete="off" placeholder="请输入标题" class="layui-input">
+							<input type="text" name="user" value="总店销售审核" id="user" lay-verify="title" disabled="disabled" autocomplete="off" placeholder="请输入标题" class="layui-input">
 						</div>
 					</div>
 				<div class="layui-form-item">
@@ -159,7 +159,6 @@
 		                        title: '信息',
 		                        content: html,
 		                        area: ['800px', '450px'],
-		                        btn: ['提交', '重置', '取消'],
 		                        yes: function(index, layero) {
 		                            editIndex = index;
 		                            $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
@@ -230,7 +229,6 @@
 	                        title: '表单',
 	                        content: html,
 	                        area: ['600px', '500px'],
-	                        btn: ['提交', '重置', '取消'],
 	                        yes: function(index, layero) {
 	                            editIndex = index;
 	                            $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();

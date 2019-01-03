@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yidu.domain.DrugInve;
-import com.yidu.domain.Qc;
+ 
 import com.yidu.service.DrugInvService;
-import com.yidu.util.Message;
+ 
 import com.yidu.util.PageUtil;
 
 import java.util.HashMap;
@@ -44,7 +44,7 @@ public class DrugInvController {
 	@RequestMapping("qureyAll")
 	@ResponseBody
 	public   Map<String, Object>  qureyAll(DrugInve  drugInve,Integer page,Integer limit){
-		//分页
+		//创建分页对象
 		PageUtil pageUtil = new PageUtil();
 		//前台取过来的分页值
 		pageUtil.setCurPage(page);
@@ -59,6 +59,7 @@ public class DrugInvController {
 		map.put("msg", "");
 		map.put("count", rows);
 		map.put("data", list);
+		//返回map
 		return  map;
 	}  
 }

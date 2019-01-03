@@ -45,18 +45,25 @@ public class DrugInvDetailController {
 	@Resource
 	private    QcService  qcService;
 
-
-
+	/**
+	 * 根据ID差看库存详细
+	 * @param drugInvDetail
+	 * @return
+	 */
 	@RequestMapping("findById")
 	@ResponseBody
 	public   Map<String , Object>  findById(DrugInvDetail drugInvDetail){
+		//调用根据ID查询库存详细的方法
 		List<DrugInvDetail> list = drugInvDetailService.findById(drugInvDetail.getDiId());
+		//查询行数
 		int    rows=drugInvDetailService.selectcount(drugInvDetail.getDiId());
+		//返回前台layui格式
 		Map<String, Object>  map  =new HashMap<>();
 		map.put("code", 0);
 		map.put("msg", "");
 		map.put("count", rows);
 		map.put("data", list);
+		//返回map
 		return  map;
 	}
 	/**
@@ -120,32 +127,45 @@ public class DrugInvDetailController {
 				//库存数量    用 查出来的质检总数  减去未通过的数量
 				int  sum=qcDetail.getQdetAmount()-qcDetail.getQdetFail();
 				drugInve.setDiAmount(sum);
-				//
+				//设置默认为
 				drugInve.setDiComtype("0");
+				//  主键ID为UUID
 				drugInve.setDiId(string);
+				//增加库存
 				rows = drugInvService.insert(drugInve);
+				//增加库存明细
+				//明细主键
 				drugInvDetail.setDidId(str);
+				//库存明细的外键是库存的主键
 				drugInvDetail.setDiId(string);
+				//入库数量
 				int  sums=qcDetail.getQdetAmount()-qcDetail.getQdetFail();
 				drugInvDetail.setDiAmount(sums);
+				//默认为入库
 				drugInvDetail.setRemarks(0);
+				//增加明细
 				drugInvDetailService.insert(drugInvDetail);
 			} 
 		}
-
+		//将质检的状态改成已提交库存
 		Qc  qc2  = new  Qc();
+		//根据ID修改状态
 		qc2.setQcId(qc.getQcId());
+		//将状态改为已提交
 		qc2.setQcPut("1");
+		//调用修改的方法
 		qcService.updateByPrimaryKeySelective(qc2);
 
-
+		//返回提示信息
 		if (rows>0) {
+			
 			message.setStatus(1);
 			message.setMsg("保存成功");
 		}else {
 			message.setStatus(0);
 			message.setMsg("保存失败");
 		} 
+		//返回提示对象
 		return  message;
 	}
 

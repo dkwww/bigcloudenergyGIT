@@ -53,7 +53,7 @@ public class BuyController {
 		PageUtil pageUtil = new PageUtil();
 		pageUtil.setCurPage(page);
 		pageUtil.setRows(limit);
-		Admin admin = (Admin) session.getAttribute("user");
+		Admin admin = (Admin) session.getAttribute("admin");
 		
 		List<Buy> list = service.showList(buy,pageUtil,admin);
 		int rows = service.findCount(buy);

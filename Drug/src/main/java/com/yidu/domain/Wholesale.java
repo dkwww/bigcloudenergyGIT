@@ -21,8 +21,18 @@ public class Wholesale {
     private String sort;
     
     private String comName;
+    
+    private String audState;
 
-    public String getComName() {
+    public String getAudState() {
+		return audState;
+	}
+
+	public void setAudState(String audState) {
+		this.audState = audState;
+	}
+
+	public String getComName() {
 		return comName;
 	}
 
