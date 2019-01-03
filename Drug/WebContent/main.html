@@ -8,7 +8,9 @@
     <title>Document</title>
     <link rel="stylesheet" href="./res/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="./res/css/common/font-awesome.min.css" media="all">
-    <script crossorigin="anonymous" integrity="sha384-FP8jhy0HzjWkxqZPxg/wrXfPqeGdGv5H8Xeb1cKDhn2be3GKlaptLBAa74n3X7ys" src="https://lib.baomitu.com/echarts/4.2.0-rc.2/echarts-en.common.js"></script>
+    <script type="text/javascript" src="https://lib.baomitu.com/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://lib.baomitu.com/echarts/4.2.0-rc.2/echarts.min.js"></script>
+   
     <style>
         .info-box {
             height: 85px;
@@ -97,8 +99,17 @@
                     </div>
                 </div>
             </div>
+            <div class="layui-col-md3">
+                <div class="info-box">
+                    <span class="info-box-icon" style="background-color:green !important;color:white;"><i class="fa fa-database" aria-hidden="true"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">今日收入</span>
+                        <span class="info-box-number">25,412</span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="layui-row">
+        <div class="layui-row" id="sales" style="width: 100%;height:600px;">
             
         </div>
     </div>
@@ -114,6 +125,7 @@
         });
         
     </script>
+     <script src="./res/main/main.js"></script>
 </body>
 
 </html>

@@ -14,6 +14,10 @@
     <result column="sort" jdbcType="VARCHAR" property="sort" />
     <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
   </resultMap>
+  <resultMap id="BaseResultMap2" type="com.yidu.controller.vo.Series">
+    <result column="drug_id" jdbcType="VARCHAR" property="drugId" />
+    <result column="drug_name" jdbcType="VARCHAR" property="name" />
+  </resultMap>
   <sql id="Base_Column_List">
     bsd_id, bs_id, drug_id, bsd_amount, bsd_price, bsd_total, isva, optime, oper, sort
   </sql>
@@ -165,5 +169,13 @@
   	<if test="bsId !=null and bsId !='' ">
   		and bs_id=#{bsId}
   	</if>
+  </select>
+  <select id="queryName" resultMap="BaseResultMap2">
+  	select count(*),d.drug_id,d.drug_name from drug_branch_sale_detail s,drug_drug d 
+  	where s.drug_id=d.drug_id and year(s.optime)='2018' GROUP BY d.drug_id,d.drug_name
+  	order by count(*) desc LIMIT 5
+  </select>
+  <select id="queryId" parameterType="map" resultType="integer">
+  	select count(*) from drug_branch_sale_detail s,drug_drug d where s.drug_id=d.drug_id and year(s.optime)='2018' and month(s.optime)=#{time} and s.drug_id=#{id}
   </select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.yidu.service.impl;
 
  
+import com.yidu.controller.vo.Series;
 import com.yidu.dao.BranchSaleDetailMapper;
 import com.yidu.domain.BranchSaleDetail;
 import com.yidu.service.BranchSaleDetailService;
@@ -44,5 +45,17 @@ public class BranchSaleDetailServiceImpl  implements BranchSaleDetailService {
 	public int findCount(BranchSaleDetail saleDetail) {
 		return mapper.findCount(saleDetail);
 	}
+	
+	@Override
+	public List<Series> queryName() {
+		return mapper.queryName();
+	}
 
+	@Override
+	public int queryId(int time, String id) {
+		Map<String, Object> map=new HashMap<>();
+		map.put("time", time);
+		map.put("id", id);
+		return mapper.queryId(map);
+	}
 }
