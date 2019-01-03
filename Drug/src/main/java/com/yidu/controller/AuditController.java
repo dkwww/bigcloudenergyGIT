@@ -306,6 +306,8 @@ public class AuditController {
 			int a =debty1.getDebMoney().compareTo(buy.getBuyMoney());
 			//如果店铺余额大于总金额,则
 			if(a>0) {
+				//修改状态
+				buyService.updateStatus(audits.getAudState(), buy.getBuyId());
 				int count = debtyService.addbty(buy.getBuyMoney(),debty1.getDebId());
 				if(count!=0) {
 					int rows=service.updateByPrimaryKeySelective(audit);
@@ -336,6 +338,8 @@ public class AuditController {
 			//修改总店总金额
 			int count = debtyService.addMoney(buy.getBuyMoney(),"0");
 			if(count!=0) {
+				//修改状态
+				buyService.updateStatus(audits.getAudState(), buy.getBuyId());
 				//质检
 				qcService.branchQualityAdd(buy);
 				//审核
@@ -351,8 +355,8 @@ public class AuditController {
 				}
 			}
 			
-		}else {
-			
+		}else if("2".equals(audits.getAudState())||"14".equals(audits.getAudState())) {
+
 			int rows=service.updateByPrimaryKeySelective(audit);
 			
 			if(rows!=0) {
@@ -361,6 +365,31 @@ public class AuditController {
 			}else {
 				message.setStatus(0);
 				message.setMsg("操作失败");
+			}
+			
+		}else {
+			
+			//如果审核不通过，则根据id查询出
+			Buy buy = buyService.findById(audits.getAudFkId());
+			//根据订单中的店铺id查找这个店铺的总余额 
+			Debty debty1 = debtyService.findByComId(buy.getComId());
+			System.out.println(" 财务余额："+debty1.getDebMoney()+" 订单总金额"+buy.getBuyMoney());
+			//修改分店总金额
+			int count = debtyService.addMoney(buy.getBuyMoney(),buy.getComId());
+			if(count!=0) {
+				//修改状态
+				buyService.updateStatus(audits.getAudState(), buy.getBuyId());
+				//审核
+				int rows=service.updateByPrimaryKeySelective(audit);
+				
+				if(rows!=0) {
+					
+					message.setStatus(1);
+					message.setMsg("操作成功");
+				}else {
+					message.setStatus(0);
+					message.setMsg("操作失败");
+				}
 			}
 		}
 		

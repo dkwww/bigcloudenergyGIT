@@ -61,4 +61,6 @@ public interface BuyService   {
 	 * @return
 	 */
 	public Buy findById(String id);
+	
+	public int updateStatus(String status,String buyId);
 }

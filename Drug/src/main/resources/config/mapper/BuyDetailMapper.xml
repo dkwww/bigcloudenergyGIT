@@ -6,6 +6,7 @@
     <result column="buy_id" jdbcType="VARCHAR" property="buyId" />
     <result column="bdet_amount" jdbcType="INTEGER" property="bdetAmount" />
     <result column="bdet_price" jdbcType="DECIMAL" property="bdetPrice" />
+    <result column="drug_unit" jdbcType="VARCHAR" property="drugUnit" />
     <result column="bdet_total" jdbcType="DECIMAL" property="bdetTotal" />
     <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
     <result column="bdet_fk_id" jdbcType="VARCHAR" property="bdetFkId" />
@@ -139,6 +140,36 @@
       </if>
     </trim>
   </insert>
+  <update id="updateByBuyId" parameterType="com.yidu.domain.BuyDetail">
+    update drug_buy_detail
+    <set>
+      <if test="bdetAmount != null">
+        bdet_amount = #{bdetAmount,jdbcType=INTEGER},
+      </if>
+      <if test="bdetPrice != null">
+        bdet_price = #{bdetPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="bdetTotal != null">
+        bdet_total = #{bdetTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="bdetFkId != null">
+        bdet_fk_id = #{bdetFkId,jdbcType=VARCHAR},
+      </if>
+      <if test="isva != null">
+        isva = #{isva,jdbcType=VARCHAR},
+      </if>
+      <if test="optime != null">
+        optime = #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oper != null">
+        oper = #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where buy_id = #{buyId,jdbcType=VARCHAR}
+  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.BuyDetail">
     update drug_buy_detail
     <set>
@@ -191,7 +222,7 @@
   </select>
   
   <select id="findBuyId" parameterType="string" resultMap="BaseResultMap">
-  	select * from drug_buy_detail where buy_id=#{buyId}
+  	select * from drug_buy_detail  bd,drug_drug d where bd.bdet_fk_id =d.drug_id and buy_id=#{buyId}
   </select>
   
 </mapper>

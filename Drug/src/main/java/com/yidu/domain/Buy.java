@@ -19,7 +19,11 @@ public class Buy {
 
     private Date buyTime;					//采购时间
     
-    private String buyTimes;				
+    private String buyTimes;
+    
+    private Date ksTime;					//开始时间
+    
+    private Date endTime;					//结束时间
 
     private String buyCompany;				//供应商外键
     
@@ -66,6 +70,24 @@ public class Buy {
     
     
     
+
+	
+
+	public Date getKsTime() {
+		return ksTime;
+	}
+
+	public void setKsTime(Date ksTime) {
+		this.ksTime = ksTime;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
 
 	public String getComName() {
 		return comName;
