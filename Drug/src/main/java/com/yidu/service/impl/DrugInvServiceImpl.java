@@ -29,23 +29,13 @@ public class DrugInvServiceImpl    implements DrugInvService {
 	private  DrugInveMapper  dao;
 
 	@Override
-	public List<DrugInve> qureyAll(DrugInve drugInve,PageUtil pageUtil) {
+	public List<DrugInve> qureyAll(DrugInve drugInve,PageUtil pageUtil ) {
+		System.out.println("=========这是IMP的Comid========="+drugInve.getComId());
 		Map<String, Object>  map  =new  HashMap<>();
 		map.put("drugInve", drugInve);
 		map.put("pageUtil", pageUtil);
 		
-	 List<DrugInve> list = dao.qureyAll(map);
-	 
-	 
-	 
-	 for (DrugInve drugInves : list) {
-		if (drugInves.getDiComtype().equals("1")) {
-			drugInves.setComName("分公司");
-		}else {
-			drugInves.setComName("总公司");
-		}
-	}
-	 
+	 List<DrugInve> list = dao.qureyAll(map); 
 		return list;
 	}
 

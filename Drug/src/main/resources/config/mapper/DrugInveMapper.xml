@@ -4,9 +4,11 @@
   <resultMap id="BaseResultMap" type="com.yidu.domain.DrugInve">
     <id column="di_id" jdbcType="VARCHAR" property="diId" />
     <result column="com_id" jdbcType="VARCHAR" property="comId" />
+    <result column="com_name" jdbcType="VARCHAR" property="comName" />
+    <result column="com_address" jdbcType="VARCHAR" property="comAddress" />
     <result column="drug_id" jdbcType="VARCHAR" property="drugId" />
-     <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
-      <result column="dt_name" jdbcType="VARCHAR" property="typeName" />
+    <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
+    <result column="dt_name" jdbcType="VARCHAR" property="typeName" />
     <result column="di_amount" jdbcType="INTEGER" property="diAmount" />
     <result column="di_comtype" jdbcType="VARCHAR" property="diComtype" />
     <result column="isva" jdbcType="VARCHAR" property="isva" />
@@ -46,24 +48,24 @@
   </update>
   
   <select id="qureyAll"  parameterType="java.util.Map"   resultMap="BaseResultMap">
-    SELECT  * FROM   drug_drug_inv  a  , drug_drug b   ,drug_drug_type c  WHERE  a.drug_id =b.drug_id  AND  b.dt_id =c.dt_id 
-    <if test="drugInve.typeName != null and drugInve.typeName != ''">
-   		and b.drug_name like CONCAT(CONCAT('%',#{drugInve.drugName,jdbcType=VARCHAR},'%'))
+    SELECT   * FROM   drug_drug_inv  a  , drug_company b ,drug_drug c  , drug_drug_type d  WHERE  a.com_id=b.com_id  AND  a.drug_id=c.drug_id AND c.dt_id=d.dt_id AND  a.com_id=#{drugInve.comId,jdbcType=VARCHAR}
+    <if test="drugInve.drugName != null and drugInve.drugName != ''">
+   		and c.drug_name like CONCAT(CONCAT('%',#{drugInve.drugName,jdbcType=VARCHAR},'%'))
    	</if>
    	<if test="drugInve.typeName != null and drugInve.typeName != ''">
-   		and c.dt_name like CONCAT(CONCAT('%',#{drugInve.dt_name,jdbcType=VARCHAR},'%'))
+   		and d.dt_name like CONCAT(CONCAT('%',#{drugInve.dt_name,jdbcType=VARCHAR},'%'))
    	</if> 
    	order by (a.sort+0) desc 
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER} 
   </select>
   
   <select id="selectCountBySelective" parameterType="com.yidu.domain.DrugInve" resultType="int">
-    SELECT  count(*)FROM   drug_drug_inv  a  , drug_drug b   ,drug_drug_type c  WHERE  a.drug_id =b.drug_id  AND  b.dt_id =c.dt_id 
-    <if test="typeName != null and typeName != ''">
-   		and b.drug_name like CONCAT(CONCAT('%',#{drugName,jdbcType=VARCHAR},'%'))
+ SELECT   count(*) FROM   drug_drug_inv  a  , drug_company b ,drug_drug c  , drug_drug_type d  WHERE  a.com_id=b.com_id  AND  a.drug_id=c.drug_id AND c.dt_id=d.dt_id AND  a.com_id=#{comId,jdbcType=VARCHAR}
+    <if test="drugName != null and drugName != ''">
+   		and c.drug_name like CONCAT(CONCAT('%',#{drugName,jdbcType=VARCHAR},'%'))
    	</if>
    	<if test="typeName != null and typeName != ''">
-   		and c.dt_name like CONCAT(CONCAT('%',#{dt_name,jdbcType=VARCHAR},'%'))
+   		and d.dt_name like CONCAT(CONCAT('%',#{dt_name,jdbcType=VARCHAR},'%'))
    	</if> 
   </select>
   

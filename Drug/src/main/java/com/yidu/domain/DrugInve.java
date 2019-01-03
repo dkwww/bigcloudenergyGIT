@@ -28,10 +28,20 @@ public class DrugInve {
     
     private  String  typeName;   //药品类型名称
     
+    private  String comAddress;//公司地址
     
     
     
-    public String getTypeName() {
+    
+    public String getComAddress() {
+		return comAddress;
+	}
+
+	public void setComAddress(String comAddress) {
+		this.comAddress = comAddress;
+	}
+
+	public String getTypeName() {
 		return typeName;
 	}
 
