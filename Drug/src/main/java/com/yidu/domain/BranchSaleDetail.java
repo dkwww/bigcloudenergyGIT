@@ -26,9 +26,24 @@ public class BranchSaleDetail {
 
     private String sort;
 
+    private String drugName;
     
     
     /**
+	 * @return the drugName
+	 */
+	public String getDrugName() {
+		return drugName;
+	}
+
+	/**
+	 * @param drugName the drugName to set
+	 */
+	public void setDrugName(String drugName) {
+		this.drugName = drugName;
+	}
+
+	/**
 	 * @return the optimestr
 	 */
 	public String getOptimestr() {

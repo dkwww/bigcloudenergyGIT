@@ -12,6 +12,7 @@
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
+    <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
   </resultMap>
   <sql id="Base_Column_List">
     bsd_id, bs_id, drug_id, bsd_amount, bsd_price, bsd_total, isva, optime, oper, sort
@@ -151,11 +152,11 @@
   </update>
   
   <select id="query" parameterType="map" resultMap="BaseResultMap">
-  	select * from drug_branch_sale_detail where isva='1'
+  	select sa.*,dr.drug_name from drug_branch_sale_detail sa,drug_drug dr where sa.drug_id=dr.drug_id and  sa.isva='1'
   	<if test=" detail.bsId !=null and detail.bsId !='' ">
-  		and bs_id=#{detail.bsId}
+  		and sa.bs_id=#{detail.bsId}
   	</if>
-  	order by sort desc
+  	order by sa.sort desc
   	limit #{page.startRows},#{page.rows}
   </select>
   

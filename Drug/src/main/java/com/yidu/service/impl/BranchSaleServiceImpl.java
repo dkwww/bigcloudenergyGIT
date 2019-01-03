@@ -98,6 +98,8 @@ public class BranchSaleServiceImpl implements BranchSaleService {
 			zk=0.85;
 		}else if("顶级会员".equals(member.getOper())) {
 			zk=0.8;
+		}else if("非会员".equals(member.getOper())) {
+			zk=1.00;
 		}
 		System.err.println("--------------------------------"+zk);
 		Message message=new Message();
@@ -111,7 +113,7 @@ public class BranchSaleServiceImpl implements BranchSaleService {
 			count+=Integer.valueOf(arr[1]);
 			Drug drug=drugMapper.selectByPrimaryKey(arr[0]);
 			
-			
+			System.out.println("-------------------------"+Integer.valueOf(arr[1]));
 			money+=(drug.getDrugPrice().doubleValue()*zk)*Integer.valueOf(arr[1]);
 		}
 		message.setMsg("总金额: "+money+"  总数量: "+count);
