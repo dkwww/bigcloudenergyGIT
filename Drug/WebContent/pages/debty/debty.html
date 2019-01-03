@@ -77,10 +77,6 @@
 		          		title: '总资产',
 		          		width: 125
 		          	}, {
-		          		field: 'isva',
-		          		title: '是否有效',
-		          		width: 100
-		          	}, {
 		          		field: 'strTime',
 		          		title: '操作时间',
 		          		width: 180
@@ -94,13 +90,6 @@
 		          	}]
 		          ],
 		            done: function(res, curr, count) {
-		                $("[data-field = 'drugProp']").children().each(function(){
-						    if($(this).text() == '1'){
-						    	$(this).text("处方药");
-						    } else if ($(this).text() == '0') {
-						    	$(this).text("非处方药");
-						    }
-					  	});
 		                /* $("[data-field = 'drugPictrue']").children().each(function(){
 						    if($(this).text() == 'null'||$(this).text() == ''){
 						    	$(this).text("暂无");
@@ -176,7 +165,7 @@
 		            	      shadeClose: true,
 		            	      shade: false,
 		            	      maxmin: true, //开启最大化最小化按钮
-		            	      area: ['893px', '600px'],
+		            	      area: ['893px', '400px'],
 		            	      content: 'debty2.html?id='+id
 		            	    });
 		            } else if (layEvent === 'del') { //删除

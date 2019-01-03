@@ -485,13 +485,14 @@
 					id: layTableId2,
 					height: h2+20,
 					where: {"comId": admin.comId},
+					//url: "../../../../drug/showList.action",
 					url: "../../../../drug/showChecked.action",
 					page: true,
 					cols: [
 						[
 							{type: 'checkbox',fixed: true},
 							{title: '序号',type: 'numbers'},
-							{field: 'drugId',title: 'ID',width: 200},
+							{field: 'drugId',title: 'ID',width: 150},
 			                {field: 'drugName',title: '药名'},
 			                {field: 'drugUnit',title: '单位',width: 80},
 			                {field: 'dtName',title: '类型',width: 90},

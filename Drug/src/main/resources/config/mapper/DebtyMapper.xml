@@ -33,10 +33,10 @@
   	limit #{pageUtil.startRows},#{pageUtil.rows}
   </select>
   <!-- 查询总共多少条数据 -->
-  <select id="selectCount" parameterType="map" resultType="int">
+  <select id="selectCount" parameterType="com.yidu.domain.Debty" resultType="int">
     select 
     count(*) 
-    from com_id= #{debty.comId,jdbcType=VARCHAR}
+    from drug_debty where com_id= #{comId,jdbcType=VARCHAR}
 
   </select>
    <!-- 财务批量修改为0 -->

@@ -79,7 +79,7 @@
 		          	}, {
 		          		field: 'ddetId',
 		          		title: '财物明细编号',
-		          		width: 80
+		          		width: 125
 		          	}, {
 		          		field: 'debId',
 		          		title: '财物编号',
@@ -91,11 +91,6 @@
 		          	}, {
 		          		field: 'ddettFkId',
 		          		title: '去向',
-		          		width: 125
-		          	},{
-		          		field: 'isva',
-		          		title: '是否有效',
-		          		width: 100
 		          	}, {
 		          		field: 'strTime',
 		          		title: '操作时间',
@@ -103,18 +98,17 @@
 		          	}]
 		          ],
 		            done: function(res, curr, count) {
-		                $("[data-field = 'drugProp']").children().each(function(){
-						    if($(this).text() == '1'){
-						    	$(this).text("处方药");
-						    } else if ($(this).text() == '0') {
-						    	$(this).text("非处方药");
+		            	var tableElem = this.elem.next('.layui-table-view');
+		                $("[data-field = 'ddettFkId']").children().not(":first").each(function(index){
+		                	var o = tableElem.find('tr[data-index="' + index + '"]').find('td[data-field="ddetChange"]').children();
+						    if($(this).text() == "0"){
+						    	$(this).text("支出");
+						    	o.html("<font style='color: red'>-"+o.text()+"</font>");
+						    } else if($(this).text() == "1"){
+						    	$(this).text("收入");
+						    	o.html("<font style='color: green'>+"+o.text()+"</font>");
 						    }
 					  	});
-		                /* $("[data-field = 'drugPictrue']").children().each(function(){
-						    if($(this).text() == 'null'||$(this).text() == ''){
-						    	$(this).text("暂无");
-						    }
-					  	}); */
 		            },
 		            loading: true,
 		        });
