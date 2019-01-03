@@ -54,10 +54,10 @@
 		<script type="text/html" id="edit-tpl">
 		    <div style="margin:10px">
 		        <form class="layui-form" action="" lay-filter="form-edit">
-		            <input type="hidden" name="buyId" value="{{d.rowdata.buyId}}" />
-					<input type="hidden" name="comId" value="{{d.rowdata.comId}}" />
-					<input type="hidden" name="buyMoney" value="{{d.rowdata.buyMoney}}" />
-					<input type="hidden" name="matName" value="{{d.rowdata.matName}}" />
+		            <input type="text" name="buyId" value="{{d.rowdata.buyId}}" />
+					<input type="text" name="comId" value="{{d.rowdata.comId}}" />
+					<input type="text" name="buyMoney" value="{{d.rowdata.buyMoney}}" />
+					<input type="text" name="matName" value="{{d.rowdata.matName}}" />
 					<div class="layui-form-item">
 		                <label class="layui-form-label">审核部门</label>
 		                <div class="layui-input-block">
@@ -237,9 +237,9 @@
 	          			layer.full(index);
 		            } else if(layEvent==='confirm'){//审核
 		            	var d = {
-			                	rowdata: data
+			                	rowdata: {buyId: data.buyId,comId: data.comId,buyMoney:data.buyMoney,audIdea:''}
 			                };
-		            	showlayer(d);
+		            	showlayer(d); 
 		            	
 		            }else if (layEvent === 'record') { //查看审核记录
 			            var  buyId=data.buyId;
@@ -269,6 +269,8 @@
 		            $('.kit-search-mored').toggle();
 		        });
 		        var editIndex;
+		        
+		        
 		    });
 			
 		  	//全屏弹窗
