@@ -2,6 +2,7 @@ package com.yidu.service;
 
 import java.util.List;
 
+import com.yidu.controller.vo.Series;
 import com.yidu.domain.BranchSaleDetail;
 import com.yidu.util.PageUtil;
 
@@ -20,5 +21,8 @@ public interface BranchSaleDetailService  {
 	List<BranchSaleDetail> query(PageUtil util, BranchSaleDetail saleDetail);
 
 	int findCount(BranchSaleDetail saleDetail);
+	
+	List<Series> queryName();
+	int queryId(int time,String id);
 }
 
