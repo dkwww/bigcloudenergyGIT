@@ -171,11 +171,26 @@
   	<if test="branchSale.priceMax != null and branchSale.priceMax != ''">
   	and dbs.bs_price &lt;= #{branchSale.priceMax,jdbcType=VARCHAR}
   	</if>
-  	order by men_name desc
+  	order by optime desc
   	limit #{util.startRows},#{util.rows}
   </select>
   <!-- 分页 -->
   <select id="findCount" parameterType="map" resultType="Integer">
   SELECT count(*) FROM drug_branch_sale dbs,drug_member dm,drug_company dc WHERE dbs.com_id=dc.com_id AND dbs.men_id=dm.men_id AND dbs.isva = '1'
+  	<if test="menName != null and menName != ''">
+  	and dm.men_name like CONCAT(CONCAT('%',#{menName,jdbcType=VARCHAR},'%'))
+  	</if>
+  	<if test="comName != null and comName != ''">
+  	and dc.com_name like CONCAT(CONCAT('%',#{comName,jdbcType=VARCHAR},'%'))
+  	</if>
+  	<if test="bsAmount != null and bsAmount != ''">
+  	and dbs.bs_amount like CONCAT(CONCAT('%',#{bsAmount,jdbcType=VARCHAR},'%'))
+  	</if>
+  	<if test="priceMin != null and priceMin != ''">
+  	and dbs.bs_price &gt;= #{priceMin,jdbcType=VARCHAR}
+  	</if>
+  	<if test="priceMax != null and priceMax != ''">
+  	and dbs.bs_price &lt;= #{priceMax,jdbcType=VARCHAR}
+  	</if>
   </select>
 </mapper>

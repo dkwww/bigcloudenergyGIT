@@ -62,8 +62,6 @@ public class BranchSaleController {
 		List<BranchSale> lists=service.query(util,branchSale);
 		int rows=service.findCount(branchSale);
 		for (BranchSale branchSale2 : lists) {
-			System.out.println(branchSale2.getComId());
-			System.out.println(branchSale2.getMenId());
 			branchSale2.setOptimeStr(Tools.getTimeStr(branchSale2.getOptime()));
 			list.add(branchSale2);
 		}

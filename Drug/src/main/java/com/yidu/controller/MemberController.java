@@ -51,7 +51,6 @@ public class MemberController {
 	@RequestMapping("/query")
 	@ResponseBody
 	public Map<String, Object> query(String page,String limit,Member member){
-		System.err.println("--------------------"+member.getMenName());
 		//分页类
 		PageUtil util=new PageUtil();
 		//得到页数
