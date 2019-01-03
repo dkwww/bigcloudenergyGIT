@@ -24,7 +24,7 @@
 	
 	<body>
 		<div>
-			<input type="hidden" id="shuju" style="width: 100%">
+			<input type="text" id="shuju" style="width: 100%">
 		</div>
 		<div class="kit-table">
 				<!-- 左上角的两个按钮 -->
@@ -122,6 +122,22 @@
 		            ],
 		            done: function(res, curr, count) {
 		            	windata=res.data;
+		            	
+		            	 var purchaseTexts = new Array();
+				            purchaseTexts=$("#shuju").val().split("#");
+					       	 for (var i = 0; i < purchaseTexts.length-1; i++) {
+					       		$('#demo').next().find('.layui-table-body tr').each(function(index,item){
+					       			var ids=$(item).find('td[data-field="matId"]').text();
+					       			if(purchaseTexts[i].split(",")[0]==ids){
+					       				var index=$(item).data('index');
+					       	            var che = $('#demo').next().find('.layui-table-body tr[data-index="'+index+'"] input[name="layTableCheckbox"]')
+					       	            che.prop("checked",true)
+					       	           form.render();
+					       			}
+					       			
+					       		});
+					       	}
+		            	
 		            },
 		            loading: true
 		        });
@@ -162,6 +178,7 @@
 		        	data=obj.data;
 		        	
 		        	if(obj.checked==true){
+		        		
 		        		 $("#shuju").val($("#shuju").val()+data.matId+","+data.matName+","+data.matPrice+","+$("#number"+data.matId).val()+","+$("#price"+data.matId).val()+"#");
 		        		 
 		        		 $.each(tables,function(i,item){

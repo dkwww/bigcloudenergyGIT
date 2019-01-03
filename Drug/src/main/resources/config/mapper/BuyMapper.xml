@@ -42,10 +42,15 @@
   </select>
   
   
+  <!-- 邓康威 -->
+  <!-- 查询订单所有 采购订单、供应商 -->
   <select id="showList" parameterType="map" resultMap="BaseResultMap">
   	SELECT * FROM drug_buy a,drug_provider b WHERE a.buy_company=b.prov_id and a.buy_type = 0
   	<if test="buy.buyCompany!=null and buy.buyCompany!='' ">
   		and buy_company like concat("%",#{buy.buyCompany},"%")
+  	</if>
+  	<if test="buy.buyTime!=null and buy.buyTime!='' ">
+  		and buy_time like concat("%",#{buy.buyTime},"%")
   	</if>
   	ORDER BY a.buy_time desc
   	limit #{page.startRows},#{page.rows}
