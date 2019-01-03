@@ -167,8 +167,8 @@
    	<if test="record.drugName != null and record.drugName != ''">
    		and dd.drug_name like CONCAT(CONCAT('%',#{record.drugName,jdbcType=VARCHAR},'%'))
    	</if>
-   	<if test="record.dtId != null and record.dtId != ''">
-   		and dt.dt_id = #{record.dtId,jdbcType=VARCHAR}
+   	<if test="record.comId != null and record.comId != ''">
+   		and dc.com_id = #{record.comId,jdbcType=VARCHAR}
    	</if>
    	<if test="record.dtId != null and record.dtId != ''">
    		and dt.dt_id = #{record.dtId,jdbcType=VARCHAR}
@@ -184,14 +184,15 @@
   </select>
   
   <select id="findCheckedCount" parameterType="com.yidu.domain.Drug" resultType="int">
-  	select count(dd.drug_id)
+  	select 
+  	count(dd.drug_id)
     from drug_drug dd,drug_drug_type dt,drug_drug_inv di,drug_company dc,drug_audit da
-    where dd.dt_id = dt.dt_id and di.drug_id=dd.drug_id and dc.com_id=di.com_id and dd.drug_id = da.aud_fk_id and da.aud_state = '10011' and dd.isva = '1' and da.isva = '1' and dt.isva = '1' and di.isva = '1' and dc.isva = '1'
+    where dd.dt_id = dt.dt_id and di.drug_id=dd.drug_id and dc.com_id=di.com_id and dd.drug_id = da.aud_fk_id and da.aud_state = '10111' and dd.isva = '1' and da.isva = '1' and dt.isva = '1' and di.isva = '1' and dc.isva = '1'
    	<if test="drugName != null and drugName != ''">
    		and dd.drug_name like CONCAT(CONCAT('%',#{drugName,jdbcType=VARCHAR},'%'))
    	</if>
-   	<if test="dtId != null and dtId != ''">
-   		and dt.dt_id = #{dtId,jdbcType=VARCHAR}
+   	<if test="comId != null and comId != ''">
+   		and dc.com_id = #{comId,jdbcType=VARCHAR}
    	</if>
    	<if test="dtId != null and dtId != ''">
    		and dt.dt_id = #{dtId,jdbcType=VARCHAR}

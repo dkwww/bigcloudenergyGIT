@@ -291,9 +291,9 @@
 		            layer = layui.layer,
 		            form = layui.form,
 		            laytpl = layui.laytpl;
-		        var tableIns = table.render({
+		    	var tableIns = table.render({
 		            elem: '#demo',
-		            height: '449px', //容器高度
+		            height: 'full-50', //容器高度
 		            url: '../../drug/showList.action',
 		            where: {"comId": admin.comId},
 		            page: true,
@@ -693,7 +693,7 @@
 				$("#layer").fadeOut("slow");
 				$("#pic").fadeOut("slow");
 			}
-		  	
+			
 		    //ajax加载动画
 		    $(function () {
 	            $.ajaxSetup({

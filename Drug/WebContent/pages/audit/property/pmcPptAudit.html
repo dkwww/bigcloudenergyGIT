@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>生产计划财物审核</title>
+		<title>生产计划财务审核</title>
 		<link rel="stylesheet" href="../../../res/layui/css/layui.css" media="all">
 		<link rel="stylesheet" href="../../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../../res/layui-config/css/app.css" media="all">
@@ -116,7 +116,7 @@
 		    <div style="margin:10px">
 		        <form class="layui-form" action="" lay-filter="form-edit">
 					<div class="layui-form-item" style="padding: 8px 0px 0px 8px;color: #FF5722;">
-		                <h3>财物审核</h3>
+		                <h3>财务审核</h3>
 		            </div>
 		            <input type="hidden" name="audId" value="{{d.rowdata.audId}}" />
 					<div class="layui-form-item">
@@ -240,7 +240,7 @@
 		                };
 		            	editLayer(d);
 		            } else if (layEvent === 'aduitDetail') {//审核明细
-		            	layer2(data.pmcId,"1","财物审核");
+		            	layer2(data.pmcId,"1","财务审核");
 		            }
 		        });
 		        
