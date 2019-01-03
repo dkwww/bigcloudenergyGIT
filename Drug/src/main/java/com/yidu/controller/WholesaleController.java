@@ -18,6 +18,7 @@ import com.yidu.service.WholesaleService;
 import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
 import com.yidu.util.TimeUtil;
+import com.yidu.util.Tools;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -95,6 +96,9 @@ public class WholesaleController {
 			Wholesale wholesale = (Wholesale) iterator.next();
 			//调用时间转换工具
 			TimeUtil.dateToString(wholesale.getOptime(), "yyyy-MM-dd");
+			
+			wholesale.setOptimes(Tools.getDateStr(wholesale.getOptime()));
+			
 			//赋值给新集合
 			lists.add(wholesale);
 		}

@@ -139,7 +139,7 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '475px', //容器高度
-		            url: '../../drug/showLists.action',
+		            url: '../../drug/showList.action',
 		            page: true,
 		            id: 'demo',
 		            cols: [
@@ -315,7 +315,7 @@
 								zongmoney+=parseFloat($(this).find('td:eq(6)').text());
 							});
 			        		$("#zongshu").val(zongnum);
-							$("#zongjin").val(zongmoney);
+							$("#zongjin").val(zongmoney.toFixed(2));
 		            	}
 		        	}
 		        });
@@ -335,6 +335,8 @@
 	  		}
 		  	
 		  	 function changeState(obj,rwowId) {
+		  			$(obj).closest('tr').remove();
+		  		 
 		 			var zongmoney=0.00;
 					var zongnum=0;
 	        		$("#add tr").not(":first").each(function(index){
@@ -343,12 +345,8 @@
 					});
 	        		$("#zongshu").val(zongnum);
 					$("#zongjin").val(zongmoney);
-					alert($(obj).parent().prev().text());
 					
 					
-					$(obj).closest('tr').remove();
-					
-					layer.alert('清单中已存在该物品');
 		 	}
 		    //ajax加载动画
 		    $(function () {

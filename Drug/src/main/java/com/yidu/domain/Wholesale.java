@@ -13,8 +13,10 @@ public class Wholesale {
     private Double wholPrice;
 
     private Date optime;
+    
+    private String optimes;
 
-    private String isva;
+	private String isva;
 
     private String oper;
 
@@ -24,6 +26,14 @@ public class Wholesale {
     
     private String audState;
 
+    
+    public String getOptimes() {
+		return optimes;
+	}
+
+	public void setOptimes(String optimes) {
+		this.optimes = optimes;
+	}
     public String getAudState() {
 		return audState;
 	}

@@ -18,7 +18,7 @@
 		            </div>
 		            <div class="kit-search-inputs">
 		                <div class="kit-search-keyword">
-		                    <input type="text" class="layui-input" name="wholId" placeholder="搜索关键字.." />
+		                    <input type="text" class="layui-input" name="comName" placeholder="搜索关键字.." />
 		                    <button lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
 		                </div>
 		                <div class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>
@@ -186,6 +186,10 @@
 		                    title: '物品总价',
 		                    width: 120
 		                }, {
+		                    field: 'optimes',
+		                    title: '批发时间',
+		                    width: 150
+		                }, {
 		                    field: 'audState',
 		                    title: '是否通过',
 		                    width: 120
@@ -206,7 +210,7 @@
 		                // //得到数据总量
 		                // console.log(count);
 		            	
-		            	$("[data-field = 'audState']").children().each(function(index){
+		            	$("[data-field = 'audState']").children().not(":first").each(function(index){
 		            			if($(this).text() != '31'){
 							    	 $(this).text("未通过");
 							    }else if($(this).text() == '31'){
@@ -222,7 +226,7 @@
 		        		$(".layui-laypage-btn")[0].click();//当前表格刷新
 			            //带条件查询
 			            table.reload('demo',{
-			                where: {'wholId':data.field.wholId},
+			                where: {'comName':data.field.comName},
 			                page:{curr:1}
 			            });
 			            return false;
@@ -234,10 +238,9 @@
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		            
 		            if (layEvent === 'detail') { //查看
-		                alert(data.wholId);
                             layer.open({
                                 type: 2,
-                                title: '增加批发订单',
+                                title: '批发订单',
                                 shadeClose: true,
                                 shade: false,
                                 maxmin: true, //开启最大化最小化按钮

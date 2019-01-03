@@ -21,7 +21,7 @@
   	SELECT dw.*,dc.com_name,da.aud_state FROM drug_wholesale dw,drug_company dc,drug_audit da WHERE dw.com_id=dc.com_id
   	and dw.whol_id=da.aud_fk_id
     <if test="title != null and title != '' ">
-    		and dw.whol_id = #{title}
+    		and dw.com_name = #{title}
     </if>
 	 <if test="kshs !=null and jshs !=null">
    		limit #{kshs},#{jshs}   <!-- 开始行数到每页多少行 -->
@@ -29,7 +29,8 @@
  
   </select>
   <select id="selectCount" parameterType="map" resultType="integer">
-  	select count(*) from drug_wholesale where 1=1
+  SELECT  count(*) FROM drug_wholesale dw,drug_company dc,drug_audit da WHERE dw.com_id=dc.com_id
+  and dw.whol_id=da.aud_fk_id
   	<if test="title != null and title != '' ">
   	and whol_id = #{title}
   	</if>
