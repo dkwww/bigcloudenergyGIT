@@ -299,7 +299,7 @@
 		            page: true,
 		            id: 'demo',
 		            cols: [
-		                [{checkbox: true,fixed: true},
+		                [{checkbox: true,fixed: false},
 		                {field: 'drugId',title: 'ID', width: 273},
 		                {field: 'drugName',title: '药名',width: 175},
 		                {field: 'dtName',title: '类型',width: 80},
@@ -331,8 +331,47 @@
 		        table.on('checkbox(demo)', function(obj){
 		        	var data = obj.data;
 		        	console.log(obj);
-		        	$("#tbo").append("<tr><td>"+data.drugName+"</td><td><input type='number' id='up_"+data.drugId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' value='1' /></td><td id='pic_"+data.drugId+"'>"+data.drugPrice+"</td><td>"+data.drugUnit+"</td><td><input type='text' id='mes_"+data.drugId+"' style='height:20px; border:0px; width:200px;' onKeyUp='pj()'/></td><td id='total'>"+data.drugPrice+"</td><td><a onclick='delrow(this);' class='dels'>删除</a></td><td style='display:none;'><input type='text' id='drugId' value='"+data.drugId+"' /></td></tr>")
-		        	
+		        	 $("#tbo").append("<tr><td>"+data.drugName+"</td><td><input type='number' id='up_"+data.drugId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' value='1' /></td><td id='pic_"+data.drugId+"'>"+data.drugPrice+"</td><td>"+data.drugUnit+"</td><td><input type='text' id='mes_"+data.drugId+"' style='height:20px; border:0px; width:200px;' onKeyUp='pj()'/></td><td id='total'>"+data.drugPrice+"</td><td><a onclick='delrow(this);' class='dels'>删除</a></td><td style='display:none;' id='"+data.drugId+"' ><input type='text' id='drugId' value='"+data.drugId+"' /></td></tr>")
+				        
+		        	 
+		        	 if(obj.checked==false){
+	        	      	/*	alert(data.stockId)*/
+	        	      		//循环一个表的tr
+	        	      		$("#add").find("tr").each(function(index,item){
+	        	      			//获取元素节点控件
+	        	      			 var aaa=$(item).children().get(7);
+	        	      			 //获取节点属性td里的id
+	        	      			 var drugId=$(aaa).prop("id");
+	        	      			  //判断获取到的id不为空
+	        	      			 if(drugId!=undefined){
+	        	      				 //判断id相等
+	        	      				 if(drugId==data.drugId){
+	        	      					 //根据控件找到tr删除一行
+	        	          				$(aaa).closest('tr').remove();
+	        	      				 }
+	        	      				
+	        	      			 }
+	        	      			 
+	        	      		})
+		        	      		
+		        	      		
+	        	      	}
+
+		        	 
+		        	 
+		        	/* if(obj.checked==false){
+	        			$("#add").find("tr").each(function(){
+	        				if($(this).find("td:eq(7) input").val()==data.drugId){
+	        					delrow(this);
+	        				}
+	        			})
+		        			
+		              		
+		             }else if(obj.checked==true){
+		            	 $("#tbo").append("<tr><td>"+data.drugName+"</td><td><input type='number' id='up_"+data.drugId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' value='1' /></td><td id='pic_"+data.drugId+"'>"+data.drugPrice+"</td><td>"+data.drugUnit+"</td><td><input type='text' id='mes_"+data.drugId+"' style='height:20px; border:0px; width:200px;' onKeyUp='pj()'/></td><td id='total'>"+data.drugPrice+"</td><td><a onclick='delrow(this);' class='dels'>删除</a></td><td style='display:none;'><input type='text' id='drugId' value='"+data.drugId+"' /></td></tr>")
+				        	
+		             } */
+
 		        	/* if(obj.type=='one'&&obj.checked==true){
 		        		var bln = false;
 		        		
@@ -403,6 +442,6 @@
 		   
 		</script>
 		
-   		<input type="text" name="mes" id="mes"/>
+   		<input type="hidden" name="mes" id="mes"/>
 	</body>
 </html>

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.yidu.domain.Admin;
 import com.yidu.domain.Buy;
 import com.yidu.domain.BuyDetail;
@@ -66,6 +67,16 @@ public class BuyController {
 		return m;
 	}
 	
-	
+	/**
+	 * 根据id查询
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/findByID")
+	@ResponseBody
+	public Buy findById(String id) {
+		
+		return service.findById(id);
+	}
 }
 

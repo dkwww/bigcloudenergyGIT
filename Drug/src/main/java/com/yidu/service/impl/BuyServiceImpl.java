@@ -54,6 +54,43 @@ public class BuyServiceImpl implements BuyService {
 			}else if("2".equals(buy2.getBuyState())) {
 				buy2.setBuyStates("采购失败");
 			}
+			if("0".equals(buy2.getBuyAudit())) {
+				buy2.setBuyAudit("审核不通过,请重新修改订单");
+			}
+			if("1".equals(buy2.getBuyAudit())) {
+				buy2.setBuyAudit("审核中");
+			}
+			if("2".equals(buy2.getBuyAudit())) {
+				buy2.setBuyAudit("审核通过,等待总经理审核");
+			}
+			if("11".equals(buy2.getBuyAudit())) {
+				buy2.setBuyAudit("分店财务部不予通过,请重新修改订单");
+			}
+			if("12".equals(buy2.getBuyAudit())) {
+				buy2.setBuyAudit("审核通过,等待总店审核");
+			}
+			if("13".equals(buy2.getBuyAudit())) {
+				buy2.setBuyAudit("总店销售部不予通过,请重新修改订单");
+			}
+			if("14".equals(buy2.getBuyAudit())) {
+				buy2.setBuyAudit("审核通过,等待总店总经理审核");
+			}
+			if("15".equals(buy2.getBuyAudit())) {
+				buy2.setBuyAudit("总店总经理不予通过,请重新修改订单");
+			}
+			if("16".equals(buy2.getBuyAudit())) {
+				buy2.setBuyAudit("总店总经理审核通过");
+			}
+			if("0".equals(buy2.getBuyPut())) {
+				buy2.setBuyPut("未入库");
+			}else if("1".equals(buy2.getBuyPut())) {
+				buy2.setBuyPut("已入库");
+			}
+			if("0".equals(buy2.getBuyQc())) {
+				buy2.setBuyQc("未质检");
+			}else if("1".equals(buy2.getBuyPut())) {
+				buy2.setBuyQc("已质检");
+			}
 		}
 		
 		return list;
@@ -102,7 +139,7 @@ public class BuyServiceImpl implements BuyService {
 
 
 	@Override
-	public int updateStatus(String status,String buyId) {
+	public int updateAudit(String status,String buyId) {
 		return mapper.updateStates(status, buyId);
 	}
 

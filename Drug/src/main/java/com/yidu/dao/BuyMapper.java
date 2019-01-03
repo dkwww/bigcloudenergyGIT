@@ -75,6 +75,16 @@ public interface BuyMapper {
     
     
     /**
+	 * 修改审核状态
+	 * @param status
+	 * @param buyId
+	 * @author 郑有宏
+	 * @return
+	 */
+	@Update("UPDATE drug_buy SET buy_audit = #{audit} WHERE buy_id = #{buyId}")
+	int updateAudit(@Param("audit")String audit,@Param("buyId")String buyId);
+
+	/**
 	 * 修改订单状态
 	 * @param status
 	 * @param buyId
@@ -83,6 +93,4 @@ public interface BuyMapper {
 	 */
 	@Update("UPDATE drug_buy SET buy_state = #{status} WHERE buy_id = #{buyId}")
 	int updateStates(@Param("status")String status,@Param("buyId")String buyId);
-
-    
 }

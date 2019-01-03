@@ -307,7 +307,7 @@ public class AuditController {
 			//如果店铺余额大于总金额,则
 			if(a>0) {
 				//修改状态
-				buyService.updateStatus(audits.getAudState(), buy.getBuyId());
+				buyService.updateAudit(audits.getAudState(), buy.getBuyId());
 				int count = debtyService.addbty(buy.getBuyMoney(),debty1.getDebId());
 				if(count!=0) {
 					int rows=service.updateByPrimaryKeySelective(audit);
@@ -339,7 +339,7 @@ public class AuditController {
 			int count = debtyService.addMoney(buy.getBuyMoney(),"0");
 			if(count!=0) {
 				//修改状态
-				buyService.updateStatus(audits.getAudState(), buy.getBuyId());
+				buyService.updateAudit(audits.getAudState(), buy.getBuyId());
 				//质检
 				qcService.branchQualityAdd(buy);
 				//审核
@@ -378,7 +378,7 @@ public class AuditController {
 			int count = debtyService.addMoney(buy.getBuyMoney(),buy.getComId());
 			if(count!=0) {
 				//修改状态
-				buyService.updateStatus(audits.getAudState(), buy.getBuyId());
+				buyService.updateAudit(audits.getAudState(), buy.getBuyId());
 				//审核
 				int rows=service.updateByPrimaryKeySelective(audit);
 				
