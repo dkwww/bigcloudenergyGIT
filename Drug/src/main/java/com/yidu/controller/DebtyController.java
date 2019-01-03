@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yidu.domain.Admin;
 import com.yidu.domain.Debty;
 import com.yidu.service.DebtyService;
 
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 
@@ -42,7 +44,7 @@ public class DebtyController {
 	 */
 	@RequestMapping("/findAll")
 	@ResponseBody
-	public Map<String, Object> findAll(Debty Debty,Integer page,Integer limit) {
+	public Map<String, Object> findAll(Debty Debty,Integer page,Integer limit,HttpSession session) {
 		//page工具类
 		PageUtil pageUtil = new PageUtil();
 		//判断page和limit不等于空
@@ -52,7 +54,7 @@ public class DebtyController {
 			//将limit赋值到rows
 			pageUtil.setRows(limit);
 		}
-
+		
 		//创建一个map
 		HashMap<String , Object> map = new HashMap<>();
 		//创建一个list并调用分店查询所有的方法

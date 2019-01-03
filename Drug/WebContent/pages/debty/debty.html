@@ -51,10 +51,13 @@
 		            layer = layui.layer,
 		            form = layui.form,
 		            laytpl = layui.laytpl;
+		        var admin = getSession();
+		        var comId = admin == null ? null : admin.comId;
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '449px', //容器高度
 		          url: '../../debty/findAll.action',
+		          where :{"comId": comId},
 		          page: true,
 		          id: 'demo',
 		          cols: [
@@ -283,7 +286,21 @@
                    	error:function(){layer.alert('数据异常，请稍后重试！！！',{icon:5});}
                  });
 		    }
-		    
+		    function getSession(){
+				var admin = null;
+				$.ajax({ 
+		        	url:"../../admin/getSession.action",
+	                type:'post',
+	                async:false,
+	                dataType:'json',
+	                success:function(mes){
+	                	if (mes!=null && mes!="") {
+	                		admin = mes;
+						}
+	                }
+	        	});
+				return admin;
+			}
 		    
 		    
 		    //ajax加载动画

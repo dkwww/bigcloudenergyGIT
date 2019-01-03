@@ -42,6 +42,7 @@ public class DebtyServiceImpl   implements DebtyService {
 	public List<Debty> findAll(Debty debty, PageUtil pageUtil) {
 		//创建map
 		Map<String, Object> map = new HashMap<String, Object>();
+		
 		//map赋值
 		map.put("debty", debty);
 		//map赋值
