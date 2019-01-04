@@ -61,13 +61,13 @@
 					<div class="layui-form-item">
 		                <label class="layui-form-label">审核部门</label>
 		                <div class="layui-input-block">
-		                    <input type="text"  required lay-verify="required" value="总经理审核" placeholder="请输入药材名称" autocomplete="off" class="layui-input">
+		                    <input class="layui-input layui-disabled" required lay-verify="required" value="总经理审核" placeholder="请输入药材名称" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 					<div class="layui-form-item">
 		                <label class="layui-form-label">订单名称</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="matAmount" required lay-verify="required" value="材料采购订单" placeholder="请输入数量" autocomplete="off" class="layui-input">
+		                    <input class="layui-input layui-disabled" name="matAmount" required lay-verify="required" value="材料采购订单" placeholder="请输入数量" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 					
@@ -237,7 +237,7 @@
 	          			layer.full(index);
 		            } else if(layEvent==='confirm'){//审核
 		            	var d = {
-			                	rowdata: {buyId: data.buyId,comId: data.comId,buyMoney:data.buyMoney,matName:data.matName,audIdea:''}
+			                	rowdata: {buyId: data.buyId,comId: data.comId,buyMoney:data.buyMoney,matName:data.matName,audIdea:'',buyAudit:1}
 			                };
 		            	showlayer(d); 
 		            	
