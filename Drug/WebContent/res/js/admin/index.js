@@ -27,9 +27,6 @@ function getSession(){
  *获取Session
  */
 function showMenu(){
-	/*$.ajaxSetup({
-		async:false,
-	})*/
 	
 	var admin = getSession();
 	if (admin != null) {
@@ -37,6 +34,10 @@ function showMenu(){
 	} else {
 		return false;
 	}
+	$.ajaxSetup({
+		async:false,
+	})
+	
 	$.post("./module/findByModule.action",{"adminId":admin.adminId},function(mes){
 		$.each(mes,function(index,item){
 			$("#LAY-system-side-menu").append('<li class="layui-nav-item">'
