@@ -46,14 +46,14 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label">是否通过</label>
 					<div class="layui-input-block">
-						<input type="radio" name="audState" id="audState1" title="是" value="16" >
+						<input type="radio" name="audState" id="audState1" title="是" checked="checked" value="16" >
 						<input type="radio" name="audState" id="audState2" title="否" value="15">
 					</div>
 				</div>
 				<div class="layui-form-item layui-form-text">
 					<label class="layui-form-label">审核意见</label>
 					<div class="layui-input-block">
-						<textarea placeholder="请输入内容" id="audMes" name="audMes" class="layui-textarea"></textarea>
+						<textarea placeholder="请输入内容" id="audMes" name="audMes" required lay-verify="required" class="layui-textarea"></textarea>
 					</div>
 				</div>
 				<div class="layui-form-item">

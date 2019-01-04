@@ -32,7 +32,7 @@
 					<div class="layui-form-item">
 						<label class="layui-form-label">审核部门</label>
 						<div class="layui-input-block">
-							<input type="text" name="user" value="分店采购审核" id="user" lay-verify="title" disabled="disabled" autocomplete="off" placeholder="请输入标题" class="layui-input">
+							<input type="text" name="user" value="分店采购审核" id="user" required lay-verify="required" disabled="disabled" autocomplete="off" placeholder="请输入标题" class="layui-input">
 						</div>
 					</div>
 				<div class="layui-form-item">
@@ -46,14 +46,14 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label">是否通过</label>
 					<div class="layui-input-block">
-						<input type="radio" name="audState" id="audState1" title="是" value="2" >
-						<input type="radio" name="audState" id="audState2" title="否" value="0">
+						<input type="radio" name="audState" required lay-verify="required" id="audState1" checked="checked" title="是" value="2" >
+						<input type="radio" name="audState" required lay-verify="required" id="audState2" title="否" value="0">
 					</div>
 				</div>
 				<div class="layui-form-item layui-form-text">
 					<label class="layui-form-label">审核意见</label>
 					<div class="layui-input-block">
-						<textarea placeholder="请输入内容" id="audMes" name="audMes" class="layui-textarea"></textarea>
+						<textarea placeholder="请输入内容" id="audMes" name="audMes" required lay-verify="required" class="layui-textarea"></textarea>
 					</div>
 				</div>
 				<div class="layui-form-item">
