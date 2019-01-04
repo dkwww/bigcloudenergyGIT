@@ -106,7 +106,7 @@ public class QcServiceImpl   implements QcService {
 		int rows=0;
 		Integer count=0;
 		//根据采购订单id查询采购明细
-		List<BuyDetail> list=detaMapper.findBuyId(buy.getBuyId());
+		List<BuyDetail> list=detaMapper.findBuysId(buy.getBuyId());
 		for (BuyDetail buyDetail : list) {
 			
 			count+=buyDetail.getBdetAmount();
@@ -125,11 +125,9 @@ public class QcServiceImpl   implements QcService {
 		qc.setOptime(new Date());
 		String uuid=UUID.randomUUID().toString().replaceAll("-", "");
 		qc.setQcId(uuid);
-		System.err.println("----------------增加到自检这里");
 		dao.insert(qc);
 		
 		for (BuyDetail buyDetail : list) {
-			System.err.println("----------------进入循环自检明细这里");
 			QcDetail detail=new QcDetail();
 			detail.setQdetId(Tools.getDateOrderNo());
 			detail.setQcId(qc.getQcId());
@@ -140,7 +138,6 @@ public class QcServiceImpl   implements QcService {
 			detail.setOptime(new Date());
 			detail.setSort(Tools.getTimeStamp());
 			detail.setQdetFkId(buyDetail.getBdetFkId());
-			System.err.println("----------------增加到自检明细这里");
 			rows=qcdetailMapper.insertSelective(detail);
 		}
 		

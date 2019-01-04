@@ -225,4 +225,9 @@
   	select * from drug_buy_detail  bd,drug_drug d where bd.bdet_fk_id =d.drug_id and buy_id=#{buyId}
   </select>
   
+  <!-- 邓康威 -->
+  <select id="findBuysId" parameterType="string" resultMap="BaseResultMap">
+  	select * from drug_buy_detail where buy_id=#{buyId}
+  </select>
+  
 </mapper>

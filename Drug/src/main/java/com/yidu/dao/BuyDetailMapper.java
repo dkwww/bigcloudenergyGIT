@@ -59,13 +59,18 @@ public interface BuyDetailMapper {
      */
     List<BuyDetail> showListIds(Map<String,Object> map);
     
-    /**
-     * 根据id查询所有
-     * @param buyId
-     * @author 邓康威
-     * @return
-     */
+    
 	List<BuyDetail> findBuyId(String buyId);
 
 	int updateByBuyId(BuyDetail detail);
+	
+	/**
+	 * 
+	 * 方法说明：根据订单详情明细id查询明细所有
+	 * @param buyId
+	 * @return
+	 * @author dengkangwei
+	 * @date：2019年1月4日
+	 */
+	List<BuyDetail> findBuysId(String buyId);
 }
