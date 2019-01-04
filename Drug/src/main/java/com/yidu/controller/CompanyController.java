@@ -41,7 +41,7 @@ public class CompanyController {
 	 * @param company 传入company
 	 * @param page 传入page
 	 * @param limit 传入limit
-	 * @return
+	 * @return 返回map
 	 */
 	@RequestMapping("/findAll")
 	@ResponseBody
@@ -91,7 +91,7 @@ public class CompanyController {
 	 * @param company 传入company
 	 * @param page 传入page
 	 * @param limit 传入limit
-	 * @return
+	 * @return 返回map
 	 */
 	@RequestMapping("/checkfindAll")
 	@ResponseBody
