@@ -147,35 +147,23 @@
 	            		showlayer(d);
 		            } else if (layEvent === 'del') { //不审核
 		            } else if (layEvent === 'edit') { //查看详情
-		                var d = {
-		                    user: data,
-		                    citys: staticData.citys,
-		                    classifies: staticData.classifies
-		                };
-		                laytpl($('#edit-tpl').html()).render(d, function(html) {
-		                    layer.open({
-		                        type: 1,
-		                        title: '信息',
-		                        content: html,
-		                        area: ['800px', '450px'],
-		                        yes: function(index, layero) {
-		                            editIndex = index;
-		                            $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
-		                        },
-		                        btn2: function(index, layero) {
-		                            $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
-		                            return false;
-		                        },
-		                        success: function() {
-		                            form.render(null, 'form-edit');
-		                        }
-		                    });
-		                });
-		                //同步更新缓存对应的值
-		                // obj.update({
-		                //     username: '123',
-		                //     title: 'xxx'
-		                // });
+		            	layer.open({
+                            type: 2,
+                            title: '信息',
+                            content:['../../branchQuality/branchQualityDetail.html?id='+data.audId, 'no'],
+                            area: ['800px', '450px'],
+                            yes: function(index, layero) {
+                                editIndex = index;
+                                $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
+                            },
+                            btn2: function(index, layero) {
+                                $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
+                                return false;
+                            },
+                            success: function() {
+                                form.render(null, 'form-edit');
+                            }
+                        });
 		            }
 		        });
 		        form.render(null, 'kit-search-form');
