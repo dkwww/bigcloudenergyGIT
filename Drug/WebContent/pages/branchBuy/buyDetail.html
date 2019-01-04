@@ -416,11 +416,15 @@
 					$.post(url,data,function(mes){
 						if(mes.status==1){
 							layer.msg("采购成功");
-							history.go(0);location.reload();//返回上一页重载页面，本地刷新
+							  window.parent.location.reload()
+	    					  var index=parent.layer.getFrameIndex(window.name);
+	    					  parent.layer.close(index);
 							
 						}else{
 							layer.msg("采购失败");
-							history.go(0);location.reload();//返回上一页重载页面，本地刷新
+							  window.parent.location.reload()
+	    					  var index=parent.layer.getFrameIndex(window.name);
+	    					  parent.layer.close(index);
 
 						}
 						

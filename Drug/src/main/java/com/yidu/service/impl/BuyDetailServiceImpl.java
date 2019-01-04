@@ -177,13 +177,14 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 						System.err.println("   进来了增加的方法");
 						//采购订单增加的方法
 						buyService.insertSelective(buy);
+
+						audit.setAudFkId(uuidOne);
 					}else {
 						mapper.deleteByPrimaryKeys(buyId);
 						buyService.updateByPrimaryKeySelective(buy);
+						audit.setAudFkId(buyId);
 					}
 					
-					
-					audit.setAudFkId(uuidOne);
 					audit.setAudComtype("1");
 					audit.setQcFkId(admin.getComId());
 					audit.setAudTime(new Date());
@@ -202,7 +203,12 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 
 				String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 				bDetail.setBdetId(uuid);
-				bDetail.setBuyId(uuidOne);
+				
+				if(buy.getBuyId().equals(uuidOne)) {
+					bDetail.setBuyId(uuidOne);
+				}else {
+					bDetail.setBuyId(buyId);
+				}
 				
 				bDetail.setBdetAmount(Integer.valueOf(bdetAmount));
 				bDetail.setBdetPrice(bdetPrices);
