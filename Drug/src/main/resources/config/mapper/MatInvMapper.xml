@@ -124,8 +124,13 @@
   <select id="showList" parameterType="map" resultMap="BaseResultMap">
   	SELECT 
   	a.mat_name,b.mt_name,c.*
-  	FROM drug_material a,drug_mat_type b,drug_mat_inv c 
-  	WHERE a.mt_id=b.mt_id AND a.mat_id=c.mat_id
+  	FROM drug_material a,drug_mat_type b,drug_mat_inv c WHERE a.mt_id=b.mt_id AND a.mat_id=c.mat_id
+  	<if test="matinv.matName!=null and matinv.matName!='' ">
+  	 and a.mat_name like concat("%",#{matinv.matName},"%")
+  	</if>
+  	<if test="matinv.mtName!=null and matinv.mtName!='' ">
+  	 and b.mt_name like concat("%",#{matinv.mtName},"%")
+  	</if>
   	limit #{page.startRows},#{page.rows}
   </select>
   
