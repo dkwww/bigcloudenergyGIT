@@ -111,11 +111,10 @@ body {
 	position: absolute;
 	right: 0px;
 	width: 18px;
-	height: 30px;
+	height: 32px;
 	padding-right: 15px;
-	line-height: 30px;
-	font-size: 18px;
-	font-weight: bold;
+	line-height: 32px;
+	font-size: 20px;
 	transition: all .5s ease 0s;
 	color: transparent;
 }

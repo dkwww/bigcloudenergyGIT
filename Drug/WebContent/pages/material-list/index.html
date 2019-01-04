@@ -232,14 +232,16 @@
 			layui.use(['table', 'layer', 'element', 'jquery', 'form'], function(table, layer, element, $, form) {
 				// data模式
 				var $ = layui.$, table = layui.table, form = layui.form, layer = layui.layer;
+				
+				autoHeight();
+				
 				//数据表格实例化			
 				var layTableId1 = "layTableId1";
-				var h1 = autoHeight(layTableId1);
 				var tableIns1 = table.render({
 					elem: '#dataTable1',
 					id: layTableId1,
 					data: viewObj.data,
-					height: h1,
+					height: 'full-188',
 					page: true,
 					cols: [
 						[
@@ -401,12 +403,11 @@
 				
 				
 				var layTableId2 = "table2";
-				var h2 = autoHeight(layTableId2)+10;
 				var tableElem = "";
 				var tableIns2 = table.render({
 					elem: '#dataTable2',
 					id: layTableId2,
-					height: h2+20,
+					height: 'full-155',
 					url: "../../material/showList.action",
 					page: true,
 					cols: [
@@ -496,9 +497,6 @@
 		            $('#kit-search-mored-two').toggle();
 		        });
 		        
-				$(".layui-card").css({"height":h2+135});
-				$(".card-body-left").css({"height":h2+18});
-				
 				table.on('checkbox(dataTables)', function(obj) {
 					if (obj.checked == true) {
 						if (obj.type == 'one') {
@@ -591,8 +589,17 @@
 		  		}
 				
 				//窗口自适应
-				function autoHeight(tableId) {
-					return document.body.clientHeight && document.documentElement.clientHeight - 175; //窗口高度
+				function autoHeight() {
+					setHeight();
+				    window.onresize = function() {
+				    	setHeight();
+					}
+				}
+				
+				function setHeight() {
+					var h = document.body.clientHeight && document.documentElement.clientHeight - 175; //窗口高度
+					$(".layui-card").css({"height":h+135});
+					$(".card-body-left").css({"height":h+18});
 				}
 				
 				//移除数组内重复的元素
@@ -646,10 +653,7 @@
 					$(".card-top,.card-down").addClass("css-showTrans").removeClass("css-closeTrans");
 					$(".old-item").remove();
 					for (var i = 0; i < newData.length; i++) {
-						$("<li />", {
-							'text': newData[newData.length-1-i].matName,
-							'class': 'old-item'
-						}).insertAfter($(".li-title"));
+						$(".down-ul").append('<li class="old-item">'+newData[newData.length-1-i].matName+'</li>');
 					}
 					tableIns2.reload();
 				});

@@ -249,15 +249,17 @@
 			layui.use(['table', 'layer', 'element', 'jquery', 'form'], function(table, layer, element, $, form) {
 				// data模式
 				var $ = layui.$, table = layui.table, form = layui.form, layer = layui.layer;
+				
+				autoHeight();
+				
 				//数据表格实例化			
 				var layTableId1 = "layTableId1";
-				var h1 = autoHeight(layTableId1);
 				var tableElems;
 				var tableIns1 = table.render({
 					elem: '#dataTable1',
 					id: layTableId1,
 					data: viewObj.data,
-					height: h1,
+					height: 'full-188',
 					page: true,
 					cols: [
 						[
@@ -298,6 +300,7 @@
 								if (o.val().length < 1) o.val(1);
 								count(o);
 							}).on('change', '.layui-table-edit', function() {
+								if ($(this).val().length < 1) $(this).val(1);
 								getAmount();
 							}).on('keyup', '.layui-table-edit', function() {
 								var o = $(this);
@@ -314,6 +317,7 @@
 						    	$(this).text("非处方药");
 						    }
 					  	});
+						$(".mat").remove();
 						getAmount();
 					}
 				});
@@ -476,14 +480,13 @@
 				
 				
 				var layTableId2 = "table2";
-				var h2 = autoHeight(layTableId2)+10;
 				var tableElem = "";
 				var admin = getSession();
 		    	if (admin==null) return;
 				var tableIns2 = table.render({
 					elem: '#dataTable2',
 					id: layTableId2,
-					height: h2+20,
+					height: 'full-155',
 					where: {"comId": admin.comId},
 					url: "../../../../drug/showChecked.action",
 					page: true,
@@ -558,10 +561,6 @@
 						form.render();
 					}
 				});
-				
-				$(".layui-card").css({"height":h2+135});
-				$(".card-body-left").eq(0).css({"height":h2-12});
-				$(".card-body-left").eq(1).css({"height":h2+18});
 				
 				$.ajax({ 
 					url:"../../../../drugType/showList.action",
@@ -694,8 +693,18 @@
 		  		}
 				
 				//窗口自适应
-				function autoHeight(tableId) {
-					return document.body.clientHeight && document.documentElement.clientHeight - 175; //窗口高度
+				function autoHeight() {
+					setHeight();
+				    window.onresize = function() {
+				    	setHeight();
+					}
+				}
+				
+				function setHeight() {
+					var h = document.body.clientHeight && document.documentElement.clientHeight - 175; //窗口高度
+				    $(".layui-card").height(h+135);
+					$(".card-body-left").eq(0).height(h-15);
+					$(".card-body-left").eq(1).height(h+18); 
 				}
 				
 				//移除数组内重复的元素
@@ -748,12 +757,9 @@
 				
 				$(".add").on("click",function(){
 					$(".card-top,.card-down").addClass("css-showTrans").removeClass("css-closeTrans");
-					$(".down-ul").eq(1).$(".old-item").remove();
+					$(".down-ul").eq(1).find(".old-item").remove();
 					for (var i = 0; i < newData.length; i++) {
-						$("<li />", {
-							'text': newData[newData.length-1-i].drugName,
-							'class': 'old-item'
-						}).insertAfter($(".li-title").eq(1));
+						$(".down-ul").eq(1).append('<li class="old-item">'+newData[newData.length-1-i].drugName+'</li>');
 					}
 					tableIns2.reload();
 				});
