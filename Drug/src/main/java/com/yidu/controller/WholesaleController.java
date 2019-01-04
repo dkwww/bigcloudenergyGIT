@@ -179,24 +179,31 @@ public class WholesaleController {
 			System.err.println("药品ID:"+pistr[0]);
 			//拆分数组0为药品ID
 			String drugid=pistr[0];
+			
 			System.err.println("药品名称:"+pistr[1]);
 			//拆分数组1为药品名称
 			String drugname=pistr[1];
+			
 			System.err.println("药品类型:"+pistr[2]);
 			//拆分数组2为药品类型
 			String drugtype=pistr[2];
+			
 			System.err.println("药品价格:"+pistr[3]);
 			//拆分数组3为药品价格
 			String drugmoney=pistr[3];
+			
 			System.err.println("药品数量:"+pistr[9]);
-			//拆分数组8为药品数量
-			int amount=Integer.parseInt(pistr[8]);
+			//拆分数组9为药品数量
+			int amount=Integer.parseInt(pistr[9]);
+			
 			System.err.println("药品小计:"+pistr[5]);
 			//拆分数组5为药品小计
 			String price=pistr[5];
+			
 			System.err.println("批发价:"+pistr[6]);
 			//拆分数组6为批发价
 			String drugpi=pistr[6];
+			
 			//创建一个随机数
 			String uuid=UUID.randomUUID().toString().replace("-","");
 			

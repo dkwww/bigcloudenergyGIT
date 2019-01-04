@@ -2,6 +2,7 @@ package com.yidu.controller;
 
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -215,6 +216,7 @@ public class AuditController {
 			pageUtil.setRows(limit);
 		}
 		
+		List<Audit> lists=new ArrayList<>();
 		List<Audit> list = service.financeo(audit,pageUtil);
 		int rows=service.findCount(audit);
 		

@@ -145,7 +145,7 @@
   </update>
   
   <update id="moneyupdate" parameterType="com.yidu.domain.Debty">
-  		update drug_debty set deb_money=deb_money+#{debMoney,jdbcType=DECIMAL} where com_id=#{comID,jdbcType=VARCHAR}
+  		update drug_debty set deb_money=deb_money+#{debMoney,jdbcType=DECIMAL} where com_id=#{comId,jdbcType=VARCHAR}
   </update>
   
   <select id="findcomIds" parameterType="string" resultMap="BaseResultMap">

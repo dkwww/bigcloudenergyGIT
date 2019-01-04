@@ -378,12 +378,13 @@
 			var id = obj.id;
 			var a = obj.value;
 			var kucun=$(obj).parent().next().next().next().next().text();
-			
 			var reg= /^[0-9]*$/;
 			
 			if (reg.test(a)) {
 				if(a<=parseInt(kucun)){
 					if(a!=""&&a!=0){
+						
+						
 						var b=$(obj).parent().prev().text();
 						var c =parseFloat(a).toFixed(2)*parseFloat(b).toFixed(2);
 						var d=c*0.8;
@@ -403,7 +404,7 @@
 						resultshu(obj);
 					}
 				}else{
-					layer.alert('库存不足');
+					layer.alert('库存不足,还剩:'+kucun+" 盒");
 					resultshu(obj);
 				}
 			}else{
