@@ -131,10 +131,16 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 			String bdetFkId = strOne[10];//药品id
 			System.out.println("药品id:"+bdetFkId);
 			String amount = strOne[11];//订单总数量
+			System.out.println("订单总数量:"+strOne[11]);
 			BigDecimal money = new BigDecimal(strOne[12]);//订单总金额
-			String buyId = strOne[13];//订单总数量
-			System.err.println("采购订单id "+strOne[13]);
-			
+			System.out.println("订单总数量:"+strOne[12]);
+			String buyId = null;
+			List<BuyDetail> buya = findById(strOne[strOne.length-1]);
+			if(!buya.isEmpty()) {
+				buyId = strOne[strOne.length-1];//订单id
+				System.err.println("采购订单id "+strOne[strOne.length-1]);
+				
+			}
 			
 			
 			DrugInve drugInv = invService.findDrug(bdetFkId);
@@ -163,7 +169,12 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 				buy.setSort(TimeUtil.getStrDate());//排序
 				
 				if(i==0) {
-					if(buyId==null||"".equals(buyId)) {
+
+					System.err.println("第一次循环");
+					
+					if(buy.getBuyId().equals(uuidOne)) {
+
+						System.err.println("   进来了增加的方法");
 						//采购订单增加的方法
 						buyService.insertSelective(buy);
 					}else {
@@ -188,14 +199,11 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 				}
 				BigDecimal bdetPrices = new BigDecimal(bdetPrice);//单价
 				BigDecimal bdetTotals = new BigDecimal(bdetTotal);//总价
-				
+
 				String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 				bDetail.setBdetId(uuid);
-				if(buyId==null) {
-					bDetail.setBuyId(uuidOne);
-				}else {
-					bDetail.setBuyId(buyId);
-				}
+				bDetail.setBuyId(uuidOne);
+				
 				bDetail.setBdetAmount(Integer.valueOf(bdetAmount));
 				bDetail.setBdetPrice(bdetPrices);
 				bDetail.setBdetTotal(bdetTotals);
@@ -204,7 +212,6 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 				bDetail.setOper(admin.getAdminName());
 				bDetail.setOptime(new Date());
 				
-				//采购详情的增加
 				buyRows =insertSelective(bDetail);
 				
 				
@@ -212,7 +219,7 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 					
 					//给销售单定义一个id
 					uuidTwo = UUID.randomUUID().toString().replaceAll("-", "");
-					System.out.println("uuid:"+uuidOne);
+					System.out.println("uuid:"+uuidTwo);
 					sale.setSaleId(uuidTwo);
 					sale.setSaleTime(new Date());
 					sale.setSaleAmount(Integer.valueOf(amount));

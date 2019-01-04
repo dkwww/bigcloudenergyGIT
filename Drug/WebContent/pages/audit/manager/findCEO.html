@@ -27,7 +27,7 @@
 		<script type="text/html" id="edit-tpl">
 		    <div style="margin:10px">
 		        <form class="layui-form" action="" lay-filter="form-edit">
-		           <input type="text" value="{{d.rowdata.audId}}" name="audId"/>
+		           <input type="hidden" value="{{d.rowdata.audId}}" name="audId"/>
 					<div class="layui-form-item">
 						<label class="layui-form-label">审核部门</label>
 						<div class="layui-input-block">
@@ -82,7 +82,6 @@
 		            id: 'demo',
 		            cols: [
 		            	 [{field: 'audId',title: 'ID', width: 273},
-		                {field: 'audFkId',title: '采购单号',width: 175},
 		                {field: 'audComtype',title: '厂家',width: 80},
 		                {field: 'qcFkId',title: '公司编号',width: 130},
 		                {field: 'audTimes',title: '审核时间',width: 170},

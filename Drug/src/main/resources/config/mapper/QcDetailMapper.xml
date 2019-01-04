@@ -36,8 +36,6 @@
   
   
   
-  
-  
   <select id="selectbycount" parameterType="com.yidu.domain.QcDetail" resultType="int">
       SELECT  count(*) FROM   drug_qc_detail   a, drug_drug  b   WHERE    a.qdet_fk_id=b.drug_id   AND  a.qc_id=#{qcId,jdbcType=VARCHAR}
      <if test="drugName != null and drugName != ''">
@@ -71,6 +69,10 @@
       #{qdetOptime,jdbcType=TIMESTAMP}, #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, 
       #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR})
   </insert>
+  
+  <select id="findByQcId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT * FROM drug_qc_detail a,drug_drug b WHERE  a.qdet_fk_id=b.drug_id AND a.qc_id=#{qcId,jdbcType=VARCHAR}
+  </select>
   <insert id="insertSelective" parameterType="com.yidu.domain.QcDetail">
     insert into drug_qc_detail
     <trim prefix="(" suffix=")" suffixOverrides=",">

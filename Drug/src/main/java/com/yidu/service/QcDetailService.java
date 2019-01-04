@@ -49,6 +49,6 @@ public interface QcDetailService   {
 
 	List<QcDetail> findByIdss(String qcId);
 	  
-	  
+	 List<QcDetail> findByQcId(String id);
 	
 }

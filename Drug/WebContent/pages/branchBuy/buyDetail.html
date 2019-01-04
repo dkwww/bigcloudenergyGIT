@@ -11,14 +11,17 @@
 		<script>
 			$(function(){
 				var   buyId=getParameter("id");
-				var url="../../buyDetail/findById.action";
-				var data={"id":buyId};
-				$.post(url,data,function(mes){
-					$.each(mes,function(i,item){
-						$("#tbo").append("<tr><td>"+item.drugName+"</td><td><input type='number' id='up_"+item.bdetFkId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' value='1' /></td><td id='pic_"+item.bdetFkId+"'>"+item.bdetPrice+"</td><td>"+item.drugUnit+"</td><td><input type='text' id='mes_"+item.bdetFkId+"' style='height:20px; border:0px; width:200px;' onKeyUp='pj()'/></td><td id='total'>"+item.bdetPrice+"</td><td><a onclick='delrow(this);' class='dels'>删除</a></td><td style='display:none;'><input type='text' id='drugId' value='"+item.bdetFkId+"' /></td></tr>")
-			        });
-					pj();
-				},"json");
+				if(buyId!=null){
+					var url="../../buyDetail/findById.action";
+					var data={"id":buyId};
+					$.post(url,data,function(mes){
+						$.each(mes,function(i,item){
+							$("#tbo").append("<tr><td>"+item.drugName+"</td><td><input type='number' id='up_"+item.bdetFkId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' value='1' /></td><td id='pic_"+item.bdetFkId+"'>"+item.bdetPrice+"</td><td>"+item.drugUnit+"</td><td><input type='text' id='mes_"+item.bdetFkId+"' style='height:20px; border:0px; width:200px;' onKeyUp='pj()'/></td><td id='total'>"+item.bdetPrice+"</td><td><a onclick='delrow(this);' class='dels'>删除</a></td><td style='display:none;'><input type='text' id='drugId' value='"+item.bdetFkId+"' /></td></tr>")
+				        });
+						pj();
+					},"json");
+				}
+				
 				
 			})
 		</script>
@@ -219,6 +222,7 @@
 			*/
 			function pj(){
 				var   buyId=getParameter("id");//获取buyid
+				
 				//赋值
 				var str = ""; 
 				//拼接
@@ -229,7 +233,12 @@
 					  str+=$(this).find("td:eq(1) input").val()+"#";
 					  str+=$(this).find("td:eq(4) input").val()+"#";
 					  str+=$(this).find("td:eq(7) input").val()+"#";
-					  str+=amount+"#"+money+"#"+buyId+"&";
+					  if(buyId!=null){
+						  str+=amount+"#"+money+"#"+buyId+"&";
+					  }else{
+						  str+=amount+"#"+money+"&";
+					  }
+					  
 				});
 				$("#mes").val(str);
 			}
@@ -250,7 +259,9 @@
 		            th.value = th.value.replace(reg, regStrs[i][1]);
 		        }
 		    }
-			
+			/**
+			* 获取id的方法
+			*/
 		    function getParameter(param){
 	    		var query = window.location.search;
 	    		var iLen = param.length;
@@ -267,6 +278,7 @@
 			/**
 			* 移除当前行
 			*/
+			
 		    function delrow(obj){
                 //获取按钮所在的行
                 btnTrElement = obj.parentNode.parentNode;
@@ -356,42 +368,14 @@
 		        	      		
 		        	      		
 	        	      	}
-
 		        	 
-		        	 
-		        	/* if(obj.checked==false){
-	        			$("#add").find("tr").each(function(){
-	        				if($(this).find("td:eq(7) input").val()==data.drugId){
-	        					delrow(this);
-	        				}
-	        			})
-		        			
-		              		
-		             }else if(obj.checked==true){
-		            	 $("#tbo").append("<tr><td>"+data.drugName+"</td><td><input type='number' id='up_"+data.drugId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' value='1' /></td><td id='pic_"+data.drugId+"'>"+data.drugPrice+"</td><td>"+data.drugUnit+"</td><td><input type='text' id='mes_"+data.drugId+"' style='height:20px; border:0px; width:200px;' onKeyUp='pj()'/></td><td id='total'>"+data.drugPrice+"</td><td><a onclick='delrow(this);' class='dels'>删除</a></td><td style='display:none;'><input type='text' id='drugId' value='"+data.drugId+"' /></td></tr>")
-				        	
-		             } */
-
-		        	/* if(obj.type=='one'&&obj.checked==true){
-		        		var bln = false;
-		        		
-		        		for(var i=0;i<a.length-1;a++){
-		        			alert(data.drugId);
-		        			alert(a[i]);
-		        			if(a[i]==data.drugId){
-			        			bln=true;
-			        			layer.msg("您已添加了此商品！");
-			        			return;
-			        		}
-		        		}
-		        		if(!bln){
-		        			a.push(data.drugId);
-		        			$("#tbo").append("<tr><td>"+data.drugName+"</td><td><input type='number' id='up_"+data.drugId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' value='1' /></td><td id='pic_"+data.drugId+"'>"+data.drugPrice+"</td><td>"+data.drugUnit+"</td><td><input type='text' id='mes_"+data.drugId+"' style='height:20px; border:0px; width:200px;' onKeyUp='pj()'/></td><td id='total'>"+data.drugPrice+"</td><td><a onclick='delrow(this);' class='dels'>删除</a></td><td style='display:none;'><input type='text' id='drugId' value='"+data.drugId+"' /></td></tr>")
-				        	
-		        		}
-		        	} */
 		        	
 		        });
+		        function closeLayer(){
+				    //当你在iframe页面关闭自身时
+					var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+					parent.layer.close(index); //再执行关闭   
+				}
 		      	
 		      	/**
 		      	* 采购表移除药品
@@ -426,14 +410,18 @@
 		    if (tableBox.find(".layui-table-fixed.layui-table-fixed-l").length>0) { tableDiv = tableBox.find(".layui-table-fixed.layui-table-fixed-l"); } else { tableDiv = tableBox.find(".layui-table-body.layui-table-main"); } var checkCell = tableDiv.find("tr[data-index=" + index + "]").find("td div.laytable-cell-checkbox div.layui-form-checkbox I"); if (checkCell.length>0) { checkCell.click(); } }); $(document).on("click", "td div.laytable-cell-checkbox div.layui-form-checkbox", function (e) { e.stopPropagation(); });
 		    	
 		    $("#btn").click(function(){
+		    	alert($("#mes").val());
 					var url="../../buyDetail/add.action";
 					var data={"mes":$("#mes").val()};
 					$.post(url,data,function(mes){
 						if(mes.status==1){
 							layer.msg("采购成功");
-							editIndex && layer.close(editIndex);
+							history.go(0);location.reload();//返回上一页重载页面，本地刷新
+							
 						}else{
 							layer.msg("采购失败");
+							history.go(0);location.reload();//返回上一页重载页面，本地刷新
+
 						}
 						
 					},"json");

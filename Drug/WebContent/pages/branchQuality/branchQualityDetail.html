@@ -16,11 +16,11 @@
 		<script>
 			$(function(){
 				var id = getParameter("id");
-				var url= "../../buyDetail/findById.action";
+				var url= "../../qcDetail/findByQcId.action";
 				var data ={"id":id};
 				$.post(url,data,function(mes){
 					$.each(mes,function(i,item){
-						$("#tbo").append("<tr><td>"+item.drugName+"</td><td>"+item.bdetAmount+"</td><td>"+item.bdetPrice+"</td><td>"+item.bdetTotal+"</td></tr>");
+						$("#tbo").append("<tr><td>"+item.drugName+"</td><td>"+item.qdetAmount+"</td><td>"+item.qdetFail+"</td><td>"+item.qdetRate+"</td><td>"+item.qdetOptime+"</td></tr>");
 					});
 				},"json");
 			})
@@ -28,13 +28,17 @@
 	</head>
 	<body>
 	
+	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+  <legend>质检详情</legend>
+	</fieldset>
 <table class="layui-table"  style="width:1000px;" lay-filter="test3" id="add">
   <thead>
     <tr>
       <th>药品名称</th>
       <th>数量</th>
-      <th>单价</th>
-      <th>总价</th>
+      <th>未通过数</th>
+      <th>通过率</th>
+      <th>质检时间</th>
     </tr>
   </thead>
   <tbody id="tbo">

@@ -61,6 +61,27 @@
 			XXX医药生产销售管理
 		</div>
   </div>
+  <!-- 隐藏左侧菜单栏滚动条 -->
+  <script type="text/javascript">
+  	$(function(){
+  		hidenScroll();
+ 		$(window).resize(function () {
+ 			hidenScroll();
+ 		});
+  	});
+  	function hidenScroll() {
+  		$(".layui-side-scroll").css("cssText","width:calc(100% + "+getScrollWidth()+"px)!important");
+  	}
+  	function getScrollWidth() {
+	  var noScroll, scroll, oDiv = document.createElement("DIV");
+	  oDiv.style.cssText = "position:absolute; top:-1000px; width:100px; height:100px; overflow:hidden;";
+	  noScroll = document.body.appendChild(oDiv).clientWidth;
+	  oDiv.style.overflowY = "scroll";
+	  scroll = oDiv.clientWidth;
+	  document.body.removeChild(oDiv);
+	  return noScroll-scroll;
+	}
+  </script>
   <script src="./res/layui/layui.js"></script>
   <script src="res/js/admin/index.js"></script>
   <script>

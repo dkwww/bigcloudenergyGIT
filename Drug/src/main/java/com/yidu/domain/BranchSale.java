@@ -13,6 +13,8 @@ public class BranchSale {
     private String menId;
 
     private Integer bsAmount;
+    private Integer bsAmount2;
+    
 
     private String bsPrice;
 
@@ -34,7 +36,23 @@ public class BranchSale {
     
     private String menName;
 
-    public String getComName() {
+    
+    
+    /**
+	 * @return the bsAmount2
+	 */
+	public Integer getBsAmount2() {
+		return bsAmount2;
+	}
+
+	/**
+	 * @param bsAmount2 the bsAmount2 to set
+	 */
+	public void setBsAmount2(Integer bsAmount2) {
+		this.bsAmount2 = bsAmount2;
+	}
+
+	public String getComName() {
 		return comName;
 	}
 

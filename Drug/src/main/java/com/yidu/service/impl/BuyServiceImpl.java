@@ -61,19 +61,19 @@ public class BuyServiceImpl implements BuyService {
 				buy2.setBuyAudit("审核中");
 			}
 			if("2".equals(buy2.getBuyAudit())) {
-				buy2.setBuyAudit("审核通过,等待总经理审核");
+				buy2.setBuyAudit("审核中");
 			}
 			if("11".equals(buy2.getBuyAudit())) {
 				buy2.setBuyAudit("分店财务部不予通过,请重新修改订单");
 			}
 			if("12".equals(buy2.getBuyAudit())) {
-				buy2.setBuyAudit("审核通过,等待总店审核");
+				buy2.setBuyAudit("审核中");
 			}
 			if("13".equals(buy2.getBuyAudit())) {
 				buy2.setBuyAudit("总店销售部不予通过,请重新修改订单");
 			}
 			if("14".equals(buy2.getBuyAudit())) {
-				buy2.setBuyAudit("审核通过,等待总店总经理审核");
+				buy2.setBuyAudit("审核中");
 			}
 			if("15".equals(buy2.getBuyAudit())) {
 				buy2.setBuyAudit("总店总经理不予通过,请重新修改订单");
@@ -139,7 +139,13 @@ public class BuyServiceImpl implements BuyService {
 
 
 	@Override
-	public int updateAudit(String status,String buyId) {
+	public int updateAudit(String audit,String buyId) {
+		return mapper.updateAudit(audit, buyId);
+	}
+
+
+	@Override
+	public int updateStatus(String status, String buyId) {
 		return mapper.updateStates(status, buyId);
 	}
 

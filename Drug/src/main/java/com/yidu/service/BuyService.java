@@ -63,10 +63,18 @@ public interface BuyService   {
 	public Buy findById(String id);
 	
 	/**
-	 * 根据订单id修改状态
+	 * 根据订单id修改审核状态
 	 * @param status
 	 * @param buyId
 	 * @return
 	 */
-	public int updateAudit(String status,String buyId);
+	public int updateAudit(String audit,String buyId);
+	
+	/**
+	 * 根据订单id修改采购状态
+	 * @param status
+	 * @param buyId
+	 * @return
+	 */
+	public int updateStatus(String status,String buyId);
 }

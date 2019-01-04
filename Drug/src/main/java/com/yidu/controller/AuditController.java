@@ -361,9 +361,12 @@ public class AuditController {
 			}
 			
 		}else if("2".equals(audits.getAudState())||"14".equals(audits.getAudState())) {
-
+			//如果审核不通过，则根据id查询出
+			Buy buy = buyService.findById(audits.getAudFkId());
 			int rows=service.updateByPrimaryKeySelective(audit);
-			
+
+			//修改状态
+			buyService.updateAudit(audits.getAudState(), buy.getBuyId());
 			if(rows!=0) {
 				message.setStatus(1);
 				message.setMsg("操作成功");

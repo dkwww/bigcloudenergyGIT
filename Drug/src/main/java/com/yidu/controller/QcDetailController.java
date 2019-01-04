@@ -88,5 +88,16 @@ public class QcDetailController {
 		
 		return map;
 	}
+	
+	/**
+	 * 根据id查询
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/findByQcId")
+	@ResponseBody
+	public List<QcDetail> findByQcId(String id){
+		return qcdetaService.findByQcId(id);
+	}
 }
 
