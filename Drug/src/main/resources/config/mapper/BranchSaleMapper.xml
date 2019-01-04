@@ -163,7 +163,10 @@
   	and dc.com_name like CONCAT(CONCAT('%',#{branchSale.comName,jdbcType=VARCHAR},'%'))
   	</if>
   	<if test="branchSale.bsAmount != null and branchSale.bsAmount != ''">
-  	and dbs.bs_amount like CONCAT(CONCAT('%',#{branchSale.bsAmount,jdbcType=VARCHAR},'%'))
+  	and dbs.bs_amount &gt;= #{branchSale.bsAmount}
+  	</if>
+  	<if test="branchSale.bsAmount2 != null and branchSale.bsAmount2 != ''">
+  	and dbs.bs_amount &lt;= #{branchSale.bsAmount2}
   	</if>
   	<if test="branchSale.priceMin != null and branchSale.priceMin != ''">
   	and dbs.bs_price &gt;= #{branchSale.priceMin,jdbcType=VARCHAR}
@@ -184,7 +187,10 @@
   	and dc.com_name like CONCAT(CONCAT('%',#{comName,jdbcType=VARCHAR},'%'))
   	</if>
   	<if test="bsAmount != null and bsAmount != ''">
-  	and dbs.bs_amount like CONCAT(CONCAT('%',#{bsAmount,jdbcType=VARCHAR},'%'))
+  	and dbs.bs_amount &gt;= #{bsAmount}
+  	</if>
+  	<if test="bsAmount2 != null and bsAmount2 != ''">
+  	and dbs.bs_amount &lt;= #{bsAmount2}
   	</if>
   	<if test="priceMin != null and priceMin != ''">
   	and dbs.bs_price &gt;= #{priceMin,jdbcType=VARCHAR}

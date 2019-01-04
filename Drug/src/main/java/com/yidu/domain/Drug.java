@@ -35,13 +35,13 @@ public class Drug {
     private Double priceMax;
     
     private Integer diAmount; 
-    
+   
     private String audId;
     
     private String audState;
     
-    
-    public Integer getDiAmount() {
+
+	public Integer getDiAmount() {
 		return diAmount;
 	}
 
