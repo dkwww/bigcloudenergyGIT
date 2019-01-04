@@ -41,7 +41,7 @@
 	 <if test="mrp.mrpPlan != null and mrp.mrpPlan != ''">
    		and mrp_plan like CONCAT(CONCAT('%',#{mrpPlan,jdbcType=VARCHAR},'%'))
    	</if>
-   	order by (sort+0) desc 
+   	ORDER BY  mrp_optime desc
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
    	
    </select>

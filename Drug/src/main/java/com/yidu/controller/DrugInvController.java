@@ -32,7 +32,7 @@ import org.springframework.stereotype.Controller;
 @RequestMapping("/drugInv")
 public class DrugInvController {
 
-
+	//库存service
 	@Resource 
 	private   DrugInvService   drugInvService;
 	

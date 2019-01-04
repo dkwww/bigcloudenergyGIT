@@ -68,14 +68,27 @@ import org.springframework.stereotype.Controller;
 @Controller
 @RequestMapping("/mrpDetails")
 public class MrpDetailsController {
+	//制造明细service
 	@Resource   
 	private  MrpDetailsService  mrpDetailService; 
+	//制造计划service
 	@Resource   
 	private  MrpService  mrpService; 
+	//质检明细service
 	@Resource
 	private QcDetailService   qcDetailService;
+	//质检service
 	@Resource
 	private   QcService   qcService;
+	
+	/**
+	 * 根据ID查询制造详细
+	 * @param mrpDetails  制造详细对象
+	 * @param page  layui自带的分页
+	 * @param limit  layui自带的分页
+	 * @return
+	 * @author Pngjiangping
+	 */
 	@RequestMapping("findById")
 	@ResponseBody
 	public   Map<String, Object>  findById(MrpDetails  mrpDetails,Integer page,Integer limit){
@@ -94,23 +107,35 @@ public class MrpDetailsController {
 		map.put("data", list);
 		return  map;
 	}
+	
+	/**
+	 * 增加制造详细
+	 * @param mrpDetails
+	 * @return
+	 * @author Pngjiangping
+	 */
 	@RequestMapping("update")
 	@ResponseBody
 	public   Message   update(MrpDetails  mrpDetails) {
 		//传过来的数据
 		String   name = mrpDetails.getShujuName(); 
+		//返回提示信息
 		Message   message = new   Message();
-		//拆分数据
+		//将传过来的数据拆分为数组
 		String   nameOne[]=name.split("#");
 		int rows =0;   
+		//循环拆分的数组
 		for (int i = 0; i < nameOne.length; i++) {
 			String   str=UUID.randomUUID().toString().replaceAll("-", "");
+			//定义一个对象用于接受下面的拆分值 增加
 			MrpDetails   mrpDetails2 =new   MrpDetails();
+			//制造计划的外键
 			mrpDetails2.setMrpId(mrpDetails.getMrpId());
+			//制造计划的主键
 			mrpDetails2.setMdId(str);
 			//拆分成一个字段
 			String   nametow[] = nameOne[i].split(",");
-			//拆分后药品ID
+			//药品ID
 			String drugId = nametow[0];
 			mrpDetails2.setDrugId(drugId);
 			//计划数量
@@ -126,10 +151,14 @@ public class MrpDetailsController {
 			mrpDetails2.setMdPlan(max-Integer.valueOf(oknum));
 			//本次完成的数量
 			mrpDetails2.setMdAmount(Integer.valueOf(addnum)); 
-			int  a = Integer.valueOf(oknum)+Integer.valueOf(addnum);  
+			//a是已经完成和本次完成的
+			int  a = Integer.valueOf(oknum)+Integer.valueOf(addnum); 
+			//判断是否和计划任务相等
 			if (a==Integer.valueOf(num)) {
+				//改变状态
 				mrpDetails2.setMdState(0);
 			}else {
+				//否则就不更改
 				mrpDetails2.setMdState(1); 
 			} 
 			if (a==Integer.valueOf(num)) {
@@ -171,7 +200,12 @@ public class MrpDetailsController {
 		return message;
 	}
 	
-	
+	/**
+	 * 提交质检
+	 * @param mrpDetails  制造明细对象
+	 * @return
+	 * @author Pngjiangping
+	 */
 	
 	@RequestMapping("Preservation")
 	@ResponseBody

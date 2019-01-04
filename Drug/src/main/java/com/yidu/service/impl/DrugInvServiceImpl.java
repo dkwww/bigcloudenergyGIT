@@ -30,7 +30,7 @@ public class DrugInvServiceImpl    implements DrugInvService {
 
 	@Override
 	public List<DrugInve> qureyAll(DrugInve drugInve,PageUtil pageUtil ) {
-		System.out.println("=========这是IMP的Comid========="+drugInve.getComId());
+		
 		Map<String, Object>  map  =new  HashMap<>();
 		map.put("drugInve", drugInve);
 		map.put("pageUtil", pageUtil);

@@ -164,7 +164,7 @@ public class PmcServiceImpl  implements PmcService {
 		mrp.setMrpOptime(pmc.getPmcStart());
 		mrp.setMrpEndtime(pmc.getPmcEnd());
 		mrp.setMrpPlan(pmc.getPmcAmount());
-		mrp.setMrpIdea(0);
+		mrp.setMrpIdea(1);
 		mrp.setMrpRate("0");
 		mrp.setMrpState(0);
 		mrp.setMrpPud(0);

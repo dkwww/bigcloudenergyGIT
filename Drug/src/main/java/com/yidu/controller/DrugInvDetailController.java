@@ -34,14 +34,16 @@ import org.springframework.stereotype.Controller;
 @Controller
 @RequestMapping("/drugInvDetail")
 public class DrugInvDetailController {
-
+	//库存service
 	@Resource
 	DrugInvService   drugInvService;
+	//库存明细service
 	@Resource
 	private   DrugInvDetailService   drugInvDetailService;
-
+	//质检明细service
 	@Resource
 	private QcDetailService qcdetaService;
+	//质检service
 	@Resource
 	private    QcService  qcService;
 
@@ -158,11 +160,14 @@ public class DrugInvDetailController {
 
 		//返回提示信息
 		if (rows>0) {
-			
+			//返回1
 			message.setStatus(1);
+			//提示信息
 			message.setMsg("保存成功");
 		}else {
+			//返回1
 			message.setStatus(0);
+			//提示信息
 			message.setMsg("保存失败");
 		} 
 		//返回提示对象
