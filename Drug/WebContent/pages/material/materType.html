@@ -15,7 +15,6 @@
 		        <div class="kit-table-header">
 		            <div class="kit-search-btns">
 		                <a href="javascript:;" data-action="add" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i> 新增</a>
-		                <a href="javascript:;" data-action="del-bulk" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon">&#xe640;</i> 批量删除</a>
 		            </div>
 		            <div class="kit-search-inputs">
 		                <div class="kit-search-keyword">
@@ -270,8 +269,7 @@
                         success:function(mes){//res为相应体,function为回调函数
 	                        if(mes.status==1){ 
 		                        $("#res").click();//调用重置按钮将表单数据清空
-		                        editIndex && layer.close(editIndex); //关闭弹出层
-	    			    		$(".layui-laypage-btn")[0].click();//当前表格刷新
+		                        history.go(0);location.reload();//返回上一页重载页面，本地刷新
 	                        	layer.msg(mes.msg,{icon:1});
 	                        } else {
 	                        	layer.msg(mes.msg,{icon:5});

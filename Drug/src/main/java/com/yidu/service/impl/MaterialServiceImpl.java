@@ -7,6 +7,7 @@ import com.yidu.domain.Material;
 import com.yidu.service.MaterialService;
 import com.yidu.util.PageUtil;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +49,7 @@ public class MaterialServiceImpl   implements MaterialService {
 			String uuid=UUID.randomUUID().toString().replaceAll("-", "");
 			mat.setMatId(uuid);
 			mat.setMatAmount(0);
+			mat.setOptime(new Date());
 			mat.setIsva("1");
 			dao.insert(mat);
 		}

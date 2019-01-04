@@ -230,14 +230,15 @@
    	        		var url="../../buyht/add.action";
    					var data={"shuju":$("#shuju").val(),"sumNumber":$("#buyAmount").val(),"sumPrice":$("#buyMoney").val(),"Supplier":$("#edit_exam_school").val()}
    					
-   					if($("#edit_exam_school").val()!=0){
+   					console.log($("#buyAmount").val())
+   					if($("#edit_exam_school").val()!=0 && $("#buyAmount").val()!=0 ){
    						$.post(url,data,function(mes){
   	 						if(mes.status==1){
   	 							location.href="purchase.html";
   	 						}
   	 					})
    					}else{
-   						layer.msg('请选择供应商噢', {
+   						layer.msg('请选择供应商和数据噢', {
    							     time: 1500, //1.5s后自动关闭
    							 });
    					}

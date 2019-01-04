@@ -31,7 +31,7 @@
   	<if test="material.mtName !=null and material.mtName!='' ">
   		and b.mt_name like concat('%',#{material.mtName},'%')
   	</if>
-  	order by (a.sort+0) desc
+  	order by a.optime desc
   	limit #{page.startRows},#{page.rows}
   </select>
   

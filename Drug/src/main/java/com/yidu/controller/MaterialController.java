@@ -77,12 +77,14 @@ public class MaterialController {
 	@ResponseBody
 	public Message addorUpdate(@RequestBody Material mat) {
 		
-		
+		//增加或修改到原材料数据库
 		matservice.addorUpdate(mat);
 		
+		//得到库存对象
 		MatInv inv=new MatInv();
+		//存入原材料id
 		inv.setMatId(mat.getMatId());
-		
+		//放入库存数据库
 		matinvService.add(inv);
 		
 		Message me=new Message();
