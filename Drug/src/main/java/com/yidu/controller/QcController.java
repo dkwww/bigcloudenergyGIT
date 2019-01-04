@@ -63,7 +63,14 @@ public class QcController {
 	@Resource
 	private MatInvDetailService invdetailservice;
 
-	//查询 药品质检
+	/**
+	 * 查询药品质检
+	 * @param qc
+	 * @param page
+	 * @param limit
+	 * @return
+	 * @author Pngjiangping
+	 */
 	@RequestMapping("/qureyAll")
 	@ResponseBody
 	public   Map<String , Object>  qureyAll(Qc  qc  , Integer  page , Integer  limit){
@@ -86,10 +93,15 @@ public class QcController {
 		map.put("data", list);
 		return  map;
 	} 
+	/**
+	 * 增加质检和质检明细
+	 * @param qc
+	 * @return
+	 * @author Pngjiangping
+	 */
 	@RequestMapping("/add")
 	@ResponseBody
 	public   Message    add(Qc  qc ) {
-		
 		String    string= UUID.randomUUID().toString().replaceAll("-", "");
 		//分页
 		Date   date =new Date();
@@ -116,7 +128,7 @@ public class QcController {
 		qc.setQcAmount(pmc.getPmcAmount());
 		qc.setQcRate("0");
 		qc.setQcFail(0);
-		qc.setQcConpany("目前不知道是啥工厂");
+		qc.setQcConpany("总公司质检部");
 		qc.setQcType(0); 
 		qc.setQcState("0");
 		qc.setQcPut("0");
@@ -233,7 +245,6 @@ public class QcController {
 			qcDetailService.add(qcdetail);
 			
 		}
-		
 		Message me=new Message();
 		me.setStatus(1);
 		me.setMsg("操作成功");
@@ -316,11 +327,9 @@ public class QcController {
 			}else if(qc2.getQcPut().equals("1")) {
 				qc2.setQcPuts("已入库");
 			}
-			
 			//转为时间格式
 			qc2.setOptimes(Tools.getDateStr(qc2.getOptime()));
 		}
-		
 		int rows=qcService.selectCount(qc);
 		
 		Map<String, Object> map=new HashMap<>();

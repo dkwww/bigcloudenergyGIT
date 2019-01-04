@@ -218,7 +218,7 @@ public class MrpDetailsController {
 		int  kk=0;
 		String  qcid=null;
 		for (int i = 0; i < nameOne.length; i++) {
-			QcDetail    qcDetali=new QcDetail();
+			QcDetail qcDetali=new QcDetail();
 			//拆分成一个字段
 			String   nametow[] = nameOne[i].split(",");
 			//药品ID
@@ -248,7 +248,11 @@ public class MrpDetailsController {
 		numberFormat.setMaximumFractionDigits(2); 
 		Qc   qc  = new  Qc();
 		qc.setQcFail(jj);
-		String   progress  =   numberFormat.format((float) jj  /   (float)kk *100);
+		
+		System.err.println("=======jjj==========="+jj);
+		System.err.println("=======kkk==========="+kk);
+		String   progress  =   numberFormat.format(100-(float) jj  /   (float)kk   *100);
+		System.err.println("=======progress==========="+progress);
 		qc.setQcRate(progress);
 		Date  date   =new   Date();
 		qc.setQcOptime(date);
