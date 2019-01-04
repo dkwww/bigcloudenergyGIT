@@ -161,14 +161,15 @@ public class BranchSaleServiceImpl implements BranchSaleService {
 			drugInve.setDiAmount(drugInve.getDiAmount()-Double.valueOf(branchSaleDetail.getBsdAmount()).intValue());
 			inveMapper.updateByPrimaryKeySelective(drugInve);
 			
-			
+			//增加库存记录
 			DrugInvDetail drugInvDetail=new DrugInvDetail();
 			drugInvDetail.setDidId(Tools.getDateOrderNo());
 			drugInvDetail.setDiId(drugInve.getDiId());
 			drugInvDetail.setDiAmount(Double.valueOf(branchSaleDetail.getBsdTotal()).intValue());
+			System.err.println("数量"+drugInvDetail.getDiAmount());
 			drugInvDetail.setOptime(new Date());
 			drugInvDetail.setRemarks(0);
-			invDetailMapper.insertSelective(drugInvDetail);
+			invDetailMapper.insert(drugInvDetail);
 			
 		}
 		

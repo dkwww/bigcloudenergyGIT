@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yidu.domain.Admin;
 import com.yidu.domain.BranchSale;
 import com.yidu.domain.BranchSaleDetail;
 import com.yidu.service.BranchSaleDetailService;
@@ -84,8 +85,7 @@ public class BranchSaleController {
 	@RequestMapping("addSale")
 	@ResponseBody
 	public Message addSale(String sum,String menId,HttpSession session) {
-		session.setAttribute("comId", "1");
-		String comId=(String) session.getAttribute("comId");
-		return service.addSale(sum,menId,comId);
+		Admin admin=(Admin) session.getAttribute("admin");
+		return service.addSale(sum,menId,admin.getComId());
 	}
 }
