@@ -378,7 +378,7 @@
 			var id = obj.id;
 			var a = obj.value;
 			var kucun=$(obj).parent().next().next().next().next().text();
-			var reg= /^[0-9]*$/;
+			var reg= /^[1-9]\d*$/gi;
 			
 			if (reg.test(a)) {
 				if(a<=parseInt(kucun)){
