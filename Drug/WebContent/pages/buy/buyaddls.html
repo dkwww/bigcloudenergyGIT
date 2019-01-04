@@ -12,7 +12,7 @@
 	
 	<script type="text/html" id="input">
 	<div class="layui-inline">
-		<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="matAmount"  autocomplete="off"  value="{{d.matAmount}}" id="number{{d.matId}}" onkeyup="Pressdown(this);">
+		<input class="layui-input" class="oness" maxlength="5" style="border:none;padding-bottom:8px;" name="matAmount"  autocomplete="off"  value="{{d.matAmount}}" id="number{{d.matId}}" onkeyup="Pressdown(this);">
 	</div>
 	</script>
 	
@@ -100,12 +100,13 @@
 		<script>
 			window.windata=null;
 			//显示表格数据
-		    layui.use(['table','upload'], function() {
+		    layui.use(['table','upload',], function() {
 		        var table = layui.table,
 		            $ = layui.jquery,
 		            layer = layui.layer,
 		            form = layui.form,
 		            laytpl = layui.laytpl;
+		        var tableElem;
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '449px', //容器高度
@@ -122,6 +123,7 @@
 		            ],
 		            done: function(res, curr, count) {
 		            	windata=res.data;
+		            	tableElem = this.elem.next('.layui-table-view');
 		            	
 		            	 var purchaseTexts = new Array();
 				            purchaseTexts=$("#shuju").val().split("#");
@@ -178,9 +180,8 @@
 		        table.on('checkbox(demo)', function(obj){
 		        	var tables=table.cache.demo;
 		        	data=obj.data;
-		        	
-		        	
-		        	
+		        	var dd = tableElem.find('tr[data-index="' + data.LAY_TABLE_INDEX + '"]').find('td[data-field="matAmount"] input').val();
+		        	if(dd>0){
 		        	if(obj.checked==true){
 		        		 $("#shuju").val($("#shuju").val()+data.matId+","+data.matName+","+data.matPrice+","+$("#number"+data.matId).val()+","+$("#price"+data.matId).val()+"#");
 		        		 
@@ -215,6 +216,14 @@
 		        			 }
 		        		 });
 		        	 }
+		        	}else{
+		        		layer.msg("请先输入数量");
+		        		var cheTr=$("#number"+data.matId).parents("tr")
+		        		var index=$(cheTr).data('index');
+	       	            var che = $('#demo').next().find('.layui-table-body tr[data-index="'+index+'"] input[name="layTableCheckbox"]')
+		        		che.prop("checked",false)
+		        		form.render();
+		        	}
 		        });
 		        
 		        $("#add").click(function(){
@@ -310,6 +319,11 @@
 				var c =parseFloat(a)*parseFloat(b);//用this*数量
 				//计算结果显示
 				$(obj).parent().parent().parent().next().children().children().children().val(c);
+			}
+			
+			function load() {
+				var form =layui.form;
+				form.render();
 			}
 		</script>
 		

@@ -120,7 +120,8 @@
     where mi_id = #{miId,jdbcType=VARCHAR}
   </update>
   
-  
+  <!-- 邓康威 -->
+  <!-- 查询库存所有  有原材料、原材料类型、库存 -->
   <select id="showList" parameterType="map" resultMap="BaseResultMap">
   	SELECT 
   	a.mat_name,b.mt_name,c.*
