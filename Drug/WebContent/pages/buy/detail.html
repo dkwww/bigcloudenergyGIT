@@ -14,10 +14,7 @@
 		    <form class="layui-form" lay-filter="kit-search-form">
 				<!-- 左上角的两个按钮 -->
 		        <div class="kit-table-header">
-		            <div class="kit-search-btns">
-		                <a href="javascript:;" data-action="add" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i> 新增</a>
-		                <a href="javascript:;" data-action="del-bulk" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon">&#xe640;</i> 批量删除</a>
-		            </div>
+		            
 		            <div class="kit-search-inputs">
 		                <div class="kit-search-keyword">
 		                    <input type="text" class="layui-input" name="matName" id="serach-one" placeholder=".." onKeyUp="lockInput(this,'serach-two')"/>
@@ -33,28 +30,6 @@
 		                    <label class="layui-form-label">药品名称</label>
 		                    <div class="layui-input-block">
 		                        <input type="text" name="" id="serach-two" placeholder="搜索关键字.." autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
-		                    </div>
-		                </div>
-		                <div class="layui-form-item">
-			                <label class="layui-form-label">类型</label>
-			                <div class="layui-input-block">
-			                    <select name="dtId" id="drug-type">
-			                      <option value=""></option>
-			                    </select>
-			                </div>
-		                </div>
-		                <div class="layui-form-item">
-		                    <div class="layui-inline">
-		                        <label class="layui-form-label">范围</label>
-		                        <div class="layui-input-block">
-			                        <div class="layui-input-inline" style="width: 100px;">
-			                            <input type="text" name="priceMin" placeholder="￥" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
-			                        </div>
-			                        <div class="layui-form-mid">-</div>
-			                        <div class="layui-input-inline" style="width: 100px;">
-			                            <input type="text" name="priceMax" placeholder="￥" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
-			                        </div>
-		                        </div>
 		                    </div>
 		                </div>
 		            </div>
@@ -100,6 +75,7 @@
 		</script>
 		<script src="../../res/layui/layui.all.js"></script>
 		<script>
+			var tableIns;
 			//显示表格数据
 		    layui.use(['table','upload'], function() {
 		    	
@@ -125,9 +101,9 @@
 		            layer = layui.layer,
 		            form = layui.form,
 		            laytpl = layui.laytpl;
-		        var tableIns = table.render({
+		        tableIns = table.render({
 		            elem: '#demo',
-		            height: '449px', //容器高度
+		            height: autoHeight(), //容器高度
 		            url: '../../buyheDetail/showListId.action?buyId='+buyId,
 		            page: true,
 		            id: 'demo',
@@ -295,6 +271,21 @@
 		            }
 		        });
 		    });
+			
+			
+		  	//窗口自适应
+			function autoHeight() {
+				var h = document.body.clientHeight && document.documentElement.clientHeight - 50; //窗口高度
+				//监听改变窗口大小
+				window.onresize = function() {
+					h = document.body.clientHeight && document.documentElement.clientHeight - 50; //窗口高度
+					tableIns.reload({
+						height: h
+					});
+				}
+				return h;
+			}
+
 			
 		  	//全屏弹窗
 			function maxlayer(){
