@@ -257,19 +257,22 @@ public class AuditController {
 					druginvservice.amountupdate(drugInve);
 					Debty debty=new Debty();
 					debty.setComId(druginv.getComId());
-					//debty.setDebMoney(zongjia);
+					
+					BigDecimal zongjias = new BigDecimal(zongjia);
+					debty.setDebMoney(zongjias);
+					
 					int money=debtyservice.moneyupdate(debty);
 					if(money>0) {
-						l=1;
+						l++;
 					}
 					System.err.println("修改库存成功");
-					l=2;
+					l++;
 				}else {
 					System.err.println("修改库存失败");
 				}
 			}
 	}
-		if(l==2 || l==1) {
+		if(l>0) {
 			int rows=service.finanupdate(audit.getAudId());
 			message.setStatus(1);
 			message.setMsg("操作成功");

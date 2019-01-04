@@ -276,47 +276,41 @@
 		            var data = obj.data; //获得当前行数据
 		            var layEvent = obj.event; //获得 lay-event 对应的值
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
-
+					var blean=true;
 		            if (layEvent === 'detail') { //查看
-		            	var bln = true;
-		            	$("#add tr").not(":first").each(function(index){
-							if($(this).find('td:eq(1)').text()==data.drugName){
-								tableElem.find("tr").not(":first").each(function(index){
-									if(data.drugName==$(this).children().first().text()){
-										tableElem.find("tr[data-index="+index+"]").find("button").addClass('layui-btn-disabled').attr('disabled',false);
-									}
-								});
-								bln = false;
-							}
-						});
-		            	if (bln) {
-		            		var mony = data.drugPrice;
-			            	$("#add").append("<tr><td style='display:none'>"+data.drugId+"</td><td>"+data.drugName+"</td><td>"+data.dtName+"</td><td id='pic_"+data.drugId+"'>"+data.drugPrice+"</td><td><input type='text' id='up_"+data.drugId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' value='1' /></td><td id='zong_"+data.drugId+"'></td><td id='pi_"+data.drugId+"'></td><td><button onclick=\"changeState(this,\'"+data.drugId+"\')\">删除</button></td><td style='display:none'>"+data.diAmount+"</td></tr>");
-			            	//数量
-				        	var num=$(".numbers").val();
-				        	//赋值总价
-				        	$("#zong_"+data.drugId+"").text(parseFloat(mony*num).toFixed(2));
-				        	
-				        	var pi=parseFloat((mony*num)*0.8).toFixed(2);
-				        	$("#pi_"+data.drugId+"").text(pi);
-				        	zongj+=parseFloat(pi);
-				        	
-				        	var shu=$("#up_"+data.drugId+"").val();
-				        	zongshu+=parseFloat(shu);
-				        	
-				        	$("#zongjin").val(zongj.toFixed(2));
-			        		$("#zongshu").val(zongshu);
-			        		
-			        		
-			        		var zongmoney=0.00;
-							var zongnum=0;
-			        		$("#add tr").not(":first").each(function(){
-								zongnum+=parseInt($(this).find('td:eq(4) input').val());
-								zongmoney+=parseFloat($(this).find('td:eq(6)').text());
-							});
-			        		$("#zongshu").val(zongnum);
-							$("#zongjin").val(zongmoney.toFixed(2));
-		            	}
+							$("[data-field = 'drugName']").children().not(":first").each(function(index){
+	            				var m=tableElem.find("tr[data-index="+index+"]").find("button").attr('disabled'); 
+									
+								if(data.drugName==$(this).text() && m==null){
+	            					 tableElem.find("tr[data-index="+index+"]").find("button").addClass('layui-btn-disabled').attr('disabled',true);
+	            					 var mony = data.drugPrice;
+	     			            	$("#add").append("<tr><td style='display:none'>"+data.drugId+"</td><td>"+data.drugName+"</td><td>"+data.dtName+"</td><td id='pic_"+data.drugId+"'>"+data.drugPrice+"</td><td><input type='text' id='up_"+data.drugId+"' class='numbers' style='height:20px; border:0px; width:80px;' onblur='num(this)' value='1' /></td><td id='zong_"+data.drugId+"'></td><td id='pi_"+data.drugId+"'></td><td><button onclick=\"changeState(this,\'"+data.drugId+"\')\">删除</button></td><td style='display:none'>"+data.diAmount+"</td></tr>");
+	     			            	//数量
+	     				        	var num=$(".numbers").val();
+	     				        	//赋值总价
+	     				        	$("#zong_"+data.drugId+"").text(parseFloat(mony*num).toFixed(2));
+	     				        	
+	     				        	var pi=parseFloat((mony*num)*0.8).toFixed(2);
+	     				        	$("#pi_"+data.drugId+"").text(pi);
+	     				        	zongj+=parseFloat(pi);
+	     				        	
+	     				        	var shu=$("#up_"+data.drugId+"").val();
+	     				        	zongshu+=parseFloat(shu);
+	     				        	
+	     				        	$("#zongjin").val(zongj.toFixed(2));
+	     			        		$("#zongshu").val(zongshu);
+	     			        		
+	     			        		
+	     			        		var zongmoney=0.00;
+	     							var zongnum=0;
+	     			        		$("#add tr").not(":first").each(function(){
+	     								zongnum+=parseInt($(this).find('td:eq(4) input').val());
+	     								zongmoney+=parseFloat($(this).find('td:eq(6)').text());
+	     							});
+	     			        		$("#zongshu").val(zongnum);
+	     							$("#zongjin").val(zongmoney.toFixed(2));
+	            				 }	
+	        				 });
 		        	}
 		        });
 		        //表单渲染
@@ -331,23 +325,33 @@
 	  			layui.use('form', function(){ 
 		  			var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加() 
 		  			form.render(); 
-	  			}); 
+	  			});  
 	  		}
 		  	
+		  
+		  	
 		  	 function changeState(obj,rwowId) {
-		  			$(obj).closest('tr').remove();
+		  		 	var str=$(obj).parent().prev().prev().prev().prev().prev().prev().text();
 		  		 
+		  			$(obj).closest('tr').remove();
 		 			var zongmoney=0.00;
 					var zongnum=0;
+					
+					var strs=null;
 	        		$("#add tr").not(":first").each(function(index){
 	        			zongnum+=parseInt($(this).find('td:eq(4) input').val());
 						zongmoney+=parseFloat($(this).find('td:eq(6)').text());
 					});
+	        			
+	        		$("[data-field = 'drugName']").children().not(":first").each(function(index){
+	            		 if($(this).text()==str){
+	        	        	tableElem.find("tr[data-index="+index+"]").find("button").removeClass('layui-btn-disabled');
+	        	         }	
+	        		 });
 	        		$("#zongshu").val(zongnum);
 					$("#zongjin").val(zongmoney);
-					
-					
 		 	}
+		  	 
 		    //ajax加载动画
 		    $(function () {
 	            $.ajaxSetup({
@@ -442,7 +446,6 @@
 					});
 						html+=$(this).find('td:eq(4) input').val()+"#";
 				});
-				alert(html);
 				$.ajax({ url:"../../wholesale/Wholesalemanagement.action",
 	                type:'post',//method请求方式，get或者post
 	                cache: false,//同步
@@ -451,7 +454,7 @@
 	                success:function(mes){//res为相应体,function为回调函数
 	                	 if(mes.msg>=1){
 	                		 layer.msg('添加成功'); 
-	                		 location.reload();
+	                		 closeLayer();
 	                		$("#zongshu").val("");
 	         				$("#zongjin").val("");
 	                	 }else{
@@ -463,5 +466,14 @@
 				layer.msg('请添加物品');
 			}
 		}
+		
+		function closeLayer(){
+			history.go(0);location.reload();//返回上一页重载页面，本地刷新
+		    //当你在iframe页面关闭自身时
+			var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+			parent.layer.close(index); //再执行关闭   
+			window.parent.location.reload(); // 父页面刷新
+		}
+		
 		</script>
 	</body>
