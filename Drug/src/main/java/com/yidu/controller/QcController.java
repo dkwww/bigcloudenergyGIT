@@ -148,7 +148,7 @@ public class QcController {
 	 * @param page
 	 * @param limit
 	 * @return
-	 * @author dengknagwei
+	 * @author dengkangwei
 	 * @date：2018年12月27日
 	 */
 	@RequestMapping("QcbuyshowList")

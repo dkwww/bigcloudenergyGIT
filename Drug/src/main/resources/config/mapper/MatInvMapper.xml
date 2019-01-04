@@ -124,7 +124,9 @@
   <select id="showList" parameterType="map" resultMap="BaseResultMap">
   	SELECT 
   	a.mat_name,b.mt_name,c.*
-  	FROM drug_material a,drug_mat_type b,drug_mat_inv c WHERE a.mt_id=b.mt_id AND a.mat_id=c.mat_id
+  	FROM drug_material a,drug_mat_type b,drug_mat_inv c 
+  	WHERE a.mt_id=b.mt_id AND a.mat_id=c.mat_id
+  	limit #{page.startRows},#{page.rows}
   </select>
   
   
