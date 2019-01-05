@@ -39,24 +39,34 @@ public class MaterialController {
 	private MatInvService matinvService;
 	
 	/**
-	 * 查询所有
-	 * @param material
-	 * @author 邓康威
+	 * 
+	 * 方法说明：查询原材料所有
+	 * @param material 原材料对象
+	 * @param page	页数
+	 * @param limit	行数
 	 * @return
+	 * @author dengkangwei
+	 * @date：2019年1月5日
 	 */
 	@RequestMapping("showList")
 	@ResponseBody
 	public Map<String, Object> showList(Material material,Integer page,Integer limit){
+		//得到分页对象
 		PageUtil pageUtil = new PageUtil();
+		//判断页数不等于空 且 行数不等于空
 		if(page!=null && limit!=null) {
+			//赋值页数
 			pageUtil.setCurPage(page);
+			//赋值行数
 			pageUtil.setRows(limit);
 		}
 		
-		
+		//查询原材料集合
 		List<Material> list=matservice.showList(material,pageUtil);
+		//查询原材料行数
 		int rows=matservice.selectCount(material);
 		
+		//创建map对象
 		Map<String, Object> map=new HashMap<>();
 		map.put("code", 0);
 		map.put("msg", "");
@@ -86,6 +96,7 @@ public class MaterialController {
 		inv.setMatId(mat.getMatId());
 		//放入库存数据库
 		matinvService.add(inv);
+		
 		
 		Message me=new Message();
 		me.setStatus(1);

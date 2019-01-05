@@ -21,20 +21,27 @@
     sort,mt_name,mat_effect
   </sql>
   
+  <!-- 邓康威 -->
+  <!-- 原材料查询所有  有原材料、原材料类型 -->
   <select id="showList" parameterType="map" resultMap="BaseResultMap">
   	select
   	*
   	from drug_material a,drug_mat_type b where a.mt_id=b.mt_id and a.isva='1'
+  	<!-- 查询材料名 -->
   	<if test="material.matName!=null and material.matName!='' ">
   		and mat_name like concat('%',#{material.matName},'%')
   	</if>
+  	<!-- 查询材料类型名 -->
   	<if test="material.mtName !=null and material.mtName!='' ">
   		and b.mt_name like concat('%',#{material.mtName},'%')
   	</if>
+  	<!-- 根据时间倒叙 -->
   	order by a.optime desc
   	limit #{page.startRows},#{page.rows}
   </select>
   
+  <!-- 邓康威 -->
+  <!-- 原材料查询总行数  有原材料、原材料类型 -->
   <select id="selectCount" parameterType="com.yidu.domain.Material" resultType="int">
   	select count(*) from drug_material a,drug_mat_type b where a.mt_id=b.mt_id and a.isva= '1'
   	<if test="matName !=null and matName!='' ">

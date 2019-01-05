@@ -34,23 +34,36 @@ public class MaterialServiceImpl   implements MaterialService {
 	
 	@Override
 	public List<Material> showList(Material material,PageUtil page) {
+		//创建map集合
 		Map<String, Object> map=new HashMap<String, Object>();
+		//得到原材料
 		map.put("material", material);
+		//得到原材料行数
 		map.put("page", page);
+		//放进数据库
 		return dao.showList(map);
 	}
 
 	@Override
 	public int addorUpdate(Material mat) {
+		//定义一个变量为0
 		int rows=0;
+		//判断如果原材料id不等于空且不等于空
 		if(mat.getMatId()!=null && !"".equals(mat.getMatId())) {
+			//就调用修改方法
 			rows=dao.updateByPrimaryKeySelective(mat);
 		}else {
+			//uuid
 			String uuid=UUID.randomUUID().toString().replaceAll("-", "");
+			//把uuid放入材料id
 			mat.setMatId(uuid);
+			//默认数量为0
 			mat.setMatAmount(0);
+			//得到当前时间
 			mat.setOptime(new Date());
+			//默认是否有效为1
 			mat.setIsva("1");
+			//放入数据库
 			dao.insert(mat);
 		}
 		return rows;
