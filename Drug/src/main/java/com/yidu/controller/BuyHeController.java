@@ -239,6 +239,8 @@ public class BuyHeController {
 	}
 	
 	
+	
+	
 	/**
 	 * 审核显示列表
 	 * @param buy
@@ -279,6 +281,25 @@ public class BuyHeController {
 		map.put("count", rows);
 		map.put("data", list);
 		return map;
+	}
+	
+	/**
+	 * 
+	 * 方法说明：删除订单
+	 * @param buy
+	 * @return
+	 * @author dengkangwei
+	 * @date：2019年1月5日
+	 */
+	@RequestMapping("delete")
+	@ResponseBody
+	public Message delete(@RequestBody Buy buy) {
+		service.update(buy);
+		
+		Message me=new Message();
+		me.setStatus(1);
+		me.setMsg("删除成功");
+		return me;
 	}
 	
 	

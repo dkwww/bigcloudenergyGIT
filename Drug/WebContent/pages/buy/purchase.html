@@ -220,7 +220,7 @@
 		            } else if (layEvent === 'del') { //删除
 		                layer.confirm('真的删除行么', function(index) {
 		                	layer.close(index);
-		                    update("../../material/addorUpdate.action",{"matId":data.matId,"isva":"0"});
+		                    update("../../buyht/delete.action",{"buyId":data.buyId,"buyType":"2"});
 		                });
 		            } else if (layEvent === 'edit') { //编辑
 			            var  buyId=data.buyId;
