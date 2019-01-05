@@ -48,9 +48,13 @@ public class QcDetailServiceImpl   implements QcDetailService {
 	}
 
 	@Override
-	public List<QcDetail> findByIds(String qcId) {
+	public List<QcDetail> findByIds(QcDetail qcdetail,PageUtil page) {
+		Map<String, Object> map=new HashMap<>();
+		map.put("qcdetail", qcdetail);
+		map.put("page", page);
 		
-		return dao.findByIds(qcId);
+		
+		return dao.findByIds(map);
 	}
 
 	@Override
@@ -60,10 +64,10 @@ public class QcDetailServiceImpl   implements QcDetailService {
 	}
 
 	@Override
-	public List<QcDetail> selectbyId(QcDetail record,PageUtil  pageUtil) {
+	public List<QcDetail> selectbyId(QcDetail record,PageUtil  page) {
 		Map<String, Object>  map  = new   HashMap<>();
 		map.put("qcDetail", record);
-		map.put("pageUtil", pageUtil);
+		map.put("page", page);
 		List<QcDetail> list = dao.selectbyId(map);
 		return list;
 	}
@@ -95,6 +99,18 @@ public class QcDetailServiceImpl   implements QcDetailService {
 	@Override
 	public List<QcDetail> findByQcId(String id) {
 		return dao.findByQcId(id);
+	}
+
+	@Override
+	public int findByIdselectCount(QcDetail qcdetail) {
+		
+		return dao.findByIdselectCount(qcdetail);
+	}
+
+	@Override
+	public List<QcDetail> findkcId(String qcId) {
+		// TODO Auto-generated method stub
+		return dao.findkcId(qcId);
 	}
 	
 

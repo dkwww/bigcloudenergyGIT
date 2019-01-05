@@ -267,7 +267,7 @@ public class QcController {
 		qcService.buyQcadd(qc);
 		
 		//根据质检id查询质检明细
-		List<QcDetail> list=qcDetailService.findByIds(qc.getQcId());
+		List<QcDetail> list=qcDetailService.findkcId(qc.getQcId());
 		//循环质检明细的内容
 		for (QcDetail qcDetail : list) {
 			System.out.println("-------------进入这里");

@@ -60,12 +60,19 @@ public class QcDetailController {
 	 */
 	@RequestMapping("findBuyId")
 	@ResponseBody
-	public Map<String, Object> findBuyId(QcDetail qcdetail){
-		List <QcDetail> list=qcdetaService.findByIds(qcdetail.getQcId());
+	public Map<String, Object> findBuyId(QcDetail qcdetail,Integer page,Integer limit){
+		PageUtil pageUtil = new PageUtil();
+		if(page!=null && limit!=null) {
+			pageUtil.setCurPage(page);
+			pageUtil.setRows(limit);
+		}
+		
+		List <QcDetail> list=qcdetaService.findByIds(qcdetail,pageUtil);
+		int rows=qcdetaService.findByIdselectCount(qcdetail);
 		Map<String, Object> map=new HashMap<>();
 		map.put("code", 0);
 		map.put("msg", "");
-		map.put("count", 0);
+		map.put("count", rows);
 		map.put("data", list);
 		
 		return map;

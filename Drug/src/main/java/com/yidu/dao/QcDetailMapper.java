@@ -26,7 +26,26 @@ public interface QcDetailMapper {
      * @author 邓康威
      * @return
      */
-    List<QcDetail> findByIds(String qcId);
+    List<QcDetail> findByIds(Map<String, Object> map);
+    
+    /**
+     * 根据质检id查看质检明细
+     * @param qcId
+     * @author 邓康威
+     * @return
+     */
+    List<QcDetail> findkcId(String qcId);
+    
+    
+    /**
+     * 
+     * 方法说明：根据质检id查看质检明细总行数
+     * @param qcdetail
+     * @return
+     * @author dengkangwei
+     * @date：2019年1月5日
+     */
+    int findByIdselectCount(QcDetail qcdetail);
     
     
     List<QcDetail>   selectbyId (Map<String, Object> map);
