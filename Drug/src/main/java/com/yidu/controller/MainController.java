@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Controller;
@@ -49,7 +50,9 @@ public class MainController {
 	 */
 	@RequestMapping("queryList")
 	@ResponseBody
-	public Map<String,Object> queryList(){
+	public Map<String,Object> queryList(HttpServletRequest request){
+		HttpSession session=request.getSession();
+		Admin user=(Admin) session.getAttribute("admin");
 		int time[]={1,2,3,4,5,6,7,8,9,10,11,12};
 		
 		String dataname[]=new String[5];
@@ -81,7 +84,8 @@ public class MainController {
 	@RequestMapping("queryRepertory")
 	@ResponseBody
 	public List<Repertory> queryRepertory(HttpServletRequest request) {
-		Admin user=(Admin) request.getSession();
+		HttpSession session=request.getSession();
+		Admin user=(Admin) session.getAttribute("admin");
 		List<Repertory> list=invService.queryBalance(user.getComId());
 		return list;
 	}

@@ -90,7 +90,7 @@ public class RoleController {
 		//根据，拆分模块id
 		String[] split=role.getModuleId().split(",");
 		//获取到当前登陆用户的对象
-		Admin user=(Admin) session.getAttribute("user");
+		Admin user=(Admin) session.getAttribute("admin");
 		if(user!=null&&!"".equals(user)) {
 			//给操作人赋予当前登陆用户的名称
 			role.setOper(user.getAdminName());
