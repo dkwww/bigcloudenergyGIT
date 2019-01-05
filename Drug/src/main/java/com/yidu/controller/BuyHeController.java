@@ -297,8 +297,14 @@ public class BuyHeController {
 		System.err.println("------------财务总金额"+deb.getDebMoney());
 		System.err.println("------------材料总价格"+buy.getBuyMoney());
 		System.err.println("=============财务id"+deb.getDebId());
-		//修改金额
-		debtyservice.addbty(buy.getBuyMoney(),deb.getDebId());
+		System.err.println("---------------------------------"+buy.getBuyAudit());
+		//判断如果审核状态为1的时候就减财务
+		if(buy.getBuyAudit().equals("1")) {
+			System.err.println("进入减财务");
+			//修改金额
+			debtyservice.addbty(buy.getBuyMoney(),deb.getDebId());
+		}
+		
 		
 		//得到财务明细对象
 		DebtyDetail debmx=new DebtyDetail();

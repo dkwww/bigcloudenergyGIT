@@ -33,45 +33,6 @@
 		                        <input type="text" name="mtName" placeholder="请输入标题" id="serach-two" autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
 		                    </div>
 		                </div>
-		                <div class="layui-form-item">
-		                    <div class="layui-inline">
-		                        <label class="layui-form-label">验证手机</label>
-		                        <div class="layui-input-inline">
-		                            <input type="tel" name="phone" autocomplete="off" class="layui-input">
-		                        </div>
-		                    </div>
-		                    <div class="layui-inline">
-		                        <label class="layui-form-label">验证邮箱</label>
-		                        <div class="layui-input-inline">
-		                            <input type="text" name="email" autocomplete="off" class="layui-input">
-		                        </div>
-		                    </div>
-		                </div>
-		                <div class="layui-form-item">
-		                    <div class="layui-inline">
-		                        <label class="layui-form-label">范围</label>
-		                        <div class="layui-input-inline" style="width: 100px;">
-		                            <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input">
-		                        </div>
-		                        <div class="layui-form-mid">-</div>
-		                        <div class="layui-input-inline" style="width: 100px;">
-		                            <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input">
-		                        </div>
-		                    </div>
-		                </div>
-		                <div class="layui-form-item">
-		                    <label class="layui-form-label">单行选择框</label>
-		                    <div class="layui-input-block">
-		                        <select name="interest" lay-filter="aihao">
-		                            <option value=""></option>
-		                            <option value="0">写作</option>
-		                            <option value="1" selected="">阅读</option>
-		                            <option value="2">游戏</option>
-		                            <option value="3">音乐</option>
-		                            <option value="4">旅行</option>
-		                          </select>
-		                    </div>
-		                </div>
 		            </div>
 		            <div class="kit-search-footer">
 		                <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary kit-btn">重置</button>
@@ -182,8 +143,6 @@
 		        
 		        //监听搜索表单提交
 		        form.on('submit(search)', function(data) {
-		            console.log(data.field);
-		            layer.msg(JSON.stringify(data.field));
 		            //带条件查询
 		            tableIns.reload({
 		                where: data.field
