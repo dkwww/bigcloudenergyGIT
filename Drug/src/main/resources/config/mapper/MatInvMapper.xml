@@ -121,7 +121,7 @@
   </update>
   
   <!-- 邓康威 -->
-  <!-- 查询库存所有  有原材料、原材料类型、库存 -->
+  <!-- 查询原材料名、材料类型名、库存所有   有原材料、原材料类型、库存 -->
   <select id="showList" parameterType="map" resultMap="BaseResultMap">
   	SELECT 
   	a.mat_name,b.mt_name,c.*
@@ -135,7 +135,8 @@
   	limit #{page.startRows},#{page.rows}
   </select>
   
-  
+  <!-- 邓康威 -->
+  <!-- 查询原材料名、材料类型名、库存的总行数   有原材料、原材料类型、库存 -->
   <select id="selectCount" parameterType="com.yidu.domain.MatInv" resultType="int">
   	SELECT count(*) FROM drug_material a,drug_mat_type b,drug_mat_inv c WHERE a.mt_id=b.mt_id AND a.mat_id=c.mat_id
   </select>

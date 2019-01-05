@@ -46,7 +46,7 @@
   
   
   <!-- 邓康威 -->
-  <!-- 查询采购订单所有 采购订单、供应商 -->
+  <!-- 查询采购订单所有  有采购订单、供应商 -->
   <select id="showList" parameterType="map" resultMap="BaseResultMap">
   	SELECT * FROM drug_buy a,drug_provider b WHERE a.buy_company=b.prov_id and a.buy_type = 0
   	<if test="buy.buyCompany!=null and buy.buyCompany!='' ">
@@ -62,7 +62,8 @@
   	limit #{page.startRows},#{page.rows}
   </select>
   
-  
+  <!-- 邓康威 -->
+  <!-- 查询采购订单总行数   有采购订单、供应商-->
   <select id="selectCount" parameterType="com.yidu.domain.Buy" resultType="int">
   	select count(*) from drug_buy a,drug_provider b WHERE a.buy_company=b.prov_id
   	<if test="buyCompany!=null and buyCompany!='' ">
@@ -71,7 +72,8 @@
   	ORDER BY a.buy_time desc
   </select>
   
-  
+  <!-- 邓康威 -->
+  <!-- 查询审核所有   有采购订单、供应商、审核、分店表-->
   <select id="AuditshowList" parameterType="map" resultMap="BaseResultMap">
   	SELECT * FROM drug_buy a,drug_provider b,drug_audit c,drug_company d 
 	WHERE a.buy_company=b.prov_id AND a.buy_id=c.aud_fk_id AND c.qc_fk_id=d.com_id 
@@ -83,7 +85,8 @@
   	limit #{page.startRows},#{page.rows}
   </select>
   
-  
+  <!-- 邓康威 -->
+  <!-- 查询审核总行数   有采购订单、供应商、审核、分店表-->
   <select id="AuditselectCount" parameterType="com.yidu.domain.Buy" resultType="int">
   	SELECT count(*) FROM drug_buy a,drug_provider b,drug_audit c,drug_company d 
 	WHERE a.buy_company=b.prov_id AND a.buy_id=c.aud_fk_id AND c.qc_fk_id=d.com_id 
