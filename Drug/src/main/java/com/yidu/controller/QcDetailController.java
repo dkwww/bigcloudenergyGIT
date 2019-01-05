@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yidu.domain.QcDetail;
 import com.yidu.service.QcDetailService;
 import com.yidu.util.PageUtil;
+import com.yidu.util.TimeUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -42,8 +43,11 @@ public class QcDetailController {
 		PageUtil pageUtil = new PageUtil();
 		//前台取过来的分页值
 		pageUtil.setCurPage(page);
-		pageUtil.setRows(limit);
+		pageUtil.setRows(limit); 
 		List <QcDetail> list=qcdetaService.selectbyId(qcdetail,pageUtil);
+		for (QcDetail qcDetail2 : list) {
+				qcDetail2.setSjName(TimeUtil.dateToString(qcDetail2.getQdetOptime(), "yyyy-mm-dd"));
+		}
 		int  rows  = qcdetaService.selectbycount(qcdetail);
 		Map<String, Object> map=new HashMap<>();
 		map.put("code", 0);

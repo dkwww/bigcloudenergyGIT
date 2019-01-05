@@ -79,6 +79,13 @@ public class MatInvServiceImpl  implements MatInvService {
 	}
 
 
+	@Override
+	public List<MatInv> selectByamount(MatInv record) {
+		
+		return matinvmapper.selectByamount(record);
+	}
+
+
 	
 
 }

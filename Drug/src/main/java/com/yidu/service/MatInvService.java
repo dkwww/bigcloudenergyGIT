@@ -14,8 +14,12 @@ import com.yidu.util.PageUtil;
  * @since 2018-11-26
  */
 public interface MatInvService  {
-
-	
+	/**
+	 * 根据ID和数量查询
+	 * @param record
+	 * @return
+	 */
+	List<MatInv> selectByamount(MatInv record);
 	/**
 	 * 查询所有
 	 * @param matinv

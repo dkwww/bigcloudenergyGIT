@@ -25,7 +25,7 @@
      <if test="qcDetail.drugName != null and qcDetail.drugName != ''">
    		and b.drug_name like CONCAT(CONCAT('%',#{qcDetail.drugName,jdbcType=VARCHAR},'%'))
    	</if>
-     order by (a.sort+0) desc 
+     order by qdet_optime desc 
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
     
   </select>

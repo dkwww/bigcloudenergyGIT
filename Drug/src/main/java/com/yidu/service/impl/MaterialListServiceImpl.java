@@ -71,4 +71,9 @@ public class MaterialListServiceImpl  implements MaterialListService {
 		
 	}
 
+	@Override
+	public List<MaterialList> selectBydrugId(String id) { 
+		return materialListMapper.selectBydrugId(id);
+	}
+
 }

@@ -67,7 +67,7 @@ public class QcDetailServiceImpl   implements QcDetailService {
 	public List<QcDetail> selectbyId(QcDetail record,PageUtil  page) {
 		Map<String, Object>  map  = new   HashMap<>();
 		map.put("qcDetail", record);
-		map.put("page", page);
+		map.put("pageUtil", page);
 		List<QcDetail> list = dao.selectbyId(map);
 		return list;
 	}

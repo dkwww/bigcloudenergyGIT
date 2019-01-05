@@ -25,9 +25,26 @@
 </style>
 
 </head>
+<script type="text/javascript">
+//文本框只能输数字 
+function amount(th){
+    var regStrs = [
+        ['^0(\\d+)$', '$1'], //禁止录入整数部分两位以上，但首位为0
+        ['[^\\d\\.]+$', ''], //禁止录入任何非数字和点
+        ['\\.(\\d?)\\.+', '.$1'], //禁止录入两个以上的点
+        ['^(\\d+\\.\\d{2}).+', '$1'] //禁止录入小数点后两位以上
+    ];
+    for(i=0; i<regStrs.length; i++){
+        var reg = new RegExp(regStrs[i][0]);
+        th.value = th.value.replace(reg, regStrs[i][1]);
+    }
+}
+
+
+</script>
 <script type="text/html" id="input">
 		<div class="layui-inline">
-				<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="hangName"  autocomplete="off"  value="0" id="number{{d.pdId}}" onkeyup="Pressdown(this);">
+				<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="hangName"  autocomplete="off"  value="0" id="number{{d.pdId}}" onkeyup="Pressdown(this);"  onKeyUp="amount(this)">
 		</div>
 	</script>
 
@@ -35,12 +52,14 @@
 	$(function(){
 		
 		var mrpId = getParameter("mrpId");
+		
+		
 		$("#mrpId").val(mrpId);
 		
 	 $("#tijiao").click(function (){ 
 		var   shu= $("#shuju").val(); 
 		 var url ="../../../mrpDetails/update.action";
-		 var  data={"shujuName" : shu , "mrpId"  : mrpId};
+		 var  data={"shujuName" : shu , "mrpId"  : mrpId,};
 		 $.post(url,data,function(mes){
 			 if(mes.status==1){
 				

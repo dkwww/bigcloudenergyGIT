@@ -20,5 +20,8 @@ public interface MaterialListService   {
 	int findCount(MaterialList record);
 
 	int addOrUpdate(MaterialList record);
+	
+	
+	List<MaterialList> selectBydrugId (String   id);
 
 }

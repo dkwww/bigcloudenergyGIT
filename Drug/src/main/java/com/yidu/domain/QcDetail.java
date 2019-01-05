@@ -35,7 +35,17 @@ public class QcDetail {
     
     private   String   qdetOptimeName;
     
+    private   String   sjName;
     
+    
+
+	public String getSjName() {
+		return sjName;
+	}
+
+	public void setSjName(String sjName) {
+		this.sjName = sjName;
+	}
 
 	public String getQdetRateName() {
 		return qdetRateName;

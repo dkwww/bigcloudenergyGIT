@@ -21,6 +21,12 @@ public interface MatInvMapper {
 
     int updateByPrimaryKey(MatInv record);
     
+    /**
+     * 根据材料ID和数量查询
+     * @param record
+     * @return
+     */
+    List<MatInv> selectByamount(MatInv record);
     
     /**
      * 查询所有

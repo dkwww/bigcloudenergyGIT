@@ -3,42 +3,15 @@ package com.yidu.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-           
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import com.yidu.domain.MatInv;
+import com.yidu.domain.MaterialList;
 import com.yidu.domain.Mrp;
 import com.yidu.domain.MrpDetails;
 import com.yidu.domain.Qc;
 import com.yidu.domain.QcDetail;
+import com.yidu.service.MatInvService;
+import com.yidu.service.MaterialListService;
 import com.yidu.service.MrpDetailsService;
 import com.yidu.service.MrpService;
 import com.yidu.service.QcDetailService;
@@ -79,7 +52,14 @@ public class MrpDetailsController {
 	private QcDetailService   qcDetailService;
 	//质检service
 	@Resource
-	private   QcService   qcService;
+	private QcService qcService;
+	//物料清单
+	@Resource
+	private MaterialListService materialListService;
+	//原材料库存service
+	@Resource
+	private MatInvService matinvservice;
+	
 	
 	/**
 	 * 根据ID查询制造详细
@@ -126,13 +106,26 @@ public class MrpDetailsController {
 			String   nametow[] = namefive[i].split(",");
 			//药品ID
 			String drugId = nametow[0]; 
-			//计划数量
-			String num = nametow[1];
-			Integer max = Integer.valueOf(num);
-			//已完成的数量
-			String    oknum =nametow[2];
+			List<MaterialList> list = materialListService.selectBydrugId(drugId);
 			//增加的数量
 			String    addnum =nametow[3]; 
+			for (MaterialList materialList : list) {
+				MatInv  matInv =new   MatInv();
+				matInv.setMatId(materialList.getMatId());
+				int   aa= materialList.getMlAmount()*Integer.valueOf(addnum);
+				matInv.setMiAmount(aa);
+				List<MatInv> lsit = matinvservice.selectByamount(matInv);
+				
+				 if (!lsit.isEmpty()) {
+					System.err.println("可以制造");
+				}else {
+					System.err.println("返回材料不足");
+				}
+				
+				 
+				
+			}
+			
 		} 
 		
 		
@@ -210,7 +203,7 @@ public class MrpDetailsController {
 			mrp.setMrpIdea(0);
 			//修改状态
 			mrpService.Modifyprogresss(mrp);
-		 
+			System.out.println("==========pmcID========="+mrp.getPmcId());
 		}
 		
 		
