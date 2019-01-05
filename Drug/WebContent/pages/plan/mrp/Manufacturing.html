@@ -127,6 +127,7 @@
 		      <script type="text/html" id="barDemo">
 					<button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="edit">制作成品</button>
    					<button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">提交质检</button>
+					<button class="layui-btn layui-btn-xs" lay-event="auditDetail">查看详细</button>
 		        </script>
 		    </div>
 		</div>
@@ -400,7 +401,11 @@
 		
 		            if (layEvent === 'detail') { //查看
 		                console.log(table.checkStatus('demo'));
-		            } else if (layEvent === 'del') { //删除
+		            }else if(layEvent === 'auditDetail'){   //弹出查看详细 
+		            	var  mrpId=data.mrpId;
+		           		 alert(mrpId);
+		            	layer3(data.mrpId); 
+		            }else if (layEvent === 'del') { //删除
 		                layer.confirm('真的提交质检么', function(index) {
 		                	var d = {
 				                    user: data,
@@ -426,7 +431,7 @@
 		                	var index = layer.open({
 		          				  type: 2,
 		          				  title: '制作药品',
-		          				  content: '../../plan/ManufacturingList.html?id='+pmcId+'&mrpId='+mrpId,
+		          				  content: '../../plan/mrp/ManufacturingList.html?id='+pmcId+'&mrpId='+mrpId,
 		          				  area: ['800px', '30px']
 		          				  //maxmin: true
 		          				});
@@ -515,7 +520,17 @@
 		        });
 		    });
 		    
-		    
+		  //制造详情弹窗
+			function layer3(id){
+			 	 alert(id);
+				var layerIndex3 = layer.open({
+				  type: 2,
+				  title: '制造详细',
+				  content: '../../audit/detail/mrpDetail.html?id='+id,
+				  area: ['1000px', '430px'],
+				  maxmin: true,
+				});
+			}
 		   
 		</script>
 	</body>

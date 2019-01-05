@@ -119,6 +119,23 @@ public class MrpDetailsController {
 	public   Message   update(MrpDetails  mrpDetails) {
 		//传过来的数据
 		String   name = mrpDetails.getShujuName(); 
+		
+		String   namefive[]=name.split("#");
+		for (int i = 0; i < namefive.length; i++) { 
+			//拆分成一个字段
+			String   nametow[] = namefive[i].split(",");
+			//药品ID
+			String drugId = nametow[0]; 
+			//计划数量
+			String num = nametow[1];
+			Integer max = Integer.valueOf(num);
+			//已完成的数量
+			String    oknum =nametow[2];
+			//增加的数量
+			String    addnum =nametow[3]; 
+		} 
+		
+		
 		//返回提示信息
 		Message   message = new   Message();
 		//将传过来的数据拆分为数组
@@ -185,13 +202,23 @@ public class MrpDetailsController {
 		} 
 		 
 		Integer ii = Integer.valueOf(progress);
-		if(ii==100) { 
+		//判断  如果百分比等于100的话就将状态改为停止
+		if(ii==100) {
+			//将这条信息的状态改为停止
 			mrp.setMrpId(mrpDetails.getMrpId());
 			mrp.setMrpState(0);
 			mrp.setMrpIdea(0);
-		  mrpService.Modifyprogresss(mrp);
+			//修改状态
+			mrpService.Modifyprogresss(mrp);
 		 
-		} 
+		}
+		
+		
+		
+		
+		
+		
+		
 		if (rows>0) {
 			message.setStatus(1);
 		}else {
@@ -248,11 +275,7 @@ public class MrpDetailsController {
 		numberFormat.setMaximumFractionDigits(2); 
 		Qc   qc  = new  Qc();
 		qc.setQcFail(jj);
-		
-		System.err.println("=======jjj==========="+jj);
-		System.err.println("=======kkk==========="+kk);
 		String   progress  =   numberFormat.format(100-(float) jj  /   (float)kk   *100);
-		System.err.println("=======progress==========="+progress);
 		qc.setQcRate(progress);
 		Date  date   =new   Date();
 		qc.setQcOptime(date);

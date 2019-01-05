@@ -1,17 +1,51 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8" />
+		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
 		<script src="../../res/layui/layui.js"></script>
+		<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
 		<title>药品质检管理</title>
-		<script type="text/html" id="input">
-		<div class="layui-inline">
-				<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="hangName"  autocomplete="off"  value="0" id="number{{d.pdId}}" onkeyup="Pressdown(this);">
-		</div>
+		<script type="text/javascript">
+		$(function(){ 
+			 $("#tijiao").click(function (){ 
+			 
+			var   shu= $("#shuju").val();
+		 var url ="../../mrpDetails/Preservation.action";
+		 var  data={"shujuName" : shu};
+		 $.post(url,data,function(mes){
+			 if(mes.status==1){
+				 closeLayer();
+				 layer.msg("保存成功"); 
+				 closeLayer();
+				 window.parent.location.reload();
+			 }else{
+				 layer.msg("保存失败"); 
+			 }
+			 
+			
+			
+		},"json");
+		 
+	 });
+			 
+			 function closeLayer(){
+				    //当你在iframe页面关闭自身时
+					var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+					parent.layer.close(index); //再执行关闭 
+					window.parent.location.reload();
+				}
+	});
+		
+	function closeLayer(){
+	    //当你在iframe页面关闭自身时
+		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+		parent.layer.close(index); //再执行关闭 
+		window.parent.location.reload();
+	}
 	</script>
 		
 	</head>
@@ -51,17 +85,25 @@
 				  });
 				});
 </script>
+<script type="text/html" id="input">
+	<div class="layui-inline">
+		<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="qdetAmount"   value="0"  autocomplete="off"    id="number{{d.qdetId}}" onkeyup="Pressdown(this);">
+	</div>
+	</script>
+	
 	
 	
 	<body>
-	 
+	 	<input type="hidden" id="shuju"  style="width: 100%;"  >
+		  
 		<div class="kit-table">
 		    <form class="layui-form" lay-filter="kit-search-form">
 						<!-- 左上角的两个按钮 -->
+ 
 		        <div class="kit-table-header">
 		            <div class="kit-search-inputs">
 		                <div class="kit-search-keyword">
-		                    <input type="text" class="layui-input" name="drugName" placeholder="搜索关键字.." />
+		                    <input type="text" class="layui-input" name="drugName" placeholder="请输入药品名称" />
 		                    <button lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
 		                </div>
 		                <div class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>
@@ -127,9 +169,8 @@
 		    <div class="kit-table-body">
 		        <table id="demo" lay-filter="demo"></table>
 		      <script type="text/html" id="barDemo">
-					<button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="edit">立即质检</button>
-   					<button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">入库</button>
-					<button class="layui-btn layui-btn-xs" lay-event="auditDetail">查看详细</button>
+					            <a class="layui-btn layui-btn-xs" lay-event="edit">立即质检</a>
+   					  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">入库</a>
 		        </script>
 		    </div>
 		</div>
@@ -229,6 +270,11 @@
 		<script src="../../res/js/common/parameter.js"></script>
 		<script>
 		    layui.use(['table'], function() { 
+		    	
+		    	 
+		    	var   qcId=getParameter("qcId");
+		    	alert("123321");
+		   		  alert(qcId);
 		        var table = layui.table,
 		            $ = layui.jquery,
 		            layer = layui.layer,
@@ -237,81 +283,44 @@
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: 'full', //容器高度
-		            url: '../../qc/qureyAll.action',
+		            url: '../../qcDetail/findById.action?qcId='+qcId,
 		            page: true,
 		            id: 'demo',
 		            cols: [
 		                [{
-		                    field: 'qcAmount',
-		                    title: '质检总数',
-		                    width: 140
-		                }, {
-		                    field: 'qcFail',
-		                    title: '未通过数',
-		                    width: 140
-		                },{ 
-		                    field: 'qcRateName',
+		                    field: 'qdetId',
+		                    title: '质检ID',
+		                    width: 190
+		                } , {
+		                    field: 'drugName',
+		                    title: '药品名称',
+		                    width: 150
+		                },{
+		                    field: 'qdetAmount',
+		                    title: '质检数量',
+		                    width: 190
+		                },{
+		                    field: 'qdetFail',
+		                    title: '未通过数', 
+		                    width: 150
+		                }, { 
+		                    field: 'qdetRate',
 		                    title: '通过率',
-		                    width: 120
+		                    width: 160
 		                }, { 
-		                    field: 'qcOptiemName',
+		                    field: 'qdetOptime',
 		                    title: '质检时间',
-		                    width: 140
-		                }, { 
-		                    field: 'qcConpany',
-		                    title: '质检厂家',
-		                    width: 140
-		                }, { 
-		                    field: 'qcStates',
-		                    title: '质检状态',
-		                    width: 140
-		                }, { 
-		                    field: 'qcPuts',
-		                    title: '入库状态',
-		                    width: 140
-		                }, {
-		                    fixed: 'right',
-		                    title: '操作',
-		                    width: 270,
-		                    align: 'center',
-		                    toolbar: '#barDemo'
+		                    width: 160
 		                }]
 		            ],
 		            done: function(res, curr, count) {
+		            	//获取表单数据
+		            	var tables=table.cache.demo;
 		            	
-		            	var tableElem = this.elem.next('.layui-table-view');
-		            	
-		            	$("[data-field = 'qcStates']").children().not(":first").each(function(index){
-		            		console.log($(this).text());
-		            		if($(this).text()=="未质检"){
-		            			//禁用
-		            			tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=del]').addClass('layui-btn-disabled').attr('disabled',true);
-		            		} 
-					  	});
-		            	
-		            	$("[data-field = 'qcStates']").children().not(":first").each(function(index){
-		            		console.log($(this).text());
-		            		if($(this).text()=="已质检"){
-		            			//禁用
-		            			tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=edit]').addClass('layui-btn-disabled').attr('disabled',true);
-		            		} 
-					  	});
-		            	
-		            	$("[data-field = 'qcPuts']").children().not(":first").each(function(index){
-		            		console.log($(this).text());
-		            		if($(this).text()=="已入库"){
-		            			//禁用
-		            			tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=del]').addClass('layui-btn-disabled').attr('disabled',true);
-		            		} 
-					  	});
-		            	
-		            	
-		             
-		            	
-		            	
-		            	
-		            	
-		            	 
+ 						$.each(tables,function(i,item){
+		            		
+		            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+item.qdetAmount+","+item.qcId+","+item.qdetRate+","+$("#number"+item.qdetId).val()+"#");
+		            	 })
 		            	
 		                //如果是异步请求数据方式，res即为你接口返回的信息。
 		                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
@@ -365,30 +374,6 @@
 		        });
 		        
 		        
-		      //药品增加、修改、删除、批量删除 都是用的这一个方法
-			    function update(url,data){
-			    	var cls = false;
-			    	$.ajax({
-			    		url: url,
-	                    type:'post',//method请求方式，get或者post
-	                    async:false,//同步
-	                    dataType:'json',//预期服务器返回的数据类型
-	                    data: JSON.stringify(data),//表格数据序列化
-	                    contentType: "application/json; charset=utf-8",
-	                    success:function(mes){//res为相应体,function为回调函数
-	                    	$(".layui-laypage-btn")[0].click();//当前表格刷新
-	                        if(mes.status==1){ 
-	                        	cls = true;//有弹出层时是关闭弹出层 false不关闭
-		                        $("#res").click();//调用重置按钮将表单数据清空
-	                        }
-	                        layer.msg(mes.msg);
-	                    },
-	                   	error:function(){layer.alert('数据异常，请稍后重试！！！',{icon:5});}
-	                 });
-			    	return cls;
-			    }
-		        
-		        
 		        //监听工具条
 		        table.on('tool(demo)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
 		            var data = obj.data; //获得当前行数据
@@ -397,20 +382,9 @@
 		
 		            if (layEvent === 'detail') { //查看
 		                console.log(table.checkStatus('demo'));
-		            }else if(layEvent === 'auditDetail'){   //弹出查看详细 
-		            	var  qcId=data.qcId;
-		           		 alert(qcId);
-		            	layer3(data.qcId); 
 		            } else if (layEvent === 'del') { //删除
-		                layer.confirm('确定要加入库存？', function(index) {
-		                	
-		                	var d = {
-				                    user: data,
-				                    citys: staticData.citys,
-				                    classifies: staticData.classifies
-				                };
-		                	var  qcId=d.user.qcId;
-		                	update("../../drugInvDetail/addAll.action?qcId="+qcId,null); 
+		                layer.confirm('真的提交质检么', function(index) {
+		                    obj.del(); //删除对应行（tr）的DOM结构
 		                    layer.close(index);
 		                    //向服务端发送删除指令
 		                });
@@ -421,12 +395,11 @@
 		                    classifies: staticData.classifies
 		                };
 		                laytpl($('#edit-tpl').html()).render(d, function(html) {
-		                	var  pmcId=d.user.pmcId;
 		                	var  qcId=d.user.qcId;
 		                	var index = layer.open({
 		          				  type: 2,
-		          				  title: '质检药品',
-		          				  content: '../quality/DrugqualityList.html?id='+pmcId+'&qcId='+qcId,
+		          				  title: '制作药品',
+		          				  content: '../plan/ManufacturingList.html?id='+qcId,
 		          				  area: ['800px', '30px']
 		          				  //maxmin: true
 		          				});
@@ -514,19 +487,62 @@
 		            }
 		        });
 		    });
-		    
-		  //制造详情弹窗
-			function layer3(id){
-			 	 alert(id);
-				var layerIndex3 = layer.open({
-				  type: 2,
-				  title: '制造详细',
-				  content: '../quality/Drugqualitys.html?qcId='+id,
-				  area: ['1000px', '430px'],
-				  maxmin: true,
-				});
-			}
 		   
+		</script>
+		<script type="text/javascript">
+		 function  Pressdown(obj){ 
+			 
+	 
+	        var a=obj.value;   // 未通过数  10
+         	var b=$(obj).parent().parent().parent().prev().children().text();   //总质检数  100
+         	var  c=0;
+         	
+         	if(parseInt(a)<=parseInt(b)){
+        		 
+             	var  e = parseInt(b)-parseInt(a);
+             	//console.info(e)
+             	if(e==0){
+             		 c=0;
+             		 console.info("dddd")
+             		var d=$(obj).parent().parent().parent().next().children().text(0+"%"); 
+             	}else{
+             		var  c=parseInt(e)/parseInt(b);
+             		var f=c.toFixed(4);
+
+             		var d=$(obj).parent().parent().parent().next().children().text(f*100+"%"); 
+             	}
+             	}
+         	
+         	if(parseInt(a)>parseInt(b)){
+         		a=parseInt(b);
+         		
+         		$(obj).val(parseInt(b));
+       			 layer.msg("不能大于质检总数"); 
+       			 $("#shuju").val("")
+        		 layui.use(['table'], function() {
+        			 var table=layui.table;
+        			 var tables=table.cache.demo;      
+	            	 $.each(tables,function(i,item){
+	            			var d=$(obj).parent().parent().parent().next().children().text(); 
+	            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+item.qdetAmount+","+item.qcId+","+d+","+$("#number"+item.qdetId).val()+"#");
+	            			
+	            	 })
+        		 });
+         		
+         	}else{
+         		 $("#shuju").val("")
+        		 layui.use(['table'], function() {
+        			 var table=layui.table;
+        			 var tables=table.cache.demo;      
+	            	 $.each(tables,function(i,item){
+	            		 console.info(item)
+	            		 var d=$(obj).parent().parent().parent().next().children().text(); 
+	            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+item.qdetAmount+","+item.qcId+","+d+","+$("#number"+item.qdetId).val()+"#");
+	            			
+	            	 })
+        		 });
+         	}
+		    }
 		</script>
 	</body>
 </html>
