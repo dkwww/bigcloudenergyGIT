@@ -92,6 +92,7 @@ public class PmcServiceImpl  implements PmcService {
 			record.setPmcAmount(0);
 			record.setPmcState("-1");
 			record.setIsva("1");
+			record.setSort(TimeUtil.getStrDate());
 			return pmcMapper.insertSelective(record);
 		}
 	}
