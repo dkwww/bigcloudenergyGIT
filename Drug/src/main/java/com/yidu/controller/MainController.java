@@ -6,23 +6,32 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yidu.controller.vo.Repertory;
 import com.yidu.controller.vo.Series;
+import com.yidu.domain.Admin;
 import com.yidu.domain.BranchSale;
 import com.yidu.domain.BranchSaleDetail;
 import com.yidu.domain.Role;
 import com.yidu.domain.Sale;
 import com.yidu.service.BranchSaleDetailService;
 import com.yidu.service.BranchSaleService;
+import com.yidu.service.DrugInvService;
 import com.yidu.service.ModuleRoleService;
 import com.yidu.service.RoleService;
 import com.yidu.service.SaleService;
-
+import com.yidu.util.Message;
+/**
+ * 
+ * @author Administrator
+ *
+ */
 @Controller
 @RequestMapping("/main")
 public class MainController {
@@ -32,6 +41,12 @@ public class MainController {
 	private ModuleRoleService moroService;
 	@Resource
 	private BranchSaleDetailService branService;
+	@Resource
+	private DrugInvService invService;
+	/**
+	 * 查询今年药品的销售次数
+	 * @return
+	 */
 	@RequestMapping("queryList")
 	@ResponseBody
 	public Map<String,Object> queryList(){
@@ -47,9 +62,7 @@ public class MainController {
 				Map<String,Object> but = new HashMap<>();
 				List<Integer> data=new ArrayList<Integer>();
 				for (int i = 0; i < time.length; i++) {
-					System.out.println("测试的药品Id"+series.getDrugId()+"测试的月份"+time[i]);
 					rows=branService.queryId(time[i],series.getDrugId());
-					System.out.println("根据月份查询出来的次数+++++++++++"+rows);
 					data.add(rows);
 				}
 				but.put("stack", "受欢迎程度");
@@ -65,4 +78,11 @@ public class MainController {
 			map.put("name",dataname);
 		return map;
 	};
+	@RequestMapping("queryRepertory")
+	@ResponseBody
+	public List<Repertory> queryRepertory(HttpServletRequest request) {
+		Admin user=(Admin) request.getSession();
+		List<Repertory> list=invService.queryBalance(user.getComId());
+		return list;
+	}
 }

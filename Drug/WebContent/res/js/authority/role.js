@@ -15,13 +15,8 @@
 		            id: 'demo',
 		            cols: [
 		                [{checkbox: true,fixed: true},
-		                {field: 'roleId',title: 'ID', width: 273},
 		                {field: 'roleName',title: '角色名称',width: 145},
-		                {field: 'roleCode',title: '角色编号',width: 150},
 		                {field: 'roleDescribe',title: '角色描述',width: 150},
-		                {field: 'isva',title: '是否有效',width: 90},
-		                {field: 'optime',title: '操作时间',width: 60},
-		                {field: 'oper',title: '操作者',width: 150},
 		                {fixed: 'right',title: '操作',width: 180,align: 'center',toolbar: '#barDemo'}]
 		            ],
 		            done: function(res, curr, count) {
@@ -168,10 +163,7 @@
 		            var layEvent = obj.event; //获得 lay-event 对应的值
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		
-		            if (layEvent === 'detail') { //查看
-		            	maxlayer();
-		                console.log(table.checkStatus('demo'));
-		            } else if (layEvent === 'del') { //删除
+		            if (layEvent === 'del') { //删除
 		                layer.confirm('真的删除行么', function(index) {
 		                	layer.close(index);
 		                    update("../../role/delete.action",{"roleId":data.roleId,"isva":"否"});

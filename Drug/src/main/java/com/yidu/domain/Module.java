@@ -14,6 +14,8 @@ public class Module {
     private String modeCode;
 
     private String modeExplain;
+    
+    private String modeNames;
 
     private String isva;
 
@@ -25,7 +27,16 @@ public class Module {
     
     private String adminId;
 
-    public String getModeId() {
+    
+    public String getModeNames() {
+		return modeNames;
+	}
+
+	public void setModeNames(String modeNames) {
+		this.modeNames = modeNames;
+	}
+
+	public String getModeId() {
         return modeId;
     }
 

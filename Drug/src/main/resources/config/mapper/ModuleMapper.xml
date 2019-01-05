@@ -7,6 +7,7 @@
     <result column="mode_url" jdbcType="VARCHAR" property="modeUrl" />
     <result column="mode_name" jdbcType="VARCHAR" property="modeName" />
     <result column="mode_code" jdbcType="VARCHAR" property="modeCode" />
+    <result column="mode_names" jdbcType="VARCHAR" property="modeNames" />
     <result column="mode_explain" jdbcType="VARCHAR" property="modeExplain" />
     <result column="isva" jdbcType="VARCHAR" property="isva" />
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
@@ -23,33 +24,33 @@
     oper, sort
   </sql>
   <select id="queryId" resultMap="BaseResultMap">
-  	select * from drug_module where isva ='是' and  dru_mode_id is null
+  	select * from drug_module where isva ='是' and  dru_mode_id = 0
   </select>
   <select id="queryList" parameterType="java.util.Map" resultMap="BaseResultMap">
-  	select * from drug_module where isva ='是'
+  select m.*,d.mode_name as mode_names from drug_module m,drug_module d where m.dru_mode_id=d.mode_id and m.isva ='是' and m.dru_mode_id is not null
   	  <if test="module.modeId !=null and module.modeId != '' ">
-  	   and mode_id=#{module.modeId}
+  	   and m.mode_id=#{module.modeId}
   	  </if>
   	  <if test="module.druModeId != null and module.druModeId != '' ">
-       and dru_mode_id = #{module.druModeId}
+       and m.dru_mode_id = #{module.druModeId}
       </if>
       <if test="module.modeUrl != null and module.modeUrl != '' ">
-       and mode_url = #{module.modeUrl}
+       and m.mode_url = #{module.modeUrl}
       </if>
       <if test="module.modeName != null and module.modeName != '' ">
-       and mode_name like CONCAT(CONCAT('%',#{module.modeName},'%'))
+       and m.mode_name like CONCAT(CONCAT('%',#{module.modeName},'%'))
       </if>
       <if test="module.modeCode != null and module.modeCode != '' ">
-       and mode_code = #{module.modeCode}
+       and m.mode_code = #{module.modeCode}
       </if>
       <if test="module.modeExplain != null and module.modeExplain != '' ">
-       and mode_explain = #{module.modeExplain}
+       and m.mode_explain = #{module.modeExplain}
       </if>
-      order by (sort+0) desc 
+      order by (m.sort+0) desc 
    	  limit #{page.startRows},#{page.rows}
   </select>
   <select id="queryCount" parameterType="com.yidu.domain.Module" resultType="int">
-  	select count(*) from drug_module where isva ='是'
+  	select count(*) from drug_module where isva ='是' and dru_mode_id is not null
   	<if test="modeId !=null and modeId != '' ">
   	   and mode_id=#{modeId}
   	  </if>
@@ -74,7 +75,7 @@
   	  WHERE ad.admin_id = ar.admin_id AND 
 	  ar.role_id = ro.role_id AND 
 	  ro.role_id = mr.role_id AND 
-	  mr.mode_id = mo.mode_id AND ad.admin_id=#{adminId,jdbcType=VARCHAR} and mo.dru_mode_id = 0 order by (mo.sort)
+	  mr.mode_id = mo.mode_id AND ad.admin_id=#{adminId,jdbcType=VARCHAR} and mo.dru_mode_id = 0 order by (mo.sort+0)
   </select>
   <select id="findByZiModule" parameterType="com.yidu.domain.Module" resultMap="BaseResultMap">
   	  SELECT * FROM drug_module mo,drug_role ro,drug_module_role mr,drug_admin ad,drug_admin_role ar 
@@ -82,7 +83,7 @@
 	  ar.role_id = ro.role_id AND 
 	  ro.role_id = mr.role_id AND 
 	  mr.mode_id = mo.mode_id AND 
-	  mo.dru_mode_id = #{modeId,jdbcType=VARCHAR} and ad.admin_id= #{adminId,jdbcType=VARCHAR}  order by (mo.sort)
+	  mo.dru_mode_id = #{modeId,jdbcType=VARCHAR} and ad.admin_id= #{adminId,jdbcType=VARCHAR}  order by (mo.sort+0)
   </select>
   <select id="selectList" resultMap="BaseResultMap2">
   	select * from drug_module

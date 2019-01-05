@@ -16,10 +16,17 @@
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="sort" jdbcType="VARCHAR" property="sort" />
   </resultMap>
+  <resultMap id="BaseResultMap2" type="com.yidu.controller.vo.Repertory">
+    <result column="drug_name" property="name" />
+    <result column="indexs" property="value" />
+  </resultMap>
+  
   <sql id="Base_Column_List">
     di_id, com_id, drug_id, di_amount, di_comtype, isva, optime, oper, sort
   </sql>
-  
+  <select id="queryBalance" parameterType="java.lang.String" resultMap="BaseResultMap2">
+  	select sum(i.di_amount) as indexs ,d.drug_id,d.drug_name from drug_drug_inv i,drug_drug d where i.drug_id=d.drug_id and i.com_id=#{id} GROUP BY d.drug_name,d.drug_id ORDER BY sum(i.di_amount) asc LIMIT 8
+  </select>
   <select id="findselect" parameterType="com.yidu.domain.DrugInve" resultMap="BaseResultMap">
   	SELECT dd.drug_name,dc.com_name,di.* FROM drug_drug dd,drug_drug_inv di,drug_company dc WHERE di.drug_id=dd.drug_id
 	AND dc.com_id=di.com_id

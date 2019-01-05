@@ -15,13 +15,10 @@
 		            id: 'demo',
 		            cols: [
 		                [{checkbox: true,fixed: true},
-		                {field: 'modeId',title: '模块ID', width: 273},
-		                {field: 'druModeId',title: '上级模块ID',width: 145},
-		                {field: 'modeUrl',title: '模块地址',width: 150},
+		                {field: 'modeNames',title: '上级模块名称', width: 273},
 		                {field: 'modeName',title: '模块名称',width: 150},
+		                {field: 'modeUrl',title: '模块地址',width: 150},
 		                {field: 'modeExplain',title: '模块介绍',width: 90},
-		                {field: 'optime',title: '操作时间',width: 60},
-		                {field: 'oper',title: '操作者',width: 150},
 		                {fixed: 'right',title: '操作',width: 180,align: 'center',toolbar: '#barDemo'}]
 		            ],
 		            done: function(res, curr, count) {
@@ -101,10 +98,7 @@
 		            var layEvent = obj.event; //获得 lay-event 对应的值
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		
-		            if (layEvent === 'detail') { //查看
-		            	maxlayer();
-		                console.log(table.checkStatus('demo'));
-		            } else if (layEvent === 'del') { //删除
+		            if (layEvent === 'del') { //删除
 		                layer.confirm('真的删除行么', function(index) {
 		                	layer.close(index);
 		                    update("../../module/updateId.action",{"modeId":data.modeId,"isva":"否"});

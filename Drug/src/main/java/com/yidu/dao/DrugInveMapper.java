@@ -3,6 +3,7 @@ package com.yidu.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.yidu.controller.vo.Repertory;
 import com.yidu.domain.DrugInve;
 
 public interface DrugInveMapper {
@@ -69,4 +70,6 @@ public interface DrugInveMapper {
      * @author ly
      */
     public DrugInve findDrugId(String drugId);
+    
+    List<Repertory> queryBalance(String id);
 }

@@ -2,6 +2,7 @@ package com.yidu.service;
 
 import java.util.List;
 
+import com.yidu.controller.vo.Repertory;
 import com.yidu.domain.DrugInve;
 import com.yidu.util.PageUtil;
 
@@ -62,5 +63,6 @@ public interface DrugInvService  {
 	  * @return
 	  */
 	 int insert(DrugInve record);
-
+	 
+	 List<Repertory> queryBalance(String id);
 }

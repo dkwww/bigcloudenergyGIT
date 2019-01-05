@@ -12,7 +12,7 @@ function queryRepertory(){
 	var url="/Drug/main/queryRepertory.action";
 	var data=null;
 	$.post(url,data,function(mes){
-		
+		queryStatistics(mes);
 	},"json");
 }
 function showSell(mes){
@@ -21,7 +21,7 @@ function showSell(mes){
     var myChart = echarts.init(document.getElementById('sales'));
     option = {
     	    title: {
-    	        text: '堆叠区域图'
+    	        text: '零售最受欢迎统计'
     	    },
     	    tooltip : {
     	        trigger: 'axis',
@@ -63,4 +63,62 @@ function showSell(mes){
 
 	// 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
+}
+function queryStatistics(mes){
+	option = {
+		    title : {
+		        text: '库存预警',
+		        subtext: '',
+		        x:'center'
+		    },
+		    tooltip : {
+		        trigger: 'item',
+		        formatter: "{a} <br/>{b} : {c} ({d}%)"
+		    },
+		    legend: {
+		        x : 'center',
+		        y : 'bottom'
+		    },
+		    toolbox: {
+		        show : true,
+		        feature : {
+		            mark : {show: true},
+		            dataView : {show: true, readOnly: false},
+		            magicType : {
+		                show: true,
+		                type: ['pie', 'funnel']
+		            },
+		            restore : {show: true},
+		            saveAsImage : {show: true}
+		        }
+		    },
+		    calculable : true,
+		    series : [
+		        {
+		            name:'库存预警',
+		            type:'pie',
+		            radius : [20, 110],
+		            center : ['25%', '50%'],
+		            roseType : 'radius',
+		            label: {
+		                normal: {
+		                    show: false
+		                },
+		                emphasis: {
+		                    show: true
+		                }
+		            },
+		            lableLine: {
+		                normal: {
+		                    show: false
+		                },
+		                emphasis: {
+		                    show: true
+		                }
+		            },
+		            data:
+		        }
+		    ]
+		};
+
 }

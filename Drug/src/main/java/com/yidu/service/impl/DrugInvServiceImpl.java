@@ -1,6 +1,7 @@
 package com.yidu.service.impl;
 
  
+import com.yidu.controller.vo.Repertory;
 import com.yidu.dao.DrugInveMapper;
 import com.yidu.domain.DrugInve;
 import com.yidu.service.DrugInvService;
@@ -77,6 +78,11 @@ public class DrugInvServiceImpl    implements DrugInvService {
 	public int insert(DrugInve record) {
 		 
 		return dao.insert(record);
+	}
+
+	@Override
+	public List<Repertory> queryBalance(String id) {
+		return dao.queryBalance(id);
 	}
 
 }
