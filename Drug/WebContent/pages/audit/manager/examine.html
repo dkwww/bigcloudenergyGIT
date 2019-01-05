@@ -6,7 +6,7 @@
 		<link rel="stylesheet" href="../../../res/layui/css/layui.css" media="all">
 		<link rel="stylesheet" href="../../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../../res/layui-config/css/app.css" media="all">
-		<title>审核表</title>
+		<title>采购材料审核表</title>
     </script>
 	</head>
 	
@@ -257,7 +257,7 @@
 				
 		      //审核提交
 		        form.on('submit(formEdit)', function(data) {
-		        	var cls = update("../../buyht/update.action",data.field);
+		        	var cls = update("../../../buyht/update.action",data.field);
 		        	editIndex && layer.close(editIndex); //关闭弹出层
                 	return false;
 		        });
