@@ -63,7 +63,7 @@ public class ModuleController {
 		Message mes=new Message();
 		int rows=0;
 		HttpSession session=request.getSession();
-		Admin user=(Admin) session.getAttribute("user");
+		Admin user=(Admin) session.getAttribute("admin");
 		if(user!=null&&!"".equals(user)) {
 			module.setOper(user.getAdminName());
 		}

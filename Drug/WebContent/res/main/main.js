@@ -1,5 +1,6 @@
 $(function(){
 	querySell();
+	queryRepertory();
 });
 function querySell(){
 	var url="/Drug/main/queryList.action";
@@ -65,6 +66,9 @@ function showSell(mes){
     myChart.setOption(option);
 }
 function queryStatistics(mes){
+	console.log(mes);
+	// 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('repertory'));
 	option = {
 		    title : {
 		        text: '库存预警',
@@ -76,8 +80,8 @@ function queryStatistics(mes){
 		        formatter: "{a} <br/>{b} : {c} ({d}%)"
 		    },
 		    legend: {
-		        x : 'center',
-		        y : 'bottom'
+		        x : '40',
+		        y : '100'
 		    },
 		    toolbox: {
 		        show : true,
@@ -116,9 +120,9 @@ function queryStatistics(mes){
 		                    show: true
 		                }
 		            },
-		            data:
+		            data:mes
 		        }
 		    ]
 		};
-
+	 myChart.setOption(option);
 }
