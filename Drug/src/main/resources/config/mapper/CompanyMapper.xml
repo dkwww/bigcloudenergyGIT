@@ -23,7 +23,7 @@
   </select>
 	<!-- 分店分页以及模糊查询 -->
   <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
-  	select * from  drug_company 
+  	select * from  drug_company WHERE isva IN (0,1)
   	<where>
 	  		<if test="company.comName != null and company.comName != '' ">
 	  		com_name like concat('%',#{company.comName},'%')
@@ -35,7 +35,7 @@
   <select id="selectCount" parameterType="com.yidu.domain.Company" resultType="int">
     select 
     count(*) 
-    from drug_company
+    from drug_company WHERE isva IN (0,1)
 
   </select>
   <!-- 根据条件为分店和状态为0的查询总共多少条数据 -->

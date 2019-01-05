@@ -30,10 +30,19 @@ public interface CompanyMapper {
     
     int selectCount(Company company);
     int checkselectCount(Company company);
+    /**
+     * 分店批量删修改为0
+     * @param ids
+     * @return
+     */
     int companyDeleteByPrimaryKeySelective(List<String> ids);
+    /**
+     * 审核分店批量修改为1
+     * @param ids
+     * @return
+     */
     int checkcompanyDeleteByPrimaryKeySelective(List<String> ids);
-
-    
+  
     /**
      * 根据审核id查询分公司
      * @param qcFkId

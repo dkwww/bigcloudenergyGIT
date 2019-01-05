@@ -50,7 +50,8 @@
 		        <script type="text/html" id="barDemo">
 		            
 		            <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
-		            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+		            <button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">移除加盟</button>
+					<button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="dels">删除分公司</button>
 		        </script>
 		    </div>
 		</div>
@@ -157,25 +158,37 @@
 		          	},{
 		          		fixed: 'right',
 		          		title: '操作',
-		          		width: 200,
+		          		width: 300,
 		          		align: 'center',
 		          		toolbar: '#barDemo'
 		          	
 		          	}]
 		          ],
 		            done: function(res, curr, count) {
-		                $("[data-field = 'drugProp']").children().each(function(){
-						    if($(this).text() == '1'){
-						    	$(this).text("处方药");
-						    } else if ($(this).text() == '0') {
-						    	$(this).text("非处方药");
-						    }
+						var tableElem = this.elem.next('.layui-table-view');
+						$("[data-field = 'isva']").children().not(":first").each(function(index){
+							
+							if($(this).text()=="未加盟"){
+		            			//禁用
+		            			tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=del]').addClass('layui-btn-disabled').attr('disabled',true);
+		            		} 
+							if($(this).text()=="已加盟"){
+		            			//禁用
+		            			
+		            			tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=dels]').addClass('layui-btn-disabled').attr('disabled',true);
+		            		}
 					  	});
-		                /* $("[data-field = 'drugPictrue']").children().each(function(){
-						    if($(this).text() == 'null'||$(this).text() == ''){
-						    	$(this).text("暂无");
-						    }
-					  	}); */
+						
+					$("[data-field = 'comName']").children().not(":first").each(function(index){
+							
+							if($(this).text()=="总店"){
+		            			//禁用
+		            			tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=dels]').addClass('layui-btn-disabled').attr('disabled',true);
+		            			tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=del]').addClass('layui-btn-disabled').attr('disabled',true);
+		            		} 
+						
+					  	});
+		            	
 		            },
 		            loading: true,
 		        });
@@ -241,11 +254,16 @@
 		            if (layEvent === 'detail') { //查看
 		                console.log(table.checkStatus('demo'));
 		            } else if (layEvent === 'del') { //删除
-		                layer.confirm('真的移除加盟吗', function(index) {
+		                layer.confirm('真的要移除加盟吗', function(index) {
 		                	layer.close(index);
 		                    update("../../company/add.action",{"comId":data.comId,"isva":"0"});
 		                });
-		            } else if (layEvent === 'edit') { //编辑
+		            } else if (layEvent === 'dels') { //删除
+		                layer.confirm('删除该分公司', function(index) {
+		                	layer.close(index);
+		                    update("../../company/add.action",{"comId":data.comId,"isva":"3"});
+		                });
+		            }else if (layEvent === 'edit') { //编辑
 		                var d = {
 		                	user: data
 		                };
