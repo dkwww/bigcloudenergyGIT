@@ -1,4 +1,7 @@
 $(function(){
+	$.ajaxSetup({
+		async:false,
+	})
 	showMenu();
 })
 
@@ -34,9 +37,6 @@ function showMenu(){
 	} else {
 		return false;
 	}
-	$.ajaxSetup({
-		async:false,
-	})
 	
 	$.post("./module/findByModule.action",{"adminId":admin.adminId},function(mes){
 		$.each(mes,function(index,item){
