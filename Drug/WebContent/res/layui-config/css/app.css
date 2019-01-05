@@ -333,9 +333,6 @@ button {
 }
 
 /* 我对layui自定义的样式 */
-.layui-side-scroll {
-    overflow-y: scroll;
-}
 .layui-input-block {
     margin: 0px 115px
 }
