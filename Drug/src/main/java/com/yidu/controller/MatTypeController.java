@@ -33,24 +33,39 @@ public class MatTypeController {
 	private MatTypeService matTypeService;
 	
 	/**
-	 * 查询所有
+	 * 
+	 * 方法说明：查询原材料所有
+	 * @param material 原材料类型对象
+	 * @param page	页数
+	 * @param limit	行数
 	 * @return
+	 * @author dengkangwei
+	 * @date：2019年1月5日
 	 */
 	@RequestMapping("showList")
 	@ResponseBody
 	public Map<String, Object> showList(MatType type,Integer page,Integer limit){
+		//得到分页对象
 		PageUtil pageUtil = new PageUtil();
+		//判断页数不等于空 且 行数不等于空
 		if(page!=null && limit!=null) {
+			//赋值页数
 			pageUtil.setCurPage(page);
+			//赋值行数
 			pageUtil.setRows(limit);
 		}
 		
+		//查询原材料类型集合
 		List<MatType> list=matTypeService.showList(type,pageUtil);
+		//循环类型集合
 		for (MatType matType : list) {
+			//转时间
 			matType.setOptimes(Tools.getDateStr(matType.getOptime()));
 		}
+		//查询原材料行数
 		int rows=matTypeService.selectCount(type);
 		
+		//创建map对象
 		Map<String, Object> map=new HashMap<>();
 		map.put("code", 0);
 		map.put("msg", "");
@@ -64,14 +79,17 @@ public class MatTypeController {
 	
 	
 	/**
-	 * 增加或修改
-	 * @param type
+	 * 
+	 * 方法说明：增加或修改
+	 * @param type 类型对象
 	 * @return
+	 * @author dengkangwei
+	 * @date：2019年1月5日
 	 */
-	
 	@RequestMapping("addorupdate")
 	@ResponseBody
 	public Message addorupdate(@RequestBody MatType type) {
+		//增加或修改到原材料类型数据库
 		matTypeService.addorupdate(type);
 		Message me=new Message();
 		me.setStatus(1);
@@ -80,50 +98,6 @@ public class MatTypeController {
 	}
 	
 	
-	/**
-	 * 根据id显示修改
-	 * @param mtId
-	 * @return
-	 */
-	public MatType showUpdate(String mtId) {
-		
-		return matTypeService.showUpdate(mtId);
-	}
-	
-	
-	/**
-	 * 删除
-	 * @param mtId
-	 * @return
-	 */
-	@RequestMapping("delete")
-	@ResponseBody
-	public Message delete(String mtId) {
-		matTypeService.delete(mtId);
-		Message me=new Message();
-		me.setStatus(1);
-		me.setMsg("删除成功");
-		
-		return me;
-	}
-	
-	
-	/**
-	 *  批量删除
-	 * @param ids 传入一个ids
-	 * @return 返回mes
-	 */
-	@RequestMapping("/TypeUpdate")
-	@ResponseBody
-	public Message TypeUpdate(@RequestBody List<String> ids) {
-		//调用批量修改的方法
-		matTypeService.TypeupdateByPrimaryKeySelective(ids);
-		//创建message
-		Message me=new Message();
-		me.setStatus(1);
-		me.setMsg("删除成功");
-		return me;
-	}
 	
 }
 

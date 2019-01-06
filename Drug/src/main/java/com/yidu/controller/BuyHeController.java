@@ -320,28 +320,29 @@ public class BuyHeController {
 		System.err.println("=============财务id"+deb.getDebId());
 		System.err.println("---------------------------------"+buy.getBuyAudit());
 		//判断如果审核状态为1的时候就减财务
-		if(buy.getBuyAudit().equals("1")) {
+		if(buy.getBuyAudit()!="" && buy.getBuyAudit().equals("1")) {
 			System.err.println("进入减财务");
 			//修改金额
 			debtyservice.addbty(buy.getBuyMoney(),deb.getDebId());
+			
+			
+			//得到财务明细对象
+			DebtyDetail debmx=new DebtyDetail();
+			//赋值一个id
+			debmx.setDdetId(Tools.getDateOrderNo());
+			//赋值财务的id
+			debmx.setDebId(deb.getDebId());
+			//赋值订单的金额
+			debmx.setDdetChange(buy.getBuyMoney());
+			debmx.setIsva("1");
+			//赋值0为支出状态
+			debmx.setDdettFkId("0");
+			//当前的时间
+			debmx.setOptime(new Date());
+			//放入数据库
+			debtydetailservice.addmx(debmx);
 		}
 		
-		
-		//得到财务明细对象
-		DebtyDetail debmx=new DebtyDetail();
-		//赋值一个id
-		debmx.setDdetId(Tools.getDateOrderNo());
-		//赋值财务的id
-		debmx.setDebId(deb.getDebId());
-		//赋值订单的金额
-		debmx.setDdetChange(buy.getBuyMoney());
-		debmx.setIsva("1");
-		//赋值0为支出状态
-		debmx.setDdettFkId("0");
-		//当前的时间
-		debmx.setOptime(new Date());
-		//放入数据库
-		debtydetailservice.addmx(debmx);
 		
 		
 		//获取审核表的对象

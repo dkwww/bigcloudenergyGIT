@@ -13,10 +13,13 @@
     mt_id, mt_name, isva, optime, oper, sort
   </sql>
   
+   <!-- 邓康威 -->
+  <!-- 原材料类型查询所有  只有原材料类型 -->
   <select id="showList" parameterType="map" resultMap="BaseResultMap">
   	select 
   	<include refid="Base_Column_List" />
   	from drug_mat_type where isva = '1'
+  	<!-- 查询材料类型名 -->
 	<if test="type.mtName!=null and type.mtName!='' ">
 		and mt_name like concat('%', #{type.mtName} ,'%')
 	</if>
@@ -24,6 +27,8 @@
 	limit #{pageUtil.startRows},#{pageUtil.rows}
   </select>
   
+  <!-- 邓康威 -->
+  <!-- 原材料查询总行数  只有原材料类型 -->
   <select id="selectCount" parameterType="com.yidu.domain.MatType" resultType="int">
   	select count(*) from drug_mat_type where isva= '1'
   	<if test="mtName!=null and mtName!='' ">

@@ -19,24 +19,26 @@ public interface MatTypeMapper {
     int updateByPrimaryKey(MatType record);
     
     /**
-     * 查询所有
+     * 
+     * 方法说明：查询所有
+     * @param map map对象
      * @return
+     * @author dengkangwei
+     * @date：2019年1月5日
      */
     List<MatType> showList(Map<String, Object> map);
     
     /**
-     * 查询总行数
-     * @param type
+     * 
+     * 方法说明：查询总行数
+     * @param type 对象
      * @return
+     * @author dengkangwei
+     * @date：2019年1月5日
      */
     int selectCount(MatType type);
     
-    /**
-     * 批量删除
-     * @param ids
-     * @return
-     */
-    int TypeupdateByPrimaryKeySelective(List<String> ids);
+    
     
     
 }

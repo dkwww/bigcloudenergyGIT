@@ -67,7 +67,7 @@ public class DebtyDetailServiceImpl  implements DebtyDetailService {
 	}
 	@Override
 	public int addmx(DebtyDetail debty) {
-		System.err.println("============进入增加方法");
+		
 		return debtyDetailMapper.insert(debty);
 	}
 

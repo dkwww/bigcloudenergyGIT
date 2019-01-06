@@ -17,32 +17,37 @@ import com.yidu.util.PageUtil;
 public interface MatTypeService  {
 	
 	/**
-	 * 查询所有
+	 * 
+	 * 方法说明：查询材料类型所有
+	 * @param type 材料类对象
+	 * @param pageUtil
 	 * @return
+	 * @author dengkangwei
+	 * @date：2019年1月5日
 	 */
 	List<MatType> showList(MatType type,PageUtil pageUtil);
 	
-	
+	/**
+	 * 
+	 * 方法说明：查询材料类型总行数
+	 * @param type 材料类对象
+	 * @return
+	 * @author dengkangwei
+	 * @date：2019年1月5日
+	 */
 	int selectCount(MatType type);
 	
 	/**
-	 * 增加或修改
-	 * @param type
+	 * 
+	 * 方法说明：增加或修改
+	 * @param type 材料类对象
 	 * @return
+	 * @author dengkangwei
+	 * @date：2019年1月5日
 	 */
 	int addorupdate(MatType type);
 	
 	
-	int delete(String mtId);
 	
-	
-	MatType showUpdate(String mtId);
-	
-	/**
-	 * 材料类型批量修改
-	 * @param ids
-	 * @return
-	 */
-	int TypeupdateByPrimaryKeySelective (List<String> ids);
 	
 }
