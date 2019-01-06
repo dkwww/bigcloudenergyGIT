@@ -89,6 +89,7 @@ public class BuyHeController {
 			pageUtil.setRows(limit);
 		}
 		
+		
 		List<Buy> list = service.showList(buy,pageUtil);
 		
 		for (Buy buytwo : list) {
@@ -103,21 +104,21 @@ public class BuyHeController {
 				  buytwo.setAuName("未通过");
 			}
 			 
-			//采购状态判断如果是0是未提交
+			//采购状态判断如果是0是未采购
 			if(buytwo.getBuyState().equals("0")) {
 				buytwo.setBuyStates("未采购");
 			}else if(buytwo.getBuyState().equals("1")) {
 				buytwo.setBuyStates("已采购");
 			}
 			
-			
+			//提交状态判断如果是0是未提交
 			if(buytwo.getBuySubmission().equals("0")) {
 				buytwo.setBuySubmissions("未提交");
 			}else {
 				buytwo.setBuySubmissions("已提交");
 			}
 		}
-		//行数
+		//总行数
 		int rows=service.selectCount(buy);
 		
 		Map<String, Object> map = new HashMap<>();
@@ -179,6 +180,7 @@ public class BuyHeController {
 		buy.setBuyQc("0");
 		//默认入库状态为0
 		buy.setBuyPut("0");
+		//存入分店
 		buy.setComId("0");
 		
 		//new获取当前时间

@@ -103,7 +103,9 @@ public class QcServiceImpl   implements QcService {
 
 	@Override
 	public int addQc(Buy buy) {
+		//定义一个变量为0
 		int rows=0;
+		
 		Integer count=0;
 		//根据采购订单id查询采购明细
 		List<BuyDetail> list=detaMapper.findBuysId(buy.getBuyId());
