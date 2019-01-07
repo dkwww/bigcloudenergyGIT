@@ -55,7 +55,8 @@
 	   	</if>
   </select>
    
-   
+   <!-- 邓康威 -->
+   <!-- 质检查询所有  有质检、采购订单、分店 -->
    <select id="showList" parameterType="map" resultMap="BaseResultMap">
   	SELECT * FROM drug_qc a,drug_buy b,drug_company c 
   	WHERE a.pmc_id=b.buy_id AND a.qc_conpany=c.com_id
@@ -63,11 +64,15 @@
   	limit #{page.startRows},#{page.rows}
   </select>
   
-  
+  <!-- 邓康威 -->
+  <!-- 质检查询总行数  有质检、采购订单、分店 -->
   <select id="selectCount" parameterType="com.yidu.domain.Qc" resultType="int">
   	SELECT count(*) FROM drug_qc a,drug_buy b,drug_company c WHERE a.pmc_id=b.buy_id AND a.qc_conpany=c.com_id
   </select>
   
+  
+  <!-- 邓康威 -->
+  <!-- 根据质检id查询质检、质检明细 -->
   <select id="findById" parameterType="string" resultMap="BaseResultMap">
   	SELECT * FROM drug_qc a,drug_qc_detail b WHERE a.qc_id=b.qc_id AND a.qc_id=#{qcId}
   </select>

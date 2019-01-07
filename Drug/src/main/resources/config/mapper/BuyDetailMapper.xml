@@ -25,16 +25,22 @@
     sort
   </sql>
   
+  <!-- 邓康威 -->
+  <!-- 根据订单id查询所有   有订单、订单明细、原材料 -->
   <select id="showListId" parameterType="map" resultMap="BaseResultMap">
   	SELECT * FROM drug_buy a,drug_buy_detail b,drug_material c WHERE a.buy_id=b.buy_id AND b.bdet_fk_id=c.mat_id and a.buy_id=#{detail.buyId}
+  	<!-- 根据材料名搜索 -->
   	<if test="detail.matName!=null and detail.matName!='' ">
   		and c.mat_name like concat("%",#{detail.matName},"%")
   	</if>
   	limit #{page.startRows},#{page.rows}
   </select>
   
+  <!-- 邓康威 -->
+  <!-- 根据订单id查询所有行数   有订单、订单明细、原材料 -->
   <select id="selectCount" parameterType="com.yidu.domain.BuyDetail" resultType="int">
   	SELECT count(*) FROM drug_buy a,drug_buy_detail b,drug_material c WHERE a.buy_id=b.buy_id AND b.bdet_fk_id=c.mat_id and a.buy_id=#{buyId}
+  	<!-- 根据材料名搜索 -->
   	<if test="matName!=null and matName!='' ">
   		and c.mat_name like concat("%",#{matName},"%")
   	</if>
@@ -226,6 +232,7 @@
   </select>
   
   <!-- 邓康威 -->
+  <!-- 根据订单明细外键id(采购订单id)查询明细所有 -->
   <select id="findBuysId" parameterType="string" resultMap="BaseResultMap">
   	select * from drug_buy_detail where buy_id=#{buyId}
   </select>

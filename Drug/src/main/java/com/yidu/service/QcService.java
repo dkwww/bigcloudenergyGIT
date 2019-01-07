@@ -43,7 +43,7 @@ public interface QcService  {
 	/**
 	 * 增加
 	 * @param qc
-	 * @author 邓康威
+	 * @author dengkangwei
 	 * @return
 	 */
 	int buyQcadd(Qc qc);
@@ -52,7 +52,7 @@ public interface QcService  {
 	 * 材料查询所有
 	 * @param qc
 	 * @param page
-	 * @author 邓康威
+	 * @author dengkangwei
 	 * @return
 	 */
 	List<Qc> showList(Qc qc,PageUtil page);
@@ -60,7 +60,7 @@ public interface QcService  {
 	/**
 	 * 查看总行数
 	 * @param qc
-	 * @author 邓康威
+	 * @author dengkangwei
 	 * @return
 	 */
 	int selectCount(Qc qc);
@@ -69,7 +69,7 @@ public interface QcService  {
 	/**
 	 * 采购订单增加到质检
 	 * @param buy
-	 * @author 邓康威
+	 * @author dengkangwei
 	 * @return
 	 */
 	int addQc(Buy buy);
@@ -77,7 +77,7 @@ public interface QcService  {
 	/**
 	 * 修改
 	 * @param buy
-	 * @author 邓康威
+	 * @author dengkangwei
 	 * @return
 	 */
 	int update(Buy buy);
@@ -85,7 +85,7 @@ public interface QcService  {
 	/**
 	 * 根据id查询
 	 * @param qcId
-	 * @author 邓康威
+	 * @author dengkangwei
 	 * @return
 	 */
 	List<Qc> findById(String qcId);

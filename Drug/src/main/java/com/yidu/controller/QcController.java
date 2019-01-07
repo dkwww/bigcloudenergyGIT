@@ -167,7 +167,7 @@ public class QcController {
 	/**
 	 * 
 	 * 方法说明：材料质检显示列表
-	 * @param qc
+	 * @param qc 质检对象
 	 * @param page
 	 * @param limit
 	 * @return
@@ -185,6 +185,7 @@ public class QcController {
 		}
 		
 		List<Qc> list=qcService.showList(qc, PageUtil);
+		
 		for (Qc qc2 : list) {
 			if(qc2.getQcState().equals("0")) {
 				qc2.setQcStates("未质检");
@@ -220,7 +221,7 @@ public class QcController {
 	 * @param sumAmout
 	 * @param sumRate
 	 * @param qcState 质检状态
-	 * @author 邓康威
+	 * @author dengkangwei
 	 * @return
 	 */
 	@RequestMapping("Qcadd")
@@ -266,7 +267,7 @@ public class QcController {
 
 	/**
 	 * 材料质检完后入库
-	 * @author 邓康威
+	 * @author dengkangwei
 	 * @param qc
 	 * @return
 	 */

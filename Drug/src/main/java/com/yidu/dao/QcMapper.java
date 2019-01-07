@@ -33,7 +33,7 @@ public interface QcMapper {
     /**
      * 材料查询所有
      * @param map
-     * @author 邓康威
+     * @author dengkangwei
      * @return
      */
     List<Qc>  showList(Map<String, Object> map);
@@ -41,11 +41,19 @@ public interface QcMapper {
     /**
      * 查看总行数
      * @param qc
-     * @author 邓康威
+     * @author dengkangwei
      * @return
      */
     int selectCount(Qc qc);
     
+    /**
+     * 
+     * 方法说明：根据质检id查询质检、质检明细
+     * @param qcId
+     * @return
+     * @author dengkangwei
+     * @date：2019年1月7日
+     */
     List<Qc> findById(String qcId);
 }
 
