@@ -94,13 +94,13 @@
 					<div class="layui-form-item">
 		                <label class="layui-form-label">手机号码</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="memPhone" required lay-verify="required" value="{{d.rowdata.memPhone}}" placeholder="请输入密码" autocomplete="off" class="layui-input">
+		                    <input type="text" name="memPhone" required lay-verify="required" value="{{d.rowdata.memPhone}}" placeholder="请输入手机号" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">地址</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="memAddress" required lay-verify="required" value="{{d.rowdata.memAddress}}" placeholder="请输入密码" autocomplete="off" class="layui-input">
+		                    <input type="text" name="memAddress" required lay-verify="required" value="{{d.rowdata.memAddress}}" placeholder="请输入地址" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 					<div class="layui-form-item">
@@ -342,25 +342,7 @@
 	            });
 		    }
 		    
-		    //ajax加载动画
-		    $(function () {
-	            $.ajaxSetup({
-	                layerIndex:-1,
-	                beforeSend: function () {
-	                    this.layerIndex = layer.load(1, { shade: [0.8, '#ffffff'] });
-	                },
-	                complete: function () {
-	                    layer.close(this.layerIndex);
-	                },
-	                error: function () {
-	                    layer.alert('部分数据加载失败，可能会导致页面显示异常，请刷新后重试', {
-	                        skin: 'layui-layer-molv'
-	                       , closeBtn: 0
-	                       , shift: 4 //动画类型
-	                    });
-	                }
-	            });
-	        });
+		   
 		</script>
 	</body>
 </html>
