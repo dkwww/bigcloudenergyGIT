@@ -228,8 +228,9 @@
   
   
   <select id="findByIdss" parameterType="string" resultMap="BaseResultMap">
-  	SELECT * FROM drug_qc a,drug_qc_detail b
+  	SELECT * FROM drug_qc a,drug_qc_detail b,drug_drug c
   	WHERE a.qc_id=b.qc_id 
+  	AND b.qdet_fk_id = c.drug_id
   	AND a.qc_id=#{qcId}
   </select>
   
