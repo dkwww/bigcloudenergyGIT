@@ -97,7 +97,7 @@
 					<div class="layui-form-item">
 		                <label class="layui-form-label">密码</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="adminPwd" required lay-verify="required" value="{{d.rowdata.adminPwd}}" placeholder="请输入密码" autocomplete="off" class="layui-input">
+		                    <input type="password" name="adminPwd" required lay-verify="required" value="{{d.rowdata.adminPwd}}" placeholder="请输入密码" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 					<div class="layui-upload">
@@ -424,7 +424,7 @@
             });
 	    }
 		
-	  //重新渲染表单
+	    //重新渲染表单
 	  	function renderForm(){ 
   			layui.use('form', function(){ 
 	  			var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加() 

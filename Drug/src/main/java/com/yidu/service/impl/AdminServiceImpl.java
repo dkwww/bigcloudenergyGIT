@@ -1,7 +1,6 @@
 package com.yidu.service.impl;
 
  
-import com.yidu.controller.AdminController;
 import com.yidu.dao.AdminMapper;
 import com.yidu.dao.AdminRoleMapper;
 import com.yidu.domain.Admin;
@@ -114,5 +113,11 @@ public class AdminServiceImpl  implements AdminService {
 	@Override
 	public int delete(Admin admin) {
 		return mapper.updateByPrimaryKeySelective(admin);
+	}
+
+	@Override
+	public Admin findById(String adminId) {
+		Admin admin = mapper.selectByPrimaryKey(adminId);
+		return admin;
 	}
 }

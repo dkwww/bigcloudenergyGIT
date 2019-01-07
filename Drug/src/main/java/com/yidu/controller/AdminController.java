@@ -170,7 +170,15 @@ public class AdminController {
 	public List<AdminRole> findByRole(String adminId) {
 		return service.findByRole(adminId);
 	}
-	
+	/**
+	 * 根据id查询
+	 */
+	@RequestMapping("/showId")
+	@ResponseBody
+	public Admin showId(HttpSession session) {
+		Admin admin=(Admin) session.getAttribute("admin");
+		return service.findById(admin.getAdminId());
+	}
 	/**
 	 * 方法说明：取session
 	 * @param session 对象

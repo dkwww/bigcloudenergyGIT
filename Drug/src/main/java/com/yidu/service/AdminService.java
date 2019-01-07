@@ -57,4 +57,7 @@ public interface AdminService   {
 	List<AdminRole> findByRole(String id);
 
 	public int delete(Admin admin);
+
+	public Admin findById(String adminId);
+
 }
