@@ -37,6 +37,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Controller;
@@ -44,6 +45,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yidu.domain.Admin;
 import com.yidu.domain.Audit;
 import com.yidu.domain.Drug;
 import com.yidu.service.AuditService;
@@ -75,14 +77,21 @@ public class DrugController {
 	 */
 	@RequestMapping("/showList")
 	@ResponseBody
-	public Map<String,Object> showList(Drug record,Integer page,Integer limit) {
+	public Map<String,Object> showList(Drug record,Integer page,Integer limit,HttpServletRequest httpServletRequest) {
 		
 		PageUtil pageUtil = new PageUtil();
 		pageUtil.setCurPage(page);
 		pageUtil.setRows(limit);
 		
+		HttpSession session=httpServletRequest.getSession();
+		Admin ad=(Admin) session.getAttribute("admin");
+		
+		record.setComId(ad.getComId());
+		
 		List<Drug> list = drugService.findAll(record, pageUtil);
 		int rows = drugService.findCount(record);
+		
+		
 		
 		@SuppressWarnings("unchecked")
 		Map<String,Object> map = new HashedMap();

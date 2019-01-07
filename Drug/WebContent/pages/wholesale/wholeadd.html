@@ -280,7 +280,6 @@
 		            if (layEvent === 'detail') { //查看
 							$("[data-field = 'drugName']").children().not(":first").each(function(index){
 	            				var m=tableElem.find("tr[data-index="+index+"]").find("button").attr('disabled'); 
-									
 								if(data.drugName==$(this).text() && m==null){
 	            					 tableElem.find("tr[data-index="+index+"]").find("button").addClass('layui-btn-disabled').attr('disabled',true);
 	            					 var mony = data.drugPrice;
@@ -346,7 +345,8 @@
 	        		$("[data-field = 'drugName']").children().not(":first").each(function(index){
 	            		 if($(this).text()==str){
 	        	        	tableElem.find("tr[data-index="+index+"]").find("button").removeClass('layui-btn-disabled');
-	        	         }	
+	        	        	tableElem.find("tr[data-index="+index+"]").find("button").removeAttr('disabled');
+	            		}	
 	        		 });
 	        		$("#zongshu").val(zongnum);
 					$("#zongjin").val(zongmoney);
