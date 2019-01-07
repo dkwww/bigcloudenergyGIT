@@ -144,7 +144,8 @@
   <select id="findQcId" parameterType="string" resultMap="BaseResultMap">
 	SELECT * FROM drug_mat_inv b WHERE b.mat_id=#{matId}
   </select>
-  
+  	
+  	<!-- 查询库存是否足够 -->
    <select id="selectByamount" parameterType="com.yidu.domain.MatInv" resultMap="BaseResultMap">
     select *    from drug_mat_inv   where mat_id = #{matId,jdbcType=VARCHAR} and mi_amount=  #{miAmount,jdbcType=INTEGER}
   </select>
