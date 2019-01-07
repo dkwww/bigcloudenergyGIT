@@ -38,6 +38,9 @@ import org.springframework.stereotype.Controller;
 @Controller
 @RequestMapping("/member")
 public class MemberController {
+	/**
+	 * 注入会员service
+	 */
 	@Resource
 	private MemberService service;
 	
@@ -46,12 +49,12 @@ public class MemberController {
 	 * @param page 当前页数
 	 * @param limit 每页多少行
 	 * @param member model
-	 * @return
+	 * @return map
 	 */
 	@RequestMapping("/query")
 	@ResponseBody
 	public Map<String, Object> query(String page,String limit,Member member){
-		//分页类
+		//创建分页模型类
 		PageUtil util=new PageUtil();
 		//得到页数
 		util.setCurPage(Integer.valueOf(page));
@@ -65,7 +68,9 @@ public class MemberController {
 		int rows=service.findCount(member);
 		//循环
 		for (Member member2 : lists) {
+			//时间转换
 			member2.setOptimeString(Tools.getTimeStr(member2.getOptime()));
+			//添加到集合
 			list.add(member2);
 		}
 		//map集合
@@ -76,13 +81,13 @@ public class MemberController {
 		//总行数
 		map.put("count", rows);
 		map.put("data", list);
-		//返回map
+		//返回map集合
 		return map;
 	}
 	
 	/**
 	 * 上传文件
-	 * @param req
+	 * @param req 请求
 	 * @return msg
 	 * @throws Exception 异常
 	 */
@@ -90,42 +95,57 @@ public class MemberController {
 	@ResponseBody
 	public Message upload(HttpServletRequest req) throws Exception {
 		String fileName=UploadUtil.upload(req);
+		//创建Message
 		Message msg=new Message();
+		//如果文件名为空
 		if(fileName!=null) {
+			//1
 			msg.setStatus(1);
 			msg.setObj(fileName);
+			//提示上传成功
 			msg.setMsg("上传成功");
 		}else {
+			//0
 			msg.setStatus(0);
+			//提示上传成功
 			msg.setMsg("上传失败");
 		}
+		//返回msg
 		return msg;
 	}
 	
 	/**
 	 * 增加会员
 	 * @param record model
-	 * @return 返回msg
+	 * @return msg
 	 */
 	@RequestMapping("/addMember")
 	@ResponseBody
 	public Message addMember(@RequestBody Member record) {
+		//调用service里面增加修改的方法
 		int rows=service.addOrUpdate(record);
+		//创建Message
 		Message msg=new Message();
+		//如果rows大于零
 		if(rows>0) {
+			//1
 			msg.setStatus(1);
+			//提示操作成功
 			msg.setMsg("操作成功");
 		}else {
+			//0
 			msg.setStatus(0);
+			//提示操作失败
 			msg.setMsg("操作失败");
 		}
+		//返回msg
 		return msg;
 	}
 	
 	/**
 	 * 删除
 	 * @param menId 会员ID
-	 * @return 返回rows
+	 * @return rows
 	 */
 	@RequestMapping("/delete")
 	@ResponseBody
@@ -136,32 +156,44 @@ public class MemberController {
 		return rows;
 	}
 	
-	//批量删除
+	/**
+	 * 批量删除
+	 * @param ids id
+	 * @return msg
+	 */
 	@RequestMapping("/bulkUpdate")
 	@ResponseBody
 	public Message bulkUpdate(@RequestBody List<String> ids) {
+		//调用seivice里面批量删除的方法
 		int rows=service.bulkUpdate(ids);
+		//创建Message
 		Message msg=new Message();
+		//rows大于0
 		if(rows>0) {
+			//1
 			msg.setStatus(1);
+			//提示删除成功
 			msg.setMsg("删除成功");
 		}else {
+			//0
 			msg.setStatus(0);
+			//删除失败
 			msg.setMsg("删除失败");
 		}
+		//返回msg
 		return msg;
 	}
 	
 	/**
 	 * 根据ID查询
 	 * @param menId
-	 * @return
+	 * @return service里面格局ID查询的方法
 	 */
 	@RequestMapping("/findById")
 	@ResponseBody
 	public Member findById(String menId) {
+		//返回service里面根据ID查询的方法
 		return service.findById(menId);
-		
 	}
 }
 

@@ -43,33 +43,54 @@ import org.springframework.stereotype.Service;
 @Service
 public class BranchSaleServiceImpl implements BranchSaleService {
 	/**
-	 * 注入销售单Mapper
+	 * 注入零售Mapper
 	 */
 	@Resource
 	private  BranchSaleMapper mapper;
+	/**
+	 * 注入零售明细Mapper
+	 */
 	@Resource
 	BranchSaleDetailMapper branchSaleDetailMapper;
+	/**
+	 * 注入药品Mapper
+	 */
 	@Resource
 	DrugMapper drugMapper;
-	
+	/**
+	 * 注入财务Mapper
+	 */
 	@Resource
 	DebtyMapper debtymapper;
-	
+	/**
+	 * 注入财务明细Mapper
+	 */
 	@Resource
 	DebtyDetailMapper debtyDetailMapper;
-	
-	@Resource
-	DrugInvDetailMapper invDetailMapper;
-
-	@Resource
-	MemberMapper menberMapper;
+	/**
+	 * 注入库存Mapper
+	 */
 	@Resource
 	DrugInveMapper inveMapper;
+	/**
+	 * 注入库存明细Mapper
+	 */
+	@Resource
+	DrugInvDetailMapper invDetailMapper;
+	/**
+	 * 注入会员Mapper
+	 */
+	@Resource
+	MemberMapper menberMapper;
+	
+	
 	@Override
 	public List<BranchSale> query(PageUtil util, BranchSale branchSale) {
 		//new一个Map集合
 		Map<String, Object> map=new HashMap<>();
+		//map取到页数
 		map.put("util", util);
+		//map取到model
 		map.put("branchSale", branchSale);
 		//返回dao类查询所有的方法
 		return mapper.selectAll(map);

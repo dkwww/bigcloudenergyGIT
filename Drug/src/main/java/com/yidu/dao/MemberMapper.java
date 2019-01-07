@@ -20,7 +20,7 @@ public interface MemberMapper {
     int updateByPrimaryKey(Member record);
     /**
      * 显示列表
-     * @param maps
+     * @param maps 集合
      * @return
      */
     public List<Member> selectAll(Map<String, Object> maps);
@@ -32,7 +32,7 @@ public interface MemberMapper {
     int bulkDelete(List<String> ids);
     /**
      * 分页
-     * @param record model
+     * @param record 会员model
      * @return
      */
     int findCount(Member record);

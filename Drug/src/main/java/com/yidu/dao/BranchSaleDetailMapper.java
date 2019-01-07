@@ -19,10 +19,27 @@ public interface BranchSaleDetailMapper {
 
     int updateByPrimaryKey(BranchSaleDetail record);
 
-    
+    /**
+     * 查询所有
+     * @param map 集合
+     * @return
+     */
 	List<BranchSaleDetail> query(Map<String, Object> map);
-
+	/**
+	 * 分页
+	 * @param saleDetail 零售明细
+	 * @return
+	 */
 	int findCount(BranchSaleDetail saleDetail);
+	/**
+	 * 根据名字查询
+	 * @return
+	 */
 	List<Series> queryName();
+	/**
+	 * 根据ID查询
+	 * @param map 集合
+	 * @return
+	 */
 	int queryId(Map<String, Object> map);
 }

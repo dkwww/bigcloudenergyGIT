@@ -26,7 +26,7 @@ public interface BranchSaleMapper {
     public List<BranchSale> selectAll(Map<String, Object> maps);
     /**
      * 分页
-     * @param sale model
+     * @param branchSale 零售model
      * @return
      */
 	int findCount(BranchSale branchSale);
