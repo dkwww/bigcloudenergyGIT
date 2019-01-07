@@ -223,17 +223,15 @@
 		            var tr = obj.tr; //获得当前行 tr 的DOM对象
 		
 		            if (layEvent === 'detail') { //订单详情
-		                console.log(table.checkStatus('demo'));
 			            var  buyId=data.buyId;
 			            
 	                	var index = layer.open({
 	          				  type: 2,
 	          				  title: '采购明细',
 	          				  content: '../../buy/detail.html?id='+buyId,
-	          				  area: ['800px', '30px']
-	          				  //maxmin: true
+	          				  area: ['800px', '430px'],
+	          				  maxmin: true
 	          				});
-	          			layer.full(index);
 		            } else if(layEvent==='confirm'){//审核
 		            	var d = {
 			                	rowdata: {buyId: data.buyId,comId: data.comId,buyMoney:data.buyMoney,matName:data.matName,audIdea:'',buyAudit:1}
@@ -246,10 +244,9 @@
 	          				  type: 2,
 	          				  title: '审核记录',
 	          				  content: '../detail/examineRecord.html?ids'+buyId,
-	          				  area: ['800px', '30px']
-	          				  //maxmin: true
+	          				area: ['800px', '430px'],
+	          				  maxmin: true
 	          				});
-	          			layer.full(index);
 		            }
 		        });
 		        
