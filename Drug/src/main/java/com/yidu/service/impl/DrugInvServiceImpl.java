@@ -58,7 +58,7 @@ public class DrugInvServiceImpl    implements DrugInvService {
 		return dao.amountupdate(drugInve);
 	}
 	@Override
-	public DrugInve findDrug(String id) {
+	public List<DrugInve> findDrug(String id) {
 		return dao.findDrug(id);
 	}
 

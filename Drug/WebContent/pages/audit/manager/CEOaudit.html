@@ -85,9 +85,7 @@
 		            	 [{field: 'audId',title: 'ID', width: 273},
 		                {field: 'audFkId',title: '单号',width: 175},
 		                {field: 'comparyName',title: '厂家',width: 80},
-		                {field: 'audTimes',title: '审核时间',width: 170},
 		                {field: 'audStates',title: '审核状态',width: 200},
-		                {field: 'audIdea',title: '审核意见',width: 150},
 		                {field: 'audName',title: '审核人',width: 90},
 		                {fixed: 'right',title: '操作',width: 220,align: 'center', toolbar: '#barDemo' }]
 		            ],
@@ -153,8 +151,8 @@
 		            	layer.open({
                             type: 2,
                             title: '信息',
-                            content:['../../branchQuality/branchQualityDetail.html?id='+data.audId, 'no'],
-                            area: ['800px', '450px'],
+                            content:['../../branchBuy/findDetail.html?id='+data.audFkId, 'no'],
+                            area: ['920px', '450px'],
                             yes: function(index, layero) {
                                 editIndex = index;
                                 $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();

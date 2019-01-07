@@ -49,7 +49,7 @@ public interface DrugInvService  {
 	   * @param id
 	   * @return
 	   */
-	  public DrugInve findDrug(String id);
+	  public List<DrugInve> findDrug(String id);
 	  
 	  
 	  /**

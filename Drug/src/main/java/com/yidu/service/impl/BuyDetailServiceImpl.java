@@ -143,8 +143,8 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 			}
 			
 			
-			DrugInve drugInv = invService.findDrug(bdetFkId);
-			if(drugInv.getDiId()!=null&&!"".equals(drugInv.getDiId())) {
+			List<DrugInve> drugInv = invService.findDrug(bdetFkId);
+			if(!drugInv.isEmpty()) {
 				System.out.println("找到了药品");
 				
 				if(buyId==null) {

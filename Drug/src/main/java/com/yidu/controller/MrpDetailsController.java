@@ -271,6 +271,7 @@ public class MrpDetailsController {
 		qc.setQcId(qcid);
 		qc.setQcState("1");
 		qc.setQcPut("0");
+		
 		rows= qcService.updateByPrimaryKeySelective(qc);
 		if (rows>0) {
 			message.setStatus(1);

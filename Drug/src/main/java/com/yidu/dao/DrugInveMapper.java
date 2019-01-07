@@ -66,7 +66,7 @@ public interface DrugInveMapper {
      * @return
      */
     
-    DrugInve findDrug(String id);
+    List<DrugInve> findDrug(String id);
     /**
      * 根据商品id查询库存
      * @param drugId

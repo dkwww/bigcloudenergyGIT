@@ -20,7 +20,7 @@
 				var data ={"id":id};
 				$.post(url,data,function(mes){
 					$.each(mes,function(i,item){
-						$("#tbo").append("<tr><td>"+item.drugName+"</td><td>"+item.qdetAmount+"</td><td>"+item.qdetFail+"</td><td>"+item.qdetRate+"</td><td>"+item.qdetOptime+"</td></tr>");
+						$("#tbo").append("<tr><td>"+item.drugName+"</td><td>"+item.qdetAmount+"</td><td>"+item.qdetFail+"</td><td>"+item.qdetRate+"</td></tr>");
 					});
 				},"json");
 			})
@@ -38,7 +38,6 @@
       <th>数量</th>
       <th>未通过数</th>
       <th>通过率</th>
-      <th>质检时间</th>
     </tr>
   </thead>
   <tbody id="tbo">
