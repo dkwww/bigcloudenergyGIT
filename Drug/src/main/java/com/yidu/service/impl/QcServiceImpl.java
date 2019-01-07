@@ -280,7 +280,7 @@ public class QcServiceImpl   implements QcService {
 			detail.setIsva("1");
 			detail.setOptime(new Date());
 			detail.setSort(Tools.getTimeStamp());
-			detail.setQdetFkId(buy.getBuyId());
+			detail.setQdetFkId(buyDetail.getBdetFkId());
 			rows=qcdetailMapper.insertSelective(detail);
 		}
 		

@@ -5,6 +5,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yidu.domain.Admin;
+import com.yidu.domain.Drug;
+import com.yidu.domain.DrugInvDetail;
+import com.yidu.domain.DrugInve;
 import com.yidu.domain.MatInv;
 import com.yidu.domain.MatInvDetail;
 import com.yidu.domain.Mrp;
@@ -12,6 +16,8 @@ import com.yidu.domain.Pmc;
 import com.yidu.domain.PmcDetails;
 import com.yidu.domain.Qc;
 import com.yidu.domain.QcDetail;
+import com.yidu.service.DrugInvDetailService;
+import com.yidu.service.DrugInvService;
 import com.yidu.service.MatInvDetailService;
 import com.yidu.service.MatInvService;
 import com.yidu.service.MrpService;
@@ -53,6 +59,11 @@ public class QcController {
 	private PmcService pmcService;
 	@Resource
 	private PmcDetailsService pmcDetailsService;
+	@Resource
+	private DrugInvService druginvService;
+	@Resource
+	private DrugInvDetailService druginvDetailService;
+	
 	@Resource
 	private QcDetailService   qcDetailService;
 	@Resource
@@ -338,6 +349,68 @@ public class QcController {
 		map.put("count", rows);
 		map.put("data", list);
 		return map;
+	}
+	
+	
+	/**
+	 * 分店药品质检完后入库
+	 * @author zhengyouhong
+	 * @param qc
+	 * @return Message
+	 */
+	@RequestMapping("branchAdd")
+	@ResponseBody
+	public Message branchAdd(@RequestBody Qc qc,HttpSession session) {
+		//获取session
+		Admin admin = (Admin) session.getAttribute("admin");
+		
+		String uuid=null;
+		//改库存状态
+		qcService.buyQcadd(qc);
+		
+		//根据质检id查询质检明细
+		List<QcDetail> list=qcDetailService.selectQcId(qc.getQcId());
+		//循环质检明细的内容
+		for (QcDetail qcDetail : list) {
+			System.out.println("-------------进入这里");
+			System.out.println("    分店药品库存"+qcDetail.getQdetFkId());
+			//在根据质检明细的id查找库存
+			DrugInve drug = druginvService.findBydrugId(qcDetail.getQdetFkId());
+			if(drug!=null&& drug.getDrugId()!=null&&!"".equals(drug.getDrugId())) {
+				System.err.println("----------库存当前数量"+drug.getDiAmount());
+				System.err.println("----------质检明细的数量:"+qcDetail.getQdetAmount());
+				System.err.println("----------库存id:"+drug.getDiId());
+				druginvService.updateAmounts(qcDetail.getQdetAmount(), drug.getDiId());
+				
+				//库存明细
+				DrugInvDetail drugInvDetail=new DrugInvDetail();
+				drugInvDetail.setDiId(drug.getDiId());
+				drugInvDetail.setDiAmount(qcDetail.getQdetAmount());
+				druginvDetailService.insertSelective(drugInvDetail);
+				
+			}else {
+
+				uuid = UUID.randomUUID().toString().replaceAll("-", "");
+				DrugInve drugInve = new DrugInve();
+				drugInve.setDiId(uuid);
+				drugInve.setComId(admin.getComId());
+				drugInve.setDrugId(qcDetail.getQdetFkId());
+				drugInve.setDiAmount(qcDetail.getQdetAmount());
+				
+				druginvService.insertSelective(drugInve);
+				
+				//库存明细
+				DrugInvDetail drugInvDetail=new DrugInvDetail();
+				drugInvDetail.setDiId(uuid);
+				drugInvDetail.setDiAmount(qcDetail.getQdetAmount());
+				druginvDetailService.insertSelective(drugInvDetail);
+			}
+		}
+		Message me=new Message();
+		me.setStatus(1);
+		me.setMsg("操作成功");
+
+		return me;
 	}
 }
 

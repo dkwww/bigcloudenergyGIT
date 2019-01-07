@@ -86,6 +86,12 @@ public class MatInvServiceImpl  implements MatInvService {
 	}
 
 
+	@Override
+	public int insertSelective(MatInv inv) {
+		return matinvmapper.insertSelective(inv);
+	}
+
+
 	
 
 }

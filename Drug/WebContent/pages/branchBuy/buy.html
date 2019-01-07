@@ -212,7 +212,7 @@
 		            		},"json");
 					  	});*/
 		            	 $("[data-field = 'buyAudit']").children().not(":first").each(function(index){
-			            	if($(this).text()=="审核中"){
+			            	if($(this).text()=="审核中"||$(this).text()=="总店总经理审核通过"){
 			            		tableElem.find('tr[data-index="'+ index +'"]').find('button[lay-event=edit]').addClass('layui-btn-disabled').attr('disabled',true);
 				            	
 			            	}

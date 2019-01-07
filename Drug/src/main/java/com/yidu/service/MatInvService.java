@@ -51,4 +51,11 @@ public interface MatInvService  {
 	 */
 	int updateAmount(Integer miAmount,String miId);
 	
+	/**
+	 * 增加
+	 * @param inv
+	 * @return int
+	 */
+	int insertSelective(MatInv inv);
+	
 }

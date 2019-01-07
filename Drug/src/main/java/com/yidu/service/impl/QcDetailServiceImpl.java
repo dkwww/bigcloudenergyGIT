@@ -109,7 +109,6 @@ public class QcDetailServiceImpl   implements QcDetailService {
 
 	@Override
 	public List<QcDetail> findkcId(String qcId) {
-		// TODO Auto-generated method stub
 		return dao.findkcId(qcId);
 	}
 	

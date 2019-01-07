@@ -3,6 +3,10 @@ package com.yidu.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
 import com.yidu.controller.vo.Repertory;
 import com.yidu.domain.DrugInve;
 
@@ -72,4 +76,22 @@ public interface DrugInveMapper {
     public DrugInve findDrugId(String drugId);
     
     List<Repertory> queryBalance(String id);
+    
+    /**
+     * 
+     * 方法说明：药品库存加库存数量
+     * @param qdetAmount
+     * @param diId
+     * @return
+     * @author zhengyouhong
+     * @date：2018年12月27日
+     */
+    @Update("UPDATE drug_drug_inv SET di_amount = di_amount + #{diAmount} WHERE di_id = #{diId}")
+	int updateAmounts(@Param("diAmount")Integer qdetAmount,@Param("diId")String diId);
+
+    @Select("select * from drug_drug_inv")
+	DrugInve findById(String id);
+
+    @Select("SELECT * FROM drug_drug_inv WHERE drug_id=#{qcFkId} ")
+	DrugInve findQcId(@Param("qcFkId")String qcFkId);
 }

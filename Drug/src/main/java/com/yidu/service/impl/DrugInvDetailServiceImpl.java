@@ -6,6 +6,7 @@ import com.yidu.domain.DrugInvDetail;
 import com.yidu.service.DrugInvDetailService;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -48,6 +49,12 @@ public class DrugInvDetailServiceImpl   implements DrugInvDetailService {
      int rows = dao.insert(record);
      System.out.println("===========rows=========="+rows);
 		return rows;
+	}
+	@Override
+	public int insertSelective(DrugInvDetail record) {
+		String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+		record.setDidId(uuid);
+		return dao.insertSelective(record);
 	}
 
 }

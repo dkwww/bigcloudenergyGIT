@@ -3,6 +3,7 @@ package com.yidu.service;
 import java.util.List;
 
 import com.yidu.domain.DrugInvDetail;
+import com.yidu.domain.DrugInve;
 
 /**
  * <p>
@@ -32,5 +33,5 @@ public interface DrugInvDetailService  {
 	 */
 	  int insert(DrugInvDetail record);
 	
-	
+	int insertSelective(DrugInvDetail record);
 }

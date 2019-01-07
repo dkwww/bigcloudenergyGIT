@@ -14,17 +14,17 @@
 			 $("#tijiao").click(function (){ 
 			 	
 			var   shu= $("#shuju").val();
-		 var url ="../../mrpDetails/Preservation.action";
-		 var  data={"shujuName" : shu};
-		 $.post(url,data,function(mes){
-			 if(mes.status==1){
-				 closeLayer();
-				 layer.msg("保存成功"); 
-				 closeLayer();
-				 window.parent.location.reload();
-			 }else{
-				 layer.msg("保存失败"); 
-			 }
+			 var url ="../../mrpDetails/Preservation.action";
+			 var  data={"shujuName" : shu};
+			 $.post(url,data,function(mes){
+				 if(mes.status==1){
+					 closeLayer();
+					 layer.msg("保存成功"); 
+					 closeLayer();
+					 window.parent.location.reload();
+				 }else{
+					 layer.msg("保存失败"); 
+				 }
 			 
 			
 			
@@ -94,7 +94,7 @@
 	
 	
 	<body>
-	 	<input type="text" id="shuju"  style="width: 100%;"  >
+	 	<input type="hidden" id="shuju"  style="width: 100%;"  >
 		  
 		<div class="kit-table">
 		    <form class="layui-form" lay-filter="kit-search-form">

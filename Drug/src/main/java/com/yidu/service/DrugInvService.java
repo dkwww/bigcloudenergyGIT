@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.yidu.controller.vo.Repertory;
 import com.yidu.domain.DrugInve;
+import com.yidu.domain.MatInv;
 import com.yidu.util.PageUtil;
 
 /**
@@ -50,6 +51,17 @@ public interface DrugInvService  {
 	   */
 	  public DrugInve findDrug(String id);
 	  
+	  
+	  /**
+	   * 根据主键查询
+	   * @param id
+	   * @return
+	   */
+	  public DrugInve findById(String id);
+	  
+	  
+	  public DrugInve findBydrugId(String qcFkId);
+	  
 	  /**
 	   * 质检完增加库存
 	   * @param drugInve
@@ -65,4 +77,14 @@ public interface DrugInvService  {
 	 int insert(DrugInve record);
 	 
 	 List<Repertory> queryBalance(String id);
+	 
+	 int insertSelective(DrugInve drugInve);
+	 
+	 /**
+	  * 根据id修改库存
+	  * @param qdetAmount
+	  * @param diId
+	  * @return
+	  */
+	 int updateAmounts(Integer qdetAmount, String diId);
 }

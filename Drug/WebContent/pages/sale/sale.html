@@ -13,9 +13,6 @@
 		    <form class="layui-form" lay-filter="kit-search-form">
 						<!-- 左上角的两个按钮 -->
 		        <div class="kit-table-header">
-		            <div class="kit-search-btns">
-		                <a href="javascript:;" data-action="add" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i> 新增</a>
-		            </div>
 		            <div class="kit-search-inputs">
 		                <div class="kit-search-keyword">
 		                    <input type="text" class="layui-input" name="keyword" placeholder="搜索关键字.." />
@@ -191,7 +188,6 @@
 		                {field: 'saleMoney',title: '订单总金额',width: 100}, 
 		                {field: 'isva',title: '是否有效',width: 166}, 
 		                {field: 'optime',title: '操作时间',width: 100}, 
-		                {field: 'oper',title: '操作人',width: 100, sort: true}, 
 		                {fixed: 'right',title: '操作',width: 180,align: 'center', toolbar: '#barDemo' }]
 		            ],
 		            done: function(res, curr, count) {

@@ -85,4 +85,24 @@ public class DrugInvServiceImpl    implements DrugInvService {
 		return dao.queryBalance(id);
 	}
 
+	@Override
+	public int insertSelective(DrugInve drugInve) {
+		return dao.insertSelective(drugInve);
+	}
+
+	@Override
+	public int updateAmounts(Integer qdetAmount, String diId) {
+		return dao.updateAmounts(qdetAmount,diId);
+	}
+
+	@Override
+	public DrugInve findById(String id) {
+		return dao.findById(id);
+	}
+
+	@Override
+	public DrugInve findBydrugId(String qcFkId) {
+		return dao.findQcId(qcFkId);
+	}
+
 }

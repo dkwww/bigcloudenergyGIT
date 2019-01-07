@@ -46,12 +46,20 @@ public class Audit {
     
     private String comId;		//分店id
     
+    private String comparyName;
     
     
     
     
-    
-    public String getComId() {
+    public String getComparyName() {
+		return comparyName;
+	}
+
+	public void setComparyName(String comparyName) {
+		this.comparyName = comparyName;
+	}
+
+	public String getComId() {
 		return comId;
 	}
 
