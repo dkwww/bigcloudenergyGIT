@@ -73,7 +73,7 @@
 		            laytpl = layui.laytpl;
 		        var tableIns = table.render({
 		            elem: '#demo',
-		            height: '449px', //容器高度
+		            height: autoHeight(), //容器高度
 		            url: '../../qc/QcbuyshowList.action',
 		            page: true,
 		            id: 'demo',
@@ -170,6 +170,20 @@
 		        });
 		        var editIndex;
 		    });
+			
+		  	//窗口自适应
+			function autoHeight() {
+				var h = document.body.clientHeight && document.documentElement.clientHeight - 50; //窗口高度
+				//监听改变窗口大小
+				window.onresize = function() {
+					h = document.body.clientHeight && document.documentElement.clientHeight - 50; //窗口高度
+					tableIns.reload({
+						height: h
+					});
+				}
+				return h;
+			}
+			
 			
 		  	//全屏弹窗
 			function maxlayer(){
