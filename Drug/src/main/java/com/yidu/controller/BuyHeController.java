@@ -77,7 +77,7 @@ public class BuyHeController {
 	 * @param buy
 	 * @param page
 	 * @param limit
-	 * @author 邓康威
+	 * @author dengkangwei
 	 * @return
 	 */
 	@RequestMapping("/showList")
@@ -136,7 +136,7 @@ public class BuyHeController {
 	 * @param sumNumber 总数量
 	 * @param sumPrice	总价格
 	 * @param Supplier	供应商
-	 * @author 邓康威
+	 * @author dengkangwei
 	 * @return
 	 */
 	@RequestMapping("add")
@@ -248,7 +248,7 @@ public class BuyHeController {
 	 * @param buy
 	 * @param page
 	 * @param limit
-	 * @author 邓康威
+	 * @author dengkangwei
 	 * @return
 	 */
 	@RequestMapping("AuditshowList")
@@ -308,7 +308,7 @@ public class BuyHeController {
 	/**
 	 * 审核
 	 * @param buy
-	 * @author 邓康威
+	 * @author dengkangwei
 	 * @return
 	 */
 	@RequestMapping("update")
@@ -358,8 +358,10 @@ public class BuyHeController {
 		//审核的当前时间
 		Date date=new Date();
 		audit.setAudTime(date);
+		//数据添加到审核
 		audservice.add(audit);
 		
+		//调用修改审核状态的方法
 		service.update(buy);
 		
 		Message me=new Message();
@@ -371,12 +373,13 @@ public class BuyHeController {
 	/**
 	 * 采购状态修改
 	 * @param buy
-	 * @author 邓康威
+	 * @author dengkangwei
 	 * @return
 	 */
 	@RequestMapping("cgUpdate")
 	@ResponseBody
 	public Message cgUpdate(@RequestBody Buy buy) {
+		//调用采购状态的修改方法
 		service.update(buy);
 		
 		Message me=new Message();
@@ -389,15 +392,17 @@ public class BuyHeController {
 	/**
 	 * 采购订单提交到质检
 	 * @param buy
-	 * @author 邓康威
+	 * @author dengkangwei
 	 * @return
 	 */
 	@RequestMapping("addQc")
 	@ResponseBody
 	public Message addQc(@RequestBody Buy buy) {
-		
+		//调用采购提交质检的方法
 		qcservice.addQc(buy);
+		//调用修改质检状态方法
 		qcservice.update(buy);
+		
 		Message me=new Message();
 		me.setStatus(1);
 		me.setMsg("操作成功");

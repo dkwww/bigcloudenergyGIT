@@ -83,7 +83,7 @@ public interface QcService  {
 	int update(Buy buy);
 	
 	/**
-	 * 根据id查询
+	 * 根据质检id查询所有
 	 * @param qcId
 	 * @author dengkangwei
 	 * @return

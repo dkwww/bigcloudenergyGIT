@@ -28,10 +28,13 @@ public interface QcDetailService   {
 	List<QcDetail> findById(QcDetail qcdetail);
 	
 	/**
-	 * 根据质检id查看质检明细
-	 * @param qcId
-	 * @author 邓康威
+	 * 
+	 * 方法说明：根据质检id查看质检明细
+	 * @param qcdetail 质检明细对象
+	 * @param page
 	 * @return
+	 * @author dengkangwei
+	 * @date：2019年1月8日
 	 */
 	List<QcDetail> findByIds(QcDetail qcdetail,PageUtil page);
 	
@@ -63,8 +66,8 @@ public interface QcDetailService   {
 	 
 	 /**
 	 * 根据质检id查看质检明细
-	 * @param qcId
-	 * @author 邓康威
+	 * @param qcId 质检id
+	 * @author dengkangwei
 	 * @return
 	 */
 	List<QcDetail> findkcId(String qcId);

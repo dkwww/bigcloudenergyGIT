@@ -53,15 +53,21 @@
   	<if test="buy.buyCompany!=null and buy.buyCompany!='' ">
   		and buy_company like concat("%",#{buy.buyCompany},"%")
   	</if>
+  	<!-- 开始时间 -->
   	<if test="buy.ksTime!=null and buy.ksTime!='' ">
-  		and buy_time &gt; #{buy.ksTime}
+  		and buy_time &gt;= #{buy.ksTime}
   	</if>
+  	<!-- 结束时间 -->
   	<if test="buy.endTime!=null and buy.endTime!='' ">
-  		and buy_time &lt; #{buy.endTime}
+  		and buy_time &lt;= #{buy.endTime}
   	</if>
+  	<!-- 根据时间排序 -->
   	ORDER BY a.buy_time desc
+  	<!-- 分页 -->
   	limit #{page.startRows},#{page.rows}
   </select>
+  
+  
   
   <!-- 邓康威 -->
   <!-- 查询采购订单总行数   有采购订单、供应商-->
@@ -79,10 +85,13 @@
   	SELECT * FROM drug_buy a,drug_provider b,drug_audit c,drug_company d 
 	WHERE a.buy_company=b.prov_id AND a.buy_id=c.aud_fk_id AND c.qc_fk_id=d.com_id 
 	AND a.buy_type = 0
+	<!-- 搜索供应商 -->
   	<if test="buy.buyCompany!=null and buy.buyCompany!='' ">
   		and buy_company like concat("%",#{buy.buyCompany},"%")
   	</if>
+  	<!-- 根据采购时间排序 -->
   	ORDER BY a.buy_time desc
+  	<!-- 分页 -->
   	limit #{page.startRows},#{page.rows}
   </select>
   

@@ -49,6 +49,7 @@ public class QcDetailServiceImpl   implements QcDetailService {
 
 	@Override
 	public List<QcDetail> findByIds(QcDetail qcdetail,PageUtil page) {
+		//创建map对象
 		Map<String, Object> map=new HashMap<>();
 		map.put("qcdetail", qcdetail);
 		map.put("page", page);

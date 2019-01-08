@@ -22,7 +22,7 @@ import org.springframework.stereotype.Controller;
  * 材料质检明细 前端控制器
  * </p>
  *
- * @author Pngjiangping
+ * @author dengkangwei
  * @since 2018-11-26
  */
 @Controller
@@ -57,22 +57,32 @@ public class QcDetailController {
 		return map;
 	} 
 	/**
-	 * 根据质检id查看质检明细
-	 * @param qcdetail
-	 * @author 邓康威
+	 * 
+	 * 方法说明：根据质检id查看质检明细
+	 * @param qcdetail 质检明细对象
+	 * @param page	页数
+	 * @param limit	行数
 	 * @return
+	 * @author dengkangwei
+	 * @date：2019年1月8日
 	 */
 	@RequestMapping("findBuyId")
 	@ResponseBody
 	public Map<String, Object> findBuyId(QcDetail qcdetail,Integer page,Integer limit){
+		//得到分页工具对象
 		PageUtil pageUtil = new PageUtil();
+		//判断页数不等于空 且 行数不等于空
 		if(page!=null && limit!=null) {
+			//赋值页数
 			pageUtil.setCurPage(page);
+			//赋值行数
 			pageUtil.setRows(limit);
 		}
-		
+		//查询质检明细集合
 		List <QcDetail> list=qcdetaService.findByIds(qcdetail,pageUtil);
+		//查询质检明细总行数
 		int rows=qcdetaService.findByIdselectCount(qcdetail);
+		//创建map对象
 		Map<String, Object> map=new HashMap<>();
 		map.put("code", 0);
 		map.put("msg", "");

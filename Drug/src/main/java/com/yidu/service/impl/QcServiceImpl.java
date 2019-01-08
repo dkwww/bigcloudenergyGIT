@@ -106,40 +106,64 @@ public class QcServiceImpl   implements QcService {
 		//定义一个变量为0
 		int rows=0;
 		
+		//定义数量的变量
 		Integer count=0;
 		//根据采购订单id查询采购明细
 		List<BuyDetail> list=detaMapper.findBuysId(buy.getBuyId());
+		
+		//循环明细所有
 		for (BuyDetail buyDetail : list) {
-			
+			//把采购明细的数量循环出来
 			count+=buyDetail.getBdetAmount();
 		}
 		//得到材料质检
 		Qc qc=new Qc();
-		
+		//把采购订单的id添加到质检外键
 		qc.setPmcId(buy.getBuyId());
+		//默认未通过数为0
 		qc.setQcFail(0);
+		//默认总通过数为0
 		qc.setQcRate("0");
 		//默认质检状态为0
 		qc.setQcState("0");
+		//默认入库状态为0
 		qc.setQcPut("0");
+		//把上面循环出来的数量加入质检的数量
 		qc.setQcAmount(count);
+		//默认质检厂家为0
 		qc.setQcConpany("0");
+		//得到当前时间
 		qc.setOptime(new Date());
+		//uuid
 		String uuid=UUID.randomUUID().toString().replaceAll("-", "");
+		//质检id
 		qc.setQcId(uuid);
+		//添加进数据库
 		dao.insert(qc);
 		
+		//循环采购明细所有
 		for (BuyDetail buyDetail : list) {
+			//得到质检明细对象
 			QcDetail detail=new QcDetail();
+			//质检明细id
 			detail.setQdetId(Tools.getDateOrderNo());
+			//把质检id存入质检明细外键
 			detail.setQcId(qc.getQcId());
+			//质检明细数量
 			detail.setQdetAmount(buyDetail.getBdetAmount());
+			//默认未通过数为0
 			detail.setQdetFail(0);
+			//默认通过率为0
 			detail.setQdetRate("0");
+			//是否有效为1
 			detail.setIsva("1");
+			//得到当前时间
 			detail.setOptime(new Date());
+			//排序
 			detail.setSort(Tools.getTimeStamp());
+			//把采购明细的id放入质检明细
 			detail.setQdetFkId(buyDetail.getBdetFkId());
+			//存入数据库
 			rows=qcdetailMapper.insertSelective(detail);
 		}
 		
@@ -148,8 +172,11 @@ public class QcServiceImpl   implements QcService {
 
 	@Override
 	public int update(Buy buy) {
+		//定义一个变量
 		int rows=0;
+		//判断如果采购id不等于null 且不等于空
 		if(buy.getBuyId()!=null && !"".equals(buy.getBuyId())) {
+			//就调用修改方法
 			buyMapper.updateByPrimaryKeySelective(buy);
 		}
 		return rows;
