@@ -24,11 +24,11 @@
 	<!-- 分店分页以及模糊查询 -->
   <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
   	select * from  drug_company WHERE isva IN (0,1)
-  	<where>
+  	
 	  		<if test="company.comName != null and company.comName != '' ">
-	  		com_name like concat('%',#{company.comName},'%')
+	  		and com_name like concat('%',#{company.comName},'%')
 	  	</if>
-  	</where>
+  	
   	limit #{pageUtil.startRows},#{pageUtil.rows}
   </select>
   <!-- 查询总共多少条数据 -->
@@ -40,12 +40,12 @@
   </select>
   <!-- 根据条件为分店和状态为0的查询总共多少条数据 -->
   <select id="checkselectCount" parameterType="com.yidu.domain.Company" resultType="int">
-    select  count(*) from drug_company WHERE com_type='分店' AND isva='0'
+    select  count(*) from drug_company WHERE com_type='0' AND isva='0'
 
   </select>
   <!--根据条件为分店和状态为0的审核分页以及模糊查询  -->
   <select id="checkselectAll" parameterType="map" resultMap="BaseResultMap">
-  SELECT * FROM  drug_company WHERE com_type='分店' AND isva='0' 
+  SELECT * FROM  drug_company WHERE com_type='0' AND isva='0' 
   
 	  		<if test="company.comName != null and company.comName != '' ">
 	  		AND com_name like concat('%',#{company.comName},'%')

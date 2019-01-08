@@ -114,6 +114,7 @@
 		</script>
 		<script src="../../res/layui/layui.all.js"></script>
 		<script>
+		var editIndex1;
 			//显示表格数据
 		    layui.use(['table','upload'], function() {
 		        var table = layui.table,
@@ -121,6 +122,8 @@
 		            layer = layui.layer,
 		            form = layui.form,
 		            laytpl = layui.laytpl;
+		        var tableElem;
+		       
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '449px', //容器高度
@@ -165,7 +168,8 @@
 		          	}]
 		          ],
 		            done: function(res, curr, count) {
-						var tableElem = this.elem.next('.layui-table-view');
+						tableElem = this.elem.next('.layui-table-view');
+						count || tableElem.find('.layui-table-header').css('overflow', 'auto');
 						$("[data-field = 'isva']").children().not(":first").each(function(index){
 							
 							if($(this).text()=="未加盟"){
@@ -174,8 +178,9 @@
 		            		} 
 							if($(this).text()=="已加盟"){
 		            			//禁用
+								tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=dels]').addClass('layui-btn-disabled').attr('disabled',true);
 		            			
-		            			tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=dels]').addClass('layui-btn-disabled').attr('disabled',true);
+		            			tableElem.find('tr[data-index="' + index + '"]').find('input[name="layTableCheckbox"]').attr({name: 'layTableCheckbox_disabled',disabled: 'disabled'}).next().removeClass('layui-form-checked');
 		            		}
 					  	});
 						
@@ -188,6 +193,7 @@
 		            		} 
 						
 					  	});
+					form.render();
 		            	
 		            },
 		            loading: true,
@@ -210,6 +216,31 @@
                     }
                  });
 		        
+		        
+		        
+		        
+		        
+		        
+		      //选中、取消值
+	        	var data=null;
+		        table.on('checkbox(demo)', function(obj){
+		        	var tables=table.cache.demo;
+		        	data=obj.data;
+		        	var dd = tableElem.find('tr[data-index="' + data.LAY_TABLE_INDEX + '"]').find('td[data-field="isva"]').val();
+		        	if(dd=='已加盟'){
+		        		layer.msg("加盟后不能选");
+		        		var cheTr=data.comId.parents("tr")
+		        		console.log(cheTr);
+		        		var index=$(cheTr).data('index');
+	       	            var che = $('#demo').next().find('.layui-table-body tr[data-index="'+index+'"] input[name="layTableCheckbox"]')
+		        		che.prop("checked",false)
+		        		form.render();
+		        	}
+		        });
+		        
+		        
+		        
+		        
 		        //监听搜索表单提交
 		        form.on('submit(search)', function(data) {
 		            //带条件查询
@@ -223,14 +254,13 @@
 		        //渲染 修改和增加弹出层
 			    function showlayer(d){
 			    	laytpl($('#edit-tpl').html()).render(d,function(html) {
-	                    layer.open({
+			    		editIndex1 = layer.open({
 	                        type: 1,
 	                        title: '表单',
 	                        content: html,
 	                        area: ['800px', '430px'],
 	                        btn: ['提交', '重置', '取消'],
 	                        yes: function(index, layero) {
-	                            editIndex = index;
 	                            $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
 	                        },
 	                        btn2: function(index, layero) {
@@ -290,10 +320,11 @@
                			success: function(mes){            
                     		if(data==0){
                      			layer.msg(mes.msg, {icon: 5});
+                     			editIndex1 && layer.close(editIndex1)
                      			return false;
                     		}else{   
                     			$("#res").click();//调用重置按钮将表单数据清空
-		                        editIndex && layer.close(editIndex); //关闭弹出层
+		                        editIndex1 && layer.close(editIndex1); //关闭弹出层
 	    			    		$(".layui-laypage-btn")[0].click();//当前表格刷新
 	                        	layer.msg(mes.msg,{icon:1});
                    			 }
@@ -367,7 +398,18 @@
 		    }
 		    
 		    
-		    
+		 	//窗口自适应
+			function autoHeight() {
+				var h = document.body.clientHeight && document.documentElement.clientHeight - 50; //窗口高度
+				//监听改变窗口大小
+				window.onresize = function() {
+					h = document.body.clientHeight && document.documentElement.clientHeight - 50; //窗口高度
+					tableIns.reload({
+						height: h
+					});
+				}
+				return h;
+			}
 		    //ajax加载动画
 		    $(function () {
 	            $.ajaxSetup({
