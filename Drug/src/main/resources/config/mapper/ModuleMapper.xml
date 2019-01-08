@@ -5,6 +5,7 @@
     <id column="mode_id" jdbcType="VARCHAR" property="modeId" />
     <result column="dru_mode_id" jdbcType="VARCHAR" property="druModeId" />
     <result column="mode_url" jdbcType="VARCHAR" property="modeUrl" />
+    <result column="mode_icon" jdbcType="VARCHAR" property="modeIcon" />
     <result column="mode_name" jdbcType="VARCHAR" property="modeName" />
     <result column="mode_code" jdbcType="VARCHAR" property="modeCode" />
     <result column="mode_names" jdbcType="VARCHAR" property="modeNames" />

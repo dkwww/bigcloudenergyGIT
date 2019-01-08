@@ -8,6 +8,8 @@ public class Module {
     private String druModeId;
 
     private String modeUrl;
+    
+    private String modeIcon;
 
     private String modeName;
 
@@ -58,6 +60,14 @@ public class Module {
 
     public void setModeUrl(String modeUrl) {
         this.modeUrl = modeUrl == null ? null : modeUrl.trim();
+    }
+    
+    public String getModeIcon() {
+        return modeIcon;
+    }
+
+    public void setModeIcon(String modeIcon) {
+        this.modeIcon = modeIcon == null ? null : modeIcon.trim();
     }
 
     public String getModeName() {

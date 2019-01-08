@@ -41,13 +41,13 @@ function showMenu(){
 	$.post("./module/findByModule.action",{"adminId":admin.adminId},function(mes){
 		$.each(mes,function(index,item){
 			$("#LAY-system-side-menu").append('<li class="layui-nav-item">'
-			+'<a href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> '+item.modeName+'</span></a>'
+			+'<a href="javascript:;"><i class="icon iconfont">'+item.modeIcon+'</i><span> '+item.modeName+'</span></a>'
             +'<dl id="'+item.modeId+'" class="layui-nav-child">'
             +'</dl>'
             +'</li>');
 			$.post("./module/findByZiModule.action",{"modeId":item.modeId,"adminId":admin.adminId},function(mess){
 				$.each(mess,function(indexs,items){
-					$("#"+item.modeId).append("<dd><a href='javascript:;' kit-target data-options={url:'./"+items.modeUrl+"',icon:'&#xe658;',title:'"+items.modeName+"',id:'"+items.modeId+"'}><i class='layui-icon'>&#xe614;</i><span> "+items.modeName+"</span></a></dd>")
+					$("#"+item.modeId).append("<dd><a href='javascript:;' kit-target data-options={url:'./"+items.modeUrl+"',icon:'"+items.modeIcon+"',title:'"+items.modeName+"',id:'"+items.modeId+"'}><i class='icon iconfont'>"+items.modeIcon+"</i><span> "+items.modeName+"</span></a></dd>")
 				})
 			},"json")
 		});
