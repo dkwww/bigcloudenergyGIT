@@ -5,6 +5,9 @@ $(function(){
 	showMenu();
 })
 
+/**
+ *获取Session
+ */
 function getSession(){
 	var admin = null;
 	$.ajax({ 
@@ -27,7 +30,7 @@ function getSession(){
 }
 
 /**
- *获取Session
+ * 显示菜单列表
  */
 function showMenu(){
 	
