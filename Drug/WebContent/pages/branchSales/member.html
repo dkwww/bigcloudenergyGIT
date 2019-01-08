@@ -342,7 +342,25 @@
 	            });
 		    }
 		    
-		   
+		    //ajax加载动画
+		    $(function () {
+	            $.ajaxSetup({
+	                layerIndex:-1,
+	                beforeSend: function () {
+	                    this.layerIndex = layer.load(1, { shade: [0.8, '#ffffff'] });
+	                },
+	                complete: function () {
+	                    layer.close(this.layerIndex);
+	                },
+	                error: function () {
+	                    layer.alert('部分数据加载失败，可能会导致页面显示异常，请刷新后重试', {
+	                        skin: 'layui-layer-molv'
+	                       , closeBtn: 0
+	                       , shift: 4 //动画类型
+	                    });
+	                }
+	            });
+	        });
 		</script>
 	</body>
 </html>
