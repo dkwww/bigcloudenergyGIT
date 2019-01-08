@@ -174,7 +174,7 @@ public class QcServiceImpl   implements QcService {
 	public int update(Buy buy) {
 		//定义一个变量
 		int rows=0;
-		//判断如果采购id不等于null 且不等于空
+		//判断如果采购id不等于null 且 不等于空
 		if(buy.getBuyId()!=null && !"".equals(buy.getBuyId())) {
 			//就调用修改方法
 			buyMapper.updateByPrimaryKeySelective(buy);

@@ -26,9 +26,11 @@
   </sql>
   
   <!-- 邓康威 -->
-  <!-- 根据订单id查询所有   有订单、订单明细、原材料 -->
+  <!-- 根据订单id查询所有   有订单、订单明细、原材料、供应商 -->
   <select id="showListId" parameterType="map" resultMap="BaseResultMap">
-  	SELECT * FROM drug_buy a,drug_buy_detail b,drug_material c WHERE a.buy_id=b.buy_id AND b.bdet_fk_id=c.mat_id and a.buy_id=#{detail.buyId}
+  	SELECT * FROM drug_buy a,drug_buy_detail b,drug_material c, drug_provider d
+	WHERE a.buy_id=b.buy_id AND b.bdet_fk_id=c.mat_id AND a.buy_company=d.prov_id
+	AND a.buy_id=#{detail.buyId}
   	<!-- 根据材料名搜索 -->
   	<if test="detail.matName!=null and detail.matName!='' ">
   		and c.mat_name like concat("%",#{detail.matName},"%")
@@ -39,7 +41,9 @@
   <!-- 邓康威 -->
   <!-- 根据订单id查询所有行数   有订单、订单明细、原材料 -->
   <select id="selectCount" parameterType="com.yidu.domain.BuyDetail" resultType="int">
-  	SELECT count(*) FROM drug_buy a,drug_buy_detail b,drug_material c WHERE a.buy_id=b.buy_id AND b.bdet_fk_id=c.mat_id and a.buy_id=#{buyId}
+  	SELECT count(*) FROM drug_buy a,drug_buy_detail b,drug_material c, drug_provider d
+	WHERE a.buy_id=b.buy_id AND b.bdet_fk_id=c.mat_id AND a.buy_company=d.prov_id
+	AND a.buy_id=#{buyId}
   	<!-- 根据材料名搜索 -->
   	<if test="matName!=null and matName!='' ">
   		and c.mat_name like concat("%",#{matName},"%")

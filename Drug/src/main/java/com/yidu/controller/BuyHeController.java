@@ -89,9 +89,9 @@ public class BuyHeController {
 			pageUtil.setRows(limit);
 		}
 		
-		
+		//查询采购订单集合
 		List<Buy> list = service.showList(buy,pageUtil);
-		
+		//循环采购订单内容
 		for (Buy buytwo : list) {
 			//转成时间格式
 			buytwo.setBuyTimes(Tools.getDateStr(buytwo.getBuyTime()));
@@ -131,7 +131,7 @@ public class BuyHeController {
 	
 	/**
 	 * 采购材料增加、删除
-	 * @param id
+	 * @param id		前台传来的id
 	 * @param shuju     前台传来的数据
 	 * @param sumNumber 总数量
 	 * @param sumPrice	总价格
@@ -148,7 +148,6 @@ public class BuyHeController {
 		BuyDetail detail = new BuyDetail();
 		//创建审核对象
 		Audit audit=new Audit();
-		
 		
 		//根据前台传来的值用"#"分割
 		String [] data=shuju.split("#");
@@ -326,7 +325,6 @@ public class BuyHeController {
 			System.err.println("进入减财务");
 			//修改金额
 			debtyservice.addbty(buy.getBuyMoney(),deb.getDebId());
-			
 			
 			//得到财务明细对象
 			DebtyDetail debmx=new DebtyDetail();
