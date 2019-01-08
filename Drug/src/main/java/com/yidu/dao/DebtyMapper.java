@@ -68,11 +68,13 @@ public interface DebtyMapper {
 	
 	
 	/**
-	 * 减财务
-	 * @param money
+	 * 
+	 * 方法说明：减财务
+	 * @param buyMoney
 	 * @param debtyId
-	 * @author 邓康威
 	 * @return
+	 * @author dengkangwei
+	 * @date：2019年1月8日
 	 */
 	@Update("UPDATE drug_debty SET deb_money = deb_money - #{buyMoney} WHERE deb_id = #{debtyId}")
 	int updateMoney(@Param("buyMoney")BigDecimal buyMoney,@Param("debtyId")String debtyId);

@@ -20,7 +20,7 @@ import org.springframework.stereotype.Controller;
  * 原材料库存明细 前端控制器
  * </p>
  *
- * @author Pngjiangping
+ * @author dengkangwei
  * @since 2018-11-26
  */
 @Controller
@@ -50,7 +50,6 @@ public class MatInvDetailController {
 		map.put("data", list);
 		
 		return map;
-		
 	}
 }
 
