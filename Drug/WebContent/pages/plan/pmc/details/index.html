@@ -259,7 +259,7 @@
 					elem: '#dataTable1',
 					id: layTableId1,
 					data: viewObj.data,
-					height: 'full-188',
+					height: 'full-178',
 					page: true,
 					cols: [
 						[
@@ -486,7 +486,7 @@
 				var tableIns2 = table.render({
 					elem: '#dataTable2',
 					id: layTableId2,
-					height: 'full-155',
+					height: 'full-145',
 					where: {"comId": admin.comId},
 					url: "../../../../drug/showChecked.action",
 					page: true,
@@ -701,7 +701,7 @@
 				}
 				
 				function setHeight() {
-					var h = document.body.clientHeight && document.documentElement.clientHeight - 175; //窗口高度
+					var h = document.body.clientHeight && document.documentElement.clientHeight - 165; //窗口高度
 				    $(".layui-card").height(h+135);
 					$(".card-body-left").eq(0).height(h-15);
 					$(".card-body-left").eq(1).height(h+18); 

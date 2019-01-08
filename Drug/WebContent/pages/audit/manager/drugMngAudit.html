@@ -278,22 +278,9 @@
 				layerIndex1 = layer.open({
 				  type: 2,
 				  title: '药品配置',
-				  content: '../../material-list/index.html?id='+id+'&name='+name,
-				  area: ['100%', '100%'],
-				  maxmin: false,
-				  success: function (layero, index){
-					  var body = layer.getChildFrame('body', index);
-					  var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
-					  body.find('.remove,th[data-field="tempId"],td[data-field="tempId"]').remove();
-                      body.find('.layui-table-edit').remove();
-                      body.find("[data-field = 'mlAmount']").not(":first").each(function(){
-						  $(this).css({
-						  	"color": "#666666"
-						  }).on('focus', '.layui-table-edit', function(){
-						  	$(this).remove()
-						  });
-					  });
-                  }
+				  content: '../../materialList/details/index.html?id='+id+'&name='+name,
+				  area: ['800px', '430px'],
+				  maxmin: true
 				});
 				layer.full(layerIndex1);
 			}

@@ -40,10 +40,10 @@
 			});
 			//窗口自适应
 			function autoHeight() {
-				var h = document.body.clientHeight && document.documentElement.clientHeight - 85; //窗口高度
+				var h = document.body.clientHeight && document.documentElement.clientHeight - 65; //窗口高度
 				//监听改变窗口大小
 				window.onresize = function() {
-					h = document.body.clientHeight && document.documentElement.clientHeight - 85; //窗口高度
+					h = document.body.clientHeight && document.documentElement.clientHeight - 65; //窗口高度
 					$("#detail1,#detail2").height(h);
 				}
 				return h;

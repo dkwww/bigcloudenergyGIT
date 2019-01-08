@@ -80,10 +80,10 @@
    		and dc.com_id = #{record.comId,jdbcType=VARCHAR}
    	</if>
    	<if test="record.priceMin !=null and record.priceMin != ''">
-   		and dd.drug_price &gt; #{record.priceMin,jdbcType=DECIMAL}
+   		and dd.drug_price &gt;= #{record.priceMin,jdbcType=DECIMAL}
    	</if>
    	<if test="record.priceMax !=null and record.priceMax !='' ">
-   		and dd.drug_price &lt; #{record.priceMax,jdbcType=DECIMAL}
+   		and dd.drug_price &lt;= #{record.priceMax,jdbcType=DECIMAL}
    	</if>
    	order by (dd.sort+0) desc 
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
@@ -104,10 +104,10 @@
    		and dc.com_id = #{comId,jdbcType=VARCHAR}
    	</if>
    	<if test="priceMin !=null and priceMin !=''">
-   		and dd.drug_price &gt; #{priceMin,jdbcType=DECIMAL}
+   		and dd.drug_price &gt;= #{priceMin,jdbcType=DECIMAL}
    	</if>
    	<if test="priceMax !=null and priceMax !=''">
-   		and dd.drug_price &lt; #{priceMax,jdbcType=DECIMAL}
+   		and dd.drug_price &lt;= #{priceMax,jdbcType=DECIMAL}
    	</if>
   </select>
   
@@ -134,10 +134,10 @@
    		and dd.drug_name like CONCAT(CONCAT('%',#{record.drugName,jdbcType=VARCHAR},'%'))
    	</if>
    	<if test="record.priceMin !=null and record.priceMin != ''">
-   		and dd.drug_price &gt; #{record.priceMin,jdbcType=DECIMAL}
+   		and dd.drug_price &gt;= #{record.priceMin,jdbcType=DECIMAL}
    	</if>
    	<if test="record.priceMax !=null and record.priceMax !='' ">
-   		and dd.drug_price &lt; #{record.priceMax,jdbcType=DECIMAL}
+   		and dd.drug_price &lt;= #{record.priceMax,jdbcType=DECIMAL}
    	</if>
    	order by (da.sort+0) desc 
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
@@ -152,10 +152,10 @@
    		and dd.drug_name like CONCAT(CONCAT('%',#{drugName,jd4	bcType=VARCHAR},'%'))
    	</if>
    	<if test="priceMin !=null and priceMin != ''">
-   		and dd.drug_price &gt; #{priceMin,jdbcType=DECIMAL}
+   		and dd.drug_price &gt;= #{priceMin,jdbcType=DECIMAL}
    	</if>
    	<if test="priceMax !=null and priceMax !='' ">
-   		and dd.drug_price &lt; #{priceMax,jdbcType=DECIMAL}
+   		and dd.drug_price &lt;= #{priceMax,jdbcType=DECIMAL}
    	</if>
   </select>
   
@@ -174,10 +174,10 @@
    		and dt.dt_id = #{record.dtId,jdbcType=VARCHAR}
    	</if>
    	<if test="record.priceMin !=null and record.priceMin != ''">
-   		and dd.drug_price &gt; #{record.priceMin,jdbcType=DECIMAL}
+   		and dd.drug_price &gt;= #{record.priceMin,jdbcType=DECIMAL}
    	</if>
    	<if test="record.priceMax !=null and record.priceMax !='' ">
-   		and dd.drug_price &lt; #{record.priceMax,jdbcType=DECIMAL}
+   		and dd.drug_price &lt;= #{record.priceMax,jdbcType=DECIMAL}
    	</if>
    	order by (dd.sort+0) desc 
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
@@ -198,10 +198,10 @@
    		and dt.dt_id = #{dtId,jdbcType=VARCHAR}
    	</if>
    	<if test="priceMin !=null and priceMin !=''">
-   		and dd.drug_price &gt; #{priceMin,jdbcType=DECIMAL}
+   		and dd.drug_price &gt;= #{priceMin,jdbcType=DECIMAL}
    	</if>
    	<if test="priceMax !=null and priceMax !=''">
-   		and dd.drug_price &lt; #{priceMax,jdbcType=DECIMAL}
+   		and dd.drug_price &lt;= #{priceMax,jdbcType=DECIMAL}
    	</if>
   </select>
   

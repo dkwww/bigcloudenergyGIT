@@ -95,15 +95,17 @@
 			layui.use(['table', 'layer', 'element', 'jquery', 'form'], function(table, layer, element, $, form) {
 				// data模式
 				var $ = layui.$, table = layui.table, form = layui.form, layer = layui.layer;
+				
+				autoHeight();
+				
 				//数据表格实例化			
 				var layTableId1 = "layTableId1";
-				var h = autoHeight(layTableId1);
 				var tableIns1 = table.render({
 					elem: '#dataTable1',
 					id: layTableId1,
 					url: "../../../../pmcDetails/findAll.action",
 					where :{"pmcId":pmcId},
-					height: h+5,
+					height: 'full-140',
 					page: true,
 					cols: [
 						[
@@ -129,7 +131,6 @@
 					  	});
 					}
 				});
-				$(".layui-card").css({"height":h+120});
 				
 				$.ajax({ 
 					url:"../../../../drugType/showList.action",
@@ -174,8 +175,16 @@
 	  			}); 
 	  		}
 			//窗口自适应
-			function autoHeight(tableId) {
-				return document.body.clientHeight && document.documentElement.clientHeight - 150; //窗口高度
+			function autoHeight() {
+				setHeight();
+			    window.onresize = function() {
+			    	setHeight();
+				}
+			}
+			
+			function setHeight() {
+				var h = document.body.clientHeight && document.documentElement.clientHeight - 150; //窗口高度
+			    $(".layui-card").height(h+120);
 			}
 			//ajax加载动画
 		    $(function () {

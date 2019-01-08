@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="renderer" content="webkit" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no" />
+		<title>原料清单</title>
+		<link rel="stylesheet" href="../../../res/layui/css/layui.css" />
+		<link rel="stylesheet" href="../../../res/css/common/font-awesome.min.css" media="all">
+		<link rel="stylesheet" href="../../../res/layui-config/css/app.css" media="all">
+		<link rel="stylesheet" type="text/css" href="../../../res/css/material-list/index.css" />
+		<link rel="stylesheet" type="text/css" href="../../../res/css/material-list/row.css" />
+		<script src="../../../res/js/common/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../../res/js/material-list/index.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../../res/js/common/parameter.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body class="childBody">
+		<section class="layui-col-md10">
+			<div class="layui-card">
+				<div class="card-top css-transition kit-table">
+					<form class="layui-form" lay-filter="kit-search-form">
+						<!-- 左上角的两个按钮 -->
+				        <div class="kit-table-header">
+				        	<div class="kit-search-btns" style="height: 30px;line-height: 30px;margin-left: 10px;font-size: 16px">
+				        		药品：<font style="color: #DC2D00;" id="drugName">名称</font>
+				            </div>
+				            <div class="kit-search-inputs">
+				                <div class="kit-search-keyword">
+				                    <input type="text" class="layui-input" id="serach-one" placeholder="药材.." onKeyUp="lockInput(this,'serach-two')"/>
+				                    <button lay-submit lay-filter="search1"><i class="layui-icon">&#xe615;</i></button>
+				                </div>
+				                <div class="kit-search-more" id="kit-search-more-one">更多筛选<i class="layui-icon">&#xe61a;</i></div>
+				            </div>
+				        </div>
+						<!-- 搜索扩展工具条 -->
+				        <div class="kit-search-mored layui-anim layui-anim-upbit" id="kit-search-mored-one">
+				            <div class="kit-search-body">
+				                <div class="layui-form-item">
+				                    <label class="layui-form-label">药材名称</label>
+				                    <div class="layui-input-block">
+				                        <input type="text" name="matName" id="serach-two" placeholder="搜索关键字.." autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
+				                    </div>
+				                </div>
+				                <div class="layui-form-item">
+					                <label class="layui-form-label">类型</label>
+					                <div class="layui-input-block">
+					                    <select name="mtId" class="drug-type">
+					                      <option value="">药材类型</option>
+					                    </select>
+					                </div>
+				                </div>
+				                <div class="layui-form-item">
+				                    <div class="layui-inline">
+				                        <label class="layui-form-label">数量范围</label>
+				                        <div class="layui-input-block">
+					                        <div class="layui-input-inline" style="width: 100px;">
+					                            <input type="text" name="amountMin" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
+					                        </div>
+					                        <div class="layui-form-mid">-</div>
+					                        <div class="layui-input-inline" style="width: 100px;">
+					                            <input type="text" name="amountMax" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
+					                        </div>
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class="layui-form-item">
+				                    <div class="layui-inline">
+				                        <label class="layui-form-label">价格范围</label>
+				                        <div class="layui-input-block">
+					                        <div class="layui-input-inline" style="width: 100px;">
+					                            <input type="text" name="priceMin" placeholder="￥" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
+					                        </div>
+					                        <div class="layui-form-mid">-</div>
+					                        <div class="layui-input-inline" style="width: 100px;">
+					                            <input type="text" name="priceMax" placeholder="￥" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
+					                        </div>
+				                        </div>
+				                    </div>
+				                </div>
+				            </div>
+				            <div class="kit-search-footer">
+				                <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary kit-btn reset-btn">重置</button>
+				                <button lay-submit lay-filter="search1" class="layui-btn layui-btn-sm kit-btn">确定</button>
+				            </div>
+				        </div>
+				    </form>
+				    
+					<div class="layui-card-body">
+						<div id="tableRes" class="table-overlay">
+							<table id="dataTable1" lay-filter="dataTable" class="layui-hide"></table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<script src="../../../res/js/common/jquery-1.11.2.min.js"></script>
+		<script>
+			//文本框只能输入金额
+		    function amount(th){
+		        var regStrs = [
+		            ['^0(\\d+)$', '$1'], //禁止录入整数部分两位以上，但首位为0
+		            ['[^\\d\\.]+$', ''], //禁止录入任何非数字和点
+		            ['\\.(\\d?)\\.+', '.$1'], //禁止录入两个以上的点
+		            ['^(\\d+\\.\\d{2}).+', '$1'] //禁止录入小数点后两位以上
+		        ];
+		        for(i=0; i<regStrs.length; i++){
+		            var reg = new RegExp(regStrs[i][0]);
+		            th.value = th.value.replace(reg, regStrs[i][1]);
+		        }
+		    }
+			//搜索框同步输入
+			function lockInput(obj,id){
+				$("#"+id).val($(obj).val());
+			}
+		</script>
+		<script src="../../../res/layui/layui.all.js"></script>
+		<script type="text/javascript">
+			//准备视图对象
+			var drugId = getParameter("id");
+			$("#drugName").text(getParameter("name"));
+			window.viewObj = null;
+			var newData = new Array();//第一个表格的所有数据
+			$.ajax({
+				url: "../../../materialList/showList.action", //json文件位置
+				data: {"page":1,"limit":10000,"drugId":drugId},
+				type: "post",
+				async: false,
+				dataType: "json", //返回数据格式为json
+				success: function(res) { //请求成功完成后要执行的方法
+					layui.each(res.data, function(index, data) {
+						res.data[index].state=1;
+						res.data[index].checkDisabled == true;
+					});
+					viewObj = res; 
+					newData = res.data;
+				}
+			});
+			var arr1 = new Array();//选中的数据
+			var arr2 = new Array();//表格的数据
+			//layui 模块化引用
+			layui.use(['table', 'layer', 'element', 'jquery', 'form'], function(table, layer, element, $, form) {
+				// data模式
+				var $ = layui.$, table = layui.table, form = layui.form, layer = layui.layer;
+				
+				autoHeight();
+				
+				//数据表格实例化			
+				var layTableId1 = "layTableId1";
+				var tableIns1 = table.render({
+					elem: '#dataTable1',
+					id: layTableId1,
+					data: viewObj.data,
+					height: 'full-125',
+					page: true,
+					cols: [
+						[
+							{title: '序号',type: 'numbers'},
+							{field: 'matName',title: '材料名称（name）'},
+							{field: 'mlAmount',title: '数量（amount）',edit: 'text',sort: true},
+							{field: 'matUnit',title: '单位',width: 85,align: 'center'},
+							{field: 'matPrice',title: '单价（price）元',sort: true},
+							{field: 'mtName',title: '种类（type）'},
+							{field: 'matEffect',title: '功效（effect）'}
+						]
+					],
+					done: function(res, curr, count) {
+						$("[data-field = 'mlAmount']").not(":first").each(function(){
+							$(this).css({
+								"color": "#0000A0"
+							}).on('focus', '.layui-table-edit', function(){
+								if ($(this).prop('maxlength') == -1) $(this).prop('maxlength', 5);
+							}).on('blur', '.layui-table-edit', function(){
+								if ($(this).val().length < 1) $(this).val(1);
+							}).on('keyup', '.layui-table-edit', function() {
+								var o = $(this);
+								o.val(o.val().replace(/[^0-9]*$/, ""));//正整数
+								o.val(o.val().replace(/^[0]+[0-9]*$/gi, ""));//第一位不能为零
+							});
+					  	});
+					}
+				});
+				
+				//监听搜索表单提交
+		        form.on('submit(search1)', function(data) {
+		        	layer.confirm('你还没有保存确定要执行吗？', function(index) {
+		        		layer.close(index);
+			        	data.field["page"]=1;
+			        	data.field["limit"]=10000;
+			        	data.field["drugId"]=drugId;
+			        	var viewObjs = null;
+			        	$.ajax({
+							url: "../../../materialList/showList.action", //json文件位置
+							data: data.field,
+							type: "post",
+							async: false,
+							dataType: "json", //返回数据格式为json
+							success: function(res) { //请求成功完成后要执行的方法
+								viewObjs = res;
+							}
+						});
+			            //带条件查询
+			            tableIns1.reload({
+			            	data: viewObjs.data
+			            });
+			            arr1 = [];
+			            newData = [];
+			            for (x in viewObj.data) {
+			            	newData.push(viewObj.data[x])
+			            }
+			            $('#kit-search-mored-one').hide();
+		        	});
+		            return false;
+		        });
+				
+		      	//表单渲染
+		        form.render(null, 'kit-search-form');
+				
+		      	//更多筛选点击事件
+		        $('#kit-search-more-one').on('click', function() {
+		            $('#kit-search-mored-one').toggle();
+		        });
+				
+				//监听工具条
+				table.on('tool(dataTable)', function(obj) {
+					var data = obj.data,
+						event = obj.event,
+						tr = obj.tr; //获得当前行 tr 的DOM对象;
+					switch (event) {
+						case "del":
+							layer.confirm('真的删除行么？', function(index) {
+								//obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+								layer.close(index);
+								for (var i = 0, row; i < newData.length; i++) {
+									row = newData[i];
+									if (data.matId == row.matId) {
+										if (row.state==1) {
+											var arr3 = new Array();
+											for (var j = 0; j < viewObj.data.length; j++) {
+												if (row.matId != viewObj.data[j].matId) {
+													arr3.push(viewObj.data[j]);
+												} else {
+													addOrUpdate(JSON.stringify({"mlId":viewObj.data[j].mlId,"isva":0}));
+												}
+											}
+											viewObj.data = arr3;
+										} else {
+											removeOne(row.matId);
+										}
+										newData.splice(i, 1);
+										break;
+									}
+								}
+								tableIns1.reload({
+									data: newData
+								});
+							});
+						break;
+					}
+				});
+				
+				function closeLayer(){
+				    //当你在iframe页面关闭自身时
+					var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+					parent.layer.close(index); //再执行关闭   
+				}
+				//查询类型下拉框数据
+		        $.ajax({ 
+		        	url:'../../../matType/showList.action',
+                    type:'post',//method请求方式，get或者post
+                    async:false,//同步
+                    dataType:'json',//预期服务器返回的数据类型
+                    success:function(mes){//res为相应体,function为回调函数
+                    	//循环添加类型搜索框内的数据
+                    	$.each(mes.data,function(index,item){
+                    		$("#mat-type").append("<option value="+item.mtName+">"+item.mtName+"</option>");
+                    	});
+                    	//渲染类型搜索框内的下拉框
+                    	renderForm();
+                    }
+                 });
+				form.on('select(mat-type)', function(data){
+				  	//带条件查询
+		            tableIns2.reload({
+		                where: {"mtName":data.value},
+		                page: { curr: 1 }
+		            });
+		            $('.kit-search-mored-two').hide();//关闭搜索层
+		            return false;
+				})
+				//重新渲染表单
+			  	function renderForm(){ 
+		  			layui.use('form', function(){ 
+			  			var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加() 
+			  			form.render(); 
+		  			}); 
+		  		}
+				
+				//窗口自适应
+				function autoHeight() {
+					setHeight();
+				    window.onresize = function() {
+				    	setHeight();
+					}
+				}
+				
+				function setHeight() {
+					var h = document.body.clientHeight && document.documentElement.clientHeight - 175; //窗口高度
+					$(".layui-card").css({"height":h+135});
+					$(".card-body-left").css({"height":h+18});
+				}
+				
+			});
+			//ajax加载动画
+		    $(function () {
+	            $.ajaxSetup({
+	                layerIndex:-1,
+	                beforeSend: function () {
+	                    this.layerIndex = layer.load(1, { shade: [0.8, '#ffffff'] });
+	                },
+	                complete: function () {
+	                    layer.close(this.layerIndex);
+	                },
+	                error: function () {
+	                    layer.alert('部分数据加载失败，可能会导致页面显示异常，请刷新后重试', {
+	                        skin: 'layui-layer-molv'
+	                       , closeBtn: 0
+	                       , shift: 4 //动画类型
+	                    });
+	                }
+	            });
+	        });
+		</script>
+	</body>
+</html>

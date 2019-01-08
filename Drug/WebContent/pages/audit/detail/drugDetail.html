@@ -43,7 +43,7 @@
 					id: "layTableId1",
 					url: "../../../audit/showDetail.action",
 					where: {"comId": comId,"audFkId": getParameter("id"),"type": getParameter("type")},
-					height: autoHeight(),
+					height: 'full-90', //容器高度
 					page: true,
 					cols: [
 						[
@@ -66,19 +66,6 @@
 					  	});
 					}
 				});
-				
-				//窗口自适应
-				function autoHeight() {
-					var h = document.body.clientHeight && document.documentElement.clientHeight - 80; //窗口高度
-					//监听改变窗口大小
-					window.onresize = function() {
-						h = document.body.clientHeight && document.documentElement.clientHeight - 80; //窗口高度
-						tableIns1.reload({
-							height: h
-						});
-					}
-					return h;
-				}
 				
 				function getSession(){
 					var admin = null;

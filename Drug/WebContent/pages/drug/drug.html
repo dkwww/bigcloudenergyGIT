@@ -89,14 +89,14 @@
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">名称</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="drugName" required lay-verify="required" value="{{d.rowdata.drugName}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                    <input type="text" name="drugName" required lay-verify="required" value="{{d.rowdata.drugName}}" placeholder="请输入名称" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">类型</label>
 		                <div class="layui-input-block">
 		                    <select name="dtId" lay-verify="required">
-		                      <option value=""></option>
+		                      <option value="请选择类型"></option>
 		                      {{# layui.each(d.types,function(index,item){ }}                      
 		                      {{# if(item.dtId===d.rowdata.dtId){}}
 		                      <option value="{{item.dtId}}" selected>{{item.dtName}}</option>
@@ -110,7 +110,7 @@
 					<div class="layui-form-item">
 		                <label class="layui-form-label">单位</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="drugUnit" required lay-verify="required" value="{{d.rowdata.drugUnit}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                    <input type="text" name="drugUnit" required lay-verify="required" value="{{d.rowdata.drugUnit}}" placeholder="请输入单位" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 					<div class="layui-form-item">
@@ -156,73 +156,73 @@
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">药品名称</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="specName" required lay-verify="required" value="{{d.rowdata.specName}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                    <input type="text" name="specName" required lay-verify="required" value="{{d.rowdata.specName}}" placeholder="请输入名称" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">性状</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="specTrait" required lay-verify="required" value="{{d.rowdata.specTrait}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                    <input type="text" name="specTrait" required lay-verify="required" value="{{d.rowdata.specTrait}}" placeholder="请输入性状" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 					<div class="layui-form-item">
 		                <label class="layui-form-label">功能主治</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="specPurpose" required lay-verify="required" value="{{d.rowdata.specPurpose}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                    <input type="text" name="specPurpose" required lay-verify="required" value="{{d.rowdata.specPurpose}}" placeholder="请输入功能主治" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 					<div class="layui-form-item">
 		                <label class="layui-form-label">规格</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="specSize" required lay-verify="required" value="{{d.rowdata.specSize}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                    <input type="text" name="specSize" required lay-verify="required" value="{{d.rowdata.specSize}}" placeholder="请输入规格" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">用法用量</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="specUse" required lay-verify="required" value="{{d.rowdata.specUse}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                    <input type="text" name="specUse" required lay-verify="required" value="{{d.rowdata.specUse}}" placeholder="请输入用法用量" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 					<div class="layui-form-item">
 		                <label class="layui-form-label">不良反应</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="specEffect" required lay-verify="required" value="{{d.rowdata.specEffect}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                    <input type="text" name="specEffect" required lay-verify="required" value="{{d.rowdata.specEffect}}" placeholder="请输入不良反应" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 					<div class="layui-form-item">
 		                <label class="layui-form-label">禁忌</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="specTaboo" required lay-verify="required" value="{{d.rowdata.specTaboo}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                    <input type="text" name="specTaboo" required lay-verify="required" value="{{d.rowdata.specTaboo}}" placeholder="请输入禁忌" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 					<div class="layui-form-item">
 		                <label class="layui-form-label">注意事项</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="specNotice" required lay-verify="required" value="{{d.rowdata.specNotice}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                    <input type="text" name="specNotice" required lay-verify="required" value="{{d.rowdata.specNotice}}" placeholder="请输入注意事项" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 					<div class="layui-form-item">
 		                <label class="layui-form-label">药物相互作用</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="specInteract" required lay-verify="required" value="{{d.rowdata.specInteract}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                    <input type="text" name="specInteract" required lay-verify="required" value="{{d.rowdata.specInteract}}" placeholder="请输入药物相互作用" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 					<div class="layui-form-item">
 		                <label class="layui-form-label">贮藏</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="specDepot" required lay-verify="required" value="{{d.rowdata.specDepot}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                    <input type="text" name="specDepot" required lay-verify="required" value="{{d.rowdata.specDepot}}" placeholder="请输入贮藏" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 					<div class="layui-form-item">
 		                <label class="layui-form-label">包装</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="specPack" required lay-verify="required" value="{{d.rowdata.specPack}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                    <input type="text" name="specPack" required lay-verify="required" value="{{d.rowdata.specPack}}" placeholder="请输入包装" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 					<div class="layui-form-item">
 		                <label class="layui-form-label">有效期</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="specValidity" required lay-verify="required" value="{{d.rowdata.specValidity}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		                    <input type="text" name="specValidity" required lay-verify="required" value="{{d.rowdata.specValidity}}" placeholder="请输入有效期" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 					
@@ -499,7 +499,7 @@
 				layerIndex1 = layer.open({
 				  type: 2,
 				  title: '药品配置',
-				  content: '../material-list/index.html?id='+id+'&id2='+id2+'&name='+name+'&state='+state,
+				  content: '../materialList/index.html?id='+id+'&id2='+id2+'&name='+name+'&state='+state,
 				  area: ['100%', '100%'],
 				  maxmin: false
 				});
