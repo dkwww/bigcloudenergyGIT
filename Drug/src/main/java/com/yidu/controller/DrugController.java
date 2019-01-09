@@ -197,20 +197,31 @@ public class DrugController {
 	@RequestMapping("/showLists")
 	@ResponseBody
 	public Map<String,Object> showLists(Drug record,Integer page,Integer limit) {
+		//创建分页工具
 		PageUtil pageUtil = new PageUtil();
+		//总页
 		pageUtil.setCurPage(page);
+		//行
 		pageUtil.setRows(limit);
 		
-		record.setComId("0");
+		//分店ID
+		record.setComId("1");
 		
+		//调用查询的方法
 		List<Drug> list = drugService.selectBySelectives(record,pageUtil);
+		//查询总数的方法
 		int rows = drugService.findCount(record);
 		
 		@SuppressWarnings("unchecked")
+		//创建map集合
 		Map<String,Object> map = new HashedMap();
+		//code
 		map.put("code", 0);
+		//msg
 		map.put("msg", "");
+		//行
 		map.put("count", rows);
+		//传入集合
 		map.put("data", list);
 		return map;
 	}

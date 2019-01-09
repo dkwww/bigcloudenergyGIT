@@ -258,7 +258,7 @@ public class AuditController {
 					drugInve.setDiAmount(wholesaleDetail.getWdAmount());
 					druginvservice.amountupdate(drugInve);
 					Debty debty=new Debty();
-					debty.setComId(druginv.getComId());
+					debty.setComId("1");
 					
 					BigDecimal zongjias = new BigDecimal(zongjia);
 					debty.setDebMoney(zongjias);

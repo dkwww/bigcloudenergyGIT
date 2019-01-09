@@ -114,6 +114,8 @@ public class DrugServiceImpl implements DrugService {
 	@Override
 	public List<Drug> selectBySelectives(Drug record, PageUtil pageUtil) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		System.err.println("啊实打实大师==="+record.getComId());
+		
 		map.put("record", record);
 		map.put("pageUtil", pageUtil);
 		return drugMapper.selectBySelective(map);
