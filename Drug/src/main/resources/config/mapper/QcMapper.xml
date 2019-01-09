@@ -41,8 +41,8 @@
   </select>
   
   <select id="branchQuality" parameterType="java.util.Map" resultMap="BaseResultMap">
-    SELECT * FROM drug_qc a,drug_buy b,drug_company c WHERE a.pmc_id=b.buy_id AND a.qc_conpany=c.com_id 
-    and a.qc_type=3 order by (a.sort+0) desc 
+     SELECT * FROM drug_qc a,drug_buy_detail b,drug_company c WHERE a.pmc_id=b.buy_id AND a.qc_conpany=c.com_id 
+    AND a.qc_type=3 ORDER BY (a.sort+0) DESC 
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
     
   </select>

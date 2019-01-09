@@ -2,7 +2,8 @@
 SQLyog Ultimate v8.32 
 MySQL - 5.7.24-0ubuntu0.16.04.1 : Database - drug_db
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -186,7 +187,7 @@ DROP TABLE IF EXISTS `drug_debty`;
 CREATE TABLE `drug_debty` (
   `deb_id` varchar(100) NOT NULL COMMENT '财物编号',
   `com_id` varchar(100) DEFAULT NULL COMMENT '店铺编号',
-  `deb_money` decimal(15,2) DEFAULT NULL COMMENT '总资产',
+  `deb_money` decimal(25,2) DEFAULT NULL COMMENT '总资产',
   `optime` datetime DEFAULT NULL COMMENT '操作时间',
   `isva` varchar(50) DEFAULT NULL COMMENT '是否有效',
   `oper` varchar(100) DEFAULT NULL COMMENT '操作人',
@@ -225,7 +226,7 @@ CREATE TABLE `drug_drug` (
   `drug_unit` varchar(50) DEFAULT NULL COMMENT '药品单位（盒、粒、片、瓶、克）',
   `drug_prop` varchar(50) DEFAULT NULL COMMENT '药品属性（1处方、0非处方）',
   `drug_pictrue` varchar(200) DEFAULT NULL COMMENT '药品图片',
-  `drug_price` decimal(5,2) DEFAULT NULL COMMENT '药品单价',
+  `drug_price` decimal(8,2) DEFAULT NULL COMMENT '药品单价',
   `isva` varchar(50) DEFAULT NULL COMMENT '是否有效',
   `optime` datetime DEFAULT NULL COMMENT '操作时间',
   `oper` varchar(100) DEFAULT NULL COMMENT '操作人',
@@ -403,9 +404,10 @@ CREATE TABLE `drug_module` (
   `mode_id` varchar(100) NOT NULL COMMENT '模块编号',
   `dru_mode_id` varchar(100) DEFAULT NULL COMMENT '模块管_模块编号',
   `mode_url` varchar(100) DEFAULT NULL COMMENT '模块URL',
+  `mode_icon` varchar(100) DEFAULT NULL COMMENT '模块图标',
   `mode_name` varchar(100) DEFAULT NULL COMMENT '模块名称',
   `mode_code` varchar(100) DEFAULT NULL COMMENT '模块编码',
-  `mode_explain` varchar(300) DEFAULT NULL COMMENT '模块说明',
+  `mode_explain` varchar(300) DEFAULT '' COMMENT '模块说明',
   `isva` varchar(50) DEFAULT NULL COMMENT '是否有效',
   `optime` datetime DEFAULT NULL COMMENT '操作时间',
   `oper` varchar(100) DEFAULT NULL COMMENT '操作人',

@@ -83,10 +83,6 @@ public class DrugController {
 		pageUtil.setCurPage(page);
 		pageUtil.setRows(limit);
 		
-		HttpSession session=httpServletRequest.getSession();
-		Admin ad=(Admin) session.getAttribute("admin");
-		
-		record.setComId(ad.getComId());
 		
 		List<Drug> list = drugService.findAll(record, pageUtil);
 		int rows = drugService.findCount(record);
@@ -204,6 +200,8 @@ public class DrugController {
 		PageUtil pageUtil = new PageUtil();
 		pageUtil.setCurPage(page);
 		pageUtil.setRows(limit);
+		
+		record.setComId("0");
 		
 		List<Drug> list = drugService.selectBySelectives(record,pageUtil);
 		int rows = drugService.findCount(record);

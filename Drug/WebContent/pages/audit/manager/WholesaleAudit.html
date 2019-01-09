@@ -125,11 +125,11 @@
 		            ],
 		            done: function(res, curr, count) {
 		            	tableElem=this.elem.next('.layui-table-view');
-		            	$("[data-field = 'audState']").children().not(":first").each(function(){
+		            	$("[data-field = 'audState']").children().not(":first").each(function(indexs){
 		            		$.each($(this).find('input'),function(index,item){
 		            			if($(this).val() == '31'){
 		            				$(this).prop("checked",true);
-		            				tableElem.find('tr[data-index="' + index + '"]').find('button[lay-event=shenhe]').addClass('layui-btn-disabled').attr('disabled',true);
+		            				tableElem.find('tr[data-index="' + indexs + '"]').find('button[lay-event=shenhe]').addClass('layui-btn-disabled').attr('disabled',true);
 		            			}
 		            		});
 		            		renderForm();
@@ -192,7 +192,7 @@
                             content: '../../wholesale/detailwhol.html?whoid='+data.audFkId+''
                         });
 		            } else if (layEvent === 'shenhe') {
-		            	$.ajax({ url:"../../audit/Finanexamine.action",
+		            	$.ajax({ url:"../../../audit/Finanexamine.action",
 		                    type:'post',//method请求方式，get或者post
 		                    cache: false,//同步
 		                    dataType:'json',//预期服务器返回的数据类型

@@ -99,7 +99,7 @@ public class CompanyServiceImpl  implements CompanyService {
 			//增加uuid
 			com.setComId(uuid);
 			//增加分店时默认设置为分店
-			com.setComType("分店");
+			com.setComType("1");
 			//默认增加当前时间
 			com.setOptime(new Date());
 			//默认为0

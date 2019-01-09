@@ -212,7 +212,7 @@ public class WholesaleController {
 				//批发ID
 				wholesale.setWholId(uuid);
 				//店铺ID
-				wholesale.setComId(comIdname);
+				wholesale.setComId("0");
 				//总数量
 				wholesale.setWholAmount(zongshu);
 				//总价
