@@ -53,7 +53,7 @@
 		
 		<!-- 修改页面 -->
 		<script type="text/html" id="edit-tpl">
-		    <div style="margin:10px">
+		    <div style="height: 40px;margin:auto;position: absolute;top: 0px;bottom: 0px;left: 0px;right: 0px">
 		        <form class="layui-form" action="" lay-filter="form-edit">
 		            <input type="hidden" name="mtId" value="{{d.rowsdata.mtId}}" />
 		            <div class="layui-form-item">
@@ -262,7 +262,7 @@
 		                        function(html) {
 		                            layer.open({
 		                                type: 1,
-		                                title: '表单',
+		                                title: '药材类型操作',
 		                                content: html,
 		                                area: ['600px', '260px'],
 		                                btn: ['提交', '重置', '取消'],

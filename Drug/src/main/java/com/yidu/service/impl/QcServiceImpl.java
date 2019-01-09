@@ -105,7 +105,6 @@ public class QcServiceImpl   implements QcService {
 	public int addQc(Buy buy) {
 		//定义一个变量为0
 		int rows=0;
-		
 		//定义数量的变量
 		Integer count=0;
 		//根据采购订单id查询采购明细

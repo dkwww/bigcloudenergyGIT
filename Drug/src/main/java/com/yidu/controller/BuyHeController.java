@@ -74,18 +74,22 @@ public class BuyHeController {
 	
 	/**
 	 * 显示列表
-	 * @param buy
-	 * @param page
-	 * @param limit
+	 * @param buy 采购订单对象
+	 * @param page 前台页数
+	 * @param limit 前台行数
 	 * @author dengkangwei
 	 * @return
 	 */
 	@RequestMapping("/showList")
 	@ResponseBody
 	public Map<String,Object> showList(Buy buy,Integer page,Integer limit) {
+		//得到分页对象
 		PageUtil pageUtil = new PageUtil();
+		//判断页数不等于空 且 行数不等于空
 		if(page!=null && limit!=null) {
+			//赋值前台传来的页数
 			pageUtil.setCurPage(page);
+			//赋值前台传来的行数
 			pageUtil.setRows(limit);
 		}
 		
@@ -104,14 +108,14 @@ public class BuyHeController {
 				  buytwo.setAuName("未通过");
 			}
 			 
-			//采购状态判断如果是0是未采购
+			//采购状态判断如果是0是"未采购",1是"已采购"
 			if(buytwo.getBuyState().equals("0")) {
 				buytwo.setBuyStates("未采购");
 			}else if(buytwo.getBuyState().equals("1")) {
 				buytwo.setBuyStates("已采购");
 			}
 			
-			//提交状态判断如果是0是未提交
+			//提交状态判断如果是0是未提交,1是"已提交"
 			if(buytwo.getBuySubmission().equals("0")) {
 				buytwo.setBuySubmissions("未提交");
 			}else {
@@ -164,7 +168,7 @@ public class BuyHeController {
 		buy.setBuyCompany(Supplier);
 		//存进总数量,是int类型必须强转下
 		buy.setBuyAmount(Integer.valueOf(sumNumber));
-		//存进总金额
+		//存进总金额(因为是BigDecimal类型的,所以要强转下)
 		BigDecimal buyMoney = new BigDecimal(sumPrice);
 		buy.setBuyMoney(buyMoney);
 		//状态为0是材料
@@ -215,7 +219,7 @@ public class BuyHeController {
 			
 			//把前台传来的id存入采购明细id
 			detail.setBdetFkId(buyId);
-			//把前台传来的单价存入采购明细单价
+			//把前台传来的单价存入采购明细单价(因为是BigDecimal类型的,所以要强转下)
 			BigDecimal bdetPrices = new BigDecimal(bdetPrice);
 			detail.setBdetPrice(bdetPrices);
 			//把前台传来的数量存入采购明细数量,强转下,是int类型
@@ -244,27 +248,33 @@ public class BuyHeController {
 	
 	/**
 	 * 审核显示列表
-	 * @param buy
-	 * @param page
-	 * @param limit
+	 * @param buy 采购订单对象
+	 * @param page 前台的页数
+	 * @param limit 前台的行数
 	 * @author dengkangwei
 	 * @return
 	 */
 	@RequestMapping("AuditshowList")
 	@ResponseBody
 	public Map<String,Object> AuditshowList(Buy buy,Integer page,Integer limit){
+		//得到分页对象
 		PageUtil pageUtil = new PageUtil();
+		//判断页数不等于空 且 行数不等于空
 		if(page!=null && limit!=null) {
+			//赋值前台传来的页数
 			pageUtil.setCurPage(page);
+			//赋值前台传来的行数
 			pageUtil.setRows(limit);
 		}
 		
+		//查询采购集合
 		List<Buy> list = service.AuditshowList(buy,pageUtil);
 		
+		//循环采购所有
 		for (Buy buytwo : list) {
 			//转时间
 			buytwo.setBuyTimes(Tools.getDateStr(buytwo.getBuyTime()));
-			 //判断如果是0就是未审核
+			 //判断如果是0就是"未审核",1是 "已审核",最后是"未通过"
 			 if (buytwo.getBuyAudit().equals("0")) {
 				  buytwo.setAuName("未审核");
 			}else if(buytwo.getBuyAudit().equals("1")){
@@ -274,8 +284,10 @@ public class BuyHeController {
 			}
 			
 		}
+		//查询总行数
 		int rows=service.AuditselectCount(buy);
 		
+		//创建map对象
 		Map<String, Object> map = new HashMap<>();
 		map.put("code", 0);
 		map.put("msg", "");
@@ -295,6 +307,7 @@ public class BuyHeController {
 	@RequestMapping("delete")
 	@ResponseBody
 	public Message delete(@RequestBody Buy buy) {
+		//调用删除方法
 		service.update(buy);
 		
 		Message me=new Message();
@@ -305,10 +318,12 @@ public class BuyHeController {
 	
 	
 	/**
-	 * 审核
-	 * @param buy
-	 * @author dengkangwei
+	 * 
+	 * 方法说明：审核完后减财务
+	 * @param buy 采购订单对象
 	 * @return
+	 * @author dengkangwei
+	 * @date：2019年1月9日
 	 */
 	@RequestMapping("update")
 	@ResponseBody
@@ -319,21 +334,20 @@ public class BuyHeController {
 		System.err.println("------------财务总金额"+deb.getDebMoney());
 		System.err.println("------------材料总价格"+buy.getBuyMoney());
 		System.err.println("=============财务id"+deb.getDebId());
-		System.err.println("---------------------------------"+buy.getBuyAudit());
-		//判断如果审核状态为1的时候就减财务
+		//判断如果审核状态不等于空且为1的时候就减财务
 		if(buy.getBuyAudit()!="" && buy.getBuyAudit().equals("1")) {
-			System.err.println("进入减财务");
-			//修改金额
+			//根据财务id修改金额
 			debtyservice.addbty(buy.getBuyMoney(),deb.getDebId());
 			
 			//得到财务明细对象
 			DebtyDetail debmx=new DebtyDetail();
-			//赋值一个id
+			//赋值一个id(getDateOrderNo)
 			debmx.setDdetId(Tools.getDateOrderNo());
 			//赋值财务的id
 			debmx.setDebId(deb.getDebId());
 			//赋值订单的金额
 			debmx.setDdetChange(buy.getBuyMoney());
+			//默认是否有效为1
 			debmx.setIsva("1");
 			//赋值0为支出状态
 			debmx.setDdettFkId("0");
@@ -342,7 +356,6 @@ public class BuyHeController {
 			//放入数据库
 			debtydetailservice.addmx(debmx);
 		}
-		
 		
 		
 		//获取审核表的对象
@@ -362,7 +375,9 @@ public class BuyHeController {
 		//调用修改审核状态的方法
 		service.update(buy);
 		
+		//创建me对象
 		Message me=new Message();
+		//赋值为1
 		me.setStatus(1);
 		me.setMsg("操作成功");
 		return me;
