@@ -45,10 +45,13 @@ public class QcDetailController {
 		pageUtil.setCurPage(page);
 		pageUtil.setRows(limit); 
 		List <QcDetail> list=qcdetaService.selectbyId(qcdetail,pageUtil);
+		//将日期类型转换为字符类型
 		for (QcDetail qcDetail2 : list) {
 				qcDetail2.setSjName(TimeUtil.dateToString(qcDetail2.getQdetOptime(), "yyyy-mm-dd"));
 		}
+		//查询行数
 		int  rows  = qcdetaService.selectbycount(qcdetail);
+		//layui前台格式
 		Map<String, Object> map=new HashMap<>();
 		map.put("code", 0);
 		map.put("msg", "");

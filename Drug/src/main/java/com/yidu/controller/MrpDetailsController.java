@@ -98,32 +98,7 @@ public class MrpDetailsController {
 	@ResponseBody
 	public   Message   update(MrpDetails  mrpDetails) {
 		//传过来的数据
-		String   name = mrpDetails.getShujuName(); 
-		
-		String   namefive[]=name.split("#");
-		List<MatInv> lsit= null;
-		for (int i = 0; i < namefive.length; i++) { 
-			//拆分成一个字段
-			String   nametow[] = namefive[i].split(",");
-			//药品ID
-			String drugId = nametow[0]; 
-			List<MaterialList> list = materialListService.selectBydrugId(drugId);
-			//增加的数量
-			String    addnum =nametow[3]; 
-			
-			for (MaterialList materialList : list) {
-				MatInv  matInv =new   MatInv();
-				matInv.setMatId(materialList.getMatId());
-				int   aa= materialList.getMlAmount()*Integer.valueOf(addnum);
-				matInv.setMiAmount(aa);
-				lsit = matinvservice.selectByamount(matInv);
-			} 
-		} 
-		if (!lsit.isEmpty()) {
-			System.err.println("可以制造");
-		}else {
-			System.err.println("返回材料不足");
-		}
+		String   name = mrpDetails.getShujuName();  
 		
 		//返回提示信息
 		Message   message = new   Message();
@@ -199,7 +174,7 @@ public class MrpDetailsController {
 			mrp.setMrpIdea(0);
 			//修改状态
 			mrpService.Modifyprogresss(mrp);
-			System.out.println("==========pmcID========="+mrp.getPmcId());
+		 
 		}
 		
 		

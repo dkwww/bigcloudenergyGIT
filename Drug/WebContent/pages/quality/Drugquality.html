@@ -399,7 +399,7 @@
 		                console.log(table.checkStatus('demo'));
 		            }else if(layEvent === 'auditDetail'){   //弹出查看详细 
 		            	var  qcId=data.qcId;
-		           		 alert(qcId);
+		           		 
 		            	layer3(data.qcId); 
 		            } else if (layEvent === 'del') { //删除
 		                layer.confirm('确定要加入库存？', function(index) {
@@ -517,7 +517,7 @@
 		    
 		  //制造详情弹窗
 			function layer3(id){
-			 	 alert(id);
+			 	 
 				var layerIndex3 = layer.open({
 				  type: 2,
 				  title: '制造详细',
