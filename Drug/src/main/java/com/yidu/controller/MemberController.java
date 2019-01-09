@@ -195,5 +195,11 @@ public class MemberController {
 		//返回service里面根据ID查询的方法
 		return service.findById(menId);
 	}
+	
+	@RequestMapping("/findMenName")
+	@ResponseBody
+	public int findMenName(String menName) {
+		return service.findMenName(menName);
+	}
 }
 

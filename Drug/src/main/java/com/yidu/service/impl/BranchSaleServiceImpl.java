@@ -177,7 +177,11 @@ public class BranchSaleServiceImpl implements BranchSaleService {
 			branchSaleDetail.setSort(Tools.getTimeStamp());
 			rows=branchSaleDetailMapper.insertSelective(branchSaleDetail);
 			
-			DrugInve drugInve=inveMapper.findDrugId(arr[0]);
+			
+			Map<String, Object> map=new HashMap<>();
+			map.put("drugId", arr[0]);
+			map.put("comId", comId);
+			DrugInve drugInve=inveMapper.findDrugId(map);
 			System.err.println("--------------"+branchSaleDetail.getBsdAmount());
 			drugInve.setDiAmount(drugInve.getDiAmount()-Double.valueOf(branchSaleDetail.getBsdAmount()).intValue());
 			inveMapper.updateByPrimaryKeySelective(drugInve);

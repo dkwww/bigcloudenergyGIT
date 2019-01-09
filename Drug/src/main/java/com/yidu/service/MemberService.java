@@ -54,6 +54,8 @@ public interface MemberService   {
 	 * @return
 	 */
 	public Member findById(String menId);
+
+	public int findMenName(String menName);
 	
 	
 }

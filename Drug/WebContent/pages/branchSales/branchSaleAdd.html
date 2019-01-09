@@ -167,8 +167,8 @@
 		            laytpl = layui.laytpl;
 		        var tableIns = table.render({
 		            elem: '#demos',
-		            height: 'full-50', //容器高度
 		            url: '../../drug/showList.action',
+		            height: 'full-50', //容器高度
 		            page: true,
 		            id: 'demos',
 		            where:{"comId":comId},
@@ -373,6 +373,9 @@
 	            });
 	        });
 		    function num(obj){
+		    	if(isNaN($("#"+obj.id).val())){
+		    		$("#"+obj.id).val(1);
+		    	}
 				$("#"+obj.id).parent().next().next().html(parseFloat($("#"+obj.id).parent().next().html())*parseFloat($("#"+obj.id).val()));		 
 				$("#"+obj.id).parent().next().next().next().next().next().html(parseFloat($("#"+obj.id).parent().next().next().next().next().html())*parseFloat($("#"+obj.id).val()));
 		    }

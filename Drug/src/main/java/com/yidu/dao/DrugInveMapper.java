@@ -73,7 +73,7 @@ public interface DrugInveMapper {
      * @return 库存model
      * @author ly
      */
-    public DrugInve findDrugId(String drugId);
+    public DrugInve findDrugId(Map<String, Object> map);
     
     List<Repertory> queryBalance(String id);
     

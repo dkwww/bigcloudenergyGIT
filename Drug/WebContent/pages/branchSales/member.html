@@ -81,7 +81,7 @@
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">用户名</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="menName" required lay-verify="required" value="{{d.rowdata.menName}}" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+		                    <input type="text" id="menNameInput" name="menName" required lay-verify="required" value="{{d.rowdata.menName}}" placeholder="请输入用户名" onblur="findMenName()" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 		           
@@ -153,7 +153,7 @@
 		        });
 		        var tableIns = table.render({
 		            elem: '#demo',
-		            height: '469px', //容器高度
+		            height: 'full-50', //容器高度
 		            url: '../../member/query.action',
 		            page: true,
 		            id: 'demo',
@@ -361,6 +361,17 @@
 	                }
 	            });
 	        });
+		    function findMenName(){
+		    	var url="../../member/findMenName.action";
+		    	var data={"menName":$("#menNameInput").val()};
+		    	$.post(url,data,function(mes){
+		    		if(mes!=0){
+		    			layer.msg("用户名重复");
+		    		}
+		    		
+		    	},"json");
+		    	
+		    }
 		</script>
 	</body>
 </html>

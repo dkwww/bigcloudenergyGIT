@@ -96,4 +96,9 @@ public class MemberServiceImpl   implements MemberService {
 	public Member findById(String menId) {
 		return mapper.selectByPrimaryKey(menId);
 	}
+	@Override
+	public int findMenName(String menName) {
+		int rows=mapper.selectMenName(menName);
+		return rows;
+	}
 }

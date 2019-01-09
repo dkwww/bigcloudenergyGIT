@@ -3,6 +3,8 @@ package com.yidu.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Select;
+
 import com.yidu.domain.Member;
 import com.yidu.util.PageUtil;
 
@@ -36,4 +38,7 @@ public interface MemberMapper {
      * @return
      */
     int findCount(Member record);
+    
+    @Select("select count(*) from drug_member where men_name=#{menName}")
+	int selectMenName(String menName);
 }
