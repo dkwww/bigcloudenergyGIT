@@ -3,9 +3,9 @@ function autocomplete(formId,data){
 		var type = $("#"+formId+" [name="+k+"]").prop("type");
 
 		$("#"+formId+" textarea[name="+k+"]").val(data[k]);
-		$("#"+formId+" img[name="+k+"]").attr("src","../"+data[k]);
+		$("#"+formId+" img[name="+k+"]").attr("src","../../"+data[k]);
 		if (type!=undefined&&type!=null) {
-			if (type=="text") {
+			if (type=="text"||type=="hidden") {
 				if(data[k]!=""&&data[k]!=null){
 					$("#"+formId+" [name="+k+"]").val(data[k]);
 				}

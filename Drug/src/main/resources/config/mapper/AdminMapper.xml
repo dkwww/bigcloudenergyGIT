@@ -205,11 +205,11 @@
 		where admin_id = #{adminId,jdbcType=VARCHAR}
 	</update>
 	<!-- 根据用户名和密码查询 -->
-	<select id="queryNameOrPwd" resultMap="BaseResultMap">
+	<select id="queryNameOrPwd" resultMap="BaseResultMapOne">
 		select
-		<include refid="Base_Column_List" />
-		from drug_admin where isva='1' and admin_name = #{adminName,jdbcType=VARCHAR} and
-		admin_pwd=#{adminPwd,jdbcType=VARCHAR}
+		<include refid="Base_Column_List_One" />
+		from drug_admin ad,drug_company co where ad.com_id=co.com_id and ad.isva='1' and ad.admin_name = #{adminName,jdbcType=VARCHAR} and
+		ad.admin_pwd=#{adminPwd,jdbcType=VARCHAR}
 	</select>
 	<!-- 查询所有或者根据名字查询 -->
 	<select id="selectAll" parameterType="java.util.Map" resultMap="BaseResultMapOne">

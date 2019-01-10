@@ -97,6 +97,16 @@ public class AdminServiceImpl  implements AdminService {
 			return row;
 		}
 	}
+	
+	@Override
+	public int update(Admin admin) {
+		if(admin.getAdminId()!=null && !"".equals(admin.getAdminId())) {
+			return mapper.updateByPrimaryKeySelective(admin);
+		} else {
+			return 0;
+		}
+	}
+	
 	/**
 	 * 批量删除
 	 */

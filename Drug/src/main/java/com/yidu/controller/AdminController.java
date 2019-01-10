@@ -203,5 +203,25 @@ public class AdminController {
 		session.removeAttribute("admin");
 		return 1; 
 	}
+	/**
+	 * 修改的方法
+	 * @param admin 用户对象
+	 * @return 返回提示信息
+	 */
+	@RequestMapping("/update")
+	@ResponseBody
+	public Message update(@RequestBody Admin admin) {
+		int rows = service.update(admin);
+		Message mes = new Message();
+		if(rows>0) {
+			mes.setStatus(1);
+			mes.setMsg("修改成功");
+			mes.setUrl("pages/admin/login.html");
+		}else {
+			mes.setStatus(0);
+			mes.setMsg("数据异常，请稍后重试！");
+		}
+		return mes;
+	}
 }
 

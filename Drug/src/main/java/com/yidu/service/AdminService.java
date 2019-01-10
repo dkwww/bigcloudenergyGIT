@@ -43,6 +43,7 @@ public interface AdminService   {
 	 * @return
 	 */
 	public int addOrUpdate(Admin admin);
+	public int update(Admin admin);
 	/**
 	 * 批量修改
 	 * @param ids
