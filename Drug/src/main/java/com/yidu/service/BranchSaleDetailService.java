@@ -17,12 +17,30 @@ import com.yidu.util.PageUtil;
 public interface BranchSaleDetailService  {
 
 	int insertSelective(BranchSaleDetail branchSaleDetail);
-
+	/**
+	 * 查询所有
+	 * @param util
+	 * @param saleDetail
+	 * @return
+	 */
 	List<BranchSaleDetail> query(PageUtil util, BranchSaleDetail saleDetail);
-
+	/**
+	 * 分页
+	 * @param saleDetail
+	 * @return
+	 */
 	int findCount(BranchSaleDetail saleDetail);
-	
+	/**
+	 * 根据名字查询
+	 * @return
+	 */
 	List<Series> queryName();
+	/**
+	 * 根据ID查询
+	 * @param time
+	 * @param id
+	 * @return
+	 */
 	int queryId(int time,String id);
 }
 

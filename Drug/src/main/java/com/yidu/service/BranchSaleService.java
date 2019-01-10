@@ -13,7 +13,7 @@ import com.yidu.util.PageUtil;
  * 分店销售 服务类
  * </p>
  *
- * @author Pngjiangping
+ * @author liuyi
  * @since 2018-11-26
  */
 public interface BranchSaleService   {
@@ -30,13 +30,17 @@ public interface BranchSaleService   {
 	 * @return
 	 */
 	public int findCount(BranchSale branchSale);
-	
+	/**
+	 * 增加
+	 * @param branchSale model
+	 * @return
+	 */
 	public int insertSelective(BranchSale branchSale);
 	/**
 	 * 增加到零售明细
-	 * @param sum
-	 * @param menId
-	 * @param comId
+	 * @param sum  和
+	 * @param menId 会员ID
+	 * @param comId 店铺ID
 	 * @return
 	 */
 	public Message addSale(String sum, String menId, String comId);

@@ -83,7 +83,9 @@ public class BranchSaleServiceImpl implements BranchSaleService {
 	@Resource
 	MemberMapper menberMapper;
 	
-	
+	/**
+	 * 查询所有
+	 */
 	@Override
 	public List<BranchSale> query(PageUtil util, BranchSale branchSale) {
 		//new一个Map集合
@@ -100,10 +102,15 @@ public class BranchSaleServiceImpl implements BranchSaleService {
 	 */
 	@Override
 	public int findCount(BranchSale branchSale) {
+		//返回dao类分页的方法
 		return mapper.findCount(branchSale);
 	}
+	/**
+	 * 增加
+	 */
 	@Override
 	public int insertSelective(BranchSale branchSale) {
+		//返回dao类增加的方法
 		return mapper.insertSelective(branchSale);
 	}
 	/**
@@ -111,18 +118,28 @@ public class BranchSaleServiceImpl implements BranchSaleService {
 	 */
 	@Override
 	public Message addSale(String sum, String menId, String comId) {
+		//调用会员dao类查询的方法
 		Member member=menberMapper.selectByPrimaryKey(menId);
+		//折扣为空
 		Double zk=null;
+		//如果是“普通会员”
 		if("普通会员".equals(member.getOper())) {
+			//折扣价为0.9
 			zk=0.9;
+		//如果是“高级会员”
 		}else if("高级会员".equals(member.getOper())) {
+			//折扣价为0.85
 			zk=0.85;
+		//如果是“顶级会员”
 		}else if("顶级会员".equals(member.getOper())) {
+			//折扣价为0.8
 			zk=0.8;
+		//如果是“非会员”
 		}else if("非会员".equals(member.getOper())) {
+			//折扣价为1.00
 			zk=1.00;
 		}
-		System.err.println("--------------------------------"+zk);
+		//创建一个Message类
 		Message message=new Message();
 		Integer row=0;
 		Integer rows=0;
@@ -133,13 +150,12 @@ public class BranchSaleServiceImpl implements BranchSaleService {
 			String [] arr=string.split(",");
 			count+=Integer.valueOf(arr[1]);
 			Drug drug=drugMapper.selectByPrimaryKey(arr[0]);
-			
-			System.out.println("-------------------------"+Integer.valueOf(arr[1]));
 			money+=(drug.getDrugPrice().doubleValue()*zk)*Integer.valueOf(arr[1]);
 		}
 		message.setMsg("总金额: "+money+"  总数量: "+count);
-		
+		//创建一个零售类
 		BranchSale branchSale=new BranchSale();
+		//赋值到零售ID
 		branchSale.setBsId(Tools.getDateOrderNo());
 		branchSale.setComId(comId);
 		branchSale.setMenId(menId);
@@ -182,7 +198,6 @@ public class BranchSaleServiceImpl implements BranchSaleService {
 			map.put("drugId", arr[0]);
 			map.put("comId", comId);
 			DrugInve drugInve=inveMapper.findDrugId(map);
-			System.err.println("--------------"+branchSaleDetail.getBsdAmount());
 			drugInve.setDiAmount(drugInve.getDiAmount()-Double.valueOf(branchSaleDetail.getBsdAmount()).intValue());
 			inveMapper.updateByPrimaryKeySelective(drugInve);
 			
@@ -197,7 +212,6 @@ public class BranchSaleServiceImpl implements BranchSaleService {
 			invDetailMapper.insert(drugInvDetail);
 			
 		}
-		
 		
 		if(row==1 && rows==1) {
 			message.setStatus(1);

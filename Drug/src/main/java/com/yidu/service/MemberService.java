@@ -38,7 +38,7 @@ public interface MemberService   {
 	public int delete(String menId);
 	/**
 	 * 批量删除
-	 * @param ids
+	 * @param ids ID
 	 * @return
 	 */
 	public int bulkUpdate(List<String> ids);
@@ -49,12 +49,16 @@ public interface MemberService   {
 	 */
 	public int findCount(Member member);
 	/**
-	 * 根据ID查询
+	 * 根据会员ID查询
 	 * @param menId 
 	 * @return
 	 */
 	public Member findById(String menId);
-
+	/**
+	 * 根据会员名查询
+	 * @param menName 会员名
+	 * @return
+	 */
 	public int findMenName(String menName);
 	
 	
