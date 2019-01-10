@@ -118,6 +118,7 @@
 						]
 					],
 					done: function(res, curr, count) {
+						$("#allAmount").text(0);
 						$("[data-field = 'pdAmount']").not(":first").each(function(){
 							$("#allAmount").text(parseInt($("#allAmount").text())+parseInt($(this).text()));
 					  	});

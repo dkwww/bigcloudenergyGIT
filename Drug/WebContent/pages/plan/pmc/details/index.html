@@ -280,6 +280,7 @@
 					],
 					done: function(res, curr, count) {
 						tableElems = this.elem.next('.layui-table-view');
+						$("#allAmount").text(0);
 						//计算数量
 						function count(o){
 							var amount = o.val() =='' ? 0 : parseInt(o.val());

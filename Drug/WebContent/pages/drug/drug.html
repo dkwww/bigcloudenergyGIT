@@ -43,16 +43,14 @@
 			                </div>
 		                </div>
 		                <div class="layui-form-item">
-		                    <div class="layui-inline">
+		                    <div class="layui-inline" style="margin-left: 5px">
 		                        <label class="layui-form-label">范围</label>
-		                        <div class="layui-input-block">
-			                        <div class="layui-input-inline" style="width: 100px;">
-			                            <input type="text" name="priceMin" placeholder="￥" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
-			                        </div>
-			                        <div class="layui-form-mid">-</div>
-			                        <div class="layui-input-inline" style="width: 100px;">
-			                            <input type="text" name="priceMax" placeholder="￥" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
-			                        </div>
+		                        <div class="layui-input-inline" style="width: 30%;min-width: 60px;">
+		                            <input type="text" name="priceMin" placeholder="￥" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
+		                        </div>
+		                        <div class="layui-form-mid">-</div>
+		                        <div class="layui-input-inline" style="width: 30%;min-width: 60px;">
+		                            <input type="text" name="priceMax" placeholder="￥" autocomplete="off" class="layui-input" maxlength="6" onKeyUp="amount(this)">
 		                        </div>
 		                    </div>
 		                </div>
@@ -128,7 +126,7 @@
 		                </div>
 		            </div>
 					<div class="layui-upload">
-                		<label class="layui-form-label">头像:</label>
+                		<label class="layui-form-label">图片:</label>
                 		<div class="layui-upload layui-input-block">
                     		<input type="hidden" name="drugPictrue" value="{{d.rowdata.drugPictrue}}"/>
                     		<button type="button" class="layui-btn layui-btn-primary" id="fileBtn"><i class="layui-icon">&#xe67c;</i>选择文件</button>
@@ -512,7 +510,7 @@
 				  type: 2,
 				  title: '说明书',
 				  content: '../specification/specification.html?id='+id+'&name='+name,
-				  area: ['800px', '430px'],
+				  area: ['60%', '430px'],
 				  maxmin: true,
 				  success: function (layero, index)
                   {
@@ -523,6 +521,9 @@
                       });
                   }
 				});
+				layer.style(layerIndex2, {
+                	"min-width":"330px"
+	    		});
 		  	}
 		  	
 		  	//显示 审核明细
@@ -544,7 +545,7 @@
                         title: '药品操作',
                         content: html,
                         maxmin: true,
-                        area: ['800px', '430px'],
+                        area: ['60%', '430px'],
                         btn: ['提交', '重置', '取消'],
                         yes: function(index, layero) {
                             $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
@@ -557,6 +558,9 @@
                             layui.form.render(null, 'form-edit');
                         }
                     });
+	    			layer.style(editIndex1, {
+                    	"min-width":"330px"
+    	    		});
                     upload();
                 });
 	    		return 
@@ -570,7 +574,7 @@
                         title: '说明书编辑',
                         content: html,
                         maxmin: true,
-                        area: ['800px', '430px'],
+                        area: ['60%', '430px'],
                         btn: ['提交', '重置', '取消'],
                         yes: function(index, layero) {
                             $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
@@ -583,6 +587,9 @@
                         	layui.form.render(null, 'form-edit');
                         }
                     });
+	    			layer.style(editIndex2, {
+                    	"min-width":"330px"
+    	    		});
                     upload();
                 });
 		    }

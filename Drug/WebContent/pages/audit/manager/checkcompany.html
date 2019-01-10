@@ -205,10 +205,21 @@
 		            	
 		            	
 		                layer.confirm('确定审核通过吗', function(index) {
-		                	
-		                	
 		                	layer.close(index);
-		                    update("../../../company/add.action",{"comId":data.comId,"isva":"1"});
+		                	$.ajax({
+		    		    		url: "../../../company/add.action",
+		                        type:'post',//method请求方式，get或者post
+		                        cache: false,//同步
+		                        dataType:'json',//预期服务器返回的数据类型
+		                        data: JSON.stringify({"comId":data.comId,"isva":"1"}),//表格数据序列化
+		                        contentType: "application/json; charset=utf-8",
+		                        success:function(mes){//res为相应体,function为回调函数
+		                            if(mes.status==1){ 
+		                            	update("../../../debty/add.action",{"comId":data.comId,"debMoney":200000,"isva":"1"}); 
+		                            }
+		                        },
+		                       	error:function(){layer.alert('数据异常，请稍后重试！！！',{icon:5});}
+		                     });
 		                });
 		            } else if (layEvent === 'edit') { //编辑
 		                var d = {
@@ -280,7 +291,6 @@
                     success:function(mes){//res为相应体,function为回调函数
                     	$(".layui-laypage-btn")[0].click();//当前表格刷新
                         if(mes.status==1){ 
-                        	var close = true;//有弹出层时是关闭弹出层 false不关闭
 	                        $("#res").click();//调用重置按钮将表单数据清空
                         }
                         layer.msg(mes.msg);

@@ -334,7 +334,8 @@ button {
 
 /* 我对layui自定义的样式 */
 .layui-input-block {
-    margin: 0px 115px
+    margin: 0px 115px;
+    min-width: 150px
 }
 .layui-tab{
 	margin: 0px;

@@ -7,6 +7,11 @@
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
 		<title>财务管理</title>
+		<style type="text/css">
+			.layui-table, .layui-table-view {
+			    margin: 0;
+			}
+		</style>
     </script>
 	</head>
 	<body>
@@ -68,7 +73,7 @@
 		            laytpl = layui.laytpl;
 		        var tableIns = table.render({
 		            elem: '#demo',
-		            height: 'full-50', //容器高度
+		            height: 'full-0', //容器高度
 		          url: '../../debtyDetail/findAll.action?debId='+getParameter("id"),
 		          page: true,
 		          id: 'demo',
