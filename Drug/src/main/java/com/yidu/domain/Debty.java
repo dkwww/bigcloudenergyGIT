@@ -5,13 +5,13 @@ import java.util.Date;
 
 public class Debty {
 	private String strTime;
-    private String debId;
+    private String debId;				//财务编号
+    	
+    private String comId;				//店铺编号
 
-    private String comId;
+    private BigDecimal debMoney;		//总资产
 
-    private BigDecimal debMoney;
-
-    private Date optime;
+    private Date optime;				//操作时间
 
     private String isva;
 

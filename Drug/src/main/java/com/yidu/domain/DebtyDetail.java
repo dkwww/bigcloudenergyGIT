@@ -4,16 +4,17 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class DebtyDetail {
-	private String strTime;
-    private String ddetId;
+	private String strTime;				//支出状态
+	
+    private String ddetId;				//财务明细编号
+    
+    private String debId;				//财务id 外键
 
-    private String debId;
+    private BigDecimal ddetChange;		//资金变动
 
-    private BigDecimal ddetChange;
+    private String ddettFkId;			//业务id
 
-    private String ddettFkId;
-
-    private String isva;
+    private String isva;				
 
     private Date optime;
 

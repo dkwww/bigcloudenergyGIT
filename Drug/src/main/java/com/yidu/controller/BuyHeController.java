@@ -192,7 +192,7 @@ public class BuyHeController {
 		Date date=new Date();
 		//存进采购订单当前时间
 		buy.setBuyTime(date);
-		//放入数据库
+		//存进采购订单
 		service.addorUpdate(buy);
 		
 		//把订单id放入审核外键
@@ -338,7 +338,7 @@ public class BuyHeController {
 		System.err.println("=============财务id"+deb.getDebId());
 		//判断如果审核状态不等于空且为1的时候就减财务
 		if(buy.getBuyAudit()!="" && buy.getBuyAudit().equals("1")) {
-			//根据财务id修改金额
+			//调用财务明细减财务的方法,根据财务id修改金额
 			debtyservice.addbty(buy.getBuyMoney(),deb.getDebId());
 			
 			//得到财务明细对象
@@ -355,7 +355,7 @@ public class BuyHeController {
 			debmx.setDdettFkId("0");
 			//当前的时间
 			debmx.setOptime(new Date());
-			//放入数据库
+			//放入财务明细数据库
 			debtydetailservice.addmx(debmx);
 		}
 		
@@ -374,7 +374,7 @@ public class BuyHeController {
 		//数据添加到审核
 		audservice.add(audit);
 		
-		//调用修改审核状态的方法
+		//调用修改审核状态的方法,在采购方法里
 		service.update(buy);
 		
 		//创建me对象

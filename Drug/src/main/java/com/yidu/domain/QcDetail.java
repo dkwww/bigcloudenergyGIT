@@ -3,11 +3,11 @@ package com.yidu.domain;
 import java.util.Date;
 
 public class QcDetail {
-    private String qdetId;
+    private String qdetId;				//质检明细id
 
-    private String qcId;
+    private String qcId;				//质检id  外键
 
-    private String qdetFkId;
+    private String qdetFkId;			//业务id 采购订单外键id
 
     private Integer qdetAmount;			//数量
 
@@ -15,7 +15,7 @@ public class QcDetail {
 
     private String qdetRate;			//通过率
 
-    private Date qdetOptime;
+    private Date qdetOptime;			//质检时间
 
     private String isva;
 
