@@ -510,7 +510,7 @@
 				  type: 2,
 				  title: '说明书',
 				  content: '../specification/specification.html?id='+id+'&name='+name,
-				  area: ['60%', '430px'],
+				  area: ['800px', '430px'],
 				  maxmin: true,
 				  success: function (layero, index)
                   {
@@ -521,9 +521,6 @@
                       });
                   }
 				});
-				layer.style(layerIndex2, {
-                	"min-width":"330px"
-	    		});
 		  	}
 		  	
 		  	//显示 审核明细
@@ -545,7 +542,7 @@
                         title: '药品操作',
                         content: html,
                         maxmin: true,
-                        area: ['60%', '430px'],
+                        area: ['800px', '430px'],
                         btn: ['提交', '重置', '取消'],
                         yes: function(index, layero) {
                             $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
@@ -558,9 +555,6 @@
                             layui.form.render(null, 'form-edit');
                         }
                     });
-	    			layer.style(editIndex1, {
-                    	"min-width":"330px"
-    	    		});
                     upload();
                 });
 	    		return 
@@ -574,7 +568,7 @@
                         title: '说明书编辑',
                         content: html,
                         maxmin: true,
-                        area: ['60%', '430px'],
+                        area: ['800px', '430px'],
                         btn: ['提交', '重置', '取消'],
                         yes: function(index, layero) {
                             $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
@@ -587,9 +581,6 @@
                         	layui.form.render(null, 'form-edit');
                         }
                     });
-	    			layer.style(editIndex2, {
-                    	"min-width":"330px"
-    	    		});
                     upload();
                 });
 		    }
