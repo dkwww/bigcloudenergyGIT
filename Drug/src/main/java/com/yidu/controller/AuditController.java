@@ -148,12 +148,12 @@ public class AuditController {
 		
 		int rows=service.selectCount(audit);
 		
-		Map<String, Object> m = new HashMap<>();
-		m.put("code", 0);
-		m.put("msg", "");
-		m.put("count", rows);
-		m.put("data", list);
-		return m;
+		Map<String, Object> map = new HashMap<>();
+		map.put("code", 0);
+		map.put("msg", "");
+		map.put("count", rows);
+		map.put("data", list);
+		return map;
 	}
 	
 	

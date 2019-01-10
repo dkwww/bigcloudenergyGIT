@@ -83,6 +83,7 @@
   
   <select id="showList" parameterType="map" resultMap="BaseResultMap">
   	SELECT * FROM drug_audit a,drug_buy b WHERE a.qc_fk_id=b.buy_id AND a.qc_fk_id=#{audit.qcFkId}
+  	limit #{page.startRows},#{page.rows}
   </select>
   
   

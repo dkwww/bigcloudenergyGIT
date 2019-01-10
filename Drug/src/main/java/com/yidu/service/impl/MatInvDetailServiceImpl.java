@@ -4,6 +4,7 @@ package com.yidu.service.impl;
 import com.yidu.dao.MatInvDetailMapper;
 import com.yidu.domain.MatInvDetail;
 import com.yidu.service.MatInvDetailService;
+import com.yidu.util.PageUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,10 +29,10 @@ public class MatInvDetailServiceImpl implements MatInvDetailService {
 	private MatInvDetailMapper dao;
 	
 	@Override
-	public List<MatInvDetail> findById(MatInvDetail matdetail) {
+	public List<MatInvDetail> findById(MatInvDetail matdetail,PageUtil page) {
 		Map<String, Object> map=new HashMap<>();
 		map.put("matdetail", matdetail);
-		
+		map.put("page", page);
 		return dao.findById(map);
 	}
 

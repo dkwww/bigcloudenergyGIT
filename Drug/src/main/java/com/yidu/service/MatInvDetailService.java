@@ -3,6 +3,7 @@ package com.yidu.service;
 import java.util.List;
 
 import com.yidu.domain.MatInvDetail;
+import com.yidu.util.PageUtil;
 
 /**
  * <p>
@@ -22,7 +23,7 @@ public interface MatInvDetailService  {
 	 * @author dengknagwei
 	 * @date：2018年12月27日
 	 */
-	List<MatInvDetail> findById(MatInvDetail matdetail);
+	List<MatInvDetail> findById(MatInvDetail matdetail,PageUtil page);
 	
 	/**
 	 * 

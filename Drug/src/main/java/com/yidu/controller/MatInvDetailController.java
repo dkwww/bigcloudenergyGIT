@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yidu.domain.MatInvDetail;
 import com.yidu.service.MatInvDetailService;
+import com.yidu.util.PageUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,13 +41,14 @@ public class MatInvDetailController {
 	 */
 	@RequestMapping("findById")
 	@ResponseBody
-	public Map<String, Object> findById(MatInvDetail madetail){
+	public Map<String, Object> findById(MatInvDetail madetail,PageUtil page){
 		
-		List <MatInvDetail> list=service.findById(madetail);
+		List <MatInvDetail> list=service.findById(madetail,page);
+		int rows=service.selectCount(madetail);
 		Map<String, Object> map=new HashMap<>();
 		map.put("code", 0);
 		map.put("msg", "");
-		map.put("count", 0);
+		map.put("count", rows);
 		map.put("data", list);
 		
 		return map;
