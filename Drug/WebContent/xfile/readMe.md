@@ -1,7 +1,7 @@
 ## GIT厂库地址
 *https://gitee.com/yidu_english/Drug.git*
 
-## 后台登陆地址
+## 登陆地址
 *http://localhost:8080/Drug/pages/admin/login.html*
 
 ## 总店
