@@ -113,11 +113,16 @@ public class DrugServiceImpl implements DrugService {
 	
 	@Override
 	public List<Drug> selectBySelectives(Drug record, PageUtil pageUtil) {
+		//创建一个map集合
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.err.println("啊实打实大师==="+record.getComId());
 		
+		//传入药品对象
 		map.put("record", record);
+		//传入分页工具对象
 		map.put("pageUtil", pageUtil);
+		
+		//返回对象
 		return drugMapper.selectBySelective(map);
 	}
 

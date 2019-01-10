@@ -263,6 +263,8 @@ public class AuditController {
 					BigDecimal zongjias = new BigDecimal(zongjia);
 					debty.setDebMoney(zongjias);
 					
+					System.err.println("我要减的金钱:"+debty.getDebMoney());
+					
 					int money=debtyservice.moneyupdate(debty);
 					if(money>0) {
 						l++;
