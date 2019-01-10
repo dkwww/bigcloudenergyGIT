@@ -125,6 +125,7 @@ public class BuyHeController {
 		//总行数
 		int rows=service.selectCount(buy);
 		
+		//创建map集合
 		Map<String, Object> map = new HashMap<>();
 		map.put("code", 0);
 		map.put("msg", "");
@@ -156,6 +157,7 @@ public class BuyHeController {
 		//根据前台传来的值用"#"分割
 		String [] data=shuju.split("#");
 		
+		//循环前台的值
 		for (int i = 0; i < data.length; i++) {
 			//删除明细
 			detaservice.deleteDetail(id);

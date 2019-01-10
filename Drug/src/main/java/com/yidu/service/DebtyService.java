@@ -84,7 +84,7 @@ public interface DebtyService   {
 	
 	/**
 	 * 
-	 * 方法说明：根据采购订单查询财务
+	 * 方法说明：根据订单的分店id查询财务对象
 	 * @param comId
 	 * @return
 	 * @author dengknagwei
