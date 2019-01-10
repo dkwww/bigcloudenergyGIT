@@ -237,7 +237,8 @@ function amount(th){
 		            laytpl = layui.laytpl;
 		        tableIns = table.render({
 		            elem: '#demos',
-		            height: autoHeight(), //容器高度
+		            
+		            height: 'full-50', //容器高度
 		            url: '../../../mrpDetails/findById.action?mrpId='+mrpId,
 		            page: true,
 		            id: 'demos',
@@ -289,7 +290,7 @@ function amount(th){
 		        
 		        var tableIns = table.render({
 		            elem: '#demo',
-		            height: 'full', //容器高度
+		            height: 'full-50', //容器高度
 		            url: '../../../pmcDetails/findByPmc.action?mrpId='+mrpId+'&pmcId='+pmcId,
 		            page: true,
 		            id: 'demo',

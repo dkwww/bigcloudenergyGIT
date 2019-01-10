@@ -167,6 +167,8 @@ public class MrpDetailsController {
 		 
 		Integer ii = Integer.valueOf(progress);
 		//判断  如果百分比等于100的话就将状态改为停止
+		
+		System.err.println("========ii============"+ii);
 		if(ii==100) {
 			//将这条信息的状态改为停止
 			mrp.setMrpId(mrpDetails.getMrpId());
@@ -176,13 +178,6 @@ public class MrpDetailsController {
 			mrpService.Modifyprogresss(mrp);
 		 
 		}
-		
-		
-		
-		
-		
-		
-		
 		if (rows>0) {
 			message.setStatus(1);
 		}else {
@@ -236,7 +231,7 @@ public class MrpDetailsController {
 			rows = qcDetailService.updateByPrimaryKeySelective(qcDetali);
 		}
 		NumberFormat numberFormat = NumberFormat.getInstance();
-		numberFormat.setMaximumFractionDigits(2); 
+		numberFormat.setMaximumFractionDigits(0); 
 		Qc   qc  = new  Qc();
 		qc.setQcFail(jj);
 		String   progress  =   numberFormat.format(100-(float) jj  /   (float)kk   *100);

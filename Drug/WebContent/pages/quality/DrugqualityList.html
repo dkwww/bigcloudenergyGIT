@@ -278,6 +278,7 @@
 		            $ = layui.jquery,
 		            layer = layui.layer,
 		            form = layui.form,
+		            
 		            laytpl = layui.laytpl;
 		        var tableIns = table.render({
 		            elem: '#demo',
@@ -418,7 +419,7 @@
 		        });
 		        var editIndex;
 		        form.on('submit(formEdit)', function(data) {
-		            layer.msg('formEdit');
+		           
 		            editIndex && layer.close(editIndex); //关闭弹出层
 		            return false;
 		        });
@@ -493,8 +494,8 @@
 		 function  Pressdown(obj){ 
 			 
 	 
-	        var a=obj.value;   // 未通过数  10
-         	var b=$(obj).parent().parent().parent().prev().children().text();   //总质检数  100
+	        var a=obj.value;   // 未通过数 
+         	var b=$(obj).parent().parent().parent().prev().children().text();   //总质检数  
          	var  c=0;
          	
          	if(parseInt(a)<=parseInt(b)){
@@ -502,11 +503,12 @@
              	var  e = parseInt(b)-parseInt(a);
              	//console.info(e)
              	if(e==0){
-             		 c=0;
-             		 console.info("dddd")
+             		 c=0; 
              		var d=$(obj).parent().parent().parent().next().children().text(0+"%"); 
              	}else{
              		var  c=parseInt(e)/parseInt(b);
+             		
+             		
              		var f=c.toFixed(4);
 
              		var d=$(obj).parent().parent().parent().next().children().text(f*100+"%"); 
