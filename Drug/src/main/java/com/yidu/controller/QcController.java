@@ -47,7 +47,7 @@ import org.springframework.stereotype.Controller;
  * 质检表 前端控制器
  * </p>
  *
- * @author Pngjiangping
+ * @author dengkangwei
  * @since 2018-11-26
  */
 @Controller
@@ -219,7 +219,7 @@ public class QcController {
 	 * @param id
 	 * @param shuju 前台传的数据
 	 * @param sumAmout	未通过数
-	 * @param zjAmout	质检数量
+	 * @param zjAmout	质检总数量
 	 * @param sumRate	总通过率
 	 * @param qcState 	质检状态
 	 * @author dengkangwei
@@ -228,40 +228,55 @@ public class QcController {
 	@RequestMapping("Qcadd")
 	@ResponseBody
 	public Message Qcadd(String id,String shuju,String sumAmout,String sumRate,String zjAmout,String qcState) {
-		System.err.println("=================="+zjAmout);
 		//得到质检对象
 		Qc qc=new Qc();
+		//把前台id赋到质检id
 		qc.setQcId(id);
+		//赋值未通过数
 		qc.setQcFail(Integer.valueOf(sumAmout));
+		//赋值总通过率
 		qc.setQcRate(sumRate);
+		//赋值质检总数量
 		qc.setQcAmount(Integer.valueOf(zjAmout));
+		//赋值质检状态
 		qc.setQcState(qcState);
+		//调用质检的增加方法
 		qcService.buyQcadd(qc);
 		
+		//得到质检明细对象
 		QcDetail qcdetail=new QcDetail();
 		
 		//根据前台传来的数据用"#"分割
 		String [] data=shuju.split("#");
 		
+		//循环前台数据
 		for (int i = 0; i < data.length; i++) {
+			//用,分割
 			String [] datas=data[i].split(",");
+			//质检明细id[0]
 			String qdetId=datas[0];
-			System.out.println("质检明细id:"+qdetId);
+			//未通过数量[2]
 			String qdetFail=datas[2];
-			System.out.println("未通过数量:"+qdetFail);
+			//数量[3]
 			String qdetAmount=datas[3];
-			System.out.println("数量:"+qdetAmount);
+			//质检率[4]
 			String qdetRate=datas[4];
-			System.out.println("质检率:"+qdetRate); 
 			
+			//赋值质检明细id
 			qcdetail.setQdetId(qdetId);
+			//赋值未通过数量
 			qcdetail.setQdetFail(Integer.valueOf(qdetFail));
+			//赋值数量
 			qcdetail.setQdetAmount(Integer.valueOf(qdetAmount));
+			//赋值质检率
 			qcdetail.setQdetRate(qdetRate);
+			//调用质检明细的增加方法
 			qcDetailService.add(qcdetail);
 			
 		}
+		//得到me对象
 		Message me=new Message();
+		//是1的话
 		me.setStatus(1);
 		me.setMsg("操作成功");
 		
@@ -293,15 +308,21 @@ public class QcController {
 			System.err.println("----------库存当前数量"+invlist.getMiAmount());
 			System.err.println("----------质检明细的数量:"+qcDetail.getQdetAmount());
 			System.err.println("----------库存id:"+invlist.getMiId());
+			//调用库存的增加方法,根据库存id修改库存数量
 			invservice.updateAmount(qcDetail.getQdetAmount(), invlist.getMiId());
 			
 			//库存明细
 			MatInvDetail invdetail=new MatInvDetail();
+			//赋值库存明细id (DateOrderNo)
 			invdetail.setMidId(Tools.getDateOrderNo());
+			//赋值库存明细的库存id 外键
 			invdetail.setMiId(invlist.getMiId());
+			//赋值数量
 			invdetail.setMidAmount(qcDetail.getQdetAmount());
+			//调用库存明细增加方法
 			invdetailservice.addkcdetail(invdetail);
 		}
+		
 		Message me=new Message();
 		me.setStatus(1);
 		me.setMsg("操作成功");
