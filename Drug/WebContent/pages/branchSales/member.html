@@ -106,7 +106,13 @@
 					<div class="layui-form-item">
 		                <label class="layui-form-label">会员等级</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="oper" required lay-verify="required" value="{{d.rowdata.oper}}" placeholder="请输入会员等级" autocomplete="off" class="layui-input">
+		                    <select name="oper" lay-verify="required" value="{{d.rowdata.oper}}">
+		                      <option value="">请选择等级</option>
+		                      <option value="普通会员">普通会员</option>
+		                      <option value="高级会员">高级会员</option>
+							  <option value="顶级会员">顶级会员</option>
+							  <option value="非会员">非会员</option>
+		                    </select>
 		                </div>
 		            </div>
 					<div class="layui-upload">
@@ -165,7 +171,7 @@
 		                {field: 'memPhone',title: '电话号码',width: 130,align: 'center'},
 		                {field: 'memAddress',title: '地址',width: 120,align: 'center'},
 		                {field: 'oper',title: '会员等级',width: 120,align: 'center'},
-		                {field: 'memPictrue',title: '头像',width: 100,align: 'center',templet:'<div><img style="height:100%;height:30px;" src="../../{{ d.memPictrue}}"></div>'},
+		                {field: 'memPictrue',title: '头像',width: 100,align: 'center',templet:'#img'},
 		                {field: 'optimeString',title: '操作时间',width: 170},
 		                {fixed: 'right',title: '操作',width: 180,align: 'center',toolbar: '#barDemo'}]
 		            ],
@@ -368,9 +374,7 @@
 		    		if(mes!=0){
 		    			layer.msg("用户名重复");
 		    		}
-		    		
 		    	},"json");
-		    	
 		    }
 		</script>
 	</body>

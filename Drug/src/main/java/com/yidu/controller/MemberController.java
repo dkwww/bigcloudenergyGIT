@@ -187,7 +187,7 @@ public class MemberController {
 	/**
 	 * 根据ID查询
 	 * @param menId
-	 * @return service里面格局ID查询的方法
+	 * @return service里面根据ID查询的方法
 	 */
 	@RequestMapping("/findById")
 	@ResponseBody
@@ -195,11 +195,15 @@ public class MemberController {
 		//返回service里面根据ID查询的方法
 		return service.findById(menId);
 	}
-	
+	/**
+	 * 根据会员名查询
+	 * @param menName
+	 * @return service里面根据会员名查询的方法
+	 */
 	@RequestMapping("/findMenName")
 	@ResponseBody
 	public int findMenName(String menName) {
+		//返回service里面根据会员名查询的方法
 		return service.findMenName(menName);
 	}
 }
-
