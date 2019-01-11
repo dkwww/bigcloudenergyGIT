@@ -179,11 +179,11 @@
 		                [{checkbox: true,fixed: true},
 		               	{title: '序号',type: 'numbers'},
 		                {field: 'pmcName',title: '计划名称',width: 140},
-		                {field: 'comName',title: '计划制造商'},
-		                {field: 'pmcAmount',title: '数量',sort: true},
-		                {field: 'strStartTime',title: '开始时间',sort: true},
-		                {field: 'strEndTime',title: '生产期限',sort: true},
-		                {field: 'pmcState',title: '状态'},
+		                {field: 'comName',title: '计划制造商',width: 100},
+		                {field: 'pmcAmount',title: '数量',sort: true,width: 80},
+		                {field: 'strStartTime',title: '开始时间',sort: true,width: 120},
+		                {field: 'strEndTime',title: '生产期限',sort: true,width: 120},
+		                {field: 'pmcState',title: '状态',width: 75},
 		                {field: 'audState',title: '审核状态',width: 140},
 		                {field: 'viwes',fixed: 'right',title: '查看',width: 165,align: 'center',toolbar: '#viwes'},
 		                {field: 'tools',fixed: 'right',title: '操作',width: 280,align: 'center',toolbar: '#tools'}]
@@ -283,7 +283,7 @@
 		        
 		        //增加和修改弹出层   提交按钮点击事件
 		        form.on('submit(formEdit)', function(data) {
-                	update("../../../pmc/addOrUpdate.action",data.field);
+                	var close = update("../../../pmc/addOrUpdate.action",data.field);
                 	if (close) editIndex && layer.close(editIndex); //关闭弹出层
                 	return false;
 		        });
@@ -398,6 +398,7 @@
 		    
 		    //增加、修改、删除、批量删除 都是用的这一个方法
 		    function update(url,data){
+		    	var close = false;
 		    	$.ajax({
 		    		url: url,
                     type:'post',//method请求方式，get或者post
@@ -407,7 +408,7 @@
                     contentType: "application/json; charset=utf-8",
                     success:function(mes){//res为相应体,function为回调函数
                         if(mes.status==1){ 
-                        	var close = true;//有弹出层时是关闭弹出层 false不关闭
+                        	close = true;//有弹出层时是关闭弹出层 false不关闭
 	                        $("#res").click();//调用重置按钮将表单数据清空
 	                        $(".layui-laypage-btn")[0].click();//当前表格刷新
                         }
@@ -415,6 +416,7 @@
                     },
                    	error:function(){layer.alert('数据异常，请稍后重试！！！',{icon:5});}
                  });
+		    	return close;
 		    }
 		    
 		    function addMouth(date, num) {
