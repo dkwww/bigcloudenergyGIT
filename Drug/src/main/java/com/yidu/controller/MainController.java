@@ -24,6 +24,7 @@ import com.yidu.domain.Sale;
 import com.yidu.service.BranchSaleDetailService;
 import com.yidu.service.BranchSaleService;
 import com.yidu.service.DrugInvService;
+import com.yidu.service.MatInvService;
 import com.yidu.service.ModuleRoleService;
 import com.yidu.service.RoleService;
 import com.yidu.service.SaleService;
@@ -44,6 +45,8 @@ public class MainController {
 	private BranchSaleDetailService branService;
 	@Resource
 	private DrugInvService invService;
+	@Resource
+	private MatInvService  matService;
 	/**
 	 * 查询今年药品的销售次数
 	 * @return
@@ -87,6 +90,12 @@ public class MainController {
 		HttpSession session=request.getSession();
 		Admin user=(Admin) session.getAttribute("admin");
 		List<Repertory> list=invService.queryBalance(user.getComId());
+		return list;
+	}
+	@RequestMapping("queryMaterials")
+	@ResponseBody
+	public List<Repertory> queryMaterials(){
+		List<Repertory> list=matService.queryMaterials();
 		return list;
 	}
 }

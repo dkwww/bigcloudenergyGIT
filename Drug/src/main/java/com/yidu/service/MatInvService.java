@@ -2,6 +2,7 @@ package com.yidu.service;
 
 import java.util.List;
 
+import com.yidu.controller.vo.Repertory;
 import com.yidu.domain.MatInv;
 import com.yidu.util.PageUtil;
 
@@ -58,4 +59,5 @@ public interface MatInvService  {
 	 */
 	int insertSelective(MatInv inv);
 	
+	List<Repertory> queryMaterials();
 }

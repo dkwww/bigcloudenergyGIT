@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
+import com.yidu.controller.vo.Repertory;
 import com.yidu.domain.MatInv;
 
 public interface MatInvMapper {
@@ -51,6 +52,7 @@ public interface MatInvMapper {
      * @date：2018年12月27日
      */
 	MatInv findQcId(String qcFkId);
+	List<Repertory> queryMaterials();
 	
 	/**
      * 

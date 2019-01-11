@@ -1,6 +1,7 @@
 package com.yidu.service.impl;
 
  
+import com.yidu.controller.vo.Repertory;
 import com.yidu.dao.MatInvMapper;
 import com.yidu.domain.MatInv;
 import com.yidu.service.MatInvService;
@@ -89,6 +90,12 @@ public class MatInvServiceImpl  implements MatInvService {
 	@Override
 	public int insertSelective(MatInv inv) {
 		return matinvmapper.insertSelective(inv);
+	}
+
+
+	@Override
+	public List<Repertory> queryMaterials() {
+		return matinvmapper.queryMaterials();
 	}
 
 

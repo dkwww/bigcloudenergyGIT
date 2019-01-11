@@ -35,23 +35,7 @@
 		            },
 		            loading: true
 		        });
-				//查询类型下拉框数据
-		        var staticData = null;
-		        $.ajax({ url:"../../drugType/showList.action",
-                    type:'post',//method请求方式，get或者post
-                    cache: false,//同步
-                    dataType:'json',//预期服务器返回的数据类型
-                    success:function(mes){//res为相应体,function为回调函数
-                    	//增加及修改类型下拉框内的数据
-                    	staticData = mes;
-                    	//循环添加类型搜索框内的数据
-                    	$.each(mes.types,function(index,item){
-                    		$("#drug-type").append("<option value="+item.dtId+">"+item.dtName+"</option>");
-                    	});
-                    	//渲染类型搜索框内的下拉框
-                    	renderForm();
-                    }
-                 });
+				
 		        
 		        //监听搜索表单提交
 		        form.on('submit(search)', function(data) {  

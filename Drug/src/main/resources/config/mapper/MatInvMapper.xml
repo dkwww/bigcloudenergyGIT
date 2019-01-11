@@ -15,9 +15,16 @@
     <result column="qdet_fk_id" jdbcType="VARCHAR" property="qdetFkId" />
     
   </resultMap>
+  <resultMap id="BaseResultMap2" type="com.yidu.controller.vo.Repertory">
+    <result column="indexs" property="value" />
+    <result column="mat_name" property="name" />
+  </resultMap>
   <sql id="Base_Column_List">
     mi_id, mi_amount, mat_id, isva, optime, oper, sort,mat_name,mt_id,mt_name
   </sql>
+  <select id="queryMaterials" resultMap="BaseResultMap2">
+  	select sum(i.mi_amount) as indexs,m.mat_name,m.mat_id from drug_mat_inv i,drug_material m where i.mat_id=m.mat_id GROUP BY m.mat_name,m.mat_id ORDER BY sum(i.mi_amount) asc LIMIT 5
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
