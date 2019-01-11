@@ -43,7 +43,7 @@ public interface BuyMapper {
 	 * 方法说明：查询所有
 	 * @param map
 	 * @return
-	 * @author dengknagwei
+	 * @author dengkangwei
 	 * @date：2019年1月3日
 	 */
     public List<Buy> showList(Map<String, Object> map);
@@ -52,16 +52,18 @@ public interface BuyMapper {
      * 方法说明：查找总行数
      * @param buy
      * @return
-     * @author dengknagwei
+     * @author dengkangwei
      * @date：2019年1月3日
      */
     int selectCount(Buy buy);
     
     /**
-     * 审核查询所有
+     * 
+     * 方法说明：审核查询所有
      * @param map
-     * 邓康威
      * @return
+     * @author dengkangwei
+     * @date：2019年1月3日
      */
     public List<Buy> AuditshowList(Map<String,Object> map);
     

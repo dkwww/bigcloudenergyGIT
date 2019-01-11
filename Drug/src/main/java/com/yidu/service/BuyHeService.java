@@ -11,7 +11,7 @@ import com.yidu.util.PageUtil;
  * 采购订单 服务类
  * </p>
  *
- * @author Pngjiangping
+ * @author dengkangwei
  * @since 2018-11-26
  */
 public interface BuyHeService   {

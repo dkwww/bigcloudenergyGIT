@@ -23,6 +23,16 @@
 		<input class="layui-input layui-disabled"  readonly="readonly" name="qdetRate" value="0"  maxlength="6" style="border:none;padding-bottom:8px;" id="price{{d.qdetId}}" autocomplete="off">
 	</div>
 	</script>
+	<script type="text/html" id="inputsss">
+	 
+		<input class="layui-input layui-disabled" id="number_{{d.qdetId}}"  readonly="readonly"  value="0"  maxlength="6" style="border:none;padding-bottom:8px;" autocomplete="off">
+	 
+	</script>
+	<script type="text/html" id="inputssss">
+	 
+		<input class="layui-input layui-disabled" id="sumNumber_{{d.qdetId}}"  readonly="readonly"  value="{{d.qdetAmount}}"  maxlength="6" style="border:none;padding-bottom:8px;" autocomplete="off">
+	 
+	</script>
 	
 	<body>
 		<div>
@@ -42,6 +52,7 @@
 					   <div class="layui-input-inline">
 					     <input type="text" name="qcRate" value="100" id="qcRate" autocomplete="off" class="layui-input layui-disabled" readonly="readonly">
 					   </div>
+					   <input type="hidden" name="qcAmount" value="0" id="qcAmount" autocomplete="off" class="layui-input layui-disabled" readonly="readonly">
 					</div>
 					
 				
@@ -98,7 +109,7 @@
 		            laytpl = layui.laytpl;
 		        var tableIns = table.render({
 		            elem: '#demo',
-		            height: '449px', //容器高度
+		            height: 'full-50', //容器高度
 		            url: '../../qcDetail/findBuyId.action?qcId='+qcId,
 		            page: true,
 		            id: 'demo',
@@ -108,9 +119,15 @@
 		                {field: 'matName',title: '材料名',width: 120},
 		                {field: 'qdetFail',title: '未通过数量',width: 120,templet:'#input'},
 		                {field: 'qdetAmount',title: '质检数量',width: 120},
+		                {field: 'qdetAmounts',width: 120,templet:'#inputsss'},
+		                {field: 'qdetAmountss',width: 120,templet:'#inputssss'},
 		                {field: 'qdetRate',title: '质检总概率',width: 150,templet:'#inputss'}]
 		            ],
 		            done: function(res, curr, count) {
+		            	
+		                $(".layui-table-box").find("[data-field='qdetAmounts']").css("display","none");
+		                $(".layui-table-box").find("[data-field='qdetAmountss']").css("display","none");
+		            	
 		            	windata=res.data;
 		            	tableElem = this.elem.next('.layui-table-view');
 		            	var tables=table.cache.demo;
@@ -139,50 +156,10 @@
 		        });
 		        
 		        
-	        	//选中、取消值
-	        	var data=null;
-		        table.on('checkbox(demo)', function(obj){
-		        	var tables=table.cache.demo;
-		        	data=obj.data;
-		        	
-		        	if(obj.checked==true){
-		        		 $("#shuju").val($("#shuju").val()+data.matId+","+data.matName+","+data.matPrice+","+$("#number"+data.matId).val()+","+$("#price"+data.matId).val()+"#");
-		        		 
-		        		 $.each(tables,function(i,item){
-		        			 if(data.matId==item.matId){
-		        				 //取输入数量值
-		        				 var a=$("#number"+data.matId).val();
-		        				 //放入总数量
-		        				 $("#buyAmount").val(parseInt($("#buyAmount").val())+parseInt(a));
-		        				 
-		        				 //取输入小计值
-		        				 var b=$("#price"+data.matId).val();
-		        				 //放入总金额
-		        				 $("#buyMoney").val(parseInt($("#buyMoney").val())+parseInt(b));
-		        			 }
-		        		 });
-		        		 
-		        	 }	
-		        	 if(obj.checked==false){
-		        		 $.each(tables,function(i,item){
-		        			 if(data.matId==item.matId){
-		        				 //获取总数量值
-		        				 var zAmount=$("#buyAmount").val();
-	        					 //用总数量值减去输入的值
-		        				 $("#buyAmount").val(parseInt(zAmount)-$("#number"+data.matId).val());
-	        					 
-		        				 //获取总金额值
-		        				 var zMoney=$("#buyMoney").val();
-	        					 //用总金额减去输入的小计值
-		        				 $("#buyMoney").val(parseInt(zMoney)-$("#price"+data.matId).val());
-		        			 }
-		        		 });
-		        	 }
-		        });
-		        
 		        $("#add").click(function(){
    	        		var url="../../qc/Qcadd.action";
-   					var data={"id":qcId,"shuju":$("#shuju").val(),"sumAmout":$("#qcFail").val(),"sumRate":$("#qcRate").val(),"qcState":1}
+   	        		console.log()
+   					var data={"id":qcId,"shuju":$("#shuju").val(),"sumAmout":$("#qcFail").val(),"sumRate":$("#qcRate").val(),"zjAmout":$("#qcAmount").val(),"qcState":1}
    					
 					$.post(url,data,function(mes){
 						if(mes.status==1){
@@ -261,17 +238,48 @@
 			    	 obj.value="0";
 			    }
 			    
+			    
 			    var id = obj.id;
 			    
 				var a = obj.value;//数量值
-				var b=$(obj).parent().parent().parent().next().children().html();//获取this的父类节点
-				var c =parseFloat(a)/parseFloat(b);//用this*数量
-				var d=c.toFixed(2);
-				//计算结果显示
-				$(obj).parent().parent().parent().next().next().children().children().children().val(d);
+				var b=$(obj).parent().parent().parent().next().children().html();//获取质检数量值
 				
-				if(parseInt(a)>parseInt(b)){
+				
+				
+				if(parseInt(b)-parseInt(a)<0){
+					var c=100;
+				}else{
+					//(质检数量-质检未通过数)/质检数量*100
+					var c=(parseInt(b)-parseInt(a))/parseInt(b)*100;
+				}
+				
+				//var c =parseFloat(a)/parseFloat(b);//用this*数量
+				//截取后面两位小数
+				var d=c.toFixed(1);
+				
+				//计算结果显示
+				$(obj).parent().parent().parent().next().next().next().next().children().children().children().val(d);
+				
+				/*var sss=parseInt(b)-parseInt(a);
+				$(obj).parent().parent().parent().next().children().text(sss);*/
+			
+				
+				if(parseInt($(obj).val())>parseInt($("#number_"+id.split("number")[1]).val())){
+					$(obj).parent().parent().parent().next().children().text(parseInt($("#sumNumber_"+id.split("number")[1]).val())-a);
+				}else{
+					$(obj).parent().parent().parent().next().children().text(parseInt(b)+(parseInt($("#number_"+id.split("number")[1]).val())-a));
+				}
+				
+				$("#number_"+id.split("number")[1]).val($(obj).val())
+				
+				//另外写的质检数量
+				var kk=$(obj).parent().parent().parent().next().next().next().children().children().val();
+				//判断如果输入的值大于质检数量的值的话
+				if(obj.value>parseInt(b)){
+					//就把输入的值等于0
 					obj.value = "0";
+					//把另外一个质检数量赋进来
+					$(obj).parent().parent().parent().next().children().html(kk);
 					layer.msg("不能大于质检数量噢");
 				}
 				
@@ -279,8 +287,13 @@
 				var amo=allAmount();
 				$("#qcFail").val(amo);
 				
-				var probity=allprobability();
-				var bit=probity.toFixed(2);
+				//质检总数量
+				var zj=zjAmount();
+				$("#qcAmount").val(zj);
+				
+				//质检总通过率
+				var zongde=(zj-amo)/zj*100;
+				var bit=zongde.toFixed(1);
 				$("#qcRate").val(bit);
 				
 				//改变上面的动态值
@@ -291,6 +304,16 @@
 					var bdetFkId=$(item).children().get(0);
 					var matName=$(item).children().get(1);
 					var zjNumber=$(item).children().get(3); 
+					
+					//未通过数
+					//var shuru=$("#number"+$(bdetFkId).children().text()).val();
+					//console.log(shuru);
+					//质检数量
+					//var shuliang=$(zjNumber).children().text();
+					//console.log(shuliang);
+					//减完后的值
+					//var sjNumber=shuliang-shuru;
+					
 					 
 					$("#shuju").val($("#shuju").val()+$(bdetFkId).children().text()+","+$(matName).text()+","+$("#number"+$(bdetFkId).children().text()).val()+","+$(zjNumber).children().text()+","+$("#price"+$(bdetFkId).children().text()).val()+"#");	
 				 })
@@ -308,6 +331,15 @@
 					amount += parseInt($(this).val());
 				});
 				return amount;
+			}
+			
+			//质检数量相加
+			function zjAmount(){
+				var zjamount = 0;
+				$.each(tableElem.find('td[data-field="qdetAmount"]'),function(index,item){
+					zjamount += parseInt($(this).text());
+ 				});
+				return zjamount;
 			}
 		  	
 		  	//质检总概率相加

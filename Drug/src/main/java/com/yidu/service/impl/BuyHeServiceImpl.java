@@ -21,7 +21,7 @@ import com.yidu.util.TimeUtil;
  * 采购订单 服务实现类
  * </p>
  *
- * @author Pngjiangping
+ * @author dengkangwei
  * @since 2018-11-26
  */
 @Service
@@ -43,6 +43,7 @@ public class BuyHeServiceImpl implements BuyHeService {
 			e.printStackTrace();
 		}
 		
+		//创建map集合
 		Map<String, Object> map=new HashMap<>();
 		map.put("buy", buy);
 		map.put("page", page);
@@ -52,7 +53,9 @@ public class BuyHeServiceImpl implements BuyHeService {
 
 	@Override
 	public int addorUpdate(Buy buy) {
+		//uuid
 		String uuid=UUID.randomUUID().toString().replaceAll("-", "");
+		//赋值id
 		buy.setBuyId(uuid);
 		return dao.insert(buy);
 	}
@@ -71,6 +74,7 @@ public class BuyHeServiceImpl implements BuyHeService {
 
 	@Override
 	public List<Buy> AuditshowList(Buy buy, PageUtil page) {
+		//创建map集合
 		Map<String, Object> map=new HashMap<>();
 		map.put("buy", buy);
 		map.put("page", page);

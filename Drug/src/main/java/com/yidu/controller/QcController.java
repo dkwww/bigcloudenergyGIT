@@ -217,21 +217,24 @@ public class QcController {
 	/**
 	 * 材料质检增加
 	 * @param id
-	 * @param shuju
-	 * @param sumAmout
-	 * @param sumRate
-	 * @param qcState 质检状态
+	 * @param shuju 前台传的数据
+	 * @param sumAmout	未通过数
+	 * @param zjAmout	质检数量
+	 * @param sumRate	总通过率
+	 * @param qcState 	质检状态
 	 * @author dengkangwei
 	 * @return
 	 */
 	@RequestMapping("Qcadd")
 	@ResponseBody
-	public Message Qcadd(String id,String shuju,String sumAmout,String sumRate,String qcState) {
-		//得到库存对象
+	public Message Qcadd(String id,String shuju,String sumAmout,String sumRate,String zjAmout,String qcState) {
+		System.err.println("=================="+zjAmout);
+		//得到质检对象
 		Qc qc=new Qc();
 		qc.setQcId(id);
 		qc.setQcFail(Integer.valueOf(sumAmout));
 		qc.setQcRate(sumRate);
+		qc.setQcAmount(Integer.valueOf(zjAmout));
 		qc.setQcState(qcState);
 		qcService.buyQcadd(qc);
 		
@@ -249,10 +252,11 @@ public class QcController {
 			String qdetAmount=datas[3];
 			System.out.println("数量:"+qdetAmount);
 			String qdetRate=datas[4];
-			System.out.println("质检率:"+qdetRate);
+			System.out.println("质检率:"+qdetRate); 
 			
 			qcdetail.setQdetId(qdetId);
 			qcdetail.setQdetFail(Integer.valueOf(qdetFail));
+			qcdetail.setQdetAmount(Integer.valueOf(qdetAmount));
 			qcdetail.setQdetRate(qdetRate);
 			qcDetailService.add(qcdetail);
 			
