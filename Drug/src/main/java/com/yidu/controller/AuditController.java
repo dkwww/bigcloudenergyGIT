@@ -286,9 +286,10 @@ public class AuditController {
 					debtyDetail.setDdetChange(new BigDecimal(zongjia));
 					debtyDetail.setIsva("1");
 					debtyDetail.setOptime(new Date());
-					debtyDetailMapper.insertSelective(debtyDetail);
-					
-					  
+					int i=debtyDetailMapper.insertSelective(debtyDetail);
+					if(i>0) {
+						System.err.println("成功经理审核出现明细");
+					}
 					l++;
 				}else {
 					System.err.println("修改库存失败");
