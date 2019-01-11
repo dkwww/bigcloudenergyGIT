@@ -24,7 +24,6 @@
         .info-box {
             height: 85px;
             background-color: white;
-            background-color: #ecf0f5;
         }
         
         .info-box .info-box-icon {
@@ -155,9 +154,9 @@
 						</div>
 						<div class="layui-col-md12">
 							<div class="layui-card">
-								<div class="layui-card-header">数据统计</div>
+								<div class="layui-card-header">销售数据统计</div>
 								<div class="layui-card-body">
-									<table id="r5w0qnh7e7ew" lay-filter="rpu9lywe2zl"></table>
+									<table id="saledata" lay-filter="saledatas"></table>
 								</div>
 							</div>
 						</div>
@@ -167,7 +166,7 @@
 					<div class="layui-row layui-col-space15">
 						<div class="layui-col-md12">
 							<div class="layui-card">
-								<div class="layui-card-header"></div>
+								<div class="layui-card-header">ECharts</div>
 								<div class="layui-card-body">
 									<div id="repertory" style="height: 350px; -moz-user-select: none; position: relative;" _echarts_instance_="ec_1547172122198"></div>
 								</div>
@@ -197,17 +196,63 @@
 		</div>
     </div>
     <script src="./res/layui/layui.js"></script>
-    <script>
-        layui.use('jquery', function() {
-            var $ = layui.jquery;
-            $('#test').on('click', function() {
-                parent.message.show({
-                    skin: 'cyan'
-                });
-            });
-        });
-        
-    </script>
+    <!-- <script type="text/javascript">
+		//layui 模块化引用
+		layui.use(['table', 'layer', 'element', 'jquery', 'form'], function(table, layer, element, $, form) {
+			// data模式
+			var $ = layui.$, table = layui.table, form = layui.form, layer = layui.layer;
+			//数据表格实例化
+			var admin = getSession();
+			var comId = admin==null ? null : admin.comId;
+			
+			$("#title").text(getParameter("name"));
+			var tableIns1 = table.render({
+				elem: '#saledata',
+				id: "layTableId",
+				url: "../../WholesaleDetail/selectAll.action",
+				where: {"comId": comId,"audFkId": getParameter("id"),"type": getParameter("type")},
+				height: 'full-90', //容器高度
+				page: true,
+				cols: [
+					[
+						{title: '序号',type: 'numbers'},
+						{field: 'audTimes',title: '审核时间（time）',width: 165,sort: true},
+						{field: 'audName',title: '审核人（name）',width: 140},
+						{field: 'audState',title: '状态（state）',width: 130},
+						{field: 'audIdea',title: '意见（idea）'}
+					]
+				],
+				done: function(res, curr, count) {
+					$("[data-field = 'audState']").children().not(":first").each(function(index){
+	                	var id = $(this).parents('tr').find('td[data-field="drugId"]').text();
+	                	var o = $(this);
+            			if (o.text() == '10010'||o.text() == '10012'||o.text() == '10110'||o.text() == '10112') {
+            				o.html('<font style="color: #F00000">不通过</font>');
+            			} else if (o.text() == '10011'||o.text() == '10013'||o.text() == '10111'||o.text() == '10113') {
+            				o.html('<font style="color: #00F000">通过</font>');
+            			}
+				  	});
+				}
+			});
+			
+			function getSession(){
+				var admin = null;
+				$.ajax({ 
+		        	url:"../../../admin/getSession.action",
+	                type:'post',
+	                async:false,
+	                dataType:'json',
+	                success:function(mes){
+	                	if (mes!=null && mes!="") {
+	                		admin = mes;
+						}
+	                }
+	        	});
+				return admin;
+			}
+			
+		});
+	</script> -->
     <script src="./res/main/main.js"></script>
 </body>
 

@@ -23,6 +23,9 @@
 	WHERE dw.whol_id=dd.whol_id
 	AND dd.drug_id=dg.drug_id
 	AND dd.whol_id=#{title,jdbcType=VARCHAR}
+	<if test="comId !=null and comId !=null">
+   		AND dw.com_id=#{comId,jdbcType=VARCHAR}
+   	</if>
 	<if test="kshs !=null and jshs !=null">
    		limit #{kshs},#{jshs}   <!-- 开始行数到每页多少行 -->
    	</if>

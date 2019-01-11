@@ -84,6 +84,7 @@
 		            <input type="hidden" name="drugId" value="{{d.rowdata.drugId}}" />
 					<input type="hidden" name="audId" value="{{d.rowdata.audId}}" />
 					<input type="hidden" name="audState" value="{{d.rowdata.audState}}" />
+					<input type="hidden" name="drugPictrue" value="{{d.rowdata.drugPictrue}}" >
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">名称</label>
 		                <div class="layui-input-block">
@@ -93,7 +94,7 @@
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">类型</label>
 		                <div class="layui-input-block">
-		                    <select name="dtId" lay-verify="required">
+		                    <select name="dtId" required lay-verify="required">
 		                      <option value="请选择类型"></option>
 		                      {{# layui.each(d.types,function(index,item){ }}                      
 		                      {{# if(item.dtId===d.rowdata.dtId){}}
@@ -125,15 +126,16 @@
 		                    <input type="text" name="drugPrice" required lay-verify="required" maxlength="6" value="{{d.rowdata.drugPrice}}" placeholder="请输入金额" autocomplete="off" class="layui-input activity_card_money" onKeyUp="amount(this)">
 		                </div>
 		            </div>
-					<div class="layui-upload">
-                		<label class="layui-form-label">图片:</label>
-                		<div class="layui-upload layui-input-block">
-                    		<input type="hidden" name="drugPictrue" value="{{d.rowdata.drugPictrue}}"/>
-                    		<button type="button" class="layui-btn layui-btn-primary" id="fileBtn"><i class="layui-icon">&#xe67c;</i>选择文件</button>
-                   	 		<button type="button" class="layui-btn layui-btn-warm" id="uploadBtn">开始上传</button>
-                		</div>
-            		</div>
-					
+					<div class="layui-form-item layui-upload ">
+  		  				<label class="layui-form-label">图片</label>
+						<div class="layui-upload layui-input-block">
+		  					<button type="button" class="layui-btn layui-btn-primary" id="fileBtn"><i class="layui-icon">&#xe67c;</i>{{d.rowdata.msg}}</button>
+		  					<div class="layui-upload-list" style="display: none">
+		    					<img class="layui-upload-img" id="pic" src="../../{{d.rowdata.drugPictrue}}" name="drugPictrue" style="width: 100px;height: 100px">
+		    					<p id="errorText"></p>
+		  					</div>
+						</div>
+					</div>
 		            <div class="layui-form-item" style="display:none;">
 		                <div class="layui-input-block">
 		                    <button class="layui-btn" lay-submit lay-filter="formEdit1">立即提交</button>
@@ -411,11 +413,13 @@
 		                    update("../../drug/addDrug.action",{"drugId":data.drugId,"isva":"0"});
 		                });
 		            } else if (layEvent === 'edit') { //编辑
+		            	data["msg"]="更改图片";
 		                var d = {
 		                	rowdata: data,
 		                    types: staticData.types
 		                };
 		                editLayer1(d);
+	            		$(".layui-upload-list").css("display", "block");
 		            }
 		        });
 		        
@@ -429,9 +433,9 @@
 		        //药品增加和修改弹出层   提交按钮点击事件
 		        
 		        form.on('submit(formEdit1)', function(data) {
-                	if ($("[name=drugPictrue]").val()=="") {
+                	if ($("input[name=drugPictrue]").val()=="") {
                 		layer.msg('未上传文件');
-                    	$("#fileBtn").html('<span style="color:red"><i class="layui-icon">&#xe67c;</i>选择文件</span>');
+                    	$("#fileBtn").html('<span style="color:red"><i class="layui-icon">&#xe67c;</i>选择图片</span>');
                     	form.render(null, 'form-edit');
                     	return false;
                     }
@@ -461,7 +465,7 @@
 		                    var d = {
 		                		//替换增加页面文本框内出现的undefine
 		                        rowdata: {
-		                        	drugId: '',drugName: '',drugProp: 1,drugUnit: '',drugPrice: '',drugPictrue: '',drugProp: '0'
+		                        	drugId: '',drugName: '',drugProp: 1,drugUnit: '',drugPrice: '',drugPictrue: '',drugProp: '0',msg: '选择图片'
 		                        },
 		                        //类型下拉框数据
 		                        types: staticData.types
@@ -555,7 +559,7 @@
                             layui.form.render(null, 'form-edit');
                         }
                     });
-                    upload();
+                    uploads();
                 });
 	    		return 
 		    }
@@ -581,7 +585,6 @@
                         	layui.form.render(null, 'form-edit');
                         }
                     });
-                    upload();
                 });
 		    }
 		  	
@@ -638,26 +641,39 @@
 		    }
 		    
 		    //上传文件
-		    function upload(){
-		    	layui.upload.render({
-	                elem: '#fileBtn'
-	                ,url: '../../drug/upload.action'
-	                ,accept: 'file'
-	                ,auto: false
-	                ,bindAction: '#uploadBtn'
-	                ,before: function(){
-	                	layer.load(2,{shade:false});
-	                }
-	                ,done: function(res){
-	                	layer.closeAll("loading");
-	                	layer.msg(res.msg);
-	                	if (res.status=="1") {
-	                		 $("[name=drugPictrue]").val(res.obj);
-	                		 $("#fileBtn").html('<i class="layui-icon">&#xe67c;</i>选择文件');
-	                		 form.render('form-edit');
-	                	}
-	                }
-	            });
+		    function uploads(){
+		    	//普通图片上传
+		        var uploadInst = layui.upload.render({
+		          elem: '#fileBtn'
+		          ,url: '../../drug/upload.action'
+		          ,before: function(obj){
+		            //预读本地文件示例，不支持ie8
+		            obj.preview(function(index, file, result){
+		            	$(".layui-upload-list").css("display", "block");
+		                $('#pic').attr('src', result); //图片链接（base64）
+		            });
+		          }
+		          ,done: function(res){
+		            //如果上传失败
+		            if(res.code > 0){
+		              return layer.msg('上传失败');
+		            }
+		            //上传成功
+		            $("input[name=drugPictrue]").val(res.obj);
+		            $(".layui-upload-list").css("display", "block");
+		            $("[name=drugPictrue]").val(res.obj);
+	           		$("#fileBtn").html('<i class="layui-icon">&#xe67c;</i>跟改图片');
+	           		form.render('form-edit');
+		          }
+		          ,error: function(){
+		            //演示失败状态，并实现重传
+		            var demoText = $('#errorText');
+		            demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+		            demoText.find('.demo-reload').on('click', function(){
+		              uploadInst.upload();
+		            });
+		          }
+		        });
 		    }
 		    //刷新弹出层
 		    function layerIFrameReload(layerIndex) {
