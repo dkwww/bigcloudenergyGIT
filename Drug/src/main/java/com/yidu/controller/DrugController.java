@@ -196,7 +196,7 @@ public class DrugController {
 	 */
 	@RequestMapping("/showLists")
 	@ResponseBody
-	public Map<String,Object> showLists(Drug record,Integer page,Integer limit) {
+	public Map<String,Object> showLists(Drug record,Integer page,Integer limit,HttpSession session) {
 		//创建分页工具
 		PageUtil pageUtil = new PageUtil();
 		//总页
@@ -204,8 +204,10 @@ public class DrugController {
 		//行
 		pageUtil.setRows(limit);
 		
+		
+		Admin admin=(Admin) session.getAttribute("admin");
 		//分店ID
-		record.setComId("1");
+		record.setComId(admin.getComId());
 		
 		//调用查询的方法
 		List<Drug> list = drugService.selectBySelectives(record,pageUtil);
