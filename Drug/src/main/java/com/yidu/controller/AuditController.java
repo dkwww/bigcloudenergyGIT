@@ -3,6 +3,7 @@ package com.yidu.controller;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -17,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yidu.dao.DebtyDetailMapper;
 import com.yidu.domain.Admin;
 import com.yidu.domain.Audit;
 import com.yidu.domain.Buy;
 import com.yidu.domain.Debty;
+import com.yidu.domain.DebtyDetail;
 import com.yidu.domain.Drug;
 import com.yidu.domain.DrugInve;
 import com.yidu.domain.Qc;
@@ -54,6 +57,11 @@ public class AuditController {
 	@Resource
 	WholesaleDetailService detaiservice;
 	
+	/**
+	 * 注入财务明细Mapper
+	 */
+	@Resource
+	DebtyDetailMapper debtyDetailMapper;
 	
 	@Resource
 	DrugInvService druginvservice;
@@ -231,7 +239,7 @@ public class AuditController {
 	
 	@RequestMapping("/Finanexamine")
 	@ResponseBody
-	public Message Finanexamine(Audit audit,Double zongjia) {
+	public Message Finanexamine(Audit audit,Double zongjia,HttpSession session) {
 		Message message = new Message();
 		System.err.println(audit.getAudFkId());
 		System.err.println(audit.getAudId());
@@ -258,7 +266,10 @@ public class AuditController {
 					drugInve.setDiAmount(wholesaleDetail.getWdAmount());
 					druginvservice.amountupdate(drugInve);
 					Debty debty=new Debty();
-					debty.setComId("1");
+					
+					Admin admin=(Admin) session.getAttribute("admin");
+					
+					debty.setComId(admin.getComId());
 					
 					BigDecimal zongjias = new BigDecimal(zongjia);
 					debty.setDebMoney(zongjias);
@@ -268,6 +279,16 @@ public class AuditController {
 						l++;
 					}
 					System.err.println("修改库存成功");
+					
+					DebtyDetail debtyDetail=new DebtyDetail();
+					debtyDetail.setDdetId(Tools.getDateOrderNo());
+					debtyDetail.setDebId(debty.getDebId());
+					debtyDetail.setDdetChange(new BigDecimal(zongjia));
+					debtyDetail.setIsva("1");
+					debtyDetail.setOptime(new Date());
+					debtyDetailMapper.insertSelective(debtyDetail);
+					
+					  
 					l++;
 				}else {
 					System.err.println("修改库存失败");

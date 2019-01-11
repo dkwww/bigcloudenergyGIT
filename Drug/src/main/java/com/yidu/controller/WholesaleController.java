@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mysql.fabric.xmlrpc.base.Array;
+import com.yidu.domain.Admin;
 import com.yidu.domain.Audit;
 import com.yidu.domain.Drug;
 import com.yidu.domain.Wholesale;
@@ -30,6 +31,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Controller;
@@ -160,7 +162,7 @@ public class WholesaleController {
 	 */
 	@RequestMapping("/Wholesalemanagement")
 	@ResponseBody
-	public Message Wholesalemanagement(String htmlstr,int zongshu,String zongjin,String comIdname) {
+	public Message Wholesalemanagement(String htmlstr,int zongshu,String zongjin,String comIdname,HttpSession session) {
 		//创建订单对象
 		Wholesale wholesale=new Wholesale();
 		System.err.println("asdasdasdasd="+htmlstr);
@@ -211,8 +213,10 @@ public class WholesaleController {
 			if(i==0) {
 				//批发ID
 				wholesale.setWholId(uuid);
+				
+				Admin admin=(Admin) session.getAttribute("admin");
 				//店铺ID
-				wholesale.setComId("0");
+				wholesale.setComId(admin.getComId());
 				//总数量
 				wholesale.setWholAmount(zongshu);
 				//总价
