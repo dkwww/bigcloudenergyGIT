@@ -94,8 +94,8 @@ function queryStatistics(mes){
 		        formatter: "{a} <br/>{b} : {c} ({d}%)"
 		    },
 		    legend: {
-		        x : '40',
-		        y : '100'
+		        x : '10',
+		        y : '30'
 		    },
 		    toolbox: {
 		        show : true,
@@ -116,7 +116,7 @@ function queryStatistics(mes){
 		            name:'库存预警',
 		            type:'pie',
 		            radius : [20, 110],
-		            center : ['25%', '50%'],
+		            center : ['50%', '50%'],
 		            roseType : 'radius',
 		            label: {
 		                normal: {
@@ -177,7 +177,7 @@ function queryMaterials(mes){
 		            name:'药材库存预警',
 		            type:'pie',
 		            radius : [20, 110],
-		            center : ['25%', '50%'],
+		            center : ['50%', '50%'],
 		            roseType : 'radius',
 		            label: {
 		                normal: {
