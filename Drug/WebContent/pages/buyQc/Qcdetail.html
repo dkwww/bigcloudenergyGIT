@@ -126,7 +126,7 @@
 		            done: function(res, curr, count) {
 		            	
 		                $(".layui-table-box").find("[data-field='qdetAmounts']").css("display","none");
-		                $(".layui-table-box").find("[data-field='qdetAmountss']").css("display","none");
+		                //$(".layui-table-box").find("[data-field='qdetAmountss']").css("display","none");
 		            	
 		            	windata=res.data;
 		            	tableElem = this.elem.next('.layui-table-view');
@@ -158,7 +158,6 @@
 		        
 		        $("#add").click(function(){
    	        		var url="../../qc/Qcadd.action";
-   	        		console.log()
    					var data={"id":qcId,"shuju":$("#shuju").val(),"sumAmout":$("#qcFail").val(),"sumRate":$("#qcRate").val(),"zjAmout":$("#qcAmount").val(),"qcState":1}
    					
 					$.post(url,data,function(mes){
@@ -275,12 +274,15 @@
 				//另外写的质检数量
 				var kk=$(obj).parent().parent().parent().next().next().next().children().children().val();
 				//判断如果输入的值大于质检数量的值的话
-				if(obj.value>parseInt(b)){
+				if(parseInt(a)>parseInt(kk)){
 					//就把输入的值等于0
 					obj.value = "0";
 					//把另外一个质检数量赋进来
 					$(obj).parent().parent().parent().next().children().html(kk);
+					
 					layer.msg("不能大于质检数量噢");
+				}else{
+					$(obj).parent().parent().parent().next().children().html(kk-a);
 				}
 				
 				//质检总未通过数
