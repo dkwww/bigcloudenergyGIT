@@ -663,7 +663,7 @@
 		            $(".layui-upload-list").css("display", "block");
 		            $("[name=drugPictrue]").val(res.obj);
 	           		$("#fileBtn").html('<i class="layui-icon">&#xe67c;</i>跟改图片');
-	           		form.render('form-edit');
+	           		layui.form.render('form-edit');
 		          }
 		          ,error: function(){
 		            //演示失败状态，并实现重传

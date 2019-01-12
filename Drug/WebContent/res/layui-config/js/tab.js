@@ -146,8 +146,18 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
                                         }));
                                     break;
                                 case renderType.iframe:
+                                	NProgress.start();
                                     var item = that._content.children('div[lay-item-id=' + layId + ']').children('iframe');
                                     item.attr('src', item.attr('src'));
+                                    if (item[0].attachEvent){
+                                    	item[0].attachEvent("onload", function(){
+	                                    	NProgress.done();
+	                                    });
+                                    } else {
+	                                    item[0].onload = function(){
+	                                    	NProgress.done();
+	                                    };
+                                    }
                                     break;
                             }
                             break;

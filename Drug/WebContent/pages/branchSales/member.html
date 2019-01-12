@@ -132,7 +132,7 @@
 		</script>
 		<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
 		<script type="text/html" id="img">
-			<img style="height:100%;height:30px;" onclick="getPathOver(this)" src="../../{{ d.drugPictrue}}">
+			<img style="height:100%;height:30px;" onclick="getPathOver(this)" src="../../{{ d.memPictrue}}">
 		</script>
 		<script>
 			//搜索框同步输入
@@ -242,6 +242,7 @@
 		                	rowdata: data,
 		                };
 		                showlayer(d);
+		                $(".layui-upload-list").css("display", "block");
 		            }
 		        });
 		        
@@ -347,8 +348,7 @@
 		            //上传成功
 		            $("input[name=memPictrue]").val(res.obj);
 		            $(".layui-upload-list").css("display", "block");
-		            $("[name=memPictrue]").val(res.obj);
-	           		$("#fileBtn").html('<i class="layui-icon">&#xe67c;</i>跟改图片');
+	           		$("#fileBtn").html('<i class="layui-icon">&#xe67c;</i>更改图片');
 	           		form.render('form-edit');
 		          }
 		          ,error: function(){

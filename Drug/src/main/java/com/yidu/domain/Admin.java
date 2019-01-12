@@ -27,6 +27,8 @@ public class Admin {
     
     private String comName;
     
+    private String comType;
+    
     private String roId;
     
     
@@ -53,6 +55,14 @@ public class Admin {
 
 	public void setComName(String comName) {
 		this.comName = comName == null ? null : comName.trim();
+	}
+	
+	public String getComType() {
+		return comType;
+	}
+
+	public void setComType(String comType) {
+		this.comType = comType == null ? null : comType.trim();
 	}
 
 	public String getOptimestring() {

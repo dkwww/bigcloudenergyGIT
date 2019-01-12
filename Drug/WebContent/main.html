@@ -10,16 +10,19 @@
     <link rel="stylesheet" href="./res/css/common/font-awesome.min.css" media="all">
     <script type="text/javascript" src="https://lib.baomitu.com/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://lib.baomitu.com/echarts/4.2.0-rc.2/echarts.min.js"></script>
-   
     <style>
     
     	body{
-    		background: #F6F6F6;
+    		background: #F8F8F8;
     	}
     	
-    	/* *{
-    		border: 1px solid gray;
-    	} */
+    	.layui-fluid{
+    		padding: 0px;
+    	}
+    	
+    	.layui-col-space15 > * {
+		    padding: 4.5px;
+		}
     	
         .info-box {
             height: 85px;
@@ -152,14 +155,6 @@
 								</div>
 							</div>
 						</div>
-						<div class="layui-col-md12">
-							<div class="layui-card">
-								<div class="layui-card-header">销售数据统计</div>
-								<div class="layui-card-body">
-									<table id="saledata" lay-filter="saledatas"></table>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 				<div class="layui-col-md4">
@@ -174,18 +169,21 @@
 						</div>
 						<div class="layui-col-md12">
 							<div class="layui-card">
-								<div class="layui-card-header">关于本系统</div>
+								<div class="layui-card-header">项目及团队介绍</div>
 								<div class="layui-card-body">
-									<p>该版本的核心是[路由]，不再支持[iframe]方式的加载</p>
-									<p>版本特性：</p>
-									<ul>
-										<li>1、用法一如既往的简单，快捷。(只需要简单的配置就实现一些功能).</li>
-										<li>2、提供本地开发环境。(依赖nodejs运行环境和gulp)</li>
-										<li>3、提供代码功能。(依赖nodejs运行环境和gulp)</li>
-										<li>4、模块化加载。(依赖layui模块化，用法与layui保持一致)</li>
-										<li>5、提供路由功能。(路由是本版本的核心功能了，需与模板绑定，详情请参考相关文档)</li>
-										<li>6、完全的前后端分离开发。(集成mockjs用于拦截请求并返回模拟数据，详情请参考相关文档)</li>
-										<li>7、左侧菜单重写，支持到4级菜单。(集成mockjs用于拦截请求并返回模拟数据，详情请参考相关文档)</li>
+									<p>系统简介：</p>
+									<p style="text-indent:35px;font-size: 12px;color: gray">药品管理系统是集进、销、存、财务以及会员一体化专业药店管理软件。是将药品和中药采用同一操作流程分别管理，操作简单、管理方便的软件。</p>
+									<p>功能模块及开发人员：</p>
+									<ul style="font-size: 12px;color: gray">
+										<li>1、原材料的 采购、审核以及质检入库。(负责人：邓康威).</li>
+										<li>2、药品的 研发、生产以及审核。(负责人：周俊)</li>
+										<li>3、药品的 制造、质检以及入库。(负责人：彭江平)</li>
+										<li>4、药品销售、审核、分店采购以及质检入库。(负责人：郑宥红)</li>
+										<li>5、药品的 批发以及审核。(负责人：李凯)</li>
+										<li>6、药品的 零售以及会员。(负责人：刘意)</li>
+										<li>7、公司加盟、审核以及财务。(负责人：刘文轩)</li>
+										<li>8、系统权限管理以及统计图。(负责人：吴晓林)</li>
+										<li>9、系统用户以及角色分配。(负责人：刘荣龙)</li>
 									</ul>
 								</div>
 							</div>
@@ -196,63 +194,6 @@
 		</div>
     </div>
     <script src="./res/layui/layui.js"></script>
-    <!-- <script type="text/javascript">
-		//layui 模块化引用
-		layui.use(['table', 'layer', 'element', 'jquery', 'form'], function(table, layer, element, $, form) {
-			// data模式
-			var $ = layui.$, table = layui.table, form = layui.form, layer = layui.layer;
-			//数据表格实例化
-			var admin = getSession();
-			var comId = admin==null ? null : admin.comId;
-			
-			$("#title").text(getParameter("name"));
-			var tableIns1 = table.render({
-				elem: '#saledata',
-				id: "layTableId",
-				url: "../../WholesaleDetail/selectAll.action",
-				where: {"comId": comId,"audFkId": getParameter("id"),"type": getParameter("type")},
-				height: 'full-90', //容器高度
-				page: true,
-				cols: [
-					[
-						{title: '序号',type: 'numbers'},
-						{field: 'audTimes',title: '审核时间（time）',width: 165,sort: true},
-						{field: 'audName',title: '审核人（name）',width: 140},
-						{field: 'audState',title: '状态（state）',width: 130},
-						{field: 'audIdea',title: '意见（idea）'}
-					]
-				],
-				done: function(res, curr, count) {
-					$("[data-field = 'audState']").children().not(":first").each(function(index){
-	                	var id = $(this).parents('tr').find('td[data-field="drugId"]').text();
-	                	var o = $(this);
-            			if (o.text() == '10010'||o.text() == '10012'||o.text() == '10110'||o.text() == '10112') {
-            				o.html('<font style="color: #F00000">不通过</font>');
-            			} else if (o.text() == '10011'||o.text() == '10013'||o.text() == '10111'||o.text() == '10113') {
-            				o.html('<font style="color: #00F000">通过</font>');
-            			}
-				  	});
-				}
-			});
-			
-			function getSession(){
-				var admin = null;
-				$.ajax({ 
-		        	url:"../../../admin/getSession.action",
-	                type:'post',
-	                async:false,
-	                dataType:'json',
-	                success:function(mes){
-	                	if (mes!=null && mes!="") {
-	                		admin = mes;
-						}
-	                }
-	        	});
-				return admin;
-			}
-			
-		});
-	</script> -->
     <script src="./res/main/main.js"></script>
 </body>
 

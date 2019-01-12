@@ -1,3 +1,4 @@
 /** kit_admin-v1.1.0 MIT License By http://kit/zhengjinfan.cn e-mail:zheng_jinfan@126.com */
 .kit-theme .kit-layout-admin .layui-header{border-bottom:2px solid #23262E}
 .layui-this{color: #009688 !important}
+#nprogress .bar{background: #00E6CE!important}#nprogress .peg{box-shadow: 0 0 10px #00E6CE, 0 0 5px #00E6CE!important}#nprogress .spinner {left: 15px;}#nprogress .spinner-icon{border-top-color: #fff!important;border-left-color: #fff!important}

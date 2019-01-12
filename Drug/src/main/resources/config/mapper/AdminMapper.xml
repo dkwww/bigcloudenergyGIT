@@ -26,6 +26,7 @@
 		<result column="oper" jdbcType="VARCHAR" property="oper" />
 		<result column="sort" jdbcType="VARCHAR" property="sort" />
 		<result column="com_name" jdbcType="VARCHAR" property="comName" />
+		<result column="com_type" jdbcType="VARCHAR" property="comType" />
 	</resultMap>
 	
 	<resultMap id="BaseResultMap2" type="com.yidu.domain.AdminRole">
@@ -42,7 +43,7 @@
 	<sql id="Base_Column_List_One">
 		ad.admin_id, ad.com_id, ad.admin_name, ad.admin_pwd, ad.admin_pictrue,
 		ad.admin_msg, ad.isva, ad.optime,
-		ad.oper,ad.sort,co.com_name
+		ad.oper,ad.sort,co.com_name,co.com_type
 	</sql>
 	
 	<select id="findByRole" parameterType="java.lang.String" resultMap="BaseResultMap2">
