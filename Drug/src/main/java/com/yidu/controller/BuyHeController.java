@@ -336,52 +336,58 @@ public class BuyHeController {
 		System.err.println("------------财务总金额"+deb.getDebMoney());
 		System.err.println("------------材料总价格"+buy.getBuyMoney());
 		System.err.println("=============财务id"+deb.getDebId());
-		//判断如果审核状态不等于空且为1的时候就减财务
-		if(buy.getBuyAudit()!="" && buy.getBuyAudit().equals("1")) {
-			//调用财务明细减财务的方法,根据财务id修改金额
-			debtyservice.addbty(buy.getBuyMoney(),deb.getDebId());
-			
-			//得到财务明细对象
-			DebtyDetail debmx=new DebtyDetail();
-			//赋值一个id(getDateOrderNo)
-			debmx.setDdetId(Tools.getDateOrderNo());
-			//赋值财务的id
-			debmx.setDebId(deb.getDebId());
-			//赋值订单的金额
-			debmx.setDdetChange(buy.getBuyMoney());
-			//默认是否有效为1
-			debmx.setIsva("1");
-			//赋值0为支出状态
-			debmx.setDdettFkId("0");
-			//当前的时间
-			debmx.setOptime(new Date());
-			//放入财务明细数据库
-			debtydetailservice.addmx(debmx);
-		}
 		
-		
-		//获取审核表的对象
-		Audit audit=new Audit();
-		//获取采购订单id
-		audit.setQcFkId(buy.getBuyId());
-		//审核意见
-		audit.setAudIdea(buy.getAudIdea());
-		//审核状态
-		audit.setAudState(buy.getBuyAudit());
-		//审核的当前时间
-		Date date=new Date();
-		audit.setAudTime(date);
-		//数据添加到审核
-		audservice.add(audit);
-		
-		//调用修改审核状态的方法,在采购方法里
-		service.update(buy);
-		
-		//创建me对象
+		//得到me对象
 		Message me=new Message();
-		//赋值为1
-		me.setStatus(1);
-		me.setMsg("操作成功");
+		//判断材料总价格要小于财务总金额  (BigDecimal比较大小-1表示小于,0是等于,1是大于)
+		if(buy.getBuyMoney().compareTo(deb.getDebMoney())==-1) {
+			//判断如果审核状态不等于空且为1的时候就减财务
+			if(buy.getBuyAudit()!="" && buy.getBuyAudit().equals("1")) {
+				//调用财务明细减财务的方法,根据财务id修改金额
+				debtyservice.addbty(buy.getBuyMoney(),deb.getDebId());
+				
+				//得到财务明细对象
+				DebtyDetail debmx=new DebtyDetail();
+				//赋值一个id(getDateOrderNo)
+				debmx.setDdetId(Tools.getDateOrderNo());
+				//赋值财务的id
+				debmx.setDebId(deb.getDebId());
+				//赋值订单的金额
+				debmx.setDdetChange(buy.getBuyMoney());
+				//默认是否有效为1
+				debmx.setIsva("1");
+				//赋值0为支出状态
+				debmx.setDdettFkId("0");
+				//当前的时间
+				debmx.setOptime(new Date());
+				//放入财务明细数据库
+				debtydetailservice.addmx(debmx);
+			}
+			
+			//获取审核表的对象
+			Audit audit=new Audit();
+			//获取采购订单id
+			audit.setQcFkId(buy.getBuyId());
+			//审核意见
+			audit.setAudIdea(buy.getAudIdea());
+			//审核状态
+			audit.setAudState(buy.getBuyAudit());
+			//审核的当前时间
+			Date date=new Date();
+			audit.setAudTime(date);
+			//数据添加到审核
+			audservice.add(audit);
+			
+			//调用修改审核状态的方法,在采购方法里
+			service.update(buy);
+			//创建me对象
+			
+			//是1的话
+			me.setStatus(1);
+			me.setMsg("操作成功");
+		}else {
+			me.setMsg("金额不足");
+		}
 		return me;
 	}
 	

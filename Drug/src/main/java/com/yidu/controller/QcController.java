@@ -364,6 +364,7 @@ public class QcController {
 		
 		//得到me对象
 		Message me=new Message();
+		//是1的话
 		me.setStatus(1);
 		me.setMsg("操作成功");
 

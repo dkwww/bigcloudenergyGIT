@@ -20,7 +20,7 @@ import org.springframework.stereotype.Controller;
  * 原料供应商 前端控制器
  * </p>
  *
- * @author Pngjiangping
+ * @author dengkangwei
  * @since 2018-11-26
  */
 @Controller
