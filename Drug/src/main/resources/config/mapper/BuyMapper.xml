@@ -116,10 +116,12 @@
     from drug_buy b, drug_company c
     where b.com_id = c.com_id and buy_id = #{buyId,jdbcType=VARCHAR}
   </select>
+  <!-- 根据采购id删除所有 -->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_buy
     where buy_id = #{buyId,jdbcType=VARCHAR}
   </delete>
+  <!-- 增加 -->
   <insert id="insert" parameterType="com.yidu.domain.Buy">
     insert into drug_buy (buy_id, com_id, buy_amount, 
       buy_money, buy_time, buy_company, 
@@ -134,6 +136,7 @@
       #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, 
       #{sort,jdbcType=VARCHAR},#{buySubmission,jdbcType=VARCHAR})
   </insert>
+  <!-- 增加 -->
   <insert id="insertSelective" parameterType="com.yidu.domain.Buy">
     insert into drug_buy
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -243,6 +246,7 @@
       </if>
     </trim>
   </insert>
+  <!-- 修改-->
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Buy">
     update drug_buy
     <set>
@@ -297,6 +301,7 @@
     </set>
     where buy_id = #{buyId,jdbcType=VARCHAR}
   </update>
+  <!-- 修改 -->
   <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Buy">
     update drug_buy
     set com_id = #{comId,jdbcType=VARCHAR},
