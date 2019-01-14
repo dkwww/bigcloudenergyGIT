@@ -227,13 +227,20 @@
 		        });
 		        
 		        $("#add").click(function(){
+		        	//加载层
+		        	var index = layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+		        	//loading层
+		        	var index = layer.load(1, {
+		        	  shade: [0.1,'#fff'] //0.1透明度的白色背景
+		        	});
+
    	        		var url="../../buyht/add.action";
    					var data={"shuju":$("#shuju").val(),"sumNumber":$("#buyAmount").val(),"sumPrice":$("#buyMoney").val(),"Supplier":$("#edit_exam_school").val()}
    					
-   					console.log($("#buyAmount").val())
    					if($("#edit_exam_school").val()!=0 && $("#buyAmount").val()!=0 ){
    						$.post(url,data,function(mes){
   	 						if(mes.status==1){
+  	 							
   	 							location.href="purchase.html";
   	 						}
   	 					})

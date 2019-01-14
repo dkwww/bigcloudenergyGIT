@@ -157,6 +157,13 @@
 		        
 		        
 		        $("#add").click(function(){
+		        	//加载层
+		        	var index = layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+		        	//loading层
+		        	var index = layer.load(1, {
+		        	  shade: [0.1,'#fff'] //0.1透明度的白色背景
+		        	});
+		        	
    	        		var url="../../qc/Qcadd.action";
    					var data={"id":qcId,"shuju":$("#shuju").val(),"sumAmout":$("#qcFail").val(),"sumRate":$("#qcRate").val(),"zjAmout":$("#qcAmount").val(),"qcState":1}
    					

@@ -18,7 +18,7 @@ USE `drug_db`;
 
 /*Data for the table `drug_admin` */
 
-insert  into `drug_admin`(`admin_id`,`com_id`,`admin_name`,`admin_pwd`,`admin_pictrue`,`admin_msg`,`isva`,`optime`,`oper`,`sort`) values ('1','upload/photo.jpg','drug','123456','null','总店管理员','1',NULL,NULL,'1');
+insert  into `drug_admin`(`admin_id`,`com_id`,`admin_name`,`admin_pwd`,`admin_pictrue`,`admin_msg`,`isva`,`optime`,`oper`,`sort`) values ('1','0','drug','123456','upload/photo.jpg','总店管理员','1',NULL,NULL,'1');
 
 /*Data for the table `drug_admin_role` */
 
