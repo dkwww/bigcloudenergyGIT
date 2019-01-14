@@ -262,7 +262,24 @@
                     	form.render(null, 'form-edit');
                     	return false;
                     }
-                	update("../../member/addMember.action",data.field);
+                	$.ajax({ url:"../../member/addMember.action",
+                        type:'post',//method请求方式，get或者post
+                        cache: false,//同步
+                        dataType:'json',//预期服务器返回的数据类型
+                        data:JSON.stringify(data.field),//表格数据序列化
+                        contentType: "application/json; charset=utf-8",
+                        success:function(mes){//res为相应体,function为回调函数
+	                        if(mes.status==1){ 
+		                        $("#res").click();//调用重置按钮将表单数据清空
+		                        history.go(0);location.reload();//返回上一页重载页面，本地刷新
+	                        	layer.msg(mes.msg,{icon:1});
+	                        } else {
+	                        	layer.msg(mes.msg,{icon:5});
+	                        }
+                        },
+                       	error:function(){layer.alert('操作失败！！！',{icon:5});}
+	                 });
+                	
                 	if (close) editIndex && layer.close(editIndex); //关闭弹出层
                 	return false;
 		        });
