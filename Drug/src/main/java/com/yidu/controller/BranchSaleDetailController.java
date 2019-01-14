@@ -50,12 +50,12 @@ public class BranchSaleDetailController {
 	 * @param page 当前页数
 	 * @param limit 每页多少行
 	 * @param saleDetail 零售明细model
-	 * @return map
+	 * @return map 集合
 	 */
 	@RequestMapping("/query")
 	@ResponseBody
 	public Map<String, Object> query(String page,String limit,BranchSaleDetail saleDetail){
-		//创建分页模型类
+		//创建分页模型对象
 		PageUtil util=new PageUtil();
 		//得到页数
 		util.setCurPage(Integer.valueOf(page));

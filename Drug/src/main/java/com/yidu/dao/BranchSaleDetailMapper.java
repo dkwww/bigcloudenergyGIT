@@ -5,7 +5,12 @@ import java.util.Map;
 
 import com.yidu.controller.vo.Series;
 import com.yidu.domain.BranchSaleDetail;
-
+/**
+ * 零售明细mapper
+ * @author liuyi
+ * @since 2018-11-26
+ *
+ */
 public interface BranchSaleDetailMapper {
     int deleteByPrimaryKey(String bsdId);
 
@@ -27,7 +32,7 @@ public interface BranchSaleDetailMapper {
 	List<BranchSaleDetail> query(Map<String, Object> map);
 	/**
 	 * 分页
-	 * @param saleDetail 零售明细
+	 * @param saleDetail 零售明细model
 	 * @return
 	 */
 	int findCount(BranchSaleDetail saleDetail);

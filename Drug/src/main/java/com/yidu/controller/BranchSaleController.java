@@ -55,7 +55,7 @@ public class BranchSaleController {
 	@RequestMapping("/query")
 	@ResponseBody
 	public Map<String, Object> query(String page,String limit,BranchSale branchSale){
-		//分页模型类
+		//分页模型对象
 		PageUtil util=new PageUtil();
 		//得到页数
 		util.setCurPage(Integer.valueOf(page));
@@ -96,6 +96,7 @@ public class BranchSaleController {
 	@RequestMapping("addSale")
 	@ResponseBody
 	public Message addSale(String sum,String menId,HttpSession session) {
+		//
 		Admin admin=(Admin) session.getAttribute("admin");
 		//service里面增加零售的方法
 		return service.addSale(sum,menId,admin.getComId());

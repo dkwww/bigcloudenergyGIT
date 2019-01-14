@@ -8,9 +8,7 @@ import com.yidu.util.PageUtil;
 
 
 /**
- * <p>
  * 会员 服务类
- * </p>
  *
  * @author Liuyi
  * @since 2018-11-26
@@ -18,48 +16,47 @@ import com.yidu.util.PageUtil;
 public interface MemberService   {
 	/**
 	 * 查询所有
-	 * @param maps map集合
-	 * @return
+	 * @param util 分页model
+	 * @param member 会员model
+	 * @return 会员的List集合
 	 */
 	public List<Member> query(PageUtil util,Member member);
 	
 	/**
 	 * 增加修改
-	 * @param menId model
-	 * @return
+	 * @param record 会员model
+	 * @return int
 	 */
 	public int addOrUpdate(Member record);
 	
 	/**
 	 * 删除
 	 * @param menId 会员ID
-	 * @return
+	 * @return int
 	 */
 	public int delete(String menId);
 	/**
 	 * 批量删除
 	 * @param ids ID
-	 * @return
+	 * @return int
 	 */
 	public int bulkUpdate(List<String> ids);
 	/**
 	 * 分页
-	 * @param member model
-	 * @return
+	 * @param member 会员model
+	 * @return int
 	 */
 	public int findCount(Member member);
 	/**
 	 * 根据会员ID查询
-	 * @param menId 
-	 * @return
+	 * @param menId 会员ID
+	 * @return 会员model
 	 */
 	public Member findById(String menId);
 	/**
 	 * 根据会员名查询
 	 * @param menName 会员名
-	 * @return
+	 * @return int
 	 */
 	public int findMenName(String menName);
-	
-	
 }

@@ -1,25 +1,16 @@
 package com.yidu.service.impl;
-
- 
-
-
 import com.yidu.dao.MemberMapper;
 import com.yidu.domain.Member;
 import com.yidu.service.MemberService;
 import com.yidu.util.PageUtil;
 import com.yidu.util.TimeUtil;
 import com.yidu.util.Tools;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.Resource;
-
 import org.springframework.stereotype.Service;
-
-
 /**
  * <p>
  * 会员 服务实现类
@@ -30,11 +21,16 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class MemberServiceImpl   implements MemberService {
+	/**
+	 * 注入会员mapper
+	 */
 	@Resource
 	MemberMapper mapper;
 	
 	/**
 	 * 查询所有
+	 * @param util 分页model
+	 * @param member 会员model
 	 */
 	@Override
 	public List<Member> query(PageUtil util,Member member) {
@@ -46,7 +42,8 @@ public class MemberServiceImpl   implements MemberService {
 		return mapper.selectAll(map);
 	}
 	/**
-	 * 增加
+	 * 增加修改
+	 * @param record 会员model
 	 */
 	@Override
 	public int addOrUpdate(Member record) {
@@ -63,6 +60,7 @@ public class MemberServiceImpl   implements MemberService {
 	
 	/**
 	 * 删除
+	 * @param menId 会员ID
 	 */
 	@Override
 	public int delete(String menId) {
@@ -76,6 +74,7 @@ public class MemberServiceImpl   implements MemberService {
 	
 	/**
 	 * 批量删除
+	 * @param ids ID
 	 */
 	@Override
 	public int bulkUpdate(List<String> ids) {
@@ -84,18 +83,29 @@ public class MemberServiceImpl   implements MemberService {
 	
 	/**
 	 * 分页
+	 * @param member 会员model
+	 * @return 会员mapper里面分页的方法
 	 */
 	@Override
 	public int findCount(Member member) {
+		//返回会员mapper里面分页的方法
 		return mapper.findCount(member);
 	}
 	/**
-	 * 根据ID查询
+	 * 根据会员ID查询
+	 * @param menId 会员ID
+	 * @return 会员mapper里面查询的方法
 	 */
 	@Override
 	public Member findById(String menId) {
+		//返回会员mapper里面查询的方法
 		return mapper.selectByPrimaryKey(menId);
 	}
+	/**
+	 * 根据会员名查询
+	 * @param menName 会员名
+	 * @return rows
+	 */
 	@Override
 	public int findMenName(String menName) {
 		int rows=mapper.selectMenName(menName);

@@ -7,15 +7,17 @@ import com.yidu.domain.BranchSaleDetail;
 import com.yidu.util.PageUtil;
 
 /**
- * <p>
  * 分店销售明细 服务类
- * </p>
  *
  * @authorliuyi
  * @since 2018-11-26
  */
 public interface BranchSaleDetailService  {
-
+	/**
+	 * 增加
+	 * @param branchSaleDetail 零售明细model
+	 * @return
+	 */
 	int insertSelective(BranchSaleDetail branchSaleDetail);
 	/**
 	 * 查询所有
@@ -26,7 +28,7 @@ public interface BranchSaleDetailService  {
 	List<BranchSaleDetail> query(PageUtil util, BranchSaleDetail saleDetail);
 	/**
 	 * 分页
-	 * @param saleDetail
+	 * @param saleDetail 零售明细model
 	 * @return
 	 */
 	int findCount(BranchSaleDetail saleDetail);

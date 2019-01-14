@@ -48,23 +48,23 @@ public class MemberController {
 	 * 查询所有
 	 * @param page 当前页数
 	 * @param limit 每页多少行
-	 * @param member model
-	 * @return map
+	 * @param member 会员model
+	 * @return map 集合
 	 */
 	@RequestMapping("/query")
 	@ResponseBody
 	public Map<String, Object> query(String page,String limit,Member member){
-		//创建分页模型类
+		//创建分页模型对象
 		PageUtil util=new PageUtil();
 		//得到页数
 		util.setCurPage(Integer.valueOf(page));
 		//得到行数
 		util.setRows(Integer.valueOf(limit));
-		//List集合
+		//创建List集合
 		List<Member> list=new ArrayList<>();
 		//调用service查询所有的方法
 		List<Member> lists=service.query(util,member);
-		//调用service分页的方法
+		//调用会员service里面分页的方法
 		int rows=service.findCount(member);
 		//循环
 		for (Member member2 : lists) {
@@ -73,7 +73,7 @@ public class MemberController {
 			//添加到集合
 			list.add(member2);
 		}
-		//map集合
+		//创建map集合
 		Map<String, Object> map=new HashMap<>();
 		map.put("code", 0);
 		//打印
@@ -88,7 +88,7 @@ public class MemberController {
 	/**
 	 * 上传文件
 	 * @param req 请求
-	 * @return msg
+	 * @return msg 打印
 	 * @throws Exception 异常
 	 */
 	@RequestMapping("/upload")
@@ -117,7 +117,7 @@ public class MemberController {
 	/**
 	 * 增加会员
 	 * @param record model
-	 * @return msg
+	 * @return msg 打印
 	 */
 	@RequestMapping("/addMember")
 	@ResponseBody
@@ -159,7 +159,7 @@ public class MemberController {
 	/**
 	 * 批量删除
 	 * @param ids id
-	 * @return msg
+	 * @return msg 打印
 	 */
 	@RequestMapping("/bulkUpdate")
 	@ResponseBody

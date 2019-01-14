@@ -9,9 +9,7 @@ import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
 
 /**
- * <p>
  * 分店销售 服务类
- * </p>
  *
  * @author liuyi
  * @since 2018-11-26
@@ -19,21 +17,21 @@ import com.yidu.util.PageUtil;
 public interface BranchSaleService   {
 	/**
 	 * 显示列表
-	 * @param util 分页模型
-	 * @param sale model
-	 * @return
+	 * @param util 分页model
+	 * @param branchSale 零售model
+	 * @return 零售的List集合
 	 */
 	public List<BranchSale> query(PageUtil util, BranchSale branchSale);
 	/**
 	 * 分页
-	 * @param sale model
-	 * @return
+	 * @param branchSale 零售model
+	 * @return int
 	 */
 	public int findCount(BranchSale branchSale);
 	/**
 	 * 增加
-	 * @param branchSale model
-	 * @return
+	 * @param branchSale 零售model
+	 * @return int
 	 */
 	public int insertSelective(BranchSale branchSale);
 	/**
@@ -41,7 +39,7 @@ public interface BranchSaleService   {
 	 * @param sum  和
 	 * @param menId 会员ID
 	 * @param comId 店铺ID
-	 * @return
+	 * @return Message
 	 */
 	public Message addSale(String sum, String menId, String comId);
 }
