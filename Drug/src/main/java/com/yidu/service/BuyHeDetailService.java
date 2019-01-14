@@ -10,17 +10,19 @@ import com.yidu.util.PageUtil;
  * 采购明细 服务类
  * </p>
  *
- * @author Pngjiangping
+ * @author dengkangwei
  * @since 2018-11-26
  */
 public interface BuyHeDetailService  {
 	
-	
-	
 	/**
-	 * 显示列表
-	 * @param buyId
+	 * 
+	 * 方法说明：显示列表
+	 * @param detail 明细对象
+	 * @param page 分页
 	 * @return
+	 * @author dengkangwei
+	 * @date：2019年1月14日
 	 */
 	List<BuyDetail> showListId(BuyDetail detail,PageUtil page);
 	

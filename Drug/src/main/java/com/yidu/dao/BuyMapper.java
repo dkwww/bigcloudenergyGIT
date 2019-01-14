@@ -41,7 +41,7 @@ public interface BuyMapper {
 	/**
 	 * 
 	 * 方法说明：查询所有
-	 * @param map
+	 * @param map map对象
 	 * @return
 	 * @author dengkangwei
 	 * @date：2019年1月3日
@@ -50,7 +50,7 @@ public interface BuyMapper {
     /**
      * 
      * 方法说明：查找总行数
-     * @param buy
+     * @param buy 采购订单对象
      * @return
      * @author dengkangwei
      * @date：2019年1月3日
@@ -60,7 +60,7 @@ public interface BuyMapper {
     /**
      * 
      * 方法说明：审核查询所有
-     * @param map
+     * @param map map对象
      * @return
      * @author dengkangwei
      * @date：2019年1月3日

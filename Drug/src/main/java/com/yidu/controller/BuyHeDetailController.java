@@ -24,7 +24,7 @@ import org.springframework.stereotype.Controller;
  * 采购明细 前端控制器
  * </p>
  *
- * @author 邓康威
+ * @author dengkangwei
  * @since 2018-11-26
  */
 @Controller

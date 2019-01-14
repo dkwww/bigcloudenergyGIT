@@ -37,19 +37,24 @@ public class BuyHeDetailServiceImpl  implements BuyHeDetailService {
 	
 	@Override
 	public List<BuyDetail> showListId(BuyDetail detail,PageUtil page) {
+		//创建map对象
 		Map<String, Object> map=new HashMap<>();
+		//赋明细对象值
 		map.put("detail", detail);
+		//赋分页值
 		map.put("page", page);
 		
+		//调用查询的方法
 		return dao.showListId(map);
 	}
 
 	@Override
 	public int add(BuyDetail deta) {
-		
+		//uuid
 		String uuid=UUID.randomUUID().toString().replaceAll("-", "");
+		//把uuid赋进明细id
 		deta.setBdetId(uuid);
-			
+		//调用增加方法
 		return dao.insert(deta);
 	}
 

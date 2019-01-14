@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
  * 原材料类型 服务实现类
  * </p>
  *
- * @author 邓康威
+ * @author dengkangwei
  * @since 2018-11-26
  */
 @Service
@@ -66,6 +66,7 @@ public class MatTypeServiceImpl  implements MatTypeService {
 			//放入数据库
 			rows=dao.insert(type);
 		}
+		//返回rows
 		return rows;
 	}
 

@@ -199,8 +199,8 @@ public class QcController {
 	 * 
 	 * 方法说明：材料质检显示列表
 	 * @param qc 质检对象
-	 * @param page
-	 * @param limit
+	 * @param page 前台页数
+	 * @param limit 前台行数
 	 * @return
 	 * @author dengkangwei
 	 * @date：2018年12月27日
@@ -209,14 +209,20 @@ public class QcController {
 	@ResponseBody
 	public Map<String, Object> QcbuyshowList(Qc qc,Integer page,Integer limit){
 		
-		PageUtil PageUtil=new PageUtil();
+		//得到分页对象
+		PageUtil PageUtil = new PageUtil();
+		//判断页数不等于空 且 行数不等于空
 		if(page!=null && limit!=null) {
+			//赋值前台传来的页数
 			PageUtil.setCurPage(page);
+			//赋值前台传来的行数
 			PageUtil.setRows(limit);
 		}
 		
+		//质检集合
 		List<Qc> list=qcService.showList(qc, PageUtil);
 		
+		//循环质检所有
 		for (Qc qc2 : list) {
 			if(qc2.getQcState().equals("0")) {
 				qc2.setQcStates("未质检");
@@ -234,8 +240,10 @@ public class QcController {
 			qc2.setOptimes(Tools.getDateStr(qc2.getOptime()));
 		}
 		
+		//查询质检总行数
 		int rows=qcService.selectCount(qc);
 		
+		//创建map集合
 		Map<String, Object> map=new HashMap<>();
 		map.put("code", 0);
 		map.put("msg", "");
@@ -316,10 +324,11 @@ public class QcController {
 
 
 	/**
-	 * 材料质检完后入库
-	 * @author dengkangwei
-	 * @param qc
+	 * 方法说明： 材料质检完后入库
+	 * @param qc 质检对象
 	 * @return
+	 * @author dengkangwei
+	 * @date：2019年1月14日
 	 */
 	@RequestMapping("addkc")
 	@ResponseBody
@@ -332,7 +341,6 @@ public class QcController {
 		List<QcDetail> list=qcDetailService.findkcId(qc.getQcId());
 		//循环质检明细的内容
 		for (QcDetail qcDetail : list) {
-			System.out.println("-------------进入这里");
 			//在根据质检明细的id查找库存
 			MatInv invlist=invservice.findQcId(qcDetail.getQdetFkId());
 			
@@ -354,6 +362,7 @@ public class QcController {
 			invdetailservice.addkcdetail(invdetail);
 		}
 		
+		//得到me对象
 		Message me=new Message();
 		me.setStatus(1);
 		me.setMsg("操作成功");

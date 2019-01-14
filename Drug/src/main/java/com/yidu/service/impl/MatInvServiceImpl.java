@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
  * 原材料库存 服务实现类
  * </p>
  *
- * @author Pngjiangping
+ * @author dengkangwei
  * @since 2018-11-26
  */
 @Service
@@ -33,11 +33,14 @@ public class MatInvServiceImpl  implements MatInvService {
 	
 	@Override
 	public List<MatInv> showList(MatInv matinv,PageUtil page) {
+		//创建map对象
 		Map<String, Object> map=new HashMap<>();
+		//赋材料库存对象值
 		map.put("matinv", matinv);
+		//赋分页对象值
 		map.put("page", page);
 		
-		
+		//调用dao方法里的查询所有
 		return matinvmapper.showList(map);
 	}
 
@@ -51,19 +54,24 @@ public class MatInvServiceImpl  implements MatInvService {
 
 	@Override
 	public int add(MatInv matinv) {
+		//定义一个变量为0
 		int rows=0;
+		//判断如果id不等于空 且 不为 "  "
 		if(matinv.getMiId()!=null && !"".equals(matinv.getMiId())) {
+			//调用dao的修改方法
 			rows=matinvmapper.updateByPrimaryKeySelective(matinv);
 		}else {
+			//增加id
 			matinv.setMiId(Tools.getDateOrderNo());
+			//赋值数量为0
 			matinv.setMiAmount(0);
+			//调用dao的增加方法
 			rows=matinvmapper.insert(matinv);
 		}
+		//返回rows
 		return rows;
 	}
 
-
-	
 
 
 	@Override
@@ -97,8 +105,5 @@ public class MatInvServiceImpl  implements MatInvService {
 	public List<Repertory> queryMaterials() {
 		return matinvmapper.queryMaterials();
 	}
-
-
-	
 
 }

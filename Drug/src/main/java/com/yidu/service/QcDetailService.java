@@ -19,8 +19,8 @@ public interface QcDetailService   {
 	
 	/**
 	 * 增加
-	 * @param qcdetail
-	 * @author	邓康威
+	 * @param qcdetail 质检明细对象
+	 * @author	dengkangwei
 	 * @return
 	 */
 	int add(QcDetail qcdetail);
@@ -31,7 +31,7 @@ public interface QcDetailService   {
 	 * 
 	 * 方法说明：根据质检id查看质检明细
 	 * @param qcdetail 质检明细对象
-	 * @param page
+	 * @param page 分页对象
 	 * @return
 	 * @author dengkangwei
 	 * @date：2019年1月8日
@@ -40,7 +40,7 @@ public interface QcDetailService   {
 	
 	/**
      * 方法说明：根据质检id查看质检明细总行数
-     * @param qcdetail
+     * @param qcdetail 分页对象
      * @return
      * @author dengkangwei
      * @date：2019年1月5日

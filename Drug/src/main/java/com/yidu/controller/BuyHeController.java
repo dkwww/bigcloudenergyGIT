@@ -36,7 +36,7 @@ import com.yidu.util.Tools;
  * 采购订单 前端控制器
  * </p>
  *
- * @author 邓康威
+ * @author dengkangwei
  * @since 2018-11-26
  */
 @Controller
@@ -387,7 +387,7 @@ public class BuyHeController {
 	
 	/**
 	 * 采购状态修改
-	 * @param buy
+	 * @param buy 采购订单对象
 	 * @author dengkangwei
 	 * @return
 	 */
@@ -406,7 +406,7 @@ public class BuyHeController {
 	
 	/**
 	 * 采购订单提交到质检
-	 * @param buy
+	 * @param buy 采购订单对象
 	 * @author dengkangwei
 	 * @return
 	 */

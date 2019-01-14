@@ -79,25 +79,33 @@ public class QcServiceImpl   implements QcService {
 
 	@Override
 	public int buyQcadd(Qc qc) {
+		//定义一个变量为0
 		int rows=0;
+		//判断如果不等于空 且 不为""
 		if(qc.getQcId()!=null &&!"".equals(qc.getQcId())) {
+			//调用dao的修改方法
 			rows=dao.updateByPrimaryKeySelective(qc);
 		}
-		
+		//返回rows
 		return rows;
 	}
 
 	@Override
 	public List<Qc> showList(Qc qc, PageUtil page) {
+		//创建map对象
 		Map<String, Object> map=new HashMap<>();
+		//赋质检对象值
 		map.put("qc", qc);
+		//赋分页对象值
 		map.put("page", page);
+		//调用dao的查询所有方法
 		return dao.showList(map);
 	}
 
 	@Override
 	public int selectCount(Qc qc) {
 		
+		//调用dao的查询总行数方法
 		return dao.selectCount(qc);
 	}
 
@@ -178,12 +186,14 @@ public class QcServiceImpl   implements QcService {
 			//就调用修改方法
 			buyMapper.updateByPrimaryKeySelective(buy);
 		}
+		//返回rows
 		return rows;
 	}
 
 	@Override
 	public List<Qc> findById(String qcId) {
 		
+		//调用dao的根据id查询方法
 		return dao.findById(qcId);
 	}
 

@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
  * 原材料 服务实现类
  * </p>
  *
- * @author Pngjiangping
+ * @author dengkagnwei
  * @since 2018-11-26
  */
 @Service
@@ -66,12 +66,14 @@ public class MaterialServiceImpl   implements MaterialService {
 			//放入数据库
 			dao.insert(mat);
 		}
+		//返回rows
 		return rows;
 	}
 
 	@Override
 	public int selectCount(Material mat) {
 		
+		//调用dao的查询总行数
 		return dao.selectCount(mat);
 	}
 

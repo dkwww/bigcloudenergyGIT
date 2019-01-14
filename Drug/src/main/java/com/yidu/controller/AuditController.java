@@ -128,23 +128,35 @@ public class AuditController {
 	
 	
 	/**
-	 * 显示列表的方法
-	 * @author 邓康威
+	 * 方法说明：
+	 * @param audit 审核对象
+	 * @param page	前台页数
+	 * @param limit 前台行数
 	 * @return
+	 * @author dengkangwei
+	 * @date：2019年1月14日
 	 */
 	@RequestMapping("/showList")
 	@ResponseBody
 	public Map<String, Object> showList(Audit audit,Integer page,Integer limit){
+		//得到分页对象
 		PageUtil pageUtil = new PageUtil();
+		//判断页数不等于空 且 行数不等于空
 		if(page!=null && limit!=null) {
+			//赋值前台传来的页数
 			pageUtil.setCurPage(page);
+			//赋值前台传来的行数
 			pageUtil.setRows(limit);
 		}
 		
 		
+		//查询审核集合
 		List<Audit> list = service.bushowList(audit,pageUtil);
+		//循环集合内容
 		for (Audit audit2 : list) {
+			//转时间
 			audit2.setAudTimes(Tools.getDateStr(audit2.getAudTime()));
+			//审核状态判断如果是"0"是未审核, "1"是已审核,最后是未通过
 			if (audit2.getAudState().equals("0")) {
 				audit2.setAuName("未审核");
 			}else if(audit2.getAudState().equals("1")){
@@ -154,8 +166,10 @@ public class AuditController {
 			}
 		}
 		
+		//查询总行数
 		int rows=service.selectCount(audit);
 		
+		//创建map集合
 		Map<String, Object> map = new HashMap<>();
 		map.put("code", 0);
 		map.put("msg", "");

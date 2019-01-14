@@ -41,7 +41,7 @@ public interface QcService  {
 	List<Qc> branchQuality(Qc  qc,PageUtil pageUtil);
 	
 	/**
-	 * 增加
+	 * 修改
 	 * @param qc
 	 * @author dengkangwei
 	 * @return
@@ -50,8 +50,8 @@ public interface QcService  {
 	
 	/**
 	 * 材料查询所有
-	 * @param qc
-	 * @param page
+	 * @param qc 质检对象
+	 * @param page 分页对象
 	 * @author dengkangwei
 	 * @return
 	 */
@@ -59,7 +59,7 @@ public interface QcService  {
 	
 	/**
 	 * 查看总行数
-	 * @param qc
+	 * @param qc 质检对象
 	 * @author dengkangwei
 	 * @return
 	 */
@@ -68,7 +68,7 @@ public interface QcService  {
 	
 	/**
 	 * 采购订单增加到质检
-	 * @param buy
+	 * @param buy 采购订单对象
 	 * @author dengkangwei
 	 * @return
 	 */
@@ -76,7 +76,7 @@ public interface QcService  {
 	
 	/**
 	 * 修改
-	 * @param buy
+	 * @param buy 采购订单对象
 	 * @author dengkangwei
 	 * @return
 	 */
@@ -84,7 +84,7 @@ public interface QcService  {
 	
 	/**
 	 * 根据质检id查询所有
-	 * @param qcId
+	 * @param qcId 质检id
 	 * @author dengkangwei
 	 * @return
 	 */

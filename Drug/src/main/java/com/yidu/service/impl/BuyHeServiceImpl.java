@@ -33,6 +33,7 @@ public class BuyHeServiceImpl implements BuyHeService {
 	@Override
 	public List<Buy> showList(Buy buy,PageUtil page) {
 		try {
+			//判断如果时间不等于空 且时间不为''
 			if(buy.getBuyTimes()!=null &&!"".equals(buy.getBuyTimes())) {
 				//开始时间拆分第一个
 				buy.setKsTime(TimeUtil.stringToDate(buy.getBuyTimes().split("到")[0],  "yyyy-MM-dd"));
