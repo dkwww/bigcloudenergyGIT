@@ -177,21 +177,24 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 						System.err.println("   进来了增加的方法");
 						//采购订单增加的方法
 						buyService.insertSelective(buy);
-
+						//审核的采购外键
 						audit.setAudFkId(uuidOne);
 					}else {
+						//根据id删除
 						mapper.deleteByPrimaryKeys(buyId);
+						//修改
 						buyService.updateByPrimaryKeySelective(buy);
+						//审核的采购外键
 						audit.setAudFkId(buyId);
 					}
 					
-					audit.setAudComtype("1");
-					audit.setQcFkId(admin.getComId());
-					audit.setAudTime(new Date());
-					audit.setAudState("1");
-					audit.setAudIdea("分公司增加库存");
-					audit.setAudName(admin.getAdminName());
-					audit.setAudMes(null);
+					audit.setAudComtype("1");//公司类型
+					audit.setQcFkId(admin.getComId());//公司id
+					audit.setAudTime(new Date());//审核时间
+					audit.setAudState("1");//审核状态
+					audit.setAudIdea("分公司增加库存");//审核意见
+					audit.setAudName(admin.getAdminName());//审核人
+					audit.setAudMes(null);//审核
 					audit.setIsva("有效");
 					audit.setOptime(new Date());
 					audit.setOper(admin.getAdminName());

@@ -70,6 +70,10 @@ public class DebtyDetailServiceImpl  implements DebtyDetailService {
 		
 		return debtyDetailMapper.insert(debty);
 	}
+	@Override
+	public int insertSelective(DebtyDetail detail) {
+		return debtyDetailMapper.insertSelective(detail);
+	}
 
 	
 

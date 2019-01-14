@@ -180,7 +180,7 @@
 		            laytpl = layui.laytpl;
 		        var tableIns = table.render({
 		            elem: '#demo',
-		            height: 'full', //容器高度
+		            height: 'full-50', //容器高度
 		            url: '../../buy/showList.action',
 		            page: true,
 		            id: 'demo',
@@ -333,8 +333,8 @@
 		                            layer.open({
 		                                type: 2,
 		                                title: '信息',
-		                                content:['buyDetail.html', 'no'],
-		                                area: ['1000px', '400px'],
+		                                content:['buyDetail.html', 'yes'],
+		                                area: ['1000px', '450px'],
 		                                yes: function(index, layero) {
 		                                    editIndex = index;
 		                                    $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();

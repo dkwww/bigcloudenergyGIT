@@ -38,4 +38,6 @@ public interface DebtyDetailService  {
 	 * @date：2018年12月27日
 	 */
 	int addmx(DebtyDetail debty);
+	
+	int insertSelective(DebtyDetail detail);
 }

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -30,6 +31,7 @@ import com.yidu.domain.Qc;
 import com.yidu.domain.WholesaleDetail;
 import com.yidu.service.AuditService;
 import com.yidu.service.BuyService;
+import com.yidu.service.DebtyDetailService;
 import com.yidu.service.DebtyService;
 import com.yidu.service.DrugInvService;
 import com.yidu.service.QcService;
@@ -62,6 +64,9 @@ public class AuditController {
 	 */
 	@Resource
 	DebtyDetailMapper debtyDetailMapper;
+	
+	@Resource
+	DebtyDetailService debtyDetailService;
 	
 	@Resource
 	DrugInvService druginvservice;
@@ -328,7 +333,7 @@ public class AuditController {
 	 */
 	@RequestMapping("/auditByaudId")
 	@ResponseBody
-	public Message auditById(@RequestBody Audit audits) {
+public Message auditById(@RequestBody Audit audits) {
 		
 		//用于页面上的判断
 		Message message = new Message();
@@ -347,8 +352,20 @@ public class AuditController {
 			int a =debty1.getDebMoney().compareTo(buy.getBuyMoney());
 			//如果店铺余额大于总金额,则
 			if(a>0) {
-				//修改状态
+				
+				//修改采购状态
 				buyService.updateAudit(audits.getAudState(), buy.getBuyId());
+				String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+				DebtyDetail detail = new DebtyDetail();
+				detail.setDdetId(uuid);
+				detail.setDebId(debty1.getDebId());
+				detail.setDdetChange(buy.getBuyMoney());
+				detail.setDdettFkId(buy.getBuyId());
+				detail.setIsva("1");
+				detail.setOptime(new Date());
+				//财务明细的增加
+				debtyDetailService.insertSelective(detail);
+				//根据财务id修改财务余额
 				int count = debtyService.addbty(buy.getBuyMoney(),debty1.getDebId());
 				if(count!=0) {
 					int rows=service.updateByPrimaryKeySelective(audit);
@@ -379,6 +396,18 @@ public class AuditController {
 			//修改总店总金额
 			int count = debtyService.addMoney(buy.getBuyMoney(),"0");
 			if(count!=0) {
+				String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+				DebtyDetail detail = new DebtyDetail();
+				detail.setDdetId(uuid);
+				detail.setDebId(debty1.getDebId());
+				detail.setDdetChange(buy.getBuyMoney());
+				detail.setDdettFkId(buy.getBuyId());
+				detail.setIsva("1");
+				detail.setOptime(new Date());
+				//财务明细的增加
+				debtyDetailService.insertSelective(detail);
+				DebtyDetail debtyDetail = new DebtyDetail();
+				debtyDetailService.addmx(debtyDetail);
 				//修改状态
 				buyService.updateAudit(audits.getAudState(), buy.getBuyId());
 				//质检
