@@ -35,7 +35,8 @@ public class DrugTypeController {
 	
 	/**
 	 * 显示所有
-	 * @return
+	 * @return map 药品类型数组
+	 * @author ZhouJun
 	 */
 	@RequestMapping("/showList")
 	@ResponseBody
@@ -48,7 +49,11 @@ public class DrugTypeController {
 	
 	/**
 	 * 查询所有
-	 * @return List<Drug> 药品集合
+	 * @param record 药品类型模型类
+	 * @param page 页数
+	 * @param limit 行数
+	 * @return map 药品类型数组
+	 * @author ZhouJun
 	 */
 	@RequestMapping("/findAll")
 	@ResponseBody
@@ -71,8 +76,9 @@ public class DrugTypeController {
 	
 	/**
 	 * 增加或修改
-	 * @param record
-	 * @return
+	 * @param record 药品类型模型类
+	 * @return mes json信息工具类
+	 * @author ZhouJun
 	 */
 	@RequestMapping("/addOrUpdate")
 	@ResponseBody
@@ -91,8 +97,9 @@ public class DrugTypeController {
 	
 	/**
 	 * 批量删除
-	 * @param ids
-	 * @return
+	 * @param ids id集合
+	 * @return mes json信息工具类
+	 * @author ZhouJun
 	 */
 	@RequestMapping("/bulkUpdate")
 	@ResponseBody

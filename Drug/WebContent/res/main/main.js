@@ -2,6 +2,7 @@ $(function(){
 	querySell();
 	queryRepertory();
 	queryMedicinal();
+	countUp();
 });
 //查询药品销量
 function querySell(){
@@ -200,4 +201,18 @@ function queryMaterials(mes){
 		    ]
 		};
 	 myChart.setOption(option);
+}
+
+function countUp(){
+    var invNum = new CountUp('invNum', 0, $('#invNum').text()),
+    	saleNum = new CountUp('saleNum', 0, $('#saleNum').text()),
+    	debtyNum = new CountUp('debtyNum', 0, $('#debtyNum').text()),
+    	moneyNum = new CountUp('moneyNum', 0, $('#moneyNum').text());
+    	invNum.start();saleNum.start();debtyNum.start();moneyNum.start();
+    //可自定义触发事件
+    $('.info-box-number').css('cursor','pointer').on('click', function() {
+        var counterId = $(this).find('span').attr('id');
+        var $counter = new CountUp(counterId, 0, $('#' + counterId).text().replace(/,/g, ''));
+        $counter.start();
+    });
 }

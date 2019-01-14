@@ -24,8 +24,6 @@ public interface DrugService   {
 	int findCount(Drug record);
 	//根据药品编号多表查询
 	int check(String comId);
-	//查询所有附加库存
-	List<Drug> selectBySelectives(Drug record, PageUtil pageUtil);
 	//显示审核列表
 	List<Drug> showAudit(Drug record, PageUtil pageUtil);
 	//获得审核列表总行数

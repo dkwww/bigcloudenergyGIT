@@ -3,41 +3,9 @@ package com.yidu.controller;
 
 import java.util.List;
 import java.util.Map;
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Controller;
@@ -45,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.yidu.domain.Admin;
 import com.yidu.domain.Audit;
 import com.yidu.domain.Drug;
 import com.yidu.service.AuditService;
@@ -73,21 +40,21 @@ public class DrugController {
 	
 	/**
 	 * 查询所有
-	 * @return List<Drug> 药品集合
+	 * @param record 药品模型类
+	 * @param page 页数
+	 * @param limit 行数
+	 * @return map 药品数组
+	 * @author ZhouJun
 	 */
 	@RequestMapping("/showList")
 	@ResponseBody
-	public Map<String,Object> showList(Drug record,Integer page,Integer limit,HttpServletRequest httpServletRequest) {
-		
+	public Map<String,Object> showList(Drug record,Integer page,Integer limit) {
 		PageUtil pageUtil = new PageUtil();
 		pageUtil.setCurPage(page);
 		pageUtil.setRows(limit);
 		
-		
 		List<Drug> list = drugService.findAll(record, pageUtil);
 		int rows = drugService.findCount(record);
-		
-		
 		
 		@SuppressWarnings("unchecked")
 		Map<String,Object> map = new HashedMap();
@@ -100,9 +67,10 @@ public class DrugController {
 	
 	/**
 	 * 上传文件
-	 * @param req
-	 * @return String 文件名
+	 * @param req 请求对象
+	 * @return mes json信息工具类
 	 * @throws Exception
+	 * @author ZhouJun
 	 */
 	@RequestMapping("/upload")
 	@ResponseBody
@@ -121,8 +89,10 @@ public class DrugController {
 	}
 	
 	/**
-	 * 增加新药品
-	 * @return Message json信息类
+	 * 增加或修改
+	 * @param record 药品模型类
+	 * @return mes json信息工具类
+	 * @author ZhouJun
 	 */
 	@RequestMapping("/addDrug")
 	@ResponseBody
@@ -141,8 +111,9 @@ public class DrugController {
 	
 	/**
 	 * 批量删除
-	 * @param ids
-	 * @return
+	 * @param ids id集合
+	 * @return mes json信息工具类
+	 * @author ZhouJun
 	 */
 	@RequestMapping("/bulkUpdate")
 	@ResponseBody
@@ -159,11 +130,12 @@ public class DrugController {
 		return mes;
 	}
 	
-	
 	/**
 	 * 检查药品信息是否完善
-	 * @param drugId 药品编号
-	 * @return Message json工具类
+	 * @param comId 公司id
+	 * @param drugId 药品id
+	 * @return mes json工具类
+	 * @author ZhouJun
 	 */
 	@RequestMapping("/check")
 	@ResponseBody
@@ -188,44 +160,6 @@ public class DrugController {
 			mes.setMsg("请完善药品信息！");
 		}
 		return mes;
-	}
-	
-	/**
-	 * 查询所有
-	 * @return List<Drug> 药品集合
-	 */
-	@RequestMapping("/showLists")
-	@ResponseBody
-	public Map<String,Object> showLists(Drug record,Integer page,Integer limit,HttpSession session) {
-		//创建分页工具
-		PageUtil pageUtil = new PageUtil();
-		//总页
-		pageUtil.setCurPage(page);
-		//行
-		pageUtil.setRows(limit);
-		
-		
-		Admin admin=(Admin) session.getAttribute("admin");
-		//分店ID
-		record.setComId(admin.getComId());
-		
-		//调用查询的方法
-		List<Drug> list = drugService.selectBySelectives(record,pageUtil);
-		//查询总数的方法
-		int rows = drugService.findCount(record);
-		
-		@SuppressWarnings("unchecked")
-		//创建map集合
-		Map<String,Object> map = new HashedMap();
-		//code
-		map.put("code", 0);
-		//msg
-		map.put("msg", "");
-		//行
-		map.put("count", rows);
-		//传入集合
-		map.put("data", list);
-		return map;
 	}
 	
 	/**
