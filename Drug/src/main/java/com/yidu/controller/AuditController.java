@@ -59,12 +59,6 @@ public class AuditController {
 	@Resource
 	WholesaleDetailService detaiservice;
 	
-	/**
-	 * 注入财务明细Mapper
-	 */
-	@Resource
-	DebtyDetailMapper debtyDetailMapper;
-	
 	@Resource
 	DebtyDetailService debtyDetailService;
 	
@@ -305,7 +299,7 @@ public class AuditController {
 					debtyDetail.setDdetChange(new BigDecimal(zongjia));
 					debtyDetail.setIsva("1");
 					debtyDetail.setOptime(new Date());
-					int i=debtyDetailMapper.insertSelective(debtyDetail);
+					int i=debtyDetailService.addmx(debtyDetail);
 					if(i>0) {
 						System.err.println("成功经理审核出现明细");
 					}

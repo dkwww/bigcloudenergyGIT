@@ -136,13 +136,13 @@
 		            $ = layui.jquery,
 		            layer = layui.layer,
 		            form = layui.form,
-		            laytpl = layui.laytpl;\
+		            laytpl = layui.laytpl;
 		        var admin = getSession("../../");
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '475px', //容器高度
 		            url: '../../drug/showList.action',
-		            where:{"comId":admin.comId}
+		            where:{"comId":admin.comId},
 		            page: true,
 		            id: 'demo',
 		            cols: [
