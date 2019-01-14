@@ -77,11 +77,6 @@
 	                         layer = layui.layer;
 	                         var zNodes = mes;
 	                         var setting = {
-	                             view: {
-	                                 addHoverDom: addHoverDom,
-	                                 removeHoverDom: removeHoverDom,
-	                                 selectedMulti: false
-	                             },
 	                             check: {
 	                                 enable: true
 	                                 
@@ -90,9 +85,6 @@
 	                                 simpleData: {
 	                                     enable: true
 	                                 }
-	                             },
-	                             edit: {
-	                                 enable: true
 	                             },
 	                             callback: {
 	                                 onClick: function(e, treeId, treeNode) {
@@ -106,32 +98,7 @@
 	                             $.fn.zTree.init($("#ztree"), setting, zNodes);
 	                         });
 	                         setAllId($("#roleId").val());
-	                         var newCount = 1;
-
-	                         function addHoverDom(treeId, treeNode) {
-	                             var sObj = $("#" + treeNode.tId + "_span");
-	                             if (treeNode.editNameFlag || $("#addBtn_" + treeNode.tId).length > 0)
-	                                 return;
-	                             var addStr = "<span class='button add' id='addBtn_" + treeNode.tId +
-	                                 "' title='add node' onfocus='this.blur();'></span>";
-	                             sObj.after(addStr);
-	                             var btn = $("#addBtn_" + treeNode.tId);
-	                             if (btn) {
-	                                 btn.bind("click", function() {
-	                                     var zTree = $.fn.zTree.getZTreeObj("ztree");
-	                                     zTree.addNodes(treeNode, {
-	                                         id: (100 + newCount),
-	                                         pId: treeNode.id,
-	                                         name: "new node" + (newCount++)
-	                                     });
-	                                     return false;
-	                                 });
-	                             }
-	                         };
-
-	                         function removeHoverDom(treeId, treeNode) {
-	                             $("#addBtn_" + treeNode.tId).unbind().remove();
-	                         };
+	                         
 	                    	},"json");
 	                    });
 	                    upload();
