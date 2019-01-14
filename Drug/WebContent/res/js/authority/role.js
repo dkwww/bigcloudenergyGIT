@@ -35,8 +35,6 @@
 		            },
 		            loading: true
 		        });
-				
-		        
 		        //监听搜索表单提交
 		        form.on('submit(search)', function(data) {  
 		            //带条件查询
@@ -154,8 +152,7 @@
 		                });
 		            } else if (layEvent === 'edit') { //编辑
 		                var d = {
-		                	rowdata: data,
-		                    types: staticData.types
+		                	rowdata: data
 		                };
 		                showlayer(d);
 		            }
@@ -188,9 +185,7 @@
 		                		//替换增加页面文本框内出现的undefine
 		                        rowdata: {
 		                        	roleId:'',roleName: '',roleDescribe: ''
-		                        },
-		                        //类型下拉框数据
-		                        types: staticData.types
+		                        }
 		                    };
 		                    showlayer(d);
 		                    break;
