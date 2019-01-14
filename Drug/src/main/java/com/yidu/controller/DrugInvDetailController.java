@@ -89,8 +89,8 @@ public class DrugInvDetailController {
 			//创建一个库存明细接收对象
 			DrugInvDetail  drugInvDetail  = new  DrugInvDetail();
 			//这个是库存的UUID 用于增加
-			 String    string= UUID.randomUUID().toString().replaceAll("-", "");
-			 //这是库存明细的UUID  也是用于增加
+			String    string= UUID.randomUUID().toString().replaceAll("-", "");
+			//这是库存明细的UUID  也是用于增加
 			String     str= UUID.randomUUID().toString().replaceAll("-", "");
 			//判断库存有没有这个药品
 			List<DrugInve> drugList = drugInvService.selectDrugId(qcDetail.getQdetFkId());
@@ -120,7 +120,7 @@ public class DrugInvDetailController {
 				drugInvDetail.setRemarks(0);
 				//增加一条库存明细
 				drugInvDetailService.insert(drugInvDetail);
-			//否则的话就是没有这条信息
+				//否则的话就是没有这条信息
 			} else {
 				//商家ID
 				drugInve.setComId("0");

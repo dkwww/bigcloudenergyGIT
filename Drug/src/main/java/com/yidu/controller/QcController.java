@@ -113,45 +113,76 @@ public class QcController {
 	@RequestMapping("/add")
 	@ResponseBody
 	public   Message    add(Qc  qc ) {
+		//质检明细的UUID
 		String    string= UUID.randomUUID().toString().replaceAll("-", "");
-		//分页
+		//创建当前时间
 		Date   date =new Date();
+		//返回提示信息
 		Message message  =new   Message();
+		//根据ID将所有的制造计划的信息查询出来
 		Pmc pmc = pmcService.selectById(qc.getPmcId());
+		//创建一个明细对象 用于接收值
 		PmcDetails  pmcDetails=new   PmcDetails();
+		//制造明细ID
 		pmcDetails.setPmcId(qc.getPmcId());
+		//将质检明细中的数据根据明细ID全部查出
 		List<PmcDetails>  list  = pmcDetailsService.selectPmcId(qc.getPmcId());
+		//遍历制造明细的集合
 		for (PmcDetails pmcDetails2 : list) {
+			//创建一个UUID
 			String    strings= UUID.randomUUID().toString().replaceAll("-", "");
+			//创建一个质检明细对象  用来接收所有制造明细的数据
 			QcDetail  qcDetail=  new   QcDetail();
+			//质检Id
 			qcDetail.setQcId(string);
+			//业务ID
 			qcDetail.setQdetFkId(pmcDetails2.getDrugId());
+			//质检明细ID
 			qcDetail.setQdetId(strings);
+			//质检明细数量
 			qcDetail.setQdetAmount(pmcDetails2.getPdAmount());
+			//质检明细状态
 			qcDetail.setQdetFail(0);
+			//默认百分之0
 			qcDetail.setQdetRate("0%");
+			//质检明细时间为当前时间
 			qcDetail.setQdetOptime(date);
+			//增加质检明细
 			qcDetailService.insert(qcDetail);
 
 		} 
+		//质检ID
 		qc.setQcId(string);
+		//质检的业务ID
 		qc.setPmcId(pmc.getPmcId());
+		//质检的总数量
 		qc.setQcAmount(pmc.getPmcAmount());
+		//质检通过率默认为 0 
 		qc.setQcRate("0");
+		//质检通过数，默认为0
 		qc.setQcFail(0);
+		//默认为总公司的质检
 		qc.setQcConpany("总公司质检部");
+		//质检类型  0为药品 ，1为材料，2为分公司
 		qc.setQcType(0); 
+		//质检状态
 		qc.setQcState("0");
+		//入库状态
 		qc.setQcPut("0");
-
+		//操作时间
 		qc.setOptime(date);
+		//质检时间
 		qc.setQcOptime(date); 
+		//增加质检
 		int rows= qcService.add(qc); 
-		
+		//下面是将制造计划 的状态改为已提交
 		 Mrp  mrp  =new  Mrp();
+		//将这个ID的制造计划的状态改为提交质检
 		 mrp.setMrpId(qc.getMrpId());
+		//状态改为1
 		 mrp.setMrpPud(1);
-		  mrpService.updatepud(mrp);
+		//修改
+		mrpService.updatepud(mrp);
 		 
 		
 		if (rows>0) {
@@ -159,7 +190,7 @@ public class QcController {
 		}else {
 			message.setStatus(0);
 		}
-
+		//返回提示信息
 		return  message;
 	} 
 

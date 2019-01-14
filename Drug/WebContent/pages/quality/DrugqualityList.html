@@ -491,15 +491,11 @@
 		   
 		</script>
 		<script type="text/javascript">
-		 function  Pressdown(obj){ 
-			 
-	 
+		 function  Pressdown(obj){  
 	        var a=obj.value;   // 未通过数 
          	var b=$(obj).parent().parent().parent().prev().children().text();   //总质检数  
          	var  c=0;
-         	
          	if(parseInt(a)<=parseInt(b)){
-        		 
              	var  e = parseInt(b)-parseInt(a);
              	//console.info(e)
              	if(e==0){
@@ -507,17 +503,12 @@
              		var d=$(obj).parent().parent().parent().next().children().text(0+"%"); 
              	}else{
              		var  c=parseInt(e)/parseInt(b);
-             		
-             		
              		var f=c.toFixed(4);
-
              		var d=$(obj).parent().parent().parent().next().children().text(f*100+"%"); 
              	}
              	}
-         	
          	if(parseInt(a)>parseInt(b)){
          		a=parseInt(b);
-         		
          		$(obj).val(parseInt(b));
        			 layer.msg("不能大于质检总数"); 
        			 $("#shuju").val("")
@@ -527,10 +518,8 @@
 	            	 $.each(tables,function(i,item){
 	            			var d=$(obj).parent().parent().parent().next().children().text(); 
 	            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+item.qdetAmount+","+item.qcId+","+d+","+$("#number"+item.qdetId).val()+"#");
-	            			
 	            	 })
         		 });
-         		
          	}else{
          		 $("#shuju").val("")
         		 layui.use(['table'], function() {
@@ -540,7 +529,6 @@
 	            		 console.info(item)
 	            		 var d=$(obj).parent().parent().parent().next().children().text(); 
 	            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+item.qdetAmount+","+item.qcId+","+d+","+$("#number"+item.qdetId).val()+"#");
-	            			
 	            	 })
         		 });
          	}

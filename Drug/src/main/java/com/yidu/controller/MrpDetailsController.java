@@ -142,37 +142,54 @@ public class MrpDetailsController {
 				//否则就不更改
 				mrpDetails2.setMdState(1); 
 			} 
+			//当完成了计划数量
 			if (a==Integer.valueOf(num)) {
+				//将制作详细的意见改为停止
 				mrpDetails2.setMdView(0);
 			}else {
+				//否则设为继续
 				mrpDetails2.setMdView(1); 
 			}
+			//创建一个当前时间
 			Date   date  = new  Date();
+			//设置一个制造时间
 			mrpDetails2.setMdTime(date);
+			//当制造数量大于1个时才增加制造详细
 			if (Integer.valueOf(addnum)>0.1) {
+				//增加制造详情
 				rows= mrpDetailService.add(mrpDetails2);
 			} 
 		} 
+		//创建一个制造计划的对象
 		Mrp  mrp  = new   Mrp();
+		//使用求百分比的方法
 		NumberFormat numberFormat = NumberFormat.getInstance();
+		//不需要小数位
 		numberFormat.setMaximumFractionDigits(0); 
+		//将制作详情查出
 		int   Percentage =  mrpDetailService.findPercentage(mrpDetails);
+		//查询最大的值
 		int     sum =  mrpDetailService.findmax(mrpDetails);
+		//计算出百分比
 		String   progress  =   numberFormat.format((float) Percentage  /   (float)sum *100);
+		//质检明细的ID
 		mrp.setMrpId(mrpDetails.getMrpId());
+		//进度
 		mrp.setMrpRate(progress);
+		//如果制造大于0.1就改变制造进度
 		if (Percentage>0.1) {
+			//根据ID改变制造进度
 			mrpService.Modifyprogress(mrp);
 		} 
 		 
 		Integer ii = Integer.valueOf(progress);
-		//判断  如果百分比等于100的话就将状态改为停止
-		
-		System.err.println("========ii============"+ii);
+		//判断  如果百分比等于100的话就将状态改为停止 
 		if(ii==100) {
 			//将这条信息的状态改为停止
 			mrp.setMrpId(mrpDetails.getMrpId());
+			//0未未入库
 			mrp.setMrpState(0);
+			//0未停止制造
 			mrp.setMrpIdea(0);
 			//修改状态
 			mrpService.Modifyprogresss(mrp);
@@ -183,6 +200,7 @@ public class MrpDetailsController {
 		}else {
 			message.setStatus(0);
 		}
+		//返回提示信息
 		return message;
 	}
 	
@@ -196,12 +214,19 @@ public class MrpDetailsController {
 	@RequestMapping("Preservation")
 	@ResponseBody
 	public  Message    Preservation(MrpDetails  mrpDetails) {
+		//提示信息对象
 		Message   message  =new   Message();
+		//前台穿过来的封装数据
 		String   name = mrpDetails.getShujuName(); 
+		//将数据拆分
 		String   nameOne[]=name.split("#");
+		//定义变量
 		int  rows= 1;
+		//定义变量
 		int   jj =0;
+		//定义变量
 		int  kk=0;
+		//
 		String  qcid=null;
 		for (int i = 0; i < nameOne.length; i++) {
 			QcDetail qcDetali=new QcDetail();
@@ -225,29 +250,45 @@ public class MrpDetailsController {
 			qcDetali.setQdetRate(qdetrate);
 			//未通过数
 			String   qdetfail= nametow[5]; 
+			//质检药品数量 
 			qcDetali.setQdetFail(Integer.valueOf(qdetfail));
+			//将质检药品数量转成数字型
 			int number =  Integer.valueOf(qdetfail);
+			//将所有的药品数量相加计算百分率
 			jj = jj+number; 
+			//修改质检详细
 			rows = qcDetailService.updateByPrimaryKeySelective(qcDetali);
 		}
+		//工具类  用于计算百分率的
 		NumberFormat numberFormat = NumberFormat.getInstance();
+		//保留小数
 		numberFormat.setMaximumFractionDigits(0); 
+		//质检对象
 		Qc   qc  = new  Qc();
+		//质检的总数量
 		qc.setQcFail(jj);
+		//计算百分率
 		String   progress  =   numberFormat.format(100-(float) jj  /   (float)kk   *100);
+		//质检百分比
 		qc.setQcRate(progress);
+		//创建一个当前时间
 		Date  date   =new   Date();
+		//质检时间
 		qc.setQcOptime(date);
+		//根据QcId修改
 		qc.setQcId(qcid);
+		//状态改为已质检
 		qc.setQcState("1");
+		//未入库
 		qc.setQcPut("0");
-		
+		//修改质检状态和
 		rows= qcService.updateByPrimaryKeySelective(qc);
 		if (rows>0) {
 			message.setStatus(1);
 		}else {
 			message.setStatus(0);
 		}
+		//返回提示信息
 		return   message;  
 	} 
 }

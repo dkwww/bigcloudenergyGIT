@@ -51,8 +51,8 @@ public class DrugInvController {
 		//前台取过来的分页值
 		pageUtil.setCurPage(page);
 		pageUtil.setRows(limit);
-			Admin  admin=(Admin) session.getAttribute("admin");
-		System.out.println("========公司ID====="+admin.getComId());
+		//取公司的session
+		Admin  admin=(Admin) session.getAttribute("admin");
 		drugInve.setComId(admin.getComId());
 		//调用查询所有的方法
 		List<DrugInve> list = drugInvService.qureyAll(drugInve,pageUtil);
