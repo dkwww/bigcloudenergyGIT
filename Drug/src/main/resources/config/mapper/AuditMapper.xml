@@ -33,8 +33,7 @@
   </select>
   
   <select id="findCount" parameterType="com.yidu.domain.Audit" resultType="Integer">
-  	select count(*) from drug_audit 
-  	
+  	SELECT COUNT(*) FROM drug_audit da,drug_wholesale dw WHERE da.aud_fk_id=dw.whol_id 
   </select>
   
   <select id="findById" parameterType="string" resultMap="BaseResultMap">

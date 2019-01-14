@@ -199,7 +199,7 @@
 		                    data:{"audId":data.audId},//传表格数据
 		                    success:function(mes){//res为相应体,function为回调函数
 		                    	if(mes.status == 1){
-		                    		layer.msg('修改成功', {
+		                    		layer.msg('审核成功', {
 		                    			time: 2000, //2s后自动关闭
 		                            });
 		                    		//带条件查询
@@ -208,7 +208,7 @@
 		        		                page: { curr: 1 }
 		        		            });
 		                    	}else{
-		                    		layer.msg('修改失败', {
+		                    		layer.msg('审核失败', {
 		                    			time: 2000, //2s后自动关闭
 		                            });
 		                    	}

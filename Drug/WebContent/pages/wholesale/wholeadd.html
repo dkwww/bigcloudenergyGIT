@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
 		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
 		<title>药品管理</title>
+		<script type="text/javascript" src="../../res/js/common/session.js"></script>
 	</head>
 	<body>
 		<!-- <select name="comName" lay-filter="mat-type" id="mat-type">
@@ -135,11 +136,13 @@
 		            $ = layui.jquery,
 		            layer = layui.layer,
 		            form = layui.form,
-		            laytpl = layui.laytpl;
+		            laytpl = layui.laytpl;\
+		        var admin = getSession("../../");
 		        var tableIns = table.render({
 		            elem: '#demo',
 		            height: '475px', //容器高度
-		            url: '../../drug/showLists.action',
+		            url: '../../drug/showList.action',
+		            where:{"comId":admin.comId}
 		            page: true,
 		            id: 'demo',
 		            cols: [

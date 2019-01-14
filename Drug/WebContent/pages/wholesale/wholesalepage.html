@@ -190,7 +190,7 @@
 		                    width: 150
 		                }, {
 		                    field: 'audState',
-		                    title: '是否通过',
+		                    title: '是否审核',
 		                    width: 120
 		                }, {
 		                    fixed: 'right',
@@ -210,10 +210,12 @@
 		                // console.log(count);
 		            	
 		            	$("[data-field = 'audState']").children().not(":first").each(function(index){
-		            			if($(this).text() != '31'){
-							    	 $(this).text("未通过");
+		            			if($(this).text() == '28'){
+							    	 $(this).text("财务未审核");
+							    }else if($(this).text() == '29'){
+							    	 $(this).text("总经理未审核");
 							    }else if($(this).text() == '31'){
-							    	 $(this).text("已通过");
+							    	 $(this).text("已审核");
 							    }
 					  	});
 		            }, 
