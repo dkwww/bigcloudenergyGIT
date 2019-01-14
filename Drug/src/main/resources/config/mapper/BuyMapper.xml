@@ -46,9 +46,10 @@
   
   
   <!-- 邓康威 -->
-  <!-- 查询采购订单所有  有采购订单、供应商 -->
+  <!-- 查询采购订单所有  有采购订单、供应商    条件采购类型要为0-->
   <select id="showList" parameterType="map" resultMap="BaseResultMap">
-  	SELECT * FROM drug_buy a,drug_provider b WHERE a.buy_company=b.prov_id and a.buy_type = 0
+  	SELECT * FROM drug_buy a,drug_provider b 
+  	WHERE a.buy_company=b.prov_id and a.buy_type = 0
   	<!-- 根据供应商搜索 -->
   	<if test="buy.buyCompany!=null and buy.buyCompany!='' ">
   		and buy_company like concat("%",#{buy.buyCompany},"%")
