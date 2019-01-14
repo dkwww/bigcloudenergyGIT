@@ -159,16 +159,17 @@ public class DrugInvDetailController {
 		qcService.updateByPrimaryKeySelective(qc2);
 
 		//返回提示信息
+		System.err.println("========rowssss===="+rows);
 		if (rows>0) {
-			//返回1
+			//返回
 			message.setStatus(1);
 			//提示信息
-			message.setMsg("保存成功");
+			message.setMsg("入库失败");
 		}else {
 			//返回1
 			message.setStatus(0);
 			//提示信息
-			message.setMsg("保存失败");
+			message.setMsg("入库成功");
 		} 
 		//返回提示对象
 		return  message;

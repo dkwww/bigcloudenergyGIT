@@ -83,6 +83,9 @@ public class QcDetailController {
 		}
 		//查询质检明细集合
 		List <QcDetail> list=qcdetaService.findByIds(qcdetail,pageUtil);
+		for (QcDetail qcDetail2 : list) {
+			
+		}
 		//查询质检明细总行数
 		int rows=qcdetaService.findByIdselectCount(qcdetail);
 		//创建map对象

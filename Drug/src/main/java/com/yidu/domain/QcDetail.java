@@ -38,6 +38,8 @@ public class QcDetail {
     private   String   sjName;
     
     
+    
+    
 
 	public String getSjName() {
 		return sjName;
