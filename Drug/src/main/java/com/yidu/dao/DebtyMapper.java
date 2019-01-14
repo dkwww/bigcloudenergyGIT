@@ -81,7 +81,7 @@ public interface DebtyMapper {
 	
 	
 	/**
-	 * 加财务
+	 * 方法说明：加财务
 	 * @param money
 	 * @param debtyId
 	 * @author 郑有宏
