@@ -297,15 +297,15 @@ public class WholesaleController {
 		
 		//创建mes方法
 		Message mes = new Message();
-		//判断上述方法是否通过
+		//判断上述方法是否通过	
 		if(num>=2) {
 			mes.setMsg("1");
 		}else {
 			mes.setMsg("2");
 		}
 		
-		//返回mes
+		//返回mesz
 		return mes;
 	}
-}
+} 
 

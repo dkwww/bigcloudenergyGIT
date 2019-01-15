@@ -76,7 +76,46 @@
 		
 		<!-- 修改页面 -->
 		<script type="text/html" id="edit-tpl">
-		    	
+		    	<div style="margin:10px">
+		        <form class="layui-form" action="" lay-filter="form-edit">
+ 				<input type="hidden" name="audId" value="{{d.rowdata.audId}}" />
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">审核部门</label>
+		                <div class="layui-input-block">
+		                    <input class="layui-input layui-disabled" required lay-verify="required" value="财务审核"  autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+		                <label class="layui-form-label">订单名称</label>
+		                <div class="layui-input-block">
+		                    <input class="layui-input layui-disabled" name="matAmount" required lay-verify="required" value="批发财务审核"  autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+					
+					<div class="layui-form-item">
+		                <label class="layui-form-label">是否通过</label>
+		                <div class="layui-input-block">
+		                    {{# var woman = d.rowdata.audState === 30?'checked':'';}} {{# var man = d.rowdata.audState === 31?'checked':'';}}
+		                    <input type="radio" name="audState" value="31" title="是" {{man}} />
+		                    <input type="radio" name="audState" value="30" title="否" {{woman}} />
+		                </div>
+		            </div>
+
+					<div class="layui-form-item">
+		                <label class="layui-form-label">审核意见</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="audIdea" required lay-verify="required" value="{{d.rowdata.audIdea}}" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+		            
+		            <div class="layui-form-item" style="display:none;">
+		                <div class="layui-input-block">
+		                    <button class="layui-btn" lay-submit lay-filter="formEdit">立即提交</button>
+		                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		                </div>
+		            </div>
+		        </form>
+		    </div>
 		</script>
 		<script src="../../../res/js/common/jquery-1.11.2.min.js"></script>
 		<script>
@@ -192,30 +231,20 @@
                             content: '../../wholesale/detailwhol.html?whoid='+data.audFkId+''
                         });
 		            } else if (layEvent === 'shenhe') {
-		            	$.ajax({ url:"../../../audit/Finanexamine.action",
-		                    type:'post',//method请求方式，get或者post
-		                    cache: false,//同步
-		                    dataType:'json',//预期服务器返回的数据类型
-		                    data:{"audId":data.audId,"audFkId":data.audFkId,"zongjia":data.wholPrice},//传表格数据
-		                    success:function(mes){//res为相应体,function为回调函数
-		                    	if(mes.status == 1){
-		                    		layer.msg('修改成功', {
-		                    			time: 2000, //2s后自动关闭
-		                            });
-		                    		//带条件查询
-		        		            tableIns.reload({
-		        		                where: data.audID,
-		        		                page: { curr: 1 }
-		        		            });
-		                    	}else{
-		                    		layer.msg('审核失败，库存不足', {
-		                    			time: 2000, //2s后自动关闭
-		                            });
-		                    	}
-		                    }
-		                 });
+		            	var d = {
+			                	rowdata: {audId: data.audId,audIdea:'',audState:31}
+			                };
+		            	showlayer(d);
 		            }
 		        });
+		        
+		        //审核提交
+		        form.on('submit(formEdit)', function(data) {
+		        	update("../../../audit/Finanexamine.action",data.field);
+		        	editIndex && layer.close(editIndex); //关闭弹出层
+                	return false;
+		        });
+		        
 		        //表单渲染
 		        form.render(null, 'kit-search-form');
 		        //更多筛选点击事件
@@ -250,5 +279,28 @@
 	                }
 	            });
 	        });
+		    
+		    
+		  //增加、修改、删除、批量删除 都是用的这一个方法
+		    function update(url,data){
+		    	$.ajax({
+		    		url: url,
+                    type:'post',//method请求方式，get或者post
+                    cache: false,//同步
+                    dataType:'json',//预期服务器返回的数据类型
+                    data: JSON.stringify(data),//表格数据序列化
+                    contentType: "application/json; charset=utf-8",
+                    success:function(mes){//res为相应体,function为回调函数
+                    	$(".layui-laypage-btn")[0].click();//当前表格刷新
+                        if(mes.status==1){ 
+                        	var close = true;//有弹出层时是关闭弹出层 false不关闭
+	                        $("#res").click();//调用重置按钮将表单数据清空
+                        }
+                        layer.msg(mes.msg);
+                    },
+                   	error:function(){layer.alert('数据异常，请稍后重试！！！',{icon:5});}
+                 });
+		    }
+		    
 		</script>
 	</body>

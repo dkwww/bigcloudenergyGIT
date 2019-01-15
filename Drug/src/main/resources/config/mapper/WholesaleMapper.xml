@@ -23,6 +23,7 @@
     <if test="title != null and title != '' ">
     		and dw.com_name = #{title}
     </if>
+    ORDER BY dw.optime DESC
 	 <if test="kshs !=null and jshs !=null">
    		limit #{kshs},#{jshs}   <!-- 开始行数到每页多少行 -->
    	 </if>

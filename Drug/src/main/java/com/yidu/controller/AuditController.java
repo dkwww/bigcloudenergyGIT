@@ -207,12 +207,12 @@ public class AuditController {
 	
 	@RequestMapping("/examine")
 	@ResponseBody
-	public Message examine(Audit audit) {
+	public Message examine(@RequestBody Audit audit) {
 		Message message = new Message();
 		System.err.println(audit.getAudFkId());
 		System.err.println(audit.getAudId());
 		
-		int rows=service.wholeceoupdate(audit.getAudId());
+		int rows=service.updateByPrimaryKeySelective(audit);
 		if(rows!=0) {
 			message.setStatus(1);
 			message.setMsg("操作成功");
@@ -252,7 +252,7 @@ public class AuditController {
 	
 	@RequestMapping("/Finanexamine")
 	@ResponseBody
-	public Message Finanexamine(Audit audit,Double zongjia,HttpSession session) {
+	public Message Finanexamine(@RequestBody Audit audit,Double zongjia,HttpSession session) {
 		Message message = new Message();
 		System.err.println(audit.getAudFkId());
 		System.err.println(audit.getAudId());
@@ -310,7 +310,7 @@ public class AuditController {
 			}
 	}
 		if(l>0) {
-			int rows=service.finanupdate(audit.getAudId());
+			int rows=service.updateByPrimaryKeySelective(audit);
 			message.setStatus(1);
 			message.setMsg("操作成功");
 		}
