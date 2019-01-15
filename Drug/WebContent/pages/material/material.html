@@ -92,21 +92,21 @@
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">单价</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="matPrice" maxlength="10" required lay-verify="required" maxlength="6" value="{{d.rowdata.matPrice}}" placeholder="请输入认购数额" autocomplete="off" class="layui-input activity_card_money" onKeyUp="amount(this)">
+		                    <input type="text" name="matPrice" maxlength="10" required lay-verify="required" value="{{d.rowdata.matPrice}}" placeholder="请输入认购数额" autocomplete="off" class="layui-input activity_card_money" onKeyUp="amount(this)">
 		                </div>
 		            </div>
 					
 					<div class="layui-form-item">
 		                <label class="layui-form-label">药品单位（个、粒、克）</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="matUnit" maxlength="10" required lay-verify="required" maxlength="6" value="{{d.rowdata.matUnit}}" placeholder="请输入药品单位" autocomplete="off" class="layui-input activity_card_money">
+		                    <input type="text" name="matUnit" maxlength="10" required lay-verify="required" value="{{d.rowdata.matUnit}}" placeholder="请输入药品单位" autocomplete="off" class="layui-input activity_card_money">
 		                </div>
 		            </div>
 
 					<div class="layui-form-item">
 		                <label class="layui-form-label">功效</label>
 		                <div class="layui-input-block">
-							<input type="text" name="matEffect" maxlength="10" required lay-verify="required" value="{{d.rowdata.matEffect}}" placeholder="请输入功效" autocomplete="off" class="layui-input">
+							<input type="text" name="matEffect" maxlength="15" required lay-verify="required" value="{{d.rowdata.matEffect}}" placeholder="请输入功效" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 
