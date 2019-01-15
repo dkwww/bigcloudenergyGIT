@@ -51,17 +51,19 @@
   		and b.mt_name like concat('%',#{mtName},'%')
   	</if>
   </select>
-  
+  <!-- 根据id查询所有  -->
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from drug_material
     where mat_id = #{matId,jdbcType=VARCHAR}
   </select>
+  <!-- 删除 -->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_material
     where mat_id = #{matId,jdbcType=VARCHAR}
   </delete>
+  <!-- 增加 -->
   <insert id="insert" parameterType="com.yidu.domain.Material">
     insert into drug_material (mat_id, mt_id, mi_id, 
       mat_name, mat_amount, mat_price, 
@@ -72,6 +74,7 @@
       #{matUnit,jdbcType=VARCHAR}, #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, 
       #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR} ,#{matEffect})
   </insert>
+  <!-- 增加 -->
   <insert id="insertSelective" parameterType="com.yidu.domain.Material">
     insert into drug_material
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -145,6 +148,7 @@
       </if>
     </trim>
   </insert>
+  <!-- 修改 -->
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Material">
     update drug_material
     <set>
@@ -181,6 +185,7 @@
     </set>
     where mat_id = #{matId,jdbcType=VARCHAR}
   </update>
+  <!-- 修改 -->
   <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Material">
     update drug_material
     set mt_id = #{mtId,jdbcType=VARCHAR},

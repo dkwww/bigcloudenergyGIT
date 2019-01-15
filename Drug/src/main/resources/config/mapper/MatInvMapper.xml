@@ -25,16 +25,19 @@
   <select id="queryMaterials" resultMap="BaseResultMap2">
   	select sum(i.mi_amount) as indexs,m.mat_name,m.mat_id from drug_mat_inv i,drug_material m where i.mat_id=m.mat_id GROUP BY m.mat_name,m.mat_id ORDER BY sum(i.mi_amount) asc LIMIT 5
   </select>
+  <!-- 根据id查询所有库存 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from drug_mat_inv
     where mi_id = #{miId,jdbcType=VARCHAR}
   </select>
+  <!-- 删除 -->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_mat_inv
     where mi_id = #{miId,jdbcType=VARCHAR}
   </delete>
+  <!-- 增加 -->
   <insert id="insert" parameterType="com.yidu.domain.MatInv">
     insert into drug_mat_inv (mi_id, mi_amount, mat_id, 
       isva, optime, oper, 
@@ -43,6 +46,7 @@
       #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, 
       #{sort,jdbcType=VARCHAR})
   </insert>
+  <!-- 增加 -->
   <insert id="insertSelective" parameterType="com.yidu.domain.MatInv">
     insert into drug_mat_inv
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -92,6 +96,7 @@
       </if>
     </trim>
   </insert>
+  <!-- 修改 -->
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.MatInv">
     update drug_mat_inv
     <set>
@@ -116,6 +121,7 @@
     </set>
     where mi_id = #{miId,jdbcType=VARCHAR}
   </update>
+  <!-- 修改 -->
   <update id="updateByPrimaryKey" parameterType="com.yidu.domain.MatInv">
     update drug_mat_inv
     set mi_amount = #{miAmount,jdbcType=INTEGER},

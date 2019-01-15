@@ -35,27 +35,19 @@
 		and mt_name like concat('%', #{mtName} ,'%')
 	</if>
   </select>
-  
-  <!-- 材料类型批量修改为0 -->
-  <update id="TypeupdateByPrimaryKeySelective">
-    update drug_mat_type set isva = '0'
-    where mt_id in 
-    <foreach collection="list" item="ids" open="(" separator="," close=")">
-      #{ids} 
-    </foreach> 
-  </update>
-  
+  <!-- 根据id查询 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from drug_mat_type
     where mt_id = #{mtId,jdbcType=VARCHAR}
   </select>
-  
+  <!-- 删除 -->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_mat_type
     where mt_id = #{mtId,jdbcType=VARCHAR}
   </delete>
+  <!-- 增加 -->
   <insert id="insert" parameterType="com.yidu.domain.MatType">
     insert into drug_mat_type (mt_id, mt_name, isva, 
       optime, oper, sort
@@ -64,6 +56,7 @@
       #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}
       )
   </insert>
+  <!-- 增加 -->
   <insert id="insertSelective" parameterType="com.yidu.domain.MatType">
     insert into drug_mat_type
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -107,6 +100,7 @@
       </if>
     </trim>
   </insert>
+  <!-- 修改 -->
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.MatType">
     update drug_mat_type
     <set>
@@ -128,6 +122,7 @@
     </set>
     where mt_id = #{mtId,jdbcType=VARCHAR}
   </update>
+  <!-- 修改 -->
   <update id="updateByPrimaryKey" parameterType="com.yidu.domain.MatType">
     update drug_mat_type
     set mt_name = #{mtName,jdbcType=VARCHAR},

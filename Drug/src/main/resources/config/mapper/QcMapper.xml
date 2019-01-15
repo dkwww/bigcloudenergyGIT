@@ -24,6 +24,7 @@
     qc_id, mrp_id, qc_amount, qc_fail, qc_rate, qc_optime, qc_conpany, qc_type, isva, 
     optime, oper, sort,qc_state
   </sql>
+  <!-- 根据id查询 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -56,7 +57,7 @@
   </select>
    
    <!-- 邓康威 -->
-   <!-- 质检查询所有  有质检、采购订单、分店 ,根据时间排序 ,分页-->
+   <!-- 质检查询所有  有质检、采购订单、分店 ,根据质检时间排序 ,分页-->
    <select id="showList" parameterType="map" resultMap="BaseResultMap">
   	SELECT * FROM drug_qc a,drug_buy b,drug_company c 
   	WHERE a.pmc_id=b.buy_id AND a.qc_conpany=c.com_id
@@ -76,11 +77,12 @@
   <select id="findById" parameterType="string" resultMap="BaseResultMap">
   	SELECT * FROM drug_qc a,drug_qc_detail b WHERE a.qc_id=b.qc_id AND a.qc_id=#{qcId}
   </select>
-  
+  <!-- 删除 -->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_qc
     where qc_id = #{qcId,jdbcType=VARCHAR}
   </delete>
+  <!-- 增加 -->
   <insert id="insert" parameterType="com.yidu.domain.Qc">
     insert into drug_qc (qc_id, pmc_id, qc_amount, 
       qc_fail, qc_rate, qc_optime, 
@@ -94,6 +96,7 @@
       #{qcPut,jdbcType=VARCHAR}
       )
   </insert>
+  <!-- 增加 -->
   <insert id="insertSelective" parameterType="com.yidu.domain.Qc">
     insert into drug_qc
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -185,6 +188,7 @@
       </if>
     </trim>
   </insert>
+  <!-- 修改 -->
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Qc">
     update drug_qc
     <set>
@@ -230,6 +234,7 @@
     </set>
     where qc_id = #{qcId,jdbcType=VARCHAR}
   </update>
+  <!-- 修改 -->
   <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Qc">
     update drug_qc
     set mrp_id = #{mrpId,jdbcType=VARCHAR},

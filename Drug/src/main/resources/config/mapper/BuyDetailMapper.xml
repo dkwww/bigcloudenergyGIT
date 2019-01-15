@@ -83,6 +83,7 @@
       #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, 
       #{sort,jdbcType=VARCHAR})
   </insert>
+  <!-- 增加 -->
   <insert id="insertSelective" parameterType="com.yidu.domain.BuyDetail">
     insert into drug_buy_detail
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -150,6 +151,7 @@
       </if>
     </trim>
   </insert>
+  <!-- 修改 -->
   <update id="updateByBuyId" parameterType="com.yidu.domain.BuyDetail">
     update drug_buy_detail
     <set>
@@ -180,6 +182,7 @@
     </set>
     where buy_id = #{buyId,jdbcType=VARCHAR}
   </update>
+  <!-- 修改 -->
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.BuyDetail">
     update drug_buy_detail
     <set>
@@ -213,6 +216,7 @@
     </set>
     where bdet_id = #{bdetId,jdbcType=VARCHAR}
   </update>
+  <!-- 修改 -->
   <update id="updateByPrimaryKey" parameterType="com.yidu.domain.BuyDetail">
     update drug_buy_detail
     set buy_id = #{buyId,jdbcType=VARCHAR},
