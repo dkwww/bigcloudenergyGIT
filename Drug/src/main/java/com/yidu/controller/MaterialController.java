@@ -97,7 +97,7 @@ public class MaterialController {
 		//放入库存数据库
 		matinvService.add(inv);
 		
-		
+		//调用mes工具类
 		Message me=new Message();
 		me.setStatus(1);
 		me.setMsg("操作成功");

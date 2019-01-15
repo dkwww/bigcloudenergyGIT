@@ -313,7 +313,7 @@ public class QcController {
 			qcDetailService.add(qcdetail);
 			
 		}
-		//得到me对象
+		//调用mes工具类
 		Message me=new Message();
 		//是1的话
 		me.setStatus(1);
@@ -362,7 +362,7 @@ public class QcController {
 			invdetailservice.addkcdetail(invdetail);
 		}
 		
-		//得到me对象
+		//调用mes工具类
 		Message me=new Message();
 		//是1的话
 		me.setStatus(1);

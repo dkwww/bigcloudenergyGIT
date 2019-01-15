@@ -91,6 +91,8 @@ public class MatTypeController {
 	public Message addorupdate(@RequestBody MatType type) {
 		//增加或修改到原材料类型数据库
 		matTypeService.addorupdate(type);
+		
+		//调用mes工具类
 		Message me=new Message();
 		me.setStatus(1);
 		me.setMsg("操作成功");

@@ -235,7 +235,7 @@ public class BuyHeController {
 			//放入采购明细数据库
 			detaservice.add(detail);
 		}
-		//获取message对象
+		//调用mes工具类
 		Message me=new Message();
 		//是1的话
 		me.setStatus(1);
@@ -312,6 +312,7 @@ public class BuyHeController {
 		//调用删除方法
 		service.update(buy);
 		
+		//调用mes工具类
 		Message me=new Message();
 		me.setStatus(1);
 		me.setMsg("删除成功");
@@ -330,14 +331,14 @@ public class BuyHeController {
 	@RequestMapping("update")
 	@ResponseBody
 	public Message update(@RequestBody Buy buy) {
-		//根据订单的分店id查询财务
+		//根据订单的分店id查询财务对象
 		Debty deb=debtyservice.findcwId(buy.getComId());
 		
 		System.err.println("------------财务总金额"+deb.getDebMoney());
 		System.err.println("------------材料总价格"+buy.getBuyMoney());
 		System.err.println("=============财务id"+deb.getDebId());
 		
-		//得到me对象
+		//调用mes工具类
 		Message me=new Message();
 		//判断材料总价格要小于财务总金额  (BigDecimal比较大小-1表示小于,0是等于,1是大于)
 		if(buy.getBuyMoney().compareTo(deb.getDebMoney())==-1) {
@@ -403,6 +404,7 @@ public class BuyHeController {
 		//调用采购状态的修改方法
 		service.update(buy);
 		
+		//调用mes工具类
 		Message me=new Message();
 		me.setStatus(1);
 		me.setMsg("操作成功");
@@ -424,6 +426,7 @@ public class BuyHeController {
 		//调用修改质检状态方法
 		qcservice.update(buy);
 		
+		//调用mes工具类
 		Message me=new Message();
 		me.setStatus(1);
 		me.setMsg("操作成功");

@@ -43,8 +43,12 @@ public class MatInvDetailController {
 	@ResponseBody
 	public Map<String, Object> findById(MatInvDetail madetail,PageUtil page){
 		
+		//查询库存明细集合
 		List <MatInvDetail> list=service.findById(madetail,page);
+		//查询总行数
 		int rows=service.selectCount(madetail);
+		
+		//创建map集合
 		Map<String, Object> map=new HashMap<>();
 		map.put("code", 0);
 		map.put("msg", "");
