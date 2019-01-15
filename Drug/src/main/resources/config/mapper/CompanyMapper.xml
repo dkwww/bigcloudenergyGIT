@@ -31,6 +31,16 @@
   	
   	limit #{pageUtil.startRows},#{pageUtil.rows}
   </select>
+   <!--根据条件为分店和状态为0的审核分页以及模糊查询  -->
+  <select id="checkselectAll" parameterType="map" resultMap="BaseResultMap">
+  SELECT * FROM  drug_company WHERE com_type='1' AND isva='0' 
+  
+	  		<if test="company.comName != null and company.comName != '' ">
+	  		AND com_name like concat('%',#{company.comName},'%')
+	  	</if>
+
+  	limit #{pageUtil.startRows},#{pageUtil.rows}
+  </select>
   <!-- 查询总共多少条数据 -->
   <select id="selectCount" parameterType="com.yidu.domain.Company" resultType="int">
     select 
@@ -43,16 +53,7 @@
     select  count(*) from drug_company WHERE com_type='1' AND isva='0'
 
   </select>
-  <!--根据条件为分店和状态为0的审核分页以及模糊查询  -->
-  <select id="checkselectAll" parameterType="map" resultMap="BaseResultMap">
-  SELECT * FROM  drug_company WHERE com_type='1' AND isva='0' 
-  
-	  		<if test="company.comName != null and company.comName != '' ">
-	  		AND com_name like concat('%',#{company.comName},'%')
-	  	</if>
-
-  	limit #{pageUtil.startRows},#{pageUtil.rows}
-  </select>
+ 
   <!-- 分店批量修改为0 -->
   <update id="companyDeleteByPrimaryKeySelective">
     update drug_company set isva = '0'

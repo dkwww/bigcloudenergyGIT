@@ -21,14 +21,23 @@ public interface CompanyMapper {
     int updateByPrimaryKey(Company record);
     
     /**
-     * 查询所有
-     * @param vo
+     * 分店分页以及模糊查询
+     * @param map
      * @return
      */
     List<Company> selectAll(Map<String, Object> map);
     List<Company> checkselectAll(Map<String, Object> map);
-    
+    /**
+     * 查询总共多少条数据 
+     * @param company
+     * @return
+     */
     int selectCount(Company company);
+    /**
+     * 根据条件为分店和状态为0的查询总共多少条数据
+     * @param company
+     * @return
+     */
     int checkselectCount(Company company);
     /**
      * 分店批量删修改为0

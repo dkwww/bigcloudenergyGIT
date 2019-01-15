@@ -75,8 +75,9 @@ public class CompanyController {
 	
 		//查询总共多少条数据
 		int rows=companyService.selectCount(company);
-		//map
+		//map赋值0
 		map.put("code", 0);
+		//map赋值kong
 		map.put("msg", "");
 		//总共多少条数据
 		map.put("count",rows);

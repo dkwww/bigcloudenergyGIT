@@ -166,10 +166,5 @@ public class CompanyServiceImpl  implements CompanyService {
 		
 		return companyMapper.findDeId(qcFkId);
 	}
-	
-
-	
-	
-
 
 }
