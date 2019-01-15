@@ -67,5 +67,11 @@ public class DrugInvController {
 		//返回map
 		return  map;
 	}  
+	
+	@RequestMapping("findDrugId")
+	@ResponseBody
+	public List<DrugInve> findDrugId(String drugId){
+		return drugInvService.findDrug(drugId);
+	}
 }
 

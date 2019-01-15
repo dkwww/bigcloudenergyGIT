@@ -378,6 +378,17 @@
 		    	}
 				$("#"+obj.id).parent().next().next().html(parseFloat($("#"+obj.id).parent().next().html())*parseFloat($("#"+obj.id).val()));		 
 				$("#"+obj.id).parent().next().next().next().next().next().html(parseFloat($("#"+obj.id).parent().next().next().next().next().html())*parseFloat($("#"+obj.id).val()));
+		    	
+		    	var url="../../drugInv/findDrugId.action";
+		    	var data={"drugId":$("#"+obj.id).parent().prev().prev().html()};
+		    	$.post(url,data,function(mes){
+		    		$.each(mes,function(index,item){
+		    			if($("#"+obj.id).val()>item.diAmount){
+		    				$("#"+obj.id).val(item.diAmount);
+		    			}
+		    		});
+		    	},"json");
+		    	
 		    }
 		    function changeState(id){
 		    	$("#tr"+id).remove();

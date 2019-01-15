@@ -193,7 +193,7 @@ public class BranchSaleServiceImpl implements BranchSaleService {
 		//调用零售mapper里面增加的方法
 		row=mapper.insertSelective(branchSale);
 		//调用财务mapper里面查询的方法
-		Debty debty=debtymapper.selectByPrimaryKey(comId);
+		Debty debty=debtymapper.findByComId(comId);
 		//取到财务总资产
 		debty.setDebMoney(new BigDecimal(debty.getDebMoney().intValue()+money));
 		//调用财务mapper里面修改的方法

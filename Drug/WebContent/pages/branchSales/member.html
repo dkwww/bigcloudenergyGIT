@@ -48,10 +48,12 @@
 		                    </div>
 		                </div>
 		                <div class="layui-form-item">
-		                    <label class="layui-form-label">会员等级</label>
-		                    <div class="layui-input-block">
-		                        <input type="text" name="oper" id="serach-two" placeholder="请输入会员等级" autocomplete="off" class="layui-input" onKeyUp="lockInput(this,'serach-one')">
-		                    </div>
+			                <label class="layui-form-label">会员等级</label>
+			                <div class="layui-input-block">
+			                    <select name="oper" id="serach-two">
+			                      <option value=""></option>
+			                    </select>
+			                </div>
 		                </div>
 		                
 		            </div>
@@ -82,32 +84,38 @@
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">用户名</label>
 		                <div class="layui-input-block">
-		                    <input type="text" id="menNameInput" name="menName" required lay-verify="required" value="{{d.rowdata.menName}}" placeholder="请输入用户名" onblur="findMenName()" autocomplete="off" class="layui-input">
+		                    <input type="text" id="menNameInput" name="menName" maxlength="10" required lay-verify="required" value="{{d.rowdata.menName}}" placeholder="请输入用户名" onblur="findMenName()" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 		           
 					<div class="layui-form-item">
 		                <label class="layui-form-label">用户密码</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="memPwd" required lay-verify="required" value="{{d.rowdata.memPwd}}" placeholder="请输入密码" autocomplete="off" class="layui-input">
+		                    <input type="text" name="memPwd" maxlength="10" required lay-verify="required" value="{{d.rowdata.memPwd}}" placeholder="请输入密码" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 					<div class="layui-form-item">
 		                <label class="layui-form-label">手机号码</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="memPhone" required lay-verify="required" value="{{d.rowdata.memPhone}}" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+		                    <input type="text" name="memPhone" maxlength="10" required lay-verify="required" value="{{d.rowdata.memPhone}}" placeholder="请输入手机号" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">地址</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="memAddress" required lay-verify="required" value="{{d.rowdata.memAddress}}" placeholder="请输入地址" autocomplete="off" class="layui-input">
+		                    <input type="text" name="memAddress" maxlength="30" required lay-verify="required" value="{{d.rowdata.memAddress}}" placeholder="请输入地址" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
 					<div class="layui-form-item">
 		                <label class="layui-form-label">会员等级</label>
 		                <div class="layui-input-block">
-		                    <input type="text" name="oper" required lay-verify="required" value="{{d.rowdata.oper}}" placeholder="请输入会员等级" autocomplete="off" class="layui-input">
+		                    <select name="oper" required lay-verify="required">
+		                      <option value="请选择类型">请选择类型</option>
+							  <option value="非会员">非会员</option>
+		                      <option value="普通会员">普通会员</option>
+							  <option value="高级会员">高级会员</option>
+							  <option value="顶级会员">顶级会员</option>
+		                    </select>
 		                </div>
 		            </div>
 					<div class="layui-upload">
