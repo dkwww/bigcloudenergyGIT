@@ -59,13 +59,11 @@ public interface DrugInveMapper {
      */
     int   updateamount(DrugInve drugInve);
     
-    
     /**
      * 
      * @param id
      * @return
      */
-    
     List<DrugInve> findDrug(String id);
     /**
      * 根据商品id查询库存
@@ -89,8 +87,13 @@ public interface DrugInveMapper {
     @Update("UPDATE drug_drug_inv SET di_amount = di_amount + #{diAmount} WHERE di_id = #{diId}")
 	int updateAmounts(@Param("diAmount")Integer qdetAmount,@Param("diId")String diId);
 
-    @Select("select * from drug_drug_inv")
-	DrugInve findById(String id);
+    /**
+     * 方法说明：根据药品id查询总店库存
+     * @param id
+     * @return
+     */
+    @Select("select * from drug_drug_inv where drug_id=#{id} and com_id=0")
+	DrugInve findById(@Param("id")String id);
 
     @Select("SELECT * FROM drug_drug_inv WHERE drug_id=#{qcFkId} ")
 	DrugInve findQcId(@Param("qcFkId")String qcFkId);

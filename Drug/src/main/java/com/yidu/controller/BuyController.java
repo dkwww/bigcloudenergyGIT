@@ -54,8 +54,9 @@ public class BuyController {
 		PageUtil pageUtil = new PageUtil();
 		pageUtil.setCurPage(page);
 		pageUtil.setRows(limit);
+		//得到session
 		Admin admin = (Admin) session.getAttribute("admin");
-		
+		//显示列表
 		List<Buy> list = service.showList(buy,pageUtil,admin);
 		int rows = service.findCount(buy);
 		
@@ -75,7 +76,6 @@ public class BuyController {
 	@RequestMapping("/findByID")
 	@ResponseBody
 	public Buy findById(String id) {
-		
 		return service.findById(id);
 	}
 }

@@ -204,15 +204,17 @@
 				var a = parseFloat(obj.value);//数量
 				var b=$(obj).parent().next().text();//单价
 				var c =parseFloat(a)*parseFloat(b);//总价
-				$(obj).parent().parent().children().eq(5).text(c);
+				var d = c.toFixed(2);//截取后两位小数
+				$(obj).parent().parent().children().eq(5).text(d);
 				
-				amount = 0;
-				money = 0.0;
+				var amount = 0;
+				var money =0.0;
 				$("#tbo").find("tr").each(function(){
 					amount += parseFloat($(this).find("td:eq(1) input").val());
-					money += parseFloat($(this).find("td:eq(5)").text());
+					money += parseInt($(this).find("td:eq(5)").text());
 				});
-				$("#zontotal").val(money);
+				var e = money.toFixed(2);
+				$("#zontotal").val(e);
 				$("#zonnumber").val(amount);
 								
 				pj();
@@ -317,7 +319,7 @@
 		                {field: 'drugName',title: '药名',width: 175},
 		                {field: 'dtName',title: '类型',width: 80},
 		                {field: 'drugUnit',title: '单位',width: 80},
-		                {field: 'drugProp',title: '属性',width: 90},
+		                {field: 'diAmount',title: '库存',width: 90},
 		                {field: 'drugPictrue',title: '图片',width: 60,templet:'<div><img style="height:100%;height:30px;" src="../../{{ d.drugPictrue}}"></div>'},
 		                {field: 'drugPrice',title: '价格（元）',width: 150,sort: true}]
 		            ],
@@ -345,8 +347,6 @@
 		        	var data = obj.data;
 		        	console.log(obj);
 		        	 $("#tbo").append("<tr><td>"+data.drugName+"</td><td><input type='number' id='up_"+data.drugId+"' class='numbers' style='height:20px; border:0px; width:80px;' onKeyUp='num(this)' value='1' /></td><td id='pic_"+data.drugId+"'>"+data.drugPrice+"</td><td>"+data.drugUnit+"</td><td><input type='text' id='mes_"+data.drugId+"' style='height:20px; border:0px; width:200px;' onKeyUp='pj()'/></td><td id='total'>"+data.drugPrice+"</td><td><a onclick='delrow(this);' class='dels'>删除</a></td><td style='display:none;' id='"+data.drugId+"' ><input type='text' id='drugId' value='"+data.drugId+"' /></td></tr>")
-				        
-		        	 
 		        	 if(obj.checked==false){
 	        	      	/*	alert(data.stockId)*/
 	        	      		//循环一个表的tr
@@ -421,11 +421,8 @@
 	    					  parent.layer.close(index);
 							
 						}else{
-							layer.msg("采购失败");
-							  window.parent.location.reload()
-	    					  var index=parent.layer.getFrameIndex(window.name);
-	    					  parent.layer.close(index);
-
+							layer.msg(mes.msg);
+							 
 						}
 						
 					},"json");

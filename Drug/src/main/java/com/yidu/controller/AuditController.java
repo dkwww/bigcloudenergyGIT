@@ -320,14 +320,13 @@ public class AuditController {
 
 	/**                       
 	 * 审核的方法
-	 * @param id
-	 * @param state
+	 * @param audits
 	 * @author zhengyouhong
 	 * @return
 	 */
 	@RequestMapping("/auditByaudId")
 	@ResponseBody
-public Message auditById(@RequestBody Audit audits) {
+	public Message auditById(@RequestBody Audit audits) {
 		
 		//用于页面上的判断
 		Message message = new Message();
@@ -351,10 +350,10 @@ public Message auditById(@RequestBody Audit audits) {
 				buyService.updateAudit(audits.getAudState(), buy.getBuyId());
 				String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 				DebtyDetail detail = new DebtyDetail();
-				detail.setDdetId(uuid);
-				detail.setDebId(debty1.getDebId());
-				detail.setDdetChange(buy.getBuyMoney());
-				detail.setDdettFkId(buy.getBuyId());
+				detail.setDdetId(uuid);//财务详情的id
+				detail.setDebId(debty1.getDebId());//财务id
+				detail.setDdetChange(buy.getBuyMoney());//明细金额
+				detail.setDdettFkId(buy.getBuyId());//采购id
 				detail.setIsva("1");
 				detail.setOptime(new Date());
 				//财务明细的增加
@@ -362,6 +361,7 @@ public Message auditById(@RequestBody Audit audits) {
 				//根据财务id修改财务余额
 				int count = debtyService.addbty(buy.getBuyMoney(),debty1.getDebId());
 				if(count!=0) {
+					//审核
 					int rows=service.updateByPrimaryKeySelective(audit);
 					
 					if(rows!=0) {
@@ -386,22 +386,19 @@ public Message auditById(@RequestBody Audit audits) {
 			Buy buy = buyService.findById(audits.getAudFkId());
 			//根据订单中的店铺id查找这个店铺的总余额 
 			Debty debty1 = debtyService.findByComId(buy.getComId());
-			System.out.println(" 财务余额："+debty1.getDebMoney()+" 订单总金额"+buy.getBuyMoney());
 			//修改总店总金额
 			int count = debtyService.addMoney(buy.getBuyMoney(),"0");
 			if(count!=0) {
 				String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 				DebtyDetail detail = new DebtyDetail();
-				detail.setDdetId(uuid);
-				detail.setDebId(debty1.getDebId());
-				detail.setDdetChange(buy.getBuyMoney());
-				detail.setDdettFkId(buy.getBuyId());
+				detail.setDdetId(uuid);//财务详情的id
+				detail.setDebId(debty1.getDebId());//财务id
+				detail.setDdetChange(buy.getBuyMoney());//明细金额
+				detail.setDdettFkId(buy.getBuyId());//采购id
 				detail.setIsva("1");
 				detail.setOptime(new Date());
 				//财务明细的增加
 				debtyDetailService.insertSelective(detail);
-				DebtyDetail debtyDetail = new DebtyDetail();
-				debtyDetailService.addmx(debtyDetail);
 				//修改状态
 				buyService.updateAudit(audits.getAudState(), buy.getBuyId());
 				//质检
@@ -410,7 +407,6 @@ public Message auditById(@RequestBody Audit audits) {
 				int rows=service.updateByPrimaryKeySelective(audit);
 				
 				if(rows!=0) {
-					
 					message.setStatus(1);
 					message.setMsg("操作成功");
 				}else {
@@ -422,8 +418,8 @@ public Message auditById(@RequestBody Audit audits) {
 		}else if("2".equals(audits.getAudState())||"14".equals(audits.getAudState())) {
 			//如果审核不通过，则根据id查询出
 			Buy buy = buyService.findById(audits.getAudFkId());
+			//审核
 			int rows=service.updateByPrimaryKeySelective(audit);
-
 			//修改状态
 			buyService.updateAudit(audits.getAudState(), buy.getBuyId());
 			if(rows!=0) {
@@ -438,13 +434,10 @@ public Message auditById(@RequestBody Audit audits) {
 			
 			//如果审核不通过，则根据id查询出
 			Buy buy = buyService.findById(audits.getAudFkId());
-			//根据订单中的店铺id查找这个店铺的总余额 
-			Debty debty1 = debtyService.findByComId(buy.getComId());
-			System.out.println(" 财务余额："+debty1.getDebMoney()+" 订单总金额"+buy.getBuyMoney());
 			//修改分店总金额
 			int count = debtyService.addMoney(buy.getBuyMoney(),buy.getComId());
 			if(count!=0) {
-				//修改状态
+				//修改采购状态
 				buyService.updateAudit(audits.getAudState(), buy.getBuyId());
 				//审核
 				int rows=service.updateByPrimaryKeySelective(audit);
