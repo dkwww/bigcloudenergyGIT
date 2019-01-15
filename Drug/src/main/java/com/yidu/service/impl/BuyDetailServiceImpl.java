@@ -133,8 +133,8 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 				
 			}
 			//搜索药品库存
-			DrugInve drugInv = invService.findById(bdetFkId);
-			if(drugInv.getDiAmount()!=null&&drugInv.getDiAmount()>=Integer.valueOf(bdetAmount)) {
+			//DrugInve drugInv = invService.findById(bdetFkId);
+			//if(drugInv.getDiAmount()!=null&&drugInv.getDiAmount()>=Integer.valueOf(bdetAmount)) {
 				
 				if(buyId==null) {
 					buy.setBuyId(uuidOne);//订单id
@@ -238,9 +238,9 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 				saleDetailService.addOrUpdate(detail);
 				
 			
-			}else {
-				buyRows=0;
-			}
+			//}else {
+			//	buyRows=0;
+		//	}
 			
 			
 		}

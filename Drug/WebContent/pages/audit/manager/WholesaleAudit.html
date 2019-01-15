@@ -193,15 +193,15 @@
 		        });
 		        //渲染 修改和增加弹出层
 			    function showlayer(d){
+		        	
 			    	laytpl($('#edit-tpl').html()).render(d,function(html) {
-	                    layer.open({
+			    		editIndex=layer.open({
 	                        type: 1,
 	                        title: '表单',
 	                        content: html,
 	                        area: ['800px', '430px'],
 	                        btn: ['提交', '重置', '取消'],
 	                        yes: function(index, layero) {
-	                            editIndex = index;
 	                            $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
 	                        },
 	                        btn2: function(index, layero) {
@@ -212,7 +212,6 @@
 	                            form.render(null, 'form-edit');
 	                        }
 	                     });
-	                    upload();
 	                });
 			    }
 		        //监听工具条按钮点击
@@ -231,6 +230,7 @@
                             content: '../../wholesale/detailwhol.html?whoid='+data.audFkId+''
                         });
 		            } else if (layEvent === 'shenhe') {
+		            	alert(data.audI+" "+data.audFkId);
 		            	var d = {
 			                	rowdata: {audId: data.audId,audIdea:'',audState:31}
 			                };
