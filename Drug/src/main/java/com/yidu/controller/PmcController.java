@@ -1,12 +1,12 @@
 package com.yidu.controller;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +36,14 @@ public class PmcController {
 	@Resource
 	private AuditService auditService;
 	
+	/**
+	 * 显示所有生产计划
+	 * @param record 生产计划模型类
+	 * @param page 页数
+	 * @param limit 行数
+	 * @return map 生成计划
+	 * @author ZhouJun
+	 */
 	@RequestMapping("/showList")
 	@ResponseBody
 	public Map<String,Object> showList(Pmc record,Integer page,Integer limit) {
@@ -46,8 +54,7 @@ public class PmcController {
 		List<Pmc> list = pmcService.findAll(record,pageUtil);
 		int rows = pmcService.findCount(record);
 		
-		@SuppressWarnings("unchecked")
-		Map<String,Object> map = new HashedMap();
+		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("code", 0);
 		map.put("msg", "");
 		map.put("count", rows);
@@ -55,6 +62,12 @@ public class PmcController {
 		return map;
 	}
 	
+	/**
+	 * 增加或修改
+	 * @param record 生成计划模型类
+	 * @return mes json工具类
+	 * @author ZhouJun
+	 */
 	@RequestMapping("/addOrUpdate")
 	@ResponseBody
 	public Message addOrUpdate(@RequestBody Pmc record) {
@@ -72,8 +85,9 @@ public class PmcController {
 	
 	/**
 	 * 批量删除
-	 * @param ids
-	 * @return
+	 * @param ids id集合
+	 * @return mes json信息工具类
+	 * @author ZhouJun
 	 */
 	@RequestMapping("/bulkUpdate")
 	@ResponseBody
@@ -92,8 +106,10 @@ public class PmcController {
 	
 	/**
 	 * 检查生产计划信息是否完善
-	 * @param drugId
-	 * @return
+	 * @param comId 公司id
+	 * @param pmcId 生产计划id
+	 * @return mes json工具类
+	 * @author ZhouJun
 	 */
 	@RequestMapping("/check")
 	@ResponseBody
@@ -122,10 +138,11 @@ public class PmcController {
 	
 	/**
 	 * 显示审核列表
-	 * @param record
-	 * @param page
-	 * @param limit
-	 * @return
+	 * @param record 生产计划模型类
+	 * @param page 页数
+	 * @param limit 行数
+	 * @return map 生产计划数据
+	 * @author ZhouJun
 	 */
 	@RequestMapping("/showAudit")
 	@ResponseBody
@@ -137,8 +154,7 @@ public class PmcController {
 		List<Pmc> list = pmcService.showAudit(record,pageUtil);
 		int rows = pmcService.findAuditCount(record);
 		
-		@SuppressWarnings("unchecked")
-		Map<String,Object> map = new HashedMap();
+		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("code", 0);
 		map.put("msg", "");
 		map.put("count", rows);
@@ -146,6 +162,12 @@ public class PmcController {
 		return map;
 	}
 	
+	/**
+	 * 加入制造计划
+	 * @param record 生产计划模型类
+	 * @return int 修改的行数
+	 * @author ZhouJun
+	 */
 	@RequestMapping("/joinMade")
 	@ResponseBody
 	public int joinMade(Pmc record) {

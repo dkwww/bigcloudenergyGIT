@@ -31,6 +31,14 @@ public class PmcDetailsController {
 	@Resource
 	private PmcDetailsService pmcDetailsService;
 	
+	/**
+	 * 根据生产计划显示生产明细
+	 * @param record 生产明细模型类
+	 * @param page 页数
+	 * @param limit 行数
+	 * @return map 生产明细数据
+	 * @author ZhouJun
+	 */
 	@RequestMapping("/findAll")
 	@ResponseBody
 	public Map<String, Object> findAll(PmcDetails record,Integer page, Integer limit){
@@ -41,7 +49,7 @@ public class PmcDetailsController {
 		List<PmcDetails> list = pmcDetailsService.findAll(record, pageUtil); 
 		int rows = pmcDetailsService.selectCountBySelective(record);
 		
-		Map<String , Object>  map  =new  HashMap<>();
+		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("code", 0);
 		map.put("msg", "");
 		map.put("count", rows);
@@ -51,7 +59,10 @@ public class PmcDetailsController {
 	
 	
 	/**
-	 * 增加或修改
+	 * 怎加或修改
+	 * @param record 生产明细模型类
+	 * @return mes json工具类
+	 * @author ZhouJun
 	 */
 	@RequestMapping("/addOrUpdate")
 	@ResponseBody
@@ -68,6 +79,15 @@ public class PmcDetailsController {
 		return mes;
 	}
 	
+	/**
+	 * 显示带制造完成度的生产明细
+	 * @param record 生产明细模型类
+	 * @param page 页数
+	 * @param limit 行数
+	 * @param mrpId 制造计划id
+	 * @return map 生产计划数据
+	 * @author ZhouJun
+	 */
 	@RequestMapping("/findByPmc")
 	@ResponseBody
 	public Map<String, Object> findByPmc(PmcDetails record,Integer page, Integer limit, String mrpId){
@@ -78,7 +98,7 @@ public class PmcDetailsController {
 		List<PmcDetails> list = pmcDetailsService.findByPmc(record, pageUtil, mrpId); 
 		int rows = pmcDetailsService.selectCountBySelective(record);
 		
-		Map<String , Object>  map  =new  HashMap<>();
+		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("code", 0);
 		map.put("msg", "");
 		map.put("count", rows);
@@ -86,6 +106,12 @@ public class PmcDetailsController {
 		return  map;
 	}
 	
+	/**
+	 * 查询药品原材料库存
+	 * @param drugId 药品id
+	 * @return list 原材料库存
+	 * @author ZhouJun
+	 */
 	@RequestMapping("/checkInv")
 	@ResponseBody
 	public List<PmcDetails> checkInv(String drugId) {

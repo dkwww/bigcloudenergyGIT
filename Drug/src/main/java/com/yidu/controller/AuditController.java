@@ -602,8 +602,7 @@ public Message auditById(@RequestBody Audit audits) {
 		List<Audit> list = service.findDetail(comId,audFkId, type, pageUtil);
 		int rows = service.findDetailCount(comId,audFkId, type);
 		
-		@SuppressWarnings("unchecked")
-		Map<String,Object> map = new HashedMap();
+		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("code", 0);
 		map.put("msg", "");
 		map.put("count", rows);

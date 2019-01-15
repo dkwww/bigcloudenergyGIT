@@ -1,11 +1,11 @@
 package com.yidu.controller;
 
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,13 +30,18 @@ public class SpecController {
 	@Resource
 	private SpecService specService;
 	
+	/**
+	 * 根据药品显示说明书
+	 * @param drugId 药品id
+	 * @return map 说明书
+	 * @author ZhouJun
+	 */
 	@RequestMapping("/findById")
 	@ResponseBody
 	public Map<String,Object> findById(String drugId) {
 		Spec spec = specService.findById(drugId);
 		
-		@SuppressWarnings("unchecked")
-		Map<String,Object> map = new HashedMap();
+		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("code", 0);
 		map.put("msg", "");
 		map.put("count", 1);
@@ -44,6 +49,12 @@ public class SpecController {
 		return map;
 	}
 	
+	/**
+	 * 增加或修改
+	 * @param record 说明书模型类
+	 * @return mes json工具类
+	 * @author ZhouJun
+	 */
 	@RequestMapping("/addOrUpdate")
 	@ResponseBody
 	public Message addOrUpdate(@RequestBody Spec record) {

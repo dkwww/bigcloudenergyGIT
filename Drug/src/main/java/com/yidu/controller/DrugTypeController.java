@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,8 +64,7 @@ public class DrugTypeController {
 		List<DrugType> list = drugTypeService.findAll(record,pageUtil);
 		int rows = drugTypeService.findCount(record);
 		
-		@SuppressWarnings("unchecked")
-		Map<String,Object> map = new HashedMap();
+		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("code", 0);
 		map.put("msg", "");
 		map.put("count", rows);

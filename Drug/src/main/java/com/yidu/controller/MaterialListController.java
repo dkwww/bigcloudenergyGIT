@@ -31,6 +31,14 @@ public class MaterialListController {
 	@Resource
 	private MaterialListService materialListService;
 	
+	/**
+	 * 显示所有物料清单
+	 * @param record 物料清单模型类
+	 * @param page 页数
+	 * @param limit 行数
+	 * @return map 物料清单
+	 * @author ZhouJun
+	 */
 	@RequestMapping("/showList")
 	@ResponseBody
 	public Map<String,Object> showList(MaterialList record,Integer page,Integer limit) {
@@ -50,6 +58,12 @@ public class MaterialListController {
 		return map;
 	}
 	
+	/**
+	 * 增加或修改
+	 * @param record 物料清单模型类
+	 * @return 修改的行数
+	 * @author ZhouJun
+	 */
 	@RequestMapping("/addOrUpdate")
 	@ResponseBody
 	public int addOrUpdate(@RequestBody MaterialList record) {

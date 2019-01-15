@@ -1,6 +1,7 @@
 package com.yidu.service.impl;
 
  
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import com.yidu.domain.Audit;
 import com.yidu.domain.MaterialList;
 import com.yidu.service.MaterialListService;
 import com.yidu.util.PageUtil;
+import com.yidu.util.TimeUtil;
 
 /**
  * <p>
@@ -47,6 +49,8 @@ public class MaterialListServiceImpl  implements MaterialListService {
 
 	@Override
 	public int addOrUpdate(MaterialList record) {
+		//操作时间赋值
+		record.setOptime(new Date());
 		if (record.getMlId()!=null&&!"".equals(record.getMlId())) {
 			int rows = 1;
 			if (!"-1".equals(record.getAudState()) && !"10112".equals(record.getAudState()) && !"10113".equals(record.getAudState()) && record.getAudState()!=null && !"".equals(record.getAudState())) {
@@ -66,6 +70,8 @@ public class MaterialListServiceImpl  implements MaterialListService {
 				return 0;
 			}
 		} else {
+			//排序赋值
+			record.setSort(TimeUtil.getStrDate());
 			return materialListMapper.insertSelective(record);
 		}
 		
