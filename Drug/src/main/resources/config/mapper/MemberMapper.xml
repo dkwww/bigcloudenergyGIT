@@ -17,16 +17,19 @@
     men_id, men_name, mem_pwd, mem_phone, mem_address, mem_pictrue, isva, optime, oper, 
     sort
   </sql>
+  <!-- 自动生长查询 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from drug_member
     where men_id = #{menId,jdbcType=VARCHAR}
   </select>
+  <!-- 自动生长删除 -->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_member
     where men_id = #{menId,jdbcType=VARCHAR}
   </delete>
+  <!-- 自动生长增加 -->
   <insert id="insert" parameterType="com.yidu.domain.Member">
   	<selectKey keyProperty="menId" resultType="string" order="BEFORE">
 	    SELECT REPLACE(UUID(),'-','') AS id;
@@ -40,6 +43,7 @@
       #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, 
       #{sort,jdbcType=VARCHAR})
   </insert>
+  <!-- 自动生长增加后查询 -->
   <insert id="insertSelective" parameterType="com.yidu.domain.Member">
   	<selectKey keyProperty="menId" resultType="string" order="BEFORE">
 	    SELECT REPLACE(UUID(),'-','') AS id;
@@ -110,6 +114,7 @@
       </if>
     </trim>
   </insert>
+  <!-- 自动生长修改后查询 -->
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Member">
     update drug_member
     <set>
@@ -143,6 +148,7 @@
     </set>
     where men_id = #{menId,jdbcType=VARCHAR}
   </update>
+  <!-- 自动生长修改 -->
   <update id="updateByPrimaryKey" parameterType="com.yidu.domain.Member">
     update drug_member
     set men_name = #{menName,jdbcType=VARCHAR},
@@ -156,7 +162,7 @@
       sort = #{sort,jdbcType=VARCHAR}
     where men_id = #{menId,jdbcType=VARCHAR}
   </update>
-  
+  <!-- 查询所有 -->
   <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
   	select * from drug_member where isva='1' 
   	  <if test="member.menName != null and member.menName != '' ">
@@ -174,7 +180,7 @@
   	order by optime desc
   	 limit #{util.startRows},#{util.rows}
   </select>
-  
+  <!-- 分页 -->
   <select id="findCount" parameterType="map" resultType="Integer">
   	select count(*) from drug_member where isva='1' 
   	  <if test="menName != null and menName != '' ">

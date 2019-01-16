@@ -21,16 +21,19 @@
   <sql id="Base_Column_List">
     bsd_id, bs_id, drug_id, bsd_amount, bsd_price, bsd_total, isva, optime, oper, sort
   </sql>
+  <!-- 自动生长查询 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from drug_branch_sale_detail
     where bsd_id = #{bsdId,jdbcType=VARCHAR}
   </select>
+  <!-- 自动生长删除 -->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_branch_sale_detail
     where bsd_id = #{bsdId,jdbcType=VARCHAR}
   </delete>
+  <!-- 自动生长增加 -->
   <insert id="insert" parameterType="com.yidu.domain.BranchSaleDetail">
     insert into drug_branch_sale_detail (bsd_id, bs_id, drug_id, 
       bsd_amount, bsd_price, bsd_total, 
@@ -41,6 +44,7 @@
       #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, 
       #{sort,jdbcType=VARCHAR})
   </insert>
+  <!-- 自动生长增加 -->
   <insert id="insertSelective" parameterType="com.yidu.domain.BranchSaleDetail">
     insert into drug_branch_sale_detail
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -108,6 +112,7 @@
       </if>
     </trim>
   </insert>
+  <!-- 自动生长修改后查询-->
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.BranchSaleDetail">
     update drug_branch_sale_detail
     <set>
@@ -141,6 +146,7 @@
     </set>
     where bsd_id = #{bsdId,jdbcType=VARCHAR}
   </update>
+  <!-- 自动生长修改 -->
   <update id="updateByPrimaryKey" parameterType="com.yidu.domain.BranchSaleDetail">
     update drug_branch_sale_detail
     set bs_id = #{bsId,jdbcType=VARCHAR},
@@ -154,7 +160,7 @@
       sort = #{sort,jdbcType=VARCHAR}
     where bsd_id = #{bsdId,jdbcType=VARCHAR}
   </update>
-  
+  <!-- 查药品名 -->
   <select id="query" parameterType="map" resultMap="BaseResultMap">
   	select sa.*,dr.drug_name from drug_branch_sale_detail sa,drug_drug dr where sa.drug_id=dr.drug_id and  sa.isva='1'
   	<if test=" detail.bsId !=null and detail.bsId !='' ">
@@ -163,18 +169,20 @@
   	order by sa.sort desc
   	limit #{page.startRows},#{page.rows}
   </select>
-  
+  <!-- 分页查询 -->
   <select id="findCount" parameterType="com.yidu.domain.BranchSaleDetail" resultType="integer">
   	select count(*) from drug_branch_sale_detail where isva='1'
   	<if test="bsId !=null and bsId !='' ">
   		and bs_id=#{bsId}
   	</if>
   </select>
+  <!-- 查询 -->
   <select id="queryName" resultMap="BaseResultMap2">
   	select count(*),d.drug_id,d.drug_name from drug_branch_sale_detail s,drug_drug d 
   	where s.drug_id=d.drug_id and year(s.optime)='2018' GROUP BY d.drug_id,d.drug_name
   	order by count(*) desc LIMIT 5
   </select>
+  <!-- 根据ID查询 -->
   <select id="queryId" parameterType="map" resultType="integer">
   	select count(*) from drug_branch_sale_detail s,drug_drug d where s.drug_id=d.drug_id and year(s.optime)='2018' and month(s.optime)=#{time} and s.drug_id=#{id}
   </select>

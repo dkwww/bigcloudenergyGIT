@@ -30,16 +30,19 @@
   <sql id="Base_Column_List">
     bs_id, com_id, men_id, bs_amount, bs_price, isva, optime, oper, sort
   </sql>
+  <!-- 自动生长查询 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from drug_branch_sale
     where bs_id = #{bsId,jdbcType=VARCHAR}
   </select>
+  <!-- 自动生长删除 -->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_branch_sale
     where bs_id = #{bsId,jdbcType=VARCHAR}
   </delete>
+  <!-- 自动生长增加 -->
   <insert id="insert" parameterType="com.yidu.domain.BranchSale">
     insert into drug_branch_sale (bs_id, com_id, men_id, 
       sd_id, bs_amount, bs_price, 
@@ -50,6 +53,7 @@
       #{isva,jdbcType=VARCHAR}, #{optime,jdbcType=TIMESTAMP}, #{oper,jdbcType=VARCHAR}, 
       #{sort,jdbcType=VARCHAR})
   </insert>
+  <!-- 自动生长增加后查询 -->
   <insert id="insertSelective" parameterType="com.yidu.domain.BranchSale">
     insert into drug_branch_sale
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -111,6 +115,7 @@
       </if>
     </trim>
   </insert>
+  <!-- 自动生长修改后查询 -->
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.BranchSale">
     update drug_branch_sale
     <set>
@@ -141,6 +146,7 @@
     </set>
     where bs_id = #{bsId,jdbcType=VARCHAR}
   </update>
+  <!-- 自动生长修改 -->
   <update id="updateByPrimaryKey" parameterType="com.yidu.domain.BranchSale">
     update drug_branch_sale
     set com_id = #{comId,jdbcType=VARCHAR},

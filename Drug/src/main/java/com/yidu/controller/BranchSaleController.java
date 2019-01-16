@@ -96,7 +96,7 @@ public class BranchSaleController {
 	@RequestMapping("addSale")
 	@ResponseBody
 	public Message addSale(String sum,String menId,HttpSession session) {
-		//
+		//获取session
 		Admin admin=(Admin) session.getAttribute("admin");
 		//service里面增加零售的方法
 		return service.addSale(sum,menId,admin.getComId());
