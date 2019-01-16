@@ -12,9 +12,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 /**
- * <p>
  * 会员 服务实现类
- * </p>
  *
  * @author Liuyi
  * @since 2018-11-26
@@ -36,7 +34,9 @@ public class MemberServiceImpl   implements MemberService {
 	public List<Member> query(PageUtil util,Member member) {
 		//new一个Map集合
 		Map<String, Object> map=new HashMap<>();
+		//取到页数
 		map.put("util", util);
+		//取到会员
 		map.put("member", member);
 		//返回dao类查询所有的方法
 		return mapper.selectAll(map);
@@ -47,13 +47,20 @@ public class MemberServiceImpl   implements MemberService {
 	 */
 	@Override
 	public int addOrUpdate(Member record) {
+		//如果会员ID不等于空并且不等于空字符串
 		if (record.getMenId()!=null && !"".equals(record.getMenId())) {
+			//取到操作时间
 			record.setOptime(new Date());
+			//返回会员mapper里面修改后查询的方法
 			return mapper.updateByPrimaryKeySelective(record);
 		}else {
+			//取到是否有效为1
 			record.setIsva("1");
+			//取到排序
 			record.setSort(TimeUtil.getStrDate());
+			//取到操作时间
 			record.setOptime(new Date());
+			//返回会员mapper里面增加后查询的方法
 			return mapper.insertSelective(record);
 		}
 	}
@@ -61,6 +68,7 @@ public class MemberServiceImpl   implements MemberService {
 	/**
 	 * 删除
 	 * @param menId 会员ID
+	 * @return 会员mapper里面根据ID修改的方法
 	 */
 	@Override
 	public int delete(String menId) {
@@ -68,16 +76,18 @@ public class MemberServiceImpl   implements MemberService {
 		Member member=mapper.selectByPrimaryKey(menId);
 		//取到是否有效为0
 		member.setIsva("0");
-		//返回dao类根据ID修改的方法
+		//返回会员mapper里面根据ID修改的方法
 		return mapper.updateByPrimaryKeySelective(member);
 	}
 	
 	/**
 	 * 批量删除
 	 * @param ids ID
+	 * @return 会员mapper里面批量删除的方法
 	 */
 	@Override
 	public int bulkUpdate(List<String> ids) {
+		//返回会员mapper里面批量删除的方法
 		return mapper.bulkDelete(ids);
 	}
 	
@@ -107,8 +117,10 @@ public class MemberServiceImpl   implements MemberService {
 	 * @return rows
 	 */
 	@Override
-	public int findMenName(String menName) {
+	public int findMenName(String menName) { 
+		//调用会员mapper里面根据名字查询的方法
 		int rows=mapper.selectMenName(menName);
+		//返回rows
 		return rows;
 	}
 }

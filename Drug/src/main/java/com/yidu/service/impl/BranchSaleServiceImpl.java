@@ -238,9 +238,9 @@ public class BranchSaleServiceImpl implements BranchSaleService {
 			branchSaleDetail.setOptime(new Date());
 			//取到零售明细排序
 			branchSaleDetail.setSort(Tools.getTimeStamp());
-			//调用零售明细里面增加的方法
+			//调用零售明细mapper里面增加的方法
 			rows=branchSaleDetailMapper.insertSelective(branchSaleDetail);
-			//创建一个map对象
+			//创建一个map集合
 			Map<String, Object> map=new HashMap<>();
 			//取到药品ID
 			map.put("drugId", arr[0]);
