@@ -99,7 +99,7 @@ public class BuyHeController {
 		for (Buy buytwo : list) {
 			//转成时间格式
 			buytwo.setBuyTimes(Tools.getDateStr(buytwo.getBuyTime()));
-			 //审核状态判断如果是0就是未审核
+			//审核状态判断如果是0就是未审核  1是已审核 最后是未通过
 			if (buytwo.getBuyAudit().equals("0")) {
 				  buytwo.setAuName("未审核");
 			}else if(buytwo.getBuyAudit().equals("1")){
@@ -154,7 +154,7 @@ public class BuyHeController {
 		//创建审核对象
 		Audit audit=new Audit();
 		
-		//根据前台传来的值用"#"分割
+		//根据前台传来的数据用"#"分割
 		String [] data=shuju.split("#");
 		
 		//循环前台的值
@@ -226,7 +226,7 @@ public class BuyHeController {
 			detail.setBdetPrice(bdetPrices);
 			//把前台传来的数量存入采购明细数量,强转下,是int类型
 			detail.setBdetAmount(Integer.valueOf(bdetAmount));
-			//把前台传来的小计存入采购明细小计
+			//把前台传来的小计存入采购明细小计(因为是BigDecimal类型的,所以要强转下)
 			BigDecimal bdetTotals = new BigDecimal(bdetTotal);
 			detail.setBdetTotal(bdetTotals);
 			//把采购明细存入订单id
