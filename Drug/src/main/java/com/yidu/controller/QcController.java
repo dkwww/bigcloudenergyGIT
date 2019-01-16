@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yidu.domain.Admin;
-import com.yidu.domain.Drug;
+ 
 import com.yidu.domain.DrugInvDetail;
 import com.yidu.domain.DrugInve;
 import com.yidu.domain.MatInv;
@@ -47,7 +47,7 @@ import org.springframework.stereotype.Controller;
  * 质检表 前端控制器
  * </p>
  *
- * @author dengkangwei
+ * @author pengjiangping
  * @since 2018-11-26
  */
 @Controller
@@ -90,13 +90,18 @@ public class QcController {
 		//前台取过来的分页值
 		pageUtil.setCurPage(page);
 		pageUtil.setRows(limit);
-
+		//查询药品质检
 		List<Qc> list = qcService.selectqctype(qc, pageUtil);
+		//遍历
 		for (Qc qc2 : list) {
-			qc2.setQcOptiemName(TimeUtil.dateToString(qc2.getQcOptime(), "yyyy-mm-dd"));
+			//将时间转为String类型
+			qc2.setQcOptiemName(TimeUtil.dateToString(qc2.getQcOptime(), "yyyy-MM-dd HH:mm:ss"));
+			//改为百分比
 			qc2.setQcRateName(qc2.getQcRate()+"%");
 		}
+		//查询行数
 		int rows = qcService.selectCountBySelective(qc);
+		//layui前台格式
 		Map<String , Object>  map  =new  HashMap<>();
 		map.put("code", 0);
 		map.put("msg", "");
@@ -109,7 +114,7 @@ public class QcController {
 	 * @param qc
 	 * @return
 	 * @author Pngjiangping
-	 */
+	 */  
 	@RequestMapping("/add")
 	@ResponseBody
 	public   Message    add(Qc  qc ) {
