@@ -125,13 +125,13 @@ public class CompanyController {
 		}
 		//查询总共多少条数据
 		int rows=companyService.checkselectCount(company);
-		//map赋值0
+		//map
 		map.put("code", 0);
-		//map赋值空
+		//map
 		map.put("msg", "");
-		//map赋值总共多少条数据
+		//map
 		map.put("count",rows);
-		//map赋值查询出来的结果
+		//map
 		map.put("data", lis);
 		return map;
 	}
