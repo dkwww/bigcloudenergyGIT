@@ -105,4 +105,9 @@ public class DrugInvServiceImpl    implements DrugInvService {
 		return dao.findQcId(qcFkId);
 	}
 
+	@Override
+	public int minusAmounts(Integer qdetAmount, String diId) {
+		return dao.minusAmounts(qdetAmount, diId);
+	}
+
 }

@@ -34,7 +34,7 @@ import com.yidu.util.TimeUtil;
  * 采购明细 服务实现类
  * </p>
  *
- * @author Pngjiangping
+ * @author 郑有宏
  * @since 2018-11-26
  */
 @Service

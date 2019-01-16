@@ -87,6 +87,18 @@ public interface DrugInveMapper {
     @Update("UPDATE drug_drug_inv SET di_amount = di_amount + #{diAmount} WHERE di_id = #{diId}")
 	int updateAmounts(@Param("diAmount")Integer qdetAmount,@Param("diId")String diId);
 
+    
+    /**
+     * 
+     * 方法说明：药品库存减库存数量
+     * @param qdetAmount
+     * @param diId
+     * @return
+     * @author zhengyouhong
+     * @date：2018年12月27日
+     */
+    @Update("UPDATE drug_drug_inv SET di_amount = di_amount - #{diAmount} WHERE di_id = #{diId} and com_id= 0 ")
+	int minusAmounts(@Param("diAmount")Integer qdetAmount,@Param("diId")String diId);
     /**
      * 方法说明：根据药品id查询总店库存
      * @param id

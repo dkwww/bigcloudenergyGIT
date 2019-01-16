@@ -87,4 +87,12 @@ public interface DrugInvService  {
 	  * @return
 	  */
 	 int updateAmounts(Integer qdetAmount, String diId);
+	 
+	 /**
+	  * 根据id减库存
+	  * @param qdetAmount
+	  * @param diId
+	  * @return
+	  */
+	 int minusAmounts(Integer qdetAmount, String diId);
 }
