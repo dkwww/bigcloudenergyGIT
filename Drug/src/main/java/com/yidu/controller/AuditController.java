@@ -254,10 +254,11 @@ public class AuditController {
 	@ResponseBody
 	public Message Finanexamine(@RequestBody Audit audit,Double zongjia,HttpSession session) {
 		Message message = new Message();
-		System.err.println(audit.getAudFkId());
-		System.err.println(audit.getAudId());
+//		System.err.println(audit.getAudFkId());
+//		System.err.println(audit.getAudId());
 		
 		int l=0;
+		int p=0;
 		
 		List<WholesaleDetail> list=detaiservice.finanAll(audit.getAudFkId());
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
@@ -267,8 +268,8 @@ public class AuditController {
 			druginv.setDrugId(wholesaleDetail.getDrugId());
 			druginv.setComId(wholesaleDetail.getComId());
 			
-			System.err.println("asdasdasd="+druginv.getComId());
-			System.err.println("zxczxczxc="+druginv.getDrugId());
+//			System.err.println("asdasdasd="+druginv.getComId());
+//			System.err.println("zxczxczxc="+druginv.getDrugId());
 			
 			List<DrugInve> invlist=druginvservice.findselect(druginv);
 			for (Iterator iterator2 = invlist.iterator(); iterator2.hasNext();) {
@@ -284,7 +285,7 @@ public class AuditController {
 					
 					debty.setComId(admin.getComId());
 					
-					BigDecimal zongjias = new BigDecimal(zongjia);
+					BigDecimal zongjias = new BigDecimal(audit.getZongjia());
 					debty.setDebMoney(zongjias);
 					
 					int money=debtyservice.moneyupdate(debty);
@@ -296,7 +297,7 @@ public class AuditController {
 					DebtyDetail debtyDetail=new DebtyDetail();
 					debtyDetail.setDdetId(Tools.getDateOrderNo());
 					debtyDetail.setDebId(debty.getDebId());
-					debtyDetail.setDdetChange(new BigDecimal(zongjia));
+					debtyDetail.setDdetChange(new BigDecimal(audit.getZongjia()));
 					debtyDetail.setIsva("1");
 					debtyDetail.setOptime(new Date());
 					int i=debtyDetailService.addmx(debtyDetail);

@@ -48,10 +48,18 @@ public class Audit {
     
     private String comparyName;
     
+    private Double zongjia;
     
     
-    
-    public String getComparyName() {
+    public Double getZongjia() {
+		return zongjia;
+	}
+
+	public void setZongjia(Double zongjia) {
+		this.zongjia = zongjia;
+	}
+
+	public String getComparyName() {
 		return comparyName;
 	}
 

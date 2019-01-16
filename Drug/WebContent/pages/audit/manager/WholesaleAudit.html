@@ -79,6 +79,8 @@
 		    	<div style="margin:10px">
 		        <form class="layui-form" action="" lay-filter="form-edit">
  				<input type="hidden" name="audId" value="{{d.rowdata.audId}}" />
+				<input type="hidden" name="audFkId" value="{{d.rowdata.audFkId}}" />
+				<input type="hidden" name="wholPrice" value="{{d.rowdata.zongjia}}" />
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">审核部门</label>
 		                <div class="layui-input-block">
@@ -232,7 +234,7 @@
 		            } else if (layEvent === 'shenhe') {
 		            	alert(data.audI+" "+data.audFkId);
 		            	var d = {
-			                	rowdata: {audId: data.audId,audIdea:'',audState:31}
+		            		 	rowdata: {audId: data.audId,audFkId:data.audFkId,zongjia:data.wholPrice,audIdea:'',audState:31}
 			                };
 		            	showlayer(d);
 		            }
