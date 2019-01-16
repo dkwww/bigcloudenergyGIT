@@ -41,7 +41,9 @@
     where drug_id = #{drugId,jdbcType=VARCHAR}
   </select>
   
-  
+   <select id="findById" parameterType="java.lang.String"  resultMap="BaseResultMap" >
+  	select * from drug_drug_inv where drug_id=#{drugId} and com_id=0
+  </select>
   
   <select id="findDrug" parameterType="java.lang.String" resultMap="BaseResultMap">
   	select 

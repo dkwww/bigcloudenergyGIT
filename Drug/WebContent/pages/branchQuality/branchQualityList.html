@@ -94,7 +94,7 @@
 	
 	
 	<body>
-	 	<input type="hidden" id="shuju"  style="width: 100%;"  >
+	 	<input type="text" id="shuju"  style="width: 100%;"  >
 		  
 		<div class="kit-table">
 		    <form class="layui-form" lay-filter="kit-search-form">
@@ -273,7 +273,7 @@
 		    	
 		    	 
 		    	var   qcId=getParameter("id");
-		     
+		    	var data = obj.data;
 		        var table = layui.table,
 		            $ = layui.jquery,
 		            layer = layui.layer,
@@ -375,7 +375,7 @@
 		        });
 		        
 		        
-		       
+		       $("#amount").val(data.qdetAmount);
 		        
 		        
 		        
@@ -498,10 +498,12 @@
 		</script>
 		<script type="text/javascript">
 		 function  Pressdown(obj){ 
-			 
+			
 	 
 	        var a=obj.value;   // 未通过数  10
          	var b=$(obj).parent().parent().parent().prev().children().text();   //总质检数  100
+         	var num=parseInt(b)-parseInt(a);
+         	$(obj).parent().parent().parent().prev().children().html(num);
          	var  c=0;
          	
          	if(parseInt(a)<=parseInt(b)){

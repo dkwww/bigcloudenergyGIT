@@ -465,6 +465,7 @@ public class QcController {
 				drugInve.setComId(admin.getComId());
 				drugInve.setDrugId(qcDetail.getQdetFkId());
 				drugInve.setDiAmount(qcDetail.getQdetAmount());
+				drugInve.setDiComtype("1");
 				
 				druginvService.insertSelective(drugInve);
 				

@@ -90,13 +90,14 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 
 	@Override
 	public int purchase(String mes,Admin admin) {
-		
+		System.err.println(mes);
 		//总价
 		String bdetAmount = "";
 		String mess = "";
 		
 		//定义两个变量用于判断
 		int buyRows = 0;
+		int totalAmount = 0;
 		
 		String[] str = mes.split("&");
 		//定义一个采购订单对象
@@ -118,6 +119,7 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 			String bdetPrice = strOne[2];//单价
 			String drugUnit = strOne[3];//数量单位
 			String bdetTotal = strOne[5];//总价
+			BigDecimal bdetTotals = new BigDecimal(bdetTotal);//总价
 			bdetAmount = strOne[8];//数量
 			mess = strOne[9];//备注
 			String bdetFkId = strOne[10];//药品id
@@ -132,15 +134,19 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 				buyId = strOne[strOne.length-1];//订单id
 				
 			}
+			totalAmount+=Integer.valueOf(bdetAmount);
+			System.out.println(totalAmount);
 			//搜索药品库存
-			//DrugInve drugInv = invService.findById(bdetFkId);
-			//if(drugInv.getDiAmount()!=null&&drugInv.getDiAmount()>=Integer.valueOf(bdetAmount)) {
+			DrugInve drugInv = invService.findById(bdetFkId);
+			System.err.println("    "+drugInv.getDiAmount()+"==="+bdetAmount+"    药品id："+bdetFkId);
+			if(drugInv.getDiAmount()!=null&&drugInv.getDiAmount()>=Integer.valueOf(bdetAmount)) {
 				
 				if(buyId==null) {
 					buy.setBuyId(uuidOne);//订单id
 				}else {
 					buy.setBuyId(buyId);//订单id
 				}
+				System.err.println("    "+amount+"==="+money);
 				buy.setComId(admin.getComId());//店铺id
 				buy.setBuyAmount(Integer.valueOf(amount));//总购买数量
 				buy.setBuyMoney(money);//订单总价
@@ -187,7 +193,6 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 					auditService.addOrUpdate(audit);//审核
 				}
 				BigDecimal bdetPrices = new BigDecimal(bdetPrice);//单价
-				BigDecimal bdetTotals = new BigDecimal(bdetTotal);//总价
 
 				String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 				bDetail.setBdetId(uuid);//采购详情id
@@ -238,9 +243,9 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 				saleDetailService.addOrUpdate(detail);
 				
 			
-			//}else {
-			//	buyRows=0;
-		//	}
+			}else {
+				buyRows=0;
+			}
 			
 			
 		}

@@ -199,6 +199,8 @@
 			
 			//为隐藏的文本框赋值
 			function num(obj){
+				amount =0;
+				money = 0.0;
 				
 				var id = obj.id;
 				var a = parseFloat(obj.value);//数量
@@ -207,8 +209,6 @@
 				var d = c.toFixed(2);//截取后两位小数
 				$(obj).parent().parent().children().eq(5).text(d);
 				
-				var amount = 0;
-				var money =0.0;
 				$("#tbo").find("tr").each(function(){
 					amount += parseFloat($(this).find("td:eq(1) input").val());
 					money += parseInt($(this).find("td:eq(5)").text());
@@ -242,6 +242,7 @@
 					  }
 					  
 				});
+				alert(str)
 				$("#mes").val(str);
 			}
 			function remove(obj){
