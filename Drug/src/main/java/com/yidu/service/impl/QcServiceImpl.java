@@ -143,7 +143,7 @@ public class QcServiceImpl   implements QcService {
 		qc.setOptime(new Date());
 		//uuid
 		String uuid=UUID.randomUUID().toString().replaceAll("-", "");
-		//质检id
+		//质检id主键
 		qc.setQcId(uuid);
 		//添加进数据库
 		dao.insert(qc);
@@ -152,7 +152,7 @@ public class QcServiceImpl   implements QcService {
 		for (BuyDetail buyDetail : list) {
 			//得到质检明细对象
 			QcDetail detail=new QcDetail();
-			//质检明细id
+			//质检明细主键
 			detail.setQdetId(Tools.getDateOrderNo());
 			//把质检id存入质检明细外键
 			detail.setQcId(qc.getQcId());

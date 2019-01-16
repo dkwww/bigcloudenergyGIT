@@ -36,30 +36,36 @@ public class BuyHeDetailController {
 	
 	/**
 	 * 根据id显示列表
-	 * @param detail
-	 * @param page
-	 * @param limit
+	 * @param detail 采购明细对象
+	 * @param page   页数
+	 * @param limit  行数
 	 * @author 邓康威
 	 * @return
 	 */
 	@RequestMapping("/showListId")
 	@ResponseBody
 	public Map<String,Object> showListId(BuyDetail detail,Integer page,Integer limit) {
-		
-		PageUtil PageUtil=new PageUtil();
+		//得到分页对象
+		PageUtil PageUtil = new PageUtil();
+		//判断页数不等于空 且 行数不等于空
 		if(page!=null && limit!=null) {
+			//赋值前台传来的页数
 			PageUtil.setCurPage(page);
+			//赋值前台传来的行数
 			PageUtil.setRows(limit);
 		}
+		//查询采购明细集合
 		List<BuyDetail> list = service.showListId(detail,PageUtil);
+		//查询总行数
 		int rows =service.selectCount(detail);
 		
-		Map<String, Object> m = new HashMap<>();
-		m.put("code", 0);
-		m.put("msg", "");
-		m.put("count", rows);
-		m.put("data", list);
-		return m;
+		//创建map集合
+		Map<String, Object> me = new HashMap<>();
+		me.put("code", 0);
+		me.put("msg", "");
+		me.put("count", rows);
+		me.put("data", list);
+		return me;
 	}
 	
 }
