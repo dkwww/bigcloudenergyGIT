@@ -208,16 +208,19 @@ public class BuyHeController {
 		for (int i = 0; i < data.length; i++) {
 			//循环数据里面的内容要以','分割
 			String [] datas=data[i].split(",");
+			/**
+			 * 拆分
+			 */
+			//采购订单id
 			String buyId=datas[0];
-			System.out.println(" id"+buyId);
+			//材料名
 			String matName =datas[1];
-			System.out.println(" 材料名"+matName);
+			//单价
 			String bdetPrice=datas[2];
-			System.out.println(" 单价"+bdetPrice);
+			//数量
 			String bdetAmount=datas[3];
-			System.out.println(" 数量"+bdetAmount);
+			//小计
 			String bdetTotal=datas[4];
-			System.out.println(" 小计"+bdetTotal);
 			
 			//把前台传来的id存入采购明细id
 			detail.setBdetFkId(buyId);
