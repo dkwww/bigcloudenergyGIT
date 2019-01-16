@@ -58,12 +58,13 @@ public class DebtyDetailController {
 	
 		//查询总共多少条数据
 		int rows=debtyDetailService.selectCount(Debty);
-		//map
+		//map赋值0
 		map.put("code", 0);
+		//map赋值空
 		map.put("msg", "");
-		//总共多少条数据
+		//map赋值总共多少条数据
 		map.put("count",rows);
-		//list
+		//map赋值查询出来的结果
 		map.put("data", list);
 		
 		return map;
