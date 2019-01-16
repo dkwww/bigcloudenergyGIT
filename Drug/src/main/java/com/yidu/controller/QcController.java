@@ -114,7 +114,7 @@ public class QcController {
 	 * @param qc
 	 * @return
 	 * @author Pngjiangping
-	 */
+	 */  
 	@RequestMapping("/add")
 	@ResponseBody
 	public   Message    add(Qc  qc ) {
