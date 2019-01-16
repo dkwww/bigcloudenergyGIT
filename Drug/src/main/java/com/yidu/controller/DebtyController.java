@@ -56,7 +56,6 @@ public class DebtyController {
 		}
 		
 		//创建一个map
-		
 		HashMap<String , Object> map = new HashMap<>();
 		//创建一个list并调用分店查询所有的方法
 		List<Debty> list = debtyService.findAll(Debty,pageUtil);
@@ -75,15 +74,14 @@ public class DebtyController {
 		
 		//查询总共多少条数据
 		int rows=debtyService.selectCount(Debty);
-		//map赋值0
+		//map
 		map.put("code", 0);
-		//map赋值空
+		//map
 		map.put("msg", "");
-		//map赋值总共多少条数据
+		//map
 		map.put("count",rows);
-		//map赋值查询出来的结果
+		//map
 		map.put("data", lis);
-		
 		return map;
 	}
 	
