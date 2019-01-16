@@ -170,7 +170,7 @@ public class BranchSaleServiceImpl implements BranchSaleService {
 			money+=(drug.getDrugPrice().doubleValue()*zk)*Integer.valueOf(arr[1]);
 		}
 		//取到总金额和总数量
-		message.setMsg("总金额: "+money+"  总数量: "+count);
+		message.setMsg("总金额: "+money.doubleValue()+"  总数量: "+count);
 		
 		//创建一个零售类
 		BranchSale branchSale=new BranchSale();
