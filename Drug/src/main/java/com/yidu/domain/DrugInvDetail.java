@@ -25,6 +25,8 @@ public class DrugInvDetail {
    
    
     private   String  RemarksName;
+    
+    private   String   timeName;
    
    
    
@@ -32,6 +34,14 @@ public class DrugInvDetail {
    
    
  
+
+	public String getTimeName() {
+		return timeName;
+	}
+
+	public void setTimeName(String timeName) {
+		this.timeName = timeName;
+	}
 
 	public String getRemarksName() {
 		return RemarksName;

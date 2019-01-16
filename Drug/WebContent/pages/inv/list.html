@@ -17,7 +17,6 @@
 		            <div class="kit-search-inputs">
 		                <div class="kit-search-keyword">
 		                    <input type="text" class="layui-input" name="drugName" placeholder="请输入药品名称." />
-		                    <input type="text" class="layui-input" name="drugName" placeholder="请选择" />
 		                    <button lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
 		                </div>
 		                <div class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>
@@ -217,7 +216,12 @@
 		                    field: 'drugPrice',
 		                    title: '药品单价',
 		                    width: 160
-		                }]
+		                } ,{
+		                    field: 'timeName',
+		                    title: '出库入库时间',
+		                    width: 160
+		                }
+		                ]
 		            ],
 		            done: function(res, curr, count) {
 		                //如果是异步请求数据方式，res即为你接口返回的信息。

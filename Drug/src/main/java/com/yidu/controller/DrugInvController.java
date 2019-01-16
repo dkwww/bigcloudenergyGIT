@@ -41,7 +41,9 @@ public class DrugInvController {
 	 * @param drugInve  对象 用于接受前台传过来的值
 	 * @param page   layui自带的分页
 	 * @param limit  layui自带的分页
-	 * @return
+	 * @author Pngjiangping
+	 * @date：2019年1月9日 
+	 * @return  map layui前台格式
 	 */
 	@RequestMapping("qureyAll")
 	@ResponseBody
@@ -74,4 +76,3 @@ public class DrugInvController {
 		return drugInvService.findDrug(drugId);
 	}
 }
-

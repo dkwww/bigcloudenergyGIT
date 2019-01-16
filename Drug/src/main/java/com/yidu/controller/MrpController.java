@@ -38,6 +38,8 @@ public class MrpController {
 	 * @param mrp
 	 * @return
 	 * @author Pngjiangping
+	 * @date：2019年1月9日 
+	 * @return  map  layui前台格式
 	 */
 	@RequestMapping("qureyAll")
 	@ResponseBody
@@ -72,6 +74,4 @@ public class MrpController {
 		map.put("data", list);
 		return  map;
 	} 
-
 }
-

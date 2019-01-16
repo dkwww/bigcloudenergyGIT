@@ -34,8 +34,10 @@ public class QcDetailController {
 	
 	/**
 	 * 根据id查询
-	 * @param qcdetail
-	 * @return
+	 * @param qcdetail   质检详细的对象
+	 * @author Pngjiangping
+	 * @date：2019年1月8日 
+	 * @return map 前台个事
 	 */
 	@RequestMapping("findById")
 	@ResponseBody

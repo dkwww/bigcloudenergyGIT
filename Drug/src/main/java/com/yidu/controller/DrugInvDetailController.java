@@ -13,7 +13,9 @@ import com.yidu.service.DrugInvService;
 import com.yidu.service.QcDetailService;
 import com.yidu.service.QcService;
 import com.yidu.util.Message;
+import com.yidu.util.TimeUtil;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,13 +52,18 @@ public class DrugInvDetailController {
 	/**
 	 * 根据ID差看库存详细
 	 * @param drugInvDetail
-	 * @return
+	 * @author Pngjiangping
+	 * @date：2019年1月9日 
+	 * @return  map  layui的格式
 	 */
 	@RequestMapping("findById")
 	@ResponseBody
 	public   Map<String , Object>  findById(DrugInvDetail drugInvDetail){
 		//调用根据ID查询库存详细的方法
 		List<DrugInvDetail> list = drugInvDetailService.findById(drugInvDetail.getDiId());
+		for (DrugInvDetail drugInvDetail2 : list) {
+			drugInvDetail2.setTimeName(TimeUtil.dateToString(drugInvDetail2.getOptime(), "yyyy-MM-dd HH:mm:ss"));
+		}
 		//查询行数
 		int    rows=drugInvDetailService.selectcount(drugInvDetail.getDiId());
 		//返回前台layui格式
@@ -71,7 +78,9 @@ public class DrugInvDetailController {
 	/**
 	 * 增加库存和库存明细
 	 * @param qc
-	 * @return
+	 * @author Pngjiangping
+	 * @date：2019年1月9日 
+	 * @return  提示信息
 	 */
 	@RequestMapping("addAll")
 	@ResponseBody
@@ -145,6 +154,10 @@ public class DrugInvDetailController {
 				drugInvDetail.setDiAmount(sums);
 				//默认为入库
 				drugInvDetail.setRemarks(0);
+				//当前时间
+				Date date  =new Date();
+				//加入当前时间
+				drugInvDetail.setOptime(date);
 				//增加明细
 				drugInvDetailService.insert(drugInvDetail);
 			} 
@@ -159,7 +172,7 @@ public class DrugInvDetailController {
 		qcService.updateByPrimaryKeySelective(qc2);
 
 		//返回提示信息
-		System.err.println("========rowssss===="+rows);
+	 
 		if (rows>0) {
 			//返回
 			message.setStatus(1);

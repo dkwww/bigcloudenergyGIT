@@ -66,6 +66,8 @@ public class MrpDetailsController {
 	 * @param limit  layui自带的分页
 	 * @return
 	 * @author Pngjiangping
+	 * @date：2019年1月9日 
+	 * @return  layui  前台格式
 	 */
 	@RequestMapping("findById")
 	@ResponseBody
@@ -91,7 +93,8 @@ public class MrpDetailsController {
 	 * @param mrpDetails
 	 * @return
 	 * @author Pngjiangping
-	 * @date：2019年1月8日 
+	 * @date：2019年1月9日 
+	 * @return 提示信息
 	 */
 	@RequestMapping("update")
 	@ResponseBody
@@ -208,6 +211,7 @@ public class MrpDetailsController {
 	 * @return
 	 * @author Pngjiangping
 	 * @date：2019年1月10日 
+	 * @return  提示信息
 	 */
 	
 	@RequestMapping("Preservation")
@@ -290,5 +294,4 @@ public class MrpDetailsController {
 		//返回提示信息
 		return   message;  
 	} 
-}
-
+} 
