@@ -69,6 +69,7 @@ public class DrugInvDetailController {
 		int    rows=drugInvDetailService.selectcount(drugInvDetail.getDiId());
 		//返回前台layui格式
 		Map<String, Object>  map  =new HashMap<>();
+		
 		map.put("code", 0);
 		map.put("msg", "");
 		map.put("count", rows);
