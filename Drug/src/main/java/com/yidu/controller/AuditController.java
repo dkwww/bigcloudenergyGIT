@@ -391,11 +391,10 @@ public class AuditController {
 			Buy buy = buyService.findById(audits.getAudFkId());
 			//根据订单中的店铺id查找这个店铺的总余额
 			Debty debty1 = debtyService.findByComId(buy.getComId());
-			System.out.println(" 财务余额："+debty1.getDebMoney()+"     订单总金额"+buy.getBuyMoney());
+			//System.out.println(" 财务余额："+debty1.getDebMoney()+"     订单总金额"+buy.getBuyMoney());
 			int a =debty1.getDebMoney().compareTo(buy.getBuyMoney());
 			//如果店铺余额大于总金额,则
 			if(a>0) {
-				
 				//修改采购状态
 				buyService.updateAudit(audits.getAudState(), buy.getBuyId());
 				String uuid = UUID.randomUUID().toString().replaceAll("-", "");

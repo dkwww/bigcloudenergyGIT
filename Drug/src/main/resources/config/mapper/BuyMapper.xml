@@ -32,7 +32,8 @@
     buy_id, com_id, buy_amount, buy_money, buy_time, buy_company, buy_type, buy_audit, 
     buy_state, buy_qc, buy_put, buy_mes, isva, optime, oper, sort
   </sql>
-  
+  <!-- 郑有宏 -->
+  <!-- 查询总行数-->
   <select id="selectCountBySelective" parameterType="java.util.Map" resultType="Integer" >
   	select count(*) from drug_buy  where 1=1
   </select>

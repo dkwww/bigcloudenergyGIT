@@ -385,23 +385,23 @@ public class QcController {
 	 */
 	@RequestMapping("branchQuality")
 	@ResponseBody
-	public Map<String, Object> branchQuality(Qc qc,Integer page,Integer limit,HttpSession session){
+	public Map<String, Object> branchQuality(Qc qc,Integer page,Integer limit){
 		
 		PageUtil PageUtil=new PageUtil();
 		if(page!=null && limit!=null) {
 			PageUtil.setCurPage(page);
 			PageUtil.setRows(limit);
 		}
-		session.getAttribute("user");
-		
+		//查询所有
 		List<Qc> list=qcService.branchQuality(qc, PageUtil);
 		for (Qc qc2 : list) {
+			//质检状态
 			if(qc2.getQcState().equals("0")) {
 				qc2.setQcStates("未质检");
 			}else if(qc2.getQcState().equals("1")) {
 				qc2.setQcStates("已质检");
 			}
-			
+			//入库状态
 			if(qc2.getQcPut().equals("0")) {
 				qc2.setQcPuts("未入库");
 			}else if(qc2.getQcPut().equals("1")) {
@@ -410,6 +410,7 @@ public class QcController {
 			//转为时间格式
 			qc2.setOptimes(Tools.getDateStr(qc2.getOptime()));
 		}
+		//查询库存行数
 		int rows=qcService.selectCount(qc);
 		
 		Map<String, Object> map=new HashMap<>();
@@ -441,38 +442,36 @@ public class QcController {
 		List<QcDetail> list=qcDetailService.selectQcId(qc.getQcId());
 		//循环质检明细的内容
 		for (QcDetail qcDetail : list) {
-			System.out.println("-------------进入这里");
-			System.out.println("    分店药品库存"+qcDetail.getQdetFkId());
 			//在根据质检明细的id查找库存
 			DrugInve drug = druginvService.findBydrugId(qcDetail.getQdetFkId());
 			if(drug!=null&& drug.getDrugId()!=null&&!"".equals(drug.getDrugId())) {
-				System.err.println("----------库存当前数量"+drug.getDiAmount());
-				System.err.println("----------质检明细的数量:"+qcDetail.getQdetAmount());
-				System.err.println("----------库存id:"+drug.getDiId());
+				//修改库存数量
 				druginvService.updateAmounts(qcDetail.getQdetAmount(), drug.getDiId());
 				
 				//库存明细
 				DrugInvDetail drugInvDetail=new DrugInvDetail();
-				drugInvDetail.setDiId(drug.getDiId());
-				drugInvDetail.setDiAmount(qcDetail.getQdetAmount());
+				drugInvDetail.setDiId(drug.getDiId());//明细id
+				drugInvDetail.setDiAmount(qcDetail.getQdetAmount());//明细数量
+				//增加明细
 				druginvDetailService.insertSelective(drugInvDetail);
 				
 			}else {
 
 				uuid = UUID.randomUUID().toString().replaceAll("-", "");
 				DrugInve drugInve = new DrugInve();
-				drugInve.setDiId(uuid);
-				drugInve.setComId(admin.getComId());
-				drugInve.setDrugId(qcDetail.getQdetFkId());
-				drugInve.setDiAmount(qcDetail.getQdetAmount());
-				drugInve.setDiComtype("1");
-				
+				drugInve.setDiId(uuid);//药品库存id
+				drugInve.setComId(admin.getComId());//店铺id
+				drugInve.setDrugId(qcDetail.getQdetFkId());//药品id
+				drugInve.setDiAmount(qcDetail.getQdetAmount());//库存数量
+				drugInve.setDiComtype("1");//公司类型
+				//增加库存
 				druginvService.insertSelective(drugInve);
 				
 				//库存明细
 				DrugInvDetail drugInvDetail=new DrugInvDetail();
-				drugInvDetail.setDiId(uuid);
-				drugInvDetail.setDiAmount(qcDetail.getQdetAmount());
+				drugInvDetail.setDiId(uuid);//库存明细id
+				drugInvDetail.setDiAmount(qcDetail.getQdetAmount());//明细数量
+				//增加明细
 				druginvDetailService.insertSelective(drugInvDetail);
 			}
 		}
