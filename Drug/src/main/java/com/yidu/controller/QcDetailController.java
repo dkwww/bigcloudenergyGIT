@@ -22,7 +22,7 @@ import org.springframework.stereotype.Controller;
  * 材料质检明细 前端控制器
  * </p>
  *
- * @author dengkangwei
+ * @author pengjiangping
  * @since 2018-11-26
  */
 @Controller

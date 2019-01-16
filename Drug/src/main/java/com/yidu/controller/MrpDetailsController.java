@@ -4,8 +4,6 @@ package com.yidu.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.yidu.domain.MatInv;
-import com.yidu.domain.MaterialList;
 import com.yidu.domain.Mrp;
 import com.yidu.domain.MrpDetails;
 import com.yidu.domain.Qc;
@@ -93,13 +91,13 @@ public class MrpDetailsController {
 	 * @param mrpDetails
 	 * @return
 	 * @author Pngjiangping
+	 * @date：2019年1月8日 
 	 */
 	@RequestMapping("update")
 	@ResponseBody
 	public   Message   update(MrpDetails  mrpDetails) {
 		//传过来的数据
 		String   name = mrpDetails.getShujuName();  
-		
 		//返回提示信息
 		Message   message = new   Message();
 		//将传过来的数据拆分为数组
@@ -181,7 +179,7 @@ public class MrpDetailsController {
 			//根据ID改变制造进度
 			mrpService.Modifyprogress(mrp);
 		} 
-		 
+		//将百分比的值转换为数字类型
 		Integer ii = Integer.valueOf(progress);
 		//判断  如果百分比等于100的话就将状态改为停止 
 		if(ii==100) {
@@ -209,6 +207,7 @@ public class MrpDetailsController {
 	 * @param mrpDetails  制造明细对象
 	 * @return
 	 * @author Pngjiangping
+	 * @date：2019年1月10日 
 	 */
 	
 	@RequestMapping("Preservation")
