@@ -62,6 +62,7 @@ public class DrugInvDetailController {
 		//调用根据ID查询库存详细的方法
 		List<DrugInvDetail> list = drugInvDetailService.findById(drugInvDetail.getDiId());
 		for (DrugInvDetail drugInvDetail2 : list) {
+			//时间转换为String类型
 			drugInvDetail2.setTimeName(TimeUtil.dateToString(drugInvDetail2.getOptime(), "yyyy-MM-dd HH:mm:ss"));
 		}
 		//查询行数
