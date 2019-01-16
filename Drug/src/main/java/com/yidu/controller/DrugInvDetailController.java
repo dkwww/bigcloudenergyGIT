@@ -65,7 +65,7 @@ public class DrugInvDetailController {
 			//时间转换为String类型
 			drugInvDetail2.setTimeName(TimeUtil.dateToString(drugInvDetail2.getOptime(), "yyyy-MM-dd HH:mm:ss"));
 		}
-		//查询行数
+		//根据ID查询行数
 		int    rows=drugInvDetailService.selectcount(drugInvDetail.getDiId());
 		//返回前台layui格式
 		Map<String, Object>  map  =new HashMap<>();
