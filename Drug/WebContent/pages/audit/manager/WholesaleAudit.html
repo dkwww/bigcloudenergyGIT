@@ -79,6 +79,8 @@
 		    	<div style="margin:10px">
 		        <form class="layui-form" action="" lay-filter="form-edit">
  				<input type="hidden" name="audId" value="{{d.rowdata.audId}}" />
+				<input type="hidden" name="audFkId" value="{{d.rowdata.audFkId}}" />
+				<input type="hidden" name="wholPrice" value="{{d.rowdata.zongjia}}" />
 		            <div class="layui-form-item">
 		                <label class="layui-form-label">审核部门</label>
 		                <div class="layui-input-block">
@@ -193,15 +195,15 @@
 		        });
 		        //渲染 修改和增加弹出层
 			    function showlayer(d){
+		        	
 			    	laytpl($('#edit-tpl').html()).render(d,function(html) {
-	                    layer.open({
+			    		editIndex=layer.open({
 	                        type: 1,
 	                        title: '表单',
 	                        content: html,
 	                        area: ['800px', '430px'],
 	                        btn: ['提交', '重置', '取消'],
 	                        yes: function(index, layero) {
-	                            editIndex = index;
 	                            $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
 	                        },
 	                        btn2: function(index, layero) {
@@ -212,7 +214,6 @@
 	                            form.render(null, 'form-edit');
 	                        }
 	                     });
-	                    upload();
 	                });
 			    }
 		        //监听工具条按钮点击
@@ -231,8 +232,9 @@
                             content: '../../wholesale/detailwhol.html?whoid='+data.audFkId+''
                         });
 		            } else if (layEvent === 'shenhe') {
+		            	alert(data.audI+" "+data.audFkId);
 		            	var d = {
-			                	rowdata: {audId: data.audId,audIdea:'',audState:31}
+		            		 	rowdata: {audId: data.audId,audFkId:data.audFkId,zongjia:data.wholPrice,audIdea:'',audState:31}
 			                };
 		            	showlayer(d);
 		            }

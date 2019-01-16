@@ -227,107 +227,156 @@ public class AuditController {
 	 * @param page
 	 * @param limit
 	 * @return
+	 * @author likai
+	 * @date：2019年1月15日
 	 */
 	@RequestMapping("/financeo")
 	@ResponseBody
 	public Map<String, Object> financeo(Audit audit,Integer page,Integer limit){
+		//得到分页对象
 		PageUtil pageUtil = new PageUtil();
+		//判断页数和行数不等于空
 		if(page!=null && limit!=null) {
+			//赋值页数
 			pageUtil.setCurPage(page);
+			//赋值行数
 			pageUtil.setRows(limit);
 		}
 		
+		//创建一个空的集合
 		List<Audit> lists=new ArrayList<>();
+		//得到根据审核和分页查询所有的方法
 		List<Audit> list = service.financeo(audit,pageUtil);
+		//得到查询总数的方法
 		int rows=service.findCount(audit);
 		
+		//创建map对象
 		Map<String, Object> m = new HashMap<>();
 		m.put("code", 0);
 		m.put("msg", "");
 		m.put("count", rows);
 		m.put("data", list);
+		//返回map
 		return m;
 	}
 	
 	
+	/**
+	 * 批发总经理审核
+	 * @param audit
+	 * @param zongjia
+	 * @param session
+	 * @return
+	 * @author likai
+	 * @date：2019年1月15日
+	 */
 	@RequestMapping("/Finanexamine")
 	@ResponseBody
 	public Message Finanexamine(@RequestBody Audit audit,Double zongjia,HttpSession session) {
+		//得到mes提示对象
 		Message message = new Message();
-		System.err.println(audit.getAudFkId());
-		System.err.println(audit.getAudId());
+//		System.err.println(audit.getAudFkId());
+//		System.err.println(audit.getAudId());
 		
+		//创建两个空盒子
 		int l=0;
+		int p=0;
 		
+		//得到根据业务查询所有的方法
 		List<WholesaleDetail> list=detaiservice.finanAll(audit.getAudFkId());
+		//遍历
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 			WholesaleDetail wholesaleDetail = (WholesaleDetail) iterator.next();
+			//得到药品库存对象
 			DrugInve druginv=new DrugInve();
-			
+			//赋值药品id
 			druginv.setDrugId(wholesaleDetail.getDrugId());
+			//赋值店铺Id
 			druginv.setComId(wholesaleDetail.getComId());
 			
-			System.err.println("asdasdasd="+druginv.getComId());
-			System.err.println("zxczxczxc="+druginv.getDrugId());
+//			System.err.println("asdasdasd="+druginv.getComId());
+//			System.err.println("zxczxczxc="+druginv.getDrugId());
 			
+			//根据库存对象查询所有
 			List<DrugInve> invlist=druginvservice.findselect(druginv);
+			//遍历
 			for (Iterator iterator2 = invlist.iterator(); iterator2.hasNext();) {
 				DrugInve drugInve = (DrugInve) iterator2.next();
-				System.err.println("总库存==="+drugInve.getDiAmount());
-				
-				if(drugInve.getDiAmount()>wholesaleDetail.getWdAmount()) {
+				//判断当前库存是否大于前台数据
+				if(drugInve.getDiAmount()>=wholesaleDetail.getWdAmount()) {
+					//赋值药品数量
 					drugInve.setDiAmount(wholesaleDetail.getWdAmount());
+					//调用药品库存得到根据更改总数量的方法
 					druginvservice.amountupdate(drugInve);
+					
+					//得到财务对象
 					Debty debty=new Debty();
 					
+					//得到session
 					Admin admin=(Admin) session.getAttribute("admin");
-					
+					//赋值店铺id
 					debty.setComId(admin.getComId());
 					
-					BigDecimal zongjias = new BigDecimal(zongjia);
+					//创建bigcm的对象赋值总金额
+					BigDecimal zongjias = new BigDecimal(audit.getZongjia());
+					//赋值总金额
 					debty.setDebMoney(zongjias);
-					
+					//得到根据审核对象更改总金额的方法
 					int money=debtyservice.moneyupdate(debty);
+					//判断更改金额的方法是否错误
 					if(money>0) {
 						l++;
 					}
 					System.err.println("修改库存成功");
 					
+					//创建财务明细对象
 					DebtyDetail debtyDetail=new DebtyDetail();
+					//赋值财务明细编号
 					debtyDetail.setDdetId(Tools.getDateOrderNo());
+					//赋值财务id
 					debtyDetail.setDebId(debty.getDebId());
-					debtyDetail.setDdetChange(new BigDecimal(zongjia));
+					//赋值总金额
+					debtyDetail.setDdetChange(new BigDecimal(audit.getZongjia()));
+					//赋值状态
 					debtyDetail.setIsva("1");
+					//赋值当前时间
 					debtyDetail.setOptime(new Date());
-					int i=debtyDetailService.addmx(debtyDetail);
-					if(i>0) {
+					//得到添加到审核明细的方法
+					int debtyok=debtyDetailService.addmx(debtyDetail);
+					//判断方法是否成功
+					if(debtyok>0) {
 						System.err.println("成功经理审核出现明细");
 					}
+					//增加
 					l++;
 				}else {
 					System.err.println("修改库存失败");
 				}
 			}
 	}
+		//判断盒子是否大于0
 		if(l>0) {
+			//得到修改状态的方法
 			int rows=service.updateByPrimaryKeySelective(audit);
+			//mes赋值状态
 			message.setStatus(1);
+			//mes赋值提示
 			message.setMsg("操作成功");
 		}
+		//返回mes
 		return message;
 	}
 	
 
 	/**                       
 	 * 审核的方法
-	 * @param id
-	 * @param state
+	 * @param audits
 	 * @author zhengyouhong
 	 * @return
 	 */
 	@RequestMapping("/auditByaudId")
 	@ResponseBody
-public Message auditById(@RequestBody Audit audits) {
+	public Message auditById(@RequestBody Audit audits) {
 		
 		//用于页面上的判断
 		Message message = new Message();
@@ -351,10 +400,10 @@ public Message auditById(@RequestBody Audit audits) {
 				buyService.updateAudit(audits.getAudState(), buy.getBuyId());
 				String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 				DebtyDetail detail = new DebtyDetail();
-				detail.setDdetId(uuid);
-				detail.setDebId(debty1.getDebId());
-				detail.setDdetChange(buy.getBuyMoney());
-				detail.setDdettFkId(buy.getBuyId());
+				detail.setDdetId(uuid);//财务详情的id
+				detail.setDebId(debty1.getDebId());//财务id
+				detail.setDdetChange(buy.getBuyMoney());//明细金额
+				detail.setDdettFkId(buy.getBuyId());//采购id
 				detail.setIsva("1");
 				detail.setOptime(new Date());
 				//财务明细的增加
@@ -362,6 +411,7 @@ public Message auditById(@RequestBody Audit audits) {
 				//根据财务id修改财务余额
 				int count = debtyService.addbty(buy.getBuyMoney(),debty1.getDebId());
 				if(count!=0) {
+					//审核
 					int rows=service.updateByPrimaryKeySelective(audit);
 					
 					if(rows!=0) {
@@ -386,22 +436,19 @@ public Message auditById(@RequestBody Audit audits) {
 			Buy buy = buyService.findById(audits.getAudFkId());
 			//根据订单中的店铺id查找这个店铺的总余额 
 			Debty debty1 = debtyService.findByComId(buy.getComId());
-			System.out.println(" 财务余额："+debty1.getDebMoney()+" 订单总金额"+buy.getBuyMoney());
 			//修改总店总金额
 			int count = debtyService.addMoney(buy.getBuyMoney(),"0");
 			if(count!=0) {
 				String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 				DebtyDetail detail = new DebtyDetail();
-				detail.setDdetId(uuid);
-				detail.setDebId(debty1.getDebId());
-				detail.setDdetChange(buy.getBuyMoney());
-				detail.setDdettFkId(buy.getBuyId());
+				detail.setDdetId(uuid);//财务详情的id
+				detail.setDebId(debty1.getDebId());//财务id
+				detail.setDdetChange(buy.getBuyMoney());//明细金额
+				detail.setDdettFkId(buy.getBuyId());//采购id
 				detail.setIsva("1");
 				detail.setOptime(new Date());
 				//财务明细的增加
 				debtyDetailService.insertSelective(detail);
-				DebtyDetail debtyDetail = new DebtyDetail();
-				debtyDetailService.addmx(debtyDetail);
 				//修改状态
 				buyService.updateAudit(audits.getAudState(), buy.getBuyId());
 				//质检
@@ -410,7 +457,6 @@ public Message auditById(@RequestBody Audit audits) {
 				int rows=service.updateByPrimaryKeySelective(audit);
 				
 				if(rows!=0) {
-					
 					message.setStatus(1);
 					message.setMsg("操作成功");
 				}else {
@@ -422,8 +468,8 @@ public Message auditById(@RequestBody Audit audits) {
 		}else if("2".equals(audits.getAudState())||"14".equals(audits.getAudState())) {
 			//如果审核不通过，则根据id查询出
 			Buy buy = buyService.findById(audits.getAudFkId());
+			//审核
 			int rows=service.updateByPrimaryKeySelective(audit);
-
 			//修改状态
 			buyService.updateAudit(audits.getAudState(), buy.getBuyId());
 			if(rows!=0) {
@@ -438,13 +484,10 @@ public Message auditById(@RequestBody Audit audits) {
 			
 			//如果审核不通过，则根据id查询出
 			Buy buy = buyService.findById(audits.getAudFkId());
-			//根据订单中的店铺id查找这个店铺的总余额 
-			Debty debty1 = debtyService.findByComId(buy.getComId());
-			System.out.println(" 财务余额："+debty1.getDebMoney()+" 订单总金额"+buy.getBuyMoney());
 			//修改分店总金额
 			int count = debtyService.addMoney(buy.getBuyMoney(),buy.getComId());
 			if(count!=0) {
-				//修改状态
+				//修改采购状态
 				buyService.updateAudit(audits.getAudState(), buy.getBuyId());
 				//审核
 				int rows=service.updateByPrimaryKeySelective(audit);

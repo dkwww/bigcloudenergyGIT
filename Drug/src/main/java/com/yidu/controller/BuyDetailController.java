@@ -54,10 +54,8 @@ public class BuyDetailController {
 	public Message add(String mes,HttpSession session) {
 		//得到session
 		Admin admin = (Admin) session.getAttribute("admin");
-		
-		
+		//调用采购的方法
 		int buyRows = service.purchase(mes,admin);
-		
 		
 		Message message = new Message();
 		if(buyRows!=0) {
@@ -79,7 +77,6 @@ public class BuyDetailController {
 	@RequestMapping("/findById")
 	@ResponseBody
 	public List<BuyDetail> findById(String id){
-		
 		return service.findById(id);
 	}
 	

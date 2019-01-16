@@ -25,7 +25,7 @@ import org.springframework.stereotype.Controller;
  * 原材料 前端控制器
  * </p>
  *
- * @author 邓康威
+ * @author dengkangwei
  * @since 2018-11-26
  */
 @Controller
@@ -66,7 +66,7 @@ public class MaterialController {
 		//查询原材料行数
 		int rows=matservice.selectCount(material);
 		
-		//创建map对象
+		//创建map集合
 		Map<String, Object> map=new HashMap<>();
 		map.put("code", 0);
 		map.put("msg", "");
@@ -79,7 +79,7 @@ public class MaterialController {
 	
 	/**
 	 * 增加或修改
-	 * @param mat
+	 * @param mat 原材料对象
 	 * @author 邓康威
 	 * @return
 	 */

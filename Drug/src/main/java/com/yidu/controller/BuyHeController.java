@@ -349,7 +349,7 @@ public class BuyHeController {
 				
 				//得到财务明细对象
 				DebtyDetail debmx=new DebtyDetail();
-				//赋值一个id(getDateOrderNo)
+				//财务明细主键(getDateOrderNo)
 				debmx.setDdetId(Tools.getDateOrderNo());
 				//赋值财务的id
 				debmx.setDebId(deb.getDebId());

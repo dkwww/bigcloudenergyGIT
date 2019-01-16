@@ -224,12 +224,14 @@ public class QcController {
 		
 		//循环质检所有
 		for (Qc qc2 : list) {
+			//质检状态"0"是未质检  "1"是已质检
 			if(qc2.getQcState().equals("0")) {
 				qc2.setQcStates("未质检");
 			}else if(qc2.getQcState().equals("1")) {
 				qc2.setQcStates("已质检");
 			}
 			
+			//入库状态"0"是未入库 "1"是已入库
 			if(qc2.getQcPut().equals("0")) {
 				qc2.setQcPuts("未入库");
 			}else if(qc2.getQcPut().equals("1")) {
@@ -352,7 +354,7 @@ public class QcController {
 			
 			//库存明细
 			MatInvDetail invdetail=new MatInvDetail();
-			//赋值库存明细id (DateOrderNo)
+			//库存明细主键 (DateOrderNo)
 			invdetail.setMidId(Tools.getDateOrderNo());
 			//赋值库存明细的库存id 外键
 			invdetail.setMiId(invlist.getMiId());

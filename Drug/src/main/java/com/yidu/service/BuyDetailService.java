@@ -33,7 +33,7 @@ public interface BuyDetailService  {
 	
 	/**
 	 * 修改
-	 * @param toy
+	 * @param detail
 	 * @return
 	 */
 	public int updateByPrimaryKeySelective(BuyDetail detail);

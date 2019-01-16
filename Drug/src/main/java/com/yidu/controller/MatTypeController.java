@@ -22,7 +22,7 @@ import com.yidu.util.Tools;
  * 原材料类型 前端控制器
  * </p>
  *
- * @author 邓康威
+ * @author dengkangwei
  * @since 2018-11-26
  */
 @Controller
