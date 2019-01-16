@@ -68,7 +68,7 @@ public class DebtyDetailServiceImpl  implements DebtyDetailService {
 	@Override
 	public int addmx(DebtyDetail debty) {
 		
-		return debtyDetailMapper.insert(debty);
+		return debtyDetailMapper.insertSelective(debty);
 	}
 	@Override
 	public int insertSelective(DebtyDetail detail) {

@@ -273,11 +273,14 @@ public class AuditController {
 	@RequestMapping("/Finanexamine")
 	@ResponseBody
 	public Message Finanexamine(@RequestBody Audit audit,Double zongjia,HttpSession session) {
+		//得到session
+		Admin admin=(Admin) session.getAttribute("admin");
+		
 		//得到mes提示对象
 		Message message = new Message();
 //		System.err.println(audit.getAudFkId());
 //		System.err.println(audit.getAudId());
-		
+//		System.out.println(audit.getZongjia()+" "+audit.getWholPrice());
 		//创建两个空盒子
 		int l=0;
 		int p=0;
@@ -312,13 +315,11 @@ public class AuditController {
 					//得到财务对象
 					Debty debty=new Debty();
 					
-					//得到session
-					Admin admin=(Admin) session.getAttribute("admin");
 					//赋值店铺id
-					debty.setComId(admin.getComId());
+					debty.setComId(admin.getComId());	
 					
 					//创建bigcm的对象赋值总金额
-					BigDecimal zongjias = new BigDecimal(audit.getZongjia());
+					BigDecimal zongjias = new BigDecimal(audit.getWholPrice());
 					//赋值总金额
 					debty.setDebMoney(zongjias);
 					//得到根据审核对象更改总金额的方法
@@ -329,20 +330,24 @@ public class AuditController {
 					}
 					System.err.println("修改库存成功");
 					
+					
+					Debty debyts=debtyservice.findcwId(admin.getComId());
 					//创建财务明细对象
 					DebtyDetail debtyDetail=new DebtyDetail();
 					//赋值财务明细编号
 					debtyDetail.setDdetId(Tools.getDateOrderNo());
 					//赋值财务id
-					debtyDetail.setDebId(debty.getDebId());
+					debtyDetail.setDebId(debyts.getDebId());
 					//赋值总金额
-					debtyDetail.setDdetChange(new BigDecimal(audit.getZongjia()));
+					debtyDetail.setDdetChange(new BigDecimal(audit.getWholPrice()));
+					
+					debtyDetail.setDdettFkId("1");
 					//赋值状态
 					debtyDetail.setIsva("1");
 					//赋值当前时间
 					debtyDetail.setOptime(new Date());
 					//得到添加到审核明细的方法
-					int debtyok=debtyDetailService.addmx(debtyDetail);
+					int debtyok=debtyDetailService.insertSelective(debtyDetail);
 					//判断方法是否成功
 					if(debtyok>0) {
 						System.err.println("成功经理审核出现明细");
@@ -356,6 +361,7 @@ public class AuditController {
 	}
 		//判断盒子是否大于0
 		if(l>0) {
+			audit.setAudState("31");
 			//得到修改状态的方法
 			int rows=service.updateByPrimaryKeySelective(audit);
 			//mes赋值状态
