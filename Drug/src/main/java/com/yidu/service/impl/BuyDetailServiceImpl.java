@@ -90,15 +90,12 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 
 	@Override
 	public int purchase(String mes,Admin admin) {
-		System.err.println(mes);
 		//总价
 		String bdetAmount = "";
 		String mess = "";
-		
 		//定义两个变量用于判断
 		int buyRows = 0;
-		int totalAmount = 0;
-		
+		//把传过来的字符串根据&拆分成数组
 		String[] str = mes.split("&");
 		//定义一个采购订单对象
 		Buy buy = new Buy();
@@ -108,23 +105,33 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 		Audit audit = new Audit();
 		//采购订单的id
 		String uuidOne = UUID.randomUUID().toString().replaceAll("-", "");
-		String uuidTwo = null;//用于存储销售单的id
-		System.out.println("uuid:"+uuidOne);
+		//用于存储销售单的id
+		String uuidTwo = null;
 		
 		for (int i = 0; i < str.length; i++) {
 			BuyDetail bDetail = new BuyDetail();
 			
 			String[] strOne = str[i].split("#");
- 			String drugName = strOne[0];//药品名称
-			String bdetPrice = strOne[2];//单价
-			String drugUnit = strOne[3];//数量单位
-			String bdetTotal = strOne[5];//总价
-			BigDecimal bdetTotals = new BigDecimal(bdetTotal);//总价
-			bdetAmount = strOne[8];//数量
-			mess = strOne[9];//备注
-			String bdetFkId = strOne[10];//药品id
-			String amount = strOne[11];//订单总数量
-			BigDecimal money = new BigDecimal(strOne[12]);//订单总金额
+			//药品名称
+ 			String drugName = strOne[0];
+ 			//单价
+			String bdetPrice = strOne[2];
+			//数量单位
+			String drugUnit = strOne[3];
+			//总价
+			String bdetTotal = strOne[5];
+			//订单总价
+			BigDecimal bdetTotals = new BigDecimal(bdetTotal);
+			//订单总数量
+			bdetAmount = strOne[8];
+			//备注
+			mess = strOne[9];
+			//药品id
+			String bdetFkId = strOne[10];
+			//订单总数量
+			String amount = strOne[11];
+			//订单总金额
+			BigDecimal money = new BigDecimal(strOne[12]);
 			//先定义一个为空的采购id
 			String buyId = null;
 			//根据在这个数组末尾的采购id查询采购明细
@@ -132,36 +139,47 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 			//如果查询的结果不为空则给空的采购id赋值
 			if(!buya.isEmpty()) {
 				buyId = strOne[strOne.length-1];//订单id
-				
 			}
-			totalAmount+=Integer.valueOf(bdetAmount);
-			System.out.println(totalAmount);
 			//搜索药品库存
 			DrugInve drugInv = invService.findById(bdetFkId);
-			System.err.println("    "+drugInv.getDiAmount()+"==="+bdetAmount+"    药品id："+bdetFkId);
 			if(drugInv.getDiAmount()!=null&&drugInv.getDiAmount()>=Integer.valueOf(bdetAmount)) {
 				
 				if(buyId==null) {
-					buy.setBuyId(uuidOne);//订单id
+					//订单id
+					buy.setBuyId(uuidOne);
 				}else {
 					buy.setBuyId(buyId);//订单id
 				}
-				System.err.println("    "+amount+"==="+money);
-				buy.setComId(admin.getComId());//店铺id
-				buy.setBuyAmount(Integer.valueOf(amount));//总购买数量
-				buy.setBuyMoney(money);//订单总价
-				buy.setBuyTime(new Date());//采购时间
-				buy.setBuyCompany("总店");//店铺
-				buy.setBuyType("1");//采购类型   1为药品   0为药材
-				buy.setBuyAudit("1");//审核   1为采购中
-				buy.setBuyQc("0");//质检状态  默认0
-				buy.setBuyState("1");//采购状态
-				buy.setBuyPut("0");//入库状态
-				buy.setBuyMes(mess);//采购备注
+				//店铺id
+				buy.setComId(admin.getComId());
+				//总购买数量
+				buy.setBuyAmount(Integer.valueOf(amount));
+				//订单总价
+				buy.setBuyMoney(money);
+				//采购时间
+				buy.setBuyTime(new Date());
+				//店铺
+				buy.setBuyCompany("总店");
+				//采购类型   1为药品   0为药材
+				buy.setBuyType("1");
+				//审核   1为采购中
+				buy.setBuyAudit("1");
+				//质检状态  默认0
+				buy.setBuyQc("0");
+				//采购状态
+				buy.setBuyState("1");
+				//入库状态
+				buy.setBuyPut("0");
+				//采购备注
+				buy.setBuyMes(mess);
+				//是否有效
 				buy.setIsva("有效");
-				buy.setOptime(new Date());//操作时间
-				buy.setOper(admin.getAdminName());//操作人
-				buy.setSort(TimeUtil.getStrDate());//排序
+				//操作时间
+				buy.setOptime(new Date());
+				//操作人
+				buy.setOper(admin.getAdminName());
+				//排序
+				buy.setSort(TimeUtil.getStrDate());
 				
 				if(i==0) {
 					//判断采购id是否等于uuid
@@ -178,37 +196,58 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 						//审核的采购外键
 						audit.setAudFkId(buyId);
 					}
-					
-					audit.setAudComtype("1");//公司类型
-					audit.setQcFkId(admin.getComId());//公司id
-					audit.setAudTime(new Date());//审核时间
-					audit.setAudState("1");//审核状态
-					audit.setAudIdea("分公司增加库存");//审核意见
-					audit.setAudName(admin.getAdminName());//审核人
-					audit.setAudMes(null);//审核
+					//公司类型
+					audit.setAudComtype("1");
+					//公司id
+					audit.setQcFkId(admin.getComId());
+					//审核时间
+					audit.setAudTime(new Date());
+					//审核状态
+					audit.setAudState("1");
+					//审核意见
+					audit.setAudIdea("分公司增加库存");
+					//审核人
+					audit.setAudName(admin.getAdminName());
+					//审核
+					audit.setAudMes(mess);
+					//是否有效
 					audit.setIsva("有效");
+					//操作时间
 					audit.setOptime(new Date());
+					//操作人
 					audit.setOper(admin.getAdminName());
+					//排序
 					audit.setSort(TimeUtil.getStrDate());
-					auditService.addOrUpdate(audit);//审核
+					//审核
+					auditService.addOrUpdate(audit);
 				}
-				BigDecimal bdetPrices = new BigDecimal(bdetPrice);//单价
+				//单价
+				BigDecimal bdetPrices = new BigDecimal(bdetPrice);
 
 				String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-				bDetail.setBdetId(uuid);//采购详情id
+				//采购详情id
+				bDetail.setBdetId(uuid);
 				
 				if(buy.getBuyId().equals(uuidOne)) {
-					bDetail.setBuyId(uuidOne);//采购id
+					//采购id
+					bDetail.setBuyId(uuidOne);
 				}else {
-					bDetail.setBuyId(buyId);//采购id
+					//采购id
+					bDetail.setBuyId(buyId);
 				}
-				
-				bDetail.setBdetAmount(Integer.valueOf(bdetAmount));//药品数量
-				bDetail.setBdetPrice(bdetPrices);//药品单价额
-				bDetail.setBdetTotal(bdetTotals);//药品总价
-				bDetail.setBdetFkId(bdetFkId);//药品id
+				//药品数量
+				bDetail.setBdetAmount(Integer.valueOf(bdetAmount));
+				//药品单价额
+				bDetail.setBdetPrice(bdetPrices);
+				//药品总价
+				bDetail.setBdetTotal(bdetTotals);
+				//药品id
+				bDetail.setBdetFkId(bdetFkId);
+				//是否有效
 				bDetail.setIsva("有效");
+				//操作人
 				bDetail.setOper(admin.getAdminName());
+				//操作时间
 				bDetail.setOptime(new Date());
 				//采购详情增加
 				buyRows =insertSelective(bDetail);
@@ -217,33 +256,47 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 					
 					//给销售单定义一个id
 					uuidTwo = UUID.randomUUID().toString().replaceAll("-", "");
-					sale.setSaleId(uuidTwo);//销售id
-					sale.setSaleTime(new Date());//销售时间
-					sale.setSaleAmount(Integer.valueOf(amount));//销售总数
-					sale.setSaleMoney(money);//订单总金额
+					//销售id
+					sale.setSaleId(uuidTwo);
+					//销售时间
+					sale.setSaleTime(new Date());
+					//销售总数
+					sale.setSaleAmount(Integer.valueOf(amount));
+					//订单总金额
+					sale.setSaleMoney(money);
+					//是否有效
 					sale.setIsva("有效");
+					//操作时间
 					sale.setOptime(new Date());
-					sale.setOper(TimeUtil.getStrDate());
+					//操作人
+					sale.setOper(admin.getAdminName());
 					//调用销售单增加的方法
 					saleService.insertSelective(sale);
 					
 				}
 				//定义一个销售订单详情的对象
 				SaleDetail detail = new SaleDetail();
-				
-				detail.setDrugId(bdetFkId);//药品id
-				detail.setSaleId(uuidTwo);//销售id
-				detail.setSdAmount(Integer.valueOf(bdetAmount));//药品数量
-				detail.setSdPrice(bdetPrices);//药品单价
-				detail.setSdTotal(bdetTotals);//订单总金额
+				//药品id
+				detail.setDrugId(bdetFkId);
+				//销售id
+				detail.setSaleId(uuidTwo);
+				detail.setSdAmount(Integer.valueOf(bdetAmount));
+				//药品数量
+				detail.setSdPrice(bdetPrices);
+				//药品单价
+				detail.setSdTotal(bdetTotals);
+				//订单总金额
 				detail.setIsva("有效");
+				//操作时间
 				detail.setOptime(new Date());
-				detail.setOper(TimeUtil.getStrDate());
+				//操作人
+				detail.setOper(admin.getAdminName());
 				//增加销售详情
 				saleDetailService.addOrUpdate(detail);
 				
 			
 			}else {
+				//如果药品库存不足，则
 				buyRows=0;
 			}
 			

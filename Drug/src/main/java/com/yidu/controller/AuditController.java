@@ -382,16 +382,17 @@ public class AuditController {
 		Message message = new Message();
 		
 		Audit audit = new Audit();
+		//审核id
 		audit.setAudId(audits.getAudId());
+		//审核状态
 		audit.setAudState(audits.getAudState());
-		
 		
 		if("12".equals(audits.getAudState())) {
 			//如果分店总经理审核通过，则根据id查询出
 			Buy buy = buyService.findById(audits.getAudFkId());
 			//根据订单中的店铺id查找这个店铺的总余额
 			Debty debty1 = debtyService.findByComId(buy.getComId());
-			//System.out.println(" 财务余额："+debty1.getDebMoney()+"     订单总金额"+buy.getBuyMoney());
+			//判断采购订单金额和本店余额的大小
 			int a =debty1.getDebMoney().compareTo(buy.getBuyMoney());
 			//如果店铺余额大于总金额,则
 			if(a>0) {
@@ -399,10 +400,14 @@ public class AuditController {
 				buyService.updateAudit(audits.getAudState(), buy.getBuyId());
 				String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 				DebtyDetail detail = new DebtyDetail();
-				detail.setDdetId(uuid);//财务详情的id
-				detail.setDebId(debty1.getDebId());//财务id
-				detail.setDdetChange(buy.getBuyMoney());//明细金额
-				detail.setDdettFkId(buy.getBuyId());//采购id
+				//财务详情的id
+				detail.setDdetId(uuid);
+				//财务id
+				detail.setDebId(debty1.getDebId());
+				//明细金额
+				detail.setDdetChange(buy.getBuyMoney());
+				//采购id
+				detail.setDdettFkId(buy.getBuyId());
 				detail.setIsva("1");
 				detail.setOptime(new Date());
 				//财务明细的增加
@@ -412,7 +417,7 @@ public class AuditController {
 				if(count!=0) {
 					//审核
 					int rows=service.updateByPrimaryKeySelective(audit);
-					
+					//如果审核成功
 					if(rows!=0) {
 						message.setStatus(1);
 						message.setMsg("操作成功");
@@ -440,10 +445,14 @@ public class AuditController {
 			if(count!=0) {
 				String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 				DebtyDetail detail = new DebtyDetail();
-				detail.setDdetId(uuid);//财务详情的id
-				detail.setDebId(debty1.getDebId());//财务id
-				detail.setDdetChange(buy.getBuyMoney());//明细金额
-				detail.setDdettFkId(buy.getBuyId());//采购id
+				//财务详情的id
+				detail.setDdetId(uuid);
+				//财务id
+				detail.setDebId(debty1.getDebId());
+				//明细金额
+				detail.setDdetChange(buy.getBuyMoney());
+				//采购id
+				detail.setDdettFkId(buy.getBuyId());
 				detail.setIsva("1");
 				detail.setOptime(new Date());
 				//财务明细的增加
@@ -506,7 +515,14 @@ public class AuditController {
 		
 		return message;
 	}
-	
+	/**
+	 * 分店财务审核的查询所有
+	 * @param audit
+	 * @param page
+	 * @param limit
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("/showBuy")
 	@ResponseBody
 	public Map<String, Object> showBuy(Audit audit,Integer page,Integer limit,HttpSession session){
@@ -515,8 +531,9 @@ public class AuditController {
 			pageUtil.setCurPage(page);
 			pageUtil.setRows(limit);
 		}
+		//获取session
 		Admin admin = (Admin) session.getAttribute("admin");
-		
+		//分店财务查询所有
 		List<Audit> list = service.showBuy(audit,pageUtil,admin);
 		int rows=service.findCount(audit);
 		
@@ -528,7 +545,14 @@ public class AuditController {
 		return m;
 	}
 	
-	
+	/**
+	 * 分店总经理采购的查询所有
+	 * @param audit
+	 * @param page
+	 * @param limit
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("/showCEO")
 	@ResponseBody
 	public Map<String, Object> showCEO(Audit audit,Integer page,Integer limit,HttpSession session){
@@ -537,8 +561,9 @@ public class AuditController {
 			pageUtil.setCurPage(page);
 			pageUtil.setRows(limit);
 		}
+		//获取session
 		Admin admin = (Admin) session.getAttribute("admin");
-		
+		//分店总经理的查询所有
 		List<Audit> list = service.showCEO(audit,pageUtil,admin);
 		int rows=service.findCount(audit);
 		
@@ -551,6 +576,14 @@ public class AuditController {
 	}
 	
 
+	/**
+	 * 总店销售审核查询所有
+	 * @param audit
+	 * @param page
+	 * @param limit
+	 * @param session
+	 * @return Map
+	 */
 	@RequestMapping("/findSale")
 	@ResponseBody
 	public Map<String, Object> findSale(Audit audit,Integer page,Integer limit,HttpSession session){
@@ -559,8 +592,9 @@ public class AuditController {
 			pageUtil.setCurPage(page);
 			pageUtil.setRows(limit);
 		}
+		//获取session
 		Admin admin = (Admin) session.getAttribute("admin");
-		
+		//总店销售审核查询所有
 		List<Audit> list = service.findSale(audit,pageUtil,admin);
 		int rows=service.findCount(audit);
 		
@@ -573,6 +607,14 @@ public class AuditController {
 	}
 	
 
+	/**
+	 * 总店总经理审核查询所有
+	 * @param audit
+	 * @param page
+	 * @param limit
+	 * @param session
+	 * @return Map
+	 */
 	@RequestMapping("/findCEO")
 	@ResponseBody
 	public Map<String, Object> findCEO(Audit audit,Integer page,Integer limit,HttpSession session){
@@ -581,8 +623,9 @@ public class AuditController {
 			pageUtil.setCurPage(page);
 			pageUtil.setRows(limit);
 		}
+		//获取session
 		Admin admin = (Admin) session.getAttribute("admin");
-		
+		//总店总经理查询所有
 		List<Audit> list = service.findCEO(audit,pageUtil,admin);
 		int rows=service.findCount(audit);
 		
