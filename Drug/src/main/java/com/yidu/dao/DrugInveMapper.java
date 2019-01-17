@@ -106,6 +106,5 @@ public interface DrugInveMapper {
      */
 	DrugInve findById(String id);
 
-    @Select("SELECT * FROM drug_drug_inv WHERE drug_id=#{qcFkId} ")
-	DrugInve findQcId(@Param("qcFkId")String qcFkId);
+	DrugInve findQcId(String qcFkId);
 }

@@ -406,21 +406,22 @@ public class AuditController {
 				buyService.updateAudit(audits.getAudState(), buy.getBuyId());
 				String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 				DebtyDetail detail = new DebtyDetail();
-				//财务详情的id
-				detail.setDdetId(uuid);
-				//财务id
-				detail.setDebId(debty1.getDebId());
-				//明细金额
-				detail.setDdetChange(buy.getBuyMoney());
-				//采购id
-				detail.setDdettFkId(buy.getBuyId());
-				detail.setIsva("1");
-				detail.setOptime(new Date());
-				//财务明细的增加
-				debtyDetailService.insertSelective(detail);
+				
 				//根据财务id修改财务余额
 				int count = debtyService.addbty(buy.getBuyMoney(),debty1.getDebId());
 				if(count!=0) {
+					//财务详情的id
+					detail.setDdetId(uuid);
+					//财务id
+					detail.setDebId(debty1.getDebId());
+					//明细金额
+					detail.setDdetChange(buy.getBuyMoney());
+					//采购id
+					detail.setDdettFkId(buy.getBuyId());
+					detail.setIsva("1");
+					detail.setOptime(new Date());
+					//财务明细的增加
+					debtyDetailService.insertSelective(detail);
 					//审核
 					int rows=service.updateByPrimaryKeySelective(audit);
 					//如果审核成功

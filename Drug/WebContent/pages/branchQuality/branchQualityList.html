@@ -94,7 +94,7 @@
 	
 	
 	<body>
-	 	<input type="hidden" id="shuju"  style="width: 100%;"  >
+	 	<input type="text" id="shuju"  style="width: 100%;"  >
 		  
 		<div class="kit-table">
 		    <form class="layui-form" lay-filter="kit-search-form">
@@ -499,6 +499,8 @@
          	var b=$(obj).parent().parent().parent().prev().children().text();   //总质检数  100
          	var num=parseInt(b)-parseInt(a);
          	$(obj).parent().parent().parent().prev().children().html(num);
+         	b=$(obj).parent().parent().parent().prev().children().text();
+         	
          	var  c=0;
          	
          	if(parseInt(a)<=parseInt(b)){
@@ -516,7 +518,6 @@
              		var d=$(obj).parent().parent().parent().next().children().text(f*100+"%"); 
              	}
            		 
-           	 
           	 	
              
              	}
@@ -531,9 +532,11 @@
         			 var table=layui.table;
         			 var tables=table.cache.demo;      
 	            	 $.each(tables,function(i,item){
+	            		 
+	            		 
 	            			var d=$(obj).parent().parent().parent().next().children().text(); 
 	            		 
-	            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+item.qdetAmount+","+item.qcId+","+d+","+$("#number"+item.qdetId).val()+"#");
+	            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+b+","+item.qcId+","+d+","+$("#number"+item.qdetId).val()+"#");
 	            			
 	            	 })
         		 });
@@ -547,7 +550,7 @@
 	            		 console.info(item)
 	            		 var d=$(obj).parent().parent().parent().next().children().text(); 
 	            		 
-	            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+item.qdetAmount+","+item.qcId+","+d+","+$("#number"+item.qdetId).val()+"#");
+	            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+b+","+item.qcId+","+d+","+$("#number"+item.qdetId).val()+"#");
 	            			
 	            	 })
         		 });

@@ -457,11 +457,12 @@ public class QcController {
 				DrugInvDetail drugInvDetail=new DrugInvDetail();
 				drugInvDetail.setDiId(drug.getDiId());//明细id
 				drugInvDetail.setDiAmount(qcDetail.getQdetAmount());//明细数量
+				drugInvDetail.setRemarks(2);//入库类型
 				//增加明细
 				druginvDetailService.insertSelective(drugInvDetail);
 				
 			}else {
-
+				System.err.println("             库存数量"+qcDetail.getQdetAmount());
 				uuid = UUID.randomUUID().toString().replaceAll("-", "");
 				DrugInve drugInve = new DrugInve();
 				drugInve.setDiId(uuid);//药品库存id
@@ -476,6 +477,7 @@ public class QcController {
 				DrugInvDetail drugInvDetail=new DrugInvDetail();
 				drugInvDetail.setDiId(uuid);//库存明细id
 				drugInvDetail.setDiAmount(qcDetail.getQdetAmount());//明细数量
+				drugInvDetail.setRemarks(2);//入库类型
 				//增加明细
 				druginvDetailService.insertSelective(drugInvDetail);
 			}

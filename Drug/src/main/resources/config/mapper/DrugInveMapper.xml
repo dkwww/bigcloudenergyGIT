@@ -40,9 +40,15 @@
     from drug_drug_inv
     where drug_id = #{drugId,jdbcType=VARCHAR}
   </select>
-  
+  <!-- 郑有宏 -->
+  <!-- 根据药品id查询总店药品库存 -->
    <select id="findById" parameterType="java.lang.String"  resultMap="BaseResultMap" >
-  	select * from drug_drug_inv where drug_id=#{drugId} and com_id=0
+  	select * from drug_drug_inv a, drug_company b where a.com_id=b.com_id and
+  	 drug_id=#{drugId} and com_id=0
+  </select>
+  
+  <select id="findQcId" parameterType="java.lang.String"  resultMap="BaseResultMap" >
+  	SELECT * FROM drug_drug_inv a,drug_company b WHERE a.com_id=b.com_id and drug_id=#{qcFkId}
   </select>
   
   <select id="findDrug" parameterType="java.lang.String" resultMap="BaseResultMap">

@@ -32,6 +32,8 @@ public class DrugInvDetailServiceImpl   implements DrugInvDetailService {
 		for (DrugInvDetail drugInvDetail : list) {
 			if (drugInvDetail.getRemarks()==1) {
 				drugInvDetail.setRemarksName("销售出库");
+			}else if(drugInvDetail.getRemarks()==2){
+				drugInvDetail.setRemarksName("采购入库");
 			}else {
 				drugInvDetail.setRemarksName("生产入库");
 			}
