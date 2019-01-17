@@ -5,6 +5,7 @@
     <id column="deb_id" jdbcType="VARCHAR" property="debId" />
     <result column="com_id" jdbcType="VARCHAR" property="comId" />
     <result column="deb_money" jdbcType="DECIMAL" property="debMoney" />
+     <result column="com_name" jdbcType="VARCHAR" property="comName" />
     <result column="optime" jdbcType="TIMESTAMP" property="optime" />
     <result column="isva" jdbcType="VARCHAR" property="isva" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
@@ -28,8 +29,7 @@
   </select>
   <!-- 财务根据店铺id查询 -->
   <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
-  	select * from  drug_debty  where com_id= #{debty.comId,jdbcType=VARCHAR}
-  	
+  	select * from  drug_debty d,drug_company c where c.com_id=d.com_id and d.com_id= #{debty.comId,jdbcType=VARCHAR}
   	limit #{pageUtil.startRows},#{pageUtil.rows}
   </select>
   <!-- 查询总共多少条数据 -->

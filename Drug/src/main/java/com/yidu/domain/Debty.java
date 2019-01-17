@@ -8,7 +8,7 @@ public class Debty {
     private String debId;				//财务编号
     	
     private String comId;				//店铺编号
-
+    private String comName;
     private BigDecimal debMoney;		//总资产
 
     private Date optime;				//操作时间
@@ -20,7 +20,15 @@ public class Debty {
     private String sort;
 
     
-    public String getStrTime() {
+    public String getComName() {
+		return comName;
+	}
+
+	public void setComName(String comName) {
+		this.comName = comName;
+	}
+
+	public String getStrTime() {
 		return strTime;
 	}
 

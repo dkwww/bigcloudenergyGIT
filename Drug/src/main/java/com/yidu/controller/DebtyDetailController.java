@@ -52,19 +52,19 @@ public class DebtyDetailController {
 		}
 
 		//创建一个map
-		HashMap<String , Object> map = new HashMap<>();
+		HashMap<String, Object> map=new HashMap<>();
 		//创建一个list并调用分店查询所有的方法
-		List<DebtyDetail> list = debtyDetailService.findAll(Debty,pageUtil,debId);
+	List<DebtyDetail> list=debtyDetailService.findAll(Debty, pageUtil, debId);
 	
 		//查询总共多少条数据
 		int rows=debtyDetailService.selectCount(Debty);
-		//map赋值0
+		//map
 		map.put("code", 0);
-		//map赋值空
+		//map
 		map.put("msg", "");
-		//map赋值总共多少条数据
+		//map
 		map.put("count",rows);
-		//map赋值查询出来的结果
+		//map
 		map.put("data", list);
 		
 		return map;

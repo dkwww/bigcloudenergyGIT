@@ -23,7 +23,7 @@
 	<!-- 财务明细查询根据财务id并分页 -->
   <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
   	SELECT * FROM drug_debty_detail dd,drug_debty d WHERE d.deb_id=dd.deb_id AND d.deb_id=#{title}
-  	
+  	ORDER BY dd.optime desc
   	limit #{pageUtil.startRows},#{pageUtil.rows}
   </select>
   <!-- 查询总共多少条数据 -->

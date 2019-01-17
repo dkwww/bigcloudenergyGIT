@@ -55,6 +55,7 @@ public class CompanyController {
 			//将limit赋值到rows
 			pageUtil.setRows(limit);
 		}
+		
 
 		//创建一个map
 		HashMap<String , Object> map = new HashMap<>();
