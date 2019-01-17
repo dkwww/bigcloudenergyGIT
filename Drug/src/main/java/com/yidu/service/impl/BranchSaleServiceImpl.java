@@ -158,7 +158,9 @@ public class BranchSaleServiceImpl implements BranchSaleService {
 		Integer count=0;
 		//设置money为0.0
 		Double money=0.0;
+		//用@符号拆分
 		String [] su=sum.split("@");
+		//for循环
 		for (String string : su) {
 			//用逗号分隔
 			String [] arr=string.split(",");
