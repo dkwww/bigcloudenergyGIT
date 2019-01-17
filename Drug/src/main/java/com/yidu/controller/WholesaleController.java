@@ -67,7 +67,6 @@ public class WholesaleController {
 	@ResponseBody
 	public Map<String,Object> selectAll(@RequestParam(value = "limit",required = false)Integer limit,
 			@RequestParam(value = "page" ,required = false)Integer page, Wholesale record){
-		System.err.println("  sdsddddddddddddddddd"+limit+"==================="+page+"zxczxczxczxc="+record.getWholId());
 		//分页工具对象
 		PageUtil pages=new PageUtil();
 		//判断分页的参数是否为空
@@ -96,9 +95,7 @@ public class WholesaleController {
  		//循环所有
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 			Wholesale wholesale = (Wholesale) iterator.next();
-			//调用时间转换工具
-			TimeUtil.dateToString(wholesale.getOptime(), "yyyy-MM-dd");
-			
+			//调用时间工具类转换赋值批发时间
 			wholesale.setOptimes(Tools.getDateStr(wholesale.getOptime()));
 			
 			//赋值给新集合
@@ -131,27 +128,6 @@ public class WholesaleController {
 		//调用修改是否有效的方法
 		return service.updateisva(wholesale);
 	}	
-	
-	/**
-	 * 增加或者修改
-	 * @param record
-	 * @return mes
-	 */
-	@RequestMapping("/addorupdate")
-	@ResponseBody
-	public Message addorupdate(@RequestBody Wholesale record) {
-		int rows = service.addOrUpdate(record);
-		Message mes = new Message();
-		if (rows>0) {
-			mes.setStatus(1);
-			mes.setMsg("操作成功");
-		} else {
-			mes.setStatus(0);
-			mes.setMsg("数据异常，请稍后重试！");
-		}
-		return mes;
-	}
-	
 	
 	/**
 	 * 批发添加
@@ -213,7 +189,7 @@ public class WholesaleController {
 			if(i==0) {
 				//批发ID
 				wholesale.setWholId(uuid);
-				
+				//得到session
 				Admin admin=(Admin) session.getAttribute("admin");
 				//店铺ID
 				wholesale.setComId(admin.getComId());

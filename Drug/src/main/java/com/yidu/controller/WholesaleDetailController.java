@@ -56,7 +56,6 @@ public class WholesaleDetailController {
 	@ResponseBody
 	public Map<String,Object> selectAll(@RequestParam(value = "limit",required = false)Integer limit,
 			@RequestParam(value = "page" ,required = false)Integer page, WholesaleDetail record){
-		System.err.println("sdsddddddddddddddddd"+limit+"==================="+page);
 		//调用分页工具
 		PageUtil pages=new PageUtil();
 		//判断分页的参数是否为空
