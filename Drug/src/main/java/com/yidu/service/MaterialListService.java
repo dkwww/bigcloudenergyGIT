@@ -39,13 +39,4 @@ public interface MaterialListService   {
 	 * @author ZhouJun
 	 */
 	int addOrUpdate(MaterialList record);
-	
-	/**
-	 * 根据药品查询物料清单
-	 * @param id 药品id
-	 * @return List<MaterialList> 物料清单数据
-	 * @author ZhouJun
-	 */
-	List<MaterialList> selectBydrugId (String id);
-
 }

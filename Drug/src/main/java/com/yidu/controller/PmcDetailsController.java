@@ -42,13 +42,19 @@ public class PmcDetailsController {
 	@RequestMapping("/findAll")
 	@ResponseBody
 	public Map<String, Object> findAll(PmcDetails record,Integer page, Integer limit){
+		//获得分页工具类
 		PageUtil pageUtil = new PageUtil();
+		//开始页数赋值
 		pageUtil.setCurPage(page);
+		//每页行数赋值
 		pageUtil.setRows(limit);
 		
+		//条件查询生产计划明细
 		List<PmcDetails> list = pmcDetailsService.findAll(record, pageUtil); 
+		//获得条件查询生产计划明细的总行数
 		int rows = pmcDetailsService.selectCountBySelective(record);
 		
+		//获得一个map对象并赋值
 		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("code", 0);
 		map.put("msg", "");
@@ -67,12 +73,17 @@ public class PmcDetailsController {
 	@RequestMapping("/addOrUpdate")
 	@ResponseBody
 	public Message addOrUpdate(@RequestBody PmcDetails record) {
+		//增加或修改并或的处理的行数
 		int rows = pmcDetailsService.addOrUpdate(record);
+		//json信息工具类
 		Message mes = new Message();
+		//如果处理的行数大于零
 		if (rows > 0) {
+			//赋值成功信息
 			mes.setStatus(1);
 			mes.setMsg("操作成功！");
 		} else {
+			//赋值失败信息
 			mes.setStatus(0);
 			mes.setMsg("操作失败，请稍后重试！");
 		}
@@ -91,13 +102,18 @@ public class PmcDetailsController {
 	@RequestMapping("/findByPmc")
 	@ResponseBody
 	public Map<String, Object> findByPmc(PmcDetails record,Integer page, Integer limit, String mrpId){
+		//获得分页工具类
 		PageUtil pageUtil = new PageUtil();
+		//开始页数赋值
 		pageUtil.setCurPage(page);
+		//每页的行数赋值
 		pageUtil.setRows(limit);
 		
+		//条件查询生产计划
 		List<PmcDetails> list = pmcDetailsService.findByPmc(record, pageUtil, mrpId); 
+		//获得条件查询生产计划的总行数
 		int rows = pmcDetailsService.selectCountBySelective(record);
-		
+		//获得一个map对象并赋值
 		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("code", 0);
 		map.put("msg", "");
@@ -115,6 +131,7 @@ public class PmcDetailsController {
 	@RequestMapping("/checkInv")
 	@ResponseBody
 	public List<PmcDetails> checkInv(String drugId) {
+		//根据药品查询原材料库存
 		return pmcDetailsService.checkInv(drugId);
 	}
 }

@@ -39,8 +39,10 @@ public class SpecController {
 	@RequestMapping("/findById")
 	@ResponseBody
 	public Map<String,Object> findById(String drugId) {
+		//根据药品id查询说明书
 		Spec spec = specService.findById(drugId);
 		
+		//获得一个map对象并赋值
 		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("code", 0);
 		map.put("msg", "");
@@ -58,12 +60,17 @@ public class SpecController {
 	@RequestMapping("/addOrUpdate")
 	@ResponseBody
 	public Message addOrUpdate(@RequestBody Spec record) {
+		//增加或修改并获得处理的行数
 		int rows = specService.addOrUpdate(record);
+		//获得json信息工具类
 		Message mes = new Message();
+		//如果处理的行数大于零
 		if (rows > 0) {
+			//赋值成功信息
 			mes.setStatus(1);
 			mes.setMsg("操作成功！");
 		} else {
+			//赋值失败信息
 			mes.setStatus(0);
 			mes.setMsg("操作失败！");
 		}

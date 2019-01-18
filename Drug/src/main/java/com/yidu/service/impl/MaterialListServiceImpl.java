@@ -96,10 +96,4 @@ public class MaterialListServiceImpl  implements MaterialListService {
 		
 	}
 
-	@Override
-	public List<MaterialList> selectBydrugId(String id) { 
-		//根据药品id查询物料明细并返回结果
-		return materialListMapper.selectBydrugId(id);
-	}
-
 }

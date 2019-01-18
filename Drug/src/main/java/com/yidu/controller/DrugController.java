@@ -51,9 +51,9 @@ public class DrugController {
 	public Map<String,Object> showList(Drug record,Integer page,Integer limit) {
 		//获得分页工具类
 		PageUtil pageUtil = new PageUtil();
-		//开始的页数赋值
+		//开始页数赋值
 		pageUtil.setCurPage(page);
-		//开始的行数赋值
+		//每页行数赋值
 		pageUtil.setRows(limit);
 		
 		//条件查询药品数据
@@ -171,21 +171,30 @@ public class DrugController {
 		if (rows>0) {
 			//获得审核模型
 			Audit audit = new Audit();
+			//审核公司id赋值
 			audit.setQcFkId(comId);
+			//审核业务编号赋值药品id
 			audit.setAudFkId(drugId);
+			//审核状态赋值
 			audit.setAudState("10101");
+			//增加或修改
 			int count = auditService.addOrUpdate(audit);
+			//如果修改的行数大于零
 			if (count>0) {
+				//赋值成功信息
 				mes.setStatus(1);
 				mes.setMsg("提交成功，待审核！");
 			} else {
+				//赋值失败信息
 				mes.setStatus(0);
 				mes.setMsg("数据异常请稍后重试！");
 			}
 		} else {
+			//赋值失败信息
 			mes.setStatus(0);
 			mes.setMsg("请完善药品信息！");
 		}
+		//返回json信息类
 		return mes;
 	}
 	
@@ -200,13 +209,19 @@ public class DrugController {
 	@RequestMapping("/showAudit")
 	@ResponseBody
 	public Map<String,Object> showAudit(Drug record,Integer page,Integer limit) {
+		//获得分页工具类
 		PageUtil pageUtil = new PageUtil();
+		//开始页数赋值
 		pageUtil.setCurPage(page);
+		//每页的行数赋值
 		pageUtil.setRows(limit);
 		
+		//条件查询药品数据
 		List<Drug> list = drugService.showAudit(record,pageUtil);
+		//获得条件查询药品数据的总行数
 		int rows = drugService.findAuditCount(record);
 		
+		//获得一个map对象并赋值
 		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("code", 0);
 		map.put("msg", "");
@@ -226,13 +241,19 @@ public class DrugController {
 	@RequestMapping("/showChecked")
 	@ResponseBody
 	public Map<String,Object> showChecked(Drug record,Integer page,Integer limit) {
+		//获得分页工具类
 		PageUtil pageUtil = new PageUtil();
+		//开始页数赋值
 		pageUtil.setCurPage(page);
+		//每页行数赋值
 		pageUtil.setRows(limit);
 		
+		//条件查询药品数据
 		List<Drug> list = drugService.findChecked(record,pageUtil);
+		//获得条件查询药品数据的总行数
 		int rows = drugService.findCheckedCount(record);
 		
+		//获得一个map对象并赋值
 		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("code", 0);
 		map.put("msg", "");

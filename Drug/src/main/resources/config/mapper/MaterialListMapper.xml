@@ -43,12 +43,6 @@
     from drug_material_list
     where ml_id = #{mlId,jdbcType=VARCHAR}
   </select>
-  <select id="selectBydrugId" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select  *  from drug_material_list   where drug_id = #{drugId,jdbcType=VARCHAR}
-  </select>
-  
-  
-  
   <select id="selectByDrug" parameterType="String" resultMap="BaseResultMapOne">
     select 
     <include refid="Base_Column_List_Two" />

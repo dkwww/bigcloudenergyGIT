@@ -1,12 +1,12 @@
 package com.yidu.controller;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,15 +42,19 @@ public class MaterialListController {
 	@RequestMapping("/showList")
 	@ResponseBody
 	public Map<String,Object> showList(MaterialList record,Integer page,Integer limit) {
+		//获得分页工具类
 		PageUtil pageUtil = new PageUtil();
+		//开始页数赋值
 		pageUtil.setCurPage(page);
+		//每页行数赋值
 		pageUtil.setRows(limit);
 		
+		//条件查询所有的物料清单数据
 		List<MaterialList> list = materialListService.findAll(record,pageUtil);
 		int rows = materialListService.findCount(record);
 		
-		@SuppressWarnings("unchecked")
-		Map<String,Object> map = new HashedMap();
+		//获得一个map对象并赋值
+		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("code", 0);
 		map.put("msg", "");
 		map.put("count", rows);
@@ -67,6 +71,7 @@ public class MaterialListController {
 	@RequestMapping("/addOrUpdate")
 	@ResponseBody
 	public int addOrUpdate(@RequestBody MaterialList record) {
+		//进行增加或修改并返回处理的行数
 		return materialListService.addOrUpdate(record);
 	}
 }
