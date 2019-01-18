@@ -39,16 +39,28 @@ import org.springframework.stereotype.Controller;
 public class ModuleController {
 	@Resource
 	private ModuleService moduService;
+	/**
+	 * 查询所有的模块
+	 * @param module 根据查询的参数
+	 * @param page 当前的页数
+	 * @param limit 显示的行数
+	 * @return
+	 */
 	@RequestMapping("queryList")
 	@ResponseBody
 	public Map<String,Object> queryList(Module module,Integer page,Integer limit){
+		//获取分页的工具类
 		PageUtil pageUtil=new PageUtil();
+		//不为空时赋值给工具类
 		if(page !=null && limit !=null){
 			pageUtil.setCurPage(page);
 			pageUtil.setRows(limit);
 		}
+		//根据条件查询所有模块
 		List<Module> list=moduService.queryList(module,pageUtil);
+		//查询所有行数
 		int rows=moduService.queryCount(module);
+		//设置返回的Map
 		Map<String,Object> map = new HashedMap();
 		map.put("code", 0);
 		map.put("msg", "");
@@ -56,12 +68,20 @@ public class ModuleController {
 		map.put("data", list);
 		return map;
 	}
+	/**
+	 * 增加和修改的方法
+	 * @param request 获取当前返回的Session
+	 * @param module @RequestBody 获取传递的参数
+	 * @return
+	 */
 	@RequestMapping("updateId")
 	@ResponseBody
 	public Message updateId(HttpServletRequest request,@RequestBody Module module) {
-		System.out.println("测试++++++"+module.getModeId());
+		//创建返回的值
 		Message mes=new Message();
+		//创建接受的int参数
 		int rows=0;
+		//获取Session
 		HttpSession session=request.getSession();
 		Admin user=(Admin) session.getAttribute("admin");
 		if(user!=null&&!"".equals(user)) {
@@ -81,6 +101,10 @@ public class ModuleController {
 		}
 		return mes;
 	}
+	/**
+	 * 查询所有的父节点
+	 * @return
+	 */
 	@RequestMapping("queryId")
 	@ResponseBody
 	public List<Module> queryId(){

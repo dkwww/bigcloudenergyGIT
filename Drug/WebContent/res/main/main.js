@@ -2,8 +2,18 @@ $(function(){
 	querySell();
 	queryRepertory();
 	queryMedicinal();
+	queryDrug();
 	countUp();
+	queryMoney();
 });
+//查询药品销售额
+function queryMoney(){
+	var url="/Drug/main/queryMoney.action";
+	var data=null
+	$.post(url,data,function(mes){
+		sellMoney(mes);
+	},"json");
+}
 //查询药品销量
 function querySell(){
 	var url="/Drug/main/queryList.action";
@@ -202,16 +212,50 @@ function queryMaterials(mes){
 		};
 	 myChart.setOption(option);
 }
-
+function queryDrug(){
+	var url="/Drug/main/queryDrug.action";
+	var data=null;
+	$.post(url,data,function(mes){
+		$("#invNum").text(mes.status);
+		new CountUp('invNum', 0, $('#invNum').text()).start();
+	},"json");
+	/*$.ajax({ 
+    	url:"/Drug/main/queryDrug.action",
+        type:'post',
+        async:false,
+        dataType:'json',
+        success:function(mes){
+        	$("#invNum").text(mes.status);
+        }
+	});*/
+}
+function sellMoney(mes){
+	console.log(mes);
+	// 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('rm9wnwzzjr8m'));
+	option = {
+		    xAxis: {
+		        type: 'category',
+		        data: mes.dataname
+		    },
+		    yAxis: {
+		        type: 'value'
+		    },
+		    series: [{
+		        data: mes.data,
+		        type: 'bar'
+		    }]
+		};
+	myChart.setOption(option);
+}
 function countUp(){
-    var invNum = new CountUp('invNum', 0, $('#invNum').text()),
+    /*var invNum = new CountUp('invNum', 0, $('#invNum').text()),
     	saleNum = new CountUp('saleNum', 0, $('#saleNum').text()),
     	debtyNum = new CountUp('debtyNum', 0, $('#debtyNum').text()),
     	moneyNum = new CountUp('moneyNum', 0, $('#moneyNum').text());
-    	invNum.start();saleNum.start();debtyNum.start();moneyNum.start();
-    //可自定义触发事件
+    	invNum.start();saleNum.start();debtyNum.start();moneyNum.start();*/
     $('.info-box-number').css('cursor','pointer').on('click', function() {
-        var counterId = $(this).find('span').attr('id');
+        var counterId = $(this).attr('id');
         var $counter = new CountUp(counterId, 0, $('#' + counterId).text().replace(/,/g, ''));
         $counter.start();
     });

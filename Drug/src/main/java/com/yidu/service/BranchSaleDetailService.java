@@ -36,7 +36,7 @@ public interface BranchSaleDetailService  {
 	 * 根据名字查询
 	 * @return
 	 */
-	List<Series> queryName();
+	List<Series> queryName(String id);
 	/**
 	 * 根据ID查询
 	 * @param time
@@ -44,5 +44,7 @@ public interface BranchSaleDetailService  {
 	 * @return
 	 */
 	int queryId(int time,String id);
+	
+	List<Series> queryMoney(String id);
 }
 

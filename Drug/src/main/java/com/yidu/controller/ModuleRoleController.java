@@ -30,7 +30,11 @@ import org.springframework.stereotype.Controller;
 public class ModuleRoleController {
 	@Resource
 	private ModuleRoleService moroService;
-	
+	/**
+	 * 查询所有节点
+	 * @param drugId 传递的参数
+	 * @return
+	 */
 	@RequestMapping("queryIdModule")
 	@ResponseBody
 	public List<Ztree> queryIdModule(String drugId){

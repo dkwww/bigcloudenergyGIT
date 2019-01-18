@@ -64,9 +64,9 @@ public class BranchSaleDetailServiceImpl  implements BranchSaleDetailService {
 	 * 根据名字查询
 	 */
 	@Override
-	public List<Series> queryName() {
+	public List<Series> queryName(String id) {
 		//返回dao类根据名字查询的方法
-		return mapper.queryName();
+		return mapper.queryName(id);
 	}
 	/**
 	 * 根据ID查询
@@ -80,5 +80,9 @@ public class BranchSaleDetailServiceImpl  implements BranchSaleDetailService {
 		map.put("id", id);
 		//返回dao类根据ID查询的方法
 		return mapper.queryId(map);
+	}
+	@Override
+	public List<Series> queryMoney(String id) {
+		return mapper.queryMoney(id);
 	}
 }

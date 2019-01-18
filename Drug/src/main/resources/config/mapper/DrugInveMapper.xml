@@ -32,7 +32,9 @@
 	AND dc.com_id=di.com_id
 	AND dc.com_id=#{comId,jdbcType=VARCHAR} AND dd.drug_id=#{drugId,jdbcType=VARCHAR}
   </select>
-  
+  <select id="queryDrug" parameterType="java.lang.String" resultType="int">
+  	select sum(di_amount) from drug_drug_inv where com_id=#{id}
+  </select>
   
    <select id="selectDrugId" parameterType="java.lang.String"  resultMap="BaseResultMap" >
   	select 

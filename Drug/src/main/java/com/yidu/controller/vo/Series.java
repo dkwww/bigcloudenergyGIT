@@ -11,8 +11,16 @@ public class Series {
 	private String drugId;
 	private List<Integer> date;
 	private Map<String,Object> mup;
+	private Integer indexs;
 	
 	
+	
+	public Integer getIndexs() {
+		return indexs;
+	}
+	public void setIndexs(Integer indexs) {
+		this.indexs = indexs;
+	}
 	public Map<String, Object> getMup() {
 		return mup;
 	}

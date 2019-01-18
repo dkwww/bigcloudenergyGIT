@@ -47,40 +47,64 @@ public class MainController {
 	private DrugInvService invService;
 	@Resource
 	private MatInvService  matService;
+	
 	/**
 	 * 查询今年药品的销售次数
+	 * @param request 用于获取返回的Session
 	 * @return
 	 */
 	@RequestMapping("queryList")
 	@ResponseBody
 	public Map<String,Object> queryList(HttpServletRequest request){
+		//获取Session
 		HttpSession session=request.getSession();
+		//获取当前登陆的用户
 		Admin user=(Admin) session.getAttribute("admin");
+		//定义一个月份数组
 		int time[]={1,2,3,4,5,6,7,8,9,10,11,12};
-		
+		//定义一个String数组接收查询到的药品名称
 		String dataname[]=new String[5];
-		int rows=0;
+		//定义一个数字用于循环增加
 		int index=0;
-		List<Series> list=branService.queryName();
+		//根据店铺id查询最大的五个药品
+		List<Series> list=branService.queryName(user.getComId());
+		//定义一个Map用于返回
 		Map<String,Object> map = new HashMap<>();
+		//定义一个map类型的List用于获取查询的参数
 		List<Map<String,Object>> list2=new ArrayList<Map<String,Object>>();
+		//遍历查询到了5个药品
 			for(Series series:list) {
+				//定义一个map接收值
 				Map<String,Object> but = new HashMap<>();
+				//定义一个Integer类型的List接收值
 				List<Integer> data=new ArrayList<Integer>();
+				//循环月份数组
 				for (int i = 0; i < time.length; i++) {
-					rows=branService.queryId(time[i],series.getDrugId());
+					//根据循环的月份和遍历的药品Id查询
+					int rows=branService.queryId(time[i],series.getDrugId());
+					//获取查询的值添入data
 					data.add(rows);
 				}
+				//根据数据格式添加数据stack,受欢迎程度
 				but.put("stack", "受欢迎程度");
+				//添加药品name
 				but.put("name", series.getName());
+				//添加type，line
 				but.put("type","line");
+				//添加areaStyle,0
 				but.put("areaStyle",0);
+				//添加所有数据data
 				but.put("data", data);
+				//将map传入List
 				list2.add(but);
+				//将药品名称循环加入数组中
 				dataname[index]=series.getName();
+				//循环增加数字
 				index++;
 			}
+			//传入data
 			map.put("data",list2);
+			//传入name
 			map.put("name",dataname);
 		return map;
 	};
@@ -98,4 +122,38 @@ public class MainController {
 		List<Repertory> list=matService.queryMaterials();
 		return list;
 	}
+	@RequestMapping("queryDrug")
+	@ResponseBody
+	public Message queryDrug(HttpServletRequest request){
+		HttpSession session=request.getSession();
+		Admin user=(Admin) session.getAttribute("admin");
+		int rows=invService.queryDrug(user.getComId());
+		Message mes=new Message();
+		if(rows!=0) {
+			mes.setStatus(rows);
+		}else {
+			mes.setStatus(0);
+		}
+		return mes;
+	}
+	@RequestMapping("queryMoney")
+	@ResponseBody
+	public Map<String,Object> queryMoney(HttpServletRequest request){
+		HttpSession session=request.getSession();
+		Map<String,Object> map=new HashMap<>();
+		int index=0;
+		String dataname[]=new String[7];
+		int data[]=new int[7];
+		Admin user=(Admin) session.getAttribute("admin");
+		List<Series> list=branService.queryMoney(user.getComId());
+		for (Series series : list) {
+			dataname[index]=series.getName();
+			data[index]=series.getIndexs();
+			index++;
+		}
+		map.put("dataname",dataname);
+		map.put("data",data);
+		return map;
+	}
+	
 }

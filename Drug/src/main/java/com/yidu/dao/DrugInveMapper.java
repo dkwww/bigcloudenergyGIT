@@ -107,4 +107,6 @@ public interface DrugInveMapper {
 	DrugInve findById(String id);
 
 	DrugInve findQcId(String qcFkId);
+	
+	int queryDrug(String id);
 }

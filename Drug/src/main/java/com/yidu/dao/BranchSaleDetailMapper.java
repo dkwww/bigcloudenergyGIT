@@ -40,11 +40,13 @@ public interface BranchSaleDetailMapper {
 	 * 根据名字查询
 	 * @return
 	 */
-	List<Series> queryName();
+	List<Series> queryName(String id);
 	/**
 	 * 根据ID查询
 	 * @param map 集合
 	 * @return
 	 */
 	int queryId(Map<String, Object> map);
+	
+	List<Series> queryMoney(String id);
 }
