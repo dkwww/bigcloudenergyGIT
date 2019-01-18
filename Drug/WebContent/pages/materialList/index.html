@@ -629,8 +629,9 @@
 				
 				function changeState(rowId) {
 					var objStr = tableElem.find("td[data-field='matId']");
+					console.log(objStr);
 					for (var i = 0; i < objStr.length; i++) {
-						if (objStr[i].innerText == rowId) {
+						if ($(objStr[i]).text() == rowId) {
 							tableElem.children().find('.layui-table-fixed input[type="checkbox"]').eq(i+1).next().click();
 							tableElem.find('.layui-table-fixed input[type="checkbox"]').eq(i+1).next().removeClass('layui-form-checked');
 						}

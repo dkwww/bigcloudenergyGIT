@@ -131,7 +131,7 @@
 						<div class="layui-upload layui-input-block">
 		  					<button type="button" class="layui-btn layui-btn-primary" id="fileBtn"><i class="layui-icon">&#xe67c;</i>{{d.rowdata.msg}}</button>
 		  					<div class="layui-upload-list" style="display: none">
-		    					<img class="layui-upload-img" id="pic" src="../../{{d.rowdata.drugPictrue}}" name="drugPictrue" style="width: 100px;height: 100px">
+		    					<img class="layui-upload-img" id="pic" src="../../{{d.rowdata.drugPictrue}}" style="width: 100px;height: 100px">
 		    					<p id="errorText"></p>
 		  					</div>
 						</div>
@@ -666,7 +666,7 @@
 		            //上传成功
 		            $("input[name=drugPictrue]").val(res.obj);
 		            $(".layui-upload-list").css("display", "block");
-	           		$("#fileBtn").html('<i class="layui-icon">&#xe67c;</i>跟改图片');
+	           		$("#fileBtn").html('<i class="layui-icon">&#xe67c;</i>更改图片');
 	           		layui.form.render('form-edit');
 		          }
 		          ,error: function(){
