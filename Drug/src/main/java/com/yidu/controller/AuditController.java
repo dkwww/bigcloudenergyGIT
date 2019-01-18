@@ -471,9 +471,13 @@ public class AuditController {
 				debtyDetailService.insertSelective(detail);
 				//修改采购状态
 				buyService.updateAudit(audits.getAudState(), buy.getBuyId());
+				//根据采购id查询采购明细
 				List<BuyDetail> list = buyDetailService.findByBuyId(buy.getBuyId());
 				for (BuyDetail buyDetail : list) {
-					
+					//根据采购明细id查询药品库存
+					DrugInve drugInv = druginvservice.findBydrugId(buyDetail.getBdetFkId());
+					//修改总店库存
+					druginvservice.minusAmounts(buyDetail.getBdetAmount(), drugInv.getDiId());
 				}
 				//质检
 				qcService.branchQualityAdd(buy);

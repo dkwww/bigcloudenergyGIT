@@ -61,6 +61,11 @@ public interface DrugInvService  {
 	  public DrugInve findById(String id);
 	  
 	  
+	  /**
+	   * 根据药品id查询查询
+	   * @param id
+	   * @return
+	   */
 	  public DrugInve findBydrugId(String qcFkId);
 	  
 	  /**

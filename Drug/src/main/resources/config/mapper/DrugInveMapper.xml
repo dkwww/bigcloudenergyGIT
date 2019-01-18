@@ -41,8 +41,16 @@
     where drug_id = #{drugId,jdbcType=VARCHAR}
   </select>
   <!-- 郑有宏 -->
-  <!-- 根据药品id查询总店药品库存 -->
+  <!-- 根据药品id查询总店药品库存返回集合 -->
    <select id="findById" parameterType="java.lang.String"  resultMap="BaseResultMap" >
+  	select * from drug_drug_inv a, drug_company b,drug_drug c where a.com_id=b.com_id and
+	a.drug_id = c.drug_id and
+  	 c.drug_id=#{drugId} and a.com_id='0'
+  </select>
+  
+   <!-- 郑有宏 -->
+  <!-- 根据药品id查询总店药品库存返回对象 -->
+   <select id="findBydrugId" parameterType="java.lang.String"  resultMap="BaseResultMap" >
   	select * from drug_drug_inv a, drug_company b,drug_drug c where a.com_id=b.com_id and
 	a.drug_id = c.drug_id and
   	 c.drug_id=#{drugId} and a.com_id='0'
