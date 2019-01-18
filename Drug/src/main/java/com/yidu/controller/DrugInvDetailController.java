@@ -4,6 +4,7 @@ package com.yidu.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yidu.domain.Admin;
 import com.yidu.domain.DrugInvDetail;
 import com.yidu.domain.DrugInve;
 import com.yidu.domain.Qc;
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 
@@ -86,11 +88,13 @@ public class DrugInvDetailController {
 	 */
 	@RequestMapping("addAll")
 	@ResponseBody
-	public   Message   addAll(Qc  qc ) { 
+	public   Message   addAll(Qc  qc ,HttpSession  session) { 
 		//返回一个提示信息
 		Message  message  =new  Message() ;
 		//根据质检的Id查出所有的信息
 		List<QcDetail> list = qcdetaService.selectQcId(qc.getQcId());
+		//获取店铺s
+		
 		//定义一个rows 看是否增加成功
 		int  rows =0;
 		//将集合遍历
@@ -99,12 +103,18 @@ public class DrugInvDetailController {
 			DrugInve   drugInve  =new DrugInve();
 			//创建一个库存明细接收对象
 			DrugInvDetail  drugInvDetail  = new  DrugInvDetail();
-			//这个是库存的UUID 用于增加
+			//这个是库存的UUID 
 			String    string= UUID.randomUUID().toString().replaceAll("-", "");
-			//这是库存明细的UUID  也是用于增加
+			//这是库存明细的UUID  
 			String     str= UUID.randomUUID().toString().replaceAll("-", "");
+			//获取质检明细的业务ID  
+			drugInve.setDrugId(qcDetail.getQdetFkId());
+			//获取session
+			Admin  ad=(Admin) session.getAttribute("admin");
+			//获取session里面的店铺ID
+			drugInve.setComId(ad.getComId());
 			//判断库存有没有这个药品
-			List<DrugInve> drugList = drugInvService.selectDrugId(qcDetail.getQdetFkId());
+			List<DrugInve> drugList = drugInvService.selectDrugId(drugInve);
 			//如果集合为空     就在库存里加一行  如果不为空  就直接加数量
 			if (!drugList.isEmpty()) {
 				// 用库存对象接收值然后增加。。
@@ -114,6 +124,8 @@ public class DrugInvDetailController {
 				int  sum=qcDetail.getQdetAmount()-qcDetail.getQdetFail();
 				//应该入库的数量
 				drugInve.setDiAmount(sum);
+				Admin  admin=(Admin) session.getAttribute("admin");
+				drugInve.setComId(admin.getComId());
 				//增加库存数量
 				drugInvService.updateamount(drugInve);
 				//这是增加库存明细
@@ -129,8 +141,12 @@ public class DrugInvDetailController {
 				drugInvDetail.setDiAmount(sums);
 				//默认为入库 
 				drugInvDetail.setRemarks(0);
+				//当前时间
+				Date date  =new Date();
+				//加入当前时间
+				drugInvDetail.setOptime(date);
 				//增加一条库存明细
-				drugInvDetailService.insert(drugInvDetail);
+				rows=drugInvDetailService.insert(drugInvDetail);
 				//否则的话就是没有这条信息
 			} else {
 				//商家ID

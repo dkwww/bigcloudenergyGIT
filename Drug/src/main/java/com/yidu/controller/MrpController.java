@@ -55,7 +55,6 @@ public class MrpController {
 		for (Mrp mrp2 : list) {
 			//判断是否提交质检  将中文值返回到前台
 			if (mrp2.getMrpPud()==0) {
-				
 				mrp2.setMrpPudName("未提交质检");
 			}else {
 				mrp2.setMrpPudName("已提交质检");

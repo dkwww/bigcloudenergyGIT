@@ -50,7 +50,7 @@ public interface DrugInveMapper {
      * @return
      */
     
-    List<DrugInve> selectDrugId(String   id);
+    List<DrugInve> selectDrugId(DrugInve drugInve);
     
     /**
      * 根据药品ID修改库存数量

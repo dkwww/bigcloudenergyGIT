@@ -63,8 +63,8 @@ public class DrugInvServiceImpl    implements DrugInvService {
 	}
 
 	@Override
-	public List<DrugInve> selectDrugId(String id) {
-		return dao.selectDrugId(id);
+	public List<DrugInve> selectDrugId(DrugInve drugInve) {
+		return dao.selectDrugId(drugInve);
 	}
 	/**
 	 * 入库

@@ -36,11 +36,11 @@
   	select sum(di_amount) from drug_drug_inv where com_id=#{id}
   </select>
   
-   <select id="selectDrugId" parameterType="java.lang.String"  resultMap="BaseResultMap" >
+   <select id="selectDrugId" parameterType="com.yidu.domain.DrugInve"  resultMap="BaseResultMap" >
   	select 
     *
-    from drug_drug_inv
-    where drug_id = #{drugId,jdbcType=VARCHAR}
+    from drug_drug_inv 
+    where drug_id = #{drugId,jdbcType=VARCHAR} and com_id=#{comId,jdbcType=VARCHAR}
   </select>
   <!-- 郑有宏 -->
   <!-- 根据药品id查询总店药品库存 -->

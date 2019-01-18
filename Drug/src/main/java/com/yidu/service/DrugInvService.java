@@ -43,7 +43,7 @@ public interface DrugInvService  {
 	  * @param id
 	  * @return
 	  */
-	   List<DrugInve>  selectDrugId(String   id);
+	   List<DrugInve>  selectDrugId(DrugInve drugInve);
 	 
 	 /**
 	   * 根据药品id查询库存

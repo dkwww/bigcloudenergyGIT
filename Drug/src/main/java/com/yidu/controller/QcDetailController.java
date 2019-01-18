@@ -49,7 +49,7 @@ public class QcDetailController {
 		List <QcDetail> list=qcdetaService.selectbyId(qcdetail,pageUtil);
 		//将日期类型转换为字符类型
 		for (QcDetail qcDetail2 : list) {
-				qcDetail2.setSjName(TimeUtil.dateToString(qcDetail2.getQdetOptime(), "yyyy-mm-dd"));
+				qcDetail2.setSjName(TimeUtil.dateToString(qcDetail2.getQdetOptime(), "yyyy-MM-dd HH:mm:ss"));
 		}
 		//查询行数
 		int  rows  = qcdetaService.selectbycount(qcdetail);

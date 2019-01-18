@@ -36,7 +36,7 @@
      <if test="qc.qcConpany != null and qc.qcConpany != ''">
    		and qc_conpany like CONCAT(CONCAT('%',#{qc.qcConpany,jdbcType=VARCHAR},'%'))
    	</if>
-     order by (sort+0) desc 
+     order by  qc_optime desc 
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
     
   </select>
