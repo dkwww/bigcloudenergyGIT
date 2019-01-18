@@ -347,7 +347,7 @@ public class BuyHeController {
 		if(buy.getBuyMoney().compareTo(deb.getDebMoney())==-1) {
 			//判断如果审核状态不等于空且为1的时候就减财务
 			if(buy.getBuyAudit()!="" && buy.getBuyAudit().equals("1")) {
-				//调用减财务的方法,根据财务id修改金额
+				//调用减财务的方法,根据财务id修改材料总价格金额
 				debtyservice.addbty(buy.getBuyMoney(),deb.getDebId());
 				
 				//得到财务明细对象
