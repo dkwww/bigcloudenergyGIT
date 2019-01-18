@@ -58,4 +58,11 @@ public interface BuyDetailService  {
 	 * @return
 	 */
 	public int updateByBuyId(BuyDetail detail);
+	
+	/**
+	 * 根据采购id查询
+	 * @param id
+	 * @return
+	 */
+	public List<BuyDetail> findByBuyId(String buyId);
 }

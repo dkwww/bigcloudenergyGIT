@@ -87,14 +87,14 @@
 </script>
 <script type="text/html" id="input">
 	<div class="layui-inline">
-		<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="qdetAmount"   value="0"  autocomplete="off"    id="number{{d.qdetId}}" onkeyup="Pressdown(this);">
+		<input type="number" class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="qdetAmount"   value="0"  autocomplete="off"    id="number{{d.qdetId}}" onkeyup="Pressdown(this);">
 	</div>
 	</script>
 	
 	
 	
 	<body>
-	 	<input type="text" id="shuju"  style="width: 100%;"  >
+	 	<input type="hidden" id="shuju"  style="width: 100%;"  >
 		  
 		<div class="kit-table">
 		    <form class="layui-form" lay-filter="kit-search-form">
@@ -492,17 +492,18 @@
 		   
 		</script>
 		<script type="text/javascript">
+		 
 		 function  Pressdown(obj){ 
 			
 	 
 	        var a=obj.value;   // 未通过数  10
          	var b=$(obj).parent().parent().parent().prev().children().text();   //总质检数  100
          	var num=parseInt(b)-parseInt(a);
-         	$(obj).parent().parent().parent().prev().children().html(num);
+         	//$(obj).parent().parent().parent().prev().children().html(num);
          	b=$(obj).parent().parent().parent().prev().children().text();
          	
          	var  c=0;
-         	
+         	var f=0;
          	if(parseInt(a)<=parseInt(b)){
         		 
              	var  e = parseInt(b)-parseInt(a);
@@ -513,14 +514,14 @@
              		var d=$(obj).parent().parent().parent().next().children().text(0+"%"); 
              	}else{
              		var  c=parseInt(e)/parseInt(b);
-             		var f=c.toFixed(4);
-
-             		var d=$(obj).parent().parent().parent().next().children().text(f*100+"%"); 
+             		f=(c*100).toFixed(2);
+					
+             		var d=$(obj).parent().parent().parent().next().children().text(f+"%"); 
              	}
            		 
           	 	
              
-             	}
+           	}
          	
          	if(parseInt(a)>parseInt(b)){
          		a=parseInt(b);
@@ -534,9 +535,13 @@
 	            	 $.each(tables,function(i,item){
 	            		 
 	            		 
-	            			var d=$(obj).parent().parent().parent().next().children().text(); 
-	            		 
-	            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+b+","+item.qcId+","+d+","+$("#number"+item.qdetId).val()+"#");
+	            		 var d=$(obj).parent().parent().parent().next().children().text(); 
+	            			if(b==a){
+		            			 num=b;
+		            			 $(obj).parent().parent().parent().next().children().text(0+"%");
+		            			 d=$(obj).parent().parent().parent().next().children().text(0+"%");
+		            		 }
+	            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+num+","+item.qcId+","+f+"%"+","+$("#number"+item.qdetId).val()+"#");
 	            			
 	            	 })
         		 });
@@ -549,8 +554,12 @@
 	            	 $.each(tables,function(i,item){
 	            		 console.info(item)
 	            		 var d=$(obj).parent().parent().parent().next().children().text(); 
-	            		 
-	            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+b+","+item.qcId+","+d+","+$("#number"+item.qdetId).val()+"#");
+	            		 if(b==a){
+	            			 num=b;
+	            			 d=$(obj).parent().parent().parent().next().children().text(0+"%");
+	            			 $(obj).parent().parent().parent().next().children().text(0+"%");
+	            		 }
+	            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+num+","+item.qcId+","+f+"%"+","+$("#number"+item.qdetId).val()+"#");
 	            			
 	            	 })
         		 });

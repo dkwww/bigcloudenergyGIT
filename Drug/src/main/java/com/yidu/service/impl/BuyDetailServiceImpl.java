@@ -319,4 +319,10 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 		return mapper.updateByBuyId(detail);
 	}
 
+
+	@Override
+	public List<BuyDetail> findByBuyId(String buyId) {
+		return mapper.findBuyId(buyId);
+	}
+
 }

@@ -32,21 +32,20 @@
 	AND dc.com_id=di.com_id
 	AND dc.com_id=#{comId,jdbcType=VARCHAR} AND dd.drug_id=#{drugId,jdbcType=VARCHAR}
   </select>
-  <select id="queryDrug" parameterType="java.lang.String" resultType="int">
-  	select sum(di_amount) from drug_drug_inv where com_id=#{id}
-  </select>
   
-   <select id="selectDrugId" parameterType="com.yidu.domain.DrugInve"  resultMap="BaseResultMap" >
+  
+   <select id="selectDrugId" parameterType="java.lang.String"  resultMap="BaseResultMap" >
   	select 
     *
-    from drug_drug_inv 
-    where drug_id = #{drugId,jdbcType=VARCHAR} and com_id=#{comId,jdbcType=VARCHAR}
+    from drug_drug_inv
+    where drug_id = #{drugId,jdbcType=VARCHAR}
   </select>
   <!-- 郑有宏 -->
   <!-- 根据药品id查询总店药品库存 -->
    <select id="findById" parameterType="java.lang.String"  resultMap="BaseResultMap" >
-  	select * from drug_drug_inv a, drug_company b where a.com_id=b.com_id and
-  	 drug_id=#{drugId} and com_id=0
+  	select * from drug_drug_inv a, drug_company b,drug_drug c where a.com_id=b.com_id and
+	a.drug_id = c.drug_id and
+  	 c.drug_id=#{drugId} and a.com_id='0'
   </select>
   
   <select id="findQcId" parameterType="java.lang.String"  resultMap="BaseResultMap" >

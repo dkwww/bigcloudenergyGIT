@@ -23,6 +23,7 @@ import com.yidu.dao.DebtyDetailMapper;
 import com.yidu.domain.Admin;
 import com.yidu.domain.Audit;
 import com.yidu.domain.Buy;
+import com.yidu.domain.BuyDetail;
 import com.yidu.domain.Debty;
 import com.yidu.domain.DebtyDetail;
 import com.yidu.domain.Drug;
@@ -30,6 +31,7 @@ import com.yidu.domain.DrugInve;
 import com.yidu.domain.Qc;
 import com.yidu.domain.WholesaleDetail;
 import com.yidu.service.AuditService;
+import com.yidu.service.BuyDetailService;
 import com.yidu.service.BuyService;
 import com.yidu.service.DebtyDetailService;
 import com.yidu.service.DebtyService;
@@ -73,6 +75,9 @@ public class AuditController {
 	
 	@Resource
 	BuyService buyService;
+	
+	@Resource
+	BuyDetailService buyDetailService;
 	
 	//质检service
 	@Resource
@@ -464,8 +469,12 @@ public class AuditController {
 				detail.setOptime(new Date());
 				//财务明细的增加
 				debtyDetailService.insertSelective(detail);
-				//修改状态
+				//修改采购状态
 				buyService.updateAudit(audits.getAudState(), buy.getBuyId());
+				List<BuyDetail> list = buyDetailService.findByBuyId(buy.getBuyId());
+				for (BuyDetail buyDetail : list) {
+					
+				}
 				//质检
 				qcService.branchQualityAdd(buy);
 				//审核
