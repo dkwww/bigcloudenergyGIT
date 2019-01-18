@@ -390,15 +390,16 @@ public class QcController {
 	 */
 	@RequestMapping("branchQuality")
 	@ResponseBody
-	public Map<String, Object> branchQuality(Qc qc,Integer page,Integer limit){
+	public Map<String, Object> branchQuality(Qc qc,Integer page,Integer limit,HttpSession session){
 		
 		PageUtil PageUtil=new PageUtil();
 		if(page!=null && limit!=null) {
 			PageUtil.setCurPage(page);
 			PageUtil.setRows(limit);
 		}
+		Admin admin =(Admin) session.getAttribute("admin");
 		//查询所有
-		List<Qc> list=qcService.branchQuality(qc, PageUtil);
+		List<Qc> list=qcService.branchQuality(qc, PageUtil,admin);
 		for (Qc qc2 : list) {
 			//质检状态
 			if(qc2.getQcState().equals("0")) {

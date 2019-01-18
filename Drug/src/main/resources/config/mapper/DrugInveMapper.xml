@@ -57,7 +57,7 @@
   </select>
   
   <select id="findQcId" parameterType="java.lang.String"  resultMap="BaseResultMap" >
-  	SELECT * FROM drug_drug_inv a,drug_company b WHERE a.com_id=b.com_id and drug_id=#{qcFkId}
+  	SELECT * FROM drug_drug_inv a,drug_company b WHERE a.com_id=b.com_id and a.drug_id=#{qcFkId} and a.di_comtype='1'
   </select>
   
   <select id="findDrug" parameterType="java.lang.String" resultMap="BaseResultMap">

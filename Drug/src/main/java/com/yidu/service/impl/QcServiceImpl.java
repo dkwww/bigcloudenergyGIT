@@ -5,6 +5,7 @@ import com.yidu.dao.BuyDetailMapper;
 import com.yidu.dao.BuyMapper;
 import com.yidu.dao.QcDetailMapper;
 import com.yidu.dao.QcMapper;
+import com.yidu.domain.Admin;
 import com.yidu.domain.Buy;
 import com.yidu.domain.BuyDetail;
 import com.yidu.domain.Qc;
@@ -211,10 +212,11 @@ public class QcServiceImpl   implements QcService {
 	}
 
 	@Override
-	public List<Qc> branchQuality(Qc qc, PageUtil pageUtil) {
+	public List<Qc> branchQuality(Qc qc, PageUtil pageUtil,Admin admin) {
 		Map<String , Object>  map  =new  HashMap<>();
 		 map.put("qc", qc);
 		 map.put("pageUtil", pageUtil);
+		 map.put("admin", admin);
 		 List<Qc> list = dao.branchQuality(map);
 		 for (Qc qc2 : list) {
 			if (qc2.getQcState().equals("1")) {

@@ -2,6 +2,7 @@ package com.yidu.service;
 
 import java.util.List;
 
+import com.yidu.domain.Admin;
 import com.yidu.domain.Buy;
 import com.yidu.domain.Qc;
 import com.yidu.util.PageUtil;
@@ -38,7 +39,7 @@ public interface QcService  {
 	 * @author zhengyouhong
 	 * @return
 	 */
-	List<Qc> branchQuality(Qc  qc,PageUtil pageUtil);
+	List<Qc> branchQuality(Qc  qc,PageUtil pageUtil,Admin admin);
 	
 	/**
 	 * 修改
