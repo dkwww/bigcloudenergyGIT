@@ -12,6 +12,7 @@ layui.config({
 	app.set({
 		type: 'iframe'
 	}).init();
+	app.init();
 	$('dl.skin > dd').on('click', function() {
 		var $that = $(this);
 		var skin = $that.children('a').data('skin');
@@ -38,10 +39,3 @@ layui.config({
 		switchSkin(skin === undefined ? 'red' : skin);
 	}();
 });
-function closeSession(){
-	var url = "admin/clearSession.action";
-	var data=null;
-	$.post(url,data,function(mes){
-		location.href="pages/admin/login.html";
-	})
-}

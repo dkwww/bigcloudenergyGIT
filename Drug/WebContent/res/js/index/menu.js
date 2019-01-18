@@ -30,6 +30,18 @@ function getSession(){
 }
 
 /**
+ * 移除Session
+ * @returns
+ */
+function closeSession(){
+	var url = "admin/clearSession.action";
+	var data=null;
+	$.post(url,data,function(mes){
+		location.href="pages/admin/login.html";
+	})
+}
+
+/**
  * 显示菜单列表
  */
 function showMenu(){

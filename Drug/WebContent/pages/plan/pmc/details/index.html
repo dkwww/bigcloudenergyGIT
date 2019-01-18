@@ -92,7 +92,7 @@
 								</div>
 							</div>
 							<div id="tableRes" class="card-body-right">
-								<table id="dataTable1" lay-filter="dataTable" class="layui-hide"></table>
+								<table id="dataTable1" lay-filter="dataTable1" class="layui-hide"></table>
 							</div>
 						</div>
 						<div id="action" class="text-center">
@@ -239,7 +239,7 @@
 						res.data[index].state=1;
 						res.data[index].checkDisabled == true;
 					});
-					viewObj = res; 
+					viewObj = res;
 					newData = res.data;
 				}
 			});
@@ -349,6 +349,13 @@
 						},"json");
 					});
 				}
+				
+				//点击排序重新渲染表格
+		        table.on('sort(dataTable1)', function(obj){
+		        	tableIns1.reload({
+						data: newData
+					});
+		        });
 				
 				//监听搜索表单提交
 		        form.on('submit(search1)', function(data) {
@@ -577,6 +584,11 @@
                     	renderForm();
                     }
                  });
+				
+				//点击排序重新渲染表格
+		        table.on('sort(dataTable2)', function(obj){
+		        	tableIns2.reload();
+		        });
 				
 				//监听搜索表单提交
 		        form.on('submit(search2)', function(data) {

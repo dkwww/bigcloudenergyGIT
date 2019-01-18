@@ -189,6 +189,11 @@
 		            }
 		        });
 		        
+		      	//点击排序重新渲染表格
+		        table.on('sort(demo)', function(obj){
+		        	tableIns.reload();
+		        });
+		        
 				//查询类型下拉框数据
 		        var staticData = null;
 		        $.ajax({ url:"../../../drugType/showList.action",

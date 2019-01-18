@@ -372,6 +372,11 @@
                     }
                  });
 		        
+		      	//点击排序重新渲染表格
+		        table.on('sort(demo)', function(obj){
+		        	tableIns.reload();
+		        });
+		        
 		        //监听搜索表单提交
 		        form.on('submit(search)', function(data) {  
 		            //带条件查询

@@ -91,7 +91,7 @@
 				    
 					<div class="layui-card-body">
 						<div id="tableRes" class="table-overlay">
-							<table id="dataTable1" lay-filter="dataTable" class="layui-hide"></table>
+							<table id="dataTable1" lay-filter="dataTable1" class="layui-hide"></table>
 						</div>
 					</div>
 				</div>
@@ -183,6 +183,11 @@
 					  	});
 					}
 				});
+				
+				//点击排序重新渲染表格
+		        table.on('sort(dataTable1)', function(obj){
+		        	tableIns1.reload();
+		        });
 				
 				//监听搜索表单提交
 		        form.on('submit(search1)', function(data) {

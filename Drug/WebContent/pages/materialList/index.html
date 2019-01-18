@@ -98,7 +98,7 @@
 						  	</div>
 						</div>
 						<div id="tableRes" class="table-overlay">
-							<table id="dataTable1" lay-filter="dataTable" class="layui-hide"></table>
+							<table id="dataTable1" lay-filter="dataTable1" class="layui-hide"></table>
 						</div>
 						<div id="action" class="text-center">
 							<button type="button" name="btnSave" class="layui-btn layui-btn-sm" data-type="save"><i class="fa fa-floppy-o fa-lg"></i> 保存</button>
@@ -276,6 +276,13 @@
 					  	});
 					}
 				});
+				
+				//点击排序重新渲染表格
+		        table.on('sort(dataTable1)', function(obj){
+		        	tableIns1.reload({
+						data: newData
+					});
+		        });
 				
 				//监听搜索表单提交
 		        form.on('submit(search1)', function(data) {
@@ -460,6 +467,11 @@
 						form.render();
 					}
 				});
+				
+				//点击排序重新渲染表格
+		        table.on('sort(dataTable2)', function(obj){
+		        	tableIns2.reload();
+		        });
 				
 				//查询类型下拉框数据
 		        var staticData = null;

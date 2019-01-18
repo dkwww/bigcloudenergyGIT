@@ -40,6 +40,7 @@ public class Drug {
     
     private String audState;
     
+    private String comType;
 
 	public Integer getDiAmount() {
 		return diAmount;
@@ -182,5 +183,13 @@ public class Drug {
 
 	public void setAudState(String audState) {
 		this.audState = audState;
+	}
+
+	public String getComType() {
+		return comType;
+	}
+
+	public void setComType(String comType) {
+		this.comType = comType;
 	}
 }

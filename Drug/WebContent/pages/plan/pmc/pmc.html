@@ -171,6 +171,7 @@
 				var comId = admin==null ? null : admin.comId;
 				var tableIns = table.render({
 		            elem: '#demo',
+		            sort:true,
 		            height: 'full-50', //容器高度
 		            url: '../../../pmc/showList.action',
 		            page: true,
@@ -203,13 +204,13 @@
 		                	var id = $(this).parents('tr').find('td[data-field="pmcId"]').text();
 		                	var o = $(this);
 	            			if (o.text() == '10001') {
-	            				o.html('<font style="color: #0000F0">等待财物审核</font>');
+	            				o.html('<font style="color: #0000F0">等待财务审核</font>');
 	            				tableElem.find('tr[data-index="' + index + '"]').find('td[data-field="viwes"] button[lay-event="auditDetail"],td[data-field="tools"] button').addClass('layui-btn-disabled').attr('disabled',true);
 	            			} else if (o.text() == '10101' || o.text() == '10011') {
 	            				o.html('<font style="color: #0000F0">等待总经理审核</font>');
 	            				tableElem.find('tr[data-index="' + index + '"]').find('td[data-field="tools"] button').addClass('layui-btn-disabled').attr('disabled',true);
 	            			} else if (o.text() == '10010') {
-	            				o.html('<font style="color: #F00000">财物不通过</font>');
+	            				o.html('<font style="color: #F00000">财务不通过</font>');
 	            			} else if (o.text() == '10110') {
 	            				o.html('<font style="color: #F00000">总经理不通过</font>');
 	            			} else if (o.text() == '10111') {
@@ -226,6 +227,11 @@
 		        renderDate('#startDate');
 		        renderDate('#endDate');
 		        
+		     	//点击排序重新渲染表格
+		        table.on('sort(demo)', function(obj){
+		        	tableIns.reload();
+		        });
+		        
 		        //监听搜索表单提交
 		        form.on('submit(search)', function(data) {  
 		            //带条件查询
@@ -236,6 +242,7 @@
 		            $('.kit-search-mored').hide();
 		            return false;
 		        });
+		        
 		        
 		        //监听工具条按钮点击
 		        table.on('tool(demo)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"

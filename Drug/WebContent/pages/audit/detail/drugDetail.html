@@ -67,6 +67,11 @@
 					}
 				});
 				
+				//点击排序重新渲染表格
+		        table.on('sort(dataTable1)', function(obj){
+		        	tableIns1.reload();
+		        });
+				
 				function getSession(){
 					var admin = null;
 					$.ajax({ 
