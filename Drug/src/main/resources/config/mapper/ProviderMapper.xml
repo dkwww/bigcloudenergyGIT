@@ -17,6 +17,25 @@
   <include refid="Base_Column_List" />
   from drug_provider
   </select>
+  <select id="selectBySelective" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_provider where isva = '1'
+   	<if test="record.provName != null and record.provName != ''">
+   		and prov_name like CONCAT(CONCAT('%',#{record.provName,jdbcType=VARCHAR},'%'))
+   	</if>
+   	order by (sort+0) desc 
+   	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectCountBySelective" parameterType="com.yidu.domain.Provider" resultType="int">
+    select 
+    count(*) 
+    from drug_provider where isva = '1'
+   	<if test="provName != null and provName != ''">
+   		and prov_name like CONCAT(CONCAT('%',#{provName,jdbcType=VARCHAR},'%'))
+   	</if>
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -28,6 +47,9 @@
     where prov_id = #{provId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.yidu.domain.Provider">
+  	<selectKey keyProperty="provId" resultType="string" order="BEFORE">
+	    SELECT REPLACE(UUID(),'-','') AS id;
+	</selectKey>
     insert into drug_provider (prov_id, prov_name, isva, 
       optime, oper, sort
       )
@@ -36,6 +58,9 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.yidu.domain.Provider">
+  	<selectKey keyProperty="provId" resultType="string" order="BEFORE">
+	    SELECT REPLACE(UUID(),'-','') AS id;
+	</selectKey>
     insert into drug_provider
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="provId != null">
@@ -78,6 +103,15 @@
       </if>
     </trim>
   </insert>
+  
+  <update id="bulkDeleteByPrimaryKeySelective">
+    update drug_provider set isva = '0',optime = sysdate() 
+    where prov_id in 
+    <foreach collection="list" item="ids" open="(" separator="," close=")">
+      #{ids} 
+    </foreach> 
+  </update>
+  
   <update id="updateByPrimaryKeySelective" parameterType="com.yidu.domain.Provider">
     update drug_provider
     <set>

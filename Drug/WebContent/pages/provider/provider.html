@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>原材料供应商</title>
+		<link rel="stylesheet" href="../../res/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../res/css/common/font-awesome.min.css" media="all">
+		<link rel="stylesheet" href="../../res/layui-config/css/app.css" media="all">
+	</head>
+	<body>
+		<div class="kit-table">
+		    <form class="layui-form" lay-filter="kit-search-form">
+				<!-- 左上角的两个按钮 -->
+		        <div class="kit-table-header">
+		            <div class="kit-search-btns">
+		                <a href="javascript:;" data-action="add" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i> 新增</a>
+		                <a href="javascript:;" data-action="del-bulk" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon">&#xe640;</i> 批量删除</a>
+		            </div>
+		            <div class="kit-search-inputs" style="right: 0px">
+		                <div class="kit-search-keyword">
+		                    <input type="text" class="layui-input" name="provName" placeholder="供应商.." />
+		                    <button lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
+		                </div>
+		            </div>
+		        </div>
+		    </form>
+				
+			<!-- 操作按钮 -->
+		    <div class="kit-table-body">
+		        <table id="demo" lay-filter="demo"></table>
+		        <script type="text/html" id="tools">
+		            <button class="layui-btn layui-btn-xs" lay-event="edit">编辑</button>
+		            <button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button>
+		        </script>
+		    </div>
+		</div>
+		<!-- 供应商修改页面 -->
+		<script type="text/html" id="drug-edit-tpl">
+		    <div style="height: 40px;margin:auto;position: absolute;top: 0px;bottom: 0px;left: 0px;right: 0px">
+		        <form class="layui-form" action="" lay-filter="form-edit">
+		            <input type="hidden" name="provId" value="{{d.rowdata.provId}}" />
+		            <div class="layui-form-item">
+		                <label class="layui-form-label">名称</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="provName" required lay-verify="required" value="{{d.rowdata.provName}}" placeholder="请输入供应商名称" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+		            <div class="layui-form-item" style="display:none;">
+		                <div class="layui-input-block">
+		                    <button class="layui-btn" lay-submit lay-filter="formEdit">立即提交</button>
+		                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		                </div>
+		            </div>
+		        </form>
+		    </div>
+		</script>
+		<script src="../../res/js/common/jquery-1.11.2.min.js"></script>
+		<script src="../../res/layui/layui.all.js"></script>
+		<script>
+			//弹出层下标
+			var editIndex;
+			//显示表格数据
+		    layui.use(['table'], function() {
+		        var table = layui.table,
+		            $ = layui.jquery,
+		            layer = layui.layer,
+		            form = layui.form,
+		            laytpl = layui.laytpl;
+		        var tableIns = table.render({
+		            elem: '#demo',
+		            height: 'full-50', //容器高度
+		            url: '../../provider/findAll.action',
+		            page: true,
+		            id: 'demo',
+		            cols: [
+		                [{checkbox: true,fixed: true},
+		                {field: 'provName',title: '名称',width: 200},
+		                {fixed: 'right',title: '操作',width: 150,align: 'center',toolbar: '#tools'}]
+		            ]
+		        });
+		        
+		        //监听搜索表单提交
+		        form.on('submit(search)', function(data) {  
+		            //带条件查询
+		            tableIns.reload({
+		                where: data.field,
+		                page: { curr: 1 }
+		            });
+		            return false;
+		        });
+		        
+		        //监听工具条按钮点击
+		        table.on('tool(demo)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+		            var data = obj.data; //获得当前行数据
+		            var layEvent = obj.event; //获得 lay-event 对应的值
+		            var tr = obj.tr; //获得当前行 tr 的DOM对象
+		
+		            if (layEvent === 'del') { //删除
+		                layer.confirm('真的删除行么', function(index) {
+		                	layer.close(index);
+		                    update("../../provider/addOrUpdate.action",{"provId":data.provId,"isva":"0"});
+		                });
+		            } else if (layEvent === 'edit') { //编辑
+		                var d = {
+		                	rowdata: data
+		                };
+		                editLayer(d);
+		            }
+		        });
+		        
+		        //供应商增加和修改弹出层   提交按钮点击事件
+		        form.on('submit(formEdit)', function(data) {
+                	var cls = update("../../provider/addOrUpdate.action",data.field);
+                	if (cls) editIndex && layer.close(editIndex); //关闭弹出层
+                	return false;
+		        });
+		        
+		        //增加、批量删除 按钮点击事件
+		        $('.kit-search-btns').children('a').off('click').on('click', function() {
+		            var $that = $(this),
+		                action = $that.data('action');
+		            switch (action) {
+		            	//点击的是 增加按钮
+		                case 'add':
+		                    var d = {
+		                		//替换增加页面文本框内出现的undefine
+		                        rowdata: {
+		                        	provId: '',provName: ''
+		                        }
+		                    };
+		                    editLayer(d);
+		                    break;
+		                    
+		                //点击的是 批量删除按钮
+		                case 'del-bulk':
+		                    var d = table.checkStatus('demo');
+		                    if (d.data.length === 0) {
+		                        layer.msg('请选择要删除的数据');
+		                        return;
+		                    }
+		                    var data = d.data,
+		                        names = [],
+		                        ids = [];
+		                    layui.each(data, function(index, item) {
+		                        names.push(item.provName);
+		                        ids.push(item.provId);
+		                    });
+		                    layer.confirm('真的删除行么', function(index) {
+		                    	layer.close(index);
+		                    	update("../../provider/bulkUpdate.action",ids);
+			                });
+		                    break;
+		            }
+		        });
+		    });
+		  	
+		  	//渲染 供应商修改和增加弹出层
+		    function editLayer(d){
+	    		layui.laytpl($('#drug-edit-tpl').html()).render(d,function(html) {
+	    			editIndex = layer.open({
+                        type: 1,
+                        title: '供应商操作',
+                        content: html,
+                        maxmin: true,
+                        area: ['600px', '260px'],
+                        btn: ['提交', '重置', '取消'],
+                        yes: function(index, layero) {
+                            $('form[lay-filter="form-edit"]').find('button[lay-submit]').click();
+                        },
+                        btn2: function(index, layero) {
+                            $('form[lay-filter="form-edit"]').find('button[type="reset"]').click();
+                            return false;
+                        },
+                        success: function() {
+                            layui.form.render(null, 'form-edit');
+                        }
+                    });
+                });
+	    		return 
+		    }
+		  	
+		    //供应商增加、修改、删除、批量删除 都是用的这一个方法
+		    function update(url,data){
+		    	var cls = false;
+		    	$.ajax({
+		    		url: url,
+                    type:'post',//method请求方式，get或者post
+                    async:false,//同步
+                    dataType:'json',//预期服务器返回的数据供应商
+                    data: JSON.stringify(data),//表格数据序列化
+                    contentType: "application/json; charset=utf-8",
+                    success:function(mes){//res为相应体,function为回调函数
+                        if(mes.status==1){ 
+                        	cls = true;//有弹出层时是关闭弹出层 false不关闭
+	                        $("#res").click();//调用重置按钮将表单数据清空
+	                        $(".layui-laypage-btn")[0].click();//当前表格刷新
+                        }
+                        layer.msg(mes.msg);
+                    },
+                   	error:function(){layer.alert('数据异常，请稍后重试！！！',{icon:5});}
+                 });
+		    	return cls;
+		    }
+		    
+		  	//重新渲染表单
+		  	function renderForm(){ 
+	  			layui.use('form', function(){ 
+		  			var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加() 
+		  			form.render(); 
+	  			}); 
+	  		}
+		  	
+		    //ajax加载动画
+		    $(function () {
+	            $.ajaxSetup({
+	                layerIndex:-1,
+	                beforeSend: function () {
+	                    this.layerIndex = layer.load(1, { shade: [0.8, '#ffffff'] });
+	                },
+	                complete: function () {
+	                    layer.close(this.layerIndex);
+	                },
+	                error: function () {
+	                    layer.alert('部分数据加载失败，可能会导致页面显示异常，请刷新后重试', {
+	                        skin: 'layui-layer-molv'
+	                       , closeBtn: 0
+	                       , shift: 4 //动画类型
+	                    });
+	                }
+	            });
+	        });
+		</script>
+	</body>
+</html>

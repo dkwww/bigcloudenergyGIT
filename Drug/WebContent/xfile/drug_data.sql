@@ -30,7 +30,7 @@ insert  into `drug_company`(`com_id`,`com_name`,`com_phone`,`com_address`,`com_t
 
 /*Data for the table `drug_debty` */
 
-insert  into `drug_debty`(`deb_id`,`com_id`,`deb_money`,`optime`,`isva`,`oper`,`sort`) values ('0','0','500000.00',NULL,'1',NULL,NULL);
+insert  into `drug_debty`(`deb_id`,`com_id`,`deb_money`,`optime`,`isva`,`oper`,`sort`) values ('0','0','5000000.00',NULL,'1',NULL,NULL);
 
 /*Data for the table `drug_module` */
 
