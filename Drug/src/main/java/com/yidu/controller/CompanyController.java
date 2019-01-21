@@ -56,7 +56,7 @@ public class CompanyController {
 			pageUtil.setRows(limit);
 		}
 		
-
+		
 		//创建一个map
 		HashMap<String , Object> map = new HashMap<>();
 		//创建一个list并调用分店查询所有的方法
