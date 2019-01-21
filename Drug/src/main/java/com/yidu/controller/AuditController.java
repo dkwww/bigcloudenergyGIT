@@ -475,9 +475,11 @@ public class AuditController {
 				List<BuyDetail> list = buyDetailService.findByBuyId(buy.getBuyId());
 				for (BuyDetail buyDetail : list) {
 					//根据采购明细id查询药品库存
-					DrugInve drugInv = druginvservice.findBydrugId(buyDetail.getBdetFkId());
-					//修改总店库存
-					druginvservice.minusAmounts(buyDetail.getBdetAmount(), drugInv.getDiId());
+					DrugInve drugInv = druginvservice.findById(buyDetail.getBdetFkId());
+					if(drugInv.getDiId()!=null&&!"".equals(drugInv.getDiId())) {
+						//修改总店库存
+						druginvservice.minusAmounts(buyDetail.getBdetAmount(), drugInv.getDiId());
+					}
 				}
 				//质检
 				qcService.branchQualityAdd(buy);

@@ -16,7 +16,6 @@ import com.yidu.util.PageUtil;
  * @since 2018-11-26
  */
 public interface DrugInvService  {
-	 int  queryDrug(String id);
 	  /**
 	   * 库存表查询所有
 	   * @return

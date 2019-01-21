@@ -105,7 +105,11 @@ public interface DrugInveMapper {
      * @return
      */
 	DrugInve findById(String id);
-
+	 /**
+     * 方法说明：根据药品id查询分店库存
+     * @param id
+     * @return
+     */
 	DrugInve findQcId(String qcFkId);
 	
 	int queryDrug(String id);
