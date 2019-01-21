@@ -44,19 +44,19 @@
 		        <div class="kit-table-header">
 		        
 					<div class="layui-form-item">
-					   <label class="layui-form-label">质检未通数</label>
+					   <label class="layui-form-label"></label>
 					   <div class="layui-input-inline">
-					     <input type="text" name="qcFail" value="0" id="qcFail" autocomplete="off" class="layui-input layui-disabled" readonly="readonly">
+					     <input type="hidden" name="qcFail" value="0" id="qcFail" autocomplete="off" class="layui-input layui-disabled" readonly="readonly">
 					   </div>
-					   <label class="layui-form-label">质检总概率</label>
+					   <label class="layui-form-label"></label>
 					   <div class="layui-input-inline">
-					     <input type="text" name="qcRate" value="100" id="qcRate" autocomplete="off" class="layui-input layui-disabled" readonly="readonly">
+					     <input type="hidden" name="qcRate" value="100" id="qcRate" autocomplete="off" class="layui-input layui-disabled" readonly="readonly">
 					   </div>
 					   <input type="hidden" name="qcAmount" value="0" id="qcAmount" autocomplete="off" class="layui-input layui-disabled" readonly="readonly">
 					</div>
 					
 				
-		            <div class="kit-search-btns" style="width: 100px;margin-left: 630px;margin-top: -60px;">
+		            <div class="kit-search-btns" style="width: 100px;text-align:right;margin-top: -30px;">
 		             <a class="layui-btn layui-btn-sm" id="add"><i class="layui-icon"></i> 提交</a>
 		        	</div>
 		        </div>
@@ -121,7 +121,7 @@
 		                {field: 'qdetAmount',title: '质检数量',width: 120},
 		                {field: 'qdetAmounts',width: 120,templet:'#inputsss'},
 		                {field: 'qdetAmountss',width: 120,templet:'#inputssss'},
-		                {field: 'qdetRate',title: '质检总概率',width: 150,templet:'#inputss'}]
+		                {field: 'qdetRate',title: '质检概率',width: 150,templet:'#inputss'}]
 		            ],
 		            done: function(res, curr, count) {
 		            	
@@ -257,6 +257,7 @@
 				}else{
 					//(质检数量-质检未通过数)/质检数量*100
 					var c=(parseInt(b)-parseInt(a))/parseInt(b)*100;
+					//var c=(parseInt(b)+parseInt(a))/parseInt(a);
 				}
 				
 				//var c =parseFloat(a)/parseFloat(b);//用this*数量
@@ -264,7 +265,7 @@
 				var d=c.toFixed(1);
 				
 				//计算结果显示
-				$(obj).parent().parent().parent().next().next().next().next().children().children().children().val(d);
+				$(obj).parent().parent().parent().next().next().next().next().children().children().children().val(d+'%');
 				
 				/*var sss=parseInt(b)-parseInt(a);
 				$(obj).parent().parent().parent().next().children().text(sss);*/
@@ -302,6 +303,8 @@
 				
 				//质检总通过率
 				var zongde=(zj-amo)/zj*100;
+				console.log(zj);
+				console.log(amo);
 				var bit=zongde.toFixed(1);
 				$("#qcRate").val(bit);
 				

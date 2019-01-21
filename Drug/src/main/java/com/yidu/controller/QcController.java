@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mysql.fabric.xmlrpc.base.Data;
 import com.yidu.domain.Admin;
  
 import com.yidu.domain.DrugInvDetail;
@@ -365,6 +366,8 @@ public class QcController {
 			invdetail.setMiId(invlist.getMiId());
 			//赋值数量
 			invdetail.setMidAmount(qcDetail.getQdetAmount());
+			//赋值当前时间
+			invdetail.setOptime(new Date());
 			//调用库存明细增加方法
 			invdetailservice.addkcdetail(invdetail);
 		}

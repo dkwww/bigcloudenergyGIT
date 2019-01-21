@@ -128,6 +128,7 @@
   <select id="findById" parameterType="map" resultMap="BaseResultMap">
   	SELECT c.mat_name,d.mt_name,a.*,b.* FROM drug_mat_inv a,drug_mat_inv_detail b,drug_material c,drug_mat_type d 
   	WHERE a.mi_id=b.mi_id AND c.mt_id=d.mt_id AND c.mat_id=a.mat_id AND a.mi_id=#{matdetail.miId}
+  	ORDER BY b.optime desc
   	limit #{page.startRows},#{page.rows}
   </select>
   
