@@ -48,8 +48,9 @@ public class DrugInvDetailServiceImpl   implements DrugInvDetailService {
 	}
 	@Override
 	public int insert(DrugInvDetail record) {
+		String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+		record.setDidId(uuid);
      int rows = dao.insert(record);
-     System.out.println("===========rows=========="+rows);
 		return rows;
 	}
 	@Override

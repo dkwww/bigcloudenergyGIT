@@ -462,11 +462,15 @@ public class QcController {
 				drugInvDetail.setDiId(drug.getDiId());//明细id
 				drugInvDetail.setDiAmount(qcDetail.getQdetAmount());//明细数量
 				drugInvDetail.setRemarks(2);//入库类型
+				drugInvDetail.setOptime(new Date());//入库时间
 				//增加明细
-				druginvDetailService.insertSelective(drugInvDetail);
-				
+				int row=druginvDetailService.insert(drugInvDetail);
+				if(row!=0) {
+					System.err.println("增加了明细");
+				}else {
+					System.err.println("失败");
+				}
 			}else {
-				System.err.println("             库存数量"+qcDetail.getQdetAmount());
 				uuid = UUID.randomUUID().toString().replaceAll("-", "");
 				DrugInve drugInve = new DrugInve();
 				drugInve.setDiId(uuid);//药品库存id
@@ -474,16 +478,23 @@ public class QcController {
 				drugInve.setDrugId(qcDetail.getQdetFkId());//药品id
 				drugInve.setDiAmount(qcDetail.getQdetAmount());//库存数量
 				drugInve.setDiComtype("1");//公司类型
+				drugInve.setIsva("1");
 				//增加库存
-				druginvService.insertSelective(drugInve);
+				druginvService.insert(drugInve);
 				
 				//库存明细
 				DrugInvDetail drugInvDetail=new DrugInvDetail();
 				drugInvDetail.setDiId(uuid);//库存明细id
 				drugInvDetail.setDiAmount(qcDetail.getQdetAmount());//明细数量
 				drugInvDetail.setRemarks(2);//入库类型
+				drugInvDetail.setOptime(new Date());//入库时间
 				//增加明细
-				druginvDetailService.insertSelective(drugInvDetail);
+				int row=druginvDetailService.insert(drugInvDetail);
+				if(row!=0) {
+					System.err.println("增加了明细");
+				}else {
+					System.err.println("失败");
+				}
 			}
 		}
 		Message me=new Message();
