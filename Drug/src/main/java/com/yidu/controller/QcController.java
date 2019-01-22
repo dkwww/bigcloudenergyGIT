@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mysql.fabric.xmlrpc.base.Data;
 import com.yidu.domain.Admin;
  
 import com.yidu.domain.DrugInvDetail;
@@ -149,8 +148,8 @@ public class QcController {
 			qcDetail.setQdetAmount(pmcDetails2.getPdAmount());
 			//质检明细状态
 			qcDetail.setQdetFail(0);
-			//默认百分之0
-			qcDetail.setQdetRate("0%");
+			//默认百分之100
+			qcDetail.setQdetRate("100%");
 			//质检明细时间为当前时间
 			qcDetail.setQdetOptime(date);
 			//增加质检明细
@@ -366,8 +365,6 @@ public class QcController {
 			invdetail.setMiId(invlist.getMiId());
 			//赋值数量
 			invdetail.setMidAmount(qcDetail.getQdetAmount());
-			//赋值当前时间
-			invdetail.setOptime(new Date());
 			//调用库存明细增加方法
 			invdetailservice.addkcdetail(invdetail);
 		}
@@ -393,16 +390,15 @@ public class QcController {
 	 */
 	@RequestMapping("branchQuality")
 	@ResponseBody
-	public Map<String, Object> branchQuality(Qc qc,Integer page,Integer limit,HttpSession session){
+	public Map<String, Object> branchQuality(Qc qc,Integer page,Integer limit){
 		
 		PageUtil PageUtil=new PageUtil();
 		if(page!=null && limit!=null) {
 			PageUtil.setCurPage(page);
 			PageUtil.setRows(limit);
 		}
-		Admin admin =(Admin) session.getAttribute("admin");
 		//查询所有
-		List<Qc> list=qcService.branchQuality(qc, PageUtil,admin);
+		List<Qc> list=qcService.branchQuality(qc, PageUtil);
 		for (Qc qc2 : list) {
 			//质检状态
 			if(qc2.getQcState().equals("0")) {
@@ -462,15 +458,11 @@ public class QcController {
 				drugInvDetail.setDiId(drug.getDiId());//明细id
 				drugInvDetail.setDiAmount(qcDetail.getQdetAmount());//明细数量
 				drugInvDetail.setRemarks(2);//入库类型
-				drugInvDetail.setOptime(new Date());//入库时间
 				//增加明细
-				int row=druginvDetailService.insert(drugInvDetail);
-				if(row!=0) {
-					System.err.println("增加了明细");
-				}else {
-					System.err.println("失败");
-				}
+				druginvDetailService.insertSelective(drugInvDetail);
+				
 			}else {
+				System.err.println("             库存数量"+qcDetail.getQdetAmount());
 				uuid = UUID.randomUUID().toString().replaceAll("-", "");
 				DrugInve drugInve = new DrugInve();
 				drugInve.setDiId(uuid);//药品库存id
@@ -478,23 +470,16 @@ public class QcController {
 				drugInve.setDrugId(qcDetail.getQdetFkId());//药品id
 				drugInve.setDiAmount(qcDetail.getQdetAmount());//库存数量
 				drugInve.setDiComtype("1");//公司类型
-				drugInve.setIsva("1");
 				//增加库存
-				druginvService.insert(drugInve);
+				druginvService.insertSelective(drugInve);
 				
 				//库存明细
 				DrugInvDetail drugInvDetail=new DrugInvDetail();
 				drugInvDetail.setDiId(uuid);//库存明细id
 				drugInvDetail.setDiAmount(qcDetail.getQdetAmount());//明细数量
 				drugInvDetail.setRemarks(2);//入库类型
-				drugInvDetail.setOptime(new Date());//入库时间
 				//增加明细
-				int row=druginvDetailService.insert(drugInvDetail);
-				if(row!=0) {
-					System.err.println("增加了明细");
-				}else {
-					System.err.println("失败");
-				}
+				druginvDetailService.insertSelective(drugInvDetail);
 			}
 		}
 		Message me=new Message();
