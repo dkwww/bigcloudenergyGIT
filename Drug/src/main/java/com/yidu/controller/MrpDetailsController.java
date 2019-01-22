@@ -105,38 +105,7 @@ public class MrpDetailsController {
 		//返回提示信息
 		Message   message = new   Message();
 		//将传过来的数据拆分为数组
-		String   nameOne[]=name.split("#");
-		
-		for (int i = 0; i < nameOne.length; i++) {
-			String   namess[] = nameOne[i].split(",");
-			//药品ID
-			String drugIds = namess[0];
-			
-			//增加的数量
-			String    addnum =namess[3];
-			Integer  ok=Integer.valueOf(addnum);
-			 //根据药品ID查询需要的材料
-			List<MaterialList>  list=materialListService.selectBydrugId(drugIds); 
-			for (MaterialList materialList : list) {
-				materialList.getMlAmount();
-			}
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		String   nameOne[]=name.split("#"); 
 		
 		
 		int rows =0;   
@@ -285,6 +254,9 @@ public class MrpDetailsController {
 			qcDetali.setQcId(qcid);
 			//通过率
 			String   qdetrate= nametow[4];
+			
+			System.err.println("=======质检通过率==========="+qdetrate);
+			
 			qcDetali.setQdetRate(qdetrate);
 			//未通过数
 			String   qdetfail= nametow[5]; 
