@@ -268,6 +268,8 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 					sale.setIsva("有效");
 					//操作时间
 					sale.setOptime(new Date());
+					//排序
+					audit.setSort(TimeUtil.getStrDate());
 					//操作人
 					sale.setOper(admin.getAdminName());
 					//调用销售单增加的方法
@@ -289,6 +291,8 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 				detail.setIsva("有效");
 				//操作时间
 				detail.setOptime(new Date());
+				//排序
+				audit.setSort(TimeUtil.getStrDate());
 				//操作人
 				detail.setOper(admin.getAdminName());
 				//增加销售详情

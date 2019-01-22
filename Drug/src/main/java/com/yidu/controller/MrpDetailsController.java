@@ -17,6 +17,7 @@ import com.yidu.service.QcDetailService;
 import com.yidu.service.QcService;
 import com.yidu.util.Message;
 import com.yidu.util.PageUtil;
+import com.yidu.util.TimeUtil;
 
 import java.text.NumberFormat;
 import java.util.Date;
@@ -291,6 +292,8 @@ public class MrpDetailsController {
 		qc.setQcState("1");
 		//未入库
 		qc.setQcPut("0");
+		//排序
+		qc.setSort(TimeUtil.getStrDate());
 		//修改质检状态和
 		rows= qcService.updateByPrimaryKeySelective(qc);
 		if (rows>0) {
