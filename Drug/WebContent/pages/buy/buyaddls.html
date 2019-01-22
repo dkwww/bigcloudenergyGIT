@@ -338,8 +338,9 @@
 				var a = obj.value;//数量值
 				var b=$(obj).parent().parent().parent().prev().children().html();//获取this的父类节点
 				var c =parseFloat(a)*parseFloat(b);//用this*数量
+				var d =c.toFixed(1);
 				//计算结果显示
-				$(obj).parent().parent().parent().next().children().children().children().val(c);
+				$(obj).parent().parent().parent().next().children().children().children().val(d);
 			}
 			
 			function load() {
