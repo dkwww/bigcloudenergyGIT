@@ -38,8 +38,8 @@
   </select>
   <select  id="qureyAll" parameterType="java.util.Map"  resultMap="BaseResultMap"> 
  	 SELECT  *  FROM   drug_mrp      where 1=1
-	 <if test="mrp.mrpPlan != null and mrp.mrpPlan != ''">
-   		and mrp_plan like CONCAT(CONCAT('%',#{mrpPlan,jdbcType=VARCHAR},'%'))
+	 <if test="mrp.comName != null and mrp.comName != ''">
+   		and com_namen like CONCAT(CONCAT('%',#{comName,jdbcType=VARCHAR},'%'))
    	</if>
    	ORDER BY  mrp_optime desc
    	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}

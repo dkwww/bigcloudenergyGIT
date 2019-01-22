@@ -195,12 +195,12 @@ public class DrugInvDetailController {
 			//返回
 			message.setStatus(1);
 			//提示信息
-			message.setMsg("入库失败");
+			message.setMsg("入库成功");
 		}else {
 			//返回1
 			message.setStatus(0);
 			//提示信息
-			message.setMsg("入库成功");
+			message.setMsg("入库失败");
 		} 
 		//返回提示对象
 		return  message;

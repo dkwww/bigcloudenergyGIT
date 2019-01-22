@@ -4,6 +4,7 @@ package com.yidu.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yidu.domain.MaterialList;
 import com.yidu.domain.Mrp;
 import com.yidu.domain.MrpDetails;
 import com.yidu.domain.Qc;
@@ -90,7 +91,7 @@ public class MrpDetailsController {
 	
 	/**
 	 * 增加制造详细
-	 * @param mrpDetails
+	 * @param mrpDetailsadxz
 	 * @return
 	 * @author Pngjiangping
 	 * @date：2019年1月9日 
@@ -105,6 +106,39 @@ public class MrpDetailsController {
 		Message   message = new   Message();
 		//将传过来的数据拆分为数组
 		String   nameOne[]=name.split("#");
+		
+		for (int i = 0; i < nameOne.length; i++) {
+			String   namess[] = nameOne[i].split(",");
+			//药品ID
+			String drugIds = namess[0];
+			
+			//增加的数量
+			String    addnum =namess[3];
+			Integer  ok=Integer.valueOf(addnum);
+			 //根据药品ID查询需要的材料
+			List<MaterialList>  list=materialListService.selectBydrugId(drugIds); 
+			for (MaterialList materialList : list) {
+				materialList.getMlAmount();
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		int rows =0;   
 		//循环拆分的数组
 		for (int i = 0; i < nameOne.length; i++) {
@@ -119,6 +153,7 @@ public class MrpDetailsController {
 			String   nametow[] = nameOne[i].split(",");
 			//药品ID
 			String drugId = nametow[0];
+			
 			mrpDetails2.setDrugId(drugId);
 			//计划数量
 			String num = nametow[1];

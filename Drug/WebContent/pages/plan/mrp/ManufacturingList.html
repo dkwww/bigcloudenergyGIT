@@ -313,7 +313,7 @@ function amount(th){
 		                    width: 160
 		                }, { 
 		                    field: 'hangName',
-		                    title: '完成数量',
+		                    title: '制造数量',
 		                    templet:'#input' ,
 		                    width: 160
 		                }]
@@ -369,8 +369,7 @@ function amount(th){
 		        };
 		        //监听搜索表单提交
 		        form.on('submit(search)', function(data) {
-		            console.log(data.field);
-		            layer.msg(JSON.stringify(data.field));
+		            
 		            //带条件查询
 		            tableIns.reload({
 		                where: data.field

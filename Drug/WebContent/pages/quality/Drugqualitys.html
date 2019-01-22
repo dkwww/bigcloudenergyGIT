@@ -363,8 +363,7 @@
 		        };
 		        //监听搜索表单提交
 		        form.on('submit(search)', function(data) {
-		            console.log(data.field);
-		            layer.msg(JSON.stringify(data.field));
+		            
 		            //带条件查询
 		            tableIns.reload({
 		                where: data.field
