@@ -90,11 +90,15 @@
 		<input class="layui-input" maxlength="5" style="border:none;padding-bottom:8px;" name="qdetAmount"   value="0"  autocomplete="off"    id="number{{d.qdetId}}" onkeyup="Pressdown(this);">
 	</div>
 	</script>
-	
+	 <script type="text/html" id="inputs">
+	<div class="layui-inline">
+		<input class="layui-btn layui-btn-disabled  qders"    maxlength="5" style="border:none;padding-bottom:8px;" name="qdetRate"   value="{{d.qdetRate}}"  autocomplete="off"    id="numbers{{d.qdetId}}" ">
+	</div>
+	</script>
 	
 	
 	<body>
-	 	<input type="text" id="shuju"  style="width: 100%;"  >
+	 	<input type="hidden" id="shuju"  style="width: 100%;"  >
 		  
 		<div class="kit-table">
 		    <form class="layui-form" lay-filter="kit-search-form">
@@ -103,66 +107,12 @@
 		        <div class="kit-table-header">
 		            <div class="kit-search-inputs">
 		                <div class="kit-search-keyword">
-		                    <input type="text" class="layui-input" name="drugName" placeholder="搜索关键字.." />
+		                    <input type="text" class="layui-input" name="drugName" placeholder="搜索药品名称.." />
 		                    <button lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
 		                </div>
-		                <div class="kit-search-more" id="kit-search-more">更多筛选<i class="layui-icon">&#xe61a;</i></div>
+		               
 		            </div>
-		        </div>
-						<!-- 搜索扩展工具条 -->
-		        <div class="kit-search-mored layui-anim layui-anim-upbit">
-		            <div class="kit-search-body">
-		                <div class="layui-form-item">
-		                    <label class="layui-form-label">输入框</label>
-		                    <div class="layui-input-block">
-		                        <input type="text" name="title" placeholder="请输入标题" autocomplete="off" class="layui-input">
-		                    </div>
-		                </div>
-		                <div class="layui-form-item">
-		                    <div class="layui-inline">
-		                        <label class="layui-form-label">验证手机</label>
-		                        <div class="layui-input-inline">
-		                            <input type="tel" name="phone" autocomplete="off" class="layui-input">
-		                        </div>
-		                    </div>
-		                    <div class="layui-inline">
-		                        <label class="layui-form-label">验证邮箱</label>
-		                        <div class="layui-input-inline">
-		                            <input type="text" name="email" autocomplete="off" class="layui-input">
-		                        </div>
-		                    </div>
-		                </div>
-		                <div class="layui-form-item">
-		                    <div class="layui-inline">
-		                        <label class="layui-form-label">范围</label>
-		                        <div class="layui-input-inline" style="width: 100px;">
-		                            <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input">
-		                        </div>
-		                        <div class="layui-form-mid">-</div>
-		                        <div class="layui-input-inline" style="width: 100px;">
-		                            <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input">
-		                        </div>
-		                    </div>
-		                </div>
-		                <div class="layui-form-item">
-		                    <label class="layui-form-label">单行选择框</label>
-		                    <div class="layui-input-block">
-		                        <select name="interest" lay-filter="aihao">
-		                            <option value=""></option>
-		                            <option value="0">写作</option>
-		                            <option value="1" selected="">阅读</option>
-		                            <option value="2">游戏</option>
-		                            <option value="3">音乐</option>
-		                            <option value="4">旅行</option>
-		                          </select>
-		                    </div>
-		                </div>
-		            </div>
-		            <div class="kit-search-footer">
-		                <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary kit-btn">重置</button>
-		                <button lay-submit lay-filter="search" class="layui-btn layui-btn-sm kit-btn">确定</button>
-		            </div>
-		        </div>
+		        </div> 
 		    </form>
 				
 				<!-- 操作按钮 -->
@@ -305,9 +255,11 @@
 		                    templet:'#input' ,
 		                    width: 150
 		                }, { 
-		                    field: 'qdetRate',
-		                    title: '通过率',
-		                    width: 160
+		               
+		                    field:	'qdetRate',
+		                    title:	'通过率',
+		                    templet:'#inputs' ,
+		                    width: 200
 		                }, { 
 		                    field: 'sjName',
 		                    title: '质检时间',
@@ -320,7 +272,7 @@
 		            	
  						$.each(tables,function(i,item){
 		            		
-		            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+item.qdetAmount+","+item.qcId+","+item.qdetRate+","+$("#number"+item.qdetId).val()+"#");
+ 							 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+item.qdetAmount+","+item.qcId+","+$("#numbers"+item.qdetId).val()+","+$("#number"+item.qdetId).val()+"#");
 		            	 })
 		            	
 		                //如果是异步请求数据方式，res即为你接口返回的信息。
@@ -494,16 +446,17 @@
 	        var a=obj.value;   // 未通过数 
          	var b=$(obj).parent().parent().parent().prev().children().text();   //总质检数  
          	var  c=0;
+         	
          	if(parseInt(a)<=parseInt(b)){
              	var  e = parseInt(b)-parseInt(a);
              	//console.info(e)
              	if(e==0){
              		 c=0; 
-             		var d=$(obj).parent().parent().parent().next().children().text(0+"%"); 
+             		var d=$(obj).parent().parent().parent().next().find('input').val(0+"%"); 
              	}else{
              		var  c=parseInt(e)/parseInt(b);
              		var f=c.toFixed(4);
-             		var d=$(obj).parent().parent().parent().next().children().text(f*100+"%"); 
+             		var d=$(obj).parent().parent().parent().next().find('input').val(f*100+"%"); 
              	}
              	}
          	if(parseInt(a)>parseInt(b)){
@@ -516,7 +469,7 @@
         			 var tables=table.cache.demo;      
 	            	 $.each(tables,function(i,item){
 	            			var d=$(obj).parent().parent().parent().next().children().text(); 
-	            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+item.qdetAmount+","+item.qcId+","+d+","+$("#number"+item.qdetId).val()+"#");
+	            			 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+item.qdetAmount+","+item.qcId+","+$("#numbers"+item.qdetId).val()+","+$("#number"+item.qdetId).val()+"#");
 	            	 })
         		 });
          	}else{
@@ -525,9 +478,9 @@
         			 var table=layui.table;
         			 var tables=table.cache.demo;      
 	            	 $.each(tables,function(i,item){
-	            		 console.info(item)
 	            		 var d=$(obj).parent().parent().parent().next().children().text(); 
-	            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+item.qdetAmount+","+item.qcId+","+d+","+$("#number"+item.qdetId).val()+"#");
+	            		 console.info($("#numbers"+item.qdetId).val());
+	            		 $("#shuju").val($("#shuju").val()+item.qdetFkId+","+item.qdetId+","+item.qdetAmount+","+item.qcId+","+$("#numbers"+item.qdetId).val()+","+$("#number"+item.qdetId).val()+"#");
 	            	 })
         		 });
          	}
