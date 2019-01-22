@@ -24,6 +24,9 @@
   <sql id="Base_Column_List">
     di_id, com_id, drug_id, di_amount, di_comtype, isva, optime, oper, sort
   </sql>
+  <select id="queryDrug" parameterType="java.lang.String" resultType="int">
+  	select sum(di_amount) from drug_drug_inv where com_id=#{id}
+  </select>
   <select id="queryBalance" parameterType="java.lang.String" resultMap="BaseResultMap2">
   	select sum(i.di_amount) as indexs ,d.drug_id,d.drug_name from drug_drug_inv i,drug_drug d where i.drug_id=d.drug_id and i.com_id=#{id} GROUP BY d.drug_name,d.drug_id ORDER BY sum(i.di_amount) asc LIMIT 5
   </select>

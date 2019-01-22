@@ -183,19 +183,19 @@
   	where s.drug_id=d.drug_id 
   	and s.bs_id=b.bs_id
   	and b.com_id=#{id}
-  	and year(s.optime)='2018' GROUP BY d.drug_id,d.drug_name
+  	and year(s.optime)='2019' GROUP BY d.drug_id,d.drug_name
   	order by count(*) desc LIMIT 5
   </select>
   <!-- 根据ID查询 -->
   <select id="queryId" parameterType="map" resultType="integer">
-  	select count(*) from drug_branch_sale_detail s,drug_drug d where s.drug_id=d.drug_id and year(s.optime)='2018' and month(s.optime)=#{time} and s.drug_id=#{id}
+  	select count(*) from drug_branch_sale_detail s,drug_drug d where s.drug_id=d.drug_id and year(s.optime)='2019' and month(s.optime)=#{time} and s.drug_id=#{id}
   </select>
   <select id="queryMoney" parameterType="java.lang.String" resultMap="BaseResultMap2" >
   	select sum(s.bsd_total) as indexs,d.drug_id,d.drug_name from drug_branch_sale_detail s,drug_drug d ,drug_branch_sale b
   	where s.drug_id=d.drug_id 
 		and s.bs_id=b.bs_id
 		and b.com_id=#{id}
-		and year(s.optime)='2018' GROUP BY d.drug_id
+		and year(s.optime)='2019' GROUP BY d.drug_id
   	order by count(*) desc LIMIT 7
   </select>
 </mapper>

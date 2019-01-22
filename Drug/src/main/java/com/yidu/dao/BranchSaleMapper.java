@@ -30,4 +30,10 @@ public interface BranchSaleMapper {
      * @return
      */
 	int findCount(BranchSale branchSale);
+	/**
+	 * 根据店铺id查询销售额
+	 * @param id
+	 * @return
+	 */
+	int querySaleNum(String id);
 }

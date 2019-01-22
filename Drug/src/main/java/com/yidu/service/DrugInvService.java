@@ -16,6 +16,12 @@ import com.yidu.util.PageUtil;
  * @since 2018-11-26
  */
 public interface DrugInvService  {
+	/**
+	 * 查询所有药品库存总数
+	 * @param id
+	 * @return
+	 */
+	int queryDrug(String id);
 	  /**
 	   * 库存表查询所有
 	   * @return

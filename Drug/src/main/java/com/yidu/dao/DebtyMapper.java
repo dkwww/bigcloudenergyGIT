@@ -10,6 +10,8 @@ import org.apache.ibatis.annotations.Update;
 import com.yidu.domain.Debty;
 
 public interface DebtyMapper {
+	int queryDebtyNum(String id);
+	
     int deleteByPrimaryKey(String debId);
 
     int insert(Debty record);

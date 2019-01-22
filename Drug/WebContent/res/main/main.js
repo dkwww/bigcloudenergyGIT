@@ -5,6 +5,8 @@ $(function(){
 	queryDrug();
 	countUp();
 	queryMoney();
+	querySaleNum();
+	queryDebtyNum();
 });
 //查询药品销售额
 function queryMoney(){
@@ -47,7 +49,7 @@ function showSell(mes){
     var myChart = echarts.init(document.getElementById('sales'));
     option = {
     	    title: {
-    	        text: '零售最受欢迎统计'
+    	        text: ''
     	    },
     	    tooltip : {
     	        trigger: 'axis',
@@ -96,7 +98,7 @@ function queryStatistics(mes){
     var myChart = echarts.init(document.getElementById('repertory'));
 	option = {
 		    title : {
-		        text: '药品库存预警',
+		        text: '',
 		        subtext: '',
 		        x:'center'
 		    },
@@ -157,7 +159,7 @@ function queryMaterials(mes){
     var myChart = echarts.init(document.getElementById('materials'));
 	option = {
 		    title : {
-		        text: '药材库存预警',
+		        text: '',
 		        subtext: '',
 		        x:'center'
 		    },
@@ -216,8 +218,7 @@ function queryDrug(){
 	var url="/Drug/main/queryDrug.action";
 	var data=null;
 	$.post(url,data,function(mes){
-		$("#invNum").text(mes.status);
-		new CountUp('invNum', 0, $('#invNum').text()).start();
+		new CountUp('invNum', 0, mes.status).start();
 	},"json");
 	/*$.ajax({ 
     	url:"/Drug/main/queryDrug.action",
@@ -228,6 +229,22 @@ function queryDrug(){
         	$("#invNum").text(mes.status);
         }
 	});*/
+}
+function querySaleNum(){
+	var url="/Drug/main/querySaleNum.action";
+	var data=null
+	$.post(url,data,function(mes){
+		$("#saleNum").text(mes.status);
+		new CountUp('saleNum', 0, $('#saleNum').text()).start();
+	},"json");
+}
+function queryDebtyNum(){
+	var url="/Drug/main/queryDebtyNum.action";
+	var data=null
+	$.post(url,data,function(mes){
+		$("#debtyNum").text(mes.status);
+		new CountUp('debtyNum', 0, $('#debtyNum').text()).start();
+	},"json");
 }
 function sellMoney(mes){
 	console.log(mes);

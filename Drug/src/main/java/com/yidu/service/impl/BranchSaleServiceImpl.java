@@ -286,4 +286,11 @@ public class BranchSaleServiceImpl implements BranchSaleService {
 			return message;
 		}
 	}
+	/**
+	 * 根据店铺iD查询总额
+	 */
+	@Override
+	public int querySaleNum(String id) {
+		return mapper.querySaleNum(id);
+	}
 }

@@ -23,6 +23,7 @@ import com.yidu.domain.Role;
 import com.yidu.domain.Sale;
 import com.yidu.service.BranchSaleDetailService;
 import com.yidu.service.BranchSaleService;
+import com.yidu.service.DebtyService;
 import com.yidu.service.DrugInvService;
 import com.yidu.service.MatInvService;
 import com.yidu.service.ModuleRoleService;
@@ -47,7 +48,10 @@ public class MainController {
 	private DrugInvService invService;
 	@Resource
 	private MatInvService  matService;
-	
+	@Resource
+	private BranchSaleService saleService;
+	@Resource
+	private DebtyService devbService;
 	/**
 	 * 查询今年药品的销售次数
 	 * @param request 用于获取返回的Session
@@ -155,5 +159,40 @@ public class MainController {
 		map.put("data",data);
 		return map;
 	}
-	
+	/**
+	 * 查询销售总额
+	 * @return
+	 */
+	@RequestMapping("querySaleNum")
+	@ResponseBody
+	public Message querySaleNum(HttpServletRequest request) {
+		HttpSession session=request.getSession();
+		Admin user=(Admin) session.getAttribute("admin");
+		int rows=saleService.querySaleNum(user.getComId());
+		Message mes=new Message();
+		if(rows!=0) {
+			mes.setStatus(rows);
+		}else {
+			mes.setStatus(0);
+		}
+		return mes;
+	}
+	/**
+	 * 查询财务总额
+	 * @return
+	 */
+	@RequestMapping("queryDebtyNum")
+	@ResponseBody
+	public Message queryDebtyNum(HttpServletRequest request) {
+		HttpSession session=request.getSession();
+		Admin user=(Admin) session.getAttribute("admin");
+		int rows=devbService.queryDebtyNum(user.getComId());
+		Message mes=new Message();
+		if(rows!=0) {
+			mes.setStatus(rows);
+		}else {
+			mes.setStatus(0);
+		}
+		return mes;
+	}
 }

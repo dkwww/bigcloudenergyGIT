@@ -27,6 +27,9 @@
     from drug_debty
     where com_id = #{comId,jdbcType=VARCHAR}
   </select>
+  <select id="queryDebtyNum" parameterType="java.lang.String" resultType="int">
+  select sum(deb_money) from drug_debty where com_id=#{id} and isva ='1'
+  </select>
   <!-- 财务根据店铺id查询 -->
   <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
   	select * from  drug_debty d,drug_company c where c.com_id=d.com_id and d.com_id= #{debty.comId,jdbcType=VARCHAR}

@@ -30,6 +30,7 @@
   <sql id="Base_Column_List">
     bs_id, com_id, men_id, bs_amount, bs_price, isva, optime, oper, sort
   </sql>
+  
   <!-- 自动生长查询 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -204,5 +205,8 @@
   	<if test="priceMax != null and priceMax != ''">
   	and dbs.bs_price &lt;= #{priceMax,jdbcType=VARCHAR}
   	</if>
+  </select>
+  <select id="querySaleNum" parameterType="java.lang.String" resultType="int">
+  	select sum(bs_amount) from drug_branch_sale where com_id=#{id};
   </select>
 </mapper>

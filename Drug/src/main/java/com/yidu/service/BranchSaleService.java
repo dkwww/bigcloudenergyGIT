@@ -42,4 +42,10 @@ public interface BranchSaleService   {
 	 * @return Message
 	 */
 	public Message addSale(String sum, String menId, String comId);
+	/**
+	 * 根据店铺iD查询销售总额
+	 * @param id
+	 * @return
+	 */
+	int querySaleNum(String id);
 }

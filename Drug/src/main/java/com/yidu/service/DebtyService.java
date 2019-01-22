@@ -107,4 +107,6 @@ public interface DebtyService   {
 	 * @return
 	 */
 	int addMoney(BigDecimal money,String debtyId);
+	
+	int queryDebtyNum(String id);
 }
