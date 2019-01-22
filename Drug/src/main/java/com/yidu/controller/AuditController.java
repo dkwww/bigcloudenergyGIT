@@ -465,8 +465,8 @@ public class AuditController {
 				detail.setDdetChange(buy.getBuyMoney());
 				//采购id
 				detail.setDdettFkId(buy.getBuyId());
-				detail.setIsva("1");
-				detail.setOptime(new Date());
+				detail.setIsva("1");//是否有效
+				detail.setOptime(new Date());//操作时间
 				//财务明细的增加
 				debtyDetailService.insertSelective(detail);
 				//修改采购状态
