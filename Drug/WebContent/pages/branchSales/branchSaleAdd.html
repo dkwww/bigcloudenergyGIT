@@ -171,7 +171,7 @@
 		            height: 'full-50', //容器高度
 		            page: true,
 		            id: 'demos',
-		            where:{"comId":comId},
+		            where:{"comId":comId,"comType":comType},
 		            cols: [
 		                [{checkbox: true,fixed: true,field:'check'},
 		                {field: 'drugName',title: '药名',width: 240},
@@ -383,9 +383,7 @@
 		    	if(isNaN($("#"+obj.id).val())){
 		    		$("#"+obj.id).val(1);
 		    	}
-				$("#"+obj.id).parent().next().next().html(parseFloat($("#"+obj.id).parent().next().html())*parseFloat($("#"+obj.id).val()));		 
-				$("#"+obj.id).parent().next().next().next().next().next().html(parseFloat($("#"+obj.id).parent().next().next().next().next().html())*parseFloat($("#"+obj.id).val()));
-		    	
+				
 		    	var url="../../drugInv/findDrugId.action";
 		    	var data={"drugId":$("#"+obj.id).parent().prev().prev().html()};
 		    	$.post(url,data,function(mes){
@@ -393,6 +391,10 @@
 		    			if($("#"+obj.id).val()>item.diAmount){
 		    				layer.msg("零售库存不足");
 		    				$("#"+obj.id).val(item.diAmount);
+		    			}else{
+		    				$("#"+obj.id).parent().next().next().html(parseFloat($("#"+obj.id).parent().next().html())*parseFloat($("#"+obj.id).val()));		 
+		    				$("#"+obj.id).parent().next().next().next().next().next().html(parseFloat($("#"+obj.id).parent().next().next().next().next().html())*parseFloat($("#"+obj.id).val()));
+		    		    	
 		    			}
 		    		});
 		    	},"json");
@@ -421,6 +423,7 @@
 		    	
 		    }
 		    var comId="";
+		    var comType="";
 		    $(function(){
 		    	getSession();
 		    })
@@ -435,6 +438,7 @@
 	                success:function(mes){
 	                	if (mes!=null && mes!="") {
 	                		comId = mes.comId;
+	                		comType=mes.comType;
 						} else {
 							location.href = "../admin/login.html";
 						}
