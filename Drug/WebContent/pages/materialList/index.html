@@ -173,7 +173,7 @@
 								</div>
 							</div>
 							<div id="tableRes" class="card-body-right">
-								<table id="dataTable2" lay-filter="dataTables" class="layui-hide" ></table>
+								<table id="dataTable2" lay-filter="dataTable2" class="layui-hide" ></table>
 							</div>
 							<div id="action" class="text-center">
 								<button type="button" name="btnConfirm" class="layui-btn layui-btn-sm btnConfirm" data-type="confirm"><i class="fa fa-check-circle-o fa-lg" aria-hidden="true"></i> 确定</button>
@@ -370,7 +370,7 @@
 				});
 				
 				//监听工具条
-				table.on('tool(dataTable)', function(obj) {
+				table.on('tool(dataTable1)', function(obj) {
 					var data = obj.data,
 						event = obj.event,
 						tr = obj.tr; //获得当前行 tr 的DOM对象;
@@ -511,7 +511,7 @@
 		            $('#kit-search-mored-two').toggle();
 		        });
 		        
-				table.on('checkbox(dataTables)', function(obj) {
+				table.on('checkbox(dataTable2)', function(obj) {
 					if (obj.checked == true) {
 						if (obj.type == 'one') {
 							addRow(obj.data);

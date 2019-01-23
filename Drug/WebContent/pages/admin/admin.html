@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>layui</title>
+  <title>用户管理</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -73,6 +73,8 @@
 		   	<div style="margin:10px">
 		        <form class="layui-form" action="" lay-filter="form-edit">
 		            <input type="hidden" name="adminId" value="{{d.rowdata.adminId}}" />
+					<input type="hidden" name="drugPictrue" value="{{d.rowdata.adminPictrue}}" >
+					<input type="hidden" id="roid" name="roId" style="width:700px;"/>
 					<div class="layui-form-item">
 		                <label class="layui-form-label">公司名称</label>
 		                <div class="layui-input-block">
@@ -100,21 +102,26 @@
 		                    <input type="password" name="adminPwd" required lay-verify="required" value="{{d.rowdata.adminPwd}}" placeholder="请输入密码" autocomplete="off" class="layui-input">
 		                </div>
 		            </div>
-					<div class="layui-upload">
-                		<label class="layui-form-label">头像:</label>
-                		<div class="layui-upload layui-input-block">
-                    		<input type="hidden" name="adminPictrue" value="{{d.rowdata.adminPictrue}}"/>
-                    		<button type="button" class="layui-btn layui-btn-primary" id="fileBtn"><i class="layui-icon">&#xe67c;</i>选择文件</button>
-                   	 		<button type="button" class="layui-btn layui-btn-warm" id="uploadBtn">开始上传</button>
-                		</div>
-            		</div>
 					<div class="layui-form-item">
-    					<label class="layui-form-label">角色</label>
+		                <label class="layui-form-label">角色描述</label>
+		                <div class="layui-input-block">
+		                    <input type="text" name="adminMsg" required lay-verify="required" value="{{d.rowdata.adminMsg}}" placeholder="请输入角色描述" autocomplete="off" class="layui-input">
+		                </div>
+		            </div>
+					<div class="layui-form-item">
+    					<label class="layui-form-label">角色权限</label>
     					<div class="layui-input-block" id="findJs"></div>
   					</div>
-
-					<input type="hidden" id="roid" name="roId" style="width:700px;"/>
-
+					<div class="layui-form-item layui-upload ">
+  		  				<label class="layui-form-label">头像</label>
+						<div class="layui-upload layui-input-block">
+		  					<button type="button" class="layui-btn layui-btn-primary" id="fileBtn"><i class="layui-icon">&#xe67c;</i>{{d.rowdata.msg}}</button>
+		  					<div class="layui-upload-list" style="display: none">
+		    					<img class="layui-upload-img" id="pic" src="../../{{d.rowdata.adminPictrue}}" style="width: 100px;height: 100px">
+		    					<p id="errorText"></p>
+		  					</div>
+						</div>
+					</div>
 		            <div class="layui-form-item" style="display:none;">
 		                <div class="layui-input-block">
 		                    <button class="layui-btn" lay-submit lay-filter="formEdit">立即提交</button>
@@ -134,7 +141,7 @@
 	<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 --> 
 	<script src="../../res/layui/layui.all.js"></script> 
 	<script type="text/html" id="imgTpl">
-        <img src="@{{ ../../{{ d.adminPictrue}} }}">
+		<img style="height:100%;height:30px;" src="../../{{d.adminPictrue}}">
     </script>
 	<script>
 		
@@ -146,30 +153,19 @@
 	            laytpl = layui.laytpl;
 	        var tableIns = table.render({
 		    	elem: '#demo'
-		    	,height: '469px' //容器高度
+		    	,height: 'full-50' //容器高度
 		    	,url:'../../admin/findAll.action'
 		    	,page: true
 		    	,id: 'demo'
 		    	,cols: [[
 		      		{checkbox: true,fixed: true}
-			      ,{field:'adminId', width:80, title: 'ID', align: 'center'}
-			      ,{field:'comName', width:148, title: '公司名称',align: 'center'}
+			      ,{field:'adminId', width:180, title: 'ID', align: 'center'}
+			      ,{field:'comName', title: '公司名称',align: 'center'}
 			      ,{field:'adminName', width:110, title: '用户名', align: 'center'}
-			      ,{field:'adminPictrue', title: '头像', width: 130,align: 'center',templet:'#imgTpl'}
-			      ,{field:'isva', width:110, title: '审核状态', align: 'center'}
-			      ,{field:'optimestring', width:180, title: '操作时间',align: 'center'}
-			      ,{field:'sort', width:135, title: '排序', align: 'center'}
+			      ,{field:'adminMsg', width:200, title: '角色描述', align: 'center'}
+			      ,{field:'adminPictrue', title: '头像', width: 80,align: 'center',templet:'#imgTpl'}
 			      ,{fixed: 'right',title: '操作',width: 160,align: 'center',toolbar: '#barDemo'}
 			    ]],
-			    done: function(res, curr, count) {
-	                $("[data-field = 'isva']").children().each(function(){
-					    if($(this).text() == '1'){
-					    	$(this).text("已审核");
-					    } else if ($(this).text() == '0') {
-					    	$(this).text("未审核");
-					    }
-				  	}); 
-	            },
 	            loading: true
 	        });
 	        
@@ -252,11 +248,13 @@
 	                    update("../../admin/delete.action",{"adminId":data.adminId,"isva":"0"});
 	                });
 	            } else if (layEvent === 'edit') { //编辑
+	            	data["msg"]="更改图片";
 	            	var d = {
  	                	rowdata: data,
  	                	types: staticData.data
  	                };
 	            	showlayer(d);
+	            	$(".layui-upload-list").css("display", "block");
 	            	 
 	            	 //查询角色数据
         	        $.ajax({ url:"../../admin/findByRole.action",
@@ -336,7 +334,7 @@
 	                    var d = {
 	                		//替换增加页面文本框内出现的undefine
 	                        rowdata: {
-	                        	adminId: '',adminName: '',adminPwd: '',adminPictrue: '',adminMsg: '',isva:1,isva:'0',optime:'',oper:'',sort:'',
+	                        	adminId: '',adminName: '',adminPwd: '',adminPictrue: '',adminMsg: '',isva:1,isva:'0',optime:'',oper:'',sort:'',msg: '选择图片'
 	                        },
 	                      	//类型下拉框数据
 	                        types: staticData.data
@@ -422,6 +420,44 @@
                 	}
                 }
             });
+	    }
+	  	
+	  	//上传文件
+	    function uploads(){
+	    	//普通图片上传
+	        var uploadInst = layui.upload.render({
+	          elem: '#fileBtn'
+	          ,url: '../../admin/upload.action'
+	          ,before: function(obj){
+	        	layer.load(2,{shade:false});
+	            //预读本地文件示例，不支持ie8
+	            obj.preview(function(index, file, result){
+	            	$(".layui-upload-list").css("display", "block");
+	                $('#pic').attr('src', result); //图片链接（base64）
+	            });
+	          }
+	          ,done: function(res){
+	        	layer.closeAll("loading"); 
+	            //如果上传失败
+	            if(res.code > 0){
+	              return layer.msg('上传失败');
+	            }
+	            //上传成功
+	            $("input[name=drugPictrue]").val(res.obj);
+	            $(".layui-upload-list").css("display", "block");
+           		$("#fileBtn").html('<i class="layui-icon">&#xe67c;</i>更改图片');
+           		layui.form.render('form-edit');
+	          }
+	          ,error: function(){
+	        	layer.closeAll("loading"); 
+	            //演示失败状态，并实现重传
+	            var demoText = $('#errorText');
+	            demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+	            demoText.find('.demo-reload').on('click', function(){
+	              uploadInst.upload();
+	            });
+	          }
+	        });
 	    }
 		
 	    //重新渲染表单
