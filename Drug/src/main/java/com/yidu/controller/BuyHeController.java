@@ -337,13 +337,9 @@ public class BuyHeController {
 		//根据订单的分店id查询财务对象
 		Debty deb=debtyservice.findcwId(buy.getComId());
 		
-		System.err.println("------------财务总金额"+deb.getDebMoney());
-		System.err.println("------------材料总价格"+buy.getBuyMoney());
-		System.err.println("=============财务id"+deb.getDebId());
-		
 		//调用mes工具类
 		Message me=new Message();
-		//判断材料总价格要小于财务总金额  (BigDecimal比较大小-1表示小于,0是等于,1是大于)
+		//判断材料总价格要小于财务总金额
 		if(buy.getBuyMoney().compareTo(deb.getDebMoney())==-1) {
 			//判断如果审核状态不等于空且为1的时候就减财务
 			if(buy.getBuyAudit()!="" && buy.getBuyAudit().equals("1")) {

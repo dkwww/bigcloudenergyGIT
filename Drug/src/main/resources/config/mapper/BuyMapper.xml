@@ -110,7 +110,7 @@
   </select>
   
   
-  
+  <!-- 根据订单id查询 订单和分店 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     *
