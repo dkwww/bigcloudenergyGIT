@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yidu.domain.Audit;
 import com.yidu.domain.Buy;
 import com.yidu.domain.BuyDetail;
-import com.yidu.domain.Company;
 import com.yidu.domain.Debty;
 import com.yidu.domain.DebtyDetail;
 import com.yidu.service.AuditService;
