@@ -78,7 +78,7 @@ public class BuyHeController {
 	 * @param page 前台页数
 	 * @param limit 前台行数
 	 * @author dengkangwei
-	 * @return
+	 * @return map数组
 	 */
 	@RequestMapping("/showList")
 	@ResponseBody
@@ -142,7 +142,7 @@ public class BuyHeController {
 	 * @param sumPrice	总价格
 	 * @param Supplier	供应商
 	 * @author dengkangwei
-	 * @return
+	 * @return Message工具类
 	 */
 	@RequestMapping("add")
 	@ResponseBody
@@ -257,7 +257,7 @@ public class BuyHeController {
 	 * @param page 前台的页数
 	 * @param limit 前台的行数
 	 * @author dengkangwei
-	 * @return
+	 * @return 返回map集合
 	 */
 	@RequestMapping("AuditshowList")
 	@ResponseBody
@@ -305,7 +305,7 @@ public class BuyHeController {
 	 * 
 	 * 方法说明：删除订单
 	 * @param buy
-	 * @return
+	 * @return Message工具类
 	 * @author dengkangwei
 	 * @date：2019年1月5日
 	 */
@@ -327,7 +327,7 @@ public class BuyHeController {
 	 * 
 	 * 方法说明：审核完后减财务
 	 * @param buy 采购订单对象
-	 * @return
+	 * @return Message工具类
 	 * @author dengkangwei
 	 * @date：2019年1月9日
 	 */
@@ -394,7 +394,7 @@ public class BuyHeController {
 	 * 采购状态修改
 	 * @param buy 采购订单对象
 	 * @author dengkangwei
-	 * @return
+	 * @return Message工具类
 	 */
 	@RequestMapping("cgUpdate")
 	@ResponseBody
@@ -414,7 +414,7 @@ public class BuyHeController {
 	 * 采购订单提交到质检
 	 * @param buy 采购订单对象
 	 * @author dengkangwei
-	 * @return
+	 * @return Message工具类
 	 */
 	@RequestMapping("addQc")
 	@ResponseBody

@@ -206,7 +206,7 @@ public class QcController {
 	 * @param qc 质检对象
 	 * @param page 前台页数
 	 * @param limit 前台行数
-	 * @return
+	 * @return map集合
 	 * @author dengkangwei
 	 * @date：2018年12月27日
 	 */
@@ -269,7 +269,7 @@ public class QcController {
 	 * @param sumRate	总通过率
 	 * @param qcState 	质检状态
 	 * @author dengkangwei
-	 * @return
+	 * @return Message工具类
 	 */
 	@RequestMapping("Qcadd")
 	@ResponseBody
@@ -333,7 +333,7 @@ public class QcController {
 	/**
 	 * 方法说明： 材料质检完后入库
 	 * @param qc 质检对象
-	 * @return
+	 * @return Message工具类
 	 * @author dengkangwei
 	 * @date：2019年1月14日
 	 */
