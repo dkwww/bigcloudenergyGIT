@@ -18,14 +18,39 @@
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
        SELECT  * FROM   drug_drug_inv_detail a ,drug_drug_inv b,drug_drug c ,drug_drug_type  d WHERE   a.di_id =b.di_id AND  b.drug_id=c.drug_id  AND  c.dt_id=d.dt_id 
-    and a.di_id = #{diId,jdbcType=VARCHAR}
+    and a.di_id = #{diId,jdbcType=VARCHAR}   
+     
+     ORDER BY 	a.optime  desc 
   </select>
   
   
   <select id="selectcount" parameterType="java.lang.String"  resultType="int">
        SELECT  count(*) FROM   drug_drug_inv_detail a ,drug_drug_inv b,drug_drug c ,drug_drug_type  d WHERE   a.di_id =b.di_id AND  b.drug_id=c.drug_id  AND  c.dt_id=d.dt_id 
-    and a.di_id = #{diId,jdbcType=VARCHAR}
+    and a.di_id = #{diId,jdbcType=VARCHAR}    
+    
   </select>
+  
+  
+   <select  id="findbydiId" parameterType="java.util.Map"  resultMap="BaseResultMap"> 
+ 	  SELECT   * FROM   drug_drug_inv_detail  a , drug_drug_inv b  ,drug_drug  c WHERE  a.di_id=b.di_id  AND  c.drug_id=b.drug_id  AND  a.di_id=#{diId,jdbcType=VARCHAR}  
+	 <if test="diId.drugName != null and diId.drugName != ''">
+   		and c.drug_name like CONCAT(CONCAT('%',#{drugName,jdbcType=VARCHAR},'%'))
+   	</if>
+   	ORDER BY 	a.optime  desc
+   	limit #{pageUtil.startRows,jdbcType=INTEGER},#{pageUtil.rows,jdbcType=INTEGER}
+   	
+   </select>
+   
+    <select id="findcount" parameterType="java.lang.String"  resultType="int">
+      SELECT   count(*) FROM   drug_drug_inv_detail  a , drug_drug_inv b  ,drug_drug  c WHERE  a.di_id=b.di_id  AND  c.drug_id=b.drug_id  AND  a.di_id=#{diId,jdbcType=VARCHAR}  
+	 <if test="drugName != null and  drugName != ''">
+   		and c.drug_name like CONCAT(CONCAT('%',#{drugName,jdbcType=VARCHAR},'%'))
+   	</if>
+  </select>
+  
+  
+  
+  
   
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">

@@ -1,6 +1,7 @@
 package com.yidu.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.yidu.domain.DrugInvDetail;
 
@@ -17,5 +18,9 @@ public interface DrugInvDetailMapper {
 
     int updateByPrimaryKey(DrugInvDetail record);
     
+    List<DrugInvDetail> findbydiId(Map<String, Object> map);
+    
     int  selectcount(String  id);
+    
+    int   findcount(String  id);
 }

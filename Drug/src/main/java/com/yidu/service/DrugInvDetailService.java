@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.yidu.domain.DrugInvDetail;
 import com.yidu.domain.DrugInve;
+import com.yidu.util.PageUtil;
 
 /**
  * <p>
@@ -32,6 +33,12 @@ public interface DrugInvDetailService  {
 	 * @return
 	 */
 	  int insert(DrugInvDetail record);
+	  
+	  List<DrugInvDetail>   findBydiId(DrugInvDetail record,PageUtil  pageUtil);
+	  
 	
 	int insertSelective(DrugInvDetail record);
+	
+	
+	int  findcount(String  id);
 }
