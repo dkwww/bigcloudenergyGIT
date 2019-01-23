@@ -5,7 +5,11 @@ import java.util.Map;
 
 import com.yidu.domain.Admin;
 import com.yidu.domain.AdminRole;
-
+/**
+ * 
+ * @author LiuLongRong
+ *
+ */
 public interface AdminMapper {
     int deleteByPrimaryKey(String adminId);
 
