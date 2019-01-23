@@ -166,7 +166,7 @@ public class BuyDetailServiceImpl  implements BuyDetailService {
 				buy.setBuyAudit("1");
 				//质检状态  默认0
 				buy.setBuyQc("0");
-				//采购状态
+				//采购状态官方v44
 				buy.setBuyState("1");
 				//入库状态
 				buy.setBuyPut("0");

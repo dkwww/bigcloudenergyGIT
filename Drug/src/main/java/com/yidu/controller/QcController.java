@@ -456,31 +456,48 @@ public class QcController {
 				
 				//库存明细
 				DrugInvDetail drugInvDetail=new DrugInvDetail();
-				drugInvDetail.setDiId(drug.getDiId());//明细id
-				drugInvDetail.setDiAmount(qcDetail.getQdetAmount());//明细数量
-				drugInvDetail.setRemarks(2);//入库类型
+				//明细id
+				drugInvDetail.setDiId(drug.getDiId());
+				//明细数量
+				drugInvDetail.setDiAmount(qcDetail.getQdetAmount());
+				//入库类型
+				drugInvDetail.setRemarks(2);
+				//入库时间
+				drugInvDetail.setOptime(new Date());
 				//增加明细
-				druginvDetailService.insertSelective(drugInvDetail);
+				druginvDetailService.insert(drugInvDetail);
 				
 			}else {
 				System.err.println("             库存数量"+qcDetail.getQdetAmount());
 				uuid = UUID.randomUUID().toString().replaceAll("-", "");
 				DrugInve drugInve = new DrugInve();
-				drugInve.setDiId(uuid);//药品库存id
-				drugInve.setComId(admin.getComId());//店铺id
-				drugInve.setDrugId(qcDetail.getQdetFkId());//药品id
-				drugInve.setDiAmount(qcDetail.getQdetAmount());//库存数量
-				drugInve.setDiComtype("1");//公司类型
+				//药品库存id
+				drugInve.setDiId(uuid);
+				//店铺id
+				drugInve.setComId(admin.getComId());
+				//药品id
+				drugInve.setDrugId(qcDetail.getQdetFkId());
+				//库存数量
+				drugInve.setDiAmount(qcDetail.getQdetAmount());
+				//公司类型
+				drugInve.setDiComtype("1");
+				//是否有效
+				drugInve.setIsva("1");
 				//增加库存
 				druginvService.insertSelective(drugInve);
 				
 				//库存明细
 				DrugInvDetail drugInvDetail=new DrugInvDetail();
-				drugInvDetail.setDiId(uuid);//库存明细id
-				drugInvDetail.setDiAmount(qcDetail.getQdetAmount());//明细数量
-				drugInvDetail.setRemarks(2);//入库类型
+				//库存明细id
+				drugInvDetail.setDiId(uuid);
+				//明细数量
+				drugInvDetail.setDiAmount(qcDetail.getQdetAmount());
+				//入库类型
+				drugInvDetail.setRemarks(2);
+				//操作时间
+				drugInvDetail.setOptime(new Date());
 				//增加明细
-				druginvDetailService.insertSelective(drugInvDetail);
+				druginvDetailService.insert(drugInvDetail);
 			}
 		}
 		Message me=new Message();
