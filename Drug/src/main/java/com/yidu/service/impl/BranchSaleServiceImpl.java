@@ -291,7 +291,7 @@ public class BranchSaleServiceImpl implements BranchSaleService {
 	 */
 	@Override
 	public int querySaleNum(String id) {
-		//返回mapper里面根据ID查询总额的方法
+		//返回零售mapper里面根据ID查询总额的方法
 		return mapper.querySaleNum(id);
 	}
 }
