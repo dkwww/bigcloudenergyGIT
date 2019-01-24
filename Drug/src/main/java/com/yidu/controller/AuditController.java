@@ -421,8 +421,8 @@ public class AuditController {
 					detail.setDebId(debty1.getDebId());
 					//明细金额
 					detail.setDdetChange(buy.getBuyMoney());
-					//采购id
-					detail.setDdettFkId(buy.getBuyId());
+					//支出状态   支出0 收入1
+					detail.setDdettFkId("0");
 					detail.setIsva("1");
 					detail.setOptime(new Date());
 					//财务明细的增加
@@ -463,8 +463,8 @@ public class AuditController {
 				detail.setDebId(debty1.getDebId());
 				//明细金额
 				detail.setDdetChange(buy.getBuyMoney());
-				//采购id
-				detail.setDdettFkId(buy.getBuyId());
+				//支出状态   支出0 收入1
+				detail.setDdettFkId("1");
 				detail.setIsva("1");//是否有效
 				detail.setOptime(new Date());//操作时间
 				//财务明细的增加
