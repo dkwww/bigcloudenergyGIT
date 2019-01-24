@@ -37,7 +37,9 @@
   <select id="selectCountBySelective" parameterType="java.util.Map" resultType="Integer" >
   	select count(*) from drug_buy  where 1=1
   </select>
-  	
+  
+  <!-- 郑有宏 -->
+  <!-- 查询所有-->
   <select id="findAll" parameterType="map" resultMap="BaseResultMap">
   	SELECT * FROM drug_buy WHERE com_id = #{admin.comId,jdbcType=INTEGER}
   	
@@ -109,7 +111,7 @@
   	ORDER BY a.buy_time desc
   </select>
   
-  
+  <!-- 郑有宏 -->
   <!-- 根据订单id查询 订单和分店 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 

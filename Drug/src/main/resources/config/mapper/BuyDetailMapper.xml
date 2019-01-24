@@ -66,10 +66,13 @@
     from drug_buy_detail
     where bdet_id = #{bdetId,jdbcType=VARCHAR}
   </select>
+  <!-- 邓康威 -->
+  <!-- 根据采购id删除 -->
   <delete id="deleteByPrimaryKeys" parameterType="java.lang.String">
     delete from drug_buy_detail
     where buy_id = #{buyId,jdbcType=VARCHAR}
   </delete>
+  <!-- 根据id删除 -->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from drug_buy_detail
     where bdet_id = #{bdetId,jdbcType=VARCHAR}
